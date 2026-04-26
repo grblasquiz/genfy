@@ -1,10 +1,29 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { GENERATORS, urlFor } from '../lib/generators';
+import { GENERATORS, urlFor, CATEGORIES_ES, type GeneratorMeta } from '../lib/generators';
 const lang = 'es' as const;
 
 const title = 'Genfy — Generadores online gratis | Contraseñas, nombres, QR y más';
 const description = 'Cientos de generadores online gratis: contraseñas seguras, nombres de empresa, QR, lorem ipsum, nombres para mascotas. Sin registro y sin instalar nada.';
+
+const featured = GENERATORS.slice(0, 9);
+
+const byCategory = GENERATORS.reduce((acc, g) => {
+  (acc[g.category] = acc[g.category] || []).push(g);
+  return acc;
+}, {} as Record<GeneratorMeta['category'], GeneratorMeta[]>);
+
+const CAT_ORDER: GeneratorMeta['category'][] = [
+  'security', 'tech', 'data', 'business', 'marketing',
+  'design', 'random', 'pets', 'people', 'work', 'content', 'inspiration', 'fun', 'tools',
+];
+
+const useCases = [
+  { icon: '🚀', title: 'Lanzar una marca', text: 'Nombres, slogans, dominios y bios — todo lo que necesitás para arrancar una marca o un side project.', href: '/generador-de-nombres-de-empresa' },
+  { icon: '🔐', title: 'Proteger cuentas', text: 'Contraseñas fuertes, PINs, API keys y validadores. Pensado para que tu seguridad no dependa de la suerte.', href: '/generador-de-contrasenas' },
+  { icon: '🎨', title: 'Diseñar más rápido', text: 'Paletas, gradientes CSS, sombras, avatares y placeholders. Lo que tu mockup necesita, sin abrir Figma.', href: '/generador-de-paletas-de-colores' },
+  { icon: '✍️', title: 'Crear contenido', text: 'Captions, hashtags, headlines, bios y emails. Templates con criterio para no salir con texto genérico.', href: '/generador-de-bio-instagram' },
+];
 ---
 <Layout title={title} description={description} lang={lang}>
   <section class="hero hero-bg">
@@ -18,21 +37,15 @@ const description = 'Cientos de generadores online gratis: contraseñas seguras,
       <a href="#generadores" class="btn btn-primary">Ver generadores →</a>
       <a href="/sobre-genfy" class="btn btn-ghost">Sobre Genfy</a>
     </div>
-    <div class="stat-row">
-      <span><strong>{GENERATORS.length}+</strong> herramientas</span>
-      <span><strong>0</strong> registros</span>
-      <span><strong>0</strong> pop-ups</span>
-      <span>100% en tu navegador</span>
-    </div>
   </section>
 
   <section id="generadores" class="generators">
     <div class="section-head">
       <h2>Generadores destacados</h2>
-      <a href="/generadores" class="section-link">Ver los {GENERATORS.length} →</a>
+      <a href="/generadores" class="section-link">Ver todos →</a>
     </div>
     <div class="grid-cards">
-      {GENERATORS.slice(0, 12).map(g => (
+      {featured.map(g => (
         <a class="gcard" href={urlFor(g, lang)}>
           <span class="gcard-emoji">{g.emoji}</span>
           <span class="gcard-title">{g.title.es}</span>
@@ -43,25 +56,68 @@ const description = 'Cientos de generadores online gratis: contraseñas seguras,
     </div>
   </section>
 
+  <section class="usecases">
+    <div class="section-head">
+      <h2>¿Para qué se usa Genfy?</h2>
+    </div>
+    <div class="usecase-grid">
+      {useCases.map(u => (
+        <a class="usecase" href={u.href}>
+          <span class="usecase-icon">{u.icon}</span>
+          <h3>{u.title}</h3>
+          <p>{u.text}</p>
+          <span class="usecase-link">Empezar acá →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="categories">
+    <div class="section-head">
+      <h2>Explorar por categoría</h2>
+      <a href="/generadores" class="section-link">Ver todas →</a>
+    </div>
+    <div class="cat-grid">
+      {CAT_ORDER.filter(c => byCategory[c]?.length).map(c => (
+        <a class="cat-tile" href={`/generadores#${c}`}>
+          <span class="cat-name">{CATEGORIES_ES[c]}</span>
+          <span class="cat-count">{byCategory[c].length} herramientas</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
   <section class="why">
     <h2>Construido para usarse, no para perderte el tiempo.</h2>
     <div class="why-grid">
       <div class="why-item">
+        <span class="why-num">01</span>
         <h3>Gratis y sin registro</h3>
         <p>Ninguna herramienta pide email ni cuenta. Entrás, generás, te vas.</p>
       </div>
       <div class="why-item">
+        <span class="why-num">02</span>
         <h3>Privado por diseño</h3>
         <p>Todo se ejecuta en tu navegador. Tus datos nunca salen de tu dispositivo.</p>
       </div>
       <div class="why-item">
+        <span class="why-num">03</span>
         <h3>Pensado para velocidad</h3>
         <p>Páginas optimizadas, sin scripts pesados, sin pop-ups que se cuelan.</p>
       </div>
       <div class="why-item">
+        <span class="why-num">04</span>
         <h3>Bilingüe nativo</h3>
         <p>Versión completa en español e inglés. No traducciones automáticas.</p>
       </div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <div class="cta-final-inner">
+      <h2>Encontrá la herramienta que necesitás.</h2>
+      <p>Cientos de generadores y herramientas online, todos gratis. Sin registro, sin pop-ups, sin instalar nada.</p>
+      <a href="/generadores" class="btn btn-primary">Ver todos los generadores →</a>
     </div>
   </section>
 </Layout>
@@ -97,29 +153,22 @@ const description = 'Cientos de generadores online gratis: contraseñas seguras,
     line-height: 1.6;
   }
   .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-  .stat-row { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-soft); color: var(--text-subtle); font-size: 0.9rem; max-width: 50ch; }
-  .stat-row strong { color: var(--text); font-weight: 700; font-feature-settings: "tnum"; }
 
-  .generators { margin-top: 3rem; }
+  .generators, .usecases, .categories, .why, .cta-final { margin-top: 5rem; }
+
   .section-head {
     display: flex; justify-content: space-between; align-items: baseline;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
     border-bottom: 1px solid var(--border-soft);
     padding-bottom: 1rem;
   }
-  .section-head h2 { margin: 0; font-size: 1.375rem; font-weight: 600; letter-spacing: -0.015em; }
-  .section-link {
-    color: var(--text-subtle);
-    text-decoration: none;
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
+  .section-head h2 { margin: 0; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+  .section-link { color: var(--text-subtle); text-decoration: none; font-size: 0.875rem; font-weight: 500; }
   .section-link:hover { color: var(--accent); }
 
   .gcard {
     position: relative;
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
     gap: 0.5rem;
     padding: 1.5rem;
     background: var(--bg-card);
@@ -127,50 +176,115 @@ const description = 'Cientos de generadores online gratis: contraseñas seguras,
     border-radius: var(--radius-lg);
     text-decoration: none;
     color: var(--text);
-    transition: border-color var(--t-base) var(--ease), transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
+    transition: border-color 280ms var(--ease), transform 280ms var(--ease), box-shadow 280ms var(--ease);
   }
-  .gcard:hover {
-    border-color: var(--text);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    text-decoration: none;
-  }
+  .gcard:hover { border-color: var(--text); transform: translateY(-2px); box-shadow: var(--shadow-md); text-decoration: none; }
   .gcard-emoji { font-size: 1.5rem; line-height: 1; margin-bottom: 0.25rem; }
-  .gcard-title {
-    font-weight: 600;
-    font-size: 1rem;
-    letter-spacing: -0.015em;
-    color: var(--text);
-  }
-  .gcard-desc {
-    color: var(--text-soft);
-    font-size: 0.875rem;
-    line-height: 1.55;
-  }
-  .gcard-arrow {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    color: var(--text-muted);
-    font-size: 1rem;
-    transition: transform var(--t-base) var(--ease), color var(--t-base) var(--ease);
-  }
+  .gcard-title { font-weight: 600; font-size: 1rem; letter-spacing: -0.015em; color: var(--text); }
+  .gcard-desc { color: var(--text-soft); font-size: 0.875rem; line-height: 1.55; }
+  .gcard-arrow { position: absolute; top: 1.5rem; right: 1.5rem; color: var(--text-muted); font-size: 1rem; transition: transform 280ms var(--ease), color 280ms var(--ease); }
   .gcard:hover .gcard-arrow { color: var(--accent); transform: translateX(3px); }
 
-  .why { margin-top: 5rem; }
-  .why h2 { max-width: 22ch; }
+  /* Use cases */
+  .usecase-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 700px) { .usecase-grid { grid-template-columns: 1fr 1fr; } }
+  .usecase {
+    position: relative;
+    display: flex; flex-direction: column;
+    gap: 0.625rem;
+    padding: 1.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 280ms var(--ease), transform 280ms var(--ease);
+    overflow: hidden;
+  }
+  .usecase::before {
+    content: "";
+    position: absolute; top: 0; right: 0; width: 50%; height: 100%;
+    background: radial-gradient(circle at 100% 0%, color-mix(in oklab, var(--accent) 8%, transparent), transparent 60%);
+    pointer-events: none;
+  }
+  .usecase:hover { border-color: var(--text); transform: translateY(-2px); text-decoration: none; }
+  .usecase-icon { font-size: 1.875rem; line-height: 1; }
+  .usecase h3 { margin: 0; font-size: 1.125rem; font-weight: 700; letter-spacing: -0.02em; }
+  .usecase p { margin: 0; color: var(--text-soft); font-size: 0.9375rem; line-height: 1.55; }
+  .usecase-link { margin-top: auto; color: var(--accent); font-size: 0.875rem; font-weight: 600; padding-top: 0.5rem; }
+
+  /* Categories tiles */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.75rem;
+  }
+  .cat-tile {
+    display: flex; flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem 1.125rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 220ms var(--ease), background 220ms var(--ease);
+  }
+  .cat-tile:hover { border-color: var(--text); background: var(--bg-inset); text-decoration: none; }
+  .cat-name { font-weight: 600; font-size: 0.9375rem; letter-spacing: -0.01em; }
+  .cat-count { color: var(--text-subtle); font-size: 0.8125rem; font-feature-settings: "tnum"; }
+
+  /* Why grid */
+  .why h2 { max-width: 24ch; font-size: clamp(1.5rem, 3.5vw, 2.25rem); letter-spacing: -0.025em; }
   .why-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
   }
-  @media (min-width: 768px) { .why-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem 3rem; } }
-  .why-item h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1rem;
+  @media (min-width: 768px) { .why-grid { grid-template-columns: 1fr 1fr; gap: 3rem 4rem; } }
+  .why-item { position: relative; padding-left: 3rem; }
+  .why-item .why-num {
+    position: absolute; left: 0; top: 0;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
     font-weight: 600;
-    color: var(--text);
+    color: var(--accent);
+    padding-top: 0.25rem;
+    letter-spacing: 0.04em;
   }
+  .why-item h3 { margin: 0 0 0.5rem; font-size: 1.0625rem; font-weight: 600; color: var(--text); }
   .why-item p { margin: 0; color: var(--text-soft); }
+
+  /* Final CTA */
+  .cta-final-inner {
+    background: var(--text);
+    color: var(--bg);
+    padding: 3.5rem 2rem;
+    border-radius: var(--radius-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-final-inner::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(60% 80% at 50% 0%, color-mix(in oklab, var(--accent) 25%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .cta-final-inner h2 { color: var(--bg); margin: 0 0 0.75rem; font-size: clamp(1.5rem, 3.5vw, 2.25rem); letter-spacing: -0.025em; }
+  .cta-final-inner p { color: rgba(255, 255, 255, 0.72); max-width: 50ch; margin: 0 auto 1.5rem; }
+  .cta-final-inner .btn-primary {
+    background: var(--bg);
+    color: var(--text);
+    border-color: var(--bg);
+  }
+  .cta-final-inner .btn-primary:hover { background: var(--bg-soft); border-color: var(--bg-soft); color: var(--text); box-shadow: 0 8px 24px -8px rgba(0,0,0,0.5); }
+  @media (prefers-color-scheme: dark) {
+    .cta-final-inner { background: var(--bg-inset); border: 1px solid var(--border); }
+  }
 </style>
