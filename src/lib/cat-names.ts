@@ -1,6 +1,6 @@
 export const CAT_NAMES = {
   cute: {
-    es: ['Bichi', 'Mishi', 'Lola', 'Coco', 'Mimi', 'Pelusa', 'Nube', 'Galleta', 'Luna', 'Lila', 'Manchita', 'Pancho', 'Gordi', 'Tito', 'Pipo', 'Kira', 'Nala', 'Mora', 'Flor', 'Olivia'],
+    es: ['Bichi', 'Mishi', 'Lola', 'Coco', 'Mimi', 'Pelusa', 'Nube', 'Galleta', 'Beba', 'Lila', 'Manchita', 'Pancho', 'Gordi', 'Tito', 'Pipo', 'Kira', 'Nala', 'Mora', 'Flor', 'Olivia'],
     en: ['Mochi', 'Biscuit', 'Cookie', 'Honey', 'Daisy', 'Peanut', 'Bean', 'Pumpkin', 'Cupcake', 'Pickle', 'Muffin', 'Coco', 'Lily', 'Poppy', 'Pip', 'Fizz', 'Boo', 'Sprout', 'Tofu', 'Nala'],
   },
   funny: {
