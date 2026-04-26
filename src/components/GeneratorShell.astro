@@ -11,14 +11,24 @@ export interface Props {
 
 const { lang = 'es', title, intro, tag } = Astro.props;
 const tt = t[lang];
+const homeHref = lang === 'es' ? '/' : '/en';
+const homeLabel = lang === 'es' ? 'Inicio' : 'Home';
+const allHref = lang === 'es' ? '/generadores' : '/en/generators';
+const allLabel = lang === 'es' ? 'Generadores' : 'Generators';
 ---
+<nav class="crumbs" aria-label="Breadcrumb">
+  <a href={homeHref}>{homeLabel}</a>
+  <span aria-hidden="true">›</span>
+  <a href={allHref}>{allLabel}</a>
+</nav>
+
 <section class="gen-hero">
   {tag && <span class="tag">{tag}</span>}
   <h1>{title}</h1>
   <p class="lead">{intro}</p>
 </section>
 
-<div class="gen-tool card">
+<div class="gen-tool">
   <slot name="tool" />
 </div>
 
@@ -36,11 +46,53 @@ const tt = t[lang];
 </section>
 
 <style>
-  .gen-hero { margin-bottom: 1.5rem; }
-  .gen-hero .lead { font-size: 1.0625rem; color: var(--text-soft); max-width: 65ch; }
-  .gen-tool { margin-bottom: 1.5rem; }
-  .gen-content :global(h2) { margin-top: 2rem; }
-  .gen-content :global(p) { max-width: 70ch; }
-  .gen-content :global(ul), .gen-content :global(ol) { color: var(--text-soft); padding-left: 1.5rem; }
-  .gen-content :global(li) { margin-bottom: 0.375rem; }
+  .crumbs {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+    margin-bottom: 1.5rem;
+  }
+  .crumbs a {
+    color: var(--text-subtle);
+    text-decoration: none;
+    transition: color var(--t-base) var(--ease);
+  }
+  .crumbs a:hover { color: var(--text); }
+  .gen-hero { margin-bottom: 2rem; }
+  .gen-hero .tag { margin-bottom: 1rem; }
+  .gen-hero h1 {
+    font-size: clamp(1.875rem, 4.5vw, 3rem);
+    max-width: 22ch;
+  }
+  .gen-hero .lead {
+    font-size: 1.0625rem;
+    color: var(--text-soft);
+    max-width: 60ch;
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+  .gen-tool {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-xs);
+  }
+  @media (max-width: 600px) {
+    .gen-tool { padding: 1.5rem; border-radius: var(--radius-lg); }
+  }
+  .gen-content :global(h2) { margin-top: 3rem; }
+  .gen-content :global(h2:first-child) { margin-top: 1rem; }
+  .gen-content :global(p) { max-width: 68ch; }
+  .gen-content :global(ul),
+  .gen-content :global(ol) {
+    color: var(--text-soft);
+    padding-left: 1.5rem;
+    max-width: 66ch;
+  }
+  .gen-content :global(li) { margin-bottom: 0.5rem; line-height: 1.6; }
+  .gen-faq { margin-top: 3.5rem; }
 </style>

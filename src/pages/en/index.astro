@@ -8,69 +8,83 @@ const description = 'Hundreds of free online generators: secure passwords, busin
 ---
 <Layout title={title} description={description} lang={lang}>
   <section class="hero">
-    <h1>Genfy: free online generators for everything</h1>
+    <span class="eyebrow">Free online generators</span>
+    <h1>Small tools that <span class="accent-text">solve big things</span>.</h1>
     <p class="lead">
-      Fast web tools to solve small tasks: create secure passwords, find the perfect name for
-      your brand or your cat, generate lorem ipsum, QR codes and much more.
-      All free, no signup, nothing to install.
+      Passwords, brand names, QR codes, lorem ipsum, ideas for your next pet.
+      Everything in one clean interface — free, no signup, no pop-ups.
     </p>
     <div class="cta-row">
-      <a href="#generators" class="btn btn-primary">Browse generators</a>
+      <a href="#generators" class="btn btn-primary">Browse generators →</a>
       <a href="/en/about" class="btn btn-ghost">About Genfy</a>
     </div>
   </section>
 
-  <section id="generators">
-    <h2>Featured generators</h2>
+  <section id="generators" class="generators">
+    <div class="section-head">
+      <h2>Featured generators</h2>
+      <a href="/en/generators" class="section-link">See all →</a>
+    </div>
     <div class="grid-cards">
       {GENERATORS.map(g => (
         <a class="gcard" href={urlFor(g, lang)}>
           <span class="gcard-emoji">{g.emoji}</span>
           <span class="gcard-title">{g.title.en}</span>
           <span class="gcard-desc">{g.description.en}</span>
+          <span class="gcard-arrow" aria-hidden="true">→</span>
         </a>
       ))}
     </div>
   </section>
 
-  <section>
-    <h2>Why Genfy?</h2>
-    <p>
-      Genfy gathers in one place the small tools people search for every day on the internet:
-      a quick generator, a QR code, a pet name, ideas to baptize a new brand. Instead of
-      jumping between 15 different sites — each with its own layer of pop-ups, paywalls and
-      sign-ups — you get everything in a clean, consistent interface.
-    </p>
-    <ul>
-      <li><strong>Free and no signup:</strong> no tool asks for email or account.</li>
-      <li><strong>Private:</strong> everything runs in your browser. Your data never leaves your device.</li>
-      <li><strong>Fast:</strong> optimized pages, no heavy scripts or intrusive ads.</li>
-      <li><strong>Bilingual:</strong> full Spanish and English versions.</li>
-    </ul>
+  <section class="why">
+    <h2>Built to be used, not to waste your time.</h2>
+    <div class="why-grid">
+      <div class="why-item">
+        <h3>Free, no signup</h3>
+        <p>No tool asks for an email or account. Walk in, generate, walk out.</p>
+      </div>
+      <div class="why-item">
+        <h3>Private by design</h3>
+        <p>Everything runs in your browser. Your data never leaves your device.</p>
+      </div>
+      <div class="why-item">
+        <h3>Built for speed</h3>
+        <p>Optimized pages, no heavy scripts, no pop-ups sneaking in.</p>
+      </div>
+      <div class="why-item">
+        <h3>Native bilingual</h3>
+        <p>Full English and Spanish versions. No machine translations.</p>
+      </div>
+    </div>
   </section>
 </Layout>
 
 <style>
-  .hero { padding: 2rem 0 1rem; }
-  .hero .lead { font-size: 1.125rem; color: var(--text-soft); max-width: 60ch; }
-  .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem; }
-  .gcard {
-    display: flex; flex-direction: column; gap: 0.375rem;
-    padding: 1.25rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    text-decoration: none;
-    color: var(--text);
-    transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s;
-  }
-  .gcard:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow);
-    border-color: var(--primary);
-    text-decoration: none;
-  }
-  .gcard-emoji { font-size: 1.75rem; }
-  .gcard-title { font-weight: 700; font-size: 1.0625rem; }
-  .gcard-desc { color: var(--text-soft); font-size: 0.9rem; line-height: 1.5; }
+  .hero { padding: 4rem 0 3rem; max-width: 32ch; }
+  @media (min-width: 768px) { .hero { padding: 6rem 0 4rem; max-width: 22ch; } }
+  .eyebrow { display: inline-block; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; }
+  .hero h1 { max-width: 16ch; }
+  .accent-text { background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 0.125em; }
+  @media (prefers-color-scheme: dark) { .accent-text { color: var(--accent); background: none; } }
+  .hero .lead { font-size: 1.125rem; color: var(--text-soft); max-width: 56ch; margin: 1.5rem 0 2rem; line-height: 1.6; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .generators { margin-top: 3rem; }
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-soft); padding-bottom: 1rem; }
+  .section-head h2 { margin: 0; font-size: 1.375rem; font-weight: 600; letter-spacing: -0.015em; }
+  .section-link { color: var(--text-subtle); text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+  .section-link:hover { color: var(--accent); }
+  .gcard { position: relative; display: flex; flex-direction: column; gap: 0.5rem; padding: 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); text-decoration: none; color: var(--text); transition: border-color var(--t-base) var(--ease), transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease); }
+  .gcard:hover { border-color: var(--text); transform: translateY(-2px); box-shadow: var(--shadow-md); text-decoration: none; }
+  .gcard-emoji { font-size: 1.5rem; line-height: 1; margin-bottom: 0.25rem; }
+  .gcard-title { font-weight: 600; font-size: 1rem; letter-spacing: -0.015em; color: var(--text); }
+  .gcard-desc { color: var(--text-soft); font-size: 0.875rem; line-height: 1.55; }
+  .gcard-arrow { position: absolute; top: 1.5rem; right: 1.5rem; color: var(--text-muted); font-size: 1rem; transition: transform var(--t-base) var(--ease), color var(--t-base) var(--ease); }
+  .gcard:hover .gcard-arrow { color: var(--accent); transform: translateX(3px); }
+  .why { margin-top: 5rem; }
+  .why h2 { max-width: 22ch; }
+  .why-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2rem; }
+  @media (min-width: 768px) { .why-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem 3rem; } }
+  .why-item h3 { margin: 0 0 0.5rem; font-size: 1rem; font-weight: 600; color: var(--text); }
+  .why-item p { margin: 0; color: var(--text-soft); }
 </style>

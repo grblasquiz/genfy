@@ -19,25 +19,61 @@ const links = lang === 'es'
 ---
 <footer class="site-footer">
   <div class="container footer-inner">
-    <p class="tagline">{tt.footerTagline}</p>
-    <nav class="footer-nav">
+    <div class="footer-brand">
+      <span class="footer-brand-name">Genfy</span>
+      <span class="footer-brand-tag">{tt.footerTagline}</span>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
       {links.map(l => <a href={l.href}>{l.label}</a>)}
     </nav>
-    <p class="copy">© {year} Genfy. {tt.footerRights}</p>
+    <p class="copy">© {year} Genfy · {tt.footerRights}</p>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    margin-top: 4rem;
-    background: var(--bg-soft);
+    margin-top: 6rem;
     border-top: 1px solid var(--border);
-    padding: 2rem 0 5rem;
+    padding: 3rem 0 5rem;
+    background: var(--bg);
   }
-  .footer-inner { text-align: center; }
-  .tagline { color: var(--text-soft); margin-bottom: 1rem; }
-  .footer-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1rem; }
-  .footer-nav a { color: var(--text-soft); font-size: 0.9rem; text-decoration: none; }
-  .footer-nav a:hover { color: var(--primary); }
-  .copy { color: var(--text-subtle); font-size: 0.8125rem; margin: 0; }
+  .footer-inner {
+    display: grid;
+    gap: 2rem;
+  }
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+  .footer-brand-name {
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .footer-brand-tag {
+    color: var(--text-subtle);
+    font-size: 0.875rem;
+    max-width: 32ch;
+  }
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .footer-nav a {
+    color: var(--text-soft);
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: color var(--t-base) var(--ease);
+  }
+  .footer-nav a:hover { color: var(--text); }
+  .copy {
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+    margin: 0;
+    border-top: 1px solid var(--border-soft);
+    padding-top: 1.5rem;
+  }
 </style>

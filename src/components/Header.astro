@@ -8,11 +8,14 @@ const altHref = altPath(Astro.url.pathname, lang);
 ---
 <header class="site-header">
   <div class="container header-inner">
-    <a href={homeHref} class="brand">
-      <span class="brand-mark">G</span>
+    <a href={homeHref} class="brand" aria-label="Genfy">
+      <svg class="brand-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="22" height="22" rx="6" fill="currentColor"/>
+        <path d="M16 9.5h-4.5a2.5 2.5 0 0 0 0 5H14V13h-2.5" stroke="var(--bg)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
       <span class="brand-name">Genfy</span>
     </a>
-    <nav class="nav">
+    <nav class="nav" aria-label="Principal">
       <a href={allHref}>{tt.nav.all}</a>
       <a href={lang === 'es' ? '/sobre-genfy' : '/en/about'}>{tt.nav.about}</a>
       <a href={altHref} class="lang-switch" rel="alternate" hreflang={lang === 'es' ? 'en' : 'es'}>
@@ -24,38 +27,59 @@ const altHref = altPath(Astro.url.pathname, lang);
 
 <style>
   .site-header {
-    background: var(--bg);
+    background: rgba(255, 255, 255, 0.78);
     border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; z-index: 30;
-    backdrop-filter: saturate(180%) blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    backdrop-filter: saturate(180%) blur(12px);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+  }
+  @media (prefers-color-scheme: dark) {
+    .site-header { background: rgba(9, 9, 11, 0.78); }
   }
   .header-inner {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.875rem 1.5rem;
+    height: 60px;
   }
   .brand {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    color: var(--text); font-weight: 800; font-size: 1.125rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.02em;
     text-decoration: none;
   }
+  .brand:hover { text-decoration: none; }
   .brand-mark {
-    display: inline-grid; place-items: center;
-    width: 28px; height: 28px;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    color: #fff; border-radius: 8px;
-    font-weight: 800;
+    width: 24px; height: 24px;
+    color: var(--text);
+    flex-shrink: 0;
   }
-  .nav { display: flex; gap: 1rem; align-items: center; }
+  .brand-name { font-feature-settings: "ss01"; }
+  .nav {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+  }
   .nav a {
     color: var(--text-soft);
-    font-size: 0.95rem; font-weight: 500;
+    font-size: 0.875rem;
+    font-weight: 500;
     text-decoration: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    transition: color var(--t-base) var(--ease), background var(--t-base) var(--ease);
   }
-  .nav a:hover { color: var(--primary); }
+  .nav a:hover { color: var(--text); background: var(--bg-inset); }
   .lang-switch {
     border: 1px solid var(--border);
-    padding: 0.25rem 0.625rem;
-    border-radius: 999px;
-    font-size: 0.8125rem !important;
+    margin-left: 0.5rem;
   }
+  .lang-switch:hover { border-color: var(--border-strong); }
 </style>

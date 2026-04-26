@@ -1,80 +1,168 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { GENERATORS, urlFor } from '../lib/generators';
-import { t } from '../lib/i18n';
 const lang = 'es' as const;
-const tt = t[lang];
 
 const title = 'Genfy — Generadores online gratis | Contraseñas, nombres, QR y más';
 const description = 'Cientos de generadores online gratis: contraseñas seguras, nombres de empresa, QR, lorem ipsum, nombres para mascotas. Sin registro y sin instalar nada.';
 ---
 <Layout title={title} description={description} lang={lang}>
   <section class="hero">
-    <h1>Genfy: generadores online gratis para todo</h1>
+    <span class="eyebrow">Free online generators</span>
+    <h1>Herramientas pequeñas que <span class="accent-text">resuelven cosas grandes</span>.</h1>
     <p class="lead">
-      Herramientas web rápidas para resolver tareas chicas: crear contraseñas seguras, encontrar
-      el nombre perfecto para tu marca o tu gato, generar lorem ipsum, códigos QR y mucho más.
-      Todo gratis, sin registro y sin instalar nada.
+      Contraseñas, nombres de marca, QR, lorem ipsum, ideas para tu próxima mascota.
+      Todo en una sola interfaz limpia, gratis, sin registros y sin pop-ups.
     </p>
     <div class="cta-row">
-      <a href="#generadores" class="btn btn-primary">Ver generadores</a>
+      <a href="#generadores" class="btn btn-primary">Ver generadores →</a>
       <a href="/sobre-genfy" class="btn btn-ghost">Sobre Genfy</a>
     </div>
   </section>
 
-  <section id="generadores">
-    <h2>Generadores destacados</h2>
+  <section id="generadores" class="generators">
+    <div class="section-head">
+      <h2>Generadores destacados</h2>
+      <a href="/generadores" class="section-link">Ver todos →</a>
+    </div>
     <div class="grid-cards">
       {GENERATORS.map(g => (
         <a class="gcard" href={urlFor(g, lang)}>
           <span class="gcard-emoji">{g.emoji}</span>
           <span class="gcard-title">{g.title.es}</span>
           <span class="gcard-desc">{g.description.es}</span>
+          <span class="gcard-arrow" aria-hidden="true">→</span>
         </a>
       ))}
     </div>
   </section>
 
-  <section>
-    <h2>¿Por qué Genfy?</h2>
-    <p>
-      Genfy reúne en un solo lugar las herramientas que la gente busca todos los días en
-      internet: un generador rápido, un código QR, un nombre para una mascota, ideas para
-      bautizar una marca. En vez de saltar entre 15 sitios distintos —cada uno con su propia
-      capa de pop-ups, paywalls y registros— acá tenés todo en una interfaz limpia y
-      consistente.
-    </p>
-    <ul>
-      <li><strong>Gratis y sin registro:</strong> ninguna herramienta pide email ni cuenta.</li>
-      <li><strong>Privado:</strong> todo se ejecuta en tu navegador. Tus datos no salen de tu dispositivo.</li>
-      <li><strong>Rápido:</strong> sitios optimizados, sin scripts pesados ni anuncios intrusivos.</li>
-      <li><strong>Bilingüe:</strong> versión completa en español e inglés.</li>
-    </ul>
+  <section class="why">
+    <h2>Construido para usarse, no para perderte el tiempo.</h2>
+    <div class="why-grid">
+      <div class="why-item">
+        <h3>Gratis y sin registro</h3>
+        <p>Ninguna herramienta pide email ni cuenta. Entrás, generás, te vas.</p>
+      </div>
+      <div class="why-item">
+        <h3>Privado por diseño</h3>
+        <p>Todo se ejecuta en tu navegador. Tus datos nunca salen de tu dispositivo.</p>
+      </div>
+      <div class="why-item">
+        <h3>Pensado para velocidad</h3>
+        <p>Páginas optimizadas, sin scripts pesados, sin pop-ups que se cuelan.</p>
+      </div>
+      <div class="why-item">
+        <h3>Bilingüe nativo</h3>
+        <p>Versión completa en español e inglés. No traducciones automáticas.</p>
+      </div>
+    </div>
   </section>
 </Layout>
 
 <style>
-  .hero { padding: 2rem 0 1rem; }
-  .hero .lead { font-size: 1.125rem; color: var(--text-soft); max-width: 60ch; }
-  .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem; }
+  .hero {
+    padding: 4rem 0 3rem;
+    max-width: 32ch;
+  }
+  @media (min-width: 768px) { .hero { padding: 6rem 0 4rem; max-width: 22ch; } }
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 { max-width: 16ch; }
+  .accent-text {
+    background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%);
+    padding: 0 0.125em;
+  }
+  @media (prefers-color-scheme: dark) {
+    .accent-text { color: var(--accent); background: none; }
+  }
+  .hero .lead {
+    font-size: 1.125rem;
+    color: var(--text-soft);
+    max-width: 56ch;
+    margin: 1.5rem 0 2rem;
+    line-height: 1.6;
+  }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  .generators { margin-top: 3rem; }
+  .section-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-soft);
+    padding-bottom: 1rem;
+  }
+  .section-head h2 { margin: 0; font-size: 1.375rem; font-weight: 600; letter-spacing: -0.015em; }
+  .section-link {
+    color: var(--text-subtle);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  .section-link:hover { color: var(--accent); }
 
   .gcard {
-    display: flex; flex-direction: column; gap: 0.375rem;
-    padding: 1.25rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: var(--radius-lg);
     text-decoration: none;
     color: var(--text);
-    transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s;
+    transition: border-color var(--t-base) var(--ease), transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
   }
   .gcard:hover {
+    border-color: var(--text);
     transform: translateY(-2px);
-    box-shadow: var(--shadow);
-    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
     text-decoration: none;
   }
-  .gcard-emoji { font-size: 1.75rem; }
-  .gcard-title { font-weight: 700; font-size: 1.0625rem; }
-  .gcard-desc { color: var(--text-soft); font-size: 0.9rem; line-height: 1.5; }
+  .gcard-emoji { font-size: 1.5rem; line-height: 1; margin-bottom: 0.25rem; }
+  .gcard-title {
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: -0.015em;
+    color: var(--text);
+  }
+  .gcard-desc {
+    color: var(--text-soft);
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+  .gcard-arrow {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    color: var(--text-muted);
+    font-size: 1rem;
+    transition: transform var(--t-base) var(--ease), color var(--t-base) var(--ease);
+  }
+  .gcard:hover .gcard-arrow { color: var(--accent); transform: translateX(3px); }
+
+  .why { margin-top: 5rem; }
+  .why h2 { max-width: 22ch; }
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 768px) { .why-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem 3rem; } }
+  .why-item h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .why-item p { margin: 0; color: var(--text-soft); }
 </style>
