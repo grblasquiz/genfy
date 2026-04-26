@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Decisor "Sí o No" online | Genfy';
+const description = 'Decidí entre sí y no de manera aleatoria con animación. Útil para decisiones cotidianas, dudas rápidas o como ejercicio para escuchar tu intuición.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Es realmente 50/50?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Usamos crypto.getRandomValues para asegurar distribución uniforme: cada respuesta tiene exactamente la misma probabilidad.' } },
+    { '@type': 'Question', name: '¿Para qué sirve un decisor sí/no?', acceptedAnswer: { '@type': 'Answer', text: 'Para decisiones triviales sin consecuencia (¿cocino o pido?, ¿voy o no voy?). Y como ejercicio: cuando ves la respuesta, fijate si te alegrás o desilusionás. Eso te dice qué querías realmente.' } },
+    { '@type': 'Question', name: '¿Tiene memoria entre tiradas?', acceptedAnswer: { '@type': 'Answer', text: 'No. Cada tirada es independiente. Si pediste sí/no 5 veces seguidas y todas dieron sí, la próxima sigue siendo 50/50. La aleatoriedad no tiene memoria.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Random" title='Decisor "Sí o No"'
+    intro='Hacé tu pregunta. Tocá el botón. Recibí un sí o un no al azar. A veces escuchar la primera reacción al resultado te dice más que la respuesta misma.'>
+
+    <div slot="tool" class="yn-tool">
+      <div>
+        <label for="yn-q">Tu pregunta (opcional)</label>
+        <input id="yn-q" type="text" placeholder='Ej: "¿salgo a correr ahora?"' />
+      </div>
+
+      <div id="yn-result" class="yn-result yn-idle">
+        <div class="yn-icon">?</div>
+        <div class="yn-text">Hacé tu pregunta y tocá el botón</div>
+      </div>
+
+      <div class="yn-actions">
+        <button id="yn-decide" class="btn btn-primary" type="button">Decidir</button>
+        <button id="yn-again" class="btn btn-ghost" type="button">Otra vez</button>
+      </div>
+
+      <p class="yn-hint">Tip: cuando aparece la respuesta, prestá atención a tu primera reacción. Si te alegrás, querías eso. Si te desilusionás, querías lo otro. Esa es la respuesta real.</p>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué un decisor sí/no funciona mejor de lo que parece</h2>
+      <p>
+        El psicólogo Danny Kahneman documentó algo que la gente sabe intuitivamente: a
+        veces necesitamos un evento externo para destrabar una decisión que ya tomamos
+        adentro. Una moneda, un decisor sí/no o un dado no son herramientas para
+        <em>elegir</em> por nosotros. Son herramientas para <strong>revelar lo que ya
+        elegimos</strong>. Cuando ves "no" pero te molesta, es porque querías "sí". Esa
+        molestia es información útil.
+      </p>
+
+      <h2>Decisiones donde sí conviene usar el decisor</h2>
+      <ul>
+        <li><strong>Decisiones triviales sin consecuencia real:</strong> ¿cocino o pido delivery? ¿voy a la cama temprano? ¿le mando un mensaje a alguien con quien no hablás hace tiempo?</li>
+        <li><strong>Cuando te quedaste atascado entre dos opciones equivalentes:</strong> A o B y los dos te parecen bien. El decisor te saca del análisis-parálisis.</li>
+        <li><strong>Como ejercicio de auto-conocimiento:</strong> tirar la pregunta y ver tu reacción al resultado.</li>
+      </ul>
+
+      <h2>Decisiones donde NO conviene</h2>
+      <ol>
+        <li><strong>Decisiones grandes:</strong> trabajos, mudanzas, parejas, plata. Acá necesitás pensar, no tirar a cara o cruz.</li>
+        <li><strong>Cuando ya sabés la respuesta:</strong> si tenés certeza, no la sometas al azar para "validar". Solo lográs perder tiempo.</li>
+        <li><strong>Para evitar responsabilidad:</strong> "el decisor lo dijo" no es una excusa. La decisión sigue siendo tuya.</li>
+      </ol>
+
+      <h2>El truco mental: el "test de los 10 segundos"</h2>
+      <p>
+        Una variación útil: hacé la pregunta, tirá el decisor, pero antes de mirar el
+        resultado, pasá 10 segundos en silencio. ¿Qué esperás que diga? Esa expectativa,
+        antes de ver el resultado, es la respuesta. El decisor solo era una excusa para
+        forzarte a contestarte.
+      </p>
+
+      <h2>La paradoja del exceso de opciones</h2>
+      <p>
+        Barry Schwartz lo llamó "the paradox of choice": demasiadas opciones aumentan la
+        ansiedad y la insatisfacción posterior con cualquier elección. Reducir una
+        decisión a "sí o no" simplifica el cálculo y, paradójicamente, mejora la
+        satisfacción con el resultado, incluso si fue al azar. Por eso el decisor
+        funciona: no es que tome mejores decisiones, es que <strong>te libera de
+        decidir</strong> cuando seguir analizando ya no aporta.
+      </p>
+
+      <h2>Cómo usar el decisor en grupo</h2>
+      <p>
+        Probalo en una reunión cuando se atasca: "tiremos el decisor". El sí/no rompe la
+        parálisis grupal y casi siempre alguien dice "ah, no, mejor lo otro". Esa
+        reacción es la decisión real. El decisor no decidió; expuso una preferencia que
+        no se animaba a salir.
+      </p>
+
+      <h2>El sesgo de confirmación: cuidado</h2>
+      <p>
+        Si tirás el decisor 5 veces hasta que dice lo que querías oír, ya sabés la
+        respuesta antes de empezar. No es trampa, es información. Pero entonces no
+        necesitás el decisor: necesitás darte permiso de elegir lo que ya elegiste.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Es 50/50?</summary><p>Sí. Usamos crypto.getRandomValues con distribución uniforme.</p></details>
+      <details><summary>¿Para qué sirve?</summary><p>Decisiones triviales rápidas y como ejercicio: tu reacción al resultado revela qué querías realmente.</p></details>
+      <details><summary>¿Hay memoria entre tiradas?</summary><p>No. Cada tirada es independiente. La aleatoriedad no tiene memoria.</p></details>
+      <details><summary>¿Sirve para decisiones importantes?</summary><p>No. Para decisiones grandes (trabajo, mudanza, pareja) necesitás pensar; el azar no te ayuda.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .yn-tool { display: flex; flex-direction: column; gap: 1rem; }
+  .yn-result { padding: 3rem 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border); text-align: center; transition: background 0.3s, border-color 0.3s; }
+  .yn-idle { background: var(--bg-inset); }
+  .yn-yes { background: linear-gradient(135deg, #ecfdf5, #a7f3d0); border-color: #6ee7b7; }
+  .yn-no { background: linear-gradient(135deg, #fef2f2, #fecaca); border-color: #fca5a5; }
+  .yn-icon { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; }
+  .yn-text { font-size: 1.125rem; font-weight: 600; color: var(--text); }
+  .yn-yes .yn-icon { color: #047857; }
+  .yn-no .yn-icon { color: #b91c1c; }
+  .yn-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .yn-hint { font-size: 0.8125rem; color: var(--text-subtle); padding: 0.75rem 1rem; background: var(--bg-inset); border-radius: var(--radius); border: 1px solid var(--border-soft); margin: 0; }
+</style>
+
+<script>
+  const result = document.getElementById('yn-result')!;
+  const icon = result.querySelector('.yn-icon')!;
+  const text = result.querySelector('.yn-text')!;
+  const decide = document.getElementById('yn-decide') as HTMLButtonElement;
+  const again = document.getElementById('yn-again') as HTMLButtonElement;
+
+  function decideOnce() {
+    const arr = new Uint32Array(1);
+    window.crypto.getRandomValues(arr);
+    return arr[0] % 2 === 0;
+  }
+  function go() {
+    decide.disabled = true;
+    result.className = 'yn-result yn-idle';
+    icon.textContent = '...';
+    text.textContent = 'Pensando...';
+    setTimeout(() => {
+      const yes = decideOnce();
+      result.className = 'yn-result ' + (yes ? 'yn-yes' : 'yn-no');
+      icon.textContent = yes ? 'SÍ' : 'NO';
+      text.textContent = yes ? '¡Hacelo!' : 'Mejor no.';
+      decide.disabled = false;
+    }, 700);
+  }
+  decide.addEventListener('click', go);
+  again.addEventListener('click', go);
+</script>

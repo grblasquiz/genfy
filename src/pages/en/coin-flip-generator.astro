@@ -1,0 +1,193 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Coin Flip — Heads or Tails Online | Genfy';
+const description = 'Flip a virtual coin and get heads or tails instantly. 3D animation, result history and best-of-N mode. Truly fair and random.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Is it really 50/50?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. We use crypto.getRandomValues, which spreads results uniformly. A real coin has a small bias (~51% to whichever side starts up); ours is perfectly balanced.' } },
+    { '@type': 'Question', name: 'What is an online coin flip good for?', acceptedAnswer: { '@type': 'Answer', text: 'Quick binary decisions: who pays for dinner, who starts a board game, deciding between two equivalent options. Also in class, deciding team order.' } },
+    { '@type': 'Question', name: 'Can I flip several times in a row?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Pick "best of N" mode and the coin flips N times; the side that comes up more wins. Useful for decisions that need more statistical confidence.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Random" title="Coin flip"
+    intro="A virtual coin with 3D animation, result history and best-of-N mode. Decide what you have to decide — fair and random.">
+
+    <div slot="tool" class="cf-tool">
+      <div class="cf-stage">
+        <div id="cf-coin" class="cf-coin">
+          <div class="cf-side cf-heads">HEADS</div>
+          <div class="cf-side cf-tails">TAILS</div>
+        </div>
+      </div>
+
+      <div id="cf-result" class="cf-result">Hit "flip"</div>
+
+      <div class="cf-controls">
+        <div>
+          <label for="cf-mode">Mode</label>
+          <select id="cf-mode">
+            <option value="1" selected>Single flip</option>
+            <option value="3">Best of 3</option>
+            <option value="5">Best of 5</option>
+            <option value="7">Best of 7</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="cf-actions">
+        <button id="cf-flip" class="btn btn-primary" type="button">Flip coin</button>
+        <button id="cf-reset" class="btn btn-ghost" type="button">Reset history</button>
+      </div>
+
+      <div class="cf-history">
+        <strong>History:</strong>
+        <span id="cf-stats">— heads / — tails</span>
+        <div id="cf-list" class="cf-list"></div>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>The invisible bias of real coins</h2>
+      <p>
+        Even though "flip a coin" is shorthand for perfect randomness, studies show real
+        coins have a bias: they land slightly more often (~51%) on the side that started
+        face-up. Physicist Persi Diaconis published a 2007 analysis demonstrating the
+        effect. A virtual coin doesn't have that bias: it's exactly 50/50.
+      </p>
+
+      <h2>How our generator decides</h2>
+      <p>
+        We generate a random number with <code>crypto.getRandomValues</code>. Even
+        means heads, odd means tails. Distribution is statistically uniform, verifiable
+        with any chi-square test: flip it 10,000 times and you'll see a very close to
+        5000-5000 split.
+      </p>
+
+      <h2>What flipping a coin is good for</h2>
+      <ul>
+        <li><strong>Trivial binary decisions:</strong> pizza or sushi? Run today or skip?</li>
+        <li><strong>Tie-breaking:</strong> two people want the same chair / dessert / task.</li>
+        <li><strong>Game order:</strong> who starts a match, who serves first in tennis.</li>
+        <li><strong>Education:</strong> demonstrate probability, binomial distribution, the law of large numbers.</li>
+        <li><strong>Random role assignment:</strong> team A or team B, short or long presentation.</li>
+      </ul>
+
+      <h2>Best of N: when it helps</h2>
+      <p>
+        If a single flip feels too thin, try "best of 3" or "best of 5". Statistically
+        each individual flip is still 50/50, but the set winner carries more confidence:
+        a "best of 5" decision feels less random while remaining fair. In sports this is
+        formal: 3-set tennis, 7-game NBA finals.
+      </p>
+
+      <h2>The gambler's fallacy</h2>
+      <p>
+        If the coin lands heads 5 times in a row, many people believe "tails is due now".
+        It isn't: each flip is independent, the probability stays 50%. This fallacy is
+        documented from 1796 and is why many lose money in casinos. Randomness has no
+        memory.
+      </p>
+
+      <h2>The "rigged coin" trick</h2>
+      <p>
+        There are ways to make a physical coin land one way: spin instead of flip,
+        catch in your hand vs let it bounce, etc. With a baseline ~51% bias plus a
+        trained magician, a coin can hit 80% one way. The virtual version is immune to
+        that: you can't influence <code>crypto.getRandomValues</code>.
+      </p>
+
+      <h2>When NOT to use a coin</h2>
+      <ol>
+        <li>Important decisions with real consequences: jobs, moves, breakups. A coin doesn't add information; it only decides for you when you already know.</li>
+        <li>Raffles with monetary value: you need a certified system and ideally a notary.</li>
+        <li>When one option is objectively better: don't hand the decision to a coin if it isn't truly even.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Is it 50/50?</summary><p>Yes. crypto.getRandomValues with uniform distribution. Real coins bias ~51%; ours doesn't.</p></details>
+      <details><summary>What is it for?</summary><p>Quick binary decisions, breaking ties, game order, demonstrating probability in class.</p></details>
+      <details><summary>Best of N?</summary><p>Yes. Flips N times and the most frequent side wins. Doesn't change individual odds, but the set has more certainty.</p></details>
+      <details><summary>Works offline?</summary><p>Yes. Once the page loads everything runs in the browser.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cf-stage { display: flex; align-items: center; justify-content: center; padding: 2rem; min-height: 240px; perspective: 1000px; }
+  .cf-coin { width: 160px; height: 160px; position: relative; transform-style: preserve-3d; transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.3, 1); }
+  .cf-coin.flipping { transition: transform 2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .cf-side { position: absolute; inset: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; letter-spacing: 0.05em; color: #fff; backface-visibility: hidden; box-shadow: 0 8px 24px rgba(9,9,11,0.2), inset 0 -8px 16px rgba(0,0,0,0.15); }
+  .cf-heads { background: linear-gradient(135deg, #f59e0b, #b45309); }
+  .cf-tails { background: linear-gradient(135deg, #64748b, #1e293b); transform: rotateY(180deg); }
+  .cf-result { text-align: center; font-size: 1.5rem; font-weight: 700; padding: 1rem; background: var(--bg-inset); border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1rem; }
+  .cf-controls { margin-bottom: 1rem; }
+  .cf-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .cf-history { padding: 1rem; background: var(--bg-inset); border-radius: var(--radius); border: 1px solid var(--border); font-size: 0.875rem; }
+  .cf-list { margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.25rem; }
+  .cf-list span { display: inline-block; padding: 0.125rem 0.5rem; border-radius: var(--radius-sm); font-size: 0.75rem; font-weight: 600; }
+  .cf-list .h { background: #fef3c7; color: #92400e; }
+  .cf-list .t { background: #e2e8f0; color: #334155; }
+</style>
+
+<script>
+  const coin = document.getElementById('cf-coin') as HTMLDivElement;
+  const result = document.getElementById('cf-result')!;
+  const flipBtn = document.getElementById('cf-flip') as HTMLButtonElement;
+  const resetBtn = document.getElementById('cf-reset') as HTMLButtonElement;
+  const modeEl = document.getElementById('cf-mode') as HTMLSelectElement;
+  const stats = document.getElementById('cf-stats')!;
+  const list = document.getElementById('cf-list')!;
+
+  let history: ('h' | 't')[] = [];
+  let baseRot = 0;
+
+  function flipOnce(): 'h' | 't' {
+    const arr = new Uint32Array(1);
+    window.crypto.getRandomValues(arr);
+    return arr[0] % 2 === 0 ? 'h' : 't';
+  }
+  function animate(side: 'h' | 't') {
+    return new Promise<void>(resolve => {
+      const spins = 4 + Math.floor(Math.random() * 3);
+      const final = side === 'h' ? 0 : 180;
+      baseRot += spins * 360 + (final - (baseRot % 360));
+      coin.classList.add('flipping');
+      coin.style.transform = `rotateY(${baseRot}deg)`;
+      setTimeout(() => { coin.classList.remove('flipping'); resolve(); }, 1800);
+    });
+  }
+  async function flip() {
+    flipBtn.disabled = true;
+    const n = parseInt(modeEl.value);
+    let h = 0, t = 0;
+    let last: 'h' | 't' = 'h';
+    for (let i = 0; i < n; i++) {
+      last = flipOnce();
+      if (last === 'h') h++; else t++;
+      history.push(last);
+      await animate(last);
+    }
+    if (n === 1) {
+      result.textContent = last === 'h' ? 'HEADS!' : 'TAILS!';
+    } else {
+      result.textContent = h > t ? `HEADS wins (${h}-${t})` : `TAILS wins (${t}-${h})`;
+    }
+    const totalH = history.filter(x => x === 'h').length;
+    const totalT = history.length - totalH;
+    stats.textContent = `${totalH} heads / ${totalT} tails`;
+    list.innerHTML = history.map(x => `<span class="${x}">${x === 'h' ? 'H' : 'T'}</span>`).join('');
+    flipBtn.disabled = false;
+  }
+  flipBtn.addEventListener('click', flip);
+  resetBtn.addEventListener('click', () => {
+    history = []; stats.textContent = '— heads / — tails'; list.innerHTML = '';
+    result.textContent = 'Hit "flip"';
+  });
+</script>

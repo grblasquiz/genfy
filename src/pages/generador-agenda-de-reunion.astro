@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de agenda de reunión gratis | Genfy';
+const description = 'Armá una agenda de reunión clara, con objetivos, tiempos y dueños por punto. Plantilla profesional para equipos remotos y presenciales.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué debe tener una buena agenda de reunión?', acceptedAnswer: { '@type': 'Answer', text: 'Objetivo claro, lista de temas con tiempo asignado y responsable, decisiones esperadas, y un bloque final para next steps con dueño y fecha.' } },
+    { '@type': 'Question', name: '¿Cuánto antes debo enviar la agenda?', acceptedAnswer: { '@type': 'Answer', text: 'Idealmente 24 horas antes. Da tiempo a que cada participante prepare lo suyo y, si la reunión no era necesaria, cancelarla a tiempo.' } },
+    { '@type': 'Question', name: '¿Cómo evito que una reunión se desvíe?', acceptedAnswer: { '@type': 'Answer', text: 'Tiempos por punto, un facilitador con autoridad para cortar tangentes, y un parking lot al final para temas off-topic que se ven en otra reunión.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Trabajo" title="Generador de agenda de reunión"
+    intro="Completá los datos y obtené una agenda profesional, con objetivo, tiempos por punto, responsables y next steps. Lista para copiar al calendario o pegar en el invite.">
+
+    <div slot="tool" class="ag">
+      <label for="ag-title">Título de la reunión</label>
+      <input id="ag-title" type="text" placeholder="Sync semanal de marketing" value="Sync semanal de marketing" />
+
+      <div class="ag-row">
+        <div>
+          <label for="ag-date">Fecha</label>
+          <input id="ag-date" type="text" placeholder="Lunes 28 de abril" value="Lunes 28 de abril" />
+        </div>
+        <div>
+          <label for="ag-duration">Duración (min)</label>
+          <input id="ag-duration" type="number" min="15" max="180" step="15" value="45" />
+        </div>
+      </div>
+
+      <label for="ag-objective">Objetivo (una frase)</label>
+      <input id="ag-objective" type="text" placeholder="Decidir foco de la próxima campaña y asignar dueños" value="Decidir foco de la próxima campaña y asignar dueños" />
+
+      <label for="ag-attendees">Asistentes (separados por coma)</label>
+      <input id="ag-attendees" type="text" placeholder="Martín, Lucía, Tomás" value="Martín, Lucía, Tomás, Ana" />
+
+      <label for="ag-items">Puntos a tratar (uno por línea, formato: tema | minutos | responsable)</label>
+      <textarea id="ag-items" rows="6" placeholder="Resultado campaña Q1 | 10 | Lucía
+Análisis de competidores | 10 | Tomás
+Brief de próxima campaña | 15 | Martín
+Asignar dueños y fechas | 5 | Todos">Resultado campaña Q1 | 10 | Lucía
+Análisis de competidores | 10 | Tomás
+Brief de próxima campaña | 15 | Martín
+Asignar dueños y fechas | 5 | Todos</textarea>
+
+      <div class="ag-actions">
+        <button id="ag-gen" class="btn btn-primary" type="button">Generar agenda</button>
+        <button id="ag-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+
+      <textarea id="ag-out" rows="16" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.875rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué la agenda decide la calidad de la reunión</h2>
+      <p>
+        Las reuniones sin agenda no son reuniones, son charlas con calendario. Una agenda
+        clara hace tres cosas: filtra a quien debe estar (si tu nombre no aparece en ningún
+        punto, no hace falta que vayas), fuerza una decisión (cada punto necesita una
+        salida concreta) y deja un rastro para los que no estuvieron. La diferencia entre
+        una agenda profesional y un "tema 1, tema 2, tema 3" típico es enorme.
+      </p>
+
+      <h2>Las 5 partes de toda agenda profesional</h2>
+      <ol>
+        <li><strong>Objetivo en una frase.</strong> Si no podés escribirlo, la reunión no debería existir todavía. "Sync de marketing" no es objetivo. "Decidir el foco de la próxima campaña y asignar dueños" sí lo es.</li>
+        <li><strong>Lista de temas con tiempo y dueño.</strong> Cada punto tiene minutos asignados (suma debe = duración total) y un responsable de moverlo. Sin tiempos, todo se come el primer tema.</li>
+        <li><strong>Pre-read si aplica.</strong> Documentos a leer antes. Esto baja la duración real a la mitad: la reunión deja de ser para informar y pasa a ser para decidir.</li>
+        <li><strong>Decisiones esperadas.</strong> Marcar qué decisiones se toman en esta reunión y cuáles se postergan. Los grupos sin decisiones explícitas se reúnen de nuevo en una semana.</li>
+        <li><strong>Next steps al final.</strong> Acción + dueño + fecha. Si no hay dueño, no hay acción; si no hay fecha, no hay urgencia.</li>
+      </ol>
+
+      <h2>Reglas de tiempo por tipo de reunión</h2>
+      <ul>
+        <li><strong>Standup / daily</strong>: 15 minutos máximo, parado, 3 preguntas por persona. Más que eso es síntoma de problema, no de solución.</li>
+        <li><strong>Planning</strong>: 1 hora por sprint de 2 semanas como techo. Si necesita más, el backlog está mal preparado.</li>
+        <li><strong>Decisión</strong>: 30-45 minutos. Llegan con propuesta, salen con decisión.</li>
+        <li><strong>Retro</strong>: 45-60 minutos. Sirve si hay acciones concretas con dueño, no si es catarsis.</li>
+        <li><strong>1:1</strong>: 30 minutos cada 2 semanas. Más frecuencia es micromanagement; menos es desconexión.</li>
+        <li><strong>Brainstorm</strong>: 60 minutos. Necesita preparación previa (problema definido, restricciones claras) o se vuelve charla.</li>
+      </ul>
+
+      <h2>El parking lot: cómo evitar que la reunión se descarrile</h2>
+      <p>
+        El "parking lot" es un bloque al final donde se anotan temas off-topic que aparecen
+        durante la reunión. Cuando alguien tira un tema que no estaba en la agenda, el
+        facilitador lo manda al parking sin discusión. Después de la reunión, esos temas
+        se evalúan: algunos van a próxima reunión, otros se resuelven async, otros son
+        ruido. Sin parking lot, esos temas comen el tiempo de los puntos importantes.
+      </p>
+
+      <h2>Async-first: cuándo NO necesitás reunión</h2>
+      <p>
+        Antes de armar la agenda, preguntate si la reunión es necesaria. Tres heuristics
+        rápidas: (1) si todo lo que vas a hacer es informar, mandalo por escrito; (2) si
+        la decisión la puede tomar una persona, que la tome y comunique; (3) si necesitás
+        feedback de varios, abrí un doc colaborativo con deadline. Las únicas reuniones
+        que valen la pena son las que requieren conversación viva entre varias cabezas:
+        decisiones complejas con tradeoffs, alineamiento estratégico, conflictos a
+        resolver.
+      </p>
+
+      <h2>Antes de mandar el invite</h2>
+      <ol>
+        <li>¿La agenda cabe en la duración? Si no, sacar puntos o partir en dos reuniones.</li>
+        <li>¿Cada punto tiene dueño? Si hay puntos huérfanos, asignar antes de mandar.</li>
+        <li>¿Quién debe estar? Solo los que aparecen en la agenda como dueños o decisores. El resto recibe la minuta después.</li>
+        <li>¿Hay pre-read? Adjuntar al invite con instrucciones claras ("Leer secciones 1-3").</li>
+        <li>¿Cuándo se manda? Mínimo 24 horas antes, 48 si requiere preparación.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué debe tener una buena agenda?</summary><p>Objetivo claro, lista de temas con tiempo y responsable, decisiones esperadas, y next steps con dueño y fecha al final.</p></details>
+      <details><summary>¿Cuánto antes mando la agenda?</summary><p>24 horas antes mínimo. Da tiempo a preparar lo suyo y, si la reunión no era necesaria, cancelarla a tiempo.</p></details>
+      <details><summary>¿Cómo evito que la reunión se desvíe?</summary><p>Tiempos por punto, un facilitador con autoridad para cortar tangentes, y un parking lot al final para temas off-topic.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ag-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .ag label { margin-top: 0.875rem; }
+  .ag label:first-child { margin-top: 0; }
+  .ag-actions { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+  @media (max-width: 600px) { .ag-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const t = document.getElementById('ag-title') as HTMLInputElement;
+  const d = document.getElementById('ag-date') as HTMLInputElement;
+  const dur = document.getElementById('ag-duration') as HTMLInputElement;
+  const obj = document.getElementById('ag-objective') as HTMLInputElement;
+  const att = document.getElementById('ag-attendees') as HTMLInputElement;
+  const items = document.getElementById('ag-items') as HTMLTextAreaElement;
+  const out = document.getElementById('ag-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('ag-gen') as HTMLButtonElement;
+  const copy = document.getElementById('ag-copy') as HTMLButtonElement;
+
+  function generate() {
+    const lines = items.value.split('\n').filter(Boolean);
+    let totalMin = 0;
+    const parsed = lines.map((l, i) => {
+      const [topic = '', mins = '', owner = ''] = l.split('|').map(x => x.trim());
+      const m = parseInt(mins, 10) || 0;
+      totalMin += m;
+      return `${i + 1}. ${topic} — ${m || '?'} min — ${owner || '?'}`;
+    });
+
+    const text = [
+      `📋 ${t.value}`,
+      ``,
+      `Fecha: ${d.value}`,
+      `Duración: ${dur.value} min (planificado: ${totalMin} min)`,
+      `Asistentes: ${att.value}`,
+      ``,
+      `🎯 Objetivo`,
+      obj.value,
+      ``,
+      `📝 Agenda`,
+      ...parsed,
+      ``,
+      `✅ Next steps`,
+      `[Acción] — [Dueño] — [Fecha límite]`,
+      ``,
+      `🅿️ Parking lot (temas off-topic que aparezcan)`,
+    ].join('\n');
+    out.value = text;
+  }
+
+  gen.addEventListener('click', generate);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copiado';
+    setTimeout(() => { icon.textContent = 'Copiar'; }, 1400);
+  });
+  generate();
+</script>

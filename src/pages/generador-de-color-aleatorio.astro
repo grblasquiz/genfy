@@ -1,0 +1,175 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de color aleatorio | Genfy';
+const description = 'Generá un color aleatorio en HEX, RGB y HSL al instante. Útil para diseño rápido, mocks, ideas de paleta o para superar el bloqueo creativo.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo se genera un color aleatorio?', acceptedAnswer: { '@type': 'Answer', text: 'Generamos tres números aleatorios entre 0 y 255 para R, G y B y los convertimos a HEX. Internamente usamos crypto.getRandomValues para distribución uniforme cuando el navegador lo soporta.' } },
+    { '@type': 'Question', name: '¿Puedo limitar el rango de luminosidad?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Activá el modo "claros", "oscuros" o "vibrantes" para que el resultado caiga dentro de rangos HSL controlados, evitando colores grisáceos o demasiado pastel.' } },
+    { '@type': 'Question', name: '¿Para qué sirve generar un color al azar?', acceptedAnswer: { '@type': 'Answer', text: 'Para empezar paletas cuando estás bloqueado, asignar colores a usuarios o tags en una app, o crear mocks rápidos sin tener que decidir cada color a mano.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño" title="Generador de color aleatorio"
+    intro="Generá un color al azar en HEX, RGB y HSL al instante. Filtrá por claros, oscuros o vibrantes para evitar colores grisáceos.">
+
+    <div slot="tool" class="rc-tool">
+      <div id="rc-preview" class="rc-preview"></div>
+
+      <div class="rc-codes">
+        <div class="code-row"><span class="lbl">HEX</span><code id="rc-hex">#059669</code></div>
+        <div class="code-row"><span class="lbl">RGB</span><code id="rc-rgb">rgb(5, 150, 105)</code></div>
+        <div class="code-row"><span class="lbl">HSL</span><code id="rc-hsl">hsl(160, 94%, 30%)</code></div>
+      </div>
+
+      <div class="rc-controls">
+        <label for="rc-mode">Modo</label>
+        <select id="rc-mode">
+          <option value="any" selected>Cualquiera</option>
+          <option value="light">Claros (fondos)</option>
+          <option value="dark">Oscuros (texto)</option>
+          <option value="vibrant">Vibrantes (acento)</option>
+          <option value="pastel">Pastel</option>
+        </select>
+      </div>
+
+      <div class="rc-actions">
+        <button id="rc-gen" class="btn btn-primary" type="button">Generar nuevo color</button>
+        <button id="rc-copy" class="btn btn-ghost" type="button">Copiar HEX</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Para qué sirve un color aleatorio</h2>
+      <p>
+        Generar un color al azar parece un truco, pero tiene aplicaciones reales: superar
+        bloqueo creativo (a veces el color que te aparece dispara una idea), asignar
+        colores únicos a usuarios o etiquetas en una app, generar mocks rápidos sin
+        decidir cada paleta, y testear cómo se comporta tu UI con colores que no elegiste.
+      </p>
+
+      <h2>El problema del azar puro</h2>
+      <p>
+        Tres números aleatorios entre 0 y 255 dan colores estadísticamente válidos pero
+        visualmente decepcionantes: la mayoría son grisáceos, marrones o muy oscuros.
+        El espacio RGB no está distribuido como el ojo humano percibe los colores. Por
+        eso ofrecemos modos:
+      </p>
+      <ul>
+        <li><strong>Claros:</strong> luminosidad alta (75-95% en HSL), saturación moderada. Ideales como fondos.</li>
+        <li><strong>Oscuros:</strong> luminosidad baja (10-25%), saturación variable. Para texto o headings sobre fondo claro.</li>
+        <li><strong>Vibrantes:</strong> saturación alta (70-95%), luminosidad media (45-60%). Acentos, CTAs.</li>
+        <li><strong>Pastel:</strong> saturación media-baja (30-50%), luminosidad alta (75-85%). Estilo soft, ilustraciones.</li>
+      </ul>
+
+      <h2>Cómo asignar colores a usuarios sin que choquen</h2>
+      <p>
+        Si necesitás colores para identificar usuarios o tags (estilo Slack, Linear, Notion),
+        no uses random puro: derivá el color del nombre. Una técnica simple: hashear el
+        string a un número, mapearlo a un hue de 0-360, y fijar saturación y luminosidad
+        constantes. Eso garantiza que el mismo nombre siempre devuelva el mismo color
+        <em>y</em> que dos nombres parecidos den colores distintos.
+      </p>
+      <pre><code>function nameToColor(name) &lcub;
+  let h = 0;
+  for (const c of name) h = (h * 31 + c.charCodeAt(0)) | 0;
+  return `hsl($&lcub;Math.abs(h) % 360&rcub;, 65%, 55%)`;
+&rcub;</code></pre>
+
+      <h2>Random "cripto-seguro" vs Math.random</h2>
+      <p>
+        <code>Math.random()</code> usa un PRNG, no es seguro criptográficamente, pero para
+        elegir colores está perfecto. Solo necesitás <code>crypto.getRandomValues</code>
+        si estás generando tokens, contraseñas o IDs únicos. Para diseño, Math.random
+        sobra y consume menos.
+      </p>
+
+      <h2>Tres usos prácticos del color random</h2>
+      <ol>
+        <li><strong>Brainstorming visual:</strong> generá 20 colores rápido, fijá los 3 que más te llamen.</li>
+        <li><strong>Avatares de usuarios:</strong> color de fondo derivado del nombre, iniciales en blanco encima.</li>
+        <li><strong>Tags y categorías:</strong> primer color del proyecto = random, los siguientes derivados (mismo hue, distinta luminosidad).</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo se genera el color?</summary><p>Generamos R, G, B aleatorios entre 0 y 255 (o restringidos por HSL si elegiste un modo) y los convertimos a HEX.</p></details>
+      <details><summary>¿Puedo limitar la luminosidad?</summary><p>Sí. Modo "claros", "oscuros", "vibrantes" o "pastel" filtra los rangos HSL automáticamente.</p></details>
+      <details><summary>¿Para qué sirve?</summary><p>Brainstorming visual, asignar colores a usuarios/tags, generar mocks rápidos.</p></details>
+      <details><summary>¿Es matemáticamente uniforme?</summary><p>En modo "cualquiera" sí. En los demás modos restringimos rangos a propósito para resultados visualmente útiles.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rc-preview { width: 100%; height: 220px; border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1rem; transition: background 0.3s; }
+  .rc-codes { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+  .code-row { display: grid; grid-template-columns: 60px 1fr; gap: 0.75rem; align-items: center; padding: 0.625rem 0.875rem; background: var(--bg-inset); border-radius: var(--radius); border: 1px solid var(--border); }
+  .code-row .lbl { font-size: 0.75rem; font-weight: 600; color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.05em; }
+  .code-row code { background: transparent; border: 0; padding: 0; font-size: 0.875rem; }
+  .rc-controls { margin-bottom: 1rem; }
+  .rc-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  pre { background: var(--bg-inset); padding: 0.75rem 1rem; border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto; font-family: var(--font-mono); font-size: 0.8125rem; }
+</style>
+
+<script>
+  const preview = document.getElementById('rc-preview') as HTMLDivElement;
+  const hexEl = document.getElementById('rc-hex')!;
+  const rgbEl = document.getElementById('rc-rgb')!;
+  const hslEl = document.getElementById('rc-hsl')!;
+  const mode = document.getElementById('rc-mode') as HTMLSelectElement;
+  const gen = document.getElementById('rc-gen') as HTMLButtonElement;
+  const copy = document.getElementById('rc-copy') as HTMLButtonElement;
+
+  function hslToRgb(h: number, s: number, l: number) {
+    s /= 100; l /= 100;
+    const k = (n: number) => (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    return { r: Math.round(f(0) * 255), g: Math.round(f(8) * 255), b: Math.round(f(4) * 255) };
+  }
+  function build() {
+    let r: number, g: number, b: number, h: number, s: number, l: number;
+    if (mode.value === 'any') {
+      r = Math.floor(Math.random() * 256); g = Math.floor(Math.random() * 256); b = Math.floor(Math.random() * 256);
+      // also compute hsl
+      const rr = r/255, gg = g/255, bb = b/255;
+      const max = Math.max(rr,gg,bb), min = Math.min(rr,gg,bb);
+      let hh = 0, ss = 0; const ll = (max+min)/2;
+      if (max !== min) {
+        const d = max-min; ss = ll>0.5 ? d/(2-max-min) : d/(max+min);
+        if (max===rr) hh = ((gg-bb)/d + (gg<bb?6:0));
+        else if (max===gg) hh = (bb-rr)/d+2; else hh = (rr-gg)/d+4;
+        hh*=60;
+      }
+      h = Math.round(hh); s = Math.round(ss*100); l = Math.round(ll*100);
+    } else {
+      h = Math.floor(Math.random() * 360);
+      if (mode.value === 'light') { s = 30 + Math.random()*40; l = 75 + Math.random()*15; }
+      else if (mode.value === 'dark') { s = 30 + Math.random()*60; l = 10 + Math.random()*15; }
+      else if (mode.value === 'vibrant') { s = 70 + Math.random()*25; l = 45 + Math.random()*15; }
+      else { s = 30 + Math.random()*20; l = 75 + Math.random()*10; } // pastel
+      const rgb = hslToRgb(h, s, l);
+      r = rgb.r; g = rgb.g; b = rgb.b;
+      s = Math.round(s); l = Math.round(l);
+    }
+    const hex = '#' + [r,g,b].map(x => x.toString(16).padStart(2,'0')).join('').toUpperCase();
+    preview.style.background = hex;
+    hexEl.textContent = hex;
+    rgbEl.textContent = `rgb(${r}, ${g}, ${b})`;
+    hslEl.textContent = `hsl(${h}, ${s}%, ${l}%)`;
+  }
+  gen.addEventListener('click', build);
+  mode.addEventListener('change', build);
+  copy.addEventListener('click', () => {
+    navigator.clipboard.writeText(hexEl.textContent!);
+    copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = 'Copiar HEX'; }, 1200);
+  });
+  build();
+</script>

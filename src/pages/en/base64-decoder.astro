@@ -1,0 +1,149 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Online Base64 Decoder | Genfy';
+const description = 'Decode Base64 text to UTF-8 instantly. Supports URL-safe variant and missing padding. Runs entirely in your browser.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What does this decoder do?', acceptedAnswer: { '@type': 'Answer', text: 'It converts a Base64 string (standard or URL-safe) back to the original UTF-8 text. It auto-detects the variant and adds padding if missing.' } },
+    { '@type': 'Question', name: 'Why does it say "Invalid character"?', acceptedAnswer: { '@type': 'Answer', text: 'The string contains non-Base64 characters (spaces, dirty line breaks, weird symbols). The decoder strips whitespace automatically; if it still fails, check whether it really is Base64.' } },
+    { '@type': 'Question', name: 'Can I decode images and binary files?', acceptedAnswer: { '@type': 'Answer', text: 'This tool is built for text. For binary files, use terminal utilities like base64 -d on Linux/Mac.' } },
+    { '@type': 'Question', name: 'Is it private?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Everything is processed in your browser via atob. Nothing is sent to a server or logged.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Tech"
+    title="Base64 Decoder"
+    intro="Convert any Base64 string back to the original text. Automatically detects URL-safe variant and adds missing padding when needed."
+  >
+    <div slot="tool" class="b64-tool">
+      <label for="b64-in">Base64 input</label>
+      <textarea id="b64-in" class="mono" rows="6" placeholder="Paste your Base64 here…">SGVsbG8sIHdvcmxk</textarea>
+
+      <div id="b64-status" class="b64-status">—</div>
+
+      <label for="b64-out">Decoded text</label>
+      <textarea id="b64-out" rows="6" readonly></textarea>
+      <button id="b64-copy" class="btn btn-primary" type="button"><span class="copy-icon">Copy result</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>How decoding works</h2>
+      <p>
+        Decoding Base64 is the reverse of encoding: every 4 characters of the input become 3
+        bytes of output. The decoder takes three steps:
+      </p>
+      <ol>
+        <li>Strip whitespace, line breaks and invalid characters.</li>
+        <li>If it detects URL-safe variant (presence of <code>-</code> or <code>_</code>), replace them with <code>+</code> and <code>/</code>.</li>
+        <li>Add <code>=</code> padding until the length is a multiple of 4.</li>
+      </ol>
+      <p>
+        Then it applies <code>atob</code> (the browser's native primitive) and reinterprets the
+        bytes as UTF-8 with <code>TextDecoder</code>. That correctly displays accents,
+        emoji and non-Latin characters.
+      </p>
+
+      <h2>Common decoding errors</h2>
+      <ul>
+        <li><strong>Strings with whitespace or line breaks.</strong> Email sometimes splits Base64 into 76-char lines with breaks. Clean them first (this decoder does it).</li>
+        <li><strong>Missing padding.</strong> JWT-like strings drop trailing <code>=</code>. You add <code>=</code> until you reach a multiple of 4 (this decoder does it).</li>
+        <li><strong>URL-safe variant unconverted.</strong> If your string has <code>-</code> or <code>_</code>, the standard decoder errors. Convert or use a decoder that supports it.</li>
+        <li><strong>Non-UTF-8 data.</strong> If you decode something that wasn't text (a binary image), you'll see garbage. That's expected.</li>
+      </ul>
+
+      <h2>Real-world use cases</h2>
+      <p>
+        Base64 decoding shows up in many everyday development contexts:
+      </p>
+      <ul>
+        <li><strong>Inspecting JWT.</strong> The JWT payload is URL-safe Base64. Decoding it reveals the claims (sub, iat, exp, etc.).</li>
+        <li><strong>Reading Basic Auth.</strong> If you capture a <code>Authorization: Basic ...</code> header, decode it to see <code>username:password</code>.</li>
+        <li><strong>Examining data URIs.</strong> An SVG embedded as <code>data:image/svg+xml;base64,...</code> can be decoded to read the XML.</li>
+        <li><strong>Binary environment variables.</strong> Some tools store SSH keys or certificates as Base64 in env vars; decode to use them.</li>
+        <li><strong>Kubernetes config.</strong> K8s Secrets live in Base64. <code>kubectl get secret ... -o yaml</code> shows them encoded; the decoder reveals the actual value.</li>
+      </ul>
+
+      <h2>Base64 and security</h2>
+      <p>
+        Worth repeating: Base64 is not encryption. If you found a key or token in Base64 in a
+        public commit, assume it's compromised and rotate it. Any automated scanner decodes it
+        in milliseconds.
+      </p>
+      <p>
+        Don't confuse a hash with Base64 either. Some hashes (bcrypt, for instance) look
+        Base64-ish but aren't interchangeable: bcrypt uses its own variant with a different
+        alphabet, and the hash is one-way, not decodable.
+      </p>
+
+      <h2>If the string doesn't decode cleanly</h2>
+      <p>Check three things in order:</p>
+      <ol>
+        <li>Does the string have stray characters from copy-pasting? Trim quotes, extra spaces and BOM.</li>
+        <li>Is it really Base64 or is it Base32, Base58 (Bitcoin) or hex? They're often confused.</li>
+        <li>Was the original data text? If it was binary, the output will look like garbage.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What does this decoder do?</summary><p>Converts a Base64 string (standard or URL-safe) to the original UTF-8 text. Detects the variant and adds padding if needed.</p></details>
+      <details><summary>Why does it say "Invalid character"?</summary><p>The string has non-Base64 characters. The decoder strips whitespace automatically; if it still fails, double-check it really is Base64.</p></details>
+      <details><summary>Does it work with binary files?</summary><p>Built for text. For binary, use terminal utilities like base64 -d.</p></details>
+      <details><summary>Is it private?</summary><p>Yes — everything in your browser via atob. Nothing is sent to a server.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .b64-tool textarea { font-family: var(--font-mono); margin-bottom: 1rem; resize: vertical; }
+  .b64-tool textarea#b64-out { font-family: var(--font-sans); }
+  .b64-tool textarea[readonly] { background: var(--bg-inset); }
+  .b64-status { font-size: 0.8125rem; color: var(--text-subtle); margin-bottom: 1rem; min-height: 1.25rem; }
+  .b64-status.ok { color: var(--accent); }
+  .b64-status.err { color: var(--danger); }
+</style>
+
+<script>
+  const inp = document.getElementById('b64-in') as HTMLTextAreaElement;
+  const out = document.getElementById('b64-out') as HTMLTextAreaElement;
+  const status = document.getElementById('b64-status')!;
+  const copy = document.getElementById('b64-copy') as HTMLButtonElement;
+
+  function decode(): void {
+    let s = inp.value.trim();
+    if (!s) { out.value = ''; status.textContent = '—'; status.className = 'b64-status'; return; }
+    s = s.replace(/[\s\r\n]+/g, '');
+    const isUrl = /[-_]/.test(s);
+    if (isUrl) s = s.replace(/-/g, '+').replace(/_/g, '/');
+    while (s.length % 4 !== 0) s += '=';
+    try {
+      const bin = atob(s);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      out.value = new TextDecoder('utf-8').decode(bytes);
+      status.textContent = isUrl ? 'OK · URL-safe variant' : 'OK · standard variant';
+      status.className = 'b64-status ok';
+    } catch (e) {
+      out.value = '';
+      status.textContent = 'Error: input is not valid Base64';
+      status.className = 'b64-status err';
+    }
+  }
+  inp.addEventListener('input', decode);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copied</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copy result'; delete copy.dataset.copied; }, 1400);
+  });
+  decode();
+</script>

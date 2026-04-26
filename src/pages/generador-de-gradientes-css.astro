@@ -1,0 +1,175 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de gradientes CSS gratis | Genfy';
+const description = 'Creá gradientes CSS lineales, radiales y cónicos con preview en vivo. Copiá el código listo para pegar, soporte de múltiples puntos de color y backgrounds modernos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuál es la diferencia entre linear y radial?', acceptedAnswer: { '@type': 'Answer', text: 'Linear viaja en una dirección recta (de arriba a abajo, de izquierda a derecha o en cualquier ángulo). Radial parte de un punto central y se expande en círculo o elipse.' } },
+    { '@type': 'Question', name: '¿Los gradientes afectan el rendimiento?', acceptedAnswer: { '@type': 'Answer', text: 'Mínimamente. Un gradiente CSS se renderiza en GPU y es más liviano que cargar una imagen JPG con el mismo efecto. Solo conviene optimizar si usás muchos en animaciones.' } },
+    { '@type': 'Question', name: '¿Funcionan en todos los navegadores?', acceptedAnswer: { '@type': 'Answer', text: 'Linear y radial sí, hace más de una década. Conic-gradient está soportado desde 2020 en Chrome, Safari y Firefox modernos. Si necesitás IE11, usá un fallback de color sólido.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño" title="Generador de gradientes CSS"
+    intro="Diseñá gradientes lineales, radiales o cónicos con preview en vivo. Ajustá colores, ángulos y stops; copiá el CSS listo para pegar en tu hoja de estilos.">
+
+    <div slot="tool" class="grad-tool">
+      <div class="grad-controls">
+        <div>
+          <label for="g-type">Tipo</label>
+          <select id="g-type">
+            <option value="linear" selected>Lineal</option>
+            <option value="radial">Radial</option>
+            <option value="conic">Cónico</option>
+          </select>
+        </div>
+        <div>
+          <label for="g-angle">Ángulo (linear) / Posición</label>
+          <input id="g-angle" type="range" min="0" max="360" value="135" />
+        </div>
+        <div>
+          <label for="g-c1">Color 1</label>
+          <input id="g-c1" type="color" value="#059669" />
+        </div>
+        <div>
+          <label for="g-c2">Color 2</label>
+          <input id="g-c2" type="color" value="#0ea5e9" />
+        </div>
+        <div>
+          <label for="g-c3">Color 3 (opcional)</label>
+          <input id="g-c3" type="color" value="#a855f7" />
+        </div>
+        <div class="grad-3-toggle">
+          <label><input id="g-use3" type="checkbox" /> Usar 3 colores</label>
+        </div>
+      </div>
+
+      <div id="g-preview" class="g-preview"></div>
+
+      <label for="g-css">CSS generado</label>
+      <textarea id="g-css" rows="3" readonly></textarea>
+      <div class="g-actions">
+        <button id="g-copy" class="btn btn-primary" type="button">Copiar CSS</button>
+        <button id="g-rand" class="btn btn-ghost" type="button">Aleatorio</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Linear, radial y cónico: cuándo usar cada uno</h2>
+      <p>
+        CSS soporta tres tipos de gradiente nativos. Cada uno resuelve un problema visual
+        distinto, y mezclarlos sin criterio es la forma más rápida de hacer una interfaz
+        que se sienta cargada.
+      </p>
+      <ul>
+        <li><strong>linear-gradient:</strong> el más común. Ideal para hero sections, botones con dimensión y headers que necesitan una transición sutil entre dos zonas. Se define con un ángulo (<code>135deg</code>) o una palabra clave (<code>to right</code>).</li>
+        <li><strong>radial-gradient:</strong> emula un foco de luz. Útil para spotlight effects, fondos centrados en un CTA, mocks de pantallas con vignette. Permite forma (<code>circle</code> o <code>ellipse</code>) y posición (<code>at top left</code>).</li>
+        <li><strong>conic-gradient:</strong> rota alrededor de un punto. Es la herramienta correcta para construir gráficos de torta, ruletas, color pickers y efectos tipo "loading ring" sin SVG.</li>
+      </ul>
+
+      <h2>Stops: el detalle que separa un gradiente bueno de uno excelente</h2>
+      <p>
+        Por defecto, dos colores se mezclan en un 50/50 lineal. Pero podés controlar
+        exactamente dónde transiciona cada color con stops:
+      </p>
+      <pre><code>linear-gradient(135deg, #059669 0%, #0ea5e9 60%, #a855f7 100%)</code></pre>
+      <p>
+        Mover el segundo color al 60% en lugar del 50% hace que el primer color domine más
+        la composición. Para crear divisiones duras (sin blending), poné dos stops en la
+        misma posición: <code>#059669 50%, #0ea5e9 50%</code>.
+      </p>
+
+      <h2>Gradientes mesh: la nueva moda</h2>
+      <p>
+        Los gradientes "mesh" (estilo Stripe, Vercel) no son una propiedad CSS distinta:
+        son <strong>varios radial-gradient apilados con transparencia</strong>. Tres o
+        cuatro radiales con colores distintos, posicionados en esquinas opuestas, generan
+        ese efecto orgánico que se volvió omnipresente en landings tech.
+      </p>
+
+      <h2>Cuándo NO usar gradientes</h2>
+      <ul>
+        <li>Detrás de texto largo. Reduce contraste y hace la lectura cansadora.</li>
+        <li>En botones secundarios. Reservá esa carga visual para el CTA principal.</li>
+        <li>Animados a 60fps en mobile de gama baja. <code>background-position</code> animado puede tirar el frame rate.</li>
+        <li>En fondos de cards densas. Si ya tenés sombras, bordes y contenido, el gradiente sobra.</li>
+      </ul>
+
+      <h2>Performance y accesibilidad</h2>
+      <p>
+        Un gradiente CSS pesa cero kilobytes y se renderiza en GPU. Es siempre mejor que
+        un PNG/JPG. Pero pensá en accesibilidad: si tu gradiente va detrás de texto,
+        garantizá un ratio de contraste mínimo de 4.5:1 contra el color más claro
+        <em>y</em> contra el más oscuro. Si dudás, usá un overlay sólido con
+        <code>rgba()</code> entre el gradiente y el texto.
+      </p>
+
+      <h2>Copiar y exportar</h2>
+      <p>
+        El CSS generado va directo a tu archivo de estilos como
+        <code>background: ...;</code>. Si usás Tailwind, podés meterlo como
+        <code>className="bg-[linear-gradient(...)]"</code>. Si vas a aplicar el mismo
+        gradiente en muchos componentes, definilo como variable:
+        <code>--brand-grad: linear-gradient(...);</code>.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Diferencia entre linear y radial?</summary><p>Linear va en línea recta (un ángulo). Radial parte de un punto y se expande en círculo o elipse.</p></details>
+      <details><summary>¿Afectan el rendimiento?</summary><p>Mínimamente. Se renderizan en GPU y son más livianos que una imagen JPG con el mismo efecto.</p></details>
+      <details><summary>¿Funcionan en todos los navegadores?</summary><p>Linear y radial desde hace una década. Conic desde 2020 en Chrome/Safari/Firefox modernos.</p></details>
+      <details><summary>¿Cómo creo gradientes "mesh"?</summary><p>Apilando 3-4 radial-gradient con transparencias en esquinas distintas dentro de la misma propiedad <code>background</code>.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .grad-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; align-items: end; }
+  .grad-3-toggle { grid-column: 1 / -1; font-size: 0.875rem; color: var(--text-soft); }
+  .g-preview { width: 100%; height: 220px; border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1rem; }
+  textarea#g-css { font-family: var(--font-mono); font-size: 0.8125rem; }
+  .g-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+  pre { background: var(--bg-inset); padding: 0.75rem 1rem; border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto; font-family: var(--font-mono); font-size: 0.8125rem; }
+  @media (max-width: 600px) { .grad-controls { grid-template-columns: 1fr 1fr; } }
+</style>
+
+<script>
+  const type = document.getElementById('g-type') as HTMLSelectElement;
+  const angle = document.getElementById('g-angle') as HTMLInputElement;
+  const c1 = document.getElementById('g-c1') as HTMLInputElement;
+  const c2 = document.getElementById('g-c2') as HTMLInputElement;
+  const c3 = document.getElementById('g-c3') as HTMLInputElement;
+  const use3 = document.getElementById('g-use3') as HTMLInputElement;
+  const preview = document.getElementById('g-preview') as HTMLDivElement;
+  const css = document.getElementById('g-css') as HTMLTextAreaElement;
+  const copy = document.getElementById('g-copy') as HTMLButtonElement;
+  const rand = document.getElementById('g-rand') as HTMLButtonElement;
+
+  function build() {
+    const colors = use3.checked ? [c1.value, c2.value, c3.value] : [c1.value, c2.value];
+    let g = '';
+    if (type.value === 'linear') g = `linear-gradient(${angle.value}deg, ${colors.join(', ')})`;
+    else if (type.value === 'radial') g = `radial-gradient(circle at ${angle.value}% 50%, ${colors.join(', ')})`;
+    else g = `conic-gradient(from ${angle.value}deg, ${colors.join(', ')})`;
+    preview.style.background = g;
+    css.value = `background: ${g};`;
+  }
+  [type, angle, c1, c2, c3, use3].forEach(el => el.addEventListener('input', build));
+  copy.addEventListener('click', () => {
+    navigator.clipboard.writeText(css.value);
+    copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = 'Copiar CSS'; }, 1200);
+  });
+  rand.addEventListener('click', () => {
+    const h = (n: number) => '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    c1.value = h(0); c2.value = h(0); c3.value = h(0);
+    angle.value = String(Math.floor(Math.random() * 360));
+    build();
+  });
+  build();
+</script>

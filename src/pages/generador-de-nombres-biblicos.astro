@@ -1,0 +1,131 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+import { BIBLICAL_NAMES, NAME_STYLES } from '../lib/baby-names';
+
+const title = 'Generador de nombres bíblicos | Genfy';
+const description = 'Antiguo Testamento, Nuevo Testamento o nombres poco comunes. +60 nombres bíblicos con significado, en español e inglés.';
+
+const stylesES = { oldTestament: NAME_STYLES.es.oldTestament, newTestament: NAME_STYLES.es.newTestament, rare: NAME_STYLES.es.rare };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué nombres bíblicos son los más usados hoy?', acceptedAnswer: { '@type': 'Answer', text: 'Mateo, Lucas, Daniel, Samuel, Sara, María, Ana, Abigail. Todos son del Top 100 en países hispanos y EE.UU.' } },
+    { '@type': 'Question', name: '¿Diferencia entre nombres del Antiguo y Nuevo Testamento?', acceptedAnswer: { '@type': 'Answer', text: 'Los del Antiguo Testamento (Sara, David, Abraham) son hebreos y suelen tener significados ligados a la creación, la fe o la historia. Los del Nuevo (Mateo, Lucas, María) son griegos o arameos y vienen de los apóstoles y discípulos.' } },
+    { '@type': 'Question', name: '¿Sirven nombres bíblicos para mascotas?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, sobre todo los cortos: Sara, David, Caleb, Ruth funcionan muy bien para perros y gatos.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="es" tag="Bebés" title="Generador de nombres bíblicos"
+    intro="Del Antiguo Testamento, del Nuevo Testamento o nombres poco comunes. Click y obtené 12 ideas con tradición y significado.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Estilo</label>
+      <select id="cn-style">
+        {Object.entries(stylesES).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mezcla de todo</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 12 nombres</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Nombres bíblicos: por qué siguen vigentes</h2>
+      <p>
+        Los nombres bíblicos llevan más de 2000 años en circulación y siguen entre los más populares
+        del mundo occidental. Mateo, Lucas, Daniel, Sara, María: todos están en el Top 100 de
+        Argentina, México, España y EE.UU. cada año. La razón es simple: combinan tradición,
+        significado claro, y un sonido que envejece bien en cualquier contexto.
+      </p>
+
+      <h2>Antiguo Testamento</h2>
+      <p>
+        Los nombres del Antiguo Testamento son hebreos en su origen y suelen tener un significado
+        ligado a la fe, la historia o la naturaleza:
+      </p>
+      <ul>
+        <li><strong>Daniel:</strong> "Dios es mi juez". Profeta del exilio.</li>
+        <li><strong>Sara:</strong> "Princesa". Esposa de Abraham, madre de Isaac.</li>
+        <li><strong>David:</strong> "Amado". Rey de Israel.</li>
+        <li><strong>Abraham:</strong> "Padre de muchedumbres". Patriarca.</li>
+        <li><strong>Eva:</strong> "Vida". La primera mujer.</li>
+        <li><strong>Noé:</strong> "Descanso". El del arca.</li>
+        <li><strong>Ester:</strong> "Estrella". Reina de Persia.</li>
+        <li><strong>Ruth:</strong> "Amistad", "compañía". Símbolo de lealtad.</li>
+      </ul>
+
+      <h2>Nuevo Testamento</h2>
+      <p>
+        Los nombres del Nuevo Testamento son griegos o arameos y vienen de los apóstoles, evangelistas
+        y figuras del cristianismo primitivo:
+      </p>
+      <ul>
+        <li><strong>Mateo:</strong> "Don de Dios". Apóstol y evangelista.</li>
+        <li><strong>Lucas:</strong> "Iluminado". Evangelista, médico.</li>
+        <li><strong>Juan:</strong> "Dios es benevolente". Apóstol amado.</li>
+        <li><strong>Pedro:</strong> "Roca". Apóstol fundador.</li>
+        <li><strong>Pablo:</strong> "Pequeño", "humilde". Apóstol y autor de cartas.</li>
+        <li><strong>María:</strong> "La preferida". Madre de Jesús.</li>
+        <li><strong>Marta:</strong> "Señora". Hermana de Lázaro.</li>
+      </ul>
+
+      <h2>Poco comunes pero hermosos</h2>
+      <p>
+        Si querés un nombre con tradición pero menos común, hay opciones bíblicas que vuelven a
+        circular: Caleb, Booz, Ezequiel, Tobías, Eunice, Hadasa. Cada uno con historia propia y
+        sonidos que destacan sin sonar extraños.
+      </p>
+
+      <h2>Cómo elegir</h2>
+      <ol>
+        <li>Buscá el significado y la historia del personaje. Si conectás con la persona bíblica, el nombre adquiere otra capa.</li>
+        <li>Pronuncialo con tu apellido tres veces. Si suena flat, considerá un segundo nombre.</li>
+        <li>Decidí entre versión española o internacional: Pablo / Paul, Juan / John, Mateo / Matthew. Algunos países priorizan que coincidan en ambos idiomas.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué nombres bíblicos son los más usados hoy?</summary><p>Mateo, Lucas, Daniel, Samuel, Sara, María, Ana, Abigail. Todos en el Top 100 de países hispanos y EE.UU.</p></details>
+      <details><summary>¿Diferencia entre Antiguo y Nuevo Testamento?</summary><p>Los del Antiguo (Sara, David, Abraham) son hebreos. Los del Nuevo (Mateo, Lucas, María) son griegos o arameos.</p></details>
+      <details><summary>¿Sirven nombres bíblicos para mascotas?</summary><p>Sí, sobre todo los cortos: Sara, David, Caleb, Ruth funcionan muy bien para perros y gatos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: BIBLICAL_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.oldTestament.es, ...DATA.newTestament.es, ...DATA.rare.es];
+    else pool = DATA[s].es;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

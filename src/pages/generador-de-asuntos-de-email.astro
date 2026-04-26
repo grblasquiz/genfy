@@ -1,0 +1,155 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de asuntos de email gratis | Genfy';
+const description = 'Generá asuntos de email con tasa de apertura alta. Cortos, accionables, con cifras o curiosidad. Listos para newsletter, ventas o cold email.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuántos caracteres debe tener un asunto?', acceptedAnswer: { '@type': 'Answer', text: 'Entre 30 y 50 caracteres es lo óptimo. En mobile (60% de las aperturas) se cortan a partir de 35-40. Lo importante va al frente.' } },
+    { '@type': 'Question', name: '¿Sirve usar emojis en el asunto?', acceptedAnswer: { '@type': 'Answer', text: 'Depende. En B2C lifestyle suben aperturas 5-15%. En B2B y cold email serio bajan credibilidad. Probá con A/B test antes de decidir.' } },
+    { '@type': 'Question', name: '¿Qué fórmulas tienen mejor open rate?', acceptedAnswer: { '@type': 'Answer', text: 'Las que generan curiosidad (sin clickbait), las que prometen un beneficio concreto, las que personalizan con nombre o ubicación, y las que crean urgencia real (no falsa).' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de asuntos de email"
+    intro="Cargá tema y audiencia. Genfy aplica las cinco fórmulas que mejor open rate tienen y te devuelve 12 asuntos listos para A/B test.">
+
+    <div slot="tool" class="es">
+      <label for="es-topic">Tema del email</label>
+      <input id="es-topic" type="text" placeholder="nuevo curso, descuento..." value="ahorrar en facturación" />
+
+      <label for="es-aud" style="margin-top:1rem">Audiencia</label>
+      <input id="es-aud" type="text" placeholder="freelancers, founders..." value="freelancers" />
+
+      <label for="es-num" style="margin-top:1rem">Cifra clave (opcional)</label>
+      <input id="es-num" type="text" placeholder="4 horas, $300, 30%..." value="4 horas" />
+
+      <button id="es-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 12 asuntos</button>
+
+      <div id="es-out" class="es-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué el asunto pesa más que el cuerpo del email</h2>
+      <p>
+        Si nadie abre el email, el cuerpo no existe. La industria habla de open rate como métrica vanity, pero es la primera función matemática del email marketing: cualquier optimización del cuerpo se multiplica por la tasa de apertura. Un cuerpo perfecto con 15% de open rate vale menos que un cuerpo decente con 35%.
+      </p>
+      <p>
+        Por eso vale la pena obsesionarse con el asunto. Una buena lista alcanza 35-45% de open rate; una excelente, 50%+. La diferencia entre los dos rangos no está en el cuerpo: está en cómo se redactó el asunto.
+      </p>
+
+      <h2>Las cinco fórmulas con mejor open rate medido</h2>
+      <ol>
+        <li><strong>Curiosidad sin clickbait:</strong> "Lo que aprendí cobrando mal por 3 años." Promete una historia útil. No engaña.</li>
+        <li><strong>Cifra concreta + beneficio:</strong> "Ahorrá 4 horas al mes facturando." Cifra ancla credibilidad.</li>
+        <li><strong>Pregunta directa al lector:</strong> "¿Tu última factura tenía error?" Activa el reflejo de respuesta interna.</li>
+        <li><strong>Personalización real:</strong> "Marina, esto es para vos." Solo funciona si la base lo permite y sin abusar.</li>
+        <li><strong>Urgencia real (no falsa):</strong> "Cierra el viernes." Solo si es verdad. La urgencia falsa quema la base rápido.</li>
+      </ol>
+
+      <h2>El factor mobile que casi nadie optimiza</h2>
+      <p>
+        Más del 60% de los emails se abren en mobile, donde Gmail y Apple Mail muestran ~35-40 caracteres del asunto antes de cortarlo. Si tu asunto es "Descubrí cómo ahorrar 4 horas al mes facturando como freelancer", el lector ve "Descubrí cómo ahorrar 4 horas al m..." y eso decide la apertura.
+      </p>
+      <p>
+        Regla práctica: lo crucial en los primeros 30 caracteres. La cifra, la pregunta, el nombre. Los detalles después.
+      </p>
+
+      <h2>Errores típicos que hunden el open rate</h2>
+      <ul>
+        <li><strong>Mayúsculas:</strong> "OFERTA EXCLUSIVA" dispara filtros de spam y baja open rate 15%.</li>
+        <li><strong>Demasiados signos de exclamación:</strong> "¡¡¡No te lo pierdas!!!" baja credibilidad.</li>
+        <li><strong>Palabras gatillo de spam:</strong> "Gratis", "ganador", "haz click ahora", "100% gratis" combinadas suben el riesgo.</li>
+        <li><strong>Asuntos genéricos:</strong> "Newsletter de la semana" no compite contra 200 emails en la bandeja.</li>
+        <li><strong>Asuntos demasiado largos:</strong> 70+ caracteres pierden la mitad del mensaje en mobile.</li>
+        <li><strong>Engaño:</strong> prometer X y entregar Y mata la base. Una vez que perdés trust, no se recupera.</li>
+      </ul>
+
+      <h2>Cómo combinar asunto y preheader</h2>
+      <p>
+        El preheader es la segunda línea que aparece antes de abrir el email. La mayoría lo deja vacío o automático. Pero un buen preheader complementa el asunto: si el asunto crea curiosidad, el preheader la profundiza; si el asunto promete beneficio, el preheader cuantifica. Ejemplo:
+      </p>
+      <ul>
+        <li><strong>Asunto:</strong> "Lo que aprendí facturando mal."</li>
+        <li><strong>Preheader:</strong> "3 años de errores que te ahorro hoy en 4 minutos."</li>
+      </ul>
+      <p>
+        Esa combinación rinde 30-40% más open rate que asunto solo con preheader vacío.
+      </p>
+
+      <h2>A/B testing de asuntos: cómo hacerlo bien</h2>
+      <ol>
+        <li>Probá una sola variable por test (cifra vs sin cifra, pregunta vs afirmación).</li>
+        <li>Mínimo 1.000 envíos por variante para que el resultado sea significativo.</li>
+        <li>Medí 24-48 horas; las aperturas posteriores son ruido.</li>
+        <li>Adoptá el ganador y probá una nueva variable. La iteración compuesta da los mejores resultados.</li>
+      </ol>
+
+      <h2>Cuándo no usar emoji en el asunto</h2>
+      <p>
+        En cold email B2B serio (CXO, procurement, legal): nunca. En newsletters lifestyle, ecommerce, fitness, food: sí, pero uno solo y al inicio. En emails transaccionales: nunca. La regla: si dudás, no.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántos caracteres?</summary><p>30-50 óptimo. Mobile corta en 35-40. Lo crítico va al frente.</p></details>
+      <details><summary>¿Emojis sí o no?</summary><p>B2C lifestyle: sí. B2B serio: no. A/B test antes de decidir.</p></details>
+      <details><summary>¿Mejores fórmulas?</summary><p>Curiosidad sin clickbait, cifra + beneficio, pregunta directa, personalización real, urgencia real.</p></details>
+      <details><summary>¿Qué evitar?</summary><p>Mayúsculas, signos de exclamación múltiples, palabras gatillo de spam, asuntos genéricos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .es-out { margin-top: 1.25rem; display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+  .es-item { padding: 0.75rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .es-item:hover { border-color: var(--accent); }
+  .es-text { flex: 1; }
+  .es-len { font-size: 0.75rem; color: var(--text-subtle); font-family: var(--font-mono); }
+</style>
+
+<script>
+  const topic = document.getElementById('es-topic') as HTMLInputElement;
+  const aud = document.getElementById('es-aud') as HTMLInputElement;
+  const num = document.getElementById('es-num') as HTMLInputElement;
+  const gen = document.getElementById('es-gen') as HTMLButtonElement;
+  const out = document.getElementById('es-out')!;
+
+  function generate() {
+    const T = topic.value.trim() || 'tu tema';
+    const Tc = T.charAt(0).toUpperCase() + T.slice(1);
+    const A = aud.value.trim() || 'lectores';
+    const N = num.value.trim() || '30%';
+
+    const list = [
+      `${N} menos en ${T}`,
+      `Lo que aprendí sobre ${T}`,
+      `${Tc}: la guía rápida`,
+      `¿${Tc} te quita tiempo?`,
+      `${Tc} en 5 minutos`,
+      `Para ${A}: ${T}`,
+      `${N} de ahorro en ${T}`,
+      `${Tc} sin complicarte`,
+      `Cómo resolví ${T}`,
+      `Esto es para ${A}`,
+      `${Tc} (versión corta)`,
+      `Tu plan para ${T}`,
+    ];
+
+    out.innerHTML = '';
+    list.forEach(s => {
+      const el = document.createElement('div');
+      el.className = 'es-item';
+      el.title = 'Click para copiar';
+      el.innerHTML = `<span class="es-text">${s}</span><span class="es-len">${s.length}</span>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(s); const orig = el.innerHTML; el.innerHTML = '✓ Copiado'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

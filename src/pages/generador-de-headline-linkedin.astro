@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de headline para LinkedIn gratis | Genfy';
+const description = 'Generá un headline de LinkedIn que convierta visitas en mensajes. Estructurado para ranqueo en búsquedas y conversión de perfil.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuántos caracteres tiene el headline de LinkedIn?', acceptedAnswer: { '@type': 'Answer', text: '220 caracteres en versión web. La gente solo ve los primeros 50-70 en feed y resultados de búsqueda. Lo importante va al frente.' } },
+    { '@type': 'Question', name: '¿Conviene poner solo el cargo o algo más?', acceptedAnswer: { '@type': 'Answer', text: 'Solo el cargo desperdicia el activo. Lo ideal es: cargo + qué hacés por tu audiencia + autoridad o resultado concreto. LinkedIn premia headlines con palabras clave de búsqueda.' } },
+    { '@type': 'Question', name: '¿Cuándo cambiarlo?', acceptedAnswer: { '@type': 'Answer', text: 'Cuando cambies de rol, audiencia objetivo o expertise. Un headline desactualizado te invisibiliza en las búsquedas que sí te interesan.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de headline LinkedIn"
+    intro="Cargá rol, audiencia y resultado. Genfy estructura el headline para ranqueo en búsquedas y conversión, dentro de los 220 caracteres permitidos.">
+
+    <div slot="tool" class="lh">
+      <label for="lh-role">Rol / cargo</label>
+      <input id="lh-role" type="text" placeholder="CMO, Diseñador UX, Founder..." value="CMO" />
+
+      <label for="lh-aud" style="margin-top:1rem">Audiencia objetivo</label>
+      <input id="lh-aud" type="text" placeholder="SaaS B2B, startups, pymes..." value="SaaS B2B" />
+
+      <label for="lh-result" style="margin-top:1rem">Resultado o expertise</label>
+      <input id="lh-result" type="text" placeholder="duplico el LTV, +50% leads..." value="duplico el LTV con SEO + email" />
+
+      <label for="lh-keywords" style="margin-top:1rem">Keywords de búsqueda (opcional)</label>
+      <input id="lh-keywords" type="text" placeholder="Growth, B2B, SaaS, CRM..." value="Growth · B2B · SEO" />
+
+      <button id="lh-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 4 headlines</button>
+
+      <div id="lh-out" class="lh-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué el headline de LinkedIn es el activo más caro de subestimar</h2>
+      <p>
+        El headline de LinkedIn aparece en cuatro lugares críticos: resultados de búsqueda interna, feed cuando reaccionás o comentás, mensajes de InMail, y la versión móvil del perfil donde la bio (Acerca de) ni siquiera se ve sin scroll. Es lo único que un recruiter, prospect o partner ve antes de decidir si te abre el perfil. Si tu headline dice "Director de Marketing en Empresa X", desperdiciaste el activo.
+      </p>
+      <p>
+        LinkedIn además usa el headline como señal fuerte de búsqueda. Un recruiter que busca "growth marketing SaaS" prioriza perfiles con esas palabras en el headline sobre los que las tienen solo en la sección de experiencia. Eso lo convierte en SEO interno: cada palabra cuenta.
+      </p>
+
+      <h2>La estructura que rinde en 2026</h2>
+      <ol>
+        <li><strong>Rol concreto + para quién:</strong> "CMO para SaaS B2B."</li>
+        <li><strong>Resultado o método específico:</strong> "Duplico el LTV con SEO + email."</li>
+        <li><strong>Palabras clave de búsqueda:</strong> "Growth · B2B · SEO" (separadas por bullet o pipe).</li>
+        <li><strong>Diferenciador o autoridad opcional:</strong> "ex-HubSpot."</li>
+      </ol>
+      <p>
+        Total: 80-180 caracteres. Lo lees en una respiración, contiene 4-6 palabras clave de búsqueda, y comunica rol + valor + prueba.
+      </p>
+
+      <h2>Errores típicos que vacían el headline</h2>
+      <ul>
+        <li><strong>Solo título corporativo:</strong> "Director de Marketing | Empresa X." Cero diferenciación; ranquea solo si te buscan por nombre.</li>
+        <li><strong>Adjetivos vacíos:</strong> "Apasionado por la innovación y la transformación digital." No identifica.</li>
+        <li><strong>Demasiados emojis:</strong> 4-5 emojis arruinan la legibilidad y la percepción profesional.</li>
+        <li><strong>Lista de credenciales sin foco:</strong> "MBA · Speaker · Author · Podcaster · Founder · Mentor" — la persona no sabe qué hacés.</li>
+        <li><strong>Lenguaje genérico:</strong> "Helping companies achieve their goals." Lo dice cualquiera.</li>
+      </ul>
+
+      <h2>Cómo elegir las palabras clave correctas</h2>
+      <p>
+        Las palabras clave de tu headline deben coincidir con cómo te buscan. Un recruiter no busca "marketing strategist" en abstracto: busca "Head of Growth SaaS B2B" o "PMM B2B fintech". Para encontrar las palabras correctas:
+      </p>
+      <ol>
+        <li>Buscá en LinkedIn el rol que querés y filtrá por personas.</li>
+        <li>Mirá los headlines de los 20 perfiles más relevantes que aparecen.</li>
+        <li>Anotá las palabras que se repiten en al menos 5 de ellos.</li>
+        <li>Esas son las palabras que tu audiencia (recruiters, prospects, partners) usa al buscar.</li>
+      </ol>
+
+      <h2>Dónde meter el separador de palabras clave</h2>
+      <p>
+        LinkedIn premia headlines escaneables. Los separadores más usados son el bullet (·), el pipe (|) y la flecha (→). Recomendación: bullet o pipe para listas de keywords ("Growth · SEO · B2B"), flecha cuando querés mostrar relación de causa ("Marketer → +30% leads"). Evitá guiones largos o paréntesis: complican la lectura en mobile.
+      </p>
+
+      <h2>Test rápido antes de adoptar el headline</h2>
+      <ol>
+        <li>Pegalo en una hoja en blanco. Leelo en voz alta. ¿Tiene ritmo o es lista?</li>
+        <li>Mostrá el perfil a 3 colegas. Pediles que en una oración digan qué hacés. Si lo dicen distinto, falta foco.</li>
+        <li>Buscá tu propio headline en LinkedIn. ¿Cuántos perfiles parecidos aparecen? Si son miles, no diferenciás.</li>
+        <li>Verificá legibilidad mobile: el 60% de las visitas a tu perfil son desde el celular.</li>
+      </ol>
+
+      <h2>Cuándo y cómo iterar</h2>
+      <p>
+        Cada vez que cambies de rol, foco de audiencia o expertise. También cuando notes que las invitaciones que recibís ya no son relevantes — es señal de que tu headline atrae al público equivocado. Una iteración cada 6-12 meses es saludable; cambiarlo todos los meses confunde a tu red.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántos caracteres?</summary><p>220, pero solo se ven los primeros 50-70 en feed y búsqueda. Lo importante va al frente.</p></details>
+      <details><summary>¿Solo cargo o algo más?</summary><p>Solo cargo desperdicia el activo. Cargo + para quién + resultado o autoridad rinde más.</p></details>
+      <details><summary>¿Cuándo cambiarlo?</summary><p>Cada cambio de rol, audiencia o expertise. Cada 6-12 meses es saludable.</p></details>
+      <details><summary>¿Sirve para SEO?</summary><p>Sí. LinkedIn usa el headline como señal fuerte de búsqueda interna.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .lh-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .lh-item { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .lh-item:hover { border-color: var(--accent); }
+  .lh-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const role = document.getElementById('lh-role') as HTMLInputElement;
+  const aud = document.getElementById('lh-aud') as HTMLInputElement;
+  const res = document.getElementById('lh-result') as HTMLInputElement;
+  const kw = document.getElementById('lh-keywords') as HTMLInputElement;
+  const gen = document.getElementById('lh-gen') as HTMLButtonElement;
+  const out = document.getElementById('lh-out')!;
+
+  function generate() {
+    const R = role.value.trim() || 'Marketing';
+    const A = aud.value.trim() || 'B2B';
+    const Re = res.value.trim() || 'genero crecimiento';
+    const K = kw.value.trim();
+
+    const v1 = `${R} para ${A} | ${Re}${K ? ' · ' + K : ''}`;
+    const v2 = `${R} en ${A}. ${Re.charAt(0).toUpperCase() + Re.slice(1)}.${K ? ' ' + K : ''}`;
+    const v3 = `Ayudo a ${A} a crecer | ${R} · ${Re}`;
+    const v4 = `${R} · ${A} · ${Re}${K ? ' · ' + K : ''}`;
+
+    out.innerHTML = '';
+    [v1, v2, v3, v4].forEach((h, i) => {
+      const el = document.createElement('div');
+      el.className = 'lh-item';
+      el.title = 'Click para copiar';
+      el.innerHTML = h + `<div class="lh-meta">v${i+1} · ${h.length}/220 caracteres</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(h); const orig = el.innerHTML; el.innerHTML = '✓ Copiado'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

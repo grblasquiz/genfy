@@ -1,0 +1,228 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Email Signature Generator | Genfy';
+const description = 'Create a professional email signature with HTML ready for Gmail, Outlook and Apple Mail. Live preview. Copy as HTML or plain text.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Does it work in Gmail and Outlook?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. The HTML is built for compatibility with Gmail, Outlook 365, Apple Mail, Yahoo and Thunderbird.' } },
+    { '@type': 'Question', name: 'What should an email signature include?', acceptedAnswer: { '@type': 'Answer', text: 'Name, title, company, web/email/phone. Everything else (LinkedIn, quote, logo) is optional. More than 6 lines becomes annoying.' } },
+    { '@type': 'Question', name: 'Can I add a logo?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — provide the public URL of the image (must be hosted on an accessible server). The generator embeds it in the HTML.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Work" title="Email Signature Generator"
+    intro="Create your professional signature with live preview. HTML compatible with Gmail, Outlook, Apple Mail and Thunderbird. Copy as HTML or plain text.">
+
+    <div slot="tool" class="es">
+      <div class="es-row">
+        <div>
+          <label for="es-name">Full name</label>
+          <input id="es-name" type="text" value="Sarah Mitchell" />
+        </div>
+        <div>
+          <label for="es-role">Title</label>
+          <input id="es-role" type="text" value="Director of Marketing" />
+        </div>
+      </div>
+      <div class="es-row">
+        <div>
+          <label for="es-company">Company</label>
+          <input id="es-company" type="text" value="Acme Inc." />
+        </div>
+        <div>
+          <label for="es-phone">Phone</label>
+          <input id="es-phone" type="text" value="+1 (415) 555-0142" />
+        </div>
+      </div>
+      <div class="es-row">
+        <div>
+          <label for="es-email">Email</label>
+          <input id="es-email" type="email" value="sarah@acme.com" />
+        </div>
+        <div>
+          <label for="es-web">Web</label>
+          <input id="es-web" type="text" value="acme.com" />
+        </div>
+      </div>
+      <div class="es-row">
+        <div>
+          <label for="es-linkedin">LinkedIn (URL)</label>
+          <input id="es-linkedin" type="text" placeholder="https://linkedin.com/in/handle" />
+        </div>
+        <div>
+          <label for="es-logo">Logo (public URL)</label>
+          <input id="es-logo" type="text" placeholder="https://acme.com/logo.png" />
+        </div>
+      </div>
+      <div class="es-row">
+        <div>
+          <label for="es-color">Accent color</label>
+          <input id="es-color" type="color" value="#0066cc" />
+        </div>
+        <div>
+          <label for="es-style">Style</label>
+          <select id="es-style">
+            <option value="classic">Classic</option>
+            <option value="minimal">Minimal</option>
+            <option value="card">Block</option>
+          </select>
+        </div>
+      </div>
+      <button id="es-gen" class="btn btn-primary" type="button">Update preview</button>
+      <button id="es-copy-html" class="btn btn-ghost" type="button">Copy HTML</button>
+      <button id="es-copy-text" class="btn btn-ghost" type="button">Copy plain text</button>
+
+      <div style="margin-top:1.5rem;">
+        <label>Preview</label>
+        <div id="es-preview" class="es-preview"></div>
+      </div>
+      <div style="margin-top:1rem;">
+        <label for="es-html">HTML</label>
+        <textarea id="es-html" rows="8" readonly style="font-family: var(--font-mono); font-size: 0.85rem;"></textarea>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>What a professional signature should (and shouldn't) include</h2>
+      <p>
+        An effective signature is functional, not decorative. It must answer three questions
+        in under 2 seconds: who you are, where you work, how to reach you. Everything else
+        (motivational quote, corporate slogan, secondary social handles, oversized logo, long
+        legal disclaimers) competes with that essential info. If your signature takes up more
+        visual space than the message body, it's wrong.
+      </p>
+
+      <h2>Styles</h2>
+      <ul>
+        <li><strong>Classic.</strong> Stacked info, horizontal divider, accent color. Works in any industry.</li>
+        <li><strong>Minimal.</strong> Name + title + email. No phone, no logo. For senior profiles who mostly communicate by email.</li>
+        <li><strong>Block.</strong> Logo on the left, info on the right. Ideal for brands with strong visual identity.</li>
+      </ul>
+
+      <h2>Compatibility per client</h2>
+      <p>
+        Outlook 365 and Outlook desktop render HTML very differently from Gmail (Outlook uses
+        the Word engine, which doesn't support modern CSS). That's why this tool's HTML uses
+        only tables, inline attributes and basic styles — exactly like signatures from paid
+        services. Apple Mail, Yahoo and Thunderbird are more permissive.
+      </p>
+
+      <h2>How to install your signature</h2>
+      <ol>
+        <li><strong>Gmail.</strong> Settings → General → Signature → Create new → paste the HTML directly.</li>
+        <li><strong>Outlook 365 web.</strong> Settings → Mail → Compose and reply → Email signature → paste the HTML.</li>
+        <li><strong>Outlook desktop.</strong> File → Options → Mail → Signatures → paste the HTML.</li>
+        <li><strong>Apple Mail.</strong> Mail → Preferences → Signatures → "+" → paste as rich text.</li>
+      </ol>
+
+      <h2>About the logo</h2>
+      <p>
+        The logo must live on a stable, public URL. Hosted on your site or a CDN, recipients
+        will see it. On a private or local server, it'll break. Recommended size: 80-120px
+        tall, transparent PNG. Avoid large images — they bloat the email and many clients
+        block them by default.
+      </p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Personal quotes.</strong> "Save the planet" in a corporate signature distracts.</li>
+        <li><strong>Whole signature as image.</strong> Clients that block images will see nothing.</li>
+        <li><strong>200-word legal disclaimer.</strong> Adds nothing in most companies. Trim to the minimum viable.</li>
+        <li><strong>Multiple social handles.</strong> One max. LinkedIn for B2B; Instagram only if you sell visually.</li>
+        <li><strong>Loud color.</strong> Bright red text or dark backgrounds look bad in many clients. Use a subtle accent.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Works in Gmail/Outlook?</summary><p>Yes — broad compatibility built in.</p></details>
+      <details><summary>What to include?</summary><p>Name, title, company, contact. Everything else optional.</p></details>
+      <details><summary>Logo?</summary><p>Yes — provide the public image URL.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .es-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .es-row { grid-template-columns: 1fr; } }
+  .es-preview { padding: 1.5rem; background: #fff; color: #000; border: 1px solid var(--border); border-radius: var(--radius-lg); margin-top: 0.5rem; }
+</style>
+
+<script>
+  const ids = ['es-name','es-role','es-company','es-phone','es-email','es-web','es-linkedin','es-logo','es-color','es-style'];
+  const get = (id: string) => (document.getElementById(id) as HTMLInputElement).value;
+  const preview = document.getElementById('es-preview') as HTMLElement;
+  const htmlOut = document.getElementById('es-html') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('es-gen') as HTMLButtonElement;
+  const copyHtml = document.getElementById('es-copy-html') as HTMLButtonElement;
+  const copyText = document.getElementById('es-copy-text') as HTMLButtonElement;
+
+  function escapeHtml(s: string) { return s.replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'<','>':'>','"':'&quot;' }[c] as string)); }
+
+  function buildClassic() {
+    const name = escapeHtml(get('es-name'));
+    const role = escapeHtml(get('es-role'));
+    const company = escapeHtml(get('es-company'));
+    const phone = escapeHtml(get('es-phone'));
+    const email = escapeHtml(get('es-email'));
+    const web = escapeHtml(get('es-web'));
+    const linkedin = escapeHtml(get('es-linkedin'));
+    const logo = escapeHtml(get('es-logo'));
+    const color = escapeHtml(get('es-color'));
+    const logoCell = logo ? `<td valign="top" style="padding-right:16px;border-right:2px solid ${color};"><img src="${logo}" alt="${company}" height="56" style="display:block;border:0;outline:none;text-decoration:none;"/></td>` : '';
+    return `<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,Helvetica,sans-serif;color:#222;font-size:14px;line-height:1.4;"><tr>${logoCell}<td valign="top" style="${logo ? 'padding-left:16px;' : ''}"><div style="font-weight:700;color:#111;font-size:15px;">${name}</div><div style="color:#666;">${role}${company ? ' · ' + company : ''}</div><div style="margin-top:6px;color:#444;">${phone ? phone + ' &nbsp;|&nbsp; ' : ''}<a href="mailto:${email}" style="color:${color};text-decoration:none;">${email}</a>${web ? ' &nbsp;|&nbsp; <a href="https://' + web + '" style="color:' + color + ';text-decoration:none;">' + web + '</a>' : ''}</div>${linkedin ? '<div style="margin-top:4px;"><a href="' + linkedin + '" style="color:' + color + ';text-decoration:none;">LinkedIn</a></div>' : ''}</td></tr></table>`;
+  }
+  function buildMinimal() {
+    const name = escapeHtml(get('es-name'));
+    const role = escapeHtml(get('es-role'));
+    const company = escapeHtml(get('es-company'));
+    const email = escapeHtml(get('es-email'));
+    const color = escapeHtml(get('es-color'));
+    return `<div style="font-family:Arial,Helvetica,sans-serif;color:#111;font-size:14px;line-height:1.4;"><div style="font-weight:700;">${name}</div><div style="color:#666;">${role}${company ? ', ' + company : ''}</div><div><a href="mailto:${email}" style="color:${color};text-decoration:none;">${email}</a></div></div>`;
+  }
+  function buildCard() {
+    const name = escapeHtml(get('es-name'));
+    const role = escapeHtml(get('es-role'));
+    const company = escapeHtml(get('es-company'));
+    const phone = escapeHtml(get('es-phone'));
+    const email = escapeHtml(get('es-email'));
+    const web = escapeHtml(get('es-web'));
+    const logo = escapeHtml(get('es-logo'));
+    const color = escapeHtml(get('es-color'));
+    return `<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,Helvetica,sans-serif;background:#f7f7f7;border-radius:8px;padding:14px;"><tr>${logo ? '<td valign="middle" style="padding-right:14px;"><img src="' + logo + '" alt="' + company + '" height="48" style="display:block;border:0;"/></td>' : ''}<td valign="middle" style="font-size:14px;color:#222;line-height:1.4;"><div style="font-weight:700;color:${color};font-size:15px;">${name}</div><div style="color:#555;">${role}${company ? ' · ' + company : ''}</div><div style="color:#666;font-size:13px;margin-top:4px;">${phone}${phone && email ? ' &nbsp;·&nbsp; ' : ''}<a href="mailto:${email}" style="color:${color};text-decoration:none;">${email}</a></div>${web ? '<div style="font-size:13px;"><a href="https://' + web + '" style="color:' + color + ';text-decoration:none;">' + web + '</a></div>' : ''}</td></tr></table>`;
+  }
+  function buildText() {
+    const name = get('es-name'); const role = get('es-role'); const company = get('es-company');
+    const phone = get('es-phone'); const email = get('es-email'); const web = get('es-web');
+    const linkedin = get('es-linkedin');
+    const lines = [name, [role, company].filter(Boolean).join(' · '), [phone, email].filter(Boolean).join(' | '), web, linkedin].filter(Boolean);
+    return lines.join('\n');
+  }
+  function build() {
+    const style = get('es-style');
+    return style === 'minimal' ? buildMinimal() : style === 'card' ? buildCard() : buildClassic();
+  }
+  function update() {
+    const html = build();
+    preview.innerHTML = html;
+    htmlOut.value = html;
+  }
+  ids.forEach(id => document.getElementById(id)?.addEventListener('input', update));
+  genBtn.addEventListener('click', update);
+  copyHtml.addEventListener('click', async () => {
+    if (!htmlOut.value) return;
+    await navigator.clipboard.writeText(htmlOut.value);
+    const t = copyHtml.textContent; copyHtml.textContent = 'Copied!';
+    setTimeout(() => { copyHtml.textContent = t; }, 1200);
+  });
+  copyText.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(buildText());
+    const t = copyText.textContent; copyText.textContent = 'Copied!';
+    setTimeout(() => { copyText.textContent = t; }, 1200);
+  });
+  update();
+</script>

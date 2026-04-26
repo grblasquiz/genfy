@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'País aleatorio: generador de país al azar | Genfy';
+const description = 'Generá un país al azar entre todos los miembros de la ONU. Incluye bandera, capital y continente. Útil para juegos de geografía, planear tu próximo viaje o desafíos creativos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuántos países incluye?', acceptedAnswer: { '@type': 'Answer', text: 'Los 193 estados miembros de la ONU. No incluye territorios disputados, dependencias ni el Vaticano (Estado observador). Cada país tiene exactamente 1/193 de probabilidad.' } },
+    { '@type': 'Question', name: '¿Para qué sirve?', acceptedAnswer: { '@type': 'Answer', text: 'Educación geográfica, descubrir destinos para viajar, ejercicios de redacción ("escribí 200 palabras sobre este país"), juegos de cultura general, prompts para investigación.' } },
+    { '@type': 'Question', name: '¿Puedo filtrar por continente?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Elegí entre África, América, Asia, Europa u Oceanía, o dejá "todos" para sacar de la lista completa.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Random" title="País aleatorio"
+    intro="Sacá un país al azar entre los 193 miembros de la ONU. Bandera, capital, continente. Filtrá por continente si te interesa una región específica.">
+
+    <div slot="tool" class="cn-tool">
+      <div class="cn-controls">
+        <div>
+          <label for="cn-cont">Continente</label>
+          <select id="cn-cont">
+            <option value="all" selected>Todos</option>
+            <option value="Africa">África</option>
+            <option value="Americas">América</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europa</option>
+            <option value="Oceania">Oceanía</option>
+          </select>
+        </div>
+        <div>
+          <label for="cn-count">Cantidad</label>
+          <input id="cn-count" type="number" value="1" min="1" max="20" />
+        </div>
+      </div>
+
+      <div id="cn-result" class="cn-result"></div>
+
+      <div class="cn-actions">
+        <button id="cn-gen" class="btn btn-primary" type="button">Generar país(es)</button>
+        <button id="cn-copy" class="btn btn-ghost" type="button">Copiar nombres</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué generar un país al azar es educativo</h2>
+      <p>
+        La mayoría de la gente conoce ~30 países bien y los demás los recuerda vagamente.
+        Un generador de país aleatorio fuerza confrontación con la lista completa: vas a
+        toparte con países que sabías que existían pero no podrías ubicar en un mapa
+        (Lesoto, Comoras, Nauru), y eso es la mejor manera de aprender geografía sin
+        memorizar listas.
+      </p>
+
+      <h2>Casos de uso prácticos</h2>
+      <ul>
+        <li><strong>Inspiración para viajar:</strong> rompé el sesgo de viajar siempre a los mismos destinos. El generador te puede tirar Albania, Uzbekistán o Belice.</li>
+        <li><strong>Ejercicios de escritura:</strong> "escribí 300 palabras sobre la cultura de este país". Si te toca uno que no conocés, tenés que investigar — y aprender.</li>
+        <li><strong>Educación:</strong> en clase, cada alumno saca un país y arma una mini-presentación. Más interesante que asignaciones por orden alfabético.</li>
+        <li><strong>Juegos de trivia:</strong> generá 10 países, jugá "¿en qué continente está?" o "¿cuál es la capital?".</li>
+        <li><strong>Brainstorming creativo:</strong> "diseñá un poster turístico para este país". El random te empuja fuera de los lugares comunes.</li>
+        <li><strong>Práctica de idiomas:</strong> investigá qué idiomas se hablan, qué saludo se usa, qué moneda tiene.</li>
+      </ul>
+
+      <h2>Los 193: criterio ONU</h2>
+      <p>
+        Usamos los 193 estados miembros de Naciones Unidas como base canónica. Eso
+        excluye:
+      </p>
+      <ul>
+        <li><strong>Estado de Palestina y Vaticano:</strong> "Estados observadores", no miembros plenos.</li>
+        <li><strong>Taiwán:</strong> República de China, reconocida por algunos países pero sin asiento en la ONU.</li>
+        <li><strong>Kosovo:</strong> reconocido por más de 100 países, pero sin consenso global.</li>
+        <li><strong>Territorios dependientes:</strong> Puerto Rico, Groenlandia, Hong Kong, etc.</li>
+      </ul>
+      <p>
+        Esta exclusión no es opinión política, es la convención ONU para evitar disputas
+        territoriales.
+      </p>
+
+      <h2>Distribución por continente</h2>
+      <p>
+        Los 193 países están desigualmente distribuidos: África tiene 54, Asia 47, Europa
+        44, América 35, Oceanía 14. Si pedís "país aleatorio sin filtro", África y Asia
+        son los más probables. Si querés explorar una región específica, usá el filtro.
+      </p>
+
+      <h2>Geografía como herramienta de empatía</h2>
+      <p>
+        Saber que existen 193 países y poder ubicar al menos la mitad en un mapa es una
+        forma básica de educación cívica global. Pero más allá de saberse las capitales,
+        familiarizarse con países que no aparecen en las noticias del primer mundo
+        ayuda a entender que la realidad humana es mucho más diversa de lo que sugieren
+        los medios. Un generador random es un atajo a esa diversidad.
+      </p>
+
+      <h2>Errores frecuentes en geografía</h2>
+      <ol>
+        <li>Confundir Eslovaquia con Eslovenia. Son países distintos en regiones distintas.</li>
+        <li>Pensar que "Holanda" es un país: el país es Países Bajos (Netherlands); Holanda es solo dos provincias.</li>
+        <li>Ubicar mal Australia y Nueva Zelanda: son países separados, no provincias del mismo.</li>
+        <li>Asumir que África es un solo "país": son 54 con culturas, idiomas y economías muy distintas.</li>
+        <li>Olvidar países pequeños: Liechtenstein, Andorra, San Marino, Mónaco existen y son completamente independientes.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántos países?</summary><p>193, los miembros de la ONU. Cada uno tiene 1/193 de probabilidad.</p></details>
+      <details><summary>¿Para qué sirve?</summary><p>Geografía educativa, ideas de viaje, ejercicios de escritura, juegos de trivia, brainstorming creativo.</p></details>
+      <details><summary>¿Puedo filtrar?</summary><p>Sí, por continente: África, América, Asia, Europa, Oceanía.</p></details>
+      <details><summary>¿Por qué no incluye Taiwán/Vaticano/Palestina?</summary><p>Usamos como criterio "miembros plenos de la ONU" para evitar disputas territoriales. No es opinión política.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-controls { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .cn-result { padding: 1.5rem; background: var(--bg-inset); border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1rem; min-height: 120px; }
+  .cn-card { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: center; padding: 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 0.5rem; }
+  .cn-flag { font-size: 3rem; line-height: 1; }
+  .cn-info .name { font-size: 1.125rem; font-weight: 700; margin-bottom: 0.125rem; }
+  .cn-info .meta { font-size: 0.8125rem; color: var(--text-soft); }
+  .cn-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .cn-empty { text-align: center; color: var(--text-subtle); font-size: 0.9375rem; padding: 2rem; }
+</style>
+
+<script>
+  type Country = { name: string; capital: string; flag: string; cont: string };
+  const COUNTRIES: Country[] = [
+    {name:'Afganistán',capital:'Kabul',flag:'🇦🇫',cont:'Asia'},{name:'Albania',capital:'Tirana',flag:'🇦🇱',cont:'Europe'},{name:'Alemania',capital:'Berlín',flag:'🇩🇪',cont:'Europe'},{name:'Andorra',capital:'Andorra la Vieja',flag:'🇦🇩',cont:'Europe'},{name:'Angola',capital:'Luanda',flag:'🇦🇴',cont:'Africa'},{name:'Antigua y Barbuda',capital:"Saint John's",flag:'🇦🇬',cont:'Americas'},{name:'Arabia Saudita',capital:'Riad',flag:'🇸🇦',cont:'Asia'},{name:'Argelia',capital:'Argel',flag:'🇩🇿',cont:'Africa'},{name:'Argentina',capital:'Buenos Aires',flag:'🇦🇷',cont:'Americas'},{name:'Armenia',capital:'Ereván',flag:'🇦🇲',cont:'Asia'},{name:'Australia',capital:'Canberra',flag:'🇦🇺',cont:'Oceania'},{name:'Austria',capital:'Viena',flag:'🇦🇹',cont:'Europe'},{name:'Azerbaiyán',capital:'Bakú',flag:'🇦🇿',cont:'Asia'},{name:'Bahamas',capital:'Nassau',flag:'🇧🇸',cont:'Americas'},{name:'Bangladés',capital:'Daca',flag:'🇧🇩',cont:'Asia'},{name:'Barbados',capital:'Bridgetown',flag:'🇧🇧',cont:'Americas'},{name:'Baréin',capital:'Manama',flag:'🇧🇭',cont:'Asia'},{name:'Bélgica',capital:'Bruselas',flag:'🇧🇪',cont:'Europe'},{name:'Belice',capital:'Belmopán',flag:'🇧🇿',cont:'Americas'},{name:'Benín',capital:'Porto Novo',flag:'🇧🇯',cont:'Africa'},{name:'Bielorrusia',capital:'Minsk',flag:'🇧🇾',cont:'Europe'},{name:'Birmania',capital:'Naypyidaw',flag:'🇲🇲',cont:'Asia'},{name:'Bolivia',capital:'Sucre',flag:'🇧🇴',cont:'Americas'},{name:'Bosnia y Herzegovina',capital:'Sarajevo',flag:'🇧🇦',cont:'Europe'},{name:'Botsuana',capital:'Gaborone',flag:'🇧🇼',cont:'Africa'},{name:'Brasil',capital:'Brasilia',flag:'🇧🇷',cont:'Americas'},{name:'Brunéi',capital:'Bandar Seri Begawan',flag:'🇧🇳',cont:'Asia'},{name:'Bulgaria',capital:'Sofía',flag:'🇧🇬',cont:'Europe'},{name:'Burkina Faso',capital:'Uagadugú',flag:'🇧🇫',cont:'Africa'},{name:'Burundi',capital:'Gitega',flag:'🇧🇮',cont:'Africa'},{name:'Bután',capital:'Timbu',flag:'🇧🇹',cont:'Asia'},{name:'Cabo Verde',capital:'Praia',flag:'🇨🇻',cont:'Africa'},{name:'Camboya',capital:'Nom Pen',flag:'🇰🇭',cont:'Asia'},{name:'Camerún',capital:'Yaundé',flag:'🇨🇲',cont:'Africa'},{name:'Canadá',capital:'Ottawa',flag:'🇨🇦',cont:'Americas'},{name:'Catar',capital:'Doha',flag:'🇶🇦',cont:'Asia'},{name:'Chad',capital:'Yamena',flag:'🇹🇩',cont:'Africa'},{name:'Chile',capital:'Santiago',flag:'🇨🇱',cont:'Americas'},{name:'China',capital:'Pekín',flag:'🇨🇳',cont:'Asia'},{name:'Chipre',capital:'Nicosia',flag:'🇨🇾',cont:'Asia'},{name:'Colombia',capital:'Bogotá',flag:'🇨🇴',cont:'Americas'},{name:'Comoras',capital:'Moroni',flag:'🇰🇲',cont:'Africa'},{name:'Corea del Norte',capital:'Pionyang',flag:'🇰🇵',cont:'Asia'},{name:'Corea del Sur',capital:'Seúl',flag:'🇰🇷',cont:'Asia'},{name:'Costa de Marfil',capital:'Yamusukro',flag:'🇨🇮',cont:'Africa'},{name:'Costa Rica',capital:'San José',flag:'🇨🇷',cont:'Americas'},{name:'Croacia',capital:'Zagreb',flag:'🇭🇷',cont:'Europe'},{name:'Cuba',capital:'La Habana',flag:'🇨🇺',cont:'Americas'},{name:'Dinamarca',capital:'Copenhague',flag:'🇩🇰',cont:'Europe'},{name:'Dominica',capital:'Roseau',flag:'🇩🇲',cont:'Americas'},{name:'Ecuador',capital:'Quito',flag:'🇪🇨',cont:'Americas'},{name:'Egipto',capital:'El Cairo',flag:'🇪🇬',cont:'Africa'},{name:'El Salvador',capital:'San Salvador',flag:'🇸🇻',cont:'Americas'},{name:'Emiratos Árabes Unidos',capital:'Abu Dabi',flag:'🇦🇪',cont:'Asia'},{name:'Eritrea',capital:'Asmara',flag:'🇪🇷',cont:'Africa'},{name:'Eslovaquia',capital:'Bratislava',flag:'🇸🇰',cont:'Europe'},{name:'Eslovenia',capital:'Liubliana',flag:'🇸🇮',cont:'Europe'},{name:'España',capital:'Madrid',flag:'🇪🇸',cont:'Europe'},{name:'Estados Unidos',capital:'Washington D.C.',flag:'🇺🇸',cont:'Americas'},{name:'Estonia',capital:'Tallin',flag:'🇪🇪',cont:'Europe'},{name:'Esuatini',capital:'Mbabane',flag:'🇸🇿',cont:'Africa'},{name:'Etiopía',capital:'Adís Abeba',flag:'🇪🇹',cont:'Africa'},{name:'Filipinas',capital:'Manila',flag:'🇵🇭',cont:'Asia'},{name:'Finlandia',capital:'Helsinki',flag:'🇫🇮',cont:'Europe'},{name:'Fiyi',capital:'Suva',flag:'🇫🇯',cont:'Oceania'},{name:'Francia',capital:'París',flag:'🇫🇷',cont:'Europe'},{name:'Gabón',capital:'Libreville',flag:'🇬🇦',cont:'Africa'},{name:'Gambia',capital:'Banjul',flag:'🇬🇲',cont:'Africa'},{name:'Georgia',capital:'Tiflis',flag:'🇬🇪',cont:'Asia'},{name:'Ghana',capital:'Acra',flag:'🇬🇭',cont:'Africa'},{name:'Granada',capital:"Saint George's",flag:'🇬🇩',cont:'Americas'},{name:'Grecia',capital:'Atenas',flag:'🇬🇷',cont:'Europe'},{name:'Guatemala',capital:'Ciudad de Guatemala',flag:'🇬🇹',cont:'Americas'},{name:'Guyana',capital:'Georgetown',flag:'🇬🇾',cont:'Americas'},{name:'Guinea',capital:'Conakri',flag:'🇬🇳',cont:'Africa'},{name:'Guinea-Bisáu',capital:'Bisáu',flag:'🇬🇼',cont:'Africa'},{name:'Guinea Ecuatorial',capital:'Malabo',flag:'🇬🇶',cont:'Africa'},{name:'Haití',capital:'Puerto Príncipe',flag:'🇭🇹',cont:'Americas'},{name:'Honduras',capital:'Tegucigalpa',flag:'🇭🇳',cont:'Americas'},{name:'Hungría',capital:'Budapest',flag:'🇭🇺',cont:'Europe'},{name:'India',capital:'Nueva Delhi',flag:'🇮🇳',cont:'Asia'},{name:'Indonesia',capital:'Yakarta',flag:'🇮🇩',cont:'Asia'},{name:'Irak',capital:'Bagdad',flag:'🇮🇶',cont:'Asia'},{name:'Irán',capital:'Teherán',flag:'🇮🇷',cont:'Asia'},{name:'Irlanda',capital:'Dublín',flag:'🇮🇪',cont:'Europe'},{name:'Islandia',capital:'Reikiavik',flag:'🇮🇸',cont:'Europe'},{name:'Islas Marshall',capital:'Majuro',flag:'🇲🇭',cont:'Oceania'},{name:'Islas Salomón',capital:'Honiara',flag:'🇸🇧',cont:'Oceania'},{name:'Israel',capital:'Jerusalén',flag:'🇮🇱',cont:'Asia'},{name:'Italia',capital:'Roma',flag:'🇮🇹',cont:'Europe'},{name:'Jamaica',capital:'Kingston',flag:'🇯🇲',cont:'Americas'},{name:'Japón',capital:'Tokio',flag:'🇯🇵',cont:'Asia'},{name:'Jordania',capital:'Amán',flag:'🇯🇴',cont:'Asia'},{name:'Kazajistán',capital:'Astaná',flag:'🇰🇿',cont:'Asia'},{name:'Kenia',capital:'Nairobi',flag:'🇰🇪',cont:'Africa'},{name:'Kirguistán',capital:'Biskek',flag:'🇰🇬',cont:'Asia'},{name:'Kiribati',capital:'Tarawa',flag:'🇰🇮',cont:'Oceania'},{name:'Kuwait',capital:'Ciudad de Kuwait',flag:'🇰🇼',cont:'Asia'},{name:'Laos',capital:'Vientián',flag:'🇱🇦',cont:'Asia'},{name:'Lesoto',capital:'Maseru',flag:'🇱🇸',cont:'Africa'},{name:'Letonia',capital:'Riga',flag:'🇱🇻',cont:'Europe'},{name:'Líbano',capital:'Beirut',flag:'🇱🇧',cont:'Asia'},{name:'Liberia',capital:'Monrovia',flag:'🇱🇷',cont:'Africa'},{name:'Libia',capital:'Trípoli',flag:'🇱🇾',cont:'Africa'},{name:'Liechtenstein',capital:'Vaduz',flag:'🇱🇮',cont:'Europe'},{name:'Lituania',capital:'Vilna',flag:'🇱🇹',cont:'Europe'},{name:'Luxemburgo',capital:'Luxemburgo',flag:'🇱🇺',cont:'Europe'},{name:'Macedonia del Norte',capital:'Skopie',flag:'🇲🇰',cont:'Europe'},{name:'Madagascar',capital:'Antananarivo',flag:'🇲🇬',cont:'Africa'},{name:'Malasia',capital:'Kuala Lumpur',flag:'🇲🇾',cont:'Asia'},{name:'Malaui',capital:'Lilongüe',flag:'🇲🇼',cont:'Africa'},{name:'Maldivas',capital:'Malé',flag:'🇲🇻',cont:'Asia'},{name:'Malí',capital:'Bamako',flag:'🇲🇱',cont:'Africa'},{name:'Malta',capital:'La Valeta',flag:'🇲🇹',cont:'Europe'},{name:'Marruecos',capital:'Rabat',flag:'🇲🇦',cont:'Africa'},{name:'Mauricio',capital:'Port Louis',flag:'🇲🇺',cont:'Africa'},{name:'Mauritania',capital:'Nuakchot',flag:'🇲🇷',cont:'Africa'},{name:'México',capital:'Ciudad de México',flag:'🇲🇽',cont:'Americas'},{name:'Micronesia',capital:'Palikir',flag:'🇫🇲',cont:'Oceania'},{name:'Moldavia',capital:'Chisináu',flag:'🇲🇩',cont:'Europe'},{name:'Mónaco',capital:'Mónaco',flag:'🇲🇨',cont:'Europe'},{name:'Mongolia',capital:'Ulán Bator',flag:'🇲🇳',cont:'Asia'},{name:'Montenegro',capital:'Podgorica',flag:'🇲🇪',cont:'Europe'},{name:'Mozambique',capital:'Maputo',flag:'🇲🇿',cont:'Africa'},{name:'Namibia',capital:'Windhoek',flag:'🇳🇦',cont:'Africa'},{name:'Nauru',capital:'Yaren',flag:'🇳🇷',cont:'Oceania'},{name:'Nepal',capital:'Katmandú',flag:'🇳🇵',cont:'Asia'},{name:'Nicaragua',capital:'Managua',flag:'🇳🇮',cont:'Americas'},{name:'Níger',capital:'Niamey',flag:'🇳🇪',cont:'Africa'},{name:'Nigeria',capital:'Abuya',flag:'🇳🇬',cont:'Africa'},{name:'Noruega',capital:'Oslo',flag:'🇳🇴',cont:'Europe'},{name:'Nueva Zelanda',capital:'Wellington',flag:'🇳🇿',cont:'Oceania'},{name:'Omán',capital:'Mascate',flag:'🇴🇲',cont:'Asia'},{name:'Países Bajos',capital:'Ámsterdam',flag:'🇳🇱',cont:'Europe'},{name:'Pakistán',capital:'Islamabad',flag:'🇵🇰',cont:'Asia'},{name:'Palaos',capital:'Ngerulmud',flag:'🇵🇼',cont:'Oceania'},{name:'Panamá',capital:'Ciudad de Panamá',flag:'🇵🇦',cont:'Americas'},{name:'Papúa Nueva Guinea',capital:'Port Moresby',flag:'🇵🇬',cont:'Oceania'},{name:'Paraguay',capital:'Asunción',flag:'🇵🇾',cont:'Americas'},{name:'Perú',capital:'Lima',flag:'🇵🇪',cont:'Americas'},{name:'Polonia',capital:'Varsovia',flag:'🇵🇱',cont:'Europe'},{name:'Portugal',capital:'Lisboa',flag:'🇵🇹',cont:'Europe'},{name:'Reino Unido',capital:'Londres',flag:'🇬🇧',cont:'Europe'},{name:'República Centroafricana',capital:'Bangui',flag:'🇨🇫',cont:'Africa'},{name:'República Checa',capital:'Praga',flag:'🇨🇿',cont:'Europe'},{name:'República del Congo',capital:'Brazzaville',flag:'🇨🇬',cont:'Africa'},{name:'República Democrática del Congo',capital:'Kinsasa',flag:'🇨🇩',cont:'Africa'},{name:'República Dominicana',capital:'Santo Domingo',flag:'🇩🇴',cont:'Americas'},{name:'Ruanda',capital:'Kigali',flag:'🇷🇼',cont:'Africa'},{name:'Rumania',capital:'Bucarest',flag:'🇷🇴',cont:'Europe'},{name:'Rusia',capital:'Moscú',flag:'🇷🇺',cont:'Europe'},{name:'Samoa',capital:'Apia',flag:'🇼🇸',cont:'Oceania'},{name:'San Cristóbal y Nieves',capital:'Basseterre',flag:'🇰🇳',cont:'Americas'},{name:'San Marino',capital:'San Marino',flag:'🇸🇲',cont:'Europe'},{name:'San Vicente y las Granadinas',capital:'Kingstown',flag:'🇻🇨',cont:'Americas'},{name:'Santa Lucía',capital:'Castries',flag:'🇱🇨',cont:'Americas'},{name:'Santo Tomé y Príncipe',capital:'Santo Tomé',flag:'🇸🇹',cont:'Africa'},{name:'Senegal',capital:'Dakar',flag:'🇸🇳',cont:'Africa'},{name:'Serbia',capital:'Belgrado',flag:'🇷🇸',cont:'Europe'},{name:'Seychelles',capital:'Victoria',flag:'🇸🇨',cont:'Africa'},{name:'Sierra Leona',capital:'Freetown',flag:'🇸🇱',cont:'Africa'},{name:'Singapur',capital:'Singapur',flag:'🇸🇬',cont:'Asia'},{name:'Siria',capital:'Damasco',flag:'🇸🇾',cont:'Asia'},{name:'Somalia',capital:'Mogadiscio',flag:'🇸🇴',cont:'Africa'},{name:'Sri Lanka',capital:'Sri Jayawardenapura Kotte',flag:'🇱🇰',cont:'Asia'},{name:'Sudáfrica',capital:'Pretoria',flag:'🇿🇦',cont:'Africa'},{name:'Sudán',capital:'Jartum',flag:'🇸🇩',cont:'Africa'},{name:'Sudán del Sur',capital:'Yuba',flag:'🇸🇸',cont:'Africa'},{name:'Suecia',capital:'Estocolmo',flag:'🇸🇪',cont:'Europe'},{name:'Suiza',capital:'Berna',flag:'🇨🇭',cont:'Europe'},{name:'Surinam',capital:'Paramaribo',flag:'🇸🇷',cont:'Americas'},{name:'Tailandia',capital:'Bangkok',flag:'🇹🇭',cont:'Asia'},{name:'Tanzania',capital:'Dodoma',flag:'🇹🇿',cont:'Africa'},{name:'Tayikistán',capital:'Dusambé',flag:'🇹🇯',cont:'Asia'},{name:'Timor Oriental',capital:'Dili',flag:'🇹🇱',cont:'Asia'},{name:'Togo',capital:'Lomé',flag:'🇹🇬',cont:'Africa'},{name:'Tonga',capital:'Nukualofa',flag:'🇹🇴',cont:'Oceania'},{name:'Trinidad y Tobago',capital:'Puerto España',flag:'🇹🇹',cont:'Americas'},{name:'Túnez',capital:'Túnez',flag:'🇹🇳',cont:'Africa'},{name:'Turkmenistán',capital:'Asjabad',flag:'🇹🇲',cont:'Asia'},{name:'Turquía',capital:'Ankara',flag:'🇹🇷',cont:'Asia'},{name:'Tuvalu',capital:'Funafuti',flag:'🇹🇻',cont:'Oceania'},{name:'Ucrania',capital:'Kiev',flag:'🇺🇦',cont:'Europe'},{name:'Uganda',capital:'Kampala',flag:'🇺🇬',cont:'Africa'},{name:'Uruguay',capital:'Montevideo',flag:'🇺🇾',cont:'Americas'},{name:'Uzbekistán',capital:'Taskent',flag:'🇺🇿',cont:'Asia'},{name:'Vanuatu',capital:'Port Vila',flag:'🇻🇺',cont:'Oceania'},{name:'Venezuela',capital:'Caracas',flag:'🇻🇪',cont:'Americas'},{name:'Vietnam',capital:'Hanói',flag:'🇻🇳',cont:'Asia'},{name:'Yemen',capital:'Saná',flag:'🇾🇪',cont:'Asia'},{name:'Yibuti',capital:'Yibuti',flag:'🇩🇯',cont:'Africa'},{name:'Zambia',capital:'Lusaka',flag:'🇿🇲',cont:'Africa'},{name:'Zimbabue',capital:'Harare',flag:'🇿🇼',cont:'Africa'}
+  ];
+  const contLabel: Record<string, string> = { Africa: 'África', Americas: 'América', Asia: 'Asia', Europe: 'Europa', Oceania: 'Oceanía' };
+
+  const cont = document.getElementById('cn-cont') as HTMLSelectElement;
+  const count = document.getElementById('cn-count') as HTMLInputElement;
+  const result = document.getElementById('cn-result')!;
+  const gen = document.getElementById('cn-gen') as HTMLButtonElement;
+  const copy = document.getElementById('cn-copy') as HTMLButtonElement;
+
+  function rand(max: number) {
+    const arr = new Uint32Array(1);
+    window.crypto.getRandomValues(arr);
+    return arr[0] % max;
+  }
+  function pick() {
+    const pool = cont.value === 'all' ? COUNTRIES : COUNTRIES.filter(c => c.cont === cont.value);
+    const n = Math.max(1, Math.min(20, parseInt(count.value) || 1));
+    const picks: Country[] = [];
+    const used = new Set<number>();
+    for (let i = 0; i < n && i < pool.length; i++) {
+      let idx;
+      do { idx = rand(pool.length); } while (used.has(idx) && used.size < pool.length);
+      used.add(idx);
+      picks.push(pool[idx]);
+    }
+    result.innerHTML = picks.map(c => `<div class="cn-card"><span class="cn-flag">${c.flag}</span><div class="cn-info"><div class="name">${c.name}</div><div class="meta">Capital: ${c.capital} · ${contLabel[c.cont]}</div></div></div>`).join('');
+  }
+  gen.addEventListener('click', pick);
+  copy.addEventListener('click', () => {
+    const names = Array.from(result.querySelectorAll('.name')).map(el => el.textContent).join(', ');
+    navigator.clipboard.writeText(names);
+    copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = 'Copiar nombres'; }, 1200);
+  });
+  pick();
+</script>

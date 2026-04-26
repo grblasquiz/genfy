@@ -1,0 +1,150 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Online Base64 Encoder | Genfy';
+const description = 'Encode text to Base64 instantly. Supports UTF-8, URL-safe variant and files. Runs entirely in your browser, no data sent.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is Base64 and what is it for?', acceptedAnswer: { '@type': 'Answer', text: 'Base64 represents binary data using 64 printable ASCII characters. Used to send binaries through text-only channels: emails, JSON, URLs and data URIs.' } },
+    { '@type': 'Question', name: 'Is Base64 encryption?', acceptedAnswer: { '@type': 'Answer', text: 'No. Base64 is just an encoding, reversible by anyone. If you need confidentiality, use real encryption (AES, libsodium, TLS).' } },
+    { '@type': 'Question', name: 'When should I use URL-safe Base64?', acceptedAnswer: { '@type': 'Answer', text: 'When the result goes into URLs, HTTP headers or filenames. It replaces + with -, / with _ and skips the = padding, avoiding escaping.' } },
+    { '@type': 'Question', name: 'How much does encoded text grow?', acceptedAnswer: { '@type': 'Answer', text: 'Roughly 33% larger. Every 3 bytes of input become 4 output characters.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Tech"
+    title="Base64 Encoder"
+    intro="Convert text to Base64 with UTF-8 support and URL-safe variant. Useful for tokens, data URIs, JSON embeds and HTTP headers. Everything is processed in your browser."
+  >
+    <div slot="tool" class="b64-tool">
+      <label for="b64-in">Text to encode</label>
+      <textarea id="b64-in" rows="6" placeholder="Paste your text here…">Hello, world</textarea>
+
+      <div class="b64-toggles">
+        <label><input type="checkbox" id="b64-url" /> URL-safe (- and _ instead of + and /)</label>
+        <label><input type="checkbox" id="b64-nopad" /> No padding (no =)</label>
+        <label><input type="checkbox" id="b64-wrap" /> Wrap lines at 76 characters</label>
+      </div>
+
+      <label for="b64-out">Base64 result</label>
+      <textarea id="b64-out" class="mono" rows="6" readonly></textarea>
+      <button id="b64-copy" class="btn btn-primary" type="button"><span class="copy-icon">Copy result</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>What Base64 is</h2>
+      <p>
+        Base64 is an encoding scheme that represents binary data using 64 printable ASCII
+        characters: <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>+</code> and
+        <code>/</code>, plus <code>=</code> as padding. Every 3 bytes (24 bits) map to 4
+        characters of 6 bits each. The name comes from "base 64": the system uses 64 symbols
+        instead of the 256 possible in raw binary.
+      </p>
+      <p>
+        It's standardized in RFC 4648. There are variants: standard (with <code>+</code> and
+        <code>/</code>), URL-safe (with <code>-</code> and <code>_</code>) and a few less common
+        ones. Every serious language ships Base64 in its standard library.
+      </p>
+
+      <h2>When to use Base64</h2>
+      <ul>
+        <li><strong>Email attachments.</strong> SMTP was designed for ASCII text. MIME uses Base64 to embed binaries (PDF, images) in messages.</li>
+        <li><strong>Data URIs.</strong> <code>data:image/png;base64,iVBORw0KGgo...</code> embeds small images directly into HTML or CSS.</li>
+        <li><strong>JSON with binary data.</strong> JSON only supports text. To send bytes without a multipart endpoint, encode them in Base64.</li>
+        <li><strong>JWT.</strong> Header, payload and signature are encoded in URL-safe Base64.</li>
+        <li><strong>Basic Auth.</strong> The <code>Authorization: Basic ...</code> header carries <code>username:password</code> in Base64 (not secure: requires HTTPS).</li>
+        <li><strong>Config variables.</strong> To store small binaries (SSH keys, certificates) in environment variables or YAML.</li>
+      </ul>
+
+      <h2>The URL-safe variant</h2>
+      <p>
+        In URLs, <code>+</code> and <code>/</code> have special meaning. <code>/</code>
+        separates path segments; <code>+</code> in query strings is interpreted as a space. To
+        avoid escaping, the URL-safe variant replaces them with <code>-</code> and <code>_</code>.
+        It also typically drops the trailing <code>=</code> padding.
+      </p>
+      <p>
+        This variant is used in JWT, OAuth (PKCE), public API keys and, in general, any token
+        that ends up in a URL.
+      </p>
+
+      <h2>Size and efficiency</h2>
+      <p>
+        Base64 inflates data by about 33%: every 3 bytes become 4. A 100 KB image becomes 133 KB
+        when Base64-encoded. That's why you should only embed small images as data URIs: for
+        anything larger, serve them as a separate file.
+      </p>
+      <p>
+        If you need something even more compact, consider Base85 (Ascii85), which encodes 4
+        bytes in 5 characters (25% overhead). The PDF format uses it for embedded images.
+      </p>
+
+      <h2>Common Base64 mistakes</h2>
+      <ol>
+        <li><strong>Confusing it with encryption.</strong> Base64 is readable — anyone can decode it. If you need privacy, encrypt with AES before encoding.</li>
+        <li><strong>Forgetting UTF-8.</strong> For text with accents or emoji, encode to UTF-8 first (which our generator does), never plain ASCII.</li>
+        <li><strong>Mixing variants.</strong> Decoding URL-safe Base64 with a standard decoder fails. Normalize first.</li>
+        <li><strong>Missing padding.</strong> Some decoders require the trailing <code>=</code>. If your string lacks it, add it manually so the length is a multiple of 4.</li>
+      </ol>
+
+      <h2>Privacy of this encoder</h2>
+      <p>
+        Everything is processed in your browser with <code>btoa</code> on top of TextEncoder.
+        No server, no content analytics, no logs. Paste whatever you want: if you close the
+        tab, it goes with you.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is Base64?</summary><p>An encoding that represents binary using 64 ASCII characters. Used to fit bytes into text-only channels.</p></details>
+      <details><summary>Is it encryption?</summary><p>No. Base64 is just encoding, reversible by anyone. For confidentiality use real encryption (AES, libsodium).</p></details>
+      <details><summary>When to use URL-safe?</summary><p>When the result goes in URLs, headers or filenames. Avoids escaping of + and /.</p></details>
+      <details><summary>How much does the text grow?</summary><p>Roughly 33%: every 3 bytes become 4 characters.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .b64-tool textarea { font-family: var(--font-mono); margin-bottom: 1rem; resize: vertical; }
+  .b64-tool textarea[readonly] { background: var(--bg-inset); }
+  .b64-toggles { display: grid; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .b64-toggles label { font-weight: 400; font-size: 0.9375rem; color: var(--text-soft); display: flex; align-items: center; gap: 0.5rem; margin: 0; cursor: pointer; }
+</style>
+
+<script>
+  const inp = document.getElementById('b64-in') as HTMLTextAreaElement;
+  const out = document.getElementById('b64-out') as HTMLTextAreaElement;
+  const url = document.getElementById('b64-url') as HTMLInputElement;
+  const nopad = document.getElementById('b64-nopad') as HTMLInputElement;
+  const wrap = document.getElementById('b64-wrap') as HTMLInputElement;
+  const copy = document.getElementById('b64-copy') as HTMLButtonElement;
+
+  function encode(): void {
+    try {
+      const utf8 = new TextEncoder().encode(inp.value);
+      let bin = ''; for (let i = 0; i < utf8.length; i++) bin += String.fromCharCode(utf8[i]);
+      let b64 = btoa(bin);
+      if (url.checked) b64 = b64.replace(/\+/g, '-').replace(/\//g, '_');
+      if (nopad.checked) b64 = b64.replace(/=+$/, '');
+      if (wrap.checked) b64 = b64.match(/.{1,76}/g)?.join('\n') ?? b64;
+      out.value = b64;
+    } catch { out.value = ''; }
+  }
+  [inp, url, nopad, wrap].forEach(el => el.addEventListener('input', encode));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copied</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copy result'; delete copy.dataset.copied; }, 1400);
+  });
+  encode();
+</script>

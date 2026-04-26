@@ -1,0 +1,225 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de fechas aleatorias | Genfy';
+const description = 'Generá fechas aleatorias en cualquier rango y formato (ISO 8601, dd/mm/yyyy, Unix timestamp). Para fixtures, tests y datos sintéticos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué formato de fecha conviene en una base de datos?', acceptedAnswer: { '@type': 'Answer', text: 'ISO 8601 con UTC: 2026-04-26T14:30:00Z. Es inequívoco, ordenable como string y soportado por todos los motores. Para columnas date sin hora, YYYY-MM-DD.' } },
+    { '@type': 'Question', name: '¿Por qué generar fechas con timezone?', acceptedAnswer: { '@type': 'Answer', text: 'En tests reales tu sistema procesa eventos de usuarios en distintas zonas. Si todas tus fixtures están en UTC, no detectás bugs de conversión.' } },
+    { '@type': 'Question', name: '¿Qué es Unix timestamp?', acceptedAnswer: { '@type': 'Answer', text: 'El número de segundos transcurridos desde el 1 de enero de 1970 UTC. Compacto y ordenable, lo usan APIs como JWT, GitHub o cualquier cosa que mande tiempos en JSON.' } },
+    { '@type': 'Question', name: '¿Cuándo NO usar fechas aleatorias?', acceptedAnswer: { '@type': 'Answer', text: 'Cuando tu test depende de relaciones temporales reales (ej. "el pago llega después del pedido"). Para esos casos, generá fechas correlacionadas explícitamente.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Datos / Testing"
+    title="Generador de fechas aleatorias"
+    intro="Fechas aleatorias dentro del rango que elijas, con el formato que necesites. Útil para fixtures, seeds, tests de validación y prototipos."
+  >
+    <div slot="tool" class="date-tool">
+      <div class="date-range">
+        <div>
+          <label for="date-from">Desde</label>
+          <input id="date-from" type="date" />
+        </div>
+        <div>
+          <label for="date-to">Hasta</label>
+          <input id="date-to" type="date" />
+        </div>
+      </div>
+
+      <div class="date-controls">
+        <div>
+          <label for="date-format">Formato</label>
+          <select id="date-format">
+            <option value="iso" selected>ISO 8601 (2026-04-26T14:30:00Z)</option>
+            <option value="iso-date">ISO date (2026-04-26)</option>
+            <option value="es">dd/mm/yyyy (26/04/2026)</option>
+            <option value="us">mm/dd/yyyy (04/26/2026)</option>
+            <option value="long">26 de abril de 2026</option>
+            <option value="unix">Unix timestamp (1745676600)</option>
+            <option value="unix-ms">Unix ms (1745676600000)</option>
+          </select>
+        </div>
+        <div>
+          <label for="date-time">Hora</label>
+          <select id="date-time">
+            <option value="any" selected>Cualquier hora</option>
+            <option value="business">Horario laboral (9-18)</option>
+            <option value="midnight">Medianoche (00:00)</option>
+            <option value="none">Sin hora</option>
+          </select>
+        </div>
+        <div>
+          <label for="date-count">Cantidad</label>
+          <input id="date-count" type="number" min="1" max="500" value="20" />
+        </div>
+      </div>
+
+      <button id="date-gen" class="btn btn-primary" type="button">Generar fechas</button>
+
+      <textarea id="date-out" class="mono" rows="14" readonly></textarea>
+      <button id="date-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar todas</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>Formatos de fecha que conviene conocer</h2>
+      <p>
+        El mundo de las fechas es complicado precisamente porque es un dominio compartido entre
+        humanos, máquinas y zonas horarias. Algunos formatos clave:
+      </p>
+      <ul>
+        <li><strong>ISO 8601:</strong> <code>2026-04-26T14:30:00Z</code>. Estándar internacional, soporta zona horaria, ordenable como string. Es lo que usan APIs serias.</li>
+        <li><strong>ISO date:</strong> <code>2026-04-26</code>. Solo fecha, sin hora. Para columnas <code>DATE</code> en SQL.</li>
+        <li><strong>RFC 3339:</strong> subset de ISO 8601 más estricto. Es lo que usa JSON Schema y muchos lenguajes.</li>
+        <li><strong>Unix timestamp:</strong> <code>1745676600</code>. Segundos desde 1970-01-01 UTC. Compacto y monotónico.</li>
+        <li><strong>Local string:</strong> <code>26/04/2026</code> o <code>04/26/2026</code>. Bueno para mostrar al usuario, pésimo para almacenar.</li>
+      </ul>
+
+      <h2>UTC vs zonas horarias</h2>
+      <p>
+        La regla de oro en aplicaciones modernas: <strong>almacená todo en UTC, mostrá en la
+        zona horaria del usuario</strong>. Si guardás fechas en hora local, te enfrentás a:
+      </p>
+      <ul>
+        <li>Conversiones inconsistentes cuando el servidor está en UTC y la base en otra zona.</li>
+        <li>Cambios de horario de verano que crean horas duplicadas o inexistentes.</li>
+        <li>Imposibilidad de comparar eventos entre usuarios de distintas zonas.</li>
+      </ul>
+      <p>
+        Para tests, este generador produce fechas en UTC por default. Mezclá con timezones
+        distintos para detectar bugs de conversión.
+      </p>
+
+      <h2>Fechas en tests automatizados</h2>
+      <ol>
+        <li><strong>No uses <code>new Date()</code> en assertions.</strong> Mockeá el reloj con bibliotecas como Sinon, vitest's <code>vi.useFakeTimers()</code>, o jest mock timers.</li>
+        <li><strong>Reproducibilidad.</strong> Si un test depende de fechas, fijá una semilla y un "now" simulado. Si no, los tests pasan o fallan según el momento del día.</li>
+        <li><strong>Edge cases temporales.</strong> 29 de febrero, cambios de horario, transiciones de año. Generá fechas que toquen esos casos.</li>
+        <li><strong>Rangos relativos.</strong> "Hace 7 días" debería calcularse desde el now mockeado, no desde el real.</li>
+      </ol>
+
+      <h2>El problema del año 2038</h2>
+      <p>
+        Los Unix timestamps de 32 bits con signo desbordan el 19 de enero de 2038 a las 03:14:07
+        UTC. Sistemas que aún usen <code>time_t</code> de 32 bits van a tener bugs ese día. Es
+        el equivalente moderno del Y2K.
+      </p>
+      <p>
+        Si generás fechas para tests de futuro, considerá incluir fechas posteriores al 2038
+        para verificar que tu sistema usa 64 bits o representaciones alternativas (ISO 8601,
+        BigInt). La mayoría de lenguajes modernos ya migraron, pero las bases legacy siguen
+        siendo vulnerables.
+      </p>
+
+      <h2>Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Fechas de creación de cuentas.</strong> Distribución plausible: pocos usuarios viejos, muchos recientes. Generá hasta hace 3-5 años.</li>
+        <li><strong>Fechas de pedidos.</strong> Concentración en horario laboral, picos en ciertos días. Combinable con la opción "horario laboral".</li>
+        <li><strong>Fechas de nacimiento.</strong> Rango entre hace 80 y hace 18 años para tests de validación de edad.</li>
+        <li><strong>Logs.</strong> Distribución uniforme con segundos exactos.</li>
+        <li><strong>Vencimientos.</strong> Fechas futuras con duraciones plausibles (1-12 meses).</li>
+      </ul>
+
+      <h2>Bugs de fechas que aparecen tarde</h2>
+      <p>
+        Tres bugs clásicos que aparecen recién en producción:
+      </p>
+      <ol>
+        <li><strong>Off-by-one en zonas horarias.</strong> Un usuario en GMT+10 ve "lunes" cuando tu base lo guarda como "domingo UTC".</li>
+        <li><strong>Truncamiento al insertar.</strong> Tu API recibe ISO 8601 con milisegundos pero la columna es <code>TIMESTAMP(0)</code>. Pierdes precisión.</li>
+        <li><strong>Format strings hardcodeados.</strong> <code>"DD/MM/YYYY"</code> en moment.js falla con datos en formato US.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué formato usar en BD?</summary><p>ISO 8601 con UTC. Para columnas date sin hora, YYYY-MM-DD. Inequívoco y ordenable como string.</p></details>
+      <details><summary>¿Por qué timezone variado?</summary><p>Para detectar bugs de conversión. Si tus fixtures son todas UTC, esos bugs aparecen recién en producción.</p></details>
+      <details><summary>¿Qué es Unix timestamp?</summary><p>Segundos desde 1970-01-01 UTC. Compacto y ordenable, usado en JWT, APIs y JSON.</p></details>
+      <details><summary>¿Cuándo NO usarlas?</summary><p>Cuando hay relaciones temporales (pago después de pedido). Generá fechas correlacionadas en esos casos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .date-range, .date-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .date-controls { grid-template-columns: 2fr 1.3fr 1fr; }
+  @media (max-width: 600px) { .date-range, .date-controls { grid-template-columns: 1fr; } }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; margin: 1rem 0 0.75rem; }
+</style>
+
+<script>
+  function rand(min: number, max: number): number { const a = new Uint32Array(1); crypto.getRandomValues(a); return min + (a[0] % (max - min + 1)); }
+  const fromEl = document.getElementById('date-from') as HTMLInputElement;
+  const toEl = document.getElementById('date-to') as HTMLInputElement;
+  const fmt = document.getElementById('date-format') as HTMLSelectElement;
+  const time = document.getElementById('date-time') as HTMLSelectElement;
+  const count = document.getElementById('date-count') as HTMLInputElement;
+  const out = document.getElementById('date-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('date-gen') as HTMLButtonElement;
+  const copy = document.getElementById('date-copy') as HTMLButtonElement;
+
+  // Init defaults
+  const today = new Date();
+  const past = new Date(); past.setFullYear(today.getFullYear() - 3);
+  fromEl.valueAsDate = past;
+  toEl.valueAsDate = today;
+
+  const MONTHS_ES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+  function format(d: Date): string {
+    const y = d.getUTCFullYear();
+    const m = String(d.getUTCMonth() + 1).padStart(2, '0');
+    const dd = String(d.getUTCDate()).padStart(2, '0');
+    const hh = String(d.getUTCHours()).padStart(2, '0');
+    const mm = String(d.getUTCMinutes()).padStart(2, '0');
+    const ss = String(d.getUTCSeconds()).padStart(2, '0');
+    if (fmt.value === 'iso') return `${y}-${m}-${dd}T${hh}:${mm}:${ss}Z`;
+    if (fmt.value === 'iso-date') return `${y}-${m}-${dd}`;
+    if (fmt.value === 'es') return `${dd}/${m}/${y}`;
+    if (fmt.value === 'us') return `${m}/${dd}/${y}`;
+    if (fmt.value === 'long') return `${parseInt(dd, 10)} de ${MONTHS_ES[d.getUTCMonth()]} de ${y}`;
+    if (fmt.value === 'unix') return String(Math.floor(d.getTime() / 1000));
+    if (fmt.value === 'unix-ms') return String(d.getTime());
+    return d.toISOString();
+  }
+
+  function generate() {
+    const from = new Date(fromEl.value).getTime();
+    const to = new Date(toEl.value).getTime();
+    if (isNaN(from) || isNaN(to) || from >= to) { out.value = '/* Rango inválido */'; return; }
+    const n = Math.min(500, Math.max(1, parseInt(count.value || '20', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) {
+      const ts = from + Math.floor(Math.random() * (to - from));
+      const d = new Date(ts);
+      if (time.value === 'business') {
+        d.setUTCHours(rand(9, 17), rand(0, 59), rand(0, 59), 0);
+      } else if (time.value === 'midnight' || time.value === 'none') {
+        d.setUTCHours(0, 0, 0, 0);
+      } else {
+        d.setUTCHours(rand(0, 23), rand(0, 59), rand(0, 59), 0);
+      }
+      lines.push(format(d));
+    }
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', generate);
+  [fromEl, toEl, fmt, time, count].forEach(el => el.addEventListener('change', generate));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copiado</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copiar todas'; delete copy.dataset.copied; }, 1400);
+  });
+  generate();
+</script>

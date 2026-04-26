@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de palabras aleatorias gratis | Genfy';
+const description = 'Generá palabras aleatorias en español al instante. Ideal para juegos, escritura creativa, brainstorming, ejercicios de vocabulario y prompts.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve un generador de palabras aleatorias?', acceptedAnswer: { '@type': 'Answer', text: 'Sirve para destrabar bloqueos creativos, generar prompts de escritura, jugar a Pictionary o Scattergories, y crear ejercicios de vocabulario o asociación de ideas.' } },
+    { '@type': 'Question', name: '¿Qué tan aleatorias son las palabras?', acceptedAnswer: { '@type': 'Answer', text: 'Usamos crypto.getRandomValues, el generador criptográfico del navegador. Es muchísimo más uniforme que Math.random y no tiene patrones predecibles.' } },
+    { '@type': 'Question', name: '¿Puedo elegir la categoría?', acceptedAnswer: { '@type': 'Answer', text: 'Sí: sustantivos, verbos, adjetivos o todas. También podés filtrar por longitud para conseguir palabras cortas o largas según el uso.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto / Words" title="Generador de palabras aleatorias"
+    intro="Palabras al azar en español para destrabar tu próxima idea: brainstorming, juegos, prompts de escritura y ejercicios de vocabulario.">
+
+    <div slot="tool" class="rw">
+      <div class="rw-row">
+        <div>
+          <label for="rw-amount">Cantidad</label>
+          <input id="rw-amount" type="number" min="1" max="50" value="5" />
+        </div>
+        <div>
+          <label for="rw-cat">Categoría</label>
+          <select id="rw-cat">
+            <option value="all">Todas</option>
+            <option value="noun">Sustantivos</option>
+            <option value="verb">Verbos</option>
+            <option value="adj">Adjetivos</option>
+          </select>
+        </div>
+        <div>
+          <label for="rw-len">Longitud</label>
+          <select id="rw-len">
+            <option value="any">Cualquiera</option>
+            <option value="short">Cortas (3-5)</option>
+            <option value="med">Medias (6-8)</option>
+            <option value="long">Largas (9+)</option>
+          </select>
+        </div>
+      </div>
+      <button id="rw-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="rw-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="rw-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué usar palabras aleatorias para crear</h2>
+      <p>
+        Cuando estás trabado, el cerebro vuelve una y otra vez a las mismas asociaciones. Una
+        palabra externa, traída al azar, fuerza una conexión nueva: si estás escribiendo sobre
+        marketing y aparece "ventana", el cerebro intenta unir los conceptos y aparecen ángulos
+        que no buscabas. Es la base de técnicas como el "estímulo aleatorio" de Edward de Bono y
+        del oblique strategies de Brian Eno.
+      </p>
+
+      <h2>Usos concretos del generador</h2>
+      <ul>
+        <li><strong>Pictionary, charadas y Scattergories.</strong> Una palabra por turno y a dibujar.</li>
+        <li><strong>Prompts de escritura.</strong> Tres palabras al azar y un cuento de 200 palabras que las incluya.</li>
+        <li><strong>Brainstorming creativo.</strong> Forzar conexiones entre tu problema y un concepto no relacionado.</li>
+        <li><strong>Vocabulario para idiomas.</strong> Generar palabras y traducirlas o usarlas en oraciones.</li>
+        <li><strong>Naming exploratorio.</strong> Para sumar al pool inicial cuando estás buscando un nombre.</li>
+      </ul>
+
+      <h2>Sustantivos, verbos o adjetivos</h2>
+      <p>
+        El filtro por categoría es útil cuando necesitás un patrón gramatical: tres sustantivos
+        para un título, un verbo para un slogan tipo "Movete", un adjetivo para describir una
+        marca. Si te da igual, dejalo en "todas" — la mezcla suele producir asociaciones más
+        ricas que un mismo tipo gramatical.
+      </p>
+
+      <h2>Filtro por longitud</h2>
+      <p>
+        Las palabras cortas funcionan mejor para juegos rápidos, hashtags y nombres de producto.
+        Las largas dan textura para prompts literarios y ejercicios de pronunciación. Si estás
+        creando flashcards o frases de ejemplo, las medianas (6-8 letras) son el punto dulce
+        para el aprendizaje sin frustración.
+      </p>
+
+      <h2>Cómo trabajar con la salida</h2>
+      <p>
+        Una técnica simple: generá 10 palabras, mirá la lista y subrayá las 3 que te llamaron la
+        atención sin pensar. Esas tres son tu prompt. El resto descártalo. La elección rápida y
+        emocional es más útil que tratar de "elegir bien" — es justamente lo que el azar viene
+        a evitar.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve?</summary><p>Para destrabar bloqueos creativos, jugar, generar prompts de escritura, ejercicios de vocabulario y brainstorming.</p></details>
+      <details><summary>¿Qué tan aleatorias son?</summary><p>Usamos crypto.getRandomValues del navegador, mucho más uniforme que Math.random y sin patrones predecibles.</p></details>
+      <details><summary>¿Puedo elegir categoría?</summary><p>Sí: sustantivos, verbos, adjetivos o todas. También podés filtrar por longitud.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const NOUNS = ["mesa","puerta","jardín","ventana","camino","ciudad","montaña","río","libro","computadora","teclado","silla","ventilador","cuaderno","lápiz","cocina","baño","pasillo","escalera","techo","pared","suelo","cuadro","espejo","reloj","cama","manta","almohada","perro","gato","caballo","conejo","tigre","oso","ardilla","lobo","cordero","pájaro","águila","gorrión","abeja","hormiga","mariposa","mosca","pez","ballena","delfín","tiburón","cangrejo","pulpo","manzana","naranja","banana","melón","sandía","fresa","limón","uva","pera","durazno","ciruela","tomate","cebolla","ajo","papa","zanahoria","lechuga","espinaca","arroz","pan","queso","leche","huevo","carne","pollo","pescado","pasta","sopa","ensalada","postre","helado","torta","galleta","chocolate","café","aire","fuego","tierra","agua","piedra","arena","nieve","hielo","viento","nube","trueno","lluvia","sol","luz","sombra","calor","frío","silencio","ruido","música","canción","baile","fiesta","viaje","trabajo","escuela","oficina","fábrica","tienda","mercado","calle","avenida","plaza","parque","puente","barco","tren","auto","bicicleta","avión","cohete","mensaje","carta","sobre","sello","papel","tinta","pluma","máquina","motor","botón","cable","pantalla","altavoz","micrófono","cámara","foto","video","película","historia","cuento","novela","poema","ensayo","palabra","frase","párrafo","capítulo","idea","sueño","memoria","esperanza","alegría","tristeza","miedo","amor","amistad","familia","hijo","madre","padre","abuelo","hermano","primo","amigo","vecino","cliente","jefe","equipo","empresa","proyecto","idea","plan","meta","logro","fracaso","éxito","desafío","problema","solución"];
+  const VERBS = ["correr","caminar","saltar","nadar","volar","leer","escribir","cantar","bailar","reír","llorar","comer","beber","dormir","soñar","pensar","crear","construir","romper","arreglar","abrir","cerrar","empujar","tirar","cargar","mover","dejar","tomar","dar","recibir","comprar","vender","prestar","pagar","cobrar","ahorrar","gastar","invertir","ganar","perder","jugar","trabajar","estudiar","enseñar","aprender","explicar","preguntar","responder","hablar","escuchar","mirar","ver","oír","oler","tocar","sentir","amar","odiar","temer","esperar","necesitar","querer","poder","saber","conocer","encontrar","perder","buscar","esconder","mostrar","ocultar","revelar","contar","sumar","restar","medir","pesar","cortar","unir","separar","mezclar","cocinar","limpiar","ordenar","decorar","pintar","dibujar","fotografiar","filmar","grabar","editar","publicar","compartir","enviar","recibir","aceptar","rechazar","aprobar","negar","permitir","prohibir","mandar","obedecer","liderar","seguir","guiar","planificar","decidir","elegir"];
+  const ADJ = ["pequeño","grande","alto","bajo","ancho","estrecho","largo","corto","grueso","delgado","ligero","pesado","rápido","lento","fuerte","débil","duro","blando","liso","áspero","suave","rugoso","limpio","sucio","nuevo","viejo","joven","antiguo","moderno","fresco","caliente","frío","tibio","seco","húmedo","mojado","claro","oscuro","brillante","opaco","colorido","neutro","alegre","triste","valiente","tímido","amable","grosero","educado","sincero","leal","generoso","tacaño","creativo","práctico","curioso","aburrido","gracioso","serio","tranquilo","ansioso","seguro","peligroso","sano","enfermo","cansado","despierto","hambriento","saciado","rico","pobre","caro","barato","útil","inútil","fácil","difícil","sencillo","complejo","raro","común","único","típico","famoso","desconocido","libre","ocupado","silencioso","ruidoso","agradable","molesto","cómodo","incómodo","abierto","cerrado","completo","vacío","lleno","entero","roto","perfecto"];
+
+  const amountEl = document.getElementById('rw-amount') as HTMLInputElement;
+  const catEl = document.getElementById('rw-cat') as HTMLSelectElement;
+  const lenEl = document.getElementById('rw-len') as HTMLSelectElement;
+  const out = document.getElementById('rw-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('rw-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('rw-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function pool() {
+    const c = catEl.value;
+    if (c === 'noun') return NOUNS;
+    if (c === 'verb') return VERBS;
+    if (c === 'adj') return ADJ;
+    return [...NOUNS, ...VERBS, ...ADJ];
+  }
+  function lenOk(w: string) {
+    const L = w.length; const f = lenEl.value;
+    if (f === 'short') return L <= 5;
+    if (f === 'med') return L >= 6 && L <= 8;
+    if (f === 'long') return L >= 9;
+    return true;
+  }
+  function generate() {
+    const n = Math.max(1, Math.min(50, parseInt(amountEl.value || '5', 10)));
+    const p = pool().filter(lenOk);
+    const list = p.length ? p : pool();
+    const arr: string[] = [];
+    for (let i = 0; i < n; i++) arr.push(pick(list));
+    out.value = arr.join('\n');
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

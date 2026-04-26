@@ -1,0 +1,149 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free TikTok Hashtag Generator | Genfy';
+const description = 'Generate TikTok hashtags built for the FYP: 3-5 precise tags the algorithm understands, no spam, no empty #fyp.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many hashtags should I use on TikTok?', acceptedAnswer: { '@type': 'Answer', text: '3 to 5 relevant hashtags. TikTok prioritizes content signals (audio, captions, watch time) over hashtag count. Past 5 no extra reach.' } },
+    { '@type': 'Question', name: 'Should I use #fyp or #foryou?', acceptedAnswer: { '@type': 'Answer', text: 'No. TikTok does not need that hashtag to send you to the FYP — the algorithm scores the video itself. Using #fyp burns useful slots that could go to niche hashtags.' } },
+    { '@type': 'Question', name: 'How is it different from Instagram?', acceptedAnswer: { '@type': 'Answer', text: 'On Instagram, the hashtag is a discovery feed. On TikTok, it is a contextual signal to the algorithm. That is why 3-5 precise tags outperform 30 generic ones.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="TikTok Hashtag Generator"
+    intro="On TikTok, hashtags are contextual signals, not a feed. Genfy returns 3-5 precise hashtags: theme + niche + community, no #fyp or spam.">
+
+    <div slot="tool" class="th">
+      <label for="th-niche">Niche / category</label>
+      <input id="th-niche" type="text" placeholder="cooking, finance, fitness..." value="cooking" />
+
+      <button id="th-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate set</button>
+
+      <div id="th-out" class="th-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why TikTok hashtags work differently</h2>
+      <p>
+        On Instagram, the hashtag is a feed: people open #fitness and see posts. On TikTok, that feed barely matters. What counts is the For You Page (FYP), and the FYP algorithm reads far more than hashtags: it reads your audio, caption words, video frames, watch time, screen time, shares. The hashtag is a complementary signal, not the main one.
+      </p>
+      <p>
+        The rule shifts. Where Instagram rewards 8-12 balanced hashtags, TikTok rewards 3-5 precise hashtags. Beyond that, you're asking the algorithm to guess which category your content belongs to, and that lowers distribution quality.
+      </p>
+
+      <h2>The #fyp myth and why it costs reach</h2>
+      <p>
+        The most repeated myth is that adding #fyp or #foryou pushes you to the For You Page. It's false. TikTok decides distribution based on video signals, not ceremonial hashtags. But the cost of using #fyp is real: it eats one of the 3-5 useful slots. Replacing #fyp with a niche-specific hashtag would help the algorithm understand who to show your video to.
+      </p>
+
+      <h2>The 3-1-1 formula for TikTok</h2>
+      <ol>
+        <li><strong>3 theme hashtags (the what):</strong> describe the content directly. If it's a recipe, #pasta, #easycooking, #recipes.</li>
+        <li><strong>1 niche hashtag (the who):</strong> identifies your sub-community. #cookingforone, #vegantiktok, #budgetmeals.</li>
+        <li><strong>1 moment or trend hashtag (when applicable):</strong> active trends, edits, challenges. If nothing relevant is active, leave it out.</li>
+      </ol>
+      <p>Total: 4-5 hashtags. Each has a clear role and speaks to the algorithm on a different axis.</p>
+
+      <h2>How to find niche hashtags on TikTok</h2>
+      <ol>
+        <li>Open Search and type your general category.</li>
+        <li>Look at top accounts in that search and check which hashtags repeat.</li>
+        <li>Type the hashtag in Search to see real view count (not post count like Instagram). Aim for 5M-100M views to rank.</li>
+        <li>Note hashtags repeated by at least 3 reference creators — that's your niche pool.</li>
+        <li>Test a set for 2 weeks, watch Insights, rotate the ones that don't bring reach.</li>
+      </ol>
+
+      <h2>What TikTok measures (and why hashtags weigh less than they seem)</h2>
+      <p>The FYP algorithm weights these signals roughly in this order:</p>
+      <ul>
+        <li><strong>Watch time / completion rate:</strong> does it play to the end? Strongest signal.</li>
+        <li><strong>Re-watch:</strong> do people watch it more than once?</li>
+        <li><strong>Shares:</strong> much stronger than likes.</li>
+        <li><strong>Comments.</strong></li>
+        <li><strong>Audio:</strong> trending audios get a boost.</li>
+        <li><strong>Captions:</strong> caption keywords get processed.</li>
+        <li><strong>Hashtags:</strong> contextual, not decisive.</li>
+        <li><strong>Likes / follows:</strong> surprisingly, the weakest.</li>
+      </ul>
+      <p>So a great hashtag set without solid content fails. But solid content with badly placed hashtags underperforms what it could.</p>
+
+      <h2>TikTok SEO: the new edge</h2>
+      <p>
+        Since 2023 TikTok also works as a search engine (especially for Gen Z). That means caption keywords matter more than they used to. If your video is a carbonara recipe, write "easy carbonara recipe 5 minutes" in the caption — you'll show up when someone searches that, even without the exact hashtag. Caption + hashtag combined is what works.
+      </p>
+
+      <h2>When to change strategy</h2>
+      <p>
+        Every 6 weeks check Insights and filter your top 5 videos: which hashtags overlap? Those are your winning set. Underperforming videos with different hashtags tell you what to drop. Constant iteration on real data outperforms copying a generic set from a blog.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many hashtags?</summary><p>3 to 5 relevant ones. TikTok prioritizes content signals over hashtag count.</p></details>
+      <details><summary>Should I use #fyp?</summary><p>No. It burns useful slots that could go to niche hashtags.</p></details>
+      <details><summary>Different from Instagram?</summary><p>Instagram: hashtag = feed. TikTok: hashtag = signal. That's why 3-5 precise ones outperform 30 generic.</p></details>
+      <details><summary>Caption SEO?</summary><p>Yes. Since 2023 TikTok works as a search engine. Caption keywords now weigh more.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .th-out { margin-top: 1.25rem; display: grid; gap: 1rem; }
+  .th-group { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; }
+  .th-group:hover { border-color: var(--accent); }
+  .th-group h4 { margin: 0 0 0.5rem; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-subtle); }
+  .th-group p { margin: 0; line-height: 1.7; word-break: break-word; font-family: var(--font-mono); font-size: 0.875rem; }
+</style>
+
+<script>
+  const SETS: Record<string, { theme: string[], niche: string[] }> = {
+    cooking: { theme: ['easycooking', 'recipes', 'homecooking'], niche: ['cookingforone', 'budgetmeals'] },
+    fitness: { theme: ['fitness', 'workout', 'training'], niche: ['fitnessathome', 'beginnerworkout'] },
+    finance: { theme: ['personalfinance', 'savingmoney', 'investing'], niche: ['investingforbeginners', 'moneytips'] },
+    fashion: { theme: ['outfit', 'fashion', 'style'], niche: ['outfitsoftheday', 'fashiontiktok'] },
+    travel: { theme: ['travel', 'tourism', 'destinations'], niche: ['solotravel', 'budgettravel'] },
+    marketing: { theme: ['marketing', 'digitalmarketing', 'socialmedia'], niche: ['marketingtips', 'creatoreconomy'] },
+    default: { theme: ['lifestyle', 'creator', 'tips'], niche: ['microcommunity', 'localbrand'] },
+  };
+
+  const niche = document.getElementById('th-niche') as HTMLInputElement;
+  const gen = document.getElementById('th-gen') as HTMLButtonElement;
+  const out = document.getElementById('th-out')!;
+
+  function findSet(n: string) {
+    const k = n.toLowerCase().trim();
+    if (SETS[k]) return SETS[k];
+    if (k.includes('cook') || k.includes('food')) return SETS.cooking;
+    if (k.includes('fit') || k.includes('gym')) return SETS.fitness;
+    if (k.includes('finan') || k.includes('money')) return SETS.finance;
+    if (k.includes('fashion') || k.includes('style')) return SETS.fashion;
+    if (k.includes('travel')) return SETS.travel;
+    if (k.includes('market')) return SETS.marketing;
+    return SETS.default;
+  }
+
+  function makeGroup(title: string, hashtags: string[]) {
+    const g = document.createElement('div');
+    g.className = 'th-group';
+    const tags = hashtags.map(w => '#' + w).join(' ');
+    g.innerHTML = `<h4>${title}</h4><p>${tags}</p>`;
+    g.title = 'Click to copy';
+    g.addEventListener('click', () => { navigator.clipboard.writeText(tags); const old = g.querySelector('h4')!.textContent; g.querySelector('h4')!.textContent = '✓ COPIED'; setTimeout(() => g.querySelector('h4')!.textContent = old, 800); });
+    return g;
+  }
+
+  function generate() {
+    const s = findSet(niche.value);
+    out.innerHTML = '';
+    out.appendChild(makeGroup('Theme (3) — what the video shows', s.theme));
+    out.appendChild(makeGroup('Niche (1-2) — specific community', s.niche));
+    out.appendChild(makeGroup('FULL 3-1-1 SET (4-5 HASHTAGS)', [...s.theme, ...s.niche]));
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

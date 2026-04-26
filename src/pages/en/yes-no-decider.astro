@@ -1,0 +1,147 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Yes / No Decider Online | Genfy';
+const description = 'Decide between yes and no at random with animation. Useful for everyday decisions, quick doubts, or as an exercise to listen to your intuition.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Is it really 50/50?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. We use crypto.getRandomValues for uniform distribution: each answer has exactly the same probability.' } },
+    { '@type': 'Question', name: 'What is a yes/no decider for?', acceptedAnswer: { '@type': 'Answer', text: 'Trivial low-stakes decisions (cook or order in?, go or stay?). And as an exercise: when you see the answer, notice if you feel relief or disappointment. That tells you what you actually wanted.' } },
+    { '@type': 'Question', name: 'Does it have memory between rolls?', acceptedAnswer: { '@type': 'Answer', text: 'No. Each pick is independent. Five "yes" in a row don\'t tilt the next pick — randomness has no memory.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Random" title="Yes / No decider"
+    intro='Ask your question. Hit the button. Get a random yes or no. Sometimes your gut reaction to the answer tells you more than the answer itself.'>
+
+    <div slot="tool" class="yn-tool">
+      <div>
+        <label for="yn-q">Your question (optional)</label>
+        <input id="yn-q" type="text" placeholder='e.g. "should I go for a run now?"' />
+      </div>
+
+      <div id="yn-result" class="yn-result yn-idle">
+        <div class="yn-icon">?</div>
+        <div class="yn-text">Ask your question and hit the button</div>
+      </div>
+
+      <div class="yn-actions">
+        <button id="yn-decide" class="btn btn-primary" type="button">Decide</button>
+        <button id="yn-again" class="btn btn-ghost" type="button">Try again</button>
+      </div>
+
+      <p class="yn-hint">Tip: when the answer pops up, watch your first reaction. Relieved? You wanted that. Disappointed? You wanted the other. That's your real answer.</p>
+    </div>
+
+    <div slot="content">
+      <h2>Why a yes/no decider works better than it should</h2>
+      <p>
+        Daniel Kahneman documented something people know intuitively: sometimes we need
+        an external event to unstick a decision we've already made internally. A coin, a
+        yes/no decider or a die isn't a tool to <em>choose</em> for you. It's a tool to
+        <strong>reveal what you've already chosen</strong>. When you see "no" and feel
+        irritated, you wanted "yes". That irritation is useful information.
+      </p>
+
+      <h2>Decisions where the decider helps</h2>
+      <ul>
+        <li><strong>Trivial, low-consequence decisions:</strong> cook or order in? Bed early? Text someone you haven't talked to in a while?</li>
+        <li><strong>When you're stuck between two equivalents:</strong> A or B both look fine. The decider breaks analysis paralysis.</li>
+        <li><strong>As a self-knowledge exercise:</strong> ask the question and watch your reaction to the answer.</li>
+      </ul>
+
+      <h2>Decisions where it doesn't</h2>
+      <ol>
+        <li><strong>Big decisions:</strong> jobs, moves, partners, money. Think; don't flip.</li>
+        <li><strong>When you already know:</strong> if you're certain, don't subject it to chance to "validate". You're just wasting time.</li>
+        <li><strong>To dodge responsibility:</strong> "the decider said so" isn't an excuse. The decision is still yours.</li>
+      </ol>
+
+      <h2>The "10-second test" mental trick</h2>
+      <p>
+        A useful variation: ask the question, hit the decider, but before checking the
+        result, sit with it for 10 seconds. What do you hope it says? That hope, before
+        the reveal, is the answer. The decider was just an excuse to make yourself answer.
+      </p>
+
+      <h2>The paradox of choice</h2>
+      <p>
+        Barry Schwartz called it "the paradox of choice": too many options increase
+        anxiety and post-decision dissatisfaction with whatever you pick. Reducing a
+        decision to "yes or no" simplifies the calculation and, paradoxically, improves
+        satisfaction with the outcome — even if it was random. That's why the decider
+        works: not because it makes better decisions, but because it
+        <strong>frees you from deciding</strong> when more analysis adds nothing.
+      </p>
+
+      <h2>How to use the decider in a group</h2>
+      <p>
+        Try it in a meeting that's stuck: "let's flip the decider". Yes/no breaks group
+        paralysis and someone almost always says "ah, no, the other thing actually". That
+        reaction is the real decision. The decider didn't decide; it surfaced a
+        preference that wasn't quite making it out.
+      </p>
+
+      <h2>Confirmation bias: a warning</h2>
+      <p>
+        If you flip the decider 5 times until it says what you wanted to hear, you knew
+        the answer before starting. Not cheating, just information. But then you don't
+        need the decider — you need permission to pick what you already picked.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Is it 50/50?</summary><p>Yes. crypto.getRandomValues with uniform distribution.</p></details>
+      <details><summary>What is it for?</summary><p>Quick trivial decisions and as an exercise: your reaction to the result reveals what you wanted.</p></details>
+      <details><summary>Memory between flips?</summary><p>No. Each flip is independent.</p></details>
+      <details><summary>Good for big decisions?</summary><p>No. For big decisions (job, move, relationship) you have to think; chance won't help.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .yn-tool { display: flex; flex-direction: column; gap: 1rem; }
+  .yn-result { padding: 3rem 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border); text-align: center; transition: background 0.3s, border-color 0.3s; }
+  .yn-idle { background: var(--bg-inset); }
+  .yn-yes { background: linear-gradient(135deg, #ecfdf5, #a7f3d0); border-color: #6ee7b7; }
+  .yn-no { background: linear-gradient(135deg, #fef2f2, #fecaca); border-color: #fca5a5; }
+  .yn-icon { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; }
+  .yn-text { font-size: 1.125rem; font-weight: 600; color: var(--text); }
+  .yn-yes .yn-icon { color: #047857; }
+  .yn-no .yn-icon { color: #b91c1c; }
+  .yn-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .yn-hint { font-size: 0.8125rem; color: var(--text-subtle); padding: 0.75rem 1rem; background: var(--bg-inset); border-radius: var(--radius); border: 1px solid var(--border-soft); margin: 0; }
+</style>
+
+<script>
+  const result = document.getElementById('yn-result')!;
+  const icon = result.querySelector('.yn-icon')!;
+  const text = result.querySelector('.yn-text')!;
+  const decide = document.getElementById('yn-decide') as HTMLButtonElement;
+  const again = document.getElementById('yn-again') as HTMLButtonElement;
+
+  function decideOnce() {
+    const arr = new Uint32Array(1);
+    window.crypto.getRandomValues(arr);
+    return arr[0] % 2 === 0;
+  }
+  function go() {
+    decide.disabled = true;
+    result.className = 'yn-result yn-idle';
+    icon.textContent = '...';
+    text.textContent = 'Thinking...';
+    setTimeout(() => {
+      const yes = decideOnce();
+      result.className = 'yn-result ' + (yes ? 'yn-yes' : 'yn-no');
+      icon.textContent = yes ? 'YES' : 'NO';
+      text.textContent = yes ? 'Go for it!' : 'Better not.';
+      decide.disabled = false;
+    }, 700);
+  }
+  decide.addEventListener('click', go);
+  again.addEventListener('click', go);
+</script>

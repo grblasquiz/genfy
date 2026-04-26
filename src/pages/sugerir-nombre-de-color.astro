@@ -1,0 +1,216 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Sugeridor de nombre de color | Genfy';
+const description = 'Ingresá un código HEX y te sugerimos un nombre descriptivo (warm coral, deep navy, dusty rose). Útil para design systems, paletas y documentación.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo decide el nombre?', acceptedAnswer: { '@type': 'Answer', text: 'Convertimos el HEX a HSL y ubicamos el color en una matriz: el hue determina la familia (rojo, naranja, etc.), la saturación y luminosidad agregan adjetivos como "deep", "soft", "muted" o "warm".' } },
+    { '@type': 'Question', name: '¿Sirve para design tokens?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Los nombres descriptivos (warm coral, deep navy) son una opción válida para design tokens, aunque para sistemas grandes es más mantenible usar nombres semánticos (primary, surface) o numéricos (gray-500).' } },
+    { '@type': 'Question', name: '¿Por qué no usar nombres CSS estándar?', acceptedAnswer: { '@type': 'Answer', text: 'Los 147 nombres reservados de CSS solo cubren colores específicos. Nuestro sugeridor da un nombre apropiado para cualquier HEX, no solo los reservados.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño" title="Sugeridor de nombre de color"
+    intro="Ingresá un HEX y te sugerimos un nombre descriptivo (warm coral, deep navy, dusty rose). Listo para tu design system o paleta documentada.">
+
+    <div slot="tool" class="cn-tool">
+      <div class="cn-input">
+        <div>
+          <label for="cn-hex">HEX</label>
+          <input id="cn-hex" type="text" value="#059669" maxlength="7" spellcheck="false" />
+        </div>
+        <div>
+          <label for="cn-picker">Picker</label>
+          <input id="cn-picker" type="color" value="#059669" />
+        </div>
+      </div>
+
+      <div id="cn-card" class="cn-card">
+        <div id="cn-swatch" class="cn-swatch"></div>
+        <div class="cn-info">
+          <div class="cn-name" id="cn-name">deep emerald</div>
+          <div class="cn-meta">
+            <span><strong>HEX:</strong> <code id="cn-hex-out">#059669</code></span>
+            <span><strong>HSL:</strong> <code id="cn-hsl-out">hsl(160, 94%, 30%)</code></span>
+          </div>
+        </div>
+      </div>
+
+      <button id="cn-copy" class="btn btn-primary" type="button">Copiar nombre</button>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué nombrar colores importa</h2>
+      <p>
+        Un design system con colores numéricos (<code>gray-500</code>, <code>blue-700</code>)
+        es eficiente pero pobre en contexto. Un nombre descriptivo (<code>warm coral</code>,
+        <code>deep navy</code>) comunica intención: el equipo de marketing entiende qué
+        color es sin abrir el sistema, y los diseñadores pueden conversar sobre matices
+        sin compartir pantalla.
+      </p>
+
+      <h2>Cómo funciona nuestro sugeridor</h2>
+      <p>
+        Convertimos el HEX a HSL y aplicamos una grilla de decisión:
+      </p>
+      <ol>
+        <li><strong>Hue (matiz)</strong> determina la familia: 0-15° = rojo, 15-45° = naranja, 45-65° = amarillo, 65-150° = verde, 150-200° = teal/cyan, 200-250° = azul, 250-290° = violeta, 290-345° = magenta/pink, 345-360° = rojo.</li>
+        <li><strong>Lightness</strong> agrega adjetivos: &lt;25% = deep / dark, 25-45% = rich / true, 45-65% = medium / vibrant, 65-80% = soft / dusty, &gt;80% = pale / pastel.</li>
+        <li><strong>Saturation</strong> matiza: &lt;20% = muted / gray, 20-50% = soft, 50-80% = warm / cool, &gt;80% = vivid.</li>
+      </ol>
+      <p>
+        Combinando los tres, salen nombres como "deep navy", "soft coral", "muted teal" o
+        "vivid amber".
+      </p>
+
+      <h2>Naming patterns en design systems</h2>
+      <ul>
+        <li><strong>Descriptivo</strong> (<code>warm coral</code>): comunicativo, ideal para paletas chicas y guías de marca.</li>
+        <li><strong>Numérico</strong> (<code>gray-500</code>): escalable, técnico, ideal para sistemas grandes con escalas (50-950).</li>
+        <li><strong>Semántico</strong> (<code>primary</code>, <code>danger</code>, <code>surface</code>): el más mantenible. Cambiar el HEX no rompe el nombre. Conviene combinarlo con numérico (<code>primary-500</code>).</li>
+      </ul>
+
+      <h2>Cuándo usar cada uno</h2>
+      <p>
+        Para una marca chica, descriptivo. Para un design system técnico, numérico +
+        semántico. Para una paleta de marca documentada, descriptivo en el brand book y
+        numérico en el código. La trampa es mezclar los tres en el mismo lugar:
+        <code>--brand-coral-500-primary</code> es ilegible.
+      </p>
+
+      <h2>Por qué usamos nombres descriptivos y no inventados</h2>
+      <p>
+        Algunos generadores online devuelven nombres ornamentales o de fantasía que suenan
+        poéticos pero son ambiguos: nadie recuerda qué tono era cuál. Los nombres
+        descriptivos basados en objetos reales (coral, navy, sage, terracotta, oxford,
+        sand) son universalmente comprensibles, fáciles de comunicar a un cliente o equipo
+        de diseño, y escalan a cualquier paleta.
+      </p>
+
+      <h2>Nombres propios bien usados</h2>
+      <p>
+        Algunas marcas usan nombres propios con éxito (Tiffany Blue, Klein Blue,
+        Cadbury Purple) pero son <em>excepciones</em>: están registrados, ligados a una
+        marca específica, y comunican exclusividad. Para el 99% de proyectos, mejor
+        empezar con descriptivo y escalar a semántico cuando hace falta.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo decide el nombre?</summary><p>Mapeamos HSL a una matriz de adjetivos (deep, soft, vivid) + familia de color (coral, navy, sage). Sin nombres mitológicos.</p></details>
+      <details><summary>¿Sirve para design tokens?</summary><p>Para paletas chicas, sí. Para sistemas grandes, mejor combinar con nombres semánticos (primary-500).</p></details>
+      <details><summary>¿Por qué no nombres CSS estándar?</summary><p>Los 147 nombres reservados solo cubren colores específicos. Nosotros damos un nombre apropiado para cualquier HEX.</p></details>
+      <details><summary>¿Puedo editar el nombre?</summary><p>Por supuesto. Lo nuestro es una sugerencia; usalo como base y refinalo.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-input { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem; align-items: end; }
+  #cn-hex { font-family: var(--font-mono); text-transform: uppercase; }
+  #cn-picker { padding: 0.25rem; height: 42px; cursor: pointer; }
+  .cn-card { display: grid; grid-template-columns: 120px 1fr; gap: 1.5rem; padding: 1.5rem; background: var(--bg-inset); border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1rem; align-items: center; }
+  .cn-swatch { aspect-ratio: 1; border-radius: var(--radius); border: 1px solid var(--border); transition: background 0.2s; }
+  .cn-name { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; text-transform: lowercase; margin-bottom: 0.5rem; }
+  .cn-meta { font-size: 0.8125rem; color: var(--text-soft); display: flex; flex-direction: column; gap: 0.25rem; }
+  .cn-meta code { background: transparent; border: 0; padding: 0; }
+  @media (max-width: 600px) { .cn-card { grid-template-columns: 1fr; } .cn-swatch { aspect-ratio: 2/1; } }
+</style>
+
+<script>
+  const hex = document.getElementById('cn-hex') as HTMLInputElement;
+  const picker = document.getElementById('cn-picker') as HTMLInputElement;
+  const swatch = document.getElementById('cn-swatch') as HTMLDivElement;
+  const name = document.getElementById('cn-name')!;
+  const hexOut = document.getElementById('cn-hex-out')!;
+  const hslOut = document.getElementById('cn-hsl-out')!;
+  const copy = document.getElementById('cn-copy') as HTMLButtonElement;
+
+  function hexToHsl(h: string) {
+    h = h.replace('#', '');
+    const r = parseInt(h.slice(0, 2), 16) / 255;
+    const g = parseInt(h.slice(2, 4), 16) / 255;
+    const b = parseInt(h.slice(4, 6), 16) / 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let H = 0, S = 0; const L = (max + min) / 2;
+    if (max !== min) {
+      const d = max - min;
+      S = L > 0.5 ? d / (2 - max - min) : d / (max + min);
+      if (max === r) H = ((g - b) / d + (g < b ? 6 : 0));
+      else if (max === g) H = (b - r) / d + 2;
+      else H = (r - g) / d + 4;
+      H *= 60;
+    }
+    return { h: Math.round(H), s: Math.round(S * 100), l: Math.round(L * 100) };
+  }
+
+  function family(h: number, s: number, l: number): string {
+    if (s < 8) {
+      if (l < 15) return 'black';
+      if (l < 30) return 'charcoal';
+      if (l < 50) return 'slate';
+      if (l < 70) return 'gray';
+      if (l < 90) return 'silver';
+      return 'white';
+    }
+    if (s < 20 && l > 60) return 'stone';
+    if (h < 12 || h >= 348) return l < 35 ? 'crimson' : (l < 60 ? 'red' : 'rose');
+    if (h < 25) return l < 50 ? 'rust' : 'coral';
+    if (h < 45) return l < 50 ? 'terracotta' : 'amber';
+    if (h < 65) return l < 50 ? 'mustard' : 'lemon';
+    if (h < 85) return l < 50 ? 'olive' : 'lime';
+    if (h < 145) return l < 30 ? 'forest' : (l < 55 ? 'emerald' : 'sage');
+    if (h < 175) return l < 50 ? 'pine' : 'mint';
+    if (h < 200) return l < 50 ? 'teal' : 'aqua';
+    if (h < 225) return l < 35 ? 'navy' : (l < 60 ? 'cobalt' : 'sky');
+    if (h < 250) return l < 35 ? 'indigo' : 'periwinkle';
+    if (h < 285) return l < 40 ? 'plum' : 'lavender';
+    if (h < 315) return l < 40 ? 'magenta' : 'orchid';
+    return l < 50 ? 'fuchsia' : 'pink';
+  }
+  function adjective(s: number, l: number): string {
+    if (s < 18) {
+      if (l < 30) return 'dark';
+      if (l > 75) return 'pale';
+      return 'muted';
+    }
+    if (l < 22) return 'deep';
+    if (l < 38) return 'rich';
+    if (l < 55) {
+      if (s > 75) return 'vivid';
+      return 'true';
+    }
+    if (l < 72) {
+      if (s > 75) return 'bright';
+      return 'soft';
+    }
+    if (s < 35) return 'dusty';
+    return 'pastel';
+  }
+
+  function update(input: string) {
+    if (!/^#[0-9a-fA-F]{6}$/.test(input)) return;
+    const hsl = hexToHsl(input);
+    swatch.style.background = input;
+    picker.value = input;
+    hex.value = input.toUpperCase();
+    hexOut.textContent = input.toUpperCase();
+    hslOut.textContent = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+    const fam = family(hsl.h, hsl.s, hsl.l);
+    const adj = adjective(hsl.s, hsl.l);
+    name.textContent = `${adj} ${fam}`;
+  }
+  hex.addEventListener('input', () => update(hex.value));
+  picker.addEventListener('input', () => update(picker.value));
+  copy.addEventListener('click', () => {
+    navigator.clipboard.writeText(name.textContent!);
+    copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = 'Copiar nombre'; }, 1200);
+  });
+  update('#059669');
+</script>

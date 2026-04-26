@@ -1,0 +1,159 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Brand Keywords Generator | Genfy';
+const description = 'Generate a set of descriptive, emotional and category keywords for your brand. Useful for naming briefs, SEO, pitch decks or moodboards.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a brand keyword set for?', acceptedAnswer: { '@type': 'Answer', text: 'It aligns the creative team, drives moodboards, keeps copy consistent, defines forbidden words and orients designers or naming agencies.' } },
+    { '@type': 'Question', name: 'How many keywords should a brand have?', acceptedAnswer: { '@type': 'Answer', text: '15 to 25, split into three groups: descriptive (what it does), emotional (how it feels) and category (who it competes with). More than 30 stops working as a filter.' } },
+    { '@type': 'Question', name: 'Are these for SEO or for branding?', acceptedAnswer: { '@type': 'Answer', text: 'Both. Descriptive ones feed SEO; emotional ones feed positioning; category ones feed competitive differentiation.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Branding" title="Brand Keywords Generator"
+    intro="Drop in category and archetype. Genfy returns a balanced set of descriptive, emotional and category keywords — ready for briefs, moodboards or naming.">
+
+    <div slot="tool" class="bk">
+      <label for="bk-cat">Category / industry</label>
+      <input id="bk-cat" type="text" placeholder="finance, health, software..." value="software" />
+
+      <label for="bk-arch" style="margin-top:1rem">Archetype</label>
+      <select id="bk-arch">
+        <option value="sage">Sage (wise, trusted)</option>
+        <option value="hero">Hero (achievement, strength)</option>
+        <option value="caregiver">Caregiver (care)</option>
+        <option value="creator">Creator (originality)</option>
+        <option value="explorer">Explorer (freedom)</option>
+        <option value="ruler">Ruler (authority)</option>
+      </select>
+
+      <button id="bk-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate keyword set</button>
+
+      <div id="bk-out" class="bk-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>What brand keywords are and why they're used</h2>
+      <p>
+        Brand keywords are the base vocabulary your brand uses to describe itself to itself and the world. They aren't SEO keywords (though they overlap); they're the 15 to 25 words anyone working on your brand — designer, copywriter, founder, agency — should be able to use as a guide without asking for context.
+      </p>
+      <p>
+        A good keyword list does three things at once. It's a filter: if a new asset doesn't use any of those words or suggests their opposite, it's probably off-brand. It's a brief: hand the list to a designer and you get a better moodboard than five pages of description. And it's an alignment tool: the team argues with concrete words instead of vague impressions.
+      </p>
+
+      <h2>The three essential groups</h2>
+      <p>A working list has three balanced categories:</p>
+      <ol>
+        <li><strong>Descriptive (8-10 words):</strong> what the brand does, what it solves, what tools it uses. Closest to SEO. Example: invoicing, automation, freelancers, electronic.</li>
+        <li><strong>Emotional (5-8 words):</strong> how the brand feels. Tied to the archetype. Example: clear, accessible, close, rigorous, professional.</li>
+        <li><strong>Category / competition (3-5 words):</strong> what space you occupy. Example: SaaS, fintech, B2B, LATAM, vertical.</li>
+      </ol>
+      <p>
+        If all your words are descriptive, your brand will sound functional but soulless. If all are emotional, it'll read like detergent advertising. The balance is the asset.
+      </p>
+
+      <h2>How to pick the right words</h2>
+      <p>
+        Think of keywords as three parallel lists. For descriptive ones, write what you solve in customer language, not industry language. "Invoice in one click" instead of "issuance of class-A electronic vouchers". For emotional ones, identify your archetype (Sage, Hero, Caregiver, Creator, Explorer, Ruler) and pull 5-8 words that archetype embodies. For category ones, list who you share SERPs and competitive panels with.
+      </p>
+
+      <h2>Forbidden words: the invisible asset</h2>
+      <p>
+        As important as the words that go in are the ones kept out. A serious brand also defines its forbidden list: words it would never use. If your brand is Sage (clear, trusted), you probably forbid "crazy", "viral" or "disruptive". If it's Hero (achievement), you forbid "modest" or "calm". Having that exclusion list prevents a junior copywriter from breaking tone.
+      </p>
+
+      <h2>Practical applications of the keyword set</h2>
+      <ul>
+        <li><strong>Naming brief:</strong> the keyword set is the main input for a naming agent or agency to return aligned options.</li>
+        <li><strong>Design moodboard:</strong> 15 keywords on Pinterest return 100 images that build the visual universe.</li>
+        <li><strong>Copy manual:</strong> the foundation of the style guide. "Use these, avoid those."</li>
+        <li><strong>Content SEO:</strong> descriptives feed your editorial calendar.</li>
+        <li><strong>Competitive differentiation:</strong> comparing your set vs. a competitor's reveals unclaimed positioning territory.</li>
+      </ul>
+
+      <h2>How to keep keywords alive</h2>
+      <p>
+        A list isn't built once and parked in a forgotten drive. It's reviewed once a year, ideally during annual planning. If during that year you pivoted, expanded into a new category or shifted the ICP, the keywords change. Keeping them current is what separates brands that feel coherent for years from brands that age fast.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is it for?</summary><p>Briefs, moodboards, consistent copy, and naming. The brand's verbal foundation.</p></details>
+      <details><summary>How many should I have?</summary><p>15 to 25 split between descriptive, emotional and category. Past 30 it stops filtering.</p></details>
+      <details><summary>SEO or branding?</summary><p>Both. Descriptives for SEO, emotional for positioning, category for differentiation.</p></details>
+      <details><summary>When to update?</summary><p>Once a year or after a major pivot.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bk-out { margin-top: 1.25rem; display: grid; gap: 1rem; }
+  .bk-group { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); }
+  .bk-group h4 { margin: 0 0 0.75rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-subtle); }
+  .bk-tags { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+  .bk-tag { padding: 0.3125rem 0.625rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-xs); font-size: 0.875rem; cursor: pointer; transition: border-color 0.1s; }
+  .bk-tag:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const DESC: Record<string, string[]> = {
+    software: ['platform', 'API', 'integration', 'automation', 'workflow', 'dashboard', 'real-time', 'scalable', 'cloud'],
+    finance: ['transparency', 'investment', 'savings', 'wealth', 'yield', 'liquidity', 'planning', 'fintech', 'banking'],
+    health: ['wellness', 'prevention', 'consultation', 'diagnosis', 'evidence', 'professional', 'treatment', 'follow-up', 'records'],
+    default: ['solution', 'service', 'product', 'platform', 'experience', 'workflow', 'process', 'system', 'tool'],
+  };
+  const EMOTION: Record<string, string[]> = {
+    sage: ['clear', 'trusted', 'precise', 'calm', 'rigorous', 'transparent', 'smart', 'solid'],
+    hero: ['strong', 'bold', 'ambitious', 'unstoppable', 'direct', 'energetic', 'decisive', 'brave'],
+    caregiver: ['close', 'warm', 'human', 'protective', 'patient', 'empathetic', 'careful', 'kind'],
+    creator: ['original', 'curious', 'expressive', 'free', 'authentic', 'fluid', 'imaginative', 'different'],
+    explorer: ['free', 'open', 'curious', 'restless', 'adventurous', 'fresh', 'discovering', 'broad'],
+    ruler: ['premium', 'authoritative', 'stable', 'solid', 'institutional', 'serious', 'commanding', 'established'],
+  };
+  const CAT: Record<string, string[]> = {
+    software: ['SaaS', 'B2B', 'B2C', 'API-first', 'self-serve'],
+    finance: ['fintech', 'digital banking', 'wealth tech', 'B2C', 'institutional'],
+    health: ['healthtech', 'telemedicine', 'B2C', 'preventive', 'clinic'],
+    default: ['B2B', 'B2C', 'D2C', 'vertical', 'horizontal'],
+  };
+
+  const cat = document.getElementById('bk-cat') as HTMLInputElement;
+  const arch = document.getElementById('bk-arch') as HTMLSelectElement;
+  const gen = document.getElementById('bk-gen') as HTMLButtonElement;
+  const out = document.getElementById('bk-out')!;
+
+  function makeGroup(title: string, words: string[]) {
+    const g = document.createElement('div');
+    g.className = 'bk-group';
+    g.innerHTML = `<h4>${title}</h4><div class="bk-tags"></div>`;
+    const tags = g.querySelector('.bk-tags')!;
+    words.forEach(w => {
+      const t = document.createElement('span');
+      t.className = 'bk-tag';
+      t.textContent = w;
+      t.title = 'Click to copy';
+      t.addEventListener('click', () => { navigator.clipboard.writeText(w); t.textContent = '✓ ' + w; setTimeout(() => t.textContent = w, 700); });
+      tags.appendChild(t);
+    });
+    return g;
+  }
+
+  function generate() {
+    const c = cat.value.trim().toLowerCase();
+    const a = arch.value;
+    const desc = DESC[c] || DESC.default;
+    const emo = EMOTION[a as keyof typeof EMOTION];
+    const ca = CAT[c] || CAT.default;
+    out.innerHTML = '';
+    out.appendChild(makeGroup('Descriptive', desc));
+    out.appendChild(makeGroup('Emotional', emo));
+    out.appendChild(makeGroup('Category', ca));
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

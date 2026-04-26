@@ -1,0 +1,130 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+import { BIBLICAL_NAMES, NAME_STYLES } from '../../lib/baby-names';
+
+const title = 'Biblical Name Generator | Genfy';
+const description = 'Old Testament, New Testament or rare biblical names. 60+ names with meaning, in English and Spanish.';
+const stylesEN = { oldTestament: NAME_STYLES.en.oldTestament, newTestament: NAME_STYLES.en.newTestament, rare: NAME_STYLES.en.rare };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Which biblical names are most used today?', acceptedAnswer: { '@type': 'Answer', text: 'Matthew, Luke, Daniel, Samuel, Sarah, Mary, Hannah, Abigail. All in the Top 100 across English-speaking countries.' } },
+    { '@type': 'Question', name: 'Difference between Old and New Testament names?', acceptedAnswer: { '@type': 'Answer', text: 'Old Testament names (Sarah, David, Abraham) are Hebrew. New Testament names (Matthew, Luke, Mary) are Greek or Aramaic.' } },
+    { '@type': 'Question', name: 'Are biblical names good for pets?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, especially short ones: Sarah, David, Caleb, Ruth work great for dogs and cats.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="en" tag="Babies" title="Biblical Name Generator"
+    intro="Old Testament, New Testament or rare biblical names. Click and get 12 ideas rich in tradition and meaning.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Style</label>
+      <select id="cn-style">
+        {Object.entries(stylesEN).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mix of all</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 names</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why biblical names still dominate</h2>
+      <p>
+        Biblical names have been in active use for over 2000 years and remain among the most popular
+        in the Western world. Matthew, Luke, Daniel, Sarah, Mary all rank in the Top 100 in the US,
+        UK, Canada, Australia and Latin America every single year. The reason is simple: tradition,
+        clear meaning, and a sound that ages well anywhere.
+      </p>
+
+      <h2>Old Testament</h2>
+      <p>
+        Old Testament names are Hebrew in origin and tend to carry meanings tied to faith, history
+        or nature:
+      </p>
+      <ul>
+        <li><strong>Daniel:</strong> "God is my judge." Prophet of the exile.</li>
+        <li><strong>Sarah:</strong> "Princess." Wife of Abraham, mother of Isaac.</li>
+        <li><strong>David:</strong> "Beloved." King of Israel.</li>
+        <li><strong>Abraham:</strong> "Father of many." Patriarch.</li>
+        <li><strong>Eve:</strong> "Life." The first woman.</li>
+        <li><strong>Noah:</strong> "Rest." Builder of the ark.</li>
+        <li><strong>Esther:</strong> "Star." Queen of Persia.</li>
+        <li><strong>Ruth:</strong> "Friendship," "companion." Symbol of loyalty.</li>
+      </ul>
+
+      <h2>New Testament</h2>
+      <p>
+        New Testament names are Greek or Aramaic and come from the apostles, evangelists and figures
+        of early Christianity:
+      </p>
+      <ul>
+        <li><strong>Matthew:</strong> "Gift of God." Apostle and evangelist.</li>
+        <li><strong>Luke:</strong> "Light-giving." Evangelist, physician.</li>
+        <li><strong>John:</strong> "God is gracious." Beloved apostle.</li>
+        <li><strong>Peter:</strong> "Rock." Founding apostle.</li>
+        <li><strong>Paul:</strong> "Small," "humble." Apostle and letter writer.</li>
+        <li><strong>Mary:</strong> "Beloved." Mother of Jesus.</li>
+        <li><strong>Martha:</strong> "Lady." Sister of Lazarus.</li>
+      </ul>
+
+      <h2>Rare but beautiful</h2>
+      <p>
+        If you want a name with tradition that's less common, biblical options are quietly returning:
+        Caleb, Boaz, Ezekiel, Tobias, Eunice, Hadassah. Each with its own story and sounds that
+        stand out without feeling foreign.
+      </p>
+
+      <h2>How to choose</h2>
+      <ol>
+        <li>Look up the meaning and the figure. If you connect with the biblical person, the name gains a layer.</li>
+        <li>Say it with your surname three times. If flat, consider a middle name.</li>
+        <li>Decide between Spanish and English versions if relevant: Paul / Pablo, John / Juan, Matthew / Mateo. Some families prioritize names that work in both.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Which biblical names are most used today?</summary><p>Matthew, Luke, Daniel, Samuel, Sarah, Mary, Hannah, Abigail. All in the Top 100.</p></details>
+      <details><summary>Difference between Old and New Testament names?</summary><p>Old Testament names (Sarah, David, Abraham) are Hebrew. New Testament (Matthew, Luke, Mary) are Greek or Aramaic.</p></details>
+      <details><summary>Good for pets?</summary><p>Yes, especially short ones: Sarah, David, Caleb, Ruth.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: BIBLICAL_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.oldTestament.en, ...DATA.newTestament.en, ...DATA.rare.en];
+    else pool = DATA[s].en;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

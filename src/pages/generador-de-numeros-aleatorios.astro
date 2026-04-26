@@ -1,0 +1,175 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de números aleatorios | Genfy';
+const description = 'Generá uno o varios números aleatorios entre el rango que elijas. Sin repeticiones opcional, exportable. Útil para sorteos, simulaciones y pruebas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Es realmente aleatorio?', acceptedAnswer: { '@type': 'Answer', text: 'Usamos crypto.getRandomValues cuando está disponible (todos los navegadores modernos), que es criptográficamente seguro. En el peor caso, Math.random, que es pseudoaleatorio pero estadísticamente uniforme.' } },
+    { '@type': 'Question', name: '¿Puedo generar números sin repetir?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Activá "sin repeticiones" y verificamos que cada número aparezca una sola vez. Si pedís más números que el tamaño del rango, no es posible y te avisamos.' } },
+    { '@type': 'Question', name: '¿Sirve para sorteos legales?', acceptedAnswer: { '@type': 'Answer', text: 'Para sorteos informales (equipo, evento de oficina, premio entre amigos) sí. Para sorteos con valor legal (loterías, rifas con premios reales), necesitás un sistema certificado y notario.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Random" title="Generador de números aleatorios"
+    intro="Generá uno o varios números aleatorios dentro del rango que elijas. Sin repeticiones opcional, copiable o exportable.">
+
+    <div slot="tool" class="rn-tool">
+      <div class="rn-controls">
+        <div>
+          <label for="rn-min">Mínimo</label>
+          <input id="rn-min" type="number" value="1" />
+        </div>
+        <div>
+          <label for="rn-max">Máximo</label>
+          <input id="rn-max" type="number" value="100" />
+        </div>
+        <div>
+          <label for="rn-count">Cantidad</label>
+          <input id="rn-count" type="number" value="1" min="1" max="1000" />
+        </div>
+        <div class="rn-toggle">
+          <label><input id="rn-unique" type="checkbox" /> Sin repeticiones</label>
+        </div>
+      </div>
+
+      <div class="rn-actions">
+        <button id="rn-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="rn-copy" class="btn btn-ghost" type="button">Copiar resultado</button>
+      </div>
+
+      <div id="rn-result" class="rn-result">—</div>
+      <p id="rn-error" class="rn-error" hidden></p>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo funciona la aleatoriedad en una computadora</h2>
+      <p>
+        Una computadora no genera azar real: genera números pseudoaleatorios usando un
+        algoritmo que parte de una "semilla" (típicamente la hora actual con precisión de
+        microsegundos). Si conocés la semilla y el algoritmo, podés predecir todos los
+        números futuros. Para criptografía eso es fatal; para sorteos informales es
+        irrelevante.
+      </p>
+      <p>
+        Los navegadores modernos exponen <code>crypto.getRandomValues</code>, que usa
+        fuentes de entropía del sistema operativo (mouse movements, ruido del CPU, eventos
+        de hardware) y produce números criptográficamente seguros. Cuando lo necesitamos,
+        lo usamos. Cuando no, <code>Math.random</code> alcanza.
+      </p>
+
+      <h2>Math.random vs crypto.getRandomValues</h2>
+      <ul>
+        <li><strong>Math.random:</strong> rápido, ligero, distribución uniforme. Apto para juegos, sorteos casuales, animaciones, simulaciones.</li>
+        <li><strong>crypto.getRandomValues:</strong> seguro contra adversarios. Necesario para tokens, claves, IDs únicos públicos, contraseñas. Más caro pero igual instantáneo a escala humana.</li>
+      </ul>
+
+      <h2>Sin repeticiones: el problema del "Fisher-Yates shuffle"</h2>
+      <p>
+        Generar 10 números únicos entre 1 y 100 no es trivial: si simplemente generás 10
+        al azar, hay alta probabilidad de duplicados. La solución correcta es construir
+        un array <code>[1..100]</code>, mezclarlo con el algoritmo de Fisher-Yates, y
+        tomar los primeros 10. Eso garantiza unicidad y distribución uniforme. Es lo que
+        hacemos cuando activás "sin repeticiones".
+      </p>
+
+      <h2>Casos de uso prácticos</h2>
+      <ol>
+        <li><strong>Sorteos informales:</strong> "elegí un número entre 1 y N, el ganador es..."</li>
+        <li><strong>Asignación al azar:</strong> dividir un equipo en grupos, decidir quién presenta primero.</li>
+        <li><strong>Pruebas de software:</strong> generar datos de prueba, simular cargas, fuzz testing.</li>
+        <li><strong>Decisiones que no importan:</strong> "¿voy al gym hoy?" → 1 = sí, 2 = no.</li>
+        <li><strong>Educación:</strong> generar problemas de matemática con números cambiantes.</li>
+        <li><strong>Estadística:</strong> elegir muestras al azar de una población.</li>
+      </ol>
+
+      <h2>Cuándo NO usar este generador</h2>
+      <ul>
+        <li><strong>Sorteos con valor legal:</strong> rifas con premios materiales requieren sistemas certificados y, en muchos países, presencia notarial.</li>
+        <li><strong>Generación de claves o passwords:</strong> usá un generador de contraseñas dedicado (también tenemos uno).</li>
+        <li><strong>Lottery picks "para ganar":</strong> la lotería es un proceso físico independiente; ningún algoritmo predice ni mejora tus chances.</li>
+      </ul>
+
+      <h2>Distribución uniforme: el detalle invisible</h2>
+      <p>
+        Un buen RNG distribuye los números de manera uniforme: si generás 1000 números
+        entre 1 y 10, esperás aproximadamente 100 de cada uno (con varianza estadística
+        normal). Algoritmos malos sesgan ciertos valores. Los modernos (xorshift, PCG, los
+        que usa V8 o SpiderMonkey) están bien testeados y no tienen este problema en la
+        práctica.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Es realmente aleatorio?</summary><p>Usamos crypto.getRandomValues (criptográficamente seguro) cuando está disponible. En el peor caso, Math.random, que es pseudoaleatorio pero uniforme.</p></details>
+      <details><summary>¿Sin repeticiones?</summary><p>Sí. Activamos Fisher-Yates shuffle para garantizar unicidad. Si pedís más números que el rango, te avisamos.</p></details>
+      <details><summary>¿Sirve para sorteos legales?</summary><p>Para sorteos informales sí. Sorteos con valor legal requieren sistema certificado y notario.</p></details>
+      <details><summary>¿Cuál es el rango máximo?</summary><p>JavaScript soporta enteros seguros hasta ±2^53. En la práctica, cualquier rango razonable (millones, billones) funciona.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rn-controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .rn-toggle { grid-column: 1 / -1; font-size: 0.875rem; color: var(--text-soft); }
+  .rn-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .rn-result { padding: 2rem 1.5rem; background: var(--bg-inset); border-radius: var(--radius-lg); border: 1px solid var(--border); font-size: 1.5rem; font-family: var(--font-mono); font-weight: 600; line-height: 1.5; word-break: break-word; min-height: 80px; display: flex; align-items: center; }
+  .rn-error { color: var(--danger); font-size: 0.875rem; margin-top: 0.5rem; }
+  @media (max-width: 600px) { .rn-controls { grid-template-columns: 1fr 1fr; } }
+</style>
+
+<script>
+  const minEl = document.getElementById('rn-min') as HTMLInputElement;
+  const maxEl = document.getElementById('rn-max') as HTMLInputElement;
+  const countEl = document.getElementById('rn-count') as HTMLInputElement;
+  const uniqueEl = document.getElementById('rn-unique') as HTMLInputElement;
+  const gen = document.getElementById('rn-gen') as HTMLButtonElement;
+  const copy = document.getElementById('rn-copy') as HTMLButtonElement;
+  const result = document.getElementById('rn-result')!;
+  const error = document.getElementById('rn-error')!;
+
+  function rand(min: number, max: number) {
+    if (window.crypto && window.crypto.getRandomValues) {
+      const arr = new Uint32Array(1);
+      window.crypto.getRandomValues(arr);
+      return min + (arr[0] % (max - min + 1));
+    }
+    return min + Math.floor(Math.random() * (max - min + 1));
+  }
+  function shuffle<T>(a: T[]) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = rand(0, i);
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  function generate() {
+    error.hidden = true;
+    const min = parseInt(minEl.value);
+    const max = parseInt(maxEl.value);
+    const count = Math.max(1, Math.min(1000, parseInt(countEl.value) || 1));
+    if (min > max) { error.textContent = 'El mínimo debe ser menor o igual al máximo.'; error.hidden = false; return; }
+    const range = max - min + 1;
+    if (uniqueEl.checked && count > range) { error.textContent = `No se pueden generar ${count} números únicos en un rango de ${range}.`; error.hidden = false; return; }
+    let nums: number[];
+    if (uniqueEl.checked) {
+      const all = Array.from({ length: range }, (_, i) => min + i);
+      shuffle(all);
+      nums = all.slice(0, count);
+    } else {
+      nums = Array.from({ length: count }, () => rand(min, max));
+    }
+    result.textContent = nums.join(', ');
+  }
+  gen.addEventListener('click', generate);
+  copy.addEventListener('click', () => {
+    navigator.clipboard.writeText(result.textContent || '');
+    copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = 'Copiar resultado'; }, 1200);
+  });
+  generate();
+</script>

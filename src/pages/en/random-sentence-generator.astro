@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Random Sentence Generator | Genfy';
+const description = 'Generate random English sentences instantly. Perfect for creative writing prompts, grammar exercises, improv and word games.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is the random sentence generator for?', acceptedAnswer: { '@type': 'Answer', text: 'It works as a writing prompt, grammar exercise, improv springboard, and a way to break through writer\'s block when you can\'t start.' } },
+    { '@type': 'Question', name: 'Do the sentences make sense?', acceptedAnswer: { '@type': 'Answer', text: 'They are grammatically correct (subject + verb + object) but on purpose the combinations can be absurd. That oddness is exactly what fuels creativity.' } },
+    { '@type': 'Question', name: 'Can I pick the tone?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — everyday, surreal or question. Each mode uses different templates.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text / Words" title="Random Sentence Generator"
+    intro="Random sentences to start writing, practice grammar or play improv. Pick how many and the tone you want.">
+
+    <div slot="tool" class="rs">
+      <div class="rs-row">
+        <div>
+          <label for="rs-amount">Amount</label>
+          <input id="rs-amount" type="number" min="1" max="20" value="3" />
+        </div>
+        <div>
+          <label for="rs-mode">Tone</label>
+          <select id="rs-mode">
+            <option value="daily">Everyday</option>
+            <option value="surreal">Surreal</option>
+            <option value="question">Question</option>
+          </select>
+        </div>
+      </div>
+      <button id="rs-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="rs-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="rs-out" rows="10" readonly style="margin-top:1rem; font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why generate sentences at random</h2>
+      <p>
+        A random sentence is a stronger prompt than a single word because it already has a
+        structure: someone, doing something, somewhere. Your brain reads it as a tiny scene and
+        starts filling in context. It's a great kickstart for an article, a short story, an
+        improv sketch, a language class — anything that fights the blank page.
+      </p>
+
+      <h2>Three modes, three uses</h2>
+      <ul>
+        <li><strong>Everyday.</strong> Plausible sentences for grammar drills, dictation and ESL practice.</li>
+        <li><strong>Surreal.</strong> Unexpected combinations that spark ideas for screenplays, poetry and ad copy.</li>
+        <li><strong>Question.</strong> Useful for podcast prompts, group ice-breakers and journaling.</li>
+      </ul>
+
+      <h2>How writers use it</h2>
+      <p>
+        A classic exercise in writing workshops: generate three random sentences and write a
+        300-word piece that includes all of them verbatim. The constraint forces narrative
+        decisions you wouldn't have made otherwise. The result is almost always more original
+        than an unconstrained draft.
+      </p>
+
+      <h2>Improv and group games</h2>
+      <p>
+        In acting classes and creative workshops the generator works as a "first line": one
+        actor reads, the next continues. In dull team meetings it's a non-obvious ice-breaker —
+        each person says how they read the line. The oddness lowers everyone's guard, which is
+        what a new group needs.
+      </p>
+
+      <h2>Practicing a language</h2>
+      <p>
+        If you're learning English, generate an everyday sentence and translate it without a
+        dictionary. Then compare with a real translation. It's quick, doesn't drill repeated
+        patterns, and trains the muscle of reading structure rather than isolated words.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is it for?</summary><p>As a writing prompt, grammar exercise, improv springboard and to fight writer's block.</p></details>
+      <details><summary>Do they make sense?</summary><p>They are grammatically correct. In surreal mode the combinations are absurd on purpose.</p></details>
+      <details><summary>Can I pick the tone?</summary><p>Yes: everyday, surreal or question.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rs-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const SUBJ = ["The cat","The teacher","My neighbor","The mailman","A small girl","The cook","The developer","The doctor","My grandmother","The pilot","The gardener","The singer","The student","A tourist","The mechanic"];
+  const VERB = ["walks toward","watches","calls","draws","searches for","finds","explains","loses","fixes","describes","greets","listens to","writes about","photographs","buys"];
+  const OBJ = ["the open window","an old map","the seven o'clock train","a cup of tea","the park bench","three cardboard boxes","the last chapter","a red bicycle","the March rain","Monday's silence","an unsigned letter","the back gate","yesterday's notes","a forgotten conversation","the living room clock"];
+  const SURR_S = ["The silence","A question","Tuesday","My shadow","The doubt","A memory","The cold","Your name","The distance","A pause"];
+  const SURR_V = ["tastes like","walks like","sleeps between","writes about","negotiates with","smells like","dances with","argues with","resembles","hides in"];
+  const SURR_O = ["lukewarm coffee","an unanswered question","slow Wednesdays","the pocket of a coat","a younger version","torn notebooks","a foggy Sunday","the first time you lied","a small promise","the white walls"];
+  const Q_TPL = [
+    (a:string,b:string) => `What would you do if ${a} ${b}?`,
+    (a:string,b:string) => `Why does ${a} always ${b}?`,
+    (a:string,b:string) => `How would you describe ${a} to someone who ${b}?`,
+    (a:string,b:string) => `When was the last time ${a} ${b}?`,
+    (a:string,b:string) => `What if tomorrow ${a} ${b}?`,
+  ];
+  const Q_A = ["winter arrived early","your boss asked for the truth","you had to move tomorrow","you found an old letter","Mondays didn't exist","everyone spoke one language","you had to start from zero","there were no clocks at home","someone offered you two lives","you lost the internet"];
+  const Q_B = ["you would make the first call","you would stay silent","you would change your plans","you would tell the whole truth","you would walk without looking back","you would rewrite that story","you would accept the risk","you would ask for help","you would forgive without conditions","you would move without warning"];
+
+  const amountEl = document.getElementById('rs-amount') as HTMLInputElement;
+  const modeEl = document.getElementById('rs-mode') as HTMLSelectElement;
+  const out = document.getElementById('rs-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('rs-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('rs-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function makeOne() {
+    const m = modeEl.value;
+    if (m === 'daily') return `${pick(SUBJ)} ${pick(VERB)} ${pick(OBJ)}.`;
+    if (m === 'surreal') return `${pick(SURR_S)} ${pick(SURR_V)} ${pick(SURR_O)}.`;
+    const tpl = pick(Q_TPL); return tpl(pick(Q_A), pick(Q_B));
+  }
+  function generate() {
+    const n = Math.max(1, Math.min(20, parseInt(amountEl.value || '3', 10)));
+    const arr: string[] = [];
+    for (let i = 0; i < n; i++) arr.push(makeOne());
+    out.value = arr.join('\n\n');
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

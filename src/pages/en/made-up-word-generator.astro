@@ -1,0 +1,163 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Made-Up Word Generator | Genfy';
+const description = 'Generate made-up words that sound real: great for product names, brands, characters, games and fiction worlds.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What are made-up words for?', acceptedAnswer: { '@type': 'Answer', text: 'Product naming, brand names, novel characters, role-playing games, sci-fi worlds and available domain names.' } },
+    { '@type': 'Question', name: 'How are they built?', acceptedAnswer: { '@type': 'Answer', text: 'We combine common syllables with natural pronunciation patterns (consonant + vowel + consonant). The result feels like a real word even though it doesn\'t exist.' } },
+    { '@type': 'Question', name: 'Can I use one for a brand?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, but always verify trademark and domain availability before committing. A made-up word does not guarantee it\'s free.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text / Words" title="Made-Up Word Generator"
+    intro="New words that sound real. Perfect for brand names, products, characters and fiction worlds.">
+
+    <div slot="tool" class="mw">
+      <div class="mw-row">
+        <div>
+          <label for="mw-amount">Amount</label>
+          <input id="mw-amount" type="number" min="1" max="30" value="10" />
+        </div>
+        <div>
+          <label for="mw-syl">Syllables</label>
+          <select id="mw-syl">
+            <option value="2">2 syllables</option>
+            <option value="3" selected>3 syllables</option>
+            <option value="4">4 syllables</option>
+          </select>
+        </div>
+        <div>
+          <label for="mw-style">Style</label>
+          <select id="mw-style">
+            <option value="brand">Brand/product</option>
+            <option value="fantasy">Fantasy</option>
+            <option value="tech">Tech</option>
+          </select>
+        </div>
+      </div>
+      <button id="mw-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="mw-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="mw-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono);"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why generate made-up words</h2>
+      <p>
+        The world's most recognizable brands are almost never dictionary words: Spotify, Skype,
+        Vimeo, Wattpad, Nubank. A made-up word has three advantages over a descriptive name: it
+        is legally protectable, it is searchable (low SEO competition), and it leaves room for
+        the brand to imprint its own meaning. The trade-off: it takes more investment for
+        people to understand what you do.
+      </p>
+
+      <h2>How they're built</h2>
+      <p>
+        The generator combines common syllables (CVC and CV) with patterns that pronounce
+        easily in English. Vary length and style and you get words that feel familiar even
+        though they don't exist. For brand naming, 2-3 syllables work best (easier to remember
+        and spell). For fantasy, 3-4 syllables sound more exotic. For tech, short words with
+        strong vowels ("a", "i") tend to win.
+      </p>
+
+      <h2>Styles: when to use each</h2>
+      <ul>
+        <li><strong>Brand/product.</strong> Soft sounds, easy to pronounce in multiple languages. Built for companies and apps.</li>
+        <li><strong>Fantasy.</strong> More complex sounds, long vowels and unusual consonants. For characters, places and races in fiction.</li>
+        <li><strong>Tech.</strong> Short, strong consonants, a touch of "tech-savvy". For SaaS, tools and open-source projects.</li>
+      </ul>
+
+      <h2>How to evaluate a made-up word</h2>
+      <ol>
+        <li><strong>Say it out loud.</strong> If you have to think to pronounce it, drop it.</li>
+        <li><strong>Spell it from dictation.</strong> Have someone hear and write it. If they get it wrong, it won't work as a domain.</li>
+        <li><strong>Search it.</strong> If Google auto-corrects to something else, it's not a winner.</li>
+        <li><strong>Check accidental meanings.</strong> Your word may mean something in another language. Run a quick translation check.</li>
+        <li><strong>Verify availability.</strong> Trademark (USPTO/WIPO), .com domain, social handles on Instagram, X, TikTok.</li>
+      </ol>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Too close to a competitor.</strong> If "Skype" exists, don't pick "Skiype" — it confuses and competes for SEO.</li>
+        <li><strong>Hard to spell over the phone.</strong> If you have to spell it every time, it adds commercial friction.</li>
+        <li><strong>Too long.</strong> More than 3 syllables already taxes memory for brand naming.</li>
+        <li><strong>No "soul".</strong> The best made-up words evoke something (motion, light, clarity). The worst feel like codes.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What are they for?</summary><p>Brand and product naming, characters, RPGs and fiction worlds.</p></details>
+      <details><summary>How are they built?</summary><p>Combining common syllables with natural pronunciation patterns (CVC and CV).</p></details>
+      <details><summary>For a brand?</summary><p>Yes, but always check trademark and domain availability first.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .mw-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .mw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const SETS: Record<string, { c: string[]; v: string[] }> = {
+    brand: {
+      c: ["b","c","d","f","g","l","m","n","p","r","s","t","v","z","ch","sh"],
+      v: ["a","e","i","o","u","ia","io","ea","ai"],
+    },
+    fantasy: {
+      c: ["d","l","m","n","r","s","t","v","th","sh","kh","gr","dr","fl","str"],
+      v: ["a","e","i","o","u","ae","io","ya","yi","au"],
+    },
+    tech: {
+      c: ["b","d","g","k","l","m","n","p","r","s","t","v","x","z"],
+      v: ["a","e","i","o","u","ai","io"],
+    },
+  };
+
+  const amountEl = document.getElementById('mw-amount') as HTMLInputElement;
+  const sylEl = document.getElementById('mw-syl') as HTMLSelectElement;
+  const styleEl = document.getElementById('mw-style') as HTMLSelectElement;
+  const out = document.getElementById('mw-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('mw-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('mw-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+
+  const FORBIDDEN = ["loki","thor","zeus","apollo","apolo","athena","atena","artemis","hera","hades","helios","selene","atlas","orion","achilles","aquiles","nyx","rhea","veritas","solis","terra","klio","aurelius","luna","astra","aurora","iris","stella","osiris","anubis","isis","vishnu","shiva","kali","odin","freya","mercury","mercurio","phoenix","fenix"];
+
+  function makeOne(): string {
+    const set = SETS[styleEl.value];
+    const sy = parseInt(sylEl.value, 10);
+    let w = "";
+    for (let i = 0; i < sy; i++) w += pick(set.c) + pick(set.v);
+    return w.charAt(0).toUpperCase() + w.slice(1);
+  }
+  function safe(w: string) {
+    const lo = w.toLowerCase();
+    return !FORBIDDEN.some(f => lo.includes(f));
+  }
+  function generate() {
+    const n = Math.max(1, Math.min(30, parseInt(amountEl.value || '10', 10)));
+    const arr: string[] = [];
+    let attempts = 0;
+    while (arr.length < n && attempts < n * 10) {
+      const w = makeOne();
+      if (safe(w) && !arr.includes(w)) arr.push(w);
+      attempts++;
+    }
+    out.value = arr.join('\n');
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

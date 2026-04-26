@@ -1,0 +1,176 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Verificador de contraste de colores WCAG | Genfy';
+const description = 'Verificá si tu combinación de texto y fondo cumple WCAG 2.1 AA o AAA. Calculá el ratio de contraste exacto con preview en vivo, gratis y sin registro.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es el ratio de contraste WCAG?', acceptedAnswer: { '@type': 'Answer', text: 'Es la relación entre la luminancia relativa del texto y la del fondo. Va de 1:1 (sin contraste) a 21:1 (máximo, negro sobre blanco). WCAG exige 4.5:1 para texto normal AA y 7:1 para AAA.' } },
+    { '@type': 'Question', name: '¿Texto grande tiene un umbral menor?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Texto a partir de 18pt regular o 14pt bold solo necesita 3:1 en AA y 4.5:1 en AAA. Eso reconoce que letras grandes son más fáciles de leer aunque haya menos contraste.' } },
+    { '@type': 'Question', name: '¿Qué nivel debo apuntar?', acceptedAnswer: { '@type': 'Answer', text: 'AA (4.5:1) es el estándar legal en muchas jurisdicciones (Europa, EE.UU. para sitios públicos). AAA (7:1) es el ideal accesible y se exige en sitios de gobierno y salud.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño" title="Verificador de contraste de colores"
+    intro="Comprobá si tu combinación de texto y fondo cumple WCAG 2.1 AA o AAA. Calculamos el ratio exacto y te mostramos preview con el texto real para que veas cómo se lee.">
+
+    <div slot="tool" class="ctr-tool">
+      <div class="ctr-controls">
+        <div>
+          <label for="ctr-fg">Color de texto</label>
+          <input id="ctr-fg" type="color" value="#09090b" />
+          <input id="ctr-fg-hex" type="text" value="#09090B" maxlength="7" spellcheck="false" />
+        </div>
+        <div>
+          <label for="ctr-bg">Color de fondo</label>
+          <input id="ctr-bg" type="color" value="#ffffff" />
+          <input id="ctr-bg-hex" type="text" value="#FFFFFF" maxlength="7" spellcheck="false" />
+        </div>
+      </div>
+
+      <div id="ctr-preview" class="ctr-preview">
+        <p class="big">Texto grande de muestra</p>
+        <p class="small">Este es un párrafo de muestra para que veas cómo se lee tu combinación de colores en un texto normal de cuerpo. La accesibilidad arranca acá.</p>
+      </div>
+
+      <div class="ctr-results">
+        <div class="ratio-big"><span id="ctr-ratio">21.00</span><small>:1</small></div>
+        <div class="checks">
+          <div class="check"><strong>AA — texto normal</strong><span id="aa-normal" class="badge">—</span></div>
+          <div class="check"><strong>AA — texto grande</strong><span id="aa-large" class="badge">—</span></div>
+          <div class="check"><strong>AAA — texto normal</strong><span id="aaa-normal" class="badge">—</span></div>
+          <div class="check"><strong>AAA — texto grande</strong><span id="aaa-large" class="badge">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo se calcula el contraste WCAG</h2>
+      <p>
+        WCAG 2.1 define el contraste como un ratio entre la luminancia relativa del texto
+        y la del fondo. La luminancia relativa de un color RGB se obtiene primero
+        linealizando cada canal (compensando la curva gamma sRGB) y luego ponderándolos:
+        <code>0.2126·R + 0.7152·G + 0.0722·B</code>. El verde pesa más porque el ojo
+        humano lo percibe como más luminoso.
+      </p>
+      <p>
+        El ratio final es <code>(L1 + 0.05) / (L2 + 0.05)</code>, donde L1 es la
+        luminancia del color más claro y L2 la del más oscuro. Va de <strong>1:1</strong>
+        (mismo color, ilegible) a <strong>21:1</strong> (negro puro sobre blanco puro).
+      </p>
+
+      <h2>Niveles WCAG explicados</h2>
+      <ul>
+        <li><strong>AA texto normal: 4.5:1</strong> — el mínimo legal en muchas leyes (EAA en Europa, ADA en EE.UU. para sitios públicos).</li>
+        <li><strong>AA texto grande: 3:1</strong> — texto desde 18pt regular o 14pt bold (≈ 24px / 18.6px en pantalla).</li>
+        <li><strong>AAA texto normal: 7:1</strong> — el ideal. Requerido en gobierno y salud en muchos países.</li>
+        <li><strong>AAA texto grande: 4.5:1</strong> — coincide con AA normal.</li>
+        <li><strong>Componentes UI: 3:1</strong> — bordes de inputs, iconos, gráficos. Es una norma aparte (1.4.11).</li>
+      </ul>
+
+      <h2>Errores frecuentes</h2>
+      <p>
+        El más común: gris claro sobre blanco. <code>#999999</code> sobre <code>#FFFFFF</code>
+        da 2.85:1 y <strong>falla incluso en texto grande AA</strong>. Si tu placeholder o
+        texto secundario está en <code>#9CA3AF</code> (gris-400 de Tailwind) sobre blanco,
+        falla. Usá <code>#6B7280</code> (gris-500) o más oscuro.
+      </p>
+      <p>
+        El segundo: texto sobre imágenes. Una foto con luminosidad variable nunca garantiza
+        contraste consistente. Solución: overlay sólido <code>rgba(0,0,0,0.5)</code> entre
+        imagen y texto.
+      </p>
+
+      <h2>Por qué AAA no siempre es factible</h2>
+      <p>
+        Llegar a 7:1 con marca propia es difícil. Muchas marcas tienen colores corporativos
+        que no superan AA. La salida pragmática: usar el color de marca solo en elementos
+        no críticos (decoración, headers grandes), y para texto de cuerpo usar negro o
+        gris muy oscuro contra fondo claro. Apple, Stripe y la mayoría de SaaS hacen esto.
+      </p>
+
+      <h2>Tres reglas de oro para diseño accesible</h2>
+      <ol>
+        <li><strong>Verificá texto pequeño primero.</strong> Si pasa AA, casi todo lo demás también pasa.</li>
+        <li><strong>No dependas solo del color para transmitir información.</strong> Errores en rojo + ícono. Status en verde + texto. Daltónicos te lo agradecen.</li>
+        <li><strong>Probá en pantalla real, no solo en monitor calibrado de diseñador.</strong> El brillo de un celular bajo sol cambia todo.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es el ratio WCAG?</summary><p>La relación entre la luminancia del texto y la del fondo. De 1:1 a 21:1. AA exige 4.5:1, AAA 7:1 para texto normal.</p></details>
+      <details><summary>¿Texto grande tiene umbral menor?</summary><p>Sí: 3:1 en AA, 4.5:1 en AAA. Aplica desde 18pt regular o 14pt bold.</p></details>
+      <details><summary>¿Qué nivel apuntar?</summary><p>AA es el estándar legal mínimo. AAA es el ideal accesible y se exige en gobierno y salud.</p></details>
+      <details><summary>¿Mi marca no supera AA, qué hago?</summary><p>Usá el color de marca solo en decoración o headers grandes. Para texto de cuerpo, negro o gris muy oscuro.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ctr-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .ctr-controls > div { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem; align-items: end; }
+  .ctr-controls label { grid-column: 1 / -1; }
+  .ctr-controls input[type="color"] { padding: 0.25rem; height: 42px; cursor: pointer; }
+  .ctr-controls input[type="text"] { font-family: var(--font-mono); text-transform: uppercase; }
+  .ctr-preview { padding: 2rem 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1.5rem; transition: background 0.2s, color 0.2s; }
+  .ctr-preview .big { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: inherit; }
+  .ctr-preview .small { font-size: 0.9375rem; margin: 0; color: inherit; }
+  .ctr-results { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: center; padding: 1.25rem; background: var(--bg-inset); border-radius: var(--radius-lg); border: 1px solid var(--border); }
+  .ratio-big { font-size: 3rem; font-weight: 800; line-height: 1; font-family: var(--font-mono); letter-spacing: -0.04em; }
+  .ratio-big small { font-size: 1.25rem; color: var(--text-subtle); margin-left: 0.25rem; }
+  .checks { display: grid; gap: 0.5rem; font-size: 0.875rem; }
+  .check { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .badge { font-size: 0.75rem; padding: 0.25rem 0.625rem; border-radius: 999px; font-weight: 600; letter-spacing: 0.02em; }
+  .badge[data-pass="true"] { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+  .badge[data-pass="false"] { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+  @media (max-width: 600px) { .ctr-controls, .ctr-results { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const fg = document.getElementById('ctr-fg') as HTMLInputElement;
+  const bg = document.getElementById('ctr-bg') as HTMLInputElement;
+  const fgH = document.getElementById('ctr-fg-hex') as HTMLInputElement;
+  const bgH = document.getElementById('ctr-bg-hex') as HTMLInputElement;
+  const preview = document.getElementById('ctr-preview') as HTMLDivElement;
+  const ratioEl = document.getElementById('ctr-ratio')!;
+
+  function lin(c: number) { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+  function lum(hex: string) {
+    hex = hex.replace('#', '');
+    const r = lin(parseInt(hex.slice(0, 2), 16));
+    const g = lin(parseInt(hex.slice(2, 4), 16));
+    const b = lin(parseInt(hex.slice(4, 6), 16));
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  }
+  function ratio(a: string, b: string) {
+    const la = lum(a), lb = lum(b);
+    const L1 = Math.max(la, lb), L2 = Math.min(la, lb);
+    return (L1 + 0.05) / (L2 + 0.05);
+  }
+  function setBadge(id: string, pass: boolean) {
+    const el = document.getElementById(id)!;
+    el.textContent = pass ? 'PASA' : 'FALLA';
+    el.dataset.pass = String(pass);
+  }
+  function update() {
+    const f = fg.value, b = bg.value;
+    fgH.value = f.toUpperCase(); bgH.value = b.toUpperCase();
+    preview.style.background = b;
+    preview.style.color = f;
+    const r = ratio(f, b);
+    ratioEl.textContent = r.toFixed(2);
+    setBadge('aa-normal', r >= 4.5);
+    setBadge('aa-large', r >= 3);
+    setBadge('aaa-normal', r >= 7);
+    setBadge('aaa-large', r >= 4.5);
+  }
+  fg.addEventListener('input', update);
+  bg.addEventListener('input', update);
+  fgH.addEventListener('input', () => { if (/^#[0-9a-fA-F]{6}$/.test(fgH.value)) { fg.value = fgH.value; update(); } });
+  bgH.addEventListener('input', () => { if (/^#[0-9a-fA-F]{6}$/.test(bgH.value)) { bg.value = bgH.value; update(); } });
+  update();
+</script>

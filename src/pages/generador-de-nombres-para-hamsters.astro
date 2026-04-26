@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+import { HAMSTER_NAMES, SMALL_PET_STYLES } from '../lib/small-pet-names';
+
+const title = 'Generador de nombres para hámsters | Genfy';
+const description = 'Tiernos, divertidos o de comida: encontrá el nombre ideal para tu hámster. +60 ideas en español e inglés, generador instantáneo gratis.';
+
+const stylesES = SMALL_PET_STYLES.es;
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Los hámsters reconocen su nombre?', acceptedAnswer: { '@type': 'Answer', text: 'Pueden aprender a asociar un sonido con comida. Aunque no lo "reconocen" como un perro, responden a sonidos repetidos consistentemente.' } },
+    { '@type': 'Question', name: '¿Qué nombre le pongo a un hámster macho?', acceptedAnswer: { '@type': 'Answer', text: 'Cortos y divertidos: Pipo, Beto, Tomy, Pancho, Mochi, Peanut, Pip, Bumble. Lo importante es 1-2 sílabas.' } },
+    { '@type': 'Question', name: '¿Importa el tamaño del nombre?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Los hámsters tienen vidas de 2-3 años: querés un nombre que disfrutes decir, corto y fácil.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="es" tag="Mascotas" title="Generador de nombres para hámsters"
+    intro="Tierno, divertido o de comida: encontrá el nombre que mejor le queda a tu hámster. Click y obtené 12 ideas frescas.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Estilo</label>
+      <select id="cn-style">
+        {Object.entries(stylesES).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mezcla de todo</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 12 nombres</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de tu hámster</h2>
+      <p>
+        Los hámsters son chiquitos, redondos y a menudo bastante tímidos al principio. El nombre
+        debería reflejar eso: corto, suave, dulce. Y muy importante: que vos lo disfrutes decir,
+        porque vas a hablarle bastante.
+      </p>
+      <ul>
+        <li><strong>1 o 2 sílabas.</strong> Pipo, Mochi, Maní, Bean, Pip — funcionan mucho mejor que algo largo.</li>
+        <li><strong>Sonidos suaves.</strong> Los hámsters tienen oído sensible: nada de sonidos fuertes ni nombres que termines gritando.</li>
+        <li><strong>Asocialo con su comida favorita.</strong> Decí el nombre antes de darle una semilla de girasol. En semanas asocia el sonido con algo bueno.</li>
+        <li><strong>Aprovechá su personalidad.</strong> Un hámster siempre en la rueda: Rueditas. Uno con mejillas hinchadas: Cachetes.</li>
+      </ul>
+
+      <h2>Nombres por estilo</h2>
+      <ul>
+        <li><strong>Tiernos</strong> (Pelusa, Coco, Bola, Mochi): los más populares, encajan con casi cualquier hámster.</li>
+        <li><strong>De comida</strong> (Maní, Pochoclo, Galleta, Caramelo): clásicos, juegan con esa imagen de hámster con la boca llena.</li>
+        <li><strong>Divertidos</strong> (Don Cachetes, Profesor Pelusa, Doctor Squeak): para los que tienen gran personalidad.</li>
+      </ul>
+
+      <h2>Curiosidades sobre los hámsters y sus nombres</h2>
+      <p>
+        En España y Latinoamérica, los nombres de hámster más populares en clínicas exóticas son
+        Pelusa, Bola, Coco, Maní y Pancho. En inglés mandan Peanut, Cookie, Mochi, Pumpkin y Bumble.
+        Los nombres relacionados con su forma redonda (Bola, Bumble, Marshmallow) y con comida
+        explican casi la mitad de las elecciones.
+      </p>
+
+      <h2>Errores comunes</h2>
+      <ol>
+        <li>Nombres muy elaborados — terminás usando un apodo.</li>
+        <li>No usar el nombre porque "total no entiende": le perdés la oportunidad de calmarlo con tu voz cuando se asusta.</li>
+        <li>Nombres que rimen con palabras fuertes que decís en casa.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Los hámsters reconocen su nombre?</summary><p>Pueden aprender a asociar un sonido con comida. Aunque no lo "reconocen" como un perro, responden a sonidos repetidos consistentemente.</p></details>
+      <details><summary>¿Qué nombre le pongo a un hámster macho?</summary><p>Cortos y divertidos: Pipo, Beto, Tomy, Pancho, Mochi, Peanut, Pip, Bumble. Lo importante es 1-2 sílabas.</p></details>
+      <details><summary>¿Importa el tamaño del nombre?</summary><p>Sí. Los hámsters tienen vidas de 2-3 años: querés un nombre que disfrutes decir, corto y fácil.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: HAMSTER_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.cute.es, ...DATA.food.es, ...DATA.funny.es];
+    else pool = DATA[s].es;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

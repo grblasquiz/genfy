@@ -1,0 +1,121 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+import { PEN_NAME_PARTS } from '../../lib/persona-names';
+
+const title = 'Author Pen Name Generator | Genfy';
+const description = 'Generate an elegant, memorable pen name to sign your novel, essay or blog. 50+ first and last names in English and Spanish.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why use a pen name?', acceptedAnswer: { '@type': 'Answer', text: 'To separate public and private life, to write in a different genre than you publish under, to have a more memorable or pronounceable name, or by personal preference.' } },
+    { '@type': 'Question', name: 'Is it legal to publish under a pen name?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Almost every country allows pen names. Contracts and copyright go to your legal name; the book appears under the pen name.' } },
+    { '@type': 'Question', name: 'How do I pick a good pen name?', acceptedAnswer: { '@type': 'Answer', text: 'Memorable, easy to pronounce, unique (check Google and Goodreads), and matched to the genre you write.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="en" tag="People" title="Author Pen Name Generator"
+    intro="To sign your novel, essay or blog: names with literary presence. Click and get 12 ideas in seconds.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Style</label>
+      <select id="cn-style">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="initial">With initial (E. Hawthorne)</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 pen names</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why authors use pen names</h2>
+      <p>
+        Stephen King wrote as Richard Bachman. J.K. Rowling signs her thrillers as Robert Galbraith.
+        George Orwell was Eric Blair. The reasons have stayed consistent for centuries:
+      </p>
+      <ul>
+        <li><strong>Separate identities.</strong> Your real name for "serious" work, the pen name for fiction, comedy or romance.</li>
+        <li><strong>Switch genres.</strong> If you publish romance under your real name, readers expect more romance. A pen name frees you.</li>
+        <li><strong>Privacy.</strong> You don't want every reader to look you up by your legal name.</li>
+        <li><strong>Better branding.</strong> Your legal name may be long, hard to pronounce, or too common. A well-chosen pen name sells.</li>
+      </ul>
+
+      <h2>How to build a strong pen name</h2>
+      <ol>
+        <li><strong>Memorable.</strong> A mix of common and uncommon sounds. Not too weird, not too generic.</li>
+        <li><strong>Unique.</strong> Search on Google and Goodreads first. If another author already has it, drop it.</li>
+        <li><strong>Genre-matched.</strong> Hard sci-fi suits a clean name (Howard Sutton). Historical romance fits something evocative (Beatrice Hawthorne).</li>
+        <li><strong>Long-term.</strong> Are you signing 10 books with this name? Make sure you'll still like it.</li>
+        <li><strong>Initials.</strong> Gender-ambiguous initials (J.K. Rowling, S.E. Hinton) can help if you want readers to come in without bias.</li>
+      </ol>
+
+      <h2>Styles by genre</h2>
+      <ul>
+        <li><strong>Literary fiction:</strong> solid surname (Hawthorne, Pendleton), classic first name (Edward, Helen).</li>
+        <li><strong>Thriller / suspense:</strong> short, hard surnames (Knox, Reed, Vance), direct first names (Henry, Ada).</li>
+        <li><strong>Romance:</strong> elegant surnames (Hawthorne, Carmichael, Ashford), softer first names (Beatrice, Camille).</li>
+        <li><strong>Sci-fi:</strong> clean, modern sounds (Vance, Holloway).</li>
+      </ul>
+
+      <h2>Legal aspects</h2>
+      <p>
+        Most countries allow pen names without issue. Publishing contracts are signed with your
+        legal name; the pen name appears on the cover ("p.k.a." or "writing as"). Copyright stays
+        with the author regardless of which name appears on the book.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Why use a pen name?</summary><p>To separate identities, switch genres, get a more memorable name, or for privacy.</p></details>
+      <details><summary>Is it legal?</summary><p>Yes. Contracts use your legal name; the book carries the pen name.</p></details>
+      <details><summary>How to pick one?</summary><p>Memorable, unique, easy to pronounce, matched to genre.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: PEN_NAME_PARTS }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const mode = styleEl.value;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < 12 && attempts < 300) {
+      attempts++;
+      let combo;
+      if (mode === 'male') combo = pick(DATA.firstMale.en) + ' ' + pick(DATA.surnames.en);
+      else if (mode === 'female') combo = pick(DATA.firstFemale.en) + ' ' + pick(DATA.surnames.en);
+      else {
+        const isMale = Math.random() > 0.5;
+        const first = isMale ? pick(DATA.firstMale.en) : pick(DATA.firstFemale.en);
+        combo = first.charAt(0) + '. ' + pick(DATA.surnames.en);
+      }
+      set.add(combo);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 900); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

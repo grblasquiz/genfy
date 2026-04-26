@@ -1,0 +1,185 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free API Key Generator | Genfy';
+const description = 'Generate random API keys with custom prefix, configurable length and hex or base62 format. Useful for development, testing and production.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How long should an API key be?', acceptedAnswer: { '@type': 'Answer', text: 'For production, 32 hex characters (128 bits) is the reasonable minimum. 48-64 characters is what serious providers like Stripe or GitHub use.' } },
+    { '@type': 'Question', name: 'Which prefix should I use?', acceptedAnswer: { '@type': 'Answer', text: 'A short prefix identifies the environment and product: sk_live_ for production, sk_test_ for sandbox, pk_ for publishable keys. Helps log scanning and rotation.' } },
+    { '@type': 'Question', name: 'Hex or base62?', acceptedAnswer: { '@type': 'Answer', text: 'Hex (a-f, 0-9) is safe and easy to inspect. Base62 (A-Z, a-z, 0-9) packs more entropy into fewer characters and looks cleaner in URLs.' } },
+    { '@type': 'Question', name: 'Is it safe to generate keys in the browser?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, as long as you use crypto.getRandomValues like this generator does. Just remember an API key is only as safe as your storage: never commit it to source control.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Security"
+    title="API Key Generator"
+    intro="Generate random access tokens for your API. Configure prefix, length and alphabet. Everything runs in your browser using crypto.getRandomValues."
+  >
+    <div slot="tool" class="key-tool">
+      <div class="key-output">
+        <input id="key-out" class="mono" readonly aria-label="Generated API key" />
+        <button id="key-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+      </div>
+
+      <div class="key-grid">
+        <div>
+          <label for="key-prefix">Prefix</label>
+          <input id="key-prefix" type="text" value="sk_live_" maxlength="20" />
+        </div>
+        <div>
+          <label for="key-len">Length</label>
+          <input id="key-len" type="number" value="32" min="16" max="128" />
+        </div>
+        <div>
+          <label for="key-fmt">Format</label>
+          <select id="key-fmt">
+            <option value="hex">Hexadecimal</option>
+            <option value="base62" selected>Base62 (alphanumeric)</option>
+            <option value="base64url">Base64 URL-safe</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="key-gen" class="btn btn-primary" type="button">Generate API key</button>
+    </div>
+
+    <div slot="content">
+      <h2>What an API key is and when to use one</h2>
+      <p>
+        An API key is a secret string a client sends with every HTTP request to authenticate.
+        Unlike username and password, it's designed to authenticate services, not people. It
+        usually shows up in headers like <code>Authorization: Bearer ...</code> or in query
+        parameters such as <code>?api_key=...</code>.
+      </p>
+      <p>
+        API keys are great for server-to-server integrations (a script calling Stripe, a cron
+        job pushing files to S3) and for testing tools. They're not ideal for end users — that's
+        what OAuth or signed JWTs are for.
+      </p>
+
+      <h2>How we generate the key</h2>
+      <p>
+        Each character is sampled from <code>crypto.getRandomValues</code>, the browser's
+        cryptographic API, mapped to the alphabet you pick:
+      </p>
+      <ul>
+        <li><strong>Hexadecimal:</strong> 16 possible characters (0-9, a-f). 4 bits per character.</li>
+        <li><strong>Base62:</strong> 62 characters (A-Z, a-z, 0-9). About 5.95 bits per character.</li>
+        <li><strong>Base64 URL-safe:</strong> 64 characters (including <code>-</code> and <code>_</code>). 6 bits per character, ideal for URL tokens with no escaping.</li>
+      </ul>
+
+      <h2>Length and entropy guidance</h2>
+      <p>
+        An API key should carry at least 128 bits of entropy. That translates to:
+      </p>
+      <ol>
+        <li>32 hex characters.</li>
+        <li>22 base62 characters.</li>
+        <li>22 base64url characters.</li>
+      </ol>
+      <p>
+        For critical tokens (master keys, webhook keys with broad privileges) bump entropy to
+        256 bits: 64 hex, 43 base62 or 43 base64url. Stripe uses 32+ random characters after
+        the prefix. GitHub PATs use 40 hex characters.
+      </p>
+
+      <h2>Best practices for prefixes</h2>
+      <p>
+        A readable prefix simplifies day-to-day operations. Conventions that work:
+      </p>
+      <ul>
+        <li><code>sk_</code> for "secret key" (server-side only).</li>
+        <li><code>pk_</code> for "publishable key" (safe in frontend code).</li>
+        <li><code>_live_</code> and <code>_test_</code> to distinguish production from sandbox.</li>
+        <li>Product prefix: <code>ghp_</code> (GitHub PAT), <code>xoxb-</code> (Slack bot).</li>
+      </ul>
+      <p>
+        The prefix also lets tools like GitGuardian or TruffleHog detect leaked keys in public
+        repositories. If your prefix is generic, those scanners won't find it.
+      </p>
+
+      <h2>Storage and rotation</h2>
+      <p>Generating the key is just the start. To make it actually safe:</p>
+      <ul>
+        <li><strong>Never commit it.</strong> Use environment variables or a secret manager (AWS Secrets Manager, Vault, Doppler, 1Password CLI).</li>
+        <li><strong>Store a hash, not plaintext.</strong> If your database leaks, the keys are still useless. Show the key only once, on creation.</li>
+        <li><strong>Rotate regularly.</strong> Every 90 days for production, immediately if you suspect a leak.</li>
+        <li><strong>Limit scopes.</strong> A least-privilege key contains the blast radius of a leak.</li>
+        <li><strong>Log usage.</strong> IP, user agent and endpoint help you spot abuse early.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>The same problems show up over and over in real projects:</p>
+      <ul>
+        <li>API keys in the frontend JavaScript bundle.</li>
+        <li>"Temporary" keys shared in Slack that never get rotated.</li>
+        <li>One key shared across the whole team.</li>
+        <li>No expiration, no last-used field, no way to know if it's still active.</li>
+        <li>Cross-environment reuse (test key works in production).</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How long should an API key be?</summary><p>At least 128 bits of entropy: 32 hex or 22 base62 characters. For critical keys, 256 bits (64 hex or 43 base62).</p></details>
+      <details><summary>Which prefix should I use?</summary><p>Something short that identifies environment and product: sk_live_, sk_test_, pk_. Helps log scanning and rotation.</p></details>
+      <details><summary>Hex or base62?</summary><p>Hex is readable and easy to inspect. Base62 packs more entropy into fewer characters and looks cleaner in URLs. Both are safe.</p></details>
+      <details><summary>Is it safe to generate keys in the browser?</summary><p>Yes — we use crypto.getRandomValues, which is just as robust as server-side. Nothing is sent to Genfy.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .key-output { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .key-output input { font-family: var(--font-mono); font-size: 0.9375rem; background: var(--bg-inset); }
+  .key-output .btn { min-width: 92px; }
+  .key-grid { display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 1rem; margin-bottom: 1.25rem; }
+  @media (max-width: 600px) { .key-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const out = document.getElementById('key-out') as HTMLInputElement;
+  const copy = document.getElementById('key-copy') as HTMLButtonElement;
+  const gen = document.getElementById('key-gen') as HTMLButtonElement;
+  const prefix = document.getElementById('key-prefix') as HTMLInputElement;
+  const lenEl = document.getElementById('key-len') as HTMLInputElement;
+  const fmt = document.getElementById('key-fmt') as HTMLSelectElement;
+
+  const HEX = '0123456789abcdef';
+  const B62 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+
+  function randString(alphabet: string, length: number): string {
+    const arr = new Uint32Array(length);
+    crypto.getRandomValues(arr);
+    let out = '';
+    for (let i = 0; i < length; i++) out += alphabet[arr[i] % alphabet.length];
+    return out;
+  }
+  function generate() {
+    const length = Math.min(128, Math.max(8, parseInt(lenEl.value || '32', 10)));
+    let alpha = HEX;
+    if (fmt.value === 'base62') alpha = B62;
+    if (fmt.value === 'base64url') alpha = B64;
+    out.value = (prefix.value || '') + randString(alpha, length);
+  }
+  gen.addEventListener('click', generate);
+  [prefix, lenEl, fmt].forEach(el => el.addEventListener('change', generate));
+  async function doCopy() {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copied</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copy'; delete copy.dataset.copied; }, 1400);
+  }
+  copy.addEventListener('click', doCopy);
+  generate();
+</script>

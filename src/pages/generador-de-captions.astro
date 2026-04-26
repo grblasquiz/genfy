@@ -1,0 +1,172 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de captions gratis | Genfy';
+const description = 'Generá captions para Instagram, LinkedIn y X con estructura ganchero-cuerpo-CTA. Listos para Reels, posts, carruseles y publicaciones de marca.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno a un caption?', acceptedAnswer: { '@type': 'Answer', text: 'Un gancho fuerte en la primera línea (porque solo se ven dos líneas antes del "ver más"), cuerpo escaneable y un CTA claro al final. Brevedad y ritmo importan más que extensión.' } },
+    { '@type': 'Question', name: '¿Cuán largo conviene?', acceptedAnswer: { '@type': 'Answer', text: 'Instagram permite 2.200 caracteres pero los datos muestran que 138-150 palabras (no caracteres) tienen mejor engagement. LinkedIn premia más extensos: 1.500-1.900 caracteres.' } },
+    { '@type': 'Question', name: '¿Conviene CTA en el caption?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Pedile a la persona que comente, guarde, comparta o vaya al link. Los captions sin CTA suelen tener 40% menos de engagement medible.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de captions"
+    intro="Cargá tema, audiencia y CTA. Genfy estructura el caption en gancho + cuerpo + CTA, optimizado para Instagram, LinkedIn o X.">
+
+    <div slot="tool" class="cp">
+      <label for="cp-topic">Tema del post</label>
+      <input id="cp-topic" type="text" placeholder="cómo ahorrar al facturar..." value="cómo ahorrar al facturar como freelancer" />
+
+      <label for="cp-aud" style="margin-top:1rem">Audiencia</label>
+      <input id="cp-aud" type="text" placeholder="freelancers, founders..." value="freelancers" />
+
+      <label for="cp-cta" style="margin-top:1rem">CTA</label>
+      <input id="cp-cta" type="text" placeholder="Guardalo. Compartilo. Link en bio..." value="Guardá el post" />
+
+      <label for="cp-platform" style="margin-top:1rem">Plataforma</label>
+      <select id="cp-platform">
+        <option value="ig">Instagram (Reels, post)</option>
+        <option value="li">LinkedIn (post largo)</option>
+        <option value="x">X / Twitter</option>
+      </select>
+
+      <button id="cp-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 3 captions</button>
+
+      <div id="cp-out" class="cp-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué la primera línea define el caption entero</h2>
+      <p>
+        En Instagram, antes de tocar "ver más", la persona ve solo dos líneas (~125 caracteres). En LinkedIn, ve tres. En X, todo el tweet — pero la primera línea sigue siendo la que decide si se lee. Si tu primera línea no engancha, los otros 1.500 caracteres no se leen, no importa qué tan buenos sean.
+      </p>
+      <p>
+        Eso convierte la primera línea en el activo más caro del caption. Lo que rinde no es ser ingenioso ni profundo: es ser específico, generar curiosidad o conflicto, y prometer algo que se cumple en el cuerpo.
+      </p>
+
+      <h2>Las cinco estructuras de gancho que mejor funcionan</h2>
+      <ul>
+        <li><strong>Cifra inesperada:</strong> "El 87% de los freelancers paga más impuestos de los que debería."</li>
+        <li><strong>Pregunta que pica:</strong> "¿Cuántas veces enviaste una factura mal en el último mes?"</li>
+        <li><strong>Confesión:</strong> "Cobré tres veces antes de aprender a facturar."</li>
+        <li><strong>Promesa explícita:</strong> "Cómo ahorrar 4 horas al mes facturando."</li>
+        <li><strong>Contraintuición:</strong> "Tu contador no quiere que sepas esto."</li>
+      </ul>
+      <p>
+        Las cinco comparten algo: prometen al lector que el resto del caption tiene algo concreto. No prometen "inspiración" o "reflexión": prometen información o ahorro de tiempo.
+      </p>
+
+      <h2>El cuerpo: cómo no aburrir</h2>
+      <p>
+        Después del gancho, el cuerpo del caption tiene que mantener el ritmo. Tres reglas que rinden:
+      </p>
+      <ol>
+        <li><strong>Frases cortas.</strong> Una idea por línea. Ritmo de scroll, no de novela.</li>
+        <li><strong>Saltos de línea cada 1-2 oraciones.</strong> El bloque compacto baja la conversión 30%.</li>
+        <li><strong>Una sola idea por caption.</strong> No metas 5 tips: convertí cada uno en su propio post.</li>
+      </ol>
+
+      <h2>El CTA al final: qué pedir y cómo</h2>
+      <p>
+        Los CTAs vagos ("¿Qué opinás?") rinden poco. Los específicos ("Comentá tu mejor truco para facturar") rinden 3-5x más. Recomendados:
+      </p>
+      <ul>
+        <li><strong>Para guardado:</strong> "Guardá esto si querés volver." Algoritmo de Instagram premia los guardados.</li>
+        <li><strong>Para comentario:</strong> pregunta abierta y específica.</li>
+        <li><strong>Para link:</strong> "Link en bio para descargar la plantilla."</li>
+        <li><strong>Para compartir:</strong> "Mandalo a un freelancer que lo necesite."</li>
+      </ul>
+
+      <h2>Diferencias por plataforma</h2>
+      <ul>
+        <li><strong>Instagram:</strong> 138-150 palabras óptimo. Hashtags al final o en primer comentario. Emojis con criterio.</li>
+        <li><strong>LinkedIn:</strong> 1.500-1.900 caracteres rinden mejor. Saltos de línea cada 1-2 frases. CTA explícito al final.</li>
+        <li><strong>X / Twitter:</strong> 280 caracteres por tweet. Hilos para temas complejos. Sin emojis si tu tono es profesional.</li>
+        <li><strong>Threads:</strong> similar a Twitter pero permite hasta 500 caracteres. Tono más casual.</li>
+      </ul>
+
+      <h2>Errores que vacían el caption</h2>
+      <ul>
+        <li>Empezar con "Hola comunidad" o "Hoy quiero contarles". Es desperdicio puro.</li>
+        <li>Frases poéticas vacías como gancho ("La vida es un viaje...").</li>
+        <li>Llenar de hashtags el cuerpo del caption.</li>
+        <li>Auto-promoción brutal sin valor previo.</li>
+        <li>Captions sin estructura: bloque compacto de 200 palabras sin saltos.</li>
+      </ul>
+
+      <h2>Cómo iterar tus captions</h2>
+      <p>
+        Cada 4-6 semanas filtrá tus 5 posts con mayor alcance / engagement. ¿Qué patrón comparten en la primera línea? ¿Qué CTA tienen? Esa es tu fórmula. Replicala en los siguientes 10 posts y volvé a medir. Las cuentas que iteran con datos crecen 2-3x más rápido que las que escriben "lo que sale".
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno a un caption?</summary><p>Gancho fuerte en primera línea, cuerpo escaneable, CTA claro al final.</p></details>
+      <details><summary>¿Cuán largo conviene?</summary><p>Instagram: 138-150 palabras. LinkedIn: 1.500-1.900 caracteres. X: 280 por tweet.</p></details>
+      <details><summary>¿CTA al final?</summary><p>Sí. Captions sin CTA tienen 40% menos engagement medible.</p></details>
+      <details><summary>¿Hashtags en el caption?</summary><p>Al final del caption o en primer comentario. No mezclados en el cuerpo.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cp-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .cp-item { padding: 1.125rem 1.375rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.65; white-space: pre-wrap; }
+  .cp-item:hover { border-color: var(--accent); }
+  .cp-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.625rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const topic = document.getElementById('cp-topic') as HTMLInputElement;
+  const aud = document.getElementById('cp-aud') as HTMLInputElement;
+  const cta = document.getElementById('cp-cta') as HTMLInputElement;
+  const plat = document.getElementById('cp-platform') as HTMLSelectElement;
+  const gen = document.getElementById('cp-gen') as HTMLButtonElement;
+  const out = document.getElementById('cp-out')!;
+
+  function generate() {
+    const T = topic.value.trim() || 'mi tema';
+    const A = aud.value.trim() || 'mi audiencia';
+    const C = cta.value.trim() || 'Comentá abajo';
+    const p = plat.value;
+
+    let captions: string[] = [];
+
+    if (p === 'ig') {
+      captions = [
+        `El 80% de ${A} se equivoca acá.\n\nDespués de ver decenas de casos sobre ${T}, hay un patrón claro:\n\n→ Lo simple gana.\n→ Lo "complejo" suele ser miedo.\n→ Empezar mal vez 1, mejor que esperar la perfecta.\n\nGuardá esto si te sirve.\n\n${C}.`,
+        `${T.charAt(0).toUpperCase() + T.slice(1)}.\n\nHablamos de algo que casi nadie cuenta.\n\nLa mayoría de ${A} aprende esto tarde — cuando ya costó plata o tiempo.\n\nEl shortcut está en saber qué evitar primero.\n\n${C} ↓`,
+        `Si sos ${A}, esto te conviene saberlo hoy.\n\n${T.charAt(0).toUpperCase() + T.slice(1)} es uno de esos temas que parecen aburridos hasta que te tocan.\n\nLo importante:\n• No te asustes con la primera vez.\n• El sistema arma un patrón en 2-3 intentos.\n• Lo que ahorrás compensa la curva.\n\n${C}.`,
+      ];
+    } else if (p === 'li') {
+      captions = [
+        `Después de trabajar con ${A} durante años, vi un patrón.\n\n${T.charAt(0).toUpperCase() + T.slice(1)} no es lo difícil.\n\nLo difícil es entender qué dejar de hacer.\n\nLas tres cosas que más cuestan:\n\n1. Pensar que "más vale más". No siempre.\n2. Copiar a alguien sin entender el contexto.\n3. No medir. Medir es la única forma de saber si funciona.\n\nLa diferencia entre quienes resuelven y quienes giran en círculos no es talento. Es disciplina de método.\n\n${C}`,
+        `${T.charAt(0).toUpperCase() + T.slice(1)}.\n\nUna de esas tareas que parecen simples y nunca lo son.\n\nLo que aprendí:\n\nLas mejores soluciones suelen ser las más obvias — pero requieren disciplina para ejecutarlas.\n\nLas peores son las que parecen "creativas" sin tener un cliente real detrás.\n\nSi sos ${A}, el principio es el mismo: empezá simple, medí, iterá.\n\n${C}`,
+        `Hay una pregunta que cambió cómo pienso sobre ${T}.\n\n¿Qué dejarías de hacer si supieras lo que sé hoy?\n\nLa respuesta para la mayoría de ${A}: dejarían de optimizar lo que no importa.\n\nEl 80% del valor sale del 20% del esfuerzo. Conocido. Pero raramente aplicado.\n\n${C}`,
+      ];
+    } else {
+      captions = [
+        `${T.charAt(0).toUpperCase() + T.slice(1)}.\n\nUn hilo de lo que aprendí trabajando con ${A}.\n\n1/`,
+        `${T.charAt(0).toUpperCase() + T.slice(1)} no es un tema técnico.\n\nEs un tema de prioridades.\n\nLa mayoría de ${A} lo descubre tarde.`,
+        `Si sos ${A} y no leíste sobre ${T}, esto te ahorra horas:\n\n• Empezá simple.\n• Medí desde el día 1.\n• Iterá cada semana.\n\n${C}`,
+      ];
+    }
+
+    out.innerHTML = '';
+    captions.forEach((c, i) => {
+      const el = document.createElement('div');
+      el.className = 'cp-item';
+      el.title = 'Click para copiar';
+      el.innerHTML = c.replace(/\n/g, '<br>') + `<div class="cp-meta">v${i+1} · ${c.length} caracteres</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(c); const orig = el.innerHTML; el.innerHTML = '✓ Copiado'; setTimeout(() => el.innerHTML = orig, 1000); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

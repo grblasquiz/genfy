@@ -1,0 +1,191 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de direcciones falsas | Genfy';
+const description = 'Generá direcciones postales realistas para testing y fixtures. Argentina, México, España y otros países hispanos. Datos sintéticos, no usar en producción.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Las direcciones existen?', acceptedAnswer: { '@type': 'Answer', text: 'Las calles y ciudades son nombres reales, pero la combinación calle + número + ciudad es aleatoria. La mayoría no corresponde a una dirección física real.' } },
+    { '@type': 'Question', name: '¿Sirve para validar APIs de direcciones?', acceptedAnswer: { '@type': 'Answer', text: 'Para tests funcionales sí. Para tests de geocoding contra Google Maps o similar, no: las direcciones aleatorias pueden o no resolver. Para esos tests usá direcciones reales conocidas.' } },
+    { '@type': 'Question', name: '¿Puedo enviar correspondencia a estas direcciones?', acceptedAnswer: { '@type': 'Answer', text: 'No. Son sintéticas. Cualquier paquete enviado terminará rebotando o entregándose a quien sí viva en esa dirección por casualidad.' } },
+    { '@type': 'Question', name: '¿Incluye código postal?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, generamos códigos postales con el formato típico de cada país (CP de 4 cifras en Argentina, CP de 5 en España y México).' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Datos / Testing"
+    title="Generador de direcciones falsas"
+    intro="Direcciones postales sintéticas para testing, fixtures y prototipos. Calle, número, ciudad y código postal con formato real por país."
+  >
+    <div slot="tool" class="addr-tool">
+      <div class="addr-controls">
+        <div>
+          <label for="addr-country">País</label>
+          <select id="addr-country">
+            <option value="ar" selected>Argentina</option>
+            <option value="mx">México</option>
+            <option value="es">España</option>
+            <option value="co">Colombia</option>
+          </select>
+        </div>
+        <div>
+          <label for="addr-count">Cantidad</label>
+          <input id="addr-count" type="number" min="1" max="50" value="5" />
+        </div>
+      </div>
+
+      <button id="addr-gen" class="btn btn-primary" type="button">Generar direcciones</button>
+
+      <textarea id="addr-out" class="mono" rows="14" readonly></textarea>
+      <button id="addr-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar todas</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>Formato de las direcciones</h2>
+      <p>
+        Cada país tiene su propio formato postal. Este generador sigue las convenciones más
+        comunes:
+      </p>
+      <ul>
+        <li><strong>Argentina:</strong> Calle nro Piso Depto, Localidad, CP, Provincia.</li>
+        <li><strong>México:</strong> Calle nro, Colonia, CP Ciudad, Estado.</li>
+        <li><strong>España:</strong> Calle nro, Piso Puerta, CP Ciudad, Provincia.</li>
+        <li><strong>Colombia:</strong> Carrera/Calle nro - nro, Barrio, Ciudad, CP.</li>
+      </ul>
+      <p>
+        Los códigos postales respetan el formato de cada país: 4 dígitos en Argentina (más una
+        letra opcional para CPA), 5 dígitos en México y España, 6 dígitos en Colombia.
+      </p>
+
+      <h2>Cuándo usar direcciones sintéticas</h2>
+      <ol>
+        <li><strong>Tests funcionales de formularios.</strong> Validar que tu formulario de checkout acepta direcciones largas, con caracteres especiales, con y sin departamento.</li>
+        <li><strong>Seeds de bases de datos.</strong> Llenar tablas de pedidos, clientes y envíos con datos plausibles.</li>
+        <li><strong>Demos para clientes.</strong> Mostrar el sistema con datos realistas sin exponer información de usuarios reales.</li>
+        <li><strong>Prototipos de UI.</strong> Listas de pedidos con direcciones que no son todas "Av. Corrientes 1234".</li>
+        <li><strong>Tests de display/PDF.</strong> Verificar que tickets, facturas y etiquetas de envío renderizan bien con direcciones de distintos largos.</li>
+      </ol>
+
+      <h2>Limitaciones del generador</h2>
+      <p>
+        Las calles que aparecen son nombres reales y comunes en el país elegido (Av. Corrientes,
+        Calle Mayor, Insurgentes Sur). Sin embargo:
+      </p>
+      <ul>
+        <li>El número puede no existir en esa calle.</li>
+        <li>El código postal puede no corresponder a la ciudad elegida.</li>
+        <li>La combinación calle + ciudad puede ser válida en otra ciudad pero no en la elegida.</li>
+      </ul>
+      <p>
+        Para tests donde la dirección debe geocodificar correctamente (resolver a coordenadas
+        en Google Maps o Nominatim), usá direcciones reales conocidas como fixtures, no estas.
+      </p>
+
+      <h2>Direcciones de prueba estándar</h2>
+      <p>
+        Algunas convenciones útiles en testing:
+      </p>
+      <ul>
+        <li><strong>123 Test Street, 12345 Test City, Test State.</strong> Patrón anglo clásico para placeholder.</li>
+        <li><strong>Av. Corrientes 1234, Piso 1 A, CABA, C1043.</strong> Formato argentino genérico.</li>
+        <li><strong>Calle Mayor 1, 28013 Madrid, España.</strong> Plaza real pero con número genérico.</li>
+        <li><strong>1600 Pennsylvania Avenue, Washington DC 20500.</strong> Dirección pública usada como ejemplo en muchos tests.</li>
+      </ul>
+
+      <h2>Privacidad y datos sintéticos</h2>
+      <p>
+        Generar direcciones sintéticas no exime de las buenas prácticas:
+      </p>
+      <ol>
+        <li>No las uses como datos reales en producción.</li>
+        <li>Si vinculás un nombre + email + dirección sintéticos, marcalos claramente como datos de prueba (flag en la DB, dominio fake, etiqueta).</li>
+        <li>No envíes correspondencia a las direcciones generadas: a veces, por casualidad, existen.</li>
+        <li>No las uses en formularios de servicios reales (registros de servicios públicos, alta en delivery, etc.).</li>
+      </ol>
+
+      <h2>Comparación con Faker</h2>
+      <p>
+        Las librerías Faker (<code>@faker-js/faker</code>, <code>faker</code> de Python) cubren
+        decenas de locales con datos más completos: provincias, distritos, georreferenciación
+        aproximada. Si tenés código que genera fixtures, Faker es mejor. Este generador es
+        ideal para uso ad-hoc rápido.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Las direcciones existen?</summary><p>Las calles y ciudades son reales, pero la combinación calle + número + ciudad es aleatoria. La mayoría no corresponde a una dirección física real.</p></details>
+      <details><summary>¿Sirve para validar APIs?</summary><p>Para tests funcionales, sí. Para geocoding contra Maps, no: las direcciones random pueden no resolver.</p></details>
+      <details><summary>¿Puedo enviar correspondencia?</summary><p>No. Son sintéticas. Cualquier envío rebotará o llegará a quien por casualidad viva ahí.</p></details>
+      <details><summary>¿Incluye código postal?</summary><p>Sí, con el formato típico del país elegido.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .addr-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .addr-controls { grid-template-columns: 1fr; } }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; margin: 1rem 0 0.75rem; }
+</style>
+
+<script>
+  const DATA: Record<string, any> = {
+    ar: {
+      streets: ['Av. Corrientes','Av. Santa Fe','Av. Cabildo','Av. Rivadavia','Av. de Mayo','Calle Florida','Av. Libertador','Av. 9 de Julio','Calle Lavalle','Av. Cordoba','Av. Pueyrredon','Av. Las Heras','Calle Reconquista','Calle Defensa','Av. Belgrano'],
+      cities: [['CABA','C1043','Buenos Aires'],['La Plata','1900','Buenos Aires'],['Cordoba','5000','Cordoba'],['Rosario','2000','Santa Fe'],['Mendoza','5500','Mendoza'],['San Miguel de Tucuman','4000','Tucuman'],['Mar del Plata','7600','Buenos Aires']],
+    },
+    mx: {
+      streets: ['Av. Insurgentes Sur','Av. Reforma','Calle Madero','Av. Universidad','Av. Revolucion','Calle Hidalgo','Av. Juarez','Av. Chapultepec','Calle 5 de Mayo','Av. Patriotismo'],
+      cities: [['Ciudad de Mexico','06600','CDMX'],['Guadalajara','44100','Jalisco'],['Monterrey','64000','Nuevo Leon'],['Puebla','72000','Puebla'],['Tijuana','22000','Baja California'],['Merida','97000','Yucatan']],
+    },
+    es: {
+      streets: ['Calle Mayor','Calle Alcala','Gran Via','Paseo de la Castellana','Calle Serrano','Calle Goya','Calle Princesa','Calle Atocha','Calle Velazquez','Calle Bravo Murillo'],
+      cities: [['Madrid','28001','Madrid'],['Barcelona','08001','Barcelona'],['Valencia','46001','Valencia'],['Sevilla','41001','Sevilla'],['Zaragoza','50001','Zaragoza'],['Malaga','29001','Malaga']],
+    },
+    co: {
+      streets: ['Carrera 7','Calle 26','Carrera 11','Calle 100','Avenida Caracas','Carrera 15','Calle 72','Avenida 19','Carrera 50','Calle 80'],
+      cities: [['Bogota','110111','Cundinamarca'],['Medellin','050010','Antioquia'],['Cali','760001','Valle del Cauca'],['Barranquilla','080001','Atlantico'],['Cartagena','130001','Bolivar']],
+    },
+  };
+  const country = document.getElementById('addr-country') as HTMLSelectElement;
+  const count = document.getElementById('addr-count') as HTMLInputElement;
+  const out = document.getElementById('addr-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('addr-gen') as HTMLButtonElement;
+  const copy = document.getElementById('addr-copy') as HTMLButtonElement;
+  function pick<T>(arr: T[]): T { const a = new Uint32Array(1); crypto.getRandomValues(a); return arr[a[0] % arr.length]; }
+  function rand(min: number, max: number): number { const a = new Uint32Array(1); crypto.getRandomValues(a); return min + (a[0] % (max - min + 1)); }
+  function generate() {
+    const n = Math.min(50, Math.max(1, parseInt(count.value || '5', 10)));
+    const c = country.value;
+    const data = DATA[c];
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) {
+      const street = pick<string>(data.streets);
+      const num = rand(100, 9999);
+      const city = pick<string[]>(data.cities);
+      let line = '';
+      if (c === 'ar') line = `${street} ${num}, Piso ${rand(1,15)} ${String.fromCharCode(65 + rand(0,5))}, ${city[0]}, ${city[1]}, ${city[2]}`;
+      else if (c === 'mx') line = `${street} ${num}, Col. Centro, ${city[1]} ${city[0]}, ${city[2]}`;
+      else if (c === 'es') line = `${street}, ${num}, ${rand(1,8)}º ${String.fromCharCode(65 + rand(0,3))}, ${city[1]} ${city[0]}, ${city[2]}`;
+      else line = `${street} #${num}-${rand(10,99)}, ${city[0]}, ${city[2]}, ${city[1]}`;
+      lines.push(line);
+    }
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', generate);
+  [country, count].forEach(el => el.addEventListener('change', generate));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copiado</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copiar todas'; delete copy.dataset.copied; }, 1400);
+  });
+  generate();
+</script>

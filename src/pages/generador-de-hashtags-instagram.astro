@@ -1,0 +1,183 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de hashtags para Instagram gratis | Genfy';
+const description = 'Generá un mix balanceado de hashtags para Instagram: 2 mega + 5 mid + 3 nicho. Optimizados para alcance, no para spam. Listo para Reels, posts y carruseles.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuántos hashtags conviene usar en Instagram?', acceptedAnswer: { '@type': 'Answer', text: 'Instagram permite hasta 30, pero los datos de 2024 muestran que el alcance se maximiza entre 8 y 12 hashtags bien elegidos. Más allá de 15 empieza a ser penalizado o ignorado.' } },
+    { '@type': 'Question', name: '¿Qué es la fórmula 2-5-3?', acceptedAnswer: { '@type': 'Answer', text: '2 hashtags mega (1M+ posts) para visibilidad inicial, 5 mid (50K-500K) donde sí podés ranquear, y 3 nicho (10K-50K) que conectan con audiencia real. Es el mix con mejor relación alcance / engagement.' } },
+    { '@type': 'Question', name: '¿Va en el caption o en el primer comentario?', acceptedAnswer: { '@type': 'Answer', text: 'Los datos actuales no muestran diferencia significativa de alcance. Por estética y legibilidad, muchos los ponen en el primer comentario. Lo que sí importa es no repetir el mismo bloque copiado en todos los posts.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de hashtags para Instagram"
+    intro="Cargá tu nicho. Genfy aplica la fórmula 2-5-3 (mega + mid + nicho) y te devuelve un set balanceado de 10-12 hashtags listos para Reels, posts y carruseles.">
+
+    <div slot="tool" class="ih">
+      <label for="ih-niche">Nicho / categoría</label>
+      <input id="ih-niche" type="text" placeholder="fitness, viajes, café, marketing..." value="fitness" />
+
+      <button id="ih-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar set 2-5-3</button>
+
+      <div id="ih-out" class="ih-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué la mayoría de las cuentas usa mal los hashtags</h2>
+      <p>
+        Hay dos errores que vemos en el 80% de las cuentas: poner 30 hashtags genéricos para "maximizar alcance", o poner solo 3-4 hashtags súper masivos esperando aparecer en el feed Explore. Ambas estrategias son ineficaces en 2026. Instagram cambió el algoritmo varias veces desde 2022 y hoy lo que rinde es la calidad del set, no la cantidad.
+      </p>
+      <p>
+        La métrica real que importa es <strong>tasa de descubrimiento</strong>: cuántas personas que no te siguen llegan al post a través de un hashtag. Para optimizarla hay que entender la matemática del alcance.
+      </p>
+
+      <h2>La matemática real del alcance por hashtag</h2>
+      <p>
+        Pensá en cada hashtag como una cola virtual. Los mega (1M+ posts) tienen mucha gente buscando, pero también miles de posts nuevos por minuto compitiendo. Tu post dura segundos en la primera pantalla. Los mid (50K-500K) tienen menos volumen pero competencia mucho menor: tu post puede sobrevivir horas o días. Los nicho (10K-50K) tienen poca gente buscando pero esa gente está hipersegmentada: tu engagement rate sube y eso le señala al algoritmo que tu contenido es relevante.
+      </p>
+      <p>
+        La fórmula <strong>2-5-3</strong> aprovecha las tres dinámicas: 2 mega para visibilidad inicial breve, 5 mid donde realmente podés ranquear, 3 nicho que disparan engagement. Total: 10 hashtags. Más allá, el rendimiento marginal cae a cero.
+      </p>
+
+      <h2>Cómo identificar hashtags por tamaño</h2>
+      <ol>
+        <li><strong>Mega (1M+ posts):</strong> #fitness, #travel, #marketing. Los obvios. Los buscás directo en Instagram, ves el contador de posts.</li>
+        <li><strong>Mid (50K-500K):</strong> #pilateslovers, #meditationdaily, #saaslife. Combinación de categoría + actividad o estilo de vida.</li>
+        <li><strong>Nicho (10K-50K):</strong> #pilatesargentina, #saasbootstrappers, #brunchbuenosaires. Geolocalización, micro-comunidad o ángulo específico.</li>
+      </ol>
+      <p>
+        Hashtags con menos de 5K posts suelen estar abandonados; con más de 5M, son tan masivos que tu post desaparece en segundos.
+      </p>
+
+      <h2>Errores que arruinan el alcance</h2>
+      <ul>
+        <li><strong>Repetir el mismo bloque en todos los posts.</strong> Instagram lo detecta como spam y baja la distribución.</li>
+        <li><strong>Hashtags prohibidos / shadowbanned.</strong> #beauty, #model, #adulting son ejemplos clásicos. La lista cambia, pero el patrón se mantiene.</li>
+        <li><strong>Hashtags irrelevantes al contenido.</strong> Si tu post de fitness usa #travel, el algoritmo te lee como inconsistente y reduce alcance futuro.</li>
+        <li><strong>Demasiados hashtags.</strong> 30 sigue siendo el máximo permitido, pero 8-12 es el sweet spot.</li>
+        <li><strong>Hashtags solo en inglés cuando tu audiencia es hispana.</strong> Mezclá según tu público real.</li>
+      </ul>
+
+      <h2>Hashtags branded: cuándo y cómo</h2>
+      <p>
+        Si tu marca tiene comunidad activa, conviene crear un hashtag propio (#marcacommunity, #marcaclub) para que los seguidores etiqueten contenido. Sirve para tres cosas: reposteo de UGC, búsqueda de menciones reales, y construcción de identidad. Pero tiene un piso: bajo 1.000 usos no aporta alcance, solo identidad. No esperés que un hashtag branded genere descubrimiento al inicio.
+      </p>
+
+      <h2>Cuándo cambiar el set</h2>
+      <p>
+        Cada 4-6 semanas conviene revisar los hashtags que más te están funcionando (Insights → ver hashtags con mejor alcance) y rotar los que no rinden. Una cuenta sana suele tener 30-40 hashtags en rotación distribuidos en 4-5 sets temáticos según el contenido del post.
+      </p>
+
+      <h2>Reels vs. posts vs. carruseles</h2>
+      <p>
+        Los Reels rinden con menos hashtags (5-7 alcanza); el algoritmo de Reels distribuye más por contenido en sí. Los posts estáticos usan el set completo (8-12). Los carruseles van bien con 10-12 más etiquetas geográficas. Las Stories no usan hashtags como herramienta de descubrimiento (uno o dos como máximo, más estético).
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántos hashtags conviene?</summary><p>8-12 es el sweet spot. La fórmula 2-5-3 (2 mega + 5 mid + 3 nicho) suma 10.</p></details>
+      <details><summary>¿Qué es la fórmula 2-5-3?</summary><p>2 mega para visibilidad inicial, 5 mid donde podés ranquear, 3 nicho que disparan engagement.</p></details>
+      <details><summary>¿En caption o en primer comentario?</summary><p>No hay diferencia significativa de alcance. Por estética, muchos los mandan al primer comentario.</p></details>
+      <details><summary>¿Cuándo rotar el set?</summary><p>Cada 4-6 semanas, viendo qué hashtags reportan mejor alcance en Insights.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ih-out { margin-top: 1.25rem; display: grid; gap: 1rem; }
+  .ih-group { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); }
+  .ih-group h4 { margin: 0 0 0.5rem; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-subtle); }
+  .ih-group p { margin: 0; line-height: 1.7; word-break: break-word; font-family: var(--font-mono); font-size: 0.875rem; }
+  .ih-copy { margin-top: 1rem; }
+</style>
+
+<script>
+  const SETS: Record<string, { mega: string[], mid: string[], niche: string[] }> = {
+    fitness: {
+      mega: ['fitness', 'workout'],
+      mid: ['fitnessmotivation', 'gymlife', 'fitfam', 'trainhard', 'fitnessjourney'],
+      niche: ['fitnessover40', 'pilateslovers', 'fitnessathome'],
+    },
+    viajes: {
+      mega: ['travel', 'wanderlust'],
+      mid: ['travelgram', 'instatravel', 'travelphotography', 'travelblog', 'travelcommunity'],
+      niche: ['slowtravel', 'soloviajes', 'travelreelsdaily'],
+    },
+    cafe: {
+      mega: ['coffee', 'coffeelover'],
+      mid: ['coffeetime', 'specialtycoffee', 'coffeeshop', 'baristalife', 'coffeegram'],
+      niche: ['v60coffee', 'cafedeespecialidad', 'coffeegeeks'],
+    },
+    marketing: {
+      mega: ['marketing', 'digitalmarketing'],
+      mid: ['marketingtips', 'contentmarketing', 'marketingstrategy', 'socialmediamarketing', 'marketingdigital'],
+      niche: ['b2bmarketing', 'saasmarketing', 'marketingargentina'],
+    },
+    food: {
+      mega: ['food', 'foodie'],
+      mid: ['foodporn', 'foodphotography', 'foodlover', 'instafood', 'homemade'],
+      niche: ['foodieargentina', 'plantbasedeats', 'realfoodlovers'],
+    },
+    moda: {
+      mega: ['fashion', 'style'],
+      mid: ['ootd', 'styleinspo', 'fashionblogger', 'streetstyle', 'fashiongram'],
+      niche: ['slowfashion', 'sustainablestyle', 'modaargentina'],
+    },
+    default: {
+      mega: ['inspiration', 'lifestyle'],
+      mid: ['daily', 'community', 'creators', 'goodvibes', 'mindset'],
+      niche: ['microcommunity', 'realtalk', 'localbrand'],
+    },
+  };
+
+  const niche = document.getElementById('ih-niche') as HTMLInputElement;
+  const gen = document.getElementById('ih-gen') as HTMLButtonElement;
+  const out = document.getElementById('ih-out')!;
+
+  function findSet(n: string) {
+    const k = n.toLowerCase().trim();
+    if (SETS[k]) return SETS[k];
+    if (k.includes('viaj') || k.includes('travel')) return SETS.viajes;
+    if (k.includes('caf') || k.includes('coffee')) return SETS.cafe;
+    if (k.includes('market')) return SETS.marketing;
+    if (k.includes('food') || k.includes('comid')) return SETS.food;
+    if (k.includes('mod') || k.includes('fashion')) return SETS.moda;
+    if (k.includes('fit') || k.includes('gym')) return SETS.fitness;
+    return SETS.default;
+  }
+
+  function makeGroup(title: string, words: string[]) {
+    const g = document.createElement('div');
+    g.className = 'ih-group';
+    const tags = words.map(w => '#' + w).join(' ');
+    g.innerHTML = `<h4>${title}</h4><p>${tags}</p>`;
+    g.title = 'Click para copiar';
+    g.addEventListener('click', () => { navigator.clipboard.writeText(tags); const old = g.querySelector('h4')!.textContent; g.querySelector('h4')!.textContent = '✓ COPIADO'; setTimeout(() => g.querySelector('h4')!.textContent = old, 800); });
+    g.style.cursor = 'pointer';
+    return g;
+  }
+
+  function generate() {
+    const s = findSet(niche.value);
+    out.innerHTML = '';
+    out.appendChild(makeGroup('Mega (1M+ posts) — visibilidad inicial', s.mega));
+    out.appendChild(makeGroup('Mid (50K-500K) — donde podés ranquear', s.mid));
+    out.appendChild(makeGroup('Nicho (10K-50K) — engagement real', s.niche));
+
+    const all = [...s.mega, ...s.mid, ...s.niche].map(w => '#' + w).join(' ');
+    const c = document.createElement('div');
+    c.className = 'ih-group ih-copy';
+    c.innerHTML = `<h4>SET COMPLETO 2-5-3 (10 HASHTAGS)</h4><p>${all}</p>`;
+    c.style.cursor = 'pointer';
+    c.title = 'Click para copiar el set completo';
+    c.addEventListener('click', () => { navigator.clipboard.writeText(all); const old = c.querySelector('h4')!.textContent; c.querySelector('h4')!.textContent = '✓ COPIADO'; setTimeout(() => c.querySelector('h4')!.textContent = old, 800); });
+    out.appendChild(c);
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,214 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Sortear ganador online (rifa) | Genfy';
+const description = 'Sorteo de ganador a partir de una lista de participantes. Verificable, exportable, con animación de selección. Para uso lúdico, sin validez legal para premios materiales.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo funciona el sorteo?', acceptedAnswer: { '@type': 'Answer', text: 'Pegás los nombres (uno por línea), elegís cuántos ganadores y nosotros mezclamos la lista con Fisher-Yates usando crypto.getRandomValues. Los primeros N son los ganadores.' } },
+    { '@type': 'Question', name: '¿Es válido legalmente?', acceptedAnswer: { '@type': 'Answer', text: 'No. Para premios con valor material (productos, dinero), las leyes de muchos países exigen sistemas certificados y, frecuentemente, presencia notarial. Nuestra herramienta es para uso lúdico.' } },
+    { '@type': 'Question', name: '¿Cómo hago un sorteo verificable?', acceptedAnswer: { '@type': 'Answer', text: 'Compartí la lista completa antes del sorteo, hacé el sorteo en vivo o grabado, y postea la captura del resultado en el lugar donde anunciaste el sorteo. Eso da transparencia.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Random" title="Sortear ganador (rifa)"
+    intro="Pegá la lista de participantes, elegí cuántos ganadores querés y dejá que el azar decida. Para uso lúdico, no tiene validez legal para premios materiales.">
+
+    <div slot="tool" class="rw-tool">
+      <div>
+        <label for="rw-list">Participantes (uno por línea)</label>
+        <textarea id="rw-list" rows="10" placeholder="Una persona por línea&#10;Ana&#10;Bruno&#10;Carla&#10;..."></textarea>
+        <p class="rw-count">0 participantes</p>
+      </div>
+
+      <div class="rw-controls">
+        <div>
+          <label for="rw-winners">Cantidad de ganadores</label>
+          <input id="rw-winners" type="number" value="1" min="1" max="50" />
+        </div>
+        <div>
+          <label for="rw-seed">Semilla (opcional)</label>
+          <input id="rw-seed" type="text" placeholder="Ej: sorteo-mayo-2026" />
+        </div>
+      </div>
+
+      <div class="rw-actions">
+        <button id="rw-draw" class="btn btn-primary" type="button">Sortear ganador(es)</button>
+        <button id="rw-copy" class="btn btn-ghost" type="button">Copiar resultado</button>
+        <button id="rw-clear" class="btn btn-ghost" type="button">Limpiar</button>
+      </div>
+
+      <div id="rw-result" class="rw-result">
+        <div class="rw-empty">Cargá los participantes y tocá "sortear"</div>
+      </div>
+
+      <p class="rw-disclaimer">⚠️ Para usos lúdicos. No tiene validez legal para sorteos con premios materiales.</p>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo funciona el sorteo internamente</h2>
+      <p>
+        Aplicamos el algoritmo <strong>Fisher-Yates shuffle</strong> sobre la lista de
+        participantes, usando <code>crypto.getRandomValues</code> como fuente de
+        aleatoriedad. Cada permutación posible de la lista tiene exactamente la misma
+        probabilidad. Los primeros N elementos del array mezclado son los ganadores.
+        Es matemáticamente justo: cada participante tiene exactamente N/total de
+        probabilidad de ser elegido.
+      </p>
+
+      <h2>Cómo hacer un sorteo público y transparente</h2>
+      <ol>
+        <li><strong>Anunciá las reglas claramente</strong>: cuántos ganadores, qué premio, cuándo es el sorteo, cómo se elige.</li>
+        <li><strong>Compartí la lista completa antes</strong> del sorteo. En grupos chicos podés mostrar los nombres; en sorteos grandes, podés publicar un hash de la lista (SHA256) para garantizar que no agregaste nombres post-mortem.</li>
+        <li><strong>Hacé el sorteo en vivo</strong>: stream en Twitch/YouTube, sala de Zoom abierta, video grabado mostrando todo el proceso.</li>
+        <li><strong>Mostrá el resultado completo</strong>: idealmente, no solo el ganador sino la lista mezclada (o al menos los top 5-10), para demostrar que el algoritmo se ejecutó.</li>
+        <li><strong>Postea capturas</strong> en el grupo donde anunciaste el sorteo, etiquetando al ganador.</li>
+      </ol>
+
+      <h2>La diferencia entre "sorteo justo" y "sorteo legal"</h2>
+      <p>
+        Un sorteo puede ser perfectamente justo (algorítmicamente irreprochable) y al
+        mismo tiempo no tener validez legal. La diferencia está en quién garantiza la
+        ejecución y la inalterabilidad. Para sorteos con premios materiales, muchos
+        países exigen:
+      </p>
+      <ul>
+        <li><strong>Sistema certificado por una autoridad</strong> (lotería nacional, cámara de comercio).</li>
+        <li><strong>Presencia notarial</strong>: un escribano valida el proceso y firma el acta.</li>
+        <li><strong>Lista de participantes auditable</strong>, presentada antes del sorteo.</li>
+        <li><strong>Reglas pre-publicadas</strong> que el organizador no puede modificar a último momento.</li>
+      </ul>
+      <p>
+        Nuestra herramienta es para sorteos informales: equipo chico, comunidad amiga,
+        rifa de cumpleaños, decisión de quién paga la próxima ronda. Para premios reales,
+        consultá la legislación de tu país.
+      </p>
+
+      <h2>Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Comunidades online</strong>: subirte a un canal de Discord o YouTube y sortear un libro o un juego.</li>
+        <li><strong>Equipo de trabajo</strong>: quién presenta primero, quién toma vacaciones primero, quién hace el café esta semana.</li>
+        <li><strong>Aulas</strong>: el profesor sortea quién pasa al pizarrón.</li>
+        <li><strong>Asignación de tareas</strong>: lista de tareas + lista de personas, mezclás y emparejás.</li>
+        <li><strong>Salidas con amigos</strong>: quién elige el restaurante, quién paga la cuenta.</li>
+      </ul>
+
+      <h2>El "sesgo del shuffle ingenuo"</h2>
+      <p>
+        Mucha gente implementa sorteos así:
+        <code>arr.sort(() =&gt; Math.random() - 0.5)</code>. <strong>Es incorrecto</strong>:
+        produce permutaciones sesgadas. Estudios formales mostraron que ciertos elementos
+        terminan más cerca del principio que otros. Si tu sorteo importa, asegurate que
+        la herramienta use Fisher-Yates (la nuestra lo hace).
+      </p>
+
+      <h2>Reproducibilidad con semilla</h2>
+      <p>
+        Si querés que el sorteo sea reproducible (que cualquiera con la misma lista y la
+        misma semilla obtenga el mismo resultado), usá el campo "semilla". Internamente
+        derivamos un PRNG determinístico desde ese string. Útil para auditorías o cuando
+        querés que tu sorteo sea verificable después de los hechos. Sin semilla, el
+        resultado es irreproducible y depende solo de <code>crypto.getRandomValues</code>.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo funciona?</summary><p>Mezclamos la lista con Fisher-Yates usando crypto.getRandomValues. Los primeros N son los ganadores. Cada uno tiene N/total de probabilidad.</p></details>
+      <details><summary>¿Es legal?</summary><p>No tiene validez legal. Para premios materiales necesitás sistemas certificados y notario. Nuestra herramienta es para uso lúdico.</p></details>
+      <details><summary>¿Cómo lo hago verificable?</summary><p>Compartí la lista antes, hacé el sorteo en vivo, postea captura del resultado. Eso garantiza transparencia.</p></details>
+      <details><summary>¿Puedo reproducir el sorteo?</summary><p>Sí, usá el campo "semilla" y guardá ese valor. Cualquiera con la misma lista y semilla obtiene el mismo resultado.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  textarea#rw-list { font-family: var(--font-mono); font-size: 0.875rem; min-height: 200px; }
+  .rw-count { font-size: 0.75rem; color: var(--text-subtle); margin: 0.25rem 0 0; }
+  .rw-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .rw-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .rw-result { padding: 1.5rem; background: var(--bg-inset); border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1rem; min-height: 100px; }
+  .rw-empty { text-align: center; color: var(--text-subtle); font-size: 0.9375rem; padding: 1rem; }
+  .rw-winner { display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1rem; background: linear-gradient(90deg, #fef3c7, #fbbf24); border: 1px solid #f59e0b; border-radius: var(--radius); margin-bottom: 0.5rem; animation: rw-pop 0.4s var(--ease); }
+  @keyframes rw-pop { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .rw-medal { font-size: 1.5rem; }
+  .rw-name { font-weight: 700; font-size: 1.0625rem; color: #78350f; flex: 1; }
+  .rw-pos { font-size: 0.75rem; color: #92400e; font-weight: 600; }
+  .rw-disclaimer { font-size: 0.8125rem; color: var(--text-soft); padding: 0.75rem 1rem; background: #fef3c7; border: 1px solid #fbbf24; border-radius: var(--radius); margin: 0; }
+  @media (max-width: 600px) { .rw-controls { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const list = document.getElementById('rw-list') as HTMLTextAreaElement;
+  const winners = document.getElementById('rw-winners') as HTMLInputElement;
+  const seed = document.getElementById('rw-seed') as HTMLInputElement;
+  const draw = document.getElementById('rw-draw') as HTMLButtonElement;
+  const copy = document.getElementById('rw-copy') as HTMLButtonElement;
+  const clear = document.getElementById('rw-clear') as HTMLButtonElement;
+  const result = document.getElementById('rw-result')!;
+  const countEl = document.querySelector('.rw-count')!;
+
+  function parse(): string[] {
+    return list.value.split('\n').map(s => s.trim()).filter(Boolean);
+  }
+  function updateCount() {
+    countEl.textContent = `${parse().length} participantes`;
+  }
+  list.addEventListener('input', updateCount);
+  updateCount();
+
+  // Seeded PRNG (mulberry32) for reproducible draws
+  function makeRng(seedStr: string) {
+    if (!seedStr) {
+      return () => {
+        const arr = new Uint32Array(1);
+        window.crypto.getRandomValues(arr);
+        return arr[0] / 0xffffffff;
+      };
+    }
+    let s = 0;
+    for (const c of seedStr) s = (s * 31 + c.charCodeAt(0)) | 0;
+    s = s >>> 0;
+    return () => {
+      s |= 0; s = (s + 0x6D2B79F5) | 0;
+      let t = s;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function shuffle<T>(arr: T[], rng: () => number): T[] {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  function go() {
+    const items = parse();
+    if (items.length === 0) { result.innerHTML = '<div class="rw-empty">Cargá al menos 1 participante.</div>'; return; }
+    const n = Math.max(1, Math.min(items.length, parseInt(winners.value) || 1));
+    const rng = makeRng(seed.value.trim());
+    const shuffled = shuffle(items, rng);
+    const picks = shuffled.slice(0, n);
+    const medals = ['🥇', '🥈', '🥉', '🏅', '🏅', '🏅'];
+    result.innerHTML = picks.map((p, i) => `<div class="rw-winner"><span class="rw-medal">${medals[i] || '🎉'}</span><span class="rw-name">${p.replace(/</g, '<')}</span><span class="rw-pos">#${i + 1}</span></div>`).join('');
+  }
+  draw.addEventListener('click', go);
+  copy.addEventListener('click', () => {
+    const names = Array.from(result.querySelectorAll('.rw-name')).map((el, i) => `${i + 1}. ${el.textContent}`).join('\n');
+    if (!names) return;
+    navigator.clipboard.writeText(names);
+    copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = 'Copiar resultado'; }, 1200);
+  });
+  clear.addEventListener('click', () => {
+    list.value = ''; seed.value = '';
+    result.innerHTML = '<div class="rw-empty">Cargá los participantes y tocá "sortear"</div>';
+    updateCount();
+  });
+</script>

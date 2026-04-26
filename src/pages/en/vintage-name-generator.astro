@@ -1,0 +1,114 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+import { VINTAGE_NAMES, NAME_STYLES } from '../../lib/baby-names';
+
+const title = 'Vintage Name Generator | Genfy';
+const description = 'Early-20th-century classic names making a comeback. Walter, Hazel, Edna, Frank and 30+ more retro ideas.';
+const stylesEN = { male: NAME_STYLES.en.male, female: NAME_STYLES.en.female };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why are vintage names coming back?', acceptedAnswer: { '@type': 'Answer', text: 'Because of the 100-year rule: names used by great-grandparents feel fresh again to grandkids. Hazel, Pearl, Walter, Frank are returning hard since 2018.' } },
+    { '@type': 'Question', name: 'Which vintage names work today?', acceptedAnswer: { '@type': 'Answer', text: 'Hazel, Pearl, Vera, Mae for girls; Walter, Frank, Hugh, Arthur for boys. Short, present, authentic without feeling weird.' } },
+    { '@type': 'Question', name: 'Is "vintage" the same as "classic"?', acceptedAnswer: { '@type': 'Answer', text: 'Not quite. Classics (John, Mary) never dropped out of use; vintage names were forgotten for 50-80 years and now return with a retro flavor.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="en" tag="People" title="Vintage Name Generator"
+    intro="Names from 1900-1950 returning with fresh energy: Walter, Hazel, Edna, Frank. Click and get 12 retro-flavored ideas.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Gender</label>
+      <select id="cn-style">
+        {Object.entries(stylesEN).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mix</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 names</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why vintage names are trending</h2>
+      <p>
+        Sociolinguistics has a 100-year rule: a name falls out of use, becomes associated with a
+        grandparent generation, gets forgotten, and when it returns two generations later it
+        suddenly feels fresh. That's why Hazel, Pearl, Walter and Frank — names that sounded "old"
+        in the 1970s — are back in the Top 100.
+      </p>
+
+      <h2>Vintage names making a comeback</h2>
+      <ul>
+        <li><strong>Female:</strong> Hazel, Pearl, Vera, Mae, Ruby, Edith, Ada, Mabel, Florence, Beatrice, Edna. Several are already in the US Top 50 since 2020.</li>
+        <li><strong>Male:</strong> Walter, Frank, Hugh, Arthur, Ernest, Harold, Earl, Ralph, Roy. Arthur in particular grows in double digits every year.</li>
+      </ul>
+
+      <h2>Why they work today</h2>
+      <ul>
+        <li><strong>Short but with presence.</strong> Vera, Hugh, Mae are 1 syllable and still uncommon.</li>
+        <li><strong>Novelistic surnames pair beautifully.</strong> Walter Hawthorne, Hazel Carmichael — instantly literary.</li>
+        <li><strong>Pronounceable everywhere.</strong> Pearl, Frank, Ada, Edna work in English, Spanish, French.</li>
+        <li><strong>Concrete meanings.</strong> Pearl, Hazel (the nut), Vera ("truth"). More tangible than many modern invented names.</li>
+      </ul>
+
+      <h2>How to pick a vintage name that doesn't feel "old"</h2>
+      <ol>
+        <li>Check today's rankings. If the name is already Top 100 (Hazel, Arthur), the comeback is real.</li>
+        <li>Avoid names still carrying stigma. Mildred, Bertha, Wilma, Doris, Ethel haven't finished their cycle yet — many people will hear a specific grandmother.</li>
+        <li>Pair with a modern middle name. Hazel Mia, Walter Liam — contrast softens it.</li>
+        <li>Consider the nicknames. Walter → Walt, Hazel → Hazy, Vera → V. If you like them, go.</li>
+      </ol>
+
+      <h2>Vintage names in Spanish</h2>
+      <p>
+        In the Spanish-speaking world the retro cycle works the same way: Norma, Hilda, Eulalia,
+        Otilia (1930s-50s) are starting to come back. On the male side, Edmundo, Alfredo, Federico,
+        Reinaldo remain rare but are gaining space among parents looking for something distinctive.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Why are vintage names coming back?</summary><p>The 100-year rule: names from great-grandparents feel fresh to grandkids.</p></details>
+      <details><summary>Which work today?</summary><p>Hazel, Pearl, Vera, Mae for girls; Walter, Frank, Hugh, Arthur for boys.</p></details>
+      <details><summary>Same as classic?</summary><p>No. Classics never dropped out; vintage were forgotten 50-80 years and return with retro flavor.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: VINTAGE_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.male.en, ...DATA.female.en];
+    else pool = DATA[s].en;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

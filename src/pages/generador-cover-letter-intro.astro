@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de intro de carta de presentación | Genfy';
+const description = 'Generá la introducción perfecta para tu carta de presentación. Apertura con logro, no con "estoy escribiendo para postularme". Lista para copiar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué la intro es lo más importante?', acceptedAnswer: { '@type': 'Answer', text: 'Porque el reclutador decide en 6-10 segundos si seguir leyendo o pasar al siguiente CV. Una intro débil mata la carta antes del segundo párrafo.' } },
+    { '@type': 'Question', name: '¿Por qué no empezar con "estoy escribiendo para postularme"?', acceptedAnswer: { '@type': 'Answer', text: 'Porque es información obvia que ocupa espacio. Empezar con un logro concreto o un dato específico genera interés desde la primera línea.' } },
+    { '@type': 'Question', name: '¿Funcionan estas plantillas en LinkedIn?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Las mismas reglas aplican para mensajes de LinkedIn, Easy Apply notes y emails directos al hiring manager.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Trabajo / Work" title="Generador de intro de carta de presentación"
+    intro="La primera línea decide si siguen leyendo. Generá aperturas con logro concreto, dato específico o conexión personal — sin clichés.">
+
+    <div slot="tool" class="cl">
+      <div class="cl-row">
+        <div>
+          <label for="cl-role">Puesto al que postulás</label>
+          <input id="cl-role" type="text" value="Senior Marketing Manager" />
+        </div>
+        <div>
+          <label for="cl-company">Empresa</label>
+          <input id="cl-company" type="text" value="Acme S.A." />
+        </div>
+      </div>
+      <div class="cl-row">
+        <div>
+          <label for="cl-years">Años de experiencia</label>
+          <input id="cl-years" type="number" value="6" min="0" max="40" />
+        </div>
+        <div>
+          <label for="cl-area">Área principal</label>
+          <input id="cl-area" type="text" value="marketing digital" />
+        </div>
+      </div>
+      <div class="cl-row">
+        <div>
+          <label for="cl-achievement">Tu mejor logro (una frase)</label>
+          <input id="cl-achievement" type="text" value="lideré el lanzamiento de un producto que generó 2 millones de USD en el primer año" />
+        </div>
+      </div>
+      <div class="cl-row">
+        <div>
+          <label for="cl-style">Estilo de apertura</label>
+          <select id="cl-style">
+            <option value="achievement">Apertura con logro</option>
+            <option value="why-here">Por qué esta empresa</option>
+            <option value="referral">Recomendación interna</option>
+            <option value="research">Hallazgo concreto sobre la empresa</option>
+          </select>
+        </div>
+      </div>
+      <button id="cl-gen" class="btn btn-primary" type="button">Generar 3 versiones</button>
+      <button id="cl-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="cl-out" rows="14" readonly style="margin-top:1rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>La regla más importante: empezá con tu logro, no con tu intención</h2>
+      <p>
+        El error más común en cartas de presentación es la apertura tipo "Por la presente me
+        dirijo a Ud. para postularme al puesto de X publicado en Indeed". Esa frase no aporta
+        nada que el reclutador no sepa: ya está leyendo tu carta de postulación, ya sabe a qué
+        puesto. Es un párrafo perdido. La regla profesional moderna: arrancá con un dato
+        concreto sobre vos. Tu logro más relevante. Un número que importa. Una observación
+        específica sobre la empresa que demuestre que investigaste.
+      </p>
+
+      <h2>Cuatro estilos de apertura que funcionan</h2>
+      <ul>
+        <li><strong>Apertura con logro.</strong> "En los últimos tres años lideré el lanzamiento de un producto que generó 2M USD en el primer año." Funciona cuando tu trayectoria habla por sí sola.</li>
+        <li><strong>Por qué esta empresa.</strong> "Sigo el trabajo de [empresa] desde 2020 y me llamó particularmente la atención su decisión de [hecho concreto]." Funciona para empresas que admirás genuinamente.</li>
+        <li><strong>Recomendación interna.</strong> "[Nombre], jefe del equipo de [área], me sugirió postularme luego de conversar sobre [tema]." Funciona cuando tenés un referido real.</li>
+        <li><strong>Hallazgo concreto.</strong> "Leyendo el último reporte trimestral de [empresa] noté que el segmento [X] creció un Y%. Mi experiencia en [área] coincide exactamente con ese crecimiento." Funciona para roles más analíticos.</li>
+      </ul>
+
+      <h2>Datos que SÍ van en la intro</h2>
+      <ol>
+        <li><strong>Cifras tangibles.</strong> "20% de aumento", "10 millones de usuarios", "USD 500k de presupuesto manejado".</li>
+        <li><strong>Nombres reconocibles.</strong> Si trabajaste en empresas conocidas o estudiaste en universidades top, mencionalo brevemente.</li>
+        <li><strong>Tiempos.</strong> "Durante 5 años en X" da más contexto que "tengo experiencia".</li>
+        <li><strong>Contexto comparativo.</strong> "Equipo de 3 que escalé a 12" cuenta más que "lideré un equipo".</li>
+      </ol>
+
+      <h2>Datos que NO van en la intro</h2>
+      <ul>
+        <li>Tu nombre (ya está en el CV).</li>
+        <li>El puesto al que postulás (ya lo saben).</li>
+        <li>Cómo te enteraste de la búsqueda (irrelevante para evaluarte).</li>
+        <li>Tu disponibilidad horaria (eso va al final, si va).</li>
+        <li>Ruegos ("agradecería la oportunidad de", "espero su pronta respuesta").</li>
+      </ul>
+
+      <h2>Largo recomendado</h2>
+      <p>
+        La intro ideal son 2-3 oraciones que sumen entre 35 y 60 palabras. Suficiente para
+        plantar un dato fuerte y dirigir al lector al siguiente párrafo. Más largo y se diluye;
+        más corto y suena truncado. Si tu mejor logro no entra en una oración, contalo en dos —
+        no compactes hasta perder claridad.
+      </p>
+
+      <h2>Adaptar al puesto</h2>
+      <p>
+        El logro que ponés en la intro tiene que conectar con lo que el puesto pide. Si el
+        anuncio menciona "experiencia liderando equipos remotos", tu intro debería incluir un
+        número sobre el tamaño del equipo remoto que liderás. Si pide "experiencia en
+        ecommerce", tu intro debería tener una métrica de ecommerce. Esa coincidencia es lo
+        que hace la diferencia entre 100 cartas idénticas y la tuya.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Por qué la intro es lo más importante?</summary><p>El reclutador decide en 6-10 segundos. Una intro débil mata la carta.</p></details>
+      <details><summary>¿Por qué no "estoy escribiendo para postularme"?</summary><p>Información obvia, ocupa espacio. Empezar con logro genera interés.</p></details>
+      <details><summary>¿Funciona en LinkedIn?</summary><p>Sí. Las mismas reglas aplican a Easy Apply y mensajes directos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cl-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .cl-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const roleEl = document.getElementById('cl-role') as HTMLInputElement;
+  const companyEl = document.getElementById('cl-company') as HTMLInputElement;
+  const yearsEl = document.getElementById('cl-years') as HTMLInputElement;
+  const areaEl = document.getElementById('cl-area') as HTMLInputElement;
+  const achEl = document.getElementById('cl-achievement') as HTMLInputElement;
+  const styleEl = document.getElementById('cl-style') as HTMLSelectElement;
+  const out = document.getElementById('cl-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('cl-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('cl-copy') as HTMLButtonElement;
+
+  function generate() {
+    const role = roleEl.value || '[puesto]';
+    const company = companyEl.value || '[empresa]';
+    const years = yearsEl.value || 'X';
+    const area = areaEl.value || '[área]';
+    const ach = achEl.value || '[tu mejor logro]';
+    const s = styleEl.value;
+    let lines: string[] = [];
+    if (s === 'achievement') {
+      lines = [
+        `En mis ${years} años en ${area}, ${ach}. Por eso me interesa especialmente la búsqueda de ${role} en ${company}: el rol coincide casi punto a punto con el tipo de impacto que vengo construyendo.`,
+        `${ach} — esa es la línea que mejor define mis últimos ${years} años en ${area}. Cuando vi la búsqueda de ${role} en ${company}, supe que era el lugar donde ese tipo de trabajo escala.`,
+        `Después de ${years} años en ${area}, hay un logro que sigue marcando mi forma de trabajar: ${ach}. Por eso me presento a la búsqueda de ${role} en ${company}.`,
+      ];
+    } else if (s === 'why-here') {
+      lines = [
+        `Sigo el trabajo de ${company} desde hace tiempo y me llamó la atención cómo se posicionaron en el último año. Con ${years} años en ${area}, creo que puedo aportar exactamente al tipo de crecimiento que están construyendo en el rol de ${role}.`,
+        `Pocas empresas en el mercado piensan ${area} como ${company}. Me presento al puesto de ${role} con ${years} años de experiencia y un logro reciente que me parece relevante: ${ach}.`,
+        `Lo que diferencia a ${company} de la mayoría de su categoría es la ejecución. Tras ${years} años en ${area}, donde ${ach}, quiero sumar a ese tipo de trabajo desde el rol de ${role}.`,
+      ];
+    } else if (s === 'referral') {
+      lines = [
+        `[Nombre del referido], del equipo de ${area} en ${company}, me sugirió postularme al rol de ${role}. Tras una conversación sobre los desafíos del puesto, creo que mis ${years} años en ${area} (donde ${ach}) calzan con lo que necesitan.`,
+        `Hablando con [Nombre del referido] sobre las prioridades de ${company} para 2026, me animó a presentarme al puesto de ${role}. Vengo de ${years} años en ${area}, con un logro que considero conectado: ${ach}.`,
+        `[Nombre del referido] me pasó la búsqueda de ${role} mencionando que el equipo necesita exactamente perfiles como el mío. Con ${years} años en ${area}, mi caso de mayor impacto fue: ${ach}.`,
+      ];
+    } else {
+      lines = [
+        `Leyendo el último reporte público de ${company} noté un movimiento concreto en ${area} que coincide con lo que vine haciendo: ${ach}. Por eso me presento al puesto de ${role}, con ${years} años de experiencia en el área.`,
+        `Hay un dato del último año de ${company} que me llamó la atención y se conecta con mi trabajo: ${ach}. Tengo ${years} años en ${area} y la búsqueda de ${role} parece pensada para perfiles con ese tipo de track record.`,
+        `Después de leer cómo ${company} está abordando ${area}, me convencí de presentarme al puesto de ${role}. Mi historia profesional reciente lo respalda: ${ach}, después de ${years} años en el área.`,
+      ];
+    }
+    out.value = lines.map((l, i) => `Versión ${i + 1}:\n${l}`).join('\n\n');
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

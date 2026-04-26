@@ -1,0 +1,193 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de afirmaciones positivas gratis | Genfy';
+const description = 'Afirmaciones positivas en presente para autoconfianza, calma, productividad y crecimiento. Versiones prácticas y bíblicas. Listas para copiar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué empezar con "Yo soy" en presente?', acceptedAnswer: { '@type': 'Answer', text: 'La afirmación funciona como un recordatorio identitario, no como un deseo futuro. "Yo soy una persona constante" entrena al cerebro a alinear acciones con esa identidad. "Yo seré" lo deja como pendiente.' } },
+    { '@type': 'Question', name: '¿Funcionan las afirmaciones positivas?', acceptedAnswer: { '@type': 'Answer', text: 'Funcionan mejor cuando son creíbles para vos y se combinan con acción concreta. Si la afirmación contradice tu evidencia ("yo soy millonario") tu cerebro la rechaza.' } },
+    { '@type': 'Question', name: '¿Cómo las uso?', acceptedAnswer: { '@type': 'Answer', text: 'Elegí 1-3 que te resuenen, escribilas a mano cada mañana y léelas en voz alta. La repetición consciente es lo que hace el trabajo.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Inspiración" title="Generador de afirmaciones positivas"
+    intro="Afirmaciones en presente, prácticas o bíblicas, para construir confianza y enfoque. Sin clichés New Age. Listas para copiar.">
+
+    <div slot="tool" class="af">
+      <div class="af-row">
+        <div>
+          <label for="af-cat">Categoría</label>
+          <select id="af-cat">
+            <option value="confidence">Autoconfianza</option>
+            <option value="calm">Calma</option>
+            <option value="work">Productividad</option>
+            <option value="growth">Crecimiento</option>
+            <option value="biblical">Bíblicas</option>
+          </select>
+        </div>
+        <div>
+          <label for="af-amount">Cantidad</label>
+          <input id="af-amount" type="number" min="1" max="10" value="3" />
+        </div>
+      </div>
+      <button id="af-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="af-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="af-out" rows="9" readonly style="margin-top:1rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>"Yo soy" vs. "yo seré": por qué importa</h2>
+      <p>
+        Una afirmación bien armada empieza en presente. "Yo soy alguien que cumple lo que
+        promete" funciona como un recordatorio de identidad, no como una promesa al futuro.
+        "Yo seré" es una postergación: deja la responsabilidad para mañana y tu cerebro la lee
+        como pendiente. Por eso el generador usa siempre presente: la frase se siente menos
+        cómoda al principio (porque puede contradecir cómo te sentís hoy), pero es justamente
+        esa fricción la que dispara el trabajo interno.
+      </p>
+
+      <h2>Cómo elegir afirmaciones que funcionan</h2>
+      <ul>
+        <li><strong>Creíble.</strong> Si "yo soy millonario" te suena absurdo, no la uses. Probá "yo soy una persona que decide bien con su dinero".</li>
+        <li><strong>Específica.</strong> "Soy bueno" es vago. "Soy bueno terminando proyectos largos" tiene contenido.</li>
+        <li><strong>Conectada con acción.</strong> Una afirmación sin acción es fantasía. Después de leerla, definí 1 micro-acción del día que esté alineada.</li>
+      </ul>
+
+      <h2>Cinco categorías y cuándo usarlas</h2>
+      <ul>
+        <li><strong>Autoconfianza.</strong> Antes de una entrevista, una conversación difícil o una primera reunión.</li>
+        <li><strong>Calma.</strong> En momentos de ansiedad alta, antes de dormir, después de noticias estresantes.</li>
+        <li><strong>Productividad.</strong> Al empezar el día o antes de bloques de trabajo profundo.</li>
+        <li><strong>Crecimiento.</strong> Cuando estás aprendiendo algo nuevo y querés sostener el esfuerzo.</li>
+        <li><strong>Bíblicas.</strong> Para devocional matutino o como parte de un journaling de fe.</li>
+      </ul>
+
+      <h2>Una rutina simple de 3 minutos</h2>
+      <p>
+        Generá 5 afirmaciones, elegí 1 (la que te incomode un poco, no la más cómoda).
+        Escribila a mano tres veces. Léela en voz alta una vez. Cerrá el cuaderno y arrancá tu
+        día. Tres minutos. La incomodidad inicial baja en 7-10 días y la frase empieza a
+        operar en segundo plano. No es magia: es el mismo principio del entrenamiento por
+        repetición espaciada.
+      </p>
+
+      <h2>Errores que matan el efecto</h2>
+      <ul>
+        <li><strong>Decirlas en automático.</strong> Si las repetís sin sentir, no entrenás nada.</li>
+        <li><strong>Cambiarlas todos los días.</strong> Mejor 1 frase por una semana que 7 distintas.</li>
+        <li><strong>No combinarlas con acción.</strong> Sin acción, las afirmaciones son ruido bonito.</li>
+        <li><strong>Usar frases que no creés en absoluto.</strong> Subí el listón gradualmente; no saltes 10 niveles.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Por qué presente?</summary><p>Porque entrena identidad, no deseo. "Yo soy" alinea acciones; "yo seré" deja todo como pendiente.</p></details>
+      <details><summary>¿Funcionan?</summary><p>Funcionan cuando son creíbles para vos y se combinan con acción concreta.</p></details>
+      <details><summary>¿Cómo las uso?</summary><p>Elegí 1-3, escribilas a mano cada mañana y léelas en voz alta. La repetición consciente es la clave.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .af-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .af-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const AF: Record<string, string[]> = {
+    confidence: [
+      "Soy capaz de manejar lo que se presente hoy.",
+      "Confío en mi criterio para tomar decisiones difíciles.",
+      "Mi voz aporta valor, incluso cuando dudo.",
+      "Tengo derecho a ocupar el espacio que ocupo.",
+      "Aprendo de cada conversación complicada.",
+      "Soy una persona segura que también acepta no saber.",
+      "Mi presencia hace una diferencia real para los que me rodean.",
+      "Soy capaz de equivocarme y seguir adelante.",
+      "Hablo claro y respetuoso al mismo tiempo.",
+      "Mi historia hasta acá ya demostró que puedo.",
+      "Confío en mi capacidad para aprender lo que aún no sé.",
+      "Soy alguien que cumple lo que promete.",
+    ],
+    calm: [
+      "Estoy en calma incluso cuando las cosas a mi alrededor no lo están.",
+      "Respiro profundo y mi cuerpo recuerda cómo descansar.",
+      "Lo que me preocupa hoy probablemente no me preocupará en un mes.",
+      "Estoy seguro en este momento, ahora.",
+      "No necesito controlar todo para estar bien.",
+      "Suelto lo que no depende de mí.",
+      "Mi paz no se negocia por urgencias ajenas.",
+      "Tengo permiso de no responder al instante.",
+      "Estoy donde tengo que estar, haciendo lo que puedo hacer.",
+      "Confío en que el descanso también es trabajo.",
+      "El silencio me devuelve a mí mismo.",
+    ],
+    work: [
+      "Soy una persona enfocada que termina lo que empieza.",
+      "Hago una cosa por vez, bien hecha.",
+      "Trabajo con sistemas, no con prisa.",
+      "Soy disciplinado incluso cuando no tengo ganas.",
+      "Mi mejor versión profesional aparece con repetición, no con genialidad.",
+      "Decido qué dejar afuera con la misma claridad que decido qué hacer.",
+      "Soy alguien que pide ayuda cuando la necesita.",
+      "Mido mi semana por avances, no por horas.",
+      "Soy ordenado con mi tiempo y honesto con mis límites.",
+      "Termino el día con tareas cerradas, no con pendientes infinitos.",
+    ],
+    growth: [
+      "Estoy aprendiendo, y eso ya me transforma.",
+      "Acepto críticas útiles sin perder la confianza en mí.",
+      "Soy paciente con mi proceso de mejora.",
+      "Cada error es información, no un veredicto.",
+      "Soy capaz de cambiar hábitos viejos cuando lo decido.",
+      "Mi identidad no depende de mis logros del último mes.",
+      "Estoy abierto a cambiar de opinión cuando aparece mejor evidencia.",
+      "Crecer también es soltar cosas que me funcionaron antes.",
+      "Soy responsable de mi formación, sin esperar que alguien me empuje.",
+      "Hoy soy una versión un poco mejor que la de ayer.",
+    ],
+    biblical: [
+      "Todo lo puedo en Cristo que me fortalece. (Filipenses 4:13)",
+      "El Señor es mi pastor, nada me faltará. (Salmo 23:1)",
+      "Soy fuerte y valiente, porque el Señor está conmigo. (Josué 1:9)",
+      "Confío en el Señor con todo mi corazón. (Proverbios 3:5)",
+      "El gozo del Señor es mi fortaleza. (Nehemías 8:10)",
+      "Espero en el Señor y mis fuerzas se renuevan. (Isaías 40:31)",
+      "La gracia del Señor me basta. (2 Corintios 12:9)",
+      "Encomiendo mis obras al Señor y mis pensamientos se afirman. (Proverbios 16:3)",
+      "Soy hijo amado, no esclavo del miedo. (Romanos 8:15)",
+      "Él hace nuevas todas las cosas, también en mí. (Apocalipsis 21:5)",
+    ],
+  };
+
+  const catEl = document.getElementById('af-cat') as HTMLSelectElement;
+  const amountEl = document.getElementById('af-amount') as HTMLInputElement;
+  const out = document.getElementById('af-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('af-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('af-copy') as HTMLButtonElement;
+
+  function pickIdx(n: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return i[0] % n; }
+  function generate() {
+    const list = AF[catEl.value] || AF.confidence;
+    const n = Math.max(1, Math.min(10, parseInt(amountEl.value || '3', 10)));
+    const used = new Set<number>(); const arr: string[] = [];
+    while (arr.length < n && used.size < list.length) {
+      const i = pickIdx(list.length);
+      if (!used.has(i)) { used.add(i); arr.push(list[i]); }
+    }
+    out.value = arr.join('\n');
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

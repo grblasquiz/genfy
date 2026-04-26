@@ -1,0 +1,118 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+import { DOG_NAMES, DOG_STYLES } from '../../lib/dog-names';
+
+const title = 'Dog Name Generator | Genfy';
+const description = 'Find the perfect name for your dog: small, medium, large or funny. 200+ ideas in English and Spanish — free instant generator.';
+const stylesEN = DOG_STYLES.en;
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is the best name for a dog?', acceptedAnswer: { '@type': 'Answer', text: 'A short one (1-2 syllables) that ends in a vowel and doesn\'t sound like a command such as "sit" or "no". That makes training easier.' } },
+    { '@type': 'Question', name: 'How fast do dogs learn their name?', acceptedAnswer: { '@type': 'Answer', text: 'Paired with treats and a happy tone of voice, a dog usually recognizes its name in 1 to 3 weeks. Puppies learn even faster.' } },
+    { '@type': 'Question', name: 'Can I rename a rescue dog?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Pair the new name with food, play and affection for 2 to 3 weeks and the dog will adjust without issue.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="en" tag="Pets" title="Dog Name Generator"
+    intro="For your puppy or adult dog: small, medium, large or funny. Click and get 12 fresh ideas in seconds.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Style</label>
+      <select id="cn-style">
+        {Object.entries(stylesEN).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mix of all</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 names</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a name for your dog</h2>
+      <p>
+        A dog's name is a training tool, not just a label. You'll say it thousands of times and your
+        dog needs to recognize it instantly. Trainers tend to agree on four basic rules:
+      </p>
+      <ul>
+        <li><strong>1 or 2 syllables, max 3.</strong> "Rocky", "Daisy", "Cooper" work; "Maximilian the Third" doesn't.</li>
+        <li><strong>End in an open vowel.</strong> Vowels like a/o/i carry better at distance.</li>
+        <li><strong>Don't rhyme with a command.</strong> If you use "no", skip "Bo". If you use "stay", skip "Bay".</li>
+        <li><strong>Don't clash with other names in the house.</strong> If your kid is Matt, don't name the dog Mat.</li>
+        <li><strong>Test for a week.</strong> If after 7 days it doesn't roll off the tongue at the park or the vet, change it.</li>
+      </ul>
+
+      <h2>Names by size: what fits each dog</h2>
+      <p>
+        Not an exact science, but rankings published every year by Rover, Petplan and Nationwide show
+        clear patterns by breed and size:
+      </p>
+      <ul>
+        <li><strong>Small dogs</strong> (Charlie, Daisy, Coco, Bella): cute, soft, easy to call across a park.</li>
+        <li><strong>Medium dogs</strong> (Rocky, Bruno, Cooper, Roxy): balanced — energetic but warm.</li>
+        <li><strong>Large dogs</strong> (Bear, Hugo, Tank, Major): names with presence, that sound respectable.</li>
+        <li><strong>Funny</strong> (Pickle, Nugget, Biscuit, Marshmallow): for big personalities and owners with a sense of humor.</li>
+      </ul>
+
+      <h2>Current trends</h2>
+      <p>
+        Rover's annual top-100 has been led for years by Bella, Charlie, Cooper, Daisy and Buddy.
+        Food-derived names (Mochi, Pumpkin, Cookie) are up roughly 40% since 2020. "Human" names like
+        Henry, Olivia and Hazel are taking over from older classics like Buddy or Spot in households
+        with younger owners.
+      </p>
+
+      <h2>Common naming mistakes</h2>
+      <ol>
+        <li>Picking a long, dramatic name and only using the nickname. If the nickname is what you say 10x more, the nickname is the real name — start with that.</li>
+        <li>Names that rhyme with "no", "stay" or another pet's name.</li>
+        <li>Inside-joke names that age badly: funny at 6 months can be embarrassing at the vet.</li>
+        <li>Switching names multiple times in the first month. Confuses the dog and slows training.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is the best name for a dog?</summary><p>A short one (1-2 syllables) that ends in a vowel and doesn't sound like a command such as "sit" or "no". That makes training easier.</p></details>
+      <details><summary>How fast do dogs learn their name?</summary><p>Paired with treats and a happy tone of voice, a dog usually recognizes its name in 1 to 3 weeks. Puppies learn even faster.</p></details>
+      <details><summary>Can I rename a rescue dog?</summary><p>Yes. Pair the new name with food, play and affection for 2 to 3 weeks and the dog will adjust without issue.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: DOG_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.small.en, ...DATA.medium.en, ...DATA.large.en, ...DATA.funny.en];
+    else pool = DATA[s].en;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

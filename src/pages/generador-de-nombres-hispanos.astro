@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+import { HISPANIC_NAMES, NAME_STYLES } from '../lib/baby-names';
+
+const title = 'Generador de nombres hispanos | Genfy';
+const description = 'Nombres tradicionales hispanos masculinos y femeninos. +50 ideas en español e inglés, con tradiciones de Argentina, México, España y más.';
+
+const stylesES = { male: NAME_STYLES.es.male, female: NAME_STYLES.es.female };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace que un nombre sea "hispano"?', acceptedAnswer: { '@type': 'Answer', text: 'Tener raíces o uso predominante en países de habla hispana, con grafía y sonido típicos del español: tildes, ñ, eñe, terminaciones en -o/-a, sílabas claras.' } },
+    { '@type': 'Question', name: '¿Los nombres hispanos funcionan en EE.UU. o Europa?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Mateo, Sofía, Camila, Diego, Isabella ya están entre los Top 100 en EE.UU. desde hace varios años.' } },
+    { '@type': 'Question', name: '¿Conviene usar tilde?', acceptedAnswer: { '@type': 'Answer', text: 'En países hispanos, sí. En EE.UU. la tilde se pierde a menudo en documentos oficiales: pensá si estás dispuesto a corregirlo toda la vida.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="es" tag="Personas" title="Generador de nombres hispanos"
+    intro="Tradicionales, modernos, masculinos o femeninos: encontrá un nombre con raíces hispanas. Click y obtené 12 ideas en segundos.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Estilo</label>
+      <select id="cn-style">
+        {Object.entries(stylesES).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mezcla de todo</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 12 nombres</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué define a un nombre hispano</h2>
+      <p>
+        Un nombre hispano combina tres cosas: raíces lingüísticas (latín, hebreo, árabe vía
+        español), uso histórico en países hispanohablantes, y una grafía y sonido que respetan
+        las reglas del español. Eso explica por qué Mateo, Diego, Sofía y Camila viajan tan bien:
+        son fonéticamente claros y culturalmente reconocibles.
+      </p>
+
+      <h2>Variaciones por país</h2>
+      <ul>
+        <li><strong>Argentina y Uruguay:</strong> tendencia a nombres modernos cortos (Mateo, Bautista, Camila, Renata).</li>
+        <li><strong>México:</strong> mezcla de modernos (Santiago, Sofía) con clásicos religiosos (Guadalupe, José).</li>
+        <li><strong>España:</strong> equilibrio entre clásicos (Manuel, Carmen) y modernos (Lucía, Hugo).</li>
+        <li><strong>Colombia y Perú:</strong> nombres con fuerte tradición católica (Camila, Daniel, Mariana).</li>
+      </ul>
+
+      <h2>Nombres masculinos hispanos populares</h2>
+      <ul>
+        <li><strong>Mateo:</strong> "Don de Dios". Top 5 en casi todos los países hispanos desde 2018.</li>
+        <li><strong>Diego:</strong> "Que enseña". Tradicional, eterno.</li>
+        <li><strong>Santiago:</strong> "San Yago", apóstol Santiago. Muy fuerte en LATAM.</li>
+        <li><strong>Sebastián:</strong> "Venerable". Clásico moderno.</li>
+        <li><strong>Joaquín:</strong> "Yahvé construirá". Bautismo del padre de la Virgen.</li>
+      </ul>
+
+      <h2>Nombres femeninos hispanos populares</h2>
+      <ul>
+        <li><strong>Sofía:</strong> "Sabiduría". Top 1 en muchos países desde 2010.</li>
+        <li><strong>Valentina:</strong> "Valiente". Crecimiento sostenido en todo LATAM.</li>
+        <li><strong>Camila:</strong> "Mensajera". Top 5 estable.</li>
+        <li><strong>Lucía:</strong> "Luz". Atemporal.</li>
+        <li><strong>Renata:</strong> "Renacida". Moderna, en alza.</li>
+      </ul>
+
+      <h2>Cómo elegir</h2>
+      <ol>
+        <li><strong>Decidí si querés tilde.</strong> En España y LATAM, sí. En EE.UU. la tilde se pierde a menudo en sistemas oficiales.</li>
+        <li><strong>Pensá en la doble pronunciación.</strong> "Joaquín" es bellísimo en español pero un desafío para angloparlantes.</li>
+        <li><strong>Combiná con apellido.</strong> Si el apellido es muy hispano, un nombre internacional balancea (María Olivia Pérez). Si el apellido no es hispano, un nombre hispano marca identidad cultural.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace que un nombre sea "hispano"?</summary><p>Raíces o uso predominante en países hispanos, con grafía y sonido típicos del español.</p></details>
+      <details><summary>¿Funcionan en EE.UU. o Europa?</summary><p>Sí. Mateo, Sofía, Camila, Diego, Isabella están en Top 100 en EE.UU. desde hace años.</p></details>
+      <details><summary>¿Conviene usar tilde?</summary><p>En países hispanos, sí. En EE.UU. la tilde se pierde a menudo: considerá si querés corregirlo toda la vida.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: HISPANIC_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.male.es, ...DATA.female.es];
+    else pool = DATA[s].es;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

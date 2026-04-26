@@ -1,0 +1,193 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Positive Affirmation Generator | Genfy';
+const description = 'Positive affirmations in present tense for confidence, calm, productivity and growth. Practical and biblical versions. Ready to copy.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why start with "I am" in present tense?', acceptedAnswer: { '@type': 'Answer', text: 'Affirmations work as identity reminders, not as future wishes. "I am a consistent person" trains the brain to align actions with that identity. "I will be" leaves it as homework.' } },
+    { '@type': 'Question', name: 'Do positive affirmations work?', acceptedAnswer: { '@type': 'Answer', text: 'They work best when believable to you and combined with concrete action. If the affirmation contradicts your evidence ("I am a millionaire") your brain rejects it.' } },
+    { '@type': 'Question', name: 'How do I use them?', acceptedAnswer: { '@type': 'Answer', text: 'Pick 1-3 that resonate, write them by hand each morning, and read them aloud. Conscious repetition does the work.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Inspiration" title="Positive Affirmation Generator"
+    intro="Present-tense affirmations, practical or biblical, to build confidence and focus. No New Age fluff. Ready to copy.">
+
+    <div slot="tool" class="af">
+      <div class="af-row">
+        <div>
+          <label for="af-cat">Category</label>
+          <select id="af-cat">
+            <option value="confidence">Confidence</option>
+            <option value="calm">Calm</option>
+            <option value="work">Productivity</option>
+            <option value="growth">Growth</option>
+            <option value="biblical">Biblical</option>
+          </select>
+        </div>
+        <div>
+          <label for="af-amount">Amount</label>
+          <input id="af-amount" type="number" min="1" max="10" value="3" />
+        </div>
+      </div>
+      <button id="af-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="af-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="af-out" rows="9" readonly style="margin-top:1rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>"I am" vs. "I will": why it matters</h2>
+      <p>
+        A well-built affirmation starts in present tense. "I am someone who keeps promises"
+        works as an identity reminder, not a future promise. "I will" is a postponement: it
+        moves responsibility to tomorrow and your brain reads it as homework. That's why this
+        generator always uses present tense — the line feels less comfortable at first
+        (because it might contradict how you feel today), and that friction is exactly what
+        triggers the inner work.
+      </p>
+
+      <h2>How to pick affirmations that work</h2>
+      <ul>
+        <li><strong>Believable.</strong> If "I am a millionaire" sounds absurd to you, don't use it. Try "I am someone who makes good decisions with money".</li>
+        <li><strong>Specific.</strong> "I am good" is vague. "I am good at finishing long projects" carries content.</li>
+        <li><strong>Linked to action.</strong> An affirmation without action is fantasy. After reading it, define one micro-action of the day aligned with it.</li>
+      </ul>
+
+      <h2>Five categories, when to use each</h2>
+      <ul>
+        <li><strong>Confidence.</strong> Before an interview, a tough conversation or a first meeting.</li>
+        <li><strong>Calm.</strong> In high-anxiety moments, before sleep, after stressful news.</li>
+        <li><strong>Productivity.</strong> Starting the day or before deep-work blocks.</li>
+        <li><strong>Growth.</strong> When learning something new and you want to sustain effort.</li>
+        <li><strong>Biblical.</strong> For morning devotionals or faith-based journaling.</li>
+      </ul>
+
+      <h2>A simple 3-minute routine</h2>
+      <p>
+        Generate 5 affirmations. Pick 1 (the one that's a little uncomfortable, not the easiest).
+        Write it by hand three times. Read it aloud once. Close the notebook and start your
+        day. Three minutes. The initial awkwardness fades in 7-10 days and the line begins
+        operating in the background. It's not magic — it's the same principle as spaced
+        repetition training.
+      </p>
+
+      <h2>Mistakes that kill the effect</h2>
+      <ul>
+        <li><strong>Saying them on autopilot.</strong> Repeat without feeling, train nothing.</li>
+        <li><strong>Changing them every day.</strong> One line for a week beats seven different ones.</li>
+        <li><strong>Not pairing with action.</strong> Without action, affirmations are pretty noise.</li>
+        <li><strong>Using lines you don't believe at all.</strong> Raise the bar gradually; don't skip ten levels.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Why present tense?</summary><p>It trains identity, not desire. "I am" aligns actions; "I will" leaves it as homework.</p></details>
+      <details><summary>Do they work?</summary><p>When they're believable to you and combined with concrete action.</p></details>
+      <details><summary>How to use them?</summary><p>Pick 1-3, write by hand each morning, read aloud. Conscious repetition is the key.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .af-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .af-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const AF: Record<string, string[]> = {
+    confidence: [
+      "I am capable of handling whatever comes today.",
+      "I trust my judgment to make hard decisions.",
+      "My voice adds value, even when I doubt.",
+      "I have the right to take up the space I take.",
+      "I learn from every difficult conversation.",
+      "I am a confident person who also accepts not knowing.",
+      "My presence makes a real difference to those around me.",
+      "I am allowed to be wrong and keep moving forward.",
+      "I speak clearly and respectfully at the same time.",
+      "My story so far has already proven I can.",
+      "I trust my ability to learn what I don't yet know.",
+      "I am someone who keeps their word.",
+    ],
+    calm: [
+      "I am calm even when things around me are not.",
+      "I breathe deeply, and my body remembers how to rest.",
+      "What worries me today probably won't worry me in a month.",
+      "I am safe in this moment, right now.",
+      "I don't need to control everything to be okay.",
+      "I let go of what is not mine to carry.",
+      "My peace is not negotiable for someone else's urgency.",
+      "I have permission not to respond instantly.",
+      "I am where I need to be, doing what I can do.",
+      "I trust that rest is also work.",
+      "Silence brings me back to myself.",
+    ],
+    work: [
+      "I am a focused person who finishes what I start.",
+      "I do one thing at a time, well done.",
+      "I work with systems, not with rush.",
+      "I am disciplined even when I don't feel like it.",
+      "My best professional self shows up through repetition, not through brilliance.",
+      "I decide what to leave out with the same clarity I decide what to do.",
+      "I am someone who asks for help when I need it.",
+      "I measure my week by progress, not hours.",
+      "I am organized with my time and honest with my limits.",
+      "I close my day with finished tasks, not endless to-dos.",
+    ],
+    growth: [
+      "I am learning, and that already transforms me.",
+      "I accept useful criticism without losing trust in myself.",
+      "I am patient with my improvement process.",
+      "Every mistake is information, not a verdict.",
+      "I am capable of changing old habits when I decide to.",
+      "My identity doesn't depend on last month's wins.",
+      "I am open to changing my mind when better evidence appears.",
+      "Growing also means letting go of things that worked before.",
+      "I am responsible for my own training — I don't wait to be pushed.",
+      "Today I am a slightly better version than yesterday.",
+    ],
+    biblical: [
+      "I can do all things through Christ who strengthens me. (Philippians 4:13)",
+      "The Lord is my shepherd; I shall not want. (Psalm 23:1)",
+      "I am strong and courageous, for the Lord is with me. (Joshua 1:9)",
+      "I trust in the Lord with all my heart. (Proverbs 3:5)",
+      "The joy of the Lord is my strength. (Nehemiah 8:10)",
+      "I wait on the Lord, and my strength is renewed. (Isaiah 40:31)",
+      "His grace is sufficient for me. (2 Corinthians 12:9)",
+      "I commit my work to the Lord and my plans are established. (Proverbs 16:3)",
+      "I am a beloved child, not a slave to fear. (Romans 8:15)",
+      "He makes all things new, including me. (Revelation 21:5)",
+    ],
+  };
+
+  const catEl = document.getElementById('af-cat') as HTMLSelectElement;
+  const amountEl = document.getElementById('af-amount') as HTMLInputElement;
+  const out = document.getElementById('af-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('af-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('af-copy') as HTMLButtonElement;
+
+  function pickIdx(n: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return i[0] % n; }
+  function generate() {
+    const list = AF[catEl.value] || AF.confidence;
+    const n = Math.max(1, Math.min(10, parseInt(amountEl.value || '3', 10)));
+    const used = new Set<number>(); const arr: string[] = [];
+    while (arr.length < n && used.size < list.length) {
+      const i = pickIdx(list.length);
+      if (!used.has(i)) { used.add(i); arr.push(list[i]); }
+    }
+    out.value = arr.join('\n');
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

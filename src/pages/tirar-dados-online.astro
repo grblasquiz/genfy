@@ -1,0 +1,184 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Tirar dados online: D6, D20 y más | Genfy';
+const description = 'Tirá uno o varios dados online con animación. Soporta D4, D6, D8, D10, D12, D20 y D100. Ideal para D&D, juegos de mesa o decisiones rápidas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué dados puedo tirar?', acceptedAnswer: { '@type': 'Answer', text: 'D4, D6 (el clásico), D8, D10, D12, D20 (el de D&D) y D100. Podés tirar múltiples a la vez (ej. 3D6 para tirar 3 dados de 6 caras).' } },
+    { '@type': 'Question', name: '¿Qué significa 4d6 drop lowest?', acceptedAnswer: { '@type': 'Answer', text: 'Es la regla clásica de D&D para generar atributos: tirás 4 dados de 6 caras, descartás el más bajo y sumás los 3 restantes. Resulta en un promedio más alto que 3d6 directo.' } },
+    { '@type': 'Question', name: '¿Es justo el azar?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Usamos crypto.getRandomValues con distribución uniforme. Más justo que un dado físico, que puede tener pequeñas asimetrías de fabricación que sesgan resultados.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Random" title="Tirar dados online"
+    intro="Una mesa de dados virtual con D4, D6, D8, D10, D12, D20 y D100. Tirá tantos como quieras a la vez. Ideal para D&D, juegos de mesa o decidir cualquier cosa con un poco más de drama que una moneda.">
+
+    <div slot="tool" class="dice-tool">
+      <div class="dice-controls">
+        <div>
+          <label for="dice-type">Tipo de dado</label>
+          <select id="dice-type">
+            <option value="4">D4 (4 caras)</option>
+            <option value="6" selected>D6 (clásico)</option>
+            <option value="8">D8</option>
+            <option value="10">D10</option>
+            <option value="12">D12</option>
+            <option value="20">D20 (D&D)</option>
+            <option value="100">D100</option>
+          </select>
+        </div>
+        <div>
+          <label for="dice-count">Cantidad</label>
+          <input id="dice-count" type="number" value="2" min="1" max="20" />
+        </div>
+        <div>
+          <label for="dice-mod">Modificador (+/-)</label>
+          <input id="dice-mod" type="number" value="0" />
+        </div>
+      </div>
+
+      <div id="dice-stage" class="dice-stage"></div>
+
+      <div id="dice-result" class="dice-result">
+        <div class="dice-total">—</div>
+        <div class="dice-detail">Tocá "tirar dados" para empezar</div>
+      </div>
+
+      <div class="dice-actions">
+        <button id="dice-roll" class="btn btn-primary" type="button">Tirar dados</button>
+        <button id="dice-d20" class="btn btn-ghost" type="button">D20 rápido</button>
+        <button id="dice-3d6" class="btn btn-ghost" type="button">3D6 (atributo)</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los dados existen en tantas formas</h2>
+      <p>
+        Aunque el dado de 6 caras es el más conocido, existen otros para cubrir distintas
+        distribuciones de probabilidad. Cada uno se usa en juegos de rol y simulaciones
+        donde la cantidad de resultados posibles importa: un D4 da pocos extremos, un D20
+        permite gradación fina entre éxito catastrófico y crítico.
+      </p>
+
+      <h2>Anatomía de cada dado</h2>
+      <ul>
+        <li><strong>D4 (tetraedro):</strong> 4 caras triangulares. Cae con un vértice hacia arriba; el número se lee abajo. Promedio: 2.5.</li>
+        <li><strong>D6 (cubo):</strong> el clásico de Monopoly y Yahtzee. Promedio: 3.5.</li>
+        <li><strong>D8 (octaedro):</strong> dos pirámides pegadas. Promedio: 4.5.</li>
+        <li><strong>D10 (trapezoedro):</strong> 10 caras pentagonales. Promedio: 5.5. Suele venir numerado 0-9 o 1-10.</li>
+        <li><strong>D12 (dodecaedro):</strong> 12 caras pentagonales. Promedio: 6.5.</li>
+        <li><strong>D20 (icosaedro):</strong> 20 caras triangulares. El rey de D&D. Promedio: 10.5. Un "20 natural" es éxito crítico, un "1 natural" es falla crítica.</li>
+        <li><strong>D100 (percentil):</strong> dos D10 (uno marca decenas, otro unidades) que dan 1-100. Para tablas de loot detalladas.</li>
+      </ul>
+
+      <h2>4d6 drop lowest: el atributo "estándar" en D&D</h2>
+      <p>
+        Cuando creás un personaje en Dungeons & Dragons 5e, la regla por defecto para
+        generar cada atributo (Fuerza, Destreza, Constitución, etc.) es <strong>tirar 4
+        dados de 6 caras y sumar los 3 más altos</strong>. El promedio sube de 10.5
+        (3d6 puro) a aproximadamente 12.24, lo que crea personajes más capaces sin
+        garantizar números altísimos. Probabilidad de un 18 natural: alrededor del 1.6%.
+      </p>
+
+      <h2>Otras notaciones útiles</h2>
+      <ul>
+        <li><strong>2d20kh1 (advantage):</strong> tirá 2 D20 y quedate con el más alto. Es la mecánica de "ventaja" en D&D 5e.</li>
+        <li><strong>2d20kl1 (disadvantage):</strong> 2 D20, te quedás con el más bajo. "Desventaja".</li>
+        <li><strong>1d20+5:</strong> tirar 1 D20 y sumar 5 al resultado. Modificadores de personaje.</li>
+        <li><strong>1d8r1 (reroll):</strong> tirá un D8, si sale 1 volvelo a tirar. Para armas mágicas que evitan resultados bajos.</li>
+      </ul>
+
+      <h2>Casos de uso fuera de los juegos</h2>
+      <ol>
+        <li><strong>Decidir qué comer:</strong> 6 opciones, un D6, listo.</li>
+        <li><strong>Sortear orden de presentación:</strong> N personas, tira un D20 cada una, ordená.</li>
+        <li><strong>Educación:</strong> demostrar distribución uniforme y suma de variables aleatorias (la suma de 2D6 NO es uniforme — 7 es el más probable).</li>
+        <li><strong>Desempate de pares:</strong> cuando una moneda no alcanza, un D6 o D20 da más granularidad.</li>
+      </ol>
+
+      <h2>La distribución de 2D6 no es plana</h2>
+      <p>
+        Dato curioso: si tirás un solo D6, cada cara tiene 1/6 de probabilidad. Pero al
+        tirar dos D6 y sumarlos, el resultado va de 2 a 12 con una distribución
+        triangular: 7 es el más probable (6 combinaciones), y 2 o 12 son los menos (1
+        combinación cada uno). Es la base de Catan, donde 7 activa al ladrón y 2 o 12
+        casi nunca producen recursos.
+      </p>
+
+      <h2>¿Por qué un dado virtual es más justo que uno físico?</h2>
+      <p>
+        Los dados físicos pueden tener defectos de fabricación que sesgan los resultados:
+        densidad desigual, esquinas desgastadas, una cara con menos pintura que otras
+        (en dados pintados, las caras con números altos son más livianas). Estudios con
+        miles de tiradas muestran sesgos del 1-3% en dados de marca standard. Un dado
+        virtual no tiene este problema.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué dados puedo tirar?</summary><p>D4, D6, D8, D10, D12, D20 y D100. Hasta 20 a la vez con modificador.</p></details>
+      <details><summary>¿Qué es 4d6 drop lowest?</summary><p>Tirás 4 dados de 6 caras, descartás el más bajo, sumás los 3 restantes. Estándar para crear atributos en D&D.</p></details>
+      <details><summary>¿Es justo?</summary><p>Sí. Usamos crypto.getRandomValues con distribución uniforme. Más justo que un dado físico con defectos de fabricación.</p></details>
+      <details><summary>¿Funciona offline?</summary><p>Sí. Una vez cargada la página, todo se calcula localmente.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .dice-controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .dice-stage { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; padding: 2rem 1rem; min-height: 140px; background: var(--bg-inset); border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1rem; }
+  .die { width: 64px; height: 64px; background: linear-gradient(135deg, #fafafa, #e4e4e7); border: 1px solid var(--border-strong); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; color: #09090b; box-shadow: 0 4px 12px rgba(9,9,11,0.08); animation: die-roll 0.6s var(--ease); }
+  .die.crit { background: linear-gradient(135deg, #fef3c7, #fbbf24); color: #78350f; }
+  .die.fumble { background: linear-gradient(135deg, #fee2e2, #ef4444); color: #fff; }
+  @keyframes die-roll {
+    0% { transform: rotate(0) scale(0.5); opacity: 0; }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); opacity: 1; }
+  }
+  .dice-result { text-align: center; padding: 1.25rem; background: var(--bg-inset); border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1rem; }
+  .dice-total { font-size: 2.5rem; font-weight: 800; line-height: 1; font-family: var(--font-mono); }
+  .dice-detail { font-size: 0.875rem; color: var(--text-soft); margin-top: 0.25rem; }
+  .dice-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  @media (max-width: 600px) { .dice-controls { grid-template-columns: 1fr 1fr; } }
+</style>
+
+<script>
+  const typeEl = document.getElementById('dice-type') as HTMLSelectElement;
+  const countEl = document.getElementById('dice-count') as HTMLInputElement;
+  const modEl = document.getElementById('dice-mod') as HTMLInputElement;
+  const stage = document.getElementById('dice-stage')!;
+  const total = document.querySelector('.dice-total')!;
+  const detail = document.querySelector('.dice-detail')!;
+  const rollBtn = document.getElementById('dice-roll') as HTMLButtonElement;
+
+  function rollOne(sides: number) {
+    const arr = new Uint32Array(1);
+    window.crypto.getRandomValues(arr);
+    return (arr[0] % sides) + 1;
+  }
+  function roll(sides: number, count: number, mod: number) {
+    stage.innerHTML = '';
+    const rolls: number[] = [];
+    for (let i = 0; i < count; i++) {
+      const r = rollOne(sides);
+      rolls.push(r);
+      const die = document.createElement('div');
+      die.className = 'die';
+      if (sides === 20 && r === 20) die.classList.add('crit');
+      if (sides === 20 && r === 1) die.classList.add('fumble');
+      die.textContent = String(r);
+      stage.appendChild(die);
+    }
+    const sum = rolls.reduce((a, b) => a + b, 0) + mod;
+    total.textContent = String(sum);
+    detail.textContent = `${count}d${sides}${mod !== 0 ? (mod > 0 ? '+' + mod : mod) : ''} = [${rolls.join(', ')}]${mod !== 0 ? ` ${mod >= 0 ? '+' : ''}${mod}` : ''}`;
+  }
+  rollBtn.addEventListener('click', () => roll(parseInt(typeEl.value), Math.max(1, Math.min(20, parseInt(countEl.value) || 1)), parseInt(modEl.value) || 0));
+  document.getElementById('dice-d20')!.addEventListener('click', () => { typeEl.value = '20'; countEl.value = '1'; modEl.value = '0'; roll(20, 1, 0); });
+  document.getElementById('dice-3d6')!.addEventListener('click', () => { typeEl.value = '6'; countEl.value = '3'; modEl.value = '0'; roll(6, 3, 0); });
+</script>

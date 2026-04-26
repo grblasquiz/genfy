@@ -1,0 +1,205 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Online JWT Decoder | Genfy';
+const description = 'Decode JSON Web Tokens instantly: header, payload and signature. Inspect claims, expiration and algorithm. 100% in your browser.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a JWT?', acceptedAnswer: { '@type': 'Answer', text: 'A JSON Web Token is a compact format for transmitting authenticated information between parties. It has three dot-separated parts: header, payload and signature, all in URL-safe Base64.' } },
+    { '@type': 'Question', name: 'Does this decoder verify the signature?', acceptedAnswer: { '@type': 'Answer', text: 'No. It only decodes the three parts so you can inspect the contents. Verifying the signature requires the secret or public key, which means a server or specific library.' } },
+    { '@type': 'Question', name: 'Is it safe to paste my token here?', acceptedAnswer: { '@type': 'Answer', text: 'Everything is decoded in your browser, nothing is sent to Genfy. Still, if the token is from production with sensitive privileges, consider rotating it after inspection.' } },
+    { '@type': 'Question', name: 'How do I know if a token is expired?', acceptedAnswer: { '@type': 'Answer', text: 'Look for the "exp" claim in the payload. It is a Unix timestamp. If it is in the past, the token is expired. The decoder formats it as a readable date.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Tech"
+    title="JWT Decoder"
+    intro="Paste a JSON Web Token and get its decoded header, payload and signature. Useful for debugging auth, inspecting claims and checking expiration."
+  >
+    <div slot="tool" class="jwt-tool">
+      <label for="jwt-in">JSON Web Token</label>
+      <textarea id="jwt-in" class="mono" rows="6" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpob24gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</textarea>
+
+      <div id="jwt-status" class="jwt-status">—</div>
+
+      <div class="jwt-grid">
+        <div class="jwt-block">
+          <label>Header</label>
+          <pre id="jwt-header" class="mono jwt-pre"></pre>
+        </div>
+        <div class="jwt-block">
+          <label>Payload</label>
+          <pre id="jwt-payload" class="mono jwt-pre"></pre>
+        </div>
+        <div class="jwt-block">
+          <label>Signature (not verified)</label>
+          <pre id="jwt-sig" class="mono jwt-pre"></pre>
+        </div>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Anatomy of a JWT</h2>
+      <p>
+        A JSON Web Token (RFC 7519) is a string with three dot-separated parts:
+        <code>header.payload.signature</code>. Each part is encoded in URL-safe Base64 without
+        padding. Header and payload are regular JSON; the signature is the result of running
+        the declared algorithm over the concatenation of the first two.
+      </p>
+      <p>
+        The header typically has two fields: <code>alg</code> (signing algorithm, e.g.
+        <code>HS256</code>, <code>RS256</code>, <code>ES256</code>) and <code>typ</code>
+        (always <code>JWT</code>). The payload carries the claims — the data the server is
+        trusting to the client.
+      </p>
+
+      <h2>Standard claims</h2>
+      <p>
+        The payload can contain anything, but seven registered claims have universal meaning:
+      </p>
+      <ul>
+        <li><strong><code>iss</code> (issuer):</strong> who issued the token.</li>
+        <li><strong><code>sub</code> (subject):</strong> who the token is about (typically the user ID).</li>
+        <li><strong><code>aud</code> (audience):</strong> who the token is for.</li>
+        <li><strong><code>exp</code> (expiration):</strong> Unix timestamp of expiration.</li>
+        <li><strong><code>nbf</code> (not before):</strong> timestamp before which the token is invalid.</li>
+        <li><strong><code>iat</code> (issued at):</strong> creation timestamp.</li>
+        <li><strong><code>jti</code> (JWT ID):</strong> unique token identifier, useful for revocation.</li>
+      </ul>
+
+      <h2>Signing algorithms</h2>
+      <ol>
+        <li><strong>HS256, HS384, HS512:</strong> HMAC with SHA-2. Symmetric: same secret signs and verifies. Simple for internal services.</li>
+        <li><strong>RS256, RS384, RS512:</strong> RSA with SHA-2. Asymmetric: private key signs, public key verifies. Standard for OAuth/OIDC.</li>
+        <li><strong>ES256, ES384, ES512:</strong> ECDSA with SHA-2. Like RSA but with elliptic curves: shorter signatures, better performance.</li>
+        <li><strong>EdDSA (Ed25519):</strong> the most modern. 64-byte signatures, very fast, no dangerous parameters.</li>
+        <li><strong><code>none</code>:</strong> unsigned. Dangerous: never accept tokens with <code>alg: none</code> in production.</li>
+      </ol>
+
+      <h2>When to use JWT (and when not)</h2>
+      <p>
+        JWT shines when you need stateless authentication, rich claims, and clients or
+        intermediate proxies that can read information without hitting your database again.
+        Prototypical cases: federated APIs, OAuth, OIDC, integrations with third parties.
+      </p>
+      <p>
+        JWT is less great for plain browser sessions. A session cookie backed by a row in your
+        database is simpler, more secure (instant revocation) and avoids JWT size issues. If
+        your only need is "logged in or not", session cookies win.
+      </p>
+
+      <h2>Common vulnerabilities</h2>
+      <ul>
+        <li><strong>Algorithm confusion.</strong> A library that trusts the token's header can be tricked with <code>alg: none</code> or <code>alg: HS256</code> against a public key. Always validate the algorithm in your code.</li>
+        <li><strong>No signature verification.</strong> Decoding is not verification. Some code only decodes and reads claims without checking the signature.</li>
+        <li><strong>No expiration.</strong> Tokens without <code>exp</code> are valid forever. Use short expirations and refresh tokens.</li>
+        <li><strong>Sensitive data in the payload.</strong> The payload is signed, not encrypted. Don't put passwords, keys or private data in it.</li>
+        <li><strong>No key rotation.</strong> If your HS256 secret leaks, you can sign tokens forever. Rotate periodically.</li>
+      </ul>
+
+      <h2>How JWT verification works in production</h2>
+      <p>The correct server-side process:</p>
+      <ol>
+        <li>Read the algorithm from the header but don't trust it: validate it against an allowed whitelist.</li>
+        <li>Verify the signature with the corresponding key.</li>
+        <li>Check <code>exp</code>, <code>nbf</code>, <code>iss</code>, <code>aud</code>.</li>
+        <li>Verify revocation if you keep a blacklist (<code>jti</code>).</li>
+        <li>Accept and read the claims.</li>
+      </ol>
+      <p>
+        This decoder only does the first step. For the rest, you need a library like
+        <code>jsonwebtoken</code> (Node), <code>PyJWT</code> (Python) or <code>jjwt</code>
+        (Java).
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a JWT?</summary><p>A compact token with header, payload and signature in URL-safe Base64. Used for stateless authentication.</p></details>
+      <details><summary>Does it verify the signature?</summary><p>No. Only decodes for inspection. To verify, you need the key and a library in your language.</p></details>
+      <details><summary>Is it safe to paste the token?</summary><p>Yes — everything is local. If it's a production token, consider rotating after inspection.</p></details>
+      <details><summary>How do I check expiration?</summary><p>Look at the "exp" claim in the payload. The decoder formats it as a readable date.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .jwt-tool textarea { font-family: var(--font-mono); font-size: 0.8125rem; resize: vertical; margin-bottom: 1rem; word-break: break-all; }
+  .jwt-status { font-size: 0.8125rem; color: var(--text-subtle); margin-bottom: 1rem; min-height: 1.25rem; }
+  .jwt-status.ok { color: var(--accent); }
+  .jwt-status.err { color: var(--danger); }
+  .jwt-grid { display: grid; gap: 1rem; }
+  .jwt-block label { display: block; margin-bottom: 0.4375rem; }
+  .jwt-pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); border: 1px solid var(--border); font-size: 0.8125rem; max-height: 240px; overflow: auto; white-space: pre-wrap; word-break: break-all; margin: 0; }
+</style>
+
+<script>
+  const inp = document.getElementById('jwt-in') as HTMLTextAreaElement;
+  const status = document.getElementById('jwt-status')!;
+  const headerEl = document.getElementById('jwt-header')!;
+  const payloadEl = document.getElementById('jwt-payload')!;
+  const sigEl = document.getElementById('jwt-sig')!;
+
+  function b64urlDecode(s: string): string {
+    s = s.replace(/-/g, '+').replace(/_/g, '/');
+    while (s.length % 4 !== 0) s += '=';
+    const bin = atob(s);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(bytes);
+  }
+  function pretty(s: string): string {
+    try { return JSON.stringify(JSON.parse(s), null, 2); } catch { return s; }
+  }
+  function tsNote(ts: number, label: string): string {
+    if (!ts) return '';
+    const date = new Date(ts * 1000);
+    const now = Date.now();
+    const diff = (date.getTime() - now) / 1000;
+    let rel = '';
+    if (label === 'exp') {
+      if (diff < 0) rel = ' (expired)';
+      else if (diff < 60) rel = ` (expires in ${Math.round(diff)} s)`;
+      else if (diff < 3600) rel = ` (expires in ${Math.round(diff/60)} min)`;
+      else if (diff < 86400) rel = ` (expires in ${Math.round(diff/3600)} h)`;
+      else rel = ` (expires in ${Math.round(diff/86400)} days)`;
+    }
+    return `\n// ${label}: ${date.toISOString()}${rel}`;
+  }
+  function decode(): void {
+    const t = inp.value.trim();
+    if (!t) { status.textContent = '—'; status.className = 'jwt-status'; headerEl.textContent = ''; payloadEl.textContent = ''; sigEl.textContent = ''; return; }
+    const parts = t.split('.');
+    if (parts.length !== 3) {
+      status.textContent = 'Error: a JWT must have three dot-separated parts';
+      status.className = 'jwt-status err';
+      return;
+    }
+    try {
+      const h = b64urlDecode(parts[0]);
+      const p = b64urlDecode(parts[1]);
+      const headerJson = JSON.parse(h);
+      const payloadJson = JSON.parse(p);
+      let payloadOut = pretty(p);
+      if (payloadJson.iat) payloadOut += tsNote(payloadJson.iat, 'iat');
+      if (payloadJson.exp) payloadOut += tsNote(payloadJson.exp, 'exp');
+      if (payloadJson.nbf) payloadOut += tsNote(payloadJson.nbf, 'nbf');
+      headerEl.textContent = pretty(h);
+      payloadEl.textContent = payloadOut;
+      sigEl.textContent = parts[2] || '(empty)';
+      status.textContent = `Decoded · alg: ${headerJson.alg || '?'}`;
+      status.className = 'jwt-status ok';
+    } catch (e) {
+      status.textContent = 'Error: could not decode (is it a valid JWT?)';
+      status.className = 'jwt-status err';
+    }
+  }
+  inp.addEventListener('input', decode);
+  decode();
+</script>

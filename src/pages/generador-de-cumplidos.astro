@@ -1,0 +1,167 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de cumplidos gratis | Genfy';
+const description = 'Cumplidos sinceros y profesionales para reconocer a colegas, amigos y equipo. Reconocimientos prácticos, no genéricos. Listo para copiar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve un generador de cumplidos?', acceptedAnswer: { '@type': 'Answer', text: 'Para destrabar el momento incómodo de "tengo que reconocer a alguien y no sé cómo". Da un punto de partida que después podés personalizar.' } },
+    { '@type': 'Question', name: '¿Son cumplidos profesionales o personales?', acceptedAnswer: { '@type': 'Answer', text: 'Tenés tres modos: trabajo, amistad y general. Todos son cumplidos sinceros y apropiados, no flirteo ni clichés vacíos.' } },
+    { '@type': 'Question', name: '¿Por qué no decir solo "buen trabajo"?', acceptedAnswer: { '@type': 'Answer', text: 'Porque los reconocimientos genéricos no se sienten reales. Un cumplido específico ("tu forma de presentar el reporte hoy hizo que todos entendieran") tiene 10 veces más impacto.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Inspiración" title="Generador de cumplidos"
+    intro="Reconocimientos sinceros para tu equipo, tus amigos o la persona que necesita escuchar algo lindo hoy. Punto de partida; después lo hacés tuyo.">
+
+    <div slot="tool" class="cp">
+      <div>
+        <label for="cp-mode">Contexto</label>
+        <select id="cp-mode">
+          <option value="work">Trabajo</option>
+          <option value="friend">Amistad</option>
+          <option value="general">General</option>
+        </select>
+      </div>
+      <div class="cp-card">
+        <p id="cp-text" class="cp-quote">—</p>
+      </div>
+      <button id="cp-gen" class="btn btn-primary" type="button">Otro cumplido</button>
+      <button id="cp-copy" class="btn btn-ghost" type="button">Copiar</button>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los cumplidos específicos rinden más</h2>
+      <p>
+        "Buen trabajo" es educado. "Tu cambio en el segundo párrafo del email cambió cómo el
+        cliente entendió la propuesta" es memorable. La diferencia es la especificidad: cuando
+        nombrás algo concreto, demostrás que prestaste atención y eso vale mucho más que el
+        elogio en sí. Los cumplidos del generador están diseñados como puntos de partida — vos
+        agregás el detalle.
+      </p>
+
+      <h2>Tres contextos, tres tonos</h2>
+      <ul>
+        <li><strong>Trabajo.</strong> Reconocimiento profesional para 1:1, retros, mensajes públicos en Slack o feedback escrito.</li>
+        <li><strong>Amistad.</strong> Algo cálido para mandar a un amigo cuando lo notás bajón, o cuando no le decís hace tiempo lo que valorás.</li>
+        <li><strong>General.</strong> Frases neutras que sirven para una nota dentro de un regalo, una tarjeta o una dedicatoria corta.</li>
+      </ul>
+
+      <h2>Cómo personalizarlos</h2>
+      <p>
+        Tomá el cumplido genérico y agregale un evento concreto: "Tu paciencia con clientes
+        difíciles inspira al equipo, especialmente cómo manejaste la llamada del jueves con
+        García". Esa frase final es lo que transforma un mensaje copiado en algo que la persona
+        va a guardar. Sin la especificidad, el cumplido suena a algoritmo.
+      </p>
+
+      <h2>Cuándo y cómo decirlos</h2>
+      <p>
+        Los reconocimientos privados (un mensaje, un mail, un audio) suelen impactar más que los
+        públicos: la persona los relee. Los públicos sirven más para reforzar comportamientos
+        ante el equipo. Si dudás, mandá los dos. Y no esperes una "ocasión especial" — el
+        reconocimiento al margen (un martes cualquiera, sin razón particular) suele ser el que
+        más se queda.
+      </p>
+
+      <h2>Errores comunes a evitar</h2>
+      <ul>
+        <li><strong>Cumplido con condición.</strong> "Sos genial cuando..." filtra el reconocimiento detrás de un requisito. Quitá la condición.</li>
+        <li><strong>Comparativos.</strong> "Sos mejor que X" elogia a uno bajando a otro. No suma.</li>
+        <li><strong>Cumplido envuelto en pedido.</strong> No mezcles "buen trabajo" con "necesito que hagas Y". Mandá dos mensajes.</li>
+        <li><strong>Solo hablar de aspecto.</strong> En contextos profesionales, evitá comentarios físicos. Enfocate en habilidades, decisiones, esfuerzo o impacto.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve?</summary><p>Para destrabar el momento incómodo de tener que reconocer a alguien y no saber cómo arrancar.</p></details>
+      <details><summary>¿Son profesionales o personales?</summary><p>Tres modos: trabajo, amistad y general. Todos sinceros y apropiados.</p></details>
+      <details><summary>¿Por qué no decir "buen trabajo"?</summary><p>Porque los cumplidos genéricos no se sienten reales. Lo específico tiene 10 veces más impacto.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cp .cp-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin: 1rem 0; }
+  .cp-quote { font-size: 1.15rem; line-height: 1.6; color: var(--text); margin: 0; }
+</style>
+
+<script>
+  const WORK = [
+    "Tu ética de trabajo eleva al equipo entero.",
+    "La forma en que explicás temas complejos hace que todos entiendan más rápido.",
+    "Tu paciencia con clientes difíciles inspira a quienes te rodean.",
+    "Notar lo que vos notás en los datos no es algo que se enseñe — lo tenés.",
+    "Cada vez que te sumás a un proyecto, el nivel general sube.",
+    "Tu capacidad para mantener la calma bajo presión hace que el equipo respire mejor.",
+    "Hacés visible el trabajo invisible. Eso es liderazgo real.",
+    "Tu atención al detalle previene problemas que la mayoría ni vería.",
+    "Sos la persona que termina lo que empezó — y eso es rarísimo.",
+    "La claridad con la que escribís ahorra horas de reuniones.",
+    "Tu honestidad para dar feedback constructivo nos hace mejores.",
+    "Cuando vos liderás una reunión, el equipo sale alineado.",
+    "Tu curiosidad técnica es contagiosa.",
+    "Tu forma de escuchar antes de opinar marca la diferencia.",
+    "Convertís problemas vagos en planes accionables, eso es talento.",
+    "Tu disposición para mentorear a los más nuevos no pasa desapercibida.",
+    "Sos el tipo de colega que todos esperan tener en su equipo.",
+    "Tu capacidad para priorizar bajo caos es de otro nivel.",
+    "Hacés el trabajo aburrido con el mismo rigor que el divertido.",
+    "Tus ideas en los brainstormings desbloquean al resto.",
+  ];
+  const FRIEND = [
+    "Tener una conversación con vos siempre me deja con más energía que antes.",
+    "Tu forma de escuchar sin juzgar es un regalo.",
+    "Sos el tipo de amigo que aparece sin que nadie tenga que pedirle.",
+    "Me hacés mejor persona solo por compararme con cómo manejás vos las cosas.",
+    "Tu humor en los días pesados vale más de lo que pensás.",
+    "Confío en tu criterio incluso para cosas que no le contaría a nadie más.",
+    "Te admiro por la coherencia entre lo que decís y lo que hacés.",
+    "Me encanta cómo te alegrás genuinamente por los logros de tus amigos.",
+    "Tu lealtad no es ruidosa, es constante. Eso es lo más valioso.",
+    "Me siento más yo mismo cuando estoy con vos.",
+    "La forma en que cuidás a los tuyos es algo de aprender.",
+    "Sos generoso de una manera que la mayoría no nota.",
+    "Tu capacidad de seguir creciendo a esta altura me motiva.",
+    "Pocas personas dicen lo que piensan con tanta claridad como vos.",
+    "Tenés una forma única de hacer que la gente se sienta vista.",
+  ];
+  const GEN = [
+    "El mundo está mejor con vos en él.",
+    "Tu presencia hace una diferencia, aunque no siempre te lo digan.",
+    "Sos más fuerte de lo que el momento difícil te hace creer.",
+    "Lo que estás construyendo importa.",
+    "Tu esfuerzo se ve, aunque parezca que pasa desapercibido.",
+    "Tenés algo que la gente nota sin poder explicarlo.",
+    "Tu forma de seguir adelante después de un golpe inspira.",
+    "Sos digno de las cosas buenas que están viniendo.",
+    "Tu paciencia con vos mismo es un acto de coraje.",
+    "Hay personas mejor cuidadas porque vos existís.",
+    "Tu manera de pensar le suma al mundo.",
+    "Sos la prueba de que las personas amables no son débiles.",
+  ];
+
+  const modeEl = document.getElementById('cp-mode') as HTMLSelectElement;
+  const text = document.getElementById('cp-text') as HTMLElement;
+  const genBtn = document.getElementById('cp-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('cp-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const m = modeEl.value;
+    const list = m === 'work' ? WORK : m === 'friend' ? FRIEND : GEN;
+    text.textContent = pick(list);
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!text.textContent) return;
+    await navigator.clipboard.writeText(text.textContent);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

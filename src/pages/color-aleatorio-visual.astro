@@ -1,0 +1,200 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Color aleatorio visual con nombre | Genfy';
+const description = 'Mostrá un color al azar con su swatch grande, nombre descriptivo y código HEX. Ideal para inspiración rápida, mood boards o brainstorming visual.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuál es la diferencia con el otro generador de color random?', acceptedAnswer: { '@type': 'Answer', text: 'Este se enfoca en lo visual: muestra el color en grande con un nombre descriptivo (warm coral, deep navy). El otro está orientado al código HEX. Acá el código es un detalle, el protagonista es el swatch.' } },
+    { '@type': 'Question', name: '¿Para qué sirve?', acceptedAnswer: { '@type': 'Answer', text: 'Inspiración rápida cuando estás bloqueado, mood boards visuales, ejercicio de discriminación cromática para diseñadores, exploración de paletas.' } },
+    { '@type': 'Question', name: '¿Cómo se elige el nombre?', acceptedAnswer: { '@type': 'Answer', text: 'Convertimos el color a HSL y mapeamos hue + saturación + luminosidad a una matriz de adjetivos descriptivos (warm coral, deep navy, dusty rose). Sin nombres mitológicos.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Random" title="Color aleatorio visual"
+    intro="Una pieza visual al azar: swatch grande, nombre descriptivo y HEX. Cuando lo que necesitás es ver el color, no leerlo.">
+
+    <div slot="tool" class="rcv-tool">
+      <div id="rcv-swatch" class="rcv-swatch">
+        <div class="rcv-name" id="rcv-name">deep emerald</div>
+        <div class="rcv-meta">
+          <code id="rcv-hex">#059669</code>
+          <span class="rcv-sep">·</span>
+          <code id="rcv-hsl">hsl(160, 94%, 30%)</code>
+        </div>
+      </div>
+
+      <div class="rcv-actions">
+        <button id="rcv-gen" class="btn btn-primary" type="button">Otro color</button>
+        <button id="rcv-copy" class="btn btn-ghost" type="button">Copiar HEX</button>
+      </div>
+
+      <div class="rcv-history">
+        <strong>Últimos colores:</strong>
+        <div id="rcv-recents" class="rcv-recents"></div>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué un swatch grande importa</h2>
+      <p>
+        Un código HEX en un texto (<code>#059669</code>) es información, no inspiración.
+        Un swatch grande te hace ver el color, sentir si es cálido o frío, decidir si te
+        gusta antes que tu cerebro intervenga con prejuicios. Por eso herramientas como
+        Coolors, Adobe Color o las paletas de Pinterest funcionan: priorizan lo visual.
+      </p>
+
+      <h2>Para qué usar este generador</h2>
+      <ul>
+        <li><strong>Inspiración pre-paleta:</strong> antes de elegir un primario, exploralo. 10 colores random te ayudan a descubrir hues que no habías considerado.</li>
+        <li><strong>Mood boards:</strong> capturá los que te llaman, después construí la paleta.</li>
+        <li><strong>Ejercicio de discriminación cromática:</strong> diseñadores experimentados pueden mirar un swatch y decir "rosé dusty 320, 30%, 75%" sin software. Practicar mejora muchísimo.</li>
+        <li><strong>Brainstorming gráfico:</strong> "diseñá un logo solo con este color".</li>
+        <li><strong>Salir de tu zona de confort:</strong> casi todos elegimos siempre los mismos hues. El random te empuja a probar fuera.</li>
+      </ul>
+
+      <h2>El nombre como herramienta de memoria</h2>
+      <p>
+        Un HEX es un identificador, pero un nombre es una historia. "Warm coral" comunica
+        más que "#FB7185". Por eso nombramos cada color: para que puedas recordar el que
+        te gustó sin tener que apuntar el código. Mapeamos HSL a una grilla de adjetivos
+        descriptivos basados en objetos reales (coral, navy, sage, terracotta) — nunca
+        nombres mitológicos.
+      </p>
+
+      <h2>Cómo aprovecharlo en mood boards</h2>
+      <ol>
+        <li>Generá 30-50 colores rápido. No analices, solo mirá.</li>
+        <li>Capturá los 5-10 que te llaman emocionalmente.</li>
+        <li>Después analizá la lista: ¿hay un patrón? ¿son todos cálidos? ¿predomina un hue?</li>
+        <li>Esa lista es la base de tu paleta o mood board. Probablemente vas a necesitar 2-3 más para completar (escala de grises, acento de contraste).</li>
+      </ol>
+
+      <h2>Por qué los colores random "feos" sirven</h2>
+      <p>
+        A veces el random te da un verde-marrón opaco que pasarías de largo. Pero si lo
+        ponés al lado del color que estabas usando, descubrís que justo te falta algo así
+        para equilibrar. Los colores que parecen feos aislados pueden ser el ingrediente
+        que tu paleta necesita. Es por eso que las paletas de Pantone Color of the Year
+        siempre incluyen un terracota o un olivo: rompen la monotonía de los colores
+        "lindos".
+      </p>
+
+      <h2>Tres reglas para no terminar saturado</h2>
+      <ul>
+        <li><strong>No mires más de 30 colores seguidos.</strong> El cerebro entra en fatiga cromática y deja de discriminar matices.</li>
+        <li><strong>Comparalos en grupos de 3-5.</strong> Un color solo no te dice si funciona; un color con sus vecinos sí.</li>
+        <li><strong>Probá tu mood board en grayscale.</strong> Si los tonos no se distinguen sin color, tu paleta colapsa para usuarios daltónicos.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Diferencia con el otro generador random?</summary><p>Este es visual: swatch grande con nombre. El otro está orientado al código HEX/RGB.</p></details>
+      <details><summary>¿Para qué sirve?</summary><p>Inspiración rápida, mood boards, ejercicio de discriminación cromática, exploración de paletas.</p></details>
+      <details><summary>¿Cómo se elige el nombre?</summary><p>Mapeamos HSL a adjetivo + familia (warm coral, deep navy). Sin nombres mitológicos.</p></details>
+      <details><summary>¿Guarda historial?</summary><p>Sí: los últimos 8 colores aparecen abajo, podés volver a cualquiera con un click.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rcv-swatch { padding: 4rem 2rem; border-radius: var(--radius-xl); border: 1px solid var(--border); margin-bottom: 1rem; transition: background 0.3s; min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; }
+  .rcv-name { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; text-transform: lowercase; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .rcv-meta { font-size: 0.9375rem; color: rgba(255,255,255,0.95); display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; justify-content: center; text-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+  .rcv-meta code { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 0.25rem 0.5rem; }
+  .rcv-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .rcv-history { padding: 1rem; background: var(--bg-inset); border-radius: var(--radius); border: 1px solid var(--border); font-size: 0.875rem; }
+  .rcv-recents { display: grid; grid-template-columns: repeat(8, 1fr); gap: 0.375rem; margin-top: 0.5rem; }
+  .rcv-recent { aspect-ratio: 1; border-radius: var(--radius-sm); border: 1px solid var(--border-strong); cursor: pointer; transition: transform var(--t-base) var(--ease); }
+  .rcv-recent:hover { transform: scale(1.1); }
+  @media (max-width: 600px) { .rcv-name { font-size: 1.75rem; } .rcv-recents { grid-template-columns: repeat(4, 1fr); } }
+</style>
+
+<script>
+  const swatch = document.getElementById('rcv-swatch') as HTMLDivElement;
+  const nameEl = document.getElementById('rcv-name')!;
+  const hexEl = document.getElementById('rcv-hex')!;
+  const hslEl = document.getElementById('rcv-hsl')!;
+  const gen = document.getElementById('rcv-gen') as HTMLButtonElement;
+  const copy = document.getElementById('rcv-copy') as HTMLButtonElement;
+  const recents = document.getElementById('rcv-recents')!;
+
+  let history: { hex: string; name: string }[] = [];
+
+  function hslToHex(h: number, s: number, l: number) {
+    s /= 100; l /= 100;
+    const k = (n: number) => (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    const toHex = (x: number) => Math.round(x * 255).toString(16).padStart(2, '0');
+    return '#' + toHex(f(0)) + toHex(f(8)) + toHex(f(4));
+  }
+  function family(h: number, s: number, l: number): string {
+    if (s < 8) {
+      if (l < 15) return 'black'; if (l < 30) return 'charcoal';
+      if (l < 50) return 'slate'; if (l < 70) return 'gray';
+      if (l < 90) return 'silver'; return 'white';
+    }
+    if (s < 20 && l > 60) return 'stone';
+    if (h < 12 || h >= 348) return l < 35 ? 'crimson' : (l < 60 ? 'red' : 'rose');
+    if (h < 25) return l < 50 ? 'rust' : 'coral';
+    if (h < 45) return l < 50 ? 'terracotta' : 'amber';
+    if (h < 65) return l < 50 ? 'mustard' : 'lemon';
+    if (h < 85) return l < 50 ? 'olive' : 'lime';
+    if (h < 145) return l < 30 ? 'forest' : (l < 55 ? 'emerald' : 'sage');
+    if (h < 175) return l < 50 ? 'pine' : 'mint';
+    if (h < 200) return l < 50 ? 'teal' : 'aqua';
+    if (h < 225) return l < 35 ? 'navy' : (l < 60 ? 'cobalt' : 'sky');
+    if (h < 250) return l < 35 ? 'indigo' : 'periwinkle';
+    if (h < 285) return l < 40 ? 'plum' : 'lavender';
+    if (h < 315) return l < 40 ? 'magenta' : 'orchid';
+    return l < 50 ? 'fuchsia' : 'pink';
+  }
+  function adjective(s: number, l: number): string {
+    if (s < 18) { if (l < 30) return 'dark'; if (l > 75) return 'pale'; return 'muted'; }
+    if (l < 22) return 'deep';
+    if (l < 38) return 'rich';
+    if (l < 55) return s > 75 ? 'vivid' : 'true';
+    if (l < 72) return s > 75 ? 'bright' : 'soft';
+    return s < 35 ? 'dusty' : 'pastel';
+  }
+
+  function generate() {
+    const arr = new Uint32Array(3);
+    window.crypto.getRandomValues(arr);
+    const h = arr[0] % 360;
+    const s = 30 + (arr[1] % 65); // 30-95
+    const l = 30 + (arr[2] % 50); // 30-80
+    const hex = hslToHex(h, s, l);
+    const name = `${adjective(s, l)} ${family(h, s, l)}`;
+    swatch.style.background = hex;
+    nameEl.textContent = name;
+    hexEl.textContent = hex.toUpperCase();
+    hslEl.textContent = `hsl(${h}, ${s}%, ${l}%)`;
+    history.unshift({ hex, name });
+    history = history.slice(0, 8);
+    renderRecents();
+  }
+  function renderRecents() {
+    recents.innerHTML = history.map(h => `<div class="rcv-recent" style="background:${h.hex}" data-hex="${h.hex}" data-name="${h.name}" title="${h.name} ${h.hex.toUpperCase()}"></div>`).join('');
+    recents.querySelectorAll('.rcv-recent').forEach(el => {
+      el.addEventListener('click', () => {
+        const e = el as HTMLElement;
+        swatch.style.background = e.dataset.hex!;
+        nameEl.textContent = e.dataset.name!;
+        hexEl.textContent = e.dataset.hex!.toUpperCase();
+      });
+    });
+  }
+  gen.addEventListener('click', generate);
+  copy.addEventListener('click', () => {
+    navigator.clipboard.writeText(hexEl.textContent!);
+    copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = 'Copiar HEX'; }, 1200);
+  });
+  generate();
+</script>

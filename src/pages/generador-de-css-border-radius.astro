@@ -1,0 +1,173 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de CSS border-radius | Genfy';
+const description = 'Generá border-radius CSS con preview en vivo. Esquinas independientes, formas asimétricas (blob), unidades px o %. Copiá el código listo para pegar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Diferencia entre px y % en border-radius?', acceptedAnswer: { '@type': 'Answer', text: 'px da un radio fijo (12px siempre miden 12px). % depende del tamaño del elemento (50% en un cuadrado da un círculo). Para botones usá px; para avatares circulares, 50%.' } },
+    { '@type': 'Question', name: '¿Qué es un border-radius "blob"?', acceptedAnswer: { '@type': 'Answer', text: 'Es una forma orgánica conseguida usando radios distintos en cada esquina con la sintaxis horizontal/vertical (60% 40% 30% 70% / 30% 60% 40% 70%). Trendy en landings de SaaS.' } },
+    { '@type': 'Question', name: '¿Hay límite de cuán grande puede ser el radio?', acceptedAnswer: { '@type': 'Answer', text: 'No. Si superás la mitad del lado, las esquinas se "encuentran" y el elemento se vuelve oval o circular. 9999px es un truco común para forzar pill shapes en cualquier altura.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño" title="Generador de CSS border-radius"
+    intro="Diseñá border-radius con preview en vivo. Esquinas independientes, formas blob asimétricas, px o %. El CSS se actualiza al instante.">
+
+    <div slot="tool" class="br-tool">
+      <div class="br-controls">
+        <div><label for="br-tl">Sup. izq. <span class="val" id="v-tl">12</span></label><input id="br-tl" type="range" min="0" max="200" value="12" /></div>
+        <div><label for="br-tr">Sup. der. <span class="val" id="v-tr">12</span></label><input id="br-tr" type="range" min="0" max="200" value="12" /></div>
+        <div><label for="br-br">Inf. der. <span class="val" id="v-br">12</span></label><input id="br-br" type="range" min="0" max="200" value="12" /></div>
+        <div><label for="br-bl">Inf. izq. <span class="val" id="v-bl">12</span></label><input id="br-bl" type="range" min="0" max="200" value="12" /></div>
+        <div>
+          <label for="br-unit">Unidad</label>
+          <select id="br-unit"><option value="px" selected>px</option><option value="%">%</option></select>
+        </div>
+        <div class="br-toggle"><label><input id="br-link" type="checkbox" checked /> Sincronizar las 4 esquinas</label></div>
+      </div>
+
+      <div class="br-preview-wrap">
+        <div id="br-preview" class="br-preview">Preview</div>
+      </div>
+
+      <label for="br-css">CSS generado</label>
+      <textarea id="br-css" rows="2" readonly></textarea>
+      <div class="br-actions">
+        <button id="br-copy" class="btn btn-primary" type="button">Copiar CSS</button>
+        <button id="br-blob" class="btn btn-ghost" type="button">Forma blob</button>
+        <button id="br-pill" class="btn btn-ghost" type="button">Pill</button>
+        <button id="br-circle" class="btn btn-ghost" type="button">Círculo</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>La sintaxis completa de border-radius</h2>
+      <p>
+        En su forma simple, <code>border-radius: 12px;</code> aplica el mismo radio a las
+        cuatro esquinas. Pero CSS soporta una sintaxis larga muy poderosa:
+      </p>
+      <pre><code>border-radius: 12px 24px 12px 24px;
+/* sup-izq, sup-der, inf-der, inf-izq (sentido reloj desde arriba a la izquierda) */
+
+border-radius: 60% 40% 30% 70% / 30% 60% 40% 70%;
+/* radios horizontales / radios verticales — formas blob */</code></pre>
+
+      <h2>px, %, em: cuál usar y cuándo</h2>
+      <ul>
+        <li><strong>px:</strong> radio fijo, predecible. Ideal para botones, cards, inputs. <code>8px</code> son siempre 8px.</li>
+        <li><strong>%:</strong> radio relativo al tamaño del elemento. <code>50%</code> en un cuadrado da un círculo perfecto. Útil para avatares y elementos circulares en general.</li>
+        <li><strong>em / rem:</strong> escala con el font-size. Útil si tu sistema de diseño usa una unidad rítmica (8px de base, 16px, etc.).</li>
+        <li><strong>9999px:</strong> truco común para "pill shape": un radio absurdamente grande que siempre alcanza la mitad de la altura, generando bordes redondos perfectos sin importar el alto del elemento.</li>
+      </ul>
+
+      <h2>Qué radio usar para qué componente</h2>
+      <ol>
+        <li><strong>Inputs y botones:</strong> 6-10px. Más alto se siente "infantil"; más bajo se siente "anticuado".</li>
+        <li><strong>Cards:</strong> 12-16px. Más generoso que botones para diferenciar jerarquía.</li>
+        <li><strong>Modales y popovers:</strong> 16-24px. Comunican que son elementos flotantes.</li>
+        <li><strong>Avatares:</strong> 50% (circular) o 8px (cuadrados con esquinas suaves, estilo Telegram/Linear).</li>
+        <li><strong>Tags y badges:</strong> 9999px (pill) o 4-6px (rectangular).</li>
+      </ol>
+
+      <h2>Border-radius en design systems</h2>
+      <p>
+        Los design systems serios definen una escala de radios, no usan valores arbitrarios:
+        <code>--radius-xs: 4px; --radius: 8px; --radius-lg: 12px; --radius-xl: 16px;</code>.
+        Eso evita que cada componente termine con un radio distinto y rompa la consistencia.
+        Tailwind hace esto built-in con <code>rounded-sm</code>, <code>rounded</code>,
+        <code>rounded-lg</code>, etc.
+      </p>
+
+      <h2>El truco de las formas blob</h2>
+      <p>
+        La sintaxis <code>border-radius: A% B% C% D% / E% F% G% H%</code> permite radios
+        horizontales y verticales distintos. Combinaciones asimétricas dan formas orgánicas
+        que se volvieron muy populares en landings de SaaS. Ejemplo:
+        <code>30% 70% 70% 30% / 30% 30% 70% 70%</code>. Pero usalas con criterio: animadas
+        son lindas, estáticas en exceso pueden sentirse aleatorias.
+      </p>
+
+      <h2>Border-radius en imágenes y backgrounds</h2>
+      <p>
+        Funciona perfecto en <code>&lt;img&gt;</code> y elementos con background-image.
+        Importante: <code>overflow: hidden</code> en el contenedor si querés cortar
+        contenido que sobresalga (ej: una imagen dentro de una card con bordes redondeados).
+        Para SVG, usá <code>clip-path</code> en vez de border-radius.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿px vs %?</summary><p>px es fijo. % depende del tamaño (50% en cuadrado = círculo). Botones: px. Avatares circulares: %.</p></details>
+      <details><summary>¿Qué es un blob?</summary><p>Forma orgánica con radios distintos en cada esquina, usando sintaxis horizontal/vertical (A% B% C% D% / E% F% G% H%).</p></details>
+      <details><summary>¿Hay límite?</summary><p>No. Si superás la mitad del lado, las esquinas se encuentran. <code>9999px</code> fuerza pill shape en cualquier altura.</p></details>
+      <details><summary>¿Funciona en imágenes?</summary><p>Sí. Para SVG usá <code>clip-path</code>; para divs con contenido, agregá <code>overflow: hidden</code>.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .br-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; margin-bottom: 1rem; }
+  .br-controls label { display: flex; justify-content: space-between; align-items: center; }
+  .br-controls .val { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-subtle); }
+  .br-controls .br-toggle { grid-column: 1 / -1; font-size: 0.875rem; color: var(--text-soft); }
+  .br-preview-wrap { display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--bg-inset); border-radius: var(--radius-lg); margin-bottom: 1rem; min-height: 280px; }
+  .br-preview { width: 240px; height: 180px; background: linear-gradient(135deg, #059669, #0ea5e9); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; transition: border-radius 0.1s; }
+  textarea#br-css { font-family: var(--font-mono); font-size: 0.8125rem; }
+  .br-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+  pre { background: var(--bg-inset); padding: 0.75rem 1rem; border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto; font-family: var(--font-mono); font-size: 0.8125rem; }
+  @media (max-width: 600px) { .br-controls { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const ids = ['tl', 'tr', 'br', 'bl'];
+  const sliders: Record<string, HTMLInputElement> = {};
+  ids.forEach(id => { sliders[id] = document.getElementById('br-' + id) as HTMLInputElement; });
+  const unit = document.getElementById('br-unit') as HTMLSelectElement;
+  const link = document.getElementById('br-link') as HTMLInputElement;
+  const preview = document.getElementById('br-preview') as HTMLDivElement;
+  const css = document.getElementById('br-css') as HTMLTextAreaElement;
+  const copy = document.getElementById('br-copy') as HTMLButtonElement;
+
+  function build() {
+    ids.forEach(id => { document.getElementById('v-' + id)!.textContent = sliders[id].value; });
+    const u = unit.value;
+    const v = ids.map(id => sliders[id].value + u);
+    const same = v.every(x => x === v[0]);
+    const radius = same ? v[0] : v.join(' ');
+    preview.style.borderRadius = radius;
+    css.value = `border-radius: ${radius};`;
+  }
+  ids.forEach(id => sliders[id].addEventListener('input', () => {
+    if (link.checked) ids.forEach(j => { if (j !== id) sliders[j].value = sliders[id].value; });
+    build();
+  }));
+  unit.addEventListener('change', () => {
+    if (unit.value === '%') ids.forEach(id => { sliders[id].max = '100'; if (parseInt(sliders[id].value) > 100) sliders[id].value = '50'; });
+    else ids.forEach(id => { sliders[id].max = '200'; });
+    build();
+  });
+  link.addEventListener('change', () => { if (link.checked) ids.forEach(id => { sliders[id].value = sliders.tl.value; }); build(); });
+  copy.addEventListener('click', () => {
+    navigator.clipboard.writeText(css.value);
+    copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = 'Copiar CSS'; }, 1200);
+  });
+  document.getElementById('br-blob')!.addEventListener('click', () => {
+    preview.style.borderRadius = '60% 40% 30% 70% / 30% 60% 40% 70%';
+    css.value = 'border-radius: 60% 40% 30% 70% / 30% 60% 40% 70%;';
+  });
+  document.getElementById('br-pill')!.addEventListener('click', () => {
+    preview.style.borderRadius = '9999px';
+    css.value = 'border-radius: 9999px;';
+  });
+  document.getElementById('br-circle')!.addEventListener('click', () => {
+    preview.style.borderRadius = '50%';
+    css.value = 'border-radius: 50%;';
+  });
+  build();
+</script>

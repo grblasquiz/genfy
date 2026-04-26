@@ -1,0 +1,183 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Hex Color Generator | Genfy';
+const description = 'Generate HEX color codes instantly with live preview. Convert between HEX, RGB and HSL and grab the exact code ready for CSS.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a HEX code?', acceptedAnswer: { '@type': 'Answer', text: 'The most compact way to represent a color in CSS. Six hex digits (0-9 and A-F) encoding red, green and blue, two per channel. #FF0000 is pure red, #000000 black, #FFFFFF white.' } },
+    { '@type': 'Question', name: '3-digit vs 6-digit HEX?', acceptedAnswer: { '@type': 'Answer', text: '3-digit is shorthand: #F00 equals #FF0000. It only covers 4096 colors; 6-digit gives the full 16.7 million RGB range. Use 6 whenever you can.' } },
+    { '@type': 'Question', name: 'What does the # mean?', acceptedAnswer: { '@type': 'Answer', text: 'It signals that what follows is a hexadecimal value. CSS requires it; some APIs (Slack, Notion) accept it as optional.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design" title="Hex color generator"
+    intro="Generate a HEX code instantly with a live preview. Convert between HEX, RGB and HSL and copy the exact code ready for CSS, Figma, Tailwind or any tool.">
+
+    <div slot="tool" class="hex-tool">
+      <div id="hex-preview" class="hex-preview"></div>
+
+      <div class="hex-controls">
+        <div>
+          <label for="hex-input">HEX</label>
+          <input id="hex-input" type="text" value="#059669" maxlength="7" spellcheck="false" />
+        </div>
+        <div>
+          <label for="hex-picker">Picker</label>
+          <input id="hex-picker" type="color" value="#059669" />
+        </div>
+      </div>
+
+      <div class="hex-formats">
+        <div class="fmt"><span class="lbl">HEX</span><code id="fmt-hex">#059669</code><button class="btn-tiny" data-copy="fmt-hex" type="button">Copy</button></div>
+        <div class="fmt"><span class="lbl">RGB</span><code id="fmt-rgb">rgb(5, 150, 105)</code><button class="btn-tiny" data-copy="fmt-rgb" type="button">Copy</button></div>
+        <div class="fmt"><span class="lbl">HSL</span><code id="fmt-hsl">hsl(160, 94%, 30%)</code><button class="btn-tiny" data-copy="fmt-hsl" type="button">Copy</button></div>
+      </div>
+
+      <div class="hex-actions">
+        <button id="hex-rand" class="btn btn-primary" type="button">Generate random HEX</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>How a HEX code reads</h2>
+      <p>
+        A HEX like <code>#059669</code> is three pairs of hex digits:
+        <strong>05</strong> (red), <strong>96</strong> (green), <strong>69</strong> (blue).
+        Each pair ranges from <code>00</code> (0, none) to <code>FF</code> (255, max).
+        That's why <code>#FF0000</code> is pure red and <code>#000000</code> is absolute
+        black. Knowing this lets you tweak colors by hand: bumping the first pair raises
+        red, lowering all three darkens.
+      </p>
+
+      <h2>HEX vs RGB vs HSL</h2>
+      <ul>
+        <li><strong>HEX:</strong> compact, ideal for design-to-dev handoff. Used to lack alpha in CSS, but <code>#RRGGBBAA</code> now works everywhere modern.</li>
+        <li><strong>RGB:</strong> <code>rgb(5 150 105 / 0.8)</code> always supports alpha. Useful for overlays and semi-transparency.</li>
+        <li><strong>HSL:</strong> <code>hsl(160 94% 30%)</code> reads as human. H = hue, S = saturation, L = lightness. Tweaking L without touching H is the right way to derive light/dark variants of the same color.</li>
+      </ul>
+
+      <h2>Valid CSS syntax</h2>
+      <p>All of these represent the same color and are valid:</p>
+      <pre><code>color: #059669;
+color: #059669FF;       /* with alpha */
+color: rgb(5, 150, 105);
+color: rgb(5 150 105);  /* modern */
+color: rgb(5 150 105 / 0.8);
+color: hsl(160 94% 30%);</code></pre>
+
+      <h2>Named colors: when they're worth it</h2>
+      <p>
+        CSS supports 147 reserved names (<code>tomato</code>, <code>steelblue</code>,
+        <code>rebeccapurple</code>). Handy for quick prototypes, but in production stick
+        to HEX or CSS variables: names can't be fine-tuned and they're a nightmare in
+        design tokens.
+      </p>
+
+      <h2>Shorthand HEX and when not to use it</h2>
+      <p>
+        <code>#F00</code> is valid and equals <code>#FF0000</code>: each digit doubles.
+        But it only covers 4096 colors (16³) instead of 16.7 million (256³). For
+        professional design, stick to 6 digits. For minimalist prototype CSS, it's fine.
+      </p>
+
+      <h2>HEX with alpha (#RRGGBBAA)</h2>
+      <p>
+        Supported by every modern browser since 2018. The last two digits are opacity:
+        <code>FF</code> = 100%, <code>80</code> ≈ 50%, <code>00</code> = 0%. Useful for
+        dark overlays: <code>#00000080</code> is black at 50%.
+      </p>
+
+      <h2>Converting HEX to other formats without losing precision</h2>
+      <p>
+        HEX and RGB are mathematically equivalent: conversion is exact both ways.
+        HEX↔HSL goes through RGB and can introduce small rounding errors (&lt;1%
+        variation), which is why serious design tokens always store HEX or RGB as the
+        source of truth and derive HSL on the fly.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a HEX code?</summary><p>A compact way to represent a color in CSS: 6 hex digits encoding R, G and B (two per channel).</p></details>
+      <details><summary>3-digit vs 6-digit HEX?</summary><p>3-digit is shorthand (<code>#F00</code> = <code>#FF0000</code>). Only covers 4096 colors; 6-digit covers 16.7 million.</p></details>
+      <details><summary>What does the # mean?</summary><p>It signals that what follows is a hex value. CSS requires it; some APIs accept it as optional.</p></details>
+      <details><summary>Does it support transparency?</summary><p>Yes, by appending two digits: <code>#059669CC</code> ≈ 80% opaque. Available in every modern browser.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .hex-preview { width: 100%; height: 180px; border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1rem; transition: background 0.2s; }
+  .hex-controls { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem; align-items: end; }
+  #hex-input { font-family: var(--font-mono); text-transform: uppercase; }
+  #hex-picker { padding: 0.25rem; height: 42px; cursor: pointer; }
+  .hex-formats { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+  .fmt { display: grid; grid-template-columns: 60px 1fr auto; gap: 0.75rem; align-items: center; padding: 0.625rem 0.875rem; background: var(--bg-inset); border-radius: var(--radius); border: 1px solid var(--border); }
+  .fmt .lbl { font-size: 0.75rem; font-weight: 600; color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.05em; }
+  .fmt code { background: transparent; border: 0; padding: 0; font-size: 0.875rem; }
+  .btn-tiny { font-size: 0.75rem; padding: 0.25rem 0.625rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); cursor: pointer; }
+  .btn-tiny:hover { background: var(--bg-card); border-color: var(--border-strong); }
+  .hex-actions { display: flex; gap: 0.5rem; }
+</style>
+
+<script>
+  const input = document.getElementById('hex-input') as HTMLInputElement;
+  const picker = document.getElementById('hex-picker') as HTMLInputElement;
+  const preview = document.getElementById('hex-preview') as HTMLDivElement;
+  const fmtHex = document.getElementById('fmt-hex')!;
+  const fmtRgb = document.getElementById('fmt-rgb')!;
+  const fmtHsl = document.getElementById('fmt-hsl')!;
+  const rand = document.getElementById('hex-rand') as HTMLButtonElement;
+
+  function hexToRgb(h: string) {
+    h = h.replace('#', '');
+    if (h.length === 3) h = h.split('').map(c => c + c).join('');
+    return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16) };
+  }
+  function rgbToHsl({ r, g, b }: { r: number; g: number; b: number }) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h = 0, s = 0; const l = (max + min) / 2;
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      if (max === r) h = ((g - b) / d + (g < b ? 6 : 0));
+      else if (max === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
+      h *= 60;
+    }
+    return { h: Math.round(h), s: Math.round(s * 100), l: Math.round(l * 100) };
+  }
+  function update(hex: string) {
+    if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
+    preview.style.background = hex;
+    const rgb = hexToRgb(hex);
+    const hsl = rgbToHsl(rgb);
+    fmtHex.textContent = hex.toUpperCase();
+    fmtRgb.textContent = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+    fmtHsl.textContent = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+    picker.value = hex;
+  }
+  input.addEventListener('input', () => update(input.value));
+  picker.addEventListener('input', () => { input.value = picker.value.toUpperCase(); update(picker.value); });
+  rand.addEventListener('click', () => {
+    const h = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase();
+    input.value = h;
+    update(h);
+  });
+  document.querySelectorAll('.btn-tiny').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = (btn as HTMLElement).dataset.copy!;
+      const txt = document.getElementById(id)!.textContent!;
+      navigator.clipboard.writeText(txt);
+      const orig = btn.textContent;
+      btn.textContent = 'copied!';
+      setTimeout(() => { btn.textContent = orig; }, 900);
+    });
+  });
+  update('#059669');
+</script>

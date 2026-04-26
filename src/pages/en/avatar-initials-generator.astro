@@ -1,0 +1,216 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Avatar Initials Generator | Genfy';
+const description = 'Generate avatars with initials and a background color derived from the name. Slack, Linear or Notion-style. Downloads as a high-resolution PNG.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How is the avatar color picked?', acceptedAnswer: { '@type': 'Answer', text: 'We hash the name and map the result to an HSL hue. Same name always returns the same color, but two different names almost always give different colors.' } },
+    { '@type': 'Question', name: 'How many initials are shown?', acceptedAnswer: { '@type': 'Answer', text: 'One if the name is a single word, two if it has a last name. For long compound names we use first letter of first and last name, ignoring middle names.' } },
+    { '@type': 'Question', name: 'What resolution is the download?', acceptedAnswer: { '@type': 'Answer', text: 'PNG 512x512px — enough for social media profiles, team photos on a landing and app avatars without pixelation.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design" title="Avatar initials generator"
+    intro="Generate avatars with initials and a background color derived from the name. Slack, Linear or Notion-style. Downloads as PNG at 512px.">
+
+    <div slot="tool" class="av-tool">
+      <div class="av-controls">
+        <div>
+          <label for="av-name">Full name</label>
+          <input id="av-name" type="text" value="Ada Lovelace" placeholder="e.g. Grace Hopper" />
+        </div>
+        <div>
+          <label for="av-shape">Shape</label>
+          <select id="av-shape">
+            <option value="circle" selected>Circle</option>
+            <option value="rounded">Rounded square</option>
+            <option value="square">Square</option>
+          </select>
+        </div>
+        <div>
+          <label for="av-style">Style</label>
+          <select id="av-style">
+            <option value="solid" selected>Solid color</option>
+            <option value="gradient">Gradient</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="av-preview-wrap">
+        <canvas id="av-canvas" width="512" height="512"></canvas>
+      </div>
+
+      <div class="av-actions">
+        <button id="av-dl" class="btn btn-primary" type="button">Download PNG</button>
+        <button id="av-shuffle" class="btn btn-ghost" type="button">Different color</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Why initial avatars are the right answer</h2>
+      <p>
+        When an app has millions of users and most won't upload a photo, the generic
+        gray-silhouette icon makes the UI dull and repetitive. Slack, Linear, Notion and
+        Google Workspace all converged on the same fix:
+        <strong>initials over a color derived from the name</strong>. Instant visual
+        identity without asking the user for anything.
+      </p>
+
+      <h2>How the color is derived</h2>
+      <p>
+        Classic technique: hash the name to a number, map it to a 0–360 hue, fix
+        saturation and lightness. That guarantees:
+      </p>
+      <ul>
+        <li>The same name always returns the same color (cross-session consistency).</li>
+        <li>Two different names almost always give different colors (uniform spread on the color wheel).</li>
+        <li>Controlled saturation and lightness avoid unreadable or overly pastel results.</li>
+      </ul>
+      <pre><code>function hashHue(s) &lcub;
+  let h = 0;
+  for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0;
+  return Math.abs(h) % 360;
+&rcub;</code></pre>
+
+      <h2>How many initials</h2>
+      <p>
+        One looks poor, three feels cluttered. The standard is <strong>two letters</strong>:
+        first of first name, first of last name. For single-word names (handles, mononyms),
+        use one larger letter. For long compound names, skip middle names.
+      </p>
+
+      <h2>Right typography and size</h2>
+      <p>
+        Initials should occupy 35–45% of the avatar's diameter. Use a geometric sans-serif
+        with strong weight (Inter Bold, Geist Medium, SF Pro Display Semibold). White text
+        on saturated color background passes AA contrast comfortably.
+      </p>
+
+      <h2>Square vs circular avatars</h2>
+      <ul>
+        <li><strong>Circle:</strong> the universal pattern, associated with "person". Slack, X, Twitter, almost every social network.</li>
+        <li><strong>Rounded square:</strong> modern, associated with "workspace" or "team". Linear, Notion, Vercel.</li>
+        <li><strong>Pure square:</strong> rare for personal avatars, common for team logos or channels (Discord servers, Slack workspaces).</li>
+      </ul>
+
+      <h2>Use cases</h2>
+      <ol>
+        <li><strong>SaaS apps</strong> where most users skip photo upload.</li>
+        <li><strong>Comment systems</strong> on blogs or docs.</li>
+        <li><strong>Team sections on landings</strong>: when you don't have professional photos yet, initials with color beat silhouettes by a mile.</li>
+        <li><strong>Membership cards and certificates</strong>: instant personality without manual design.</li>
+        <li><strong>Internal admin apps</strong>: different permission levels can have different background style (admin = brand gradient, viewers = gray).</li>
+      </ol>
+
+      <h2>Gradient avatars: the premium detail</h2>
+      <p>
+        A single solid color looks fine. A subtle gradient (same hue, two lightnesses)
+        looks premium. It's the detail that separates a generic avatar from one that
+        feels designed. Try both modes in this generator.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How is the color picked?</summary><p>Hash the name and map to an HSL hue. Same name = same color; different names almost always different.</p></details>
+      <details><summary>How many initials?</summary><p>One for single-name handles, two when there's a last name (first letter of first name + first of last name).</p></details>
+      <details><summary>Resolution?</summary><p>PNG 512x512px. Enough for social profiles, team photos and app avatars without pixelation.</p></details>
+      <details><summary>Can I change the color?</summary><p>Yes. Hit "Different color" to force a new hue while keeping the same initials.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .av-controls { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .av-preview-wrap { display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--bg-inset); border-radius: var(--radius-lg); margin-bottom: 1rem; }
+  #av-canvas { width: 220px; height: 220px; max-width: 100%; }
+  .av-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  pre { background: var(--bg-inset); padding: 0.75rem 1rem; border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto; font-family: var(--font-mono); font-size: 0.8125rem; }
+  @media (max-width: 600px) { .av-controls { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const nameEl = document.getElementById('av-name') as HTMLInputElement;
+  const shape = document.getElementById('av-shape') as HTMLSelectElement;
+  const style = document.getElementById('av-style') as HTMLSelectElement;
+  const canvas = document.getElementById('av-canvas') as HTMLCanvasElement;
+  const dl = document.getElementById('av-dl') as HTMLButtonElement;
+  const shuffle = document.getElementById('av-shuffle') as HTMLButtonElement;
+
+  let hueOffset = 0;
+
+  function getInitials(name: string): string {
+    const parts = name.trim().split(/\s+/).filter(Boolean);
+    if (parts.length === 0) return '?';
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+  function hashHue(s: string): number {
+    let h = 0;
+    for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0;
+    return (Math.abs(h) + hueOffset) % 360;
+  }
+  function hslToHex(h: number, s: number, l: number) {
+    s /= 100; l /= 100;
+    const k = (n: number) => (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    const toHex = (x: number) => Math.round(x * 255).toString(16).padStart(2, '0');
+    return '#' + toHex(f(0)) + toHex(f(8)) + toHex(f(4));
+  }
+
+  function draw() {
+    const ctx = canvas.getContext('2d')!;
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    const hue = hashHue(nameEl.value || 'A');
+    ctx.save();
+    if (shape.value === 'circle') {
+      ctx.beginPath();
+      ctx.arc(W / 2, H / 2, W / 2, 0, Math.PI * 2);
+      ctx.clip();
+    } else if (shape.value === 'rounded') {
+      const r = 96;
+      ctx.beginPath();
+      ctx.moveTo(r, 0); ctx.lineTo(W - r, 0); ctx.quadraticCurveTo(W, 0, W, r);
+      ctx.lineTo(W, H - r); ctx.quadraticCurveTo(W, H, W - r, H);
+      ctx.lineTo(r, H); ctx.quadraticCurveTo(0, H, 0, H - r);
+      ctx.lineTo(0, r); ctx.quadraticCurveTo(0, 0, r, 0); ctx.closePath();
+      ctx.clip();
+    }
+
+    if (style.value === 'gradient') {
+      const grad = ctx.createLinearGradient(0, 0, W, H);
+      grad.addColorStop(0, hslToHex(hue, 65, 55));
+      grad.addColorStop(1, hslToHex((hue + 30) % 360, 70, 45));
+      ctx.fillStyle = grad;
+    } else {
+      ctx.fillStyle = hslToHex(hue, 60, 50);
+    }
+    ctx.fillRect(0, 0, W, H);
+
+    const initials = getInitials(nameEl.value);
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 220px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(initials, W / 2, H / 2 + 12);
+    ctx.restore();
+  }
+
+  nameEl.addEventListener('input', draw);
+  shape.addEventListener('change', draw);
+  style.addEventListener('change', draw);
+  shuffle.addEventListener('click', () => { hueOffset = (hueOffset + 73) % 360; draw(); });
+  dl.addEventListener('click', () => {
+    const url = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = url; a.download = 'avatar.png'; a.click();
+  });
+  draw();
+</script>

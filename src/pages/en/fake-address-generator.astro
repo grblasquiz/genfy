@@ -1,0 +1,184 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Fake Address Generator | Genfy';
+const description = 'Generate realistic postal addresses for testing and fixtures. US, UK, Canada and Australia. Synthetic data, not for production use.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Do these addresses exist?', acceptedAnswer: { '@type': 'Answer', text: 'Streets and cities are real names, but the street + number + city combination is random. Most do not correspond to a real physical address.' } },
+    { '@type': 'Question', name: 'Can I use it to validate address APIs?', acceptedAnswer: { '@type': 'Answer', text: 'For functional tests, yes. For geocoding tests against Google Maps or similar, no: random addresses may or may not resolve. For those tests use known real addresses.' } },
+    { '@type': 'Question', name: 'Can I send mail to these addresses?', acceptedAnswer: { '@type': 'Answer', text: 'No. They are synthetic. Any package will bounce back or be delivered to whoever happens to live there.' } },
+    { '@type': 'Question', name: 'Does it include ZIP codes?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, we generate ZIP codes following each country\'s typical format (5 digits in the US, 6 alphanumeric in Canada and the UK).' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Data / Testing"
+    title="Fake Address Generator"
+    intro="Synthetic postal addresses for testing, fixtures and prototypes. Street, number, city and ZIP code with realistic country-specific formats."
+  >
+    <div slot="tool" class="addr-tool">
+      <div class="addr-controls">
+        <div>
+          <label for="addr-country">Country</label>
+          <select id="addr-country">
+            <option value="us" selected>United States</option>
+            <option value="uk">United Kingdom</option>
+            <option value="ca">Canada</option>
+            <option value="au">Australia</option>
+          </select>
+        </div>
+        <div>
+          <label for="addr-count">Quantity</label>
+          <input id="addr-count" type="number" min="1" max="50" value="5" />
+        </div>
+      </div>
+
+      <button id="addr-gen" class="btn btn-primary" type="button">Generate addresses</button>
+
+      <textarea id="addr-out" class="mono" rows="14" readonly></textarea>
+      <button id="addr-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy all</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>Address formats</h2>
+      <p>Each country has its own postal format. This generator follows the most common conventions:</p>
+      <ul>
+        <li><strong>US:</strong> Number Street, Apt, City, State ZIP.</li>
+        <li><strong>UK:</strong> Number Street, City, Postcode.</li>
+        <li><strong>Canada:</strong> Number Street, Unit, City, Province Postal Code.</li>
+        <li><strong>Australia:</strong> Number Street, Suburb State Postcode.</li>
+      </ul>
+      <p>
+        ZIP/postal codes follow each country's format: 5 digits in the US, alphanumeric like
+        <code>SW1A 1AA</code> in the UK, alphanumeric like <code>K1A 0B1</code> in Canada, 4
+        digits in Australia.
+      </p>
+
+      <h2>When to use synthetic addresses</h2>
+      <ol>
+        <li><strong>Functional form tests.</strong> Validate that your checkout form accepts long addresses, special characters, with and without unit numbers.</li>
+        <li><strong>Database seeds.</strong> Fill order, customer and shipping tables with plausible data.</li>
+        <li><strong>Client demos.</strong> Show the system with realistic data without exposing real users.</li>
+        <li><strong>UI prototypes.</strong> Order lists where every entry isn't <code>123 Main St</code>.</li>
+        <li><strong>Display/PDF tests.</strong> Verify shipping labels, invoices and receipts render correctly with addresses of varying length.</li>
+      </ol>
+
+      <h2>Generator limitations</h2>
+      <p>
+        The streets that appear are real and common in each country (Main Street, Oak Avenue,
+        High Street). However:
+      </p>
+      <ul>
+        <li>The street number may not exist on that street.</li>
+        <li>The ZIP code may not match the chosen city.</li>
+        <li>The street + city combination may be valid in another city but not the chosen one.</li>
+      </ul>
+      <p>
+        For tests where the address has to geocode correctly (resolve to coordinates in Google
+        Maps or Nominatim), use known real addresses as fixtures, not these.
+      </p>
+
+      <h2>Standard test addresses</h2>
+      <p>Some useful conventions in testing:</p>
+      <ul>
+        <li><strong>123 Test Street, 12345 Test City, Test State.</strong> Classic placeholder pattern.</li>
+        <li><strong>1600 Pennsylvania Avenue, Washington DC 20500.</strong> Public address used as an example in many tests.</li>
+        <li><strong>10 Downing Street, London SW1A 2AA.</strong> UK equivalent for tests.</li>
+        <li><strong>1 Apple Park Way, Cupertino CA 95014.</strong> Used in Apple-related test fixtures.</li>
+      </ul>
+
+      <h2>Privacy and synthetic data</h2>
+      <p>Generating synthetic addresses doesn't waive best practices:</p>
+      <ol>
+        <li>Don't use them as real data in production.</li>
+        <li>If you link a synthetic name + email + address, mark them clearly as test data (DB flag, fake domain, label).</li>
+        <li>Don't send mail to generated addresses: sometimes, by chance, they exist.</li>
+        <li>Don't use them on real-world forms (utility signups, delivery accounts, etc.).</li>
+      </ol>
+
+      <h2>Comparison with Faker</h2>
+      <p>
+        Faker libraries (<code>@faker-js/faker</code>, <code>faker</code> for Python) cover
+        dozens of locales with richer data: states, counties, approximate geocoding. If your
+        fixtures are code-driven, Faker is better. This generator is best for quick ad-hoc use.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Do they exist?</summary><p>Streets and cities are real names, but the combination is random. Most don't match a real physical address.</p></details>
+      <details><summary>Validate APIs?</summary><p>For functional tests, yes. For Maps geocoding, no: random addresses may not resolve.</p></details>
+      <details><summary>Can I send mail?</summary><p>No. They're synthetic. Mail will bounce or land at whoever happens to live there.</p></details>
+      <details><summary>Includes ZIP?</summary><p>Yes, with the typical format of the chosen country.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .addr-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .addr-controls { grid-template-columns: 1fr; } }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; margin: 1rem 0 0.75rem; }
+</style>
+
+<script>
+  const DATA: Record<string, any> = {
+    us: {
+      streets: ['Main Street','Oak Avenue','Maple Drive','Elm Street','Cedar Lane','Park Avenue','Washington Blvd','Lincoln Avenue','Highland Drive','Sunset Boulevard','Broadway','Madison Avenue','Lake Street','Hill Road'],
+      cities: [['Springfield','IL','62701'],['Madison','WI','53703'],['Albany','NY','12207'],['Austin','TX','78701'],['Portland','OR','97201'],['Denver','CO','80202'],['Boston','MA','02108'],['Seattle','WA','98101'],['Cleveland','OH','44101']],
+    },
+    uk: {
+      streets: ['High Street','Church Road','Park Road','Victoria Road','Green Lane','London Road','Manor Road','Mill Lane','Kings Road','Queens Road','Station Road'],
+      cities: [['London','SW1A 1AA'],['Manchester','M1 1AA'],['Birmingham','B1 1AA'],['Leeds','LS1 1AA'],['Glasgow','G1 1AA'],['Edinburgh','EH1 1AA'],['Liverpool','L1 1AA'],['Bristol','BS1 1AA']],
+    },
+    ca: {
+      streets: ['Yonge Street','King Street','Queen Street','Bloor Street','Bay Street','Bathurst Street','Spadina Avenue','Dundas Street','College Street','St Clair Avenue'],
+      cities: [['Toronto','ON','M5H 2N2'],['Vancouver','BC','V6B 1A1'],['Montreal','QC','H2Z 1A1'],['Calgary','AB','T2P 1A1'],['Ottawa','ON','K1A 0A1'],['Edmonton','AB','T5J 1A1']],
+    },
+    au: {
+      streets: ['George Street','Pitt Street','Queen Street','Collins Street','Bourke Street','Flinders Street','Elizabeth Street','William Street','King Street','Murray Street'],
+      cities: [['Sydney','NSW','2000'],['Melbourne','VIC','3000'],['Brisbane','QLD','4000'],['Perth','WA','6000'],['Adelaide','SA','5000'],['Canberra','ACT','2600']],
+    },
+  };
+  const country = document.getElementById('addr-country') as HTMLSelectElement;
+  const count = document.getElementById('addr-count') as HTMLInputElement;
+  const out = document.getElementById('addr-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('addr-gen') as HTMLButtonElement;
+  const copy = document.getElementById('addr-copy') as HTMLButtonElement;
+  function pick<T>(arr: T[]): T { const a = new Uint32Array(1); crypto.getRandomValues(a); return arr[a[0] % arr.length]; }
+  function rand(min: number, max: number): number { const a = new Uint32Array(1); crypto.getRandomValues(a); return min + (a[0] % (max - min + 1)); }
+  function generate() {
+    const n = Math.min(50, Math.max(1, parseInt(count.value || '5', 10)));
+    const c = country.value;
+    const data = DATA[c];
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) {
+      const street = pick<string>(data.streets);
+      const num = rand(100, 9999);
+      const city = pick<string[]>(data.cities);
+      let line = '';
+      if (c === 'us') line = `${num} ${street}, Apt ${rand(1,500)}, ${city[0]}, ${city[1]} ${city[2]}`;
+      else if (c === 'uk') line = `${num} ${street}, ${city[0]}, ${city[1]}`;
+      else if (c === 'ca') line = `${num} ${street}, Unit ${rand(1,300)}, ${city[0]}, ${city[1]} ${city[2]}`;
+      else line = `${num} ${street}, ${city[0]} ${city[1]} ${city[2]}`;
+      lines.push(line);
+    }
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', generate);
+  [country, count].forEach(el => el.addEventListener('change', generate));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copied</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copy all'; delete copy.dataset.copied; }, 1400);
+  });
+  generate();
+</script>

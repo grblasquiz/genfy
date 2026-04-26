@@ -1,0 +1,139 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Galletita de la fortuna online gratis | Genfy';
+const description = 'Abrí una galletita de la fortuna virtual y obtené un mensaje al azar. Frases cortas, divertidas y limpias. Ideal para compartir en redes y juegos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Es como una galletita real?', acceptedAnswer: { '@type': 'Answer', text: 'Es la versión digital: hacés clic en "abrir", la galleta muestra un mensaje al azar. Sin calorías y sin que se rompa la cocina.' } },
+    { '@type': 'Question', name: '¿Los mensajes son serios o de juego?', acceptedAnswer: { '@type': 'Answer', text: 'Mezcla: hay frases prácticas, recordatorios cálidos y guiños divertidos. Todos limpios y aptos para todo público.' } },
+    { '@type': 'Question', name: '¿Sirve para regalos o eventos?', acceptedAnswer: { '@type': 'Answer', text: 'Sí: ideal para reuniones online, retros de equipo, ice-breakers en clase y juegos en familia. Cada participante "abre" su galleta y comparte el mensaje.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión" title="Galletita de la fortuna"
+    intro="Una galletita virtual con un mensaje al azar adentro. Para alegrarte el día, romper el hielo en una reunión o sumar un toque divertido al chat.">
+
+    <div slot="tool" class="fc">
+      <div class="fc-card">
+        <p id="fc-text" class="fc-msg">Hacé clic en "Abrir" para ver tu mensaje.</p>
+      </div>
+      <button id="fc-gen" class="btn btn-primary" type="button">Abrir galletita</button>
+      <button id="fc-copy" class="btn btn-ghost" type="button">Copiar</button>
+    </div>
+
+    <div slot="content">
+      <h2>De dónde sale la galletita de la fortuna</h2>
+      <p>
+        Aunque mucha gente la asocia a China, la galletita de la fortuna como la conocemos hoy
+        nació en California a principios del siglo XX, en panaderías japonesas que servían
+        galletas de sésamo dobladas con un mensaje adentro. Se popularizó en restaurantes
+        chinos de Estados Unidos en los años 50 y desde ahí se exportó al mundo. Su mensaje
+        breve y un poco enigmático es parte del encanto: una frase corta deja más espacio para
+        que cada uno la interprete a su modo.
+      </p>
+
+      <h2>Cómo funciona la versión digital</h2>
+      <p>
+        El generador elige una frase de un banco curado al azar usando crypto.getRandomValues,
+        el generador criptográfico del navegador. Cada apertura es independiente y la frase no
+        se repite seguido. No guardamos tu resultado: la galletita queda solo en tu pantalla
+        hasta que cerrás la pestaña.
+      </p>
+
+      <h2>Usos creativos del generador</h2>
+      <ul>
+        <li><strong>Ice-breaker en reuniones online.</strong> Cada uno abre su galleta y comparte el mensaje en 30 segundos.</li>
+        <li><strong>Retros de equipo.</strong> Un cierre liviano: la galleta como "moraleja" del sprint.</li>
+        <li><strong>Clase con chicos o adolescentes.</strong> Empezar el módulo con un mensaje al azar, ideal para escritura creativa.</li>
+        <li><strong>Cumpleaños y eventos.</strong> Imprimir capturas de mensajes para ponerlos en tarjetitas dentro de las galletas reales.</li>
+        <li><strong>Mensaje del día.</strong> Una galleta a primera hora, simple y suficiente.</li>
+      </ul>
+
+      <h2>El humor de las galletitas</h2>
+      <p>
+        Lo mejor de la galletita es que mezcla seriedad y guiño. A veces sale un consejo
+        práctico, a veces algo absurdo. Esa imprevisibilidad es la gracia: si todos los
+        mensajes fueran sabios, sería un libro de autoayuda. Si todos fueran chistes, perdería
+        la magia. La mezcla es lo que la mantiene vigente.
+      </p>
+
+      <h2>Una nota sobre interpretación</h2>
+      <p>
+        Las galletas no predicen el futuro y no toman decisiones por vos. Son un disparador
+        chiquito para ver tus propios temas. Si te impactó un mensaje, vale la pena preguntarte
+        por qué — ahí está la información útil. El resto, divertilo y mandalo al chat.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Es como una real?</summary><p>Sí, versión digital: hacés clic, la galleta muestra un mensaje al azar.</p></details>
+      <details><summary>¿De qué tono son?</summary><p>Mezcla de frases prácticas, recordatorios cálidos y guiños divertidos. Todo limpio y para todo público.</p></details>
+      <details><summary>¿Sirve para eventos?</summary><p>Sí: ideal para reuniones online, retros, clases e ice-breakers.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .fc-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 1rem; min-height: 110px; display: flex; align-items: center; }
+  .fc-msg { font-size: 1.2rem; line-height: 1.55; margin: 0; color: var(--text); }
+</style>
+
+<script>
+  const FORTUNES = [
+    "Una conversación pequeña hoy va a abrir una puerta grande mañana.",
+    "Lo que estás postergando es más fácil de lo que parece. Empezalo igual.",
+    "El fracaso de esta semana es la enseñanza del próximo trimestre.",
+    "Una sorpresa agradable está más cerca de lo que pensás.",
+    "El mejor consejo del día va a venir de la persona menos esperada.",
+    "Confía en la idea simple. Las complicadas suelen ser excusas.",
+    "Tu paciencia con vos mismo va a multiplicar tus resultados este mes.",
+    "El silencio es la respuesta correcta hoy.",
+    "Decir que sí a todo es decir que no a algo importante.",
+    "Hoy vas a entender algo que llevaba tiempo sin tener sentido.",
+    "Lo que perdiste te dejó espacio para algo mejor. Mirá ese espacio.",
+    "Un viejo amigo está pensando en vos justo ahora.",
+    "Empezá temprano. El día rinde el doble cuando arrancás antes que el ruido.",
+    "Lo importante no es cuántos pasos das, sino que sigan en la misma dirección.",
+    "La risa de hoy es la salud de la próxima semana.",
+    "El mejor proyecto de tu vida está más cerca de lo que pensás. Solo seguí.",
+    "Pedí lo que necesitás. La gente no adivina.",
+    "Una pequeña organización hoy te ahorra una crisis pasado mañana.",
+    "Tu intuición tiene razón en lo que estás dudando.",
+    "Comer despacio es un acto de respeto hacia tu cuerpo.",
+    "Estás más cerca del logro que del comienzo. No aflojes.",
+    "Una buena conversación hoy vale más que diez reuniones.",
+    "Cuando dudes, descansá. La claridad llega después del descanso.",
+    "Hoy vas a aprender algo que no buscaste.",
+    "El elogio sincero es contagioso. Empezá vos.",
+    "Lo que ahorrás hoy no se nota; lo que ahorrás un año se transforma.",
+    "El proyecto correcto te elige a vos, no al revés.",
+    "Una semilla plantada en silencio crece igual.",
+    "Tu generosidad va a volver de forma inesperada.",
+    "Hoy es un buen día para perdonar a alguien (incluyéndote).",
+    "Hablá menos de lo que querés, escuchá más de lo que solés.",
+    "Una idea simple bien ejecutada vale más que una idea brillante esperando.",
+    "El error que cometiste no te define. Lo que hagas después, sí.",
+    "Tu calma es contagiosa. Sostenela.",
+    "Una respuesta vendrá esta semana, donde menos la buscás.",
+  ];
+
+  const text = document.getElementById('fc-text') as HTMLElement;
+  const genBtn = document.getElementById('fc-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('fc-copy') as HTMLButtonElement;
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    text.textContent = pick(FORTUNES);
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!text.textContent) return;
+    await navigator.clipboard.writeText(text.textContent);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+</script>

@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+import { GUINEA_PIG_NAMES, SMALL_PET_STYLES } from '../lib/small-pet-names';
+
+const title = 'Generador de nombres para cobayos | Genfy';
+const description = 'Tiernos, divertidos o de comida: encontrá el nombre perfecto para tu cobayo o cuy. +60 ideas en español e inglés, generador instantáneo gratis.';
+
+const stylesES = SMALL_PET_STYLES.es;
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Los cobayos aprenden su nombre?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Los cobayos son sociables y, al asociar el nombre con comida y caricias durante 2-3 semanas, lo reconocen y "wheek" cuando los llamás.' } },
+    { '@type': 'Question', name: '¿Cuántos nombres si tengo varios cobayos?', acceptedAnswer: { '@type': 'Answer', text: 'Mejor que sean fonéticamente distintos: si tenés dos, evitá Coco y Coca. Combiná nombres cortos con sonidos diferentes (Pelusa + Mochi).' } },
+    { '@type': 'Question', name: '¿Mejor un nombre serio o tierno?', acceptedAnswer: { '@type': 'Answer', text: 'Para cobayos los nombres tiernos y de comida son los más populares. Su forma redonda invita a Galleta, Pochoclo, Bombón.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="es" tag="Mascotas" title="Generador de nombres para cobayos"
+    intro="Tierno, divertido o de comida: encontrá el nombre que mejor le queda a tu cobayo o cuy. Click y obtené 12 ideas en segundos.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Estilo</label>
+      <select id="cn-style">
+        {Object.entries(stylesES).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mezcla de todo</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 12 nombres</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de tu cobayo</h2>
+      <p>
+        Los cobayos (también llamados cuyes o conejillos de indias) son una de las mascotas más
+        sociables: viven en pareja o grupo, saludan con un "wheek" característico cuando escuchan
+        la heladera, y aprenden su nombre con asombrosa rapidez. El nombre debería ser fácil de
+        gritar desde la cocina y diferenciarse del de otros cobayos en la jaula.
+      </p>
+      <ul>
+        <li><strong>1-2 sílabas.</strong> Coco, Pelusa, Pipo, Mochi funcionan mejor que algo elaborado.</li>
+        <li><strong>Sonidos suaves y agudos.</strong> A los cobayos les llaman la atención los tonos altos.</li>
+        <li><strong>Si tenés dos, sonidos diferentes.</strong> No Coco + Coca. Mejor Coco + Mochi, Pelusa + Galleta.</li>
+        <li><strong>Asocialo con comida.</strong> Decí el nombre antes de darle morrón o lechuga: en 2 semanas lo reconoce.</li>
+      </ul>
+
+      <h2>Nombres por estilo</h2>
+      <ul>
+        <li><strong>Tiernos</strong> (Coco, Pelusa, Bombón, Mochi): los más comunes, encajan con casi cualquier cobayo.</li>
+        <li><strong>De comida</strong> (Galleta, Caramelo, Trufa, Pochoclo): clásicos, juegan con la imagen de cobayo redondo y comelón.</li>
+        <li><strong>Divertidos</strong> (Profesor Cuy, Sir Squeaks, Don Bochita): para los cobayos con personalidades grandes.</li>
+      </ul>
+
+      <h2>Por color y pelaje</h2>
+      <ul>
+        <li><strong>Pelo blanco:</strong> Algodón, Nube, Marshmallow, Cotton.</li>
+        <li><strong>Pelo naranja:</strong> Mandarina, Pumpkin, Caramelo, Naranja.</li>
+        <li><strong>Pelo negro:</strong> Negro, Trufa, Sombra, Inky.</li>
+        <li><strong>Manchado:</strong> Manchas, Pinto, Patches, Mota.</li>
+      </ul>
+
+      <h2>Errores comunes</h2>
+      <ol>
+        <li>Nombres muy similares para varios cobayos: vos perdés el rastro y ellos no aprenden.</li>
+        <li>Nombres elaborados que terminás abreviando.</li>
+        <li>No usar el nombre porque "es chiquito y no entiende": sí entiende, son muy sociables.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Los cobayos aprenden su nombre?</summary><p>Sí. Asociado con comida y caricias durante 2-3 semanas lo reconocen y "wheek" cuando los llamás.</p></details>
+      <details><summary>¿Cuántos nombres si tengo varios cobayos?</summary><p>Mejor que sean fonéticamente distintos. Combiná sonidos diferentes (Pelusa + Mochi).</p></details>
+      <details><summary>¿Mejor un nombre serio o tierno?</summary><p>Los tiernos y de comida son los más populares para cobayos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: GUINEA_PIG_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.cute.es, ...DATA.food.es, ...DATA.funny.es];
+    else pool = DATA[s].es;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

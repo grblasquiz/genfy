@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombres de producto gratis | Genfy';
+const description = 'Generá nombres de producto que comuniquen beneficio, sean fáciles de pronunciar y no choquen con tu marca paraguas. Ideas listas para SaaS, físicos y servicios.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Mejor un nombre descriptivo o evocativo?', acceptedAnswer: { '@type': 'Answer', text: 'Descriptivo si tu producto compite por SEO o búsqueda directa. Evocativo si querés diferenciarte y crear identidad de submarca dentro de un ecosistema mayor.' } },
+    { '@type': 'Question', name: '¿Tiene que coincidir con el nombre de la empresa?', acceptedAnswer: { '@type': 'Answer', text: 'No. Es habitual que la empresa tenga un nombre paraguas y los productos nombres independientes (Apple → iPhone, iPad). La coherencia visual y verbal importa más que la repetición literal.' } },
+    { '@type': 'Question', name: '¿Cuántas opciones debería testear?', acceptedAnswer: { '@type': 'Answer', text: 'Generá 30 a 50, filtrá a 10 finalistas, validá pronunciación con 5 personas reales, hacé búsqueda en USPTO y INPI, y solo después decidí.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Branding" title="Generador de nombres de producto"
+    intro="Cargá la categoría, el beneficio principal y el estilo. Genfy combina prefijos, sufijos y palabras evocativas para devolverte 20 nombres de producto listos para validar.">
+
+    <div slot="tool" class="pn">
+      <label for="pn-kw">Palabras clave / categoría</label>
+      <input id="pn-kw" type="text" placeholder="audífonos, agenda, café..." value="agenda" />
+
+      <label for="pn-style" style="margin-top:1rem">Estilo</label>
+      <select id="pn-style">
+        <option value="descriptive">Descriptivo (lo que es)</option>
+        <option value="evocative">Evocativo (cómo se siente)</option>
+        <option value="latin">Latín / clásico</option>
+        <option value="modern">Moderno / inventado</option>
+        <option value="alpha">Alfanumérico (Pro, Max, X)</option>
+      </select>
+
+      <button id="pn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="pn-out" class="pn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué nombrar un producto es distinto a nombrar una empresa</h2>
+      <p>
+        Cuando nombrás una empresa, el nombre va a sobrevivir 10 o 20 años de pivotes, líneas nuevas y cambios de público. Cuando nombrás un producto, el ciclo es mucho más corto y el contexto distinto: el producto vive bajo el paraguas de la marca, compite por atención dentro de tu propio catálogo y necesita comunicar beneficio o categoría rápido.
+      </p>
+      <p>
+        Por eso los principios cambian. En empresa privilegiamos atemporalidad. En producto privilegiamos claridad y diferenciación dentro de la línea. iPhone, iPad y MacBook coexisten porque cada nombre comunica una categoría distinta — pero todos viven bajo Apple.
+      </p>
+
+      <h2>Las cinco familias de nombres de producto</h2>
+      <ul>
+        <li><strong>Descriptivo:</strong> "Cloud Storage Pro", "Smart Lock". Comunica al instante. Ideal para productos que se buscan por categoría en Google Shopping o app stores.</li>
+        <li><strong>Evocativo:</strong> "Cascada", "Cascade". Crea sensación, no describe. Ideal para productos premium o de diseño.</li>
+        <li><strong>Compuesto inventado:</strong> "Lumokit", "Brioflow". Mezcla raíces conocidas con sonidos nuevos. Diferencia y se registra fácil.</li>
+        <li><strong>Latín neutro:</strong> "Aurum", "Vita Pro". Aporta gravitas para finanzas, salud, lujo.</li>
+        <li><strong>Sistema alfanumérico:</strong> "X1", "Pro 2", "Max 5". Ideal para líneas con varias generaciones (iPhone 15, BMW X5).</li>
+      </ul>
+
+      <h2>El error que más cuesta: pelear contra tu propia marca</h2>
+      <p>
+        Si tu empresa se llama Lumen y nombrás un producto "Aurum Pro", el cliente no sabe qué marca está comprando. La regla práctica: el nombre del producto debe coexistir con el de la marca, no competirle. Hay tres patrones seguros:
+      </p>
+      <ol>
+        <li><strong>Marca + descriptor:</strong> "Lumen Notes", "Lumen Pro". El más simple y el que mejor escala.</li>
+        <li><strong>Marca + nombre evocativo:</strong> "Lumen Cascada". Funciona cuando la línea va a tener identidad propia.</li>
+        <li><strong>Solo nombre evocativo (con marca pequeña):</strong> "Cascada by Lumen". Para productos premium dentro de una marca masiva.</li>
+      </ol>
+
+      <h2>Validación legal antes de imprimir el packaging</h2>
+      <p>
+        Antes de invertir en empaque, manuales o campañas, hacé tres búsquedas: Google ("nombre" + categoría), USPTO o INPI según mercado, y dominio. La búsqueda en oficina de marcas no garantiza disponibilidad porque hay marcas en trámite que aún no aparecen, pero sí descarta los conflictos obvios. Si vendés en EE.UU., la búsqueda en USPTO es gratuita en tmsearch.uspto.gov. Si operás en Argentina, INPI tiene buscador online en argentina.gob.ar/inpi.
+      </p>
+
+      <h2>Cómo testear nombres de producto con clientes reales</h2>
+      <ol>
+        <li><strong>Test del primer click.</strong> Mostrá el nombre y la foto. ¿La persona entiende qué es?</li>
+        <li><strong>Test de pronunciación.</strong> Pedile que lo lea en voz alta. ¿Duda? ¿Lo deletrea distinto?</li>
+        <li><strong>Test de recordación.</strong> Mostralo, esperá 3 minutos, pedile que lo escriba. Si más del 30% lo escribe mal, es un problema.</li>
+        <li><strong>Test de competencia.</strong> Mostrá el nombre junto a 3 nombres de competencia. ¿El tuyo se distingue o se confunde?</li>
+        <li><strong>Test cross-language.</strong> Si vendés en otro mercado, googleá "[nombre] meaning" en el idioma local.</li>
+      </ol>
+
+      <h2>Cuándo usar números en el nombre</h2>
+      <p>
+        Los sufijos numéricos (Pro 2, Max 5, X1) tienen sentido cuando vas a iterar y querés mantener pertenencia de línea. Pero introducen un costo: el cliente percibe que la versión 1 ya está vieja. Si tu ciclo de actualización es de 6+ meses, conviene; si es continuo (SaaS), prefiero etiquetas semánticas (Lumen Notes Studio vs Lumen Notes Lite).
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Mejor un nombre descriptivo o evocativo?</summary><p>Descriptivo para SEO y categoría. Evocativo para diferenciación y submarca dentro de un ecosistema.</p></details>
+      <details><summary>¿Tiene que coincidir con el nombre de la empresa?</summary><p>No. Es común que coexistan: Apple lanza iPhone, iPad. Lo importante es coherencia, no repetición literal.</p></details>
+      <details><summary>¿Cuántas opciones debería testear?</summary><p>30 a 50 ideas, 10 finalistas, validá pronunciación, hacé búsqueda en USPTO/INPI y recién entonces decidí.</p></details>
+      <details><summary>¿Cuándo usar números?</summary><p>Si tu producto tiene generaciones claras (iPhone 15, BMW X5). En SaaS son menos efectivos: mejor etiquetas semánticas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .pn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .pn-item:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const DESC_PREF = ['Smart', 'Pro', 'Quick', 'Easy', 'Cloud', 'Auto', 'Mini'];
+  const DESC_SUFF = ['Pro', 'Plus', 'Studio', 'Suite', 'Kit', 'Lite', 'One'];
+  const EVOC = ['Cascada', 'Brio', 'Lumo', 'Vela', 'Nido', 'Tono', 'Onda', 'Quira', 'Sereno', 'Brisa'];
+  const LATIN = ['Aurum', 'Lumen', 'Vita', 'Nova', 'Magna', 'Prima', 'Lux', 'Fortis', 'Pura', 'Clara'];
+  const MOD = ['Lumokit', 'Brioflow', 'Vexalab', 'Plux', 'Toniq', 'Reki', 'Tovi', 'Yumix'];
+  const ALPHA = ['Pro', 'Max', 'Plus', 'Lite', 'X', 'One', 'Studio'];
+  const NUM = ['1', '2', '3', '5', '10', 'X1', 'X2'];
+
+  const kw = document.getElementById('pn-kw') as HTMLInputElement;
+  const style = document.getElementById('pn-style') as HTMLSelectElement;
+  const gen = document.getElementById('pn-gen') as HTMLButtonElement;
+  const out = document.getElementById('pn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const w = (kw.value.split(',')[0] || 'producto').trim();
+    const W = cap(w);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'descriptive') name = pick(DESC_PREF) + ' ' + W + (Math.random() > 0.5 ? ' ' + pick(DESC_SUFF) : '');
+      else if (s === 'evocative') name = pick(EVOC) + (Math.random() > 0.5 ? ' ' + pick(DESC_SUFF) : '');
+      else if (s === 'latin') name = pick(LATIN) + (Math.random() > 0.6 ? ' ' + pick(DESC_SUFF) : '');
+      else if (s === 'modern') name = pick(MOD) + (Math.random() > 0.5 ? ' ' + pick(DESC_SUFF) : '');
+      else if (s === 'alpha') name = W + ' ' + pick(ALPHA) + (Math.random() > 0.5 ? ' ' + pick(NUM) : '');
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'pn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

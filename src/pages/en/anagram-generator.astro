@@ -1,0 +1,158 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Anagram Generator | Genfy';
+const description = 'Generate anagrams and permutations of any word or phrase instantly. Useful for puzzles, riddles, naming and word games.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is an anagram?', acceptedAnswer: { '@type': 'Answer', text: 'An anagram is a new word or phrase formed by rearranging all the letters of the original. For example, "LISTEN" and "SILENT" are anagrams.' } },
+    { '@type': 'Question', name: 'What is it useful for?', acceptedAnswer: { '@type': 'Answer', text: 'Solving puzzles, generating playful names, playing Scrabble, writing poetry and literary riddles.' } },
+    { '@type': 'Question', name: 'Does it return all permutations?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, in "Permutations" mode. For words longer than 8 letters we limit output, since the total grows factorially.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text / Words" title="Anagram Generator"
+    intro="Rearrange the letters of a word to discover every possible combination. Useful for puzzles, games and creative naming.">
+
+    <div slot="tool" class="ag">
+      <div>
+        <label for="ag-input">Word or phrase</label>
+        <input id="ag-input" type="text" placeholder="e.g. LISTEN" maxlength="10" />
+      </div>
+      <div class="ag-row">
+        <div>
+          <label for="ag-mode">Mode</label>
+          <select id="ag-mode">
+            <option value="perms">All permutations</option>
+            <option value="random">Random shuffles (20)</option>
+          </select>
+        </div>
+      </div>
+      <button id="ag-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="ag-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="ag-out" rows="12" readonly style="margin-top:1rem; font-family: var(--font-mono);"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What is an anagram, exactly</h2>
+      <p>
+        An anagram is a word or phrase formed using exactly the same letters as the original,
+        without skipping or repeating any. "LISTEN" → "SILENT", "ASTRONOMER" → "MOON STARER".
+        There are anagrams with meaning (the prized ones, since they're hard to find) and
+        mechanical anagrams (any permutation). This generator shows them all so you can find
+        the meaningful ones.
+      </p>
+
+      <h2>Modes: permutations vs. random</h2>
+      <ul>
+        <li><strong>All permutations.</strong> Best for short words (3-7 letters). Gives you the full universe of rearrangements.</li>
+        <li><strong>Random shuffles.</strong> For longer words or phrases, where the total would explode. Returns 20 distinct shuffles for inspiration.</li>
+      </ul>
+
+      <h2>Why the count grows so fast</h2>
+      <p>
+        The number of permutations of a word is n! ("n factorial"), where n is the letter
+        count. For 4 letters it's 24, for 6 it's 720, for 8 it's 40,320, and for 10 it's
+        3,628,800. That's why we cap the length: at 10 letters your browser and your patience
+        won't make it.
+      </p>
+
+      <h2>Concrete uses</h2>
+      <ul>
+        <li><strong>Riddles and crosswords.</strong> Rearranging letters is at the heart of word puzzles.</li>
+        <li><strong>Naming.</strong> An "anagram" of the founder's name as a subtle personal brand.</li>
+        <li><strong>Poetry and literary play.</strong> Anagrams are a classic technique (Lewis Carroll loved them).</li>
+        <li><strong>Scrabble and similar.</strong> Trains the eye to see hidden words in a rack.</li>
+        <li><strong>Pseudonyms.</strong> Many authors used anagrams of their real name as a pen name.</li>
+      </ul>
+
+      <h2>Famous anagrams</h2>
+      <p>
+        "Tom Marvolo Riddle" → "I am Lord Voldemort" (J.K. Rowling built the Harry Potter
+        villain as an anagram). "William Shakespeare" → "I am a weakish speller" (a classic
+        joke). "Astronomer" → "Moon starer" is a beloved one because the new phrase still
+        describes the original. Finding a fully meaningful anagram is hard but training the
+        ear is what makes the practice rewarding.
+      </p>
+
+      <h2>How to find meaningful anagrams</h2>
+      <ol>
+        <li><strong>Sort consonants and vowels separately.</strong> Inventorying helps you see possible words.</li>
+        <li><strong>Look for fixed pairs.</strong> Combinations like "th", "ch" or "ll" shrink the problem.</li>
+        <li><strong>Use a mental reverse dictionary.</strong> Think of words that exist with those letters.</li>
+        <li><strong>Allow phrases.</strong> Sometimes no single word fits, but two or three together do.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is an anagram?</summary><p>A new word or phrase using the same letters. LISTEN and SILENT are anagrams.</p></details>
+      <details><summary>What's it for?</summary><p>Puzzles, games, naming, poetry and pen names.</p></details>
+      <details><summary>All permutations?</summary><p>Yes in permutation mode, up to 8 letters. For more, use random shuffle.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ag-row { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1rem 0; }
+</style>
+
+<script>
+  const inp = document.getElementById('ag-input') as HTMLInputElement;
+  const modeEl = document.getElementById('ag-mode') as HTMLSelectElement;
+  const out = document.getElementById('ag-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('ag-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('ag-copy') as HTMLButtonElement;
+
+  function permutations(arr: string[]): string[] {
+    if (arr.length <= 1) return [arr.join('')];
+    const out: Set<string> = new Set();
+    for (let i = 0; i < arr.length; i++) {
+      const rest = arr.slice(0, i).concat(arr.slice(i + 1));
+      const subs = permutations(rest);
+      for (const s of subs) out.add(arr[i] + s);
+    }
+    return Array.from(out);
+  }
+  function shuffle(arr: string[]): string[] {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const r = new Uint32Array(1); crypto.getRandomValues(r);
+      const j = r[0] % (i + 1);
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  function generate() {
+    const v = (inp.value || '').trim();
+    if (!v) { out.value = ''; return; }
+    const letters = v.toUpperCase().split('').filter(c => c !== ' ');
+    const m = modeEl.value;
+    if (m === 'perms') {
+      if (letters.length > 8) { out.value = `Too many letters (${letters.length}). Use "Random shuffles" or input up to 8.`; return; }
+      const perms = permutations(letters);
+      out.value = perms.slice(0, 5040).join('\n');
+    } else {
+      const arr: string[] = [];
+      const seen = new Set<string>();
+      let tries = 0;
+      while (arr.length < 20 && tries < 200) {
+        const w = shuffle(letters).join('');
+        if (!seen.has(w)) { seen.add(w); arr.push(w); }
+        tries++;
+      }
+      out.value = arr.join('\n');
+    }
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  inp.value = "LISTEN"; generate();
+</script>

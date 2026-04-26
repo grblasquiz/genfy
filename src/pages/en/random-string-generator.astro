@@ -1,0 +1,201 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random String Generator | Genfy';
+const description = 'Generate random strings with any alphabet: letters, numbers, symbols or a custom set. Ideal for tokens, slugs and test data.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How is this different from the password generator?', acceptedAnswer: { '@type': 'Answer', text: 'This produces strings with any alphabet and length, with no "strength" rules. Built for slugs, short IDs, internal tokens and test data, not human login.' } },
+    { '@type': 'Question', name: 'Can I use it as a short ID like nanoid?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Base62 with length 21 gives ~125 bits of entropy, the same as a default nanoid.' } },
+    { '@type': 'Question', name: 'How is entropy calculated?', acceptedAnswer: { '@type': 'Answer', text: 'Bits = length × log2(alphabet size). For example, 16 characters from a 36-symbol alphabet = 16 × log2(36) ≈ 82 bits.' } },
+    { '@type': 'Question', name: 'Can I use it for passwords?', acceptedAnswer: { '@type': 'Answer', text: 'You can, but the password generator has a more polished UI for that case (separate character types, strength meter). This one gives more alphabet flexibility.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Tech"
+    title="Random String Generator"
+    intro="Generate random strings with the alphabet and length you need. Useful for tokens, slugs, short IDs, test data and unique filenames."
+  >
+    <div slot="tool" class="rs-tool">
+      <div class="rs-output">
+        <input id="rs-out" class="mono" readonly aria-label="Generated string" />
+        <button id="rs-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+      </div>
+      <div id="rs-entropy" class="rs-entropy">—</div>
+
+      <div class="rs-row">
+        <label for="rs-len">Length</label>
+        <input id="rs-len" type="number" min="1" max="256" value="16" />
+      </div>
+
+      <div class="rs-toggles">
+        <label><input type="checkbox" id="rs-up" checked /> A-Z</label>
+        <label><input type="checkbox" id="rs-low" checked /> a-z</label>
+        <label><input type="checkbox" id="rs-num" checked /> 0-9</label>
+        <label><input type="checkbox" id="rs-sym" /> !@#$%^&amp;*</label>
+        <label><input type="checkbox" id="rs-dash" /> - _</label>
+      </div>
+
+      <div class="rs-row">
+        <label for="rs-custom">Custom alphabet (optional, overrides above)</label>
+        <input id="rs-custom" type="text" placeholder="e.g. ABCDEF0123" />
+      </div>
+
+      <div class="rs-row">
+        <label for="rs-bulk">Quantity</label>
+        <input id="rs-bulk" type="number" min="1" max="500" value="1" />
+      </div>
+
+      <button id="rs-gen" class="btn btn-primary" type="button">Generate</button>
+
+      <textarea id="rs-list" class="mono" rows="6" readonly hidden></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>When to use a random string</h2>
+      <p>
+        Random strings serve very different purposes depending on context. They're not the same
+        as a password, even though they're generated the same way underneath. Common cases:
+      </p>
+      <ul>
+        <li><strong>Internal tokens:</strong> beta invitation codes, signed download links, password reset tokens.</li>
+        <li><strong>Short IDs:</strong> a shorter alternative to UUID when readability or length matters (URL slugs, visible IDs).</li>
+        <li><strong>Unique filenames:</strong> to prevent collisions when uploading to S3, R2 or GCS.</li>
+        <li><strong>Test data:</strong> filling text fields in seeds and fixtures without making them look realistic.</li>
+        <li><strong>Coupon codes:</strong> when you want something shorter than a UUID but still secure.</li>
+      </ul>
+
+      <h2>Choosing the alphabet</h2>
+      <p>
+        The alphabet affects readability, entropy per character, and where you can use the
+        string.
+      </p>
+      <ul>
+        <li><strong>Digits only (10):</strong> 3.32 bits/char. For one-time codes (OTP).</li>
+        <li><strong>Lowercase alphanumeric (36):</strong> 5.17 bits/char. Good for URL slugs.</li>
+        <li><strong>Base62 (62):</strong> 5.95 bits/char. Standard for short IDs and tokens.</li>
+        <li><strong>Hex (16):</strong> 4 bits/char. Compatible with almost everything.</li>
+        <li><strong>With symbols (~95):</strong> 6.57 bits/char. Only when the destination supports them.</li>
+      </ul>
+
+      <h2>How entropy is calculated</h2>
+      <p>
+        The formula is <code>bits = length × log2(N)</code>, where N is the alphabet size.
+        Practical examples:
+      </p>
+      <ol>
+        <li>16 alphanumeric characters = 95 bits. Plenty for any internal token.</li>
+        <li>21 base62 characters = 125 bits. The nanoid default.</li>
+        <li>32 hex = 128 bits. Equivalent to a UUID v4.</li>
+        <li>43 base62 = 256 bits. For master encryption keys.</li>
+      </ol>
+      <p>
+        Below 64 bits, assume an attacker can brute-force it. Above 128 bits, it's out of reach
+        even with massive compute.
+      </p>
+
+      <h2>Token best practices</h2>
+      <ul>
+        <li>If the token goes in a URL, avoid symbols that need escaping.</li>
+        <li>If humans will read it, skip ambiguous characters (0, O, 1, l, I).</li>
+        <li>Store a hash if the token is used for authentication, not plaintext.</li>
+        <li>Give it a real expiration, not infinite.</li>
+        <li>Log usage (creation, first use, last use at minimum).</li>
+      </ul>
+
+      <h2>When NOT to use this generator</h2>
+      <p>
+        Don't use it as a primary password for a human account — the password generator is tuned
+        for that. Don't use it for IDs that need to be coordinated across distributed systems —
+        UUID v4 or v7 is the right tool there. And don't use it for data that has to be stable:
+        every generation produces something different, unless you copy and paste.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How is this different from the password generator?</summary><p>This produces strings with any alphabet and length. The password generator is optimized for human login with a strength meter.</p></details>
+      <details><summary>Can I use it as a short ID like nanoid?</summary><p>Yes. Base62 with length 21 gives ~125 bits, same as nanoid by default.</p></details>
+      <details><summary>How is entropy calculated?</summary><p>bits = length × log2(alphabet size). 16 characters from a 36-symbol set ≈ 82 bits.</p></details>
+      <details><summary>Can I use it for passwords?</summary><p>Yes, but the dedicated password generator has a more polished UI for that case.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rs-output { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
+  .rs-output input { font-family: var(--font-mono); font-size: 1rem; background: var(--bg-inset); }
+  .rs-output .btn { min-width: 92px; }
+  .rs-entropy { font-size: 0.8125rem; color: var(--text-subtle); margin-bottom: 1.25rem; }
+  .rs-row { margin-bottom: 1rem; }
+  .rs-row label { margin-bottom: 0.4375rem; }
+  .rs-toggles { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem 1rem; margin-bottom: 1rem; }
+  .rs-toggles label { font-weight: 400; font-size: 0.9375rem; color: var(--text-soft); display: flex; align-items: center; gap: 0.5rem; margin: 0; cursor: pointer; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; margin-top: 1rem; }
+</style>
+
+<script>
+  const out = document.getElementById('rs-out') as HTMLInputElement;
+  const copy = document.getElementById('rs-copy') as HTMLButtonElement;
+  const gen = document.getElementById('rs-gen') as HTMLButtonElement;
+  const lenEl = document.getElementById('rs-len') as HTMLInputElement;
+  const up = document.getElementById('rs-up') as HTMLInputElement;
+  const low = document.getElementById('rs-low') as HTMLInputElement;
+  const num = document.getElementById('rs-num') as HTMLInputElement;
+  const sym = document.getElementById('rs-sym') as HTMLInputElement;
+  const dash = document.getElementById('rs-dash') as HTMLInputElement;
+  const custom = document.getElementById('rs-custom') as HTMLInputElement;
+  const bulk = document.getElementById('rs-bulk') as HTMLInputElement;
+  const list = document.getElementById('rs-list') as HTMLTextAreaElement;
+  const ent = document.getElementById('rs-entropy')!;
+
+  function pool(): string {
+    if (custom.value.trim()) return custom.value;
+    let p = '';
+    if (up.checked) p += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (low.checked) p += 'abcdefghijklmnopqrstuvwxyz';
+    if (num.checked) p += '0123456789';
+    if (sym.checked) p += '!@#$%^&*()';
+    if (dash.checked) p += '-_';
+    return p;
+  }
+  function one(): string {
+    const p = pool(); if (!p) return '';
+    const length = Math.min(256, Math.max(1, parseInt(lenEl.value || '16', 10)));
+    const arr = new Uint32Array(length); crypto.getRandomValues(arr);
+    let s = ''; for (let i = 0; i < length; i++) s += p[arr[i] % p.length];
+    return s;
+  }
+  function generate() {
+    const p = pool();
+    if (!p) { out.value = ''; list.hidden = true; ent.textContent = 'Enable at least one set'; return; }
+    const length = Math.min(256, Math.max(1, parseInt(lenEl.value || '16', 10)));
+    const bits = length * Math.log2(p.length);
+    ent.textContent = `${p.length}-character alphabet · ${Math.round(bits)} bits of entropy`;
+    const n = Math.min(500, Math.max(1, parseInt(bulk.value || '1', 10)));
+    if (n === 1) { out.value = one(); list.hidden = true; }
+    else {
+      const arr: string[] = []; for (let i = 0; i < n; i++) arr.push(one());
+      out.value = arr[0]; list.value = arr.join('\n'); list.hidden = false;
+    }
+  }
+  gen.addEventListener('click', generate);
+  [lenEl, up, low, num, sym, dash, custom, bulk].forEach(el => el.addEventListener('input', generate));
+  async function doCopy() {
+    const txt = !list.hidden ? list.value : out.value;
+    if (!txt) return;
+    await navigator.clipboard.writeText(txt);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copied</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copy'; delete copy.dataset.copied; }, 1400);
+  }
+  copy.addEventListener('click', doCopy);
+  generate();
+</script>

@@ -1,0 +1,287 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Interview Questions Generator | Genfy';
+const description = 'Bank of interview questions by area: engineering, design, marketing, sales, general. Filter by level and type (technical, behavioral, situational).';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'For interviewer or candidate?', acceptedAnswer: { '@type': 'Answer', text: 'Both. As interviewer, it helps build a structured guide. As candidate, you can practice before the real interview.' } },
+    { '@type': 'Question', name: 'What types of questions?', acceptedAnswer: { '@type': 'Answer', text: 'Technical (specific skills), behavioral (past situations, STAR format), situational (hypothetical scenarios) and motivational.' } },
+    { '@type': 'Question', name: 'How does it differ by level?', acceptedAnswer: { '@type': 'Answer', text: 'Junior: more about knowledge and motivation. Mid: technical/behavioral balance. Senior: leadership, hard decisions, conflict management.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Work" title="Interview Questions Generator"
+    intro="Question bank by area and level. Useful to prepare interviews as interviewer or candidate. Mixes technical, behavioral and situational questions.">
+
+    <div slot="tool" class="iq">
+      <div class="iq-row">
+        <div>
+          <label for="iq-area">Area</label>
+          <select id="iq-area">
+            <option value="engineering">Engineering / Software</option>
+            <option value="design">Design / UX</option>
+            <option value="marketing">Marketing</option>
+            <option value="sales">Sales</option>
+            <option value="general">General</option>
+          </select>
+        </div>
+        <div>
+          <label for="iq-level">Level</label>
+          <select id="iq-level">
+            <option value="junior">Junior</option>
+            <option value="mid">Mid</option>
+            <option value="senior">Senior</option>
+          </select>
+        </div>
+      </div>
+      <div class="iq-row">
+        <div>
+          <label for="iq-type">Type</label>
+          <select id="iq-type">
+            <option value="all">Mix</option>
+            <option value="tech">Technical</option>
+            <option value="behavioral">Behavioral</option>
+            <option value="situational">Situational</option>
+          </select>
+        </div>
+        <div>
+          <label for="iq-amount">Amount</label>
+          <input id="iq-amount" type="number" value="8" min="1" max="20" />
+        </div>
+      </div>
+      <button id="iq-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="iq-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="iq-out" rows="14" readonly style="margin-top:1rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>How to design an effective interview</h2>
+      <p>
+        A useful interview blends four question types. <strong>Technical</strong> questions
+        check whether the person can do the job. <strong>Behavioral</strong> ("tell me about a
+        time when…") measures how they act in real situations. <strong>Situational</strong>
+        ("what would you do if…") tests reasoning. <strong>Motivational</strong> understands
+        the why. An interview made of only tech hires capable but misaligned people; one made
+        of only motivation hires enthusiasm without skill. Mix them.
+      </p>
+
+      <h2>The STAR method for behavioral questions</h2>
+      <p>
+        For "tell me about a conflict with a coworker"-style questions, ask candidates to
+        answer in STAR format: Situation (context), Task (what they had to do), Action (what
+        they specifically did), Result (what happened). If the answer jumps straight to "it
+        all worked out", they're acting — they didn't act. If they can detail each step with
+        data, they're telling something real.
+      </p>
+
+      <h2>How it varies by level</h2>
+      <ul>
+        <li><strong>Junior.</strong> Focus on basic knowledge, learning attitude, study cases. "How did you learn X?", "Which project are you proudest of?"</li>
+        <li><strong>Mid.</strong> Balance between technical and behavioral. "Tell me about a project you led", "How do you manage priorities when everything is urgent?"</li>
+        <li><strong>Senior.</strong> Hard decisions, leadership, mentorship, conflict resolution, vision. "Tell me about a decision you made without full information", "How do you handle an underperforming peer?"</li>
+      </ul>
+
+      <h2>For candidates: how to prepare</h2>
+      <ol>
+        <li><strong>List your 5 best stories.</strong> Rehearse each in STAR format.</li>
+        <li><strong>Identify your 5 worst professional moments.</strong> How you answer "tell me about a failure" separates top candidates from the rest.</li>
+        <li><strong>Practice out loud.</strong> Saying it in your head doesn't count: pronunciation changes everything.</li>
+        <li><strong>Research the company.</strong> 30 minutes on the website, 15 on the interviewer's LinkedIn, 15 on recent social. Enough to ask 2 sharp questions at the end.</li>
+        <li><strong>Prepare three questions for them.</strong> One about the role, one about the team, one about the company.</li>
+      </ol>
+
+      <h2>For interviewers: common mistakes</h2>
+      <ul>
+        <li><strong>Asking the same questions to everyone.</strong> Adapt to the resume. An interview isn't a checklist.</li>
+        <li><strong>Talking more than the candidate.</strong> If you cross 30% of the time, you're selling, not interviewing.</li>
+        <li><strong>Asking about personal life.</strong> Age, kids, family plans — illegal in many jurisdictions and bad practice everywhere.</li>
+        <li><strong>Trusting one interview.</strong> Three interviews with three people reduce individual bias.</li>
+        <li><strong>Not taking notes.</strong> After 5 interviews you confuse them. Capture verbatim quotes.</li>
+      </ul>
+
+      <h2>Questions we don't recommend</h2>
+      <p>
+        "What's your biggest weakness?" has been answered so many times that almost no one
+        gives a sincere reply. Better: "What area did you specifically focus on improving in
+        the last year?" — more concrete and revealing. Another to avoid: "Where do you see
+        yourself in 5 years?" — invites canned answers. Swap for "Which skill do you want to
+        develop next year?" or "What kind of work would you like to be doing in 2 years?"
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Who is it for?</summary><p>Interviewers building guides and candidates practicing.</p></details>
+      <details><summary>What types?</summary><p>Technical, behavioral (STAR), situational and motivational.</p></details>
+      <details><summary>Variation by level?</summary><p>Junior: knowledge. Mid: balance. Senior: leadership and hard decisions.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .iq-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .iq-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  type Q = { t: 'tech'|'behavioral'|'situational'; q: string };
+  const BANK: Record<string, Record<string, Q[]>> = {
+    engineering: {
+      junior: [
+        { t: 'tech', q: 'What\'s the difference between let, const and var in JavaScript?' },
+        { t: 'tech', q: 'Explain how a for loop differs from map or forEach.' },
+        { t: 'tech', q: 'What is a REST API and how does it differ from GraphQL?' },
+        { t: 'tech', q: 'If a page is loading slowly, how do you start debugging?' },
+        { t: 'behavioral', q: 'Tell me about a technical project you\'re proud of.' },
+        { t: 'behavioral', q: 'How do you learn a new language or framework?' },
+        { t: 'situational', q: 'If you\'re assigned a task and don\'t know the solution, what do you do first?' },
+      ],
+      mid: [
+        { t: 'tech', q: 'Explain a client-server architecture you\'ve implemented.' },
+        { t: 'tech', q: 'How would you handle a memory leak in production?' },
+        { t: 'tech', q: 'When would you choose a relational DB over NoSQL and vice versa?' },
+        { t: 'tech', q: 'Design a caching system for a heavily queried API.' },
+        { t: 'behavioral', q: 'Tell me about a time you fought for a technical decision.' },
+        { t: 'behavioral', q: 'How did your team find a bug that tests didn\'t catch? What changed after?' },
+        { t: 'situational', q: 'If your tech lead asks for something you know is a bad idea, how do you handle it?' },
+      ],
+      senior: [
+        { t: 'tech', q: 'Design a system that processes 1 million events per minute.' },
+        { t: 'tech', q: 'How do you balance feature delivery vs. tech debt in a team of 8 engineers?' },
+        { t: 'tech', q: 'Explain an architectural decision you made and got wrong. What would you do differently?' },
+        { t: 'behavioral', q: 'Tell me about a case where you mentored a junior and the mentorship failed.' },
+        { t: 'behavioral', q: 'How did you handle a conflict between two senior engineers with opposing visions?' },
+        { t: 'situational', q: 'If the CEO pushes an impossible deadline, how do you respond without losing the team?' },
+        { t: 'situational', q: 'How would you decide between rewriting a legacy system vs. evolving it gradually?' },
+      ],
+    },
+    design: {
+      junior: [
+        { t: 'tech', q: 'What tools do you use and why (Figma, Sketch, Adobe XD)?' },
+        { t: 'tech', q: 'What is a design system and what is it for?' },
+        { t: 'tech', q: 'Show me a recent case where you used research to inform a design decision.' },
+        { t: 'behavioral', q: 'What was the toughest feedback you received on your design? What did you do?' },
+        { t: 'behavioral', q: 'Tell me about a project where you learned more than expected.' },
+        { t: 'situational', q: 'If a client wants something you know is bad UX, how do you respond?' },
+      ],
+      mid: [
+        { t: 'tech', q: 'Walk me through your design process from brief to delivery.' },
+        { t: 'tech', q: 'How do you measure if a design worked after launch?' },
+        { t: 'tech', q: 'How do you collaborate with product and engineering during the design phase?' },
+        { t: 'behavioral', q: 'Tell me about an iteration that completely changed after real data.' },
+        { t: 'behavioral', q: 'How do you defend your design to a stakeholder who doesn\'t get UX?' },
+        { t: 'situational', q: 'If your best design can\'t be implemented due to tech constraints, what do you do?' },
+      ],
+      senior: [
+        { t: 'tech', q: 'Design the architecture of a design system for a company with 5 products.' },
+        { t: 'tech', q: 'How do you scale design quality in a team of 10 designers?' },
+        { t: 'behavioral', q: 'Tell me about an unpopular design decision that turned out right.' },
+        { t: 'behavioral', q: 'How do you mentor designers coming from agency into product?' },
+        { t: 'situational', q: 'If you had to start a design system from scratch today, what would you change from what you saw before?' },
+        { t: 'situational', q: 'If product and design have diverging visions, how do you resolve it without losing ground?' },
+      ],
+    },
+    marketing: {
+      junior: [
+        { t: 'tech', q: 'What digital marketing metrics do you know and how are they connected?' },
+        { t: 'tech', q: 'Difference between organic SEO, SEM and paid social.' },
+        { t: 'behavioral', q: 'Tell me about a campaign you organized — wins and what you\'d improve.' },
+        { t: 'behavioral', q: 'How do you learn about new audiences?' },
+        { t: 'situational', q: 'If a campaign is underperforming, how do you decide adjustments?' },
+      ],
+      mid: [
+        { t: 'tech', q: 'How do you build a funnel from awareness to conversion?' },
+        { t: 'tech', q: 'What are CAC and LTV, and how have you calculated them before?' },
+        { t: 'behavioral', q: 'Tell me about a case where you aligned marketing with product.' },
+        { t: 'behavioral', q: 'How do you handle constrained budgets and multiple requests?' },
+        { t: 'situational', q: 'If the CFO asks you to cut 30% of budget without dropping results, what do you do?' },
+      ],
+      senior: [
+        { t: 'tech', q: 'How would you build a marketing strategy for a product in a new category?' },
+        { t: 'tech', q: 'Define how you balance brand vs. performance in an annual budget.' },
+        { t: 'behavioral', q: 'Tell me about a strategic decision you got wrong. What did you learn?' },
+        { t: 'behavioral', q: 'How do you manage a team of 8+ across creative, paid, content and ops?' },
+        { t: 'situational', q: 'If the CEO pushes a campaign you know won\'t work, how do you handle it?' },
+      ],
+    },
+    sales: {
+      junior: [
+        { t: 'tech', q: 'Are you familiar with any CRM (Salesforce, HubSpot)? How did you use it?' },
+        { t: 'behavioral', q: 'Tell me about a sale you lost and why.' },
+        { t: 'behavioral', q: 'How do you handle a "no" from a customer?' },
+        { t: 'situational', q: 'If a customer asks for a discount you can\'t authorize, what do you say?' },
+      ],
+      mid: [
+        { t: 'tech', q: 'Walk me through your current pipeline and how you organize it.' },
+        { t: 'tech', q: 'How do you identify a hot lead vs. a warm one?' },
+        { t: 'behavioral', q: 'Tell me about a difficult negotiation you won.' },
+        { t: 'situational', q: 'If a key client threatens to leave for a competitor, what are your first three moves?' },
+      ],
+      senior: [
+        { t: 'tech', q: 'How would you build a sales team from scratch for a B2B product?' },
+        { t: 'behavioral', q: 'Tell me about restructuring a territory or team where impact was measurable.' },
+        { t: 'situational', q: 'If your team misses quota two quarters in a row, what\'s your first decision?' },
+      ],
+    },
+    general: {
+      junior: [
+        { t: 'behavioral', q: 'Why are you specifically interested in this company?' },
+        { t: 'behavioral', q: 'Tell me about a time you got hard feedback and what you did with it.' },
+        { t: 'situational', q: 'If you\'re given two priorities that seem equally urgent, how do you decide?' },
+        { t: 'behavioral', q: 'What did you learn at your last job that you want to bring to this one?' },
+      ],
+      mid: [
+        { t: 'behavioral', q: 'Tell me about a conflict with a coworker and how it was resolved.' },
+        { t: 'behavioral', q: 'How do you organize your week when many things are in motion?' },
+        { t: 'situational', q: 'If your manager gives you a direction you disagree with, how do you respond?' },
+        { t: 'behavioral', q: 'Tell me about a hard professional decision you made in the last 6 months.' },
+      ],
+      senior: [
+        { t: 'behavioral', q: 'Tell me about a time you had to fire or let someone go. How did you handle it?' },
+        { t: 'behavioral', q: 'How has your leadership changed between your first senior role and today?' },
+        { t: 'situational', q: 'If your team is exhausted and the company asks for more, how do you balance it?' },
+        { t: 'behavioral', q: 'Tell me about a decision made without full information that turned out well.' },
+      ],
+    },
+  };
+
+  const areaEl = document.getElementById('iq-area') as HTMLSelectElement;
+  const levelEl = document.getElementById('iq-level') as HTMLSelectElement;
+  const typeEl = document.getElementById('iq-type') as HTMLSelectElement;
+  const amountEl = document.getElementById('iq-amount') as HTMLInputElement;
+  const out = document.getElementById('iq-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('iq-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('iq-copy') as HTMLButtonElement;
+
+  function pickIdx(n: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return i[0] % n; }
+
+  function generate() {
+    const set = (BANK[areaEl.value] || BANK.general)[levelEl.value] || [];
+    const filt = typeEl.value === 'all' ? set : set.filter(q => {
+      if (typeEl.value === 'tech') return q.t === 'tech';
+      if (typeEl.value === 'behavioral') return q.t === 'behavioral';
+      if (typeEl.value === 'situational') return q.t === 'situational';
+      return true;
+    });
+    const pool = filt.length ? filt : set;
+    const n = Math.min(parseInt(amountEl.value, 10) || 8, pool.length);
+    const used = new Set<number>(); const arr: string[] = [];
+    while (arr.length < n) {
+      const i = pickIdx(pool.length);
+      if (!used.has(i)) { used.add(i); arr.push(`${arr.length + 1}. ${pool[i].q}`); }
+    }
+    out.value = arr.join('\n\n');
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

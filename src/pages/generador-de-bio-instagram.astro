@@ -1,0 +1,160 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de bio para Instagram gratis | Genfy';
+const description = 'Generá una bio para Instagram con estructura clara: rol, propuesta, ubicación y CTA. Hasta 150 caracteres optimizados para conversión, no para verse bonito.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuántos caracteres permite la bio de Instagram?', acceptedAnswer: { '@type': 'Answer', text: '150 caracteres. Cuenta espacios, emojis y saltos de línea. Cada carácter pesa: una bio bien estructurada usa entre 110 y 145.' } },
+    { '@type': 'Question', name: '¿Qué tiene que tener una buena bio?', acceptedAnswer: { '@type': 'Answer', text: 'Rol o propuesta de valor en la primera línea, beneficio para el lector, prueba o autoridad, ubicación si aplica, y un CTA claro hacia el link.' } },
+    { '@type': 'Question', name: '¿Conviene usar emojis?', acceptedAnswer: { '@type': 'Answer', text: 'Con moderación. Uno o dos emojis funcionan como separadores visuales. Más de tres distrae y baja la percepción de profesionalismo.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de bio para Instagram"
+    intro="Cargá rol, propuesta y CTA. Genfy te devuelve 4 versiones de bio optimizadas para conversión, dentro de los 150 caracteres permitidos.">
+
+    <div slot="tool" class="ib">
+      <label for="ib-role">Rol o categoría</label>
+      <input id="ib-role" type="text" placeholder="Coach de finanzas, Diseñadora UX..." value="Coach de finanzas" />
+
+      <label for="ib-prop" style="margin-top:1rem">Propuesta (qué hacés por tu audiencia)</label>
+      <input id="ib-prop" type="text" placeholder="Ayudo a freelancers a invertir mejor..." value="Ayudo a freelancers a ahorrar e invertir" />
+
+      <label for="ib-proof" style="margin-top:1rem">Prueba o autoridad (opcional)</label>
+      <input id="ib-proof" type="text" placeholder="ex-Galicia, +1.000 alumnos..." value="+5.000 alumnos" />
+
+      <label for="ib-loc" style="margin-top:1rem">Ubicación (opcional)</label>
+      <input id="ib-loc" type="text" placeholder="Buenos Aires" value="Buenos Aires" />
+
+      <label for="ib-cta" style="margin-top:1rem">CTA (qué querés que hagan)</label>
+      <input id="ib-cta" type="text" placeholder="Curso gratis abajo" value="Curso gratis abajo" />
+
+      <button id="ib-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 4 versiones</button>
+
+      <div id="ib-out" class="ib-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué la bio de Instagram pesa más de lo que parece</h2>
+      <p>
+        La bio es lo único que ve alguien que llega a tu perfil sin conocerte. Decide en menos de 3 segundos si te sigue, te ignora o se va. Los 150 caracteres que tenés son uno de los activos de marketing con mejor relación esfuerzo/impacto que existen — y la mayoría los usa para una frase poética que no comunica nada.
+      </p>
+      <p>
+        Una bio que convierte hace cuatro cosas en orden: dice quién sos, qué hacés por la persona que llega, da una razón para creer (autoridad o prueba), y empuja al siguiente paso (link, DM, perfil específico).
+      </p>
+
+      <h2>La estructura de cuatro líneas que rinde</h2>
+      <ol>
+        <li><strong>Línea 1 — Rol + propuesta:</strong> "Coach de finanzas. Ayudo a freelancers a ahorrar e invertir."</li>
+        <li><strong>Línea 2 — Prueba o autoridad:</strong> "+5.000 alumnos | ex-Banco X."</li>
+        <li><strong>Línea 3 — Ubicación o público específico (si aplica):</strong> "Buenos Aires y LATAM."</li>
+        <li><strong>Línea 4 — CTA hacia el link:</strong> "Curso gratis ↓"</li>
+      </ol>
+      <p>
+        Cuatro líneas, 110-145 caracteres totales, separadas por saltos de línea. Funciona porque el ojo escanea de arriba abajo y cada línea responde una pregunta distinta.
+      </p>
+
+      <h2>Errores típicos que matan la conversión</h2>
+      <ul>
+        <li><strong>Frases poéticas vacías:</strong> "Vivir, soñar, crear" — no comunica nada y desperdicia 22 caracteres.</li>
+        <li><strong>Solo emojis:</strong> dificulta la lectura, baja la percepción profesional.</li>
+        <li><strong>Lista de hashtags en la bio:</strong> los hashtags en la bio no aportan al alcance.</li>
+        <li><strong>No tener CTA al link:</strong> si tenés un link en bio, decile a la gente qué encuentra ahí.</li>
+        <li><strong>Listas de credenciales sin foco:</strong> "MBA en X, CEO de Y, Speaker en Z, Founder de W" — la persona que llega no sabe qué hacés.</li>
+      </ul>
+
+      <h2>Cómo escribir una primera línea que enganche</h2>
+      <p>
+        La primera línea es la única que la gente lee con seguridad. Tiene que cumplir dos cosas: identificar tu rol (para que sepan en qué columna ponerte) y mostrar una propuesta accionable (qué obtienen siguiéndote). Comparemos:
+      </p>
+      <ul>
+        <li>"Diseñadora UX apasionada por crear experiencias significativas." — Vacío. Adjetivo + sustantivo abstracto.</li>
+        <li>"Diseñadora UX. Convierto webs aburridas en flujos claros." — Concreta. Promesa específica.</li>
+      </ul>
+      <p>
+        La diferencia es brutal: la segunda da contexto, problema y solución en 13 palabras. La primera no comunica nada utilizable.
+      </p>
+
+      <h2>Cómo usar emojis sin sobrecargar</h2>
+      <p>
+        Los emojis funcionan como separadores visuales o anclas semánticas. Reglas prácticas:
+      </p>
+      <ol>
+        <li>Máximo 2-3 emojis en total.</li>
+        <li>Que tengan función: ↓ apunta al link, 📍 indica ubicación, ✨ separa secciones.</li>
+        <li>Evitá emojis genéricos sin contexto: 🌸💕✨🌿 son ruido visual sin significado.</li>
+        <li>Para B2B, profesional o financiero: 1 o cero emojis. Para creator, lifestyle, fitness: 2-3 con criterio.</li>
+      </ol>
+
+      <h2>El link en la bio: cómo aprovecharlo</h2>
+      <p>
+        Tenés un solo link, y vale más de lo que parece. Tres patrones que funcionan:
+      </p>
+      <ul>
+        <li><strong>Link directo a oferta:</strong> si tenés un curso, producto o newsletter, mandá directo. Mejor conversión.</li>
+        <li><strong>Linktree o equivalente:</strong> útil si tenés 4+ destinos relevantes. Costo: 1 click adicional.</li>
+        <li><strong>Landing propia:</strong> mejor de los tres. Página simple con tu propuesta, 2-3 CTAs y favicon propia. Da más control y datos.</li>
+      </ul>
+
+      <h2>Cuándo y cómo actualizar la bio</h2>
+      <p>
+        Cada vez que cambies tu oferta principal, lances algo nuevo o quieras cambiar el ángulo de tu cuenta. Una bio actualizada cada 2-3 meses está bien. Más frecuente es ruidoso para los seguidores; menos es síntoma de que no estás iterando.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántos caracteres?</summary><p>150, contando espacios, emojis y saltos de línea. Sweet spot: 110-145.</p></details>
+      <details><summary>¿Qué tiene que tener?</summary><p>Rol/propuesta, prueba o autoridad, ubicación si aplica, y CTA al link.</p></details>
+      <details><summary>¿Emojis sí o no?</summary><p>Sí, máximo 2-3 con función. Más distrae y baja profesionalismo.</p></details>
+      <details><summary>¿Linktree o link directo?</summary><p>Link directo si tenés una oferta principal. Linktree si tenés 4+ destinos. Landing propia es lo ideal.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ib-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .ib-bio { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; white-space: pre-wrap; }
+  .ib-bio:hover { border-color: var(--accent); }
+  .ib-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const role = document.getElementById('ib-role') as HTMLInputElement;
+  const prop = document.getElementById('ib-prop') as HTMLInputElement;
+  const proof = document.getElementById('ib-proof') as HTMLInputElement;
+  const loc = document.getElementById('ib-loc') as HTMLInputElement;
+  const cta = document.getElementById('ib-cta') as HTMLInputElement;
+  const gen = document.getElementById('ib-gen') as HTMLButtonElement;
+  const out = document.getElementById('ib-out')!;
+
+  function generate() {
+    const R = role.value.trim() || 'Coach';
+    const P = prop.value.trim() || 'Ayudo a personas a crecer';
+    const Pr = proof.value.trim();
+    const L = loc.value.trim();
+    const C = cta.value.trim() || 'Más info abajo';
+
+    const v1 = `${R}. ${P}.\n${Pr ? Pr + '. ' : ''}${L ? '📍 ' + L : ''}\n↓ ${C}`;
+    const v2 = `${R}.\n${P}.\n${Pr ? '✨ ' + Pr : ''}\n${C} ↓`;
+    const v3 = `${P}.\n${R}${L ? ' · ' + L : ''}.\n${Pr ? Pr + '.' : ''}\n→ ${C}`;
+    const v4 = `→ ${R}\n→ ${P}\n${Pr ? '→ ' + Pr : ''}\n${C} ↓`;
+
+    out.innerHTML = '';
+    [v1, v2, v3, v4].forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'ib-bio';
+      el.title = 'Click para copiar';
+      const len = b.length;
+      el.innerHTML = b.replace(/\n/g, '<br>') + `<div class="ib-meta">v${i+1} · ${len}/150 caracteres</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copiada'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

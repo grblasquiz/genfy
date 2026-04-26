@@ -1,0 +1,185 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Fake Email Generator for Testing | Genfy';
+const description = 'Generate fake emails using standard test domains (example.com, test.com). For fixtures, forms and QA. No mail is delivered to anyone.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Do these emails receive mail?', acceptedAnswer: { '@type': 'Answer', text: 'No. The example.com, example.net and example.org domains are reserved by IANA precisely for documentation and testing. Any email to those domains bounces.' } },
+    { '@type': 'Question', name: 'How is this different from a temporary email?', acceptedAnswer: { '@type': 'Answer', text: 'A real temporary email (10minutemail, mailinator) does receive mail for a while. These fake emails receive nothing — they are just strings in email format for forms and databases.' } },
+    { '@type': 'Question', name: 'When to use example.com vs test.com?', acceptedAnswer: { '@type': 'Answer', text: 'example.com is IANA-guaranteed. test.com is not a reserved TLD and could be registered by someone. For critical fixtures, prefer example.com.' } },
+    { '@type': 'Question', name: 'Do they pass email validation?', acceptedAnswer: { '@type': 'Answer', text: 'They pass format validation (regex). Existence checks (DNS lookup, MX record) reject them. That is expected: you want test data, not emails that receive spam.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Data / Testing"
+    title="Fake Email Generator"
+    intro="Synthetic email addresses for fixtures, tests and prototypes. They use the IANA-reserved documentation domains, so no one accidentally receives email."
+  >
+    <div slot="tool" class="email-tool">
+      <div class="email-controls">
+        <div>
+          <label for="email-style">Local-part style</label>
+          <select id="email-style">
+            <option value="name" selected>Based on name</option>
+            <option value="random">Random</option>
+            <option value="user">user1, user2…</option>
+          </select>
+        </div>
+        <div>
+          <label for="email-domain">Domain</label>
+          <select id="email-domain">
+            <option value="example.com" selected>example.com</option>
+            <option value="example.net">example.net</option>
+            <option value="example.org">example.org</option>
+            <option value="test.local">test.local</option>
+            <option value="invalid">.invalid (reserved TLD)</option>
+          </select>
+        </div>
+        <div>
+          <label for="email-count">Quantity</label>
+          <input id="email-count" type="number" min="1" max="200" value="10" />
+        </div>
+      </div>
+
+      <button id="email-gen" class="btn btn-primary" type="button">Generate emails</button>
+
+      <textarea id="email-out" class="mono" rows="14" readonly></textarea>
+      <button id="email-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy all</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>Why .example domains exist</h2>
+      <p>
+        IANA (Internet Assigned Numbers Authority) reserves <code>example.com</code>,
+        <code>example.net</code> and <code>example.org</code> in RFC 2606 specifically for
+        documentation, examples and cases where you don't want to point at a real domain. That
+        guarantees two things: nobody can register them (they won't end up pointing somewhere
+        else), and email servers reject them automatically.
+      </p>
+      <p>
+        The same applies to reserved TLDs like <code>.test</code>, <code>.invalid</code>,
+        <code>.localhost</code> and <code>.local</code>: none resolve on the public internet,
+        so they're safe for synthetic data.
+      </p>
+
+      <h2>Difference from real temporary emails</h2>
+      <p>
+        A real temporary email (Mailinator, 10minutemail, Tempmail) is a public inbox: anyone
+        can read incoming messages. Useful for signing up to services without giving out your
+        real email, but not for automated testing: you don't control delivery timing and they
+        aren't private.
+      </p>
+      <p>
+        Generated emails here are different: <strong>they receive nothing</strong>. They're
+        valid-format strings without a mailbox behind them. If your test sends mail to one,
+        it bounces. That's what you want in CI/CD: no external system is affected by your test
+        suite.
+      </p>
+
+      <h2>When to use each local-part style</h2>
+      <ul>
+        <li><strong>Name-based</strong> (<code>john.smith@example.com</code>): when you want the email to "look" real, tied to a name. Useful for demos and screenshots.</li>
+        <li><strong>Random</strong> (<code>kx7p2qm9@example.com</code>): when you only need uniqueness and volume. Useful for fixtures testing long lists.</li>
+        <li><strong>user1, user2…</strong>: when order and traceability matter. Useful for tests where you reference "the fourth user" unambiguously.</li>
+      </ul>
+
+      <h2>Common email-data testing mistakes</h2>
+      <ol>
+        <li><strong>Using your real email.</strong> If a test run skips a guard and sends mail, you fill your inbox or, worse, spam a teammate.</li>
+        <li><strong>Using domains that look fake but are real.</strong> <code>fake.com</code>, <code>nope.com</code> and many others are registered. Stick with <code>example.com</code>.</li>
+        <li><strong>Hard-coding one email everywhere.</strong> If all test users share an email, you don't catch uniqueness bugs in the database.</li>
+        <li><strong>Not flagging emails as synthetic.</strong> An <code>is_test_data</code> flag makes cleanup easy.</li>
+      </ol>
+
+      <h2>Sending best practices in non-prod</h2>
+      <p>Even with synthetic emails, harden against accidental sends:</p>
+      <ul>
+        <li>In dev and staging, configure a <strong>mail catcher</strong> (MailHog, Mailtrap, mailpit). Captures everything the system "sends" without delivering it.</li>
+        <li>Whitelist only internal addresses on the sender outside production.</li>
+        <li>Implement a <strong>kill switch</strong>: an env var that disables real sending in any non-production environment.</li>
+        <li>Log every send attempt so leaks surface fast.</li>
+      </ul>
+
+      <h2>Email validation to keep in mind</h2>
+      <p>
+        The generator emits emails with valid format (<code>name@domain.tld</code>). Different
+        libraries validate differently:
+      </p>
+      <ul>
+        <li><strong>Simple regex</strong> (HTML5, frontend): accepts them all.</li>
+        <li><strong>Strict RFC 5321</strong>: accepts.</li>
+        <li><strong>DNS/MX lookup validation</strong>: <code>example.com</code> has MX (pointing to itself), but the specific address doesn't exist. Some libraries reject.</li>
+        <li><strong>SMTP validation</strong>: bounces.</li>
+      </ul>
+      <p>
+        For tests where you need an email "that passes deep validation", use a real disposable
+        email. For everything else, these synthetic ones are enough.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Do they receive mail?</summary><p>No. example.* domains are IANA-reserved and all mail bounces.</p></details>
+      <details><summary>Different from temporary email?</summary><p>A temporary email does receive mail for a few minutes. These don't — they're just valid-format strings.</p></details>
+      <details><summary>example.com vs test.com?</summary><p>example.com is IANA-reserved. test.com isn't and could be registered. Stick with example.com for critical fixtures.</p></details>
+      <details><summary>Do they pass validation?</summary><p>Format yes. DNS/MX or SMTP reject them, which is desirable.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .email-controls { display: grid; grid-template-columns: 1.3fr 1fr 0.8fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .email-controls { grid-template-columns: 1fr; } }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; margin: 1rem 0 0.75rem; }
+</style>
+
+<script>
+  const FIRST = ['john','mary','james','patricia','robert','jennifer','michael','linda','william','elizabeth','david','barbara','richard','susan','joseph','jessica','thomas','sarah','charles','karen','christopher','lisa','daniel','nancy','matthew','emily','anthony','margaret'];
+  const LAST = ['smith','johnson','williams','brown','jones','miller','davis','wilson','anderson','thomas','taylor','moore','martin','jackson','thompson','white','harris','clark','lewis','walker'];
+  const style = document.getElementById('email-style') as HTMLSelectElement;
+  const domain = document.getElementById('email-domain') as HTMLSelectElement;
+  const count = document.getElementById('email-count') as HTMLInputElement;
+  const out = document.getElementById('email-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('email-gen') as HTMLButtonElement;
+  const copy = document.getElementById('email-copy') as HTMLButtonElement;
+  function pick<T>(arr: T[]): T { const a = new Uint32Array(1); crypto.getRandomValues(a); return arr[a[0] % arr.length]; }
+  function rand(min: number, max: number): number { const a = new Uint32Array(1); crypto.getRandomValues(a); return min + (a[0] % (max - min + 1)); }
+  function randStr(n: number): string { const c = 'abcdefghijklmnopqrstuvwxyz0123456789'; const a = new Uint32Array(n); crypto.getRandomValues(a); let s = ''; for (let i = 0; i < n; i++) s += c[a[i] % c.length]; return s; }
+  function generate() {
+    const n = Math.min(200, Math.max(1, parseInt(count.value || '10', 10)));
+    const d = domain.value === 'invalid' ? 'test.invalid' : domain.value;
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) {
+      let local = '';
+      if (style.value === 'name') {
+        const f = pick<string>(FIRST), l = pick<string>(LAST);
+        const variants = [`${f}.${l}`, `${f}${l}`, `${f}_${l}`, `${f[0]}${l}`, `${f}.${l}${rand(10,99)}`];
+        local = pick(variants);
+      } else if (style.value === 'random') {
+        local = randStr(rand(7, 11));
+      } else {
+        local = `user${i+1}`;
+      }
+      lines.push(`${local}@${d}`);
+    }
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', generate);
+  [style, domain, count].forEach(el => el.addEventListener('change', generate));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copied</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copy all'; delete copy.dataset.copied; }, 1400);
+  });
+  generate();
+</script>

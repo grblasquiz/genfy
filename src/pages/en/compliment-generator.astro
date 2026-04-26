@@ -1,0 +1,166 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Compliment Generator | Genfy';
+const description = 'Sincere, professional compliments to recognize coworkers, friends and team members. Specific, never generic. Ready to copy.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a compliment generator for?', acceptedAnswer: { '@type': 'Answer', text: 'It helps with the awkward moment of "I want to recognize someone but don\'t know how to start". It gives you a starting point you can personalize.' } },
+    { '@type': 'Question', name: 'Are these professional or personal?', acceptedAnswer: { '@type': 'Answer', text: 'Three modes: work, friend and general. All sincere and appropriate — no flirty lines or empty clichés.' } },
+    { '@type': 'Question', name: 'Why not just say "good job"?', acceptedAnswer: { '@type': 'Answer', text: 'Generic recognition doesn\'t feel real. A specific compliment ("the way you opened the report today made everyone catch up fast") is ten times more memorable.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Inspiration" title="Compliment Generator"
+    intro="Sincere recognition for your team, your friends or someone who needs to hear something kind today. Use it as a starting point — then make it yours.">
+
+    <div slot="tool" class="cp">
+      <div>
+        <label for="cp-mode">Context</label>
+        <select id="cp-mode">
+          <option value="work">Work</option>
+          <option value="friend">Friend</option>
+          <option value="general">General</option>
+        </select>
+      </div>
+      <div class="cp-card">
+        <p id="cp-text" class="cp-quote">—</p>
+      </div>
+      <button id="cp-gen" class="btn btn-primary" type="button">Another compliment</button>
+      <button id="cp-copy" class="btn btn-ghost" type="button">Copy</button>
+    </div>
+
+    <div slot="content">
+      <h2>Why specific compliments hit harder</h2>
+      <p>
+        "Good job" is polite. "Your edit on the second paragraph of that email changed how the
+        client read the proposal" is memorable. The difference is specificity: when you name
+        something concrete, you prove you were paying attention — and that signal beats the
+        praise itself. The compliments here are designed as starting points; you add the
+        detail.
+      </p>
+
+      <h2>Three contexts, three tones</h2>
+      <ul>
+        <li><strong>Work.</strong> Professional recognition for 1:1s, retros, public Slack messages or written feedback.</li>
+        <li><strong>Friend.</strong> Something warm to send a friend who's been off lately, or someone you haven't told you appreciate them.</li>
+        <li><strong>General.</strong> Neutral phrases for a card, a gift note or a short dedication.</li>
+      </ul>
+
+      <h2>How to personalize</h2>
+      <p>
+        Take the generic compliment and add a concrete event: "Your patience with difficult
+        clients inspires the team — especially how you handled Thursday's call with García."
+        That last line is what turns a copied message into something the person will save.
+        Without specificity, the compliment sounds algorithmic.
+      </p>
+
+      <h2>When and how to deliver them</h2>
+      <p>
+        Private recognition (a message, an email, a voice note) usually lands harder than public
+        praise: people re-read it. Public posts work better to reinforce behaviors in front of
+        the team. When in doubt, send both. And don't wait for a "special occasion" — the
+        random Tuesday compliment is often the one that stays the longest.
+      </p>
+
+      <h2>Common mistakes to avoid</h2>
+      <ul>
+        <li><strong>Conditional praise.</strong> "You're great when..." filters recognition behind a requirement. Drop the condition.</li>
+        <li><strong>Comparisons.</strong> "You're better than X" praises one by lowering another. Doesn't add value.</li>
+        <li><strong>Compliment wrapped in a request.</strong> Don't mix "good job" with "I need you to do Y". Send two separate messages.</li>
+        <li><strong>Only commenting on appearance.</strong> In professional contexts, avoid physical remarks. Focus on skills, decisions, effort or impact.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is it for?</summary><p>To unblock the moment of needing to recognize someone and not knowing how to start.</p></details>
+      <details><summary>Professional or personal?</summary><p>Three modes: work, friend and general. All sincere and appropriate.</p></details>
+      <details><summary>Why not "good job"?</summary><p>Generic praise doesn't feel real. Specific praise hits ten times harder.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cp .cp-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin: 1rem 0; }
+  .cp-quote { font-size: 1.15rem; line-height: 1.6; color: var(--text); margin: 0; }
+</style>
+
+<script>
+  const WORK = [
+    "Your work ethic raises the bar for the whole team.",
+    "The way you explain complex topics helps everyone catch up faster.",
+    "Your patience with difficult clients inspires the people around you.",
+    "Spotting what you spot in the data is not something you can teach — you have it.",
+    "Every project gets sharper the moment you join it.",
+    "Your composure under pressure lets the team breathe.",
+    "You make invisible work visible. That is real leadership.",
+    "Your attention to detail catches problems most people would miss.",
+    "You're the one who finishes what you start — and that's rare.",
+    "The clarity of your writing saves hours of meetings.",
+    "Your honesty in giving constructive feedback makes us better.",
+    "When you lead a meeting, the team walks out aligned.",
+    "Your technical curiosity is contagious.",
+    "The way you listen before responding makes a real difference.",
+    "You turn vague problems into actionable plans — that's a talent.",
+    "Your willingness to mentor newer teammates does not go unnoticed.",
+    "You're the kind of coworker everyone hopes to have on their team.",
+    "Your ability to prioritize under chaos is on another level.",
+    "You handle the boring work with the same rigor as the exciting work.",
+    "Your ideas in brainstorms unblock everyone else.",
+  ];
+  const FRIEND = [
+    "Talking to you always leaves me with more energy than before.",
+    "Your way of listening without judging is a gift.",
+    "You're the kind of friend who shows up without being asked.",
+    "You make me a better person just by comparing how you handle things.",
+    "Your humor on heavy days is worth more than you think.",
+    "I trust your judgment for things I wouldn't tell anyone else.",
+    "I admire the consistency between what you say and what you do.",
+    "I love how you genuinely cheer for your friends' wins.",
+    "Your loyalty isn't loud — it's steady. That's the most valuable kind.",
+    "I feel more like myself when I'm around you.",
+    "The way you take care of the people you love is something to learn from.",
+    "You're generous in ways most people don't notice.",
+    "Your capacity to keep growing at this stage of life motivates me.",
+    "Few people speak their mind with as much clarity as you do.",
+    "You have a unique way of making people feel seen.",
+  ];
+  const GEN = [
+    "The world is better with you in it.",
+    "Your presence makes a difference, even when no one says it.",
+    "You're stronger than the hard moment is making you feel.",
+    "What you're building matters.",
+    "Your effort is seen, even when it feels invisible.",
+    "You have something people notice without being able to explain.",
+    "The way you keep going after a setback is inspiring.",
+    "You are deserving of the good things on their way.",
+    "Your patience with yourself is an act of courage.",
+    "There are people better cared for because you exist.",
+    "Your way of thinking adds something the world needs.",
+    "You're proof that kind people are not weak.",
+  ];
+
+  const modeEl = document.getElementById('cp-mode') as HTMLSelectElement;
+  const text = document.getElementById('cp-text') as HTMLElement;
+  const genBtn = document.getElementById('cp-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('cp-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const m = modeEl.value;
+    const list = m === 'work' ? WORK : m === 'friend' ? FRIEND : GEN;
+    text.textContent = pick(list);
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!text.textContent) return;
+    await navigator.clipboard.writeText(text.textContent);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

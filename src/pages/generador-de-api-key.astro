@@ -1,0 +1,190 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de API key segura | Genfy';
+const description = 'Generá API keys aleatorias con prefijo personalizado, longitud configurable y formato hexadecimal o base62. Útil para desarrollo, testing y producción.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué longitud debe tener una API key?', acceptedAnswer: { '@type': 'Answer', text: 'Para producción, 32 caracteres hex (128 bits) es el mínimo razonable. 48-64 caracteres es lo más usado en proveedores serios como Stripe o GitHub.' } },
+    { '@type': 'Question', name: '¿Qué prefijo conviene usar?', acceptedAnswer: { '@type': 'Answer', text: 'Un prefijo corto identifica el entorno y el producto: sk_live_ para producción, sk_test_ para sandbox, pk_ para claves públicas. Facilita el escaneo en logs y la rotación.' } },
+    { '@type': 'Question', name: '¿Hex o base62?', acceptedAnswer: { '@type': 'Answer', text: 'Hex (a-f, 0-9) es seguro y fácil de inspeccionar. Base62 (A-Z, a-z, 0-9) compacta más entropía en menos caracteres y es habitual en URLs.' } },
+    { '@type': 'Question', name: '¿Es seguro generarlas en el navegador?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, siempre que uses crypto.getRandomValues como hace este generador. Igual recordá que la API key vale lo que vale tu sistema de almacenamiento: nunca la dejes en código fuente público.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Seguridad"
+    title="Generador de API key"
+    intro="Generá tokens de acceso aleatorios para tu API. Configurá prefijo, longitud y alfabeto. Todo se calcula en tu navegador con crypto.getRandomValues."
+  >
+    <div slot="tool" class="key-tool">
+      <div class="key-output">
+        <input id="key-out" class="mono" readonly aria-label="API key generada" />
+        <button id="key-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+
+      <div class="key-grid">
+        <div>
+          <label for="key-prefix">Prefijo</label>
+          <input id="key-prefix" type="text" value="sk_live_" maxlength="20" />
+        </div>
+        <div>
+          <label for="key-len">Longitud</label>
+          <input id="key-len" type="number" value="32" min="16" max="128" />
+        </div>
+        <div>
+          <label for="key-fmt">Formato</label>
+          <select id="key-fmt">
+            <option value="hex">Hexadecimal</option>
+            <option value="base62" selected>Base62 (alfanumérico)</option>
+            <option value="base64url">Base64 URL-safe</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="key-gen" class="btn btn-primary" type="button">Generar API key</button>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es una API key y cuándo usarla</h2>
+      <p>
+        Una API key es una cadena secreta que un cliente envía en cada pedido HTTP para
+        autenticarse. A diferencia de un usuario y contraseña, está pensada para autenticar
+        servicios, no personas. Aparece en cabeceras como <code>Authorization: Bearer ...</code>
+        o en parámetros tipo <code>?api_key=...</code>.
+      </p>
+      <p>
+        Las API keys son ideales para integraciones servidor-a-servidor (un script que llama a
+        Stripe, un cron que sube archivos a S3) y para herramientas de testing. No son la mejor
+        opción para clientes finales: ahí conviene OAuth o JWT firmados.
+      </p>
+
+      <h2>Cómo generamos la clave</h2>
+      <p>
+        Cada caracter sale de <code>crypto.getRandomValues</code>, la API criptográfica del
+        navegador, mapeado al alfabeto que elijas:
+      </p>
+      <ul>
+        <li><strong>Hexadecimal:</strong> 16 caracteres posibles (0-9, a-f). 4 bits por caracter.</li>
+        <li><strong>Base62:</strong> 62 caracteres (A-Z, a-z, 0-9). Aproximadamente 5,95 bits por caracter.</li>
+        <li><strong>Base64 URL-safe:</strong> 64 caracteres (incluye <code>-</code> y <code>_</code>). 6 bits por caracter, ideal para tokens en URLs sin escapado.</li>
+      </ul>
+
+      <h2>Recomendaciones de longitud y entropía</h2>
+      <p>
+        Una API key debería tener al menos 128 bits de entropía. Eso se traduce en:
+      </p>
+      <ol>
+        <li>32 caracteres en hex.</li>
+        <li>22 caracteres en base62.</li>
+        <li>22 caracteres en base64url.</li>
+      </ol>
+      <p>
+        Para tokens críticos (claves maestras, claves de webhook con privilegios amplios) llevá
+        la entropía a 256 bits: 64 hex, 43 base62 o 43 base64url. Stripe usa 32+ caracteres
+        random tras el prefijo. GitHub usa 40 caracteres hexadecimales en sus PATs.
+      </p>
+
+      <h2>Buenas prácticas con prefijos</h2>
+      <p>
+        Un prefijo legible facilita la operación día a día. Convenciones que funcionan:
+      </p>
+      <ul>
+        <li><code>sk_</code> para "secret key" (uso solo desde servidor).</li>
+        <li><code>pk_</code> para "publishable key" (puede aparecer en frontend).</li>
+        <li><code>_live_</code> y <code>_test_</code> para distinguir producción de sandbox.</li>
+        <li>Prefijo de producto: <code>ghp_</code> (GitHub PAT), <code>xoxb-</code> (Slack bot).</li>
+      </ul>
+      <p>
+        El prefijo también permite que herramientas como GitGuardian o TruffleHog detecten claves
+        filtradas en repositorios públicos. Si tu prefijo es genérico, esos escáneres no lo van a
+        encontrar.
+      </p>
+
+      <h2>Almacenamiento y rotación</h2>
+      <p>
+        Generar la clave es solo el principio. Para que sea segura en serio:
+      </p>
+      <ul>
+        <li><strong>Nunca la commitees al repositorio.</strong> Usá variables de entorno o un secret manager (AWS Secrets Manager, Vault, Doppler, 1Password CLI).</li>
+        <li><strong>Almacená un hash, no el texto plano.</strong> Si tu base de datos se filtra, las claves siguen siendo inservibles. Mostrá la clave una sola vez, cuando se crea.</li>
+        <li><strong>Rotá periódicamente.</strong> Cada 90 días para producción, inmediato si sospechás filtración.</li>
+        <li><strong>Limitá scopes.</strong> Una clave con permisos mínimos limita el daño si se filtra.</li>
+        <li><strong>Logueá uso.</strong> IP, user agent y endpoint te permiten detectar abuso temprano.</li>
+      </ul>
+
+      <h2>Errores frecuentes</h2>
+      <p>
+        Vemos los mismos problemas una y otra vez en proyectos reales:
+      </p>
+      <ul>
+        <li>API keys en el bundle de JavaScript del frontend.</li>
+        <li>Claves "temporales" en Slack que nunca se rotan.</li>
+        <li>Una sola clave compartida por todo el equipo.</li>
+        <li>Sin expiración, sin último uso registrado, sin forma de saber si está activa.</li>
+        <li>Reutilización entre entornos (la clave de test funciona en producción).</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué longitud debe tener una API key?</summary><p>Mínimo 128 bits de entropía: 32 hex o 22 caracteres base62. Para claves críticas, 256 bits (64 hex o 43 base62).</p></details>
+      <details><summary>¿Qué prefijo conviene usar?</summary><p>Uno corto que identifique entorno y producto: sk_live_, sk_test_, pk_. Ayuda al escaneo en logs y a la rotación.</p></details>
+      <details><summary>¿Hex o base62?</summary><p>Hex es legible y fácil de inspeccionar. Base62 compacta más entropía en menos caracteres y se ve mejor en URLs. Las dos opciones son seguras.</p></details>
+      <details><summary>¿Es seguro generarlas en el navegador?</summary><p>Sí, usamos crypto.getRandomValues, igual de robusto que el lado servidor. Nada se envía a Genfy.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .key-output { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .key-output input { font-family: var(--font-mono); font-size: 0.9375rem; background: var(--bg-inset); }
+  .key-output .btn { min-width: 92px; }
+  .key-grid { display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 1rem; margin-bottom: 1.25rem; }
+  @media (max-width: 600px) { .key-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const out = document.getElementById('key-out') as HTMLInputElement;
+  const copy = document.getElementById('key-copy') as HTMLButtonElement;
+  const gen = document.getElementById('key-gen') as HTMLButtonElement;
+  const prefix = document.getElementById('key-prefix') as HTMLInputElement;
+  const lenEl = document.getElementById('key-len') as HTMLInputElement;
+  const fmt = document.getElementById('key-fmt') as HTMLSelectElement;
+
+  const HEX = '0123456789abcdef';
+  const B62 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+
+  function randString(alphabet: string, length: number): string {
+    const arr = new Uint32Array(length);
+    crypto.getRandomValues(arr);
+    let out = '';
+    for (let i = 0; i < length; i++) out += alphabet[arr[i] % alphabet.length];
+    return out;
+  }
+  function generate() {
+    const length = Math.min(128, Math.max(8, parseInt(lenEl.value || '32', 10)));
+    let alpha = HEX;
+    if (fmt.value === 'base62') alpha = B62;
+    if (fmt.value === 'base64url') alpha = B64;
+    out.value = (prefix.value || '') + randString(alpha, length);
+  }
+  gen.addEventListener('click', generate);
+  [prefix, lenEl, fmt].forEach(el => el.addEventListener('change', generate));
+  async function doCopy() {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copiado</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copiar'; delete copy.dataset.copied; }, 1400);
+  }
+  copy.addEventListener('click', doCopy);
+  generate();
+</script>

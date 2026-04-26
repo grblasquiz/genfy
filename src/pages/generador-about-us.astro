@@ -1,0 +1,157 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de párrafo "Sobre nosotros" gratis | Genfy';
+const description = 'Generá un párrafo "Sobre nosotros" claro, humano y con foco. Listo para landing, footer, propuesta comercial o pitch deck.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuánto debe medir un párrafo Sobre nosotros?', acceptedAnswer: { '@type': 'Answer', text: 'Para una landing, 60 a 120 palabras es el rango ideal. Para un brief comercial, hasta 200. Más largo y la gente deja de leer.' } },
+    { '@type': 'Question', name: '¿Qué tiene que incluir?', acceptedAnswer: { '@type': 'Answer', text: 'Quiénes somos (nombre, año, contexto), qué hacemos, para quién, qué nos diferencia y cómo nos pueden contactar. En ese orden.' } },
+    { '@type': 'Question', name: '¿En qué tono lo escribo?', acceptedAnswer: { '@type': 'Answer', text: 'Que coincida con el resto de tu marca. Si tu marca es cercana, hablá en primera persona. Si es institucional, mantené tercera persona. La consistencia importa más que el estilo en sí.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Branding" title="Generador de párrafo Sobre nosotros"
+    intro="Cargá nombre, año, qué hacés, para quién y qué te diferencia. Genfy arma un párrafo natural, en el tono que elijas, listo para landing, footer o brief comercial.">
+
+    <div slot="tool" class="au">
+      <label for="au-brand">Nombre de la empresa</label>
+      <input id="au-brand" type="text" placeholder="Aurum" value="Aurum" />
+
+      <label for="au-year" style="margin-top:1rem">Año de fundación</label>
+      <input id="au-year" type="text" placeholder="2022" value="2022" />
+
+      <label for="au-what" style="margin-top:1rem">¿Qué hacen?</label>
+      <input id="au-what" type="text" placeholder="software de gestión..." value="herramientas de facturación electrónica" />
+
+      <label for="au-who" style="margin-top:1rem">¿Para quién?</label>
+      <input id="au-who" type="text" placeholder="freelancers, pymes..." value="freelancers de LATAM" />
+
+      <label for="au-diff" style="margin-top:1rem">¿Qué los diferencia?</label>
+      <input id="au-diff" type="text" placeholder="sin papeles, en un click..." value="sin contadores ni planillas" />
+
+      <label for="au-tone" style="margin-top:1rem">Tono</label>
+      <select id="au-tone">
+        <option value="warm">Cálido (primera persona, cercano)</option>
+        <option value="formal">Institucional (tercera persona)</option>
+        <option value="founder">Voz del fundador</option>
+      </select>
+
+      <button id="au-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar párrafo</button>
+
+      <div id="au-out" class="au-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué un buen párrafo "Sobre nosotros" pesa más de lo que parece</h2>
+      <p>
+        En la mayoría de las webs el "Sobre nosotros" es la segunda página más visitada después del home. La gente quiere saber con quién está tratando antes de comprar o contratar. Sin embargo, la mayoría de las empresas pone ahí un texto vacío, lleno de adjetivos genéricos: "líderes en el mercado, comprometidos con la calidad y la innovación". Ese párrafo no agrega valor. Es ruido.
+      </p>
+      <p>
+        Un buen "Sobre nosotros" hace cuatro cosas en menos de 120 palabras: contesta quién sos, qué hacés, para quién y por qué te elegirían. No habla de la empresa: habla del cliente y cómo lo ayudás.
+      </p>
+
+      <h2>La estructura de cuatro bloques</h2>
+      <ol>
+        <li><strong>Identidad y origen:</strong> "Aurum nació en 2022..." — una sola oración que ubique al lector.</li>
+        <li><strong>Qué hacés:</strong> "...desarrollamos herramientas de facturación electrónica..."</li>
+        <li><strong>Para quién:</strong> "...para freelancers de LATAM..."</li>
+        <li><strong>Diferencial:</strong> "...que necesitan facturar sin contadores ni planillas." Cierra con la promesa concreta.</li>
+      </ol>
+      <p>
+        Bien armado, el párrafo cabe en 60-120 palabras y tiene ritmo: oración corta, oración media, oración corta. La gente lee dos oraciones, decide si seguir, y la tercera es la que cierra.
+      </p>
+
+      <h2>Errores típicos que vacían el párrafo</h2>
+      <ul>
+        <li><strong>Adjetivos vacíos:</strong> "líderes", "innovadores", "comprometidos". No identifican.</li>
+        <li><strong>Cronología sin foco:</strong> "Fundada en 1992 por Juan Pérez como una pyme familiar..." A nadie le importa el árbol genealógico.</li>
+        <li><strong>Hablar de uno mismo en lugar del cliente:</strong> "Nuestra misión es ser los mejores..." Mejor: "Ayudamos a freelancers a..."</li>
+        <li><strong>Tecnicismos:</strong> "Implementamos soluciones omnicanal de hiperautomatización..." Si tu cliente no usa esas palabras, sacalas.</li>
+        <li><strong>Largura excesiva:</strong> 400 palabras de "Sobre nosotros" no se leen. 120 sí.</li>
+      </ul>
+
+      <h2>Tono: primera, tercera o voz del fundador</h2>
+      <p>
+        Hay tres tonos válidos según el tipo de empresa:
+      </p>
+      <ul>
+        <li><strong>Primera persona plural ("nosotros"):</strong> cálida, directa. Funciona para SaaS, agencias, startups. "Creemos que..."</li>
+        <li><strong>Tercera persona ("Aurum es..."):</strong> institucional, formal. Funciona para finanzas, legal, salud, gobierno.</li>
+        <li><strong>Voz del fundador ("Cuando lancé Aurum en 2022..."):</strong> personal, narrativa. Funciona para empresas con un fundador-cara, especialmente en consulting o creator economy.</li>
+      </ul>
+      <p>
+        La elección importa menos que la consistencia: si elegís "nosotros" en el "Sobre nosotros", todo el resto del sitio debería usarlo.
+      </p>
+
+      <h2>Dónde mostrarlo y dónde no</h2>
+      <p>
+        El párrafo va completo en la página /about (o /sobre-nosotros). Una versión más corta — 30 a 50 palabras — va en el footer del sitio para SEO y para reforzar identidad. Una versión más larga — 200 a 300 palabras — va en la propuesta comercial o pitch deck. La misma información, tres extensiones distintas según el contexto.
+      </p>
+
+      <h2>Cómo testear si tu párrafo funciona</h2>
+      <ol>
+        <li>Mostralo a 3 personas que no conocen la empresa. Pediles que digan, en una oración, qué hace.</li>
+        <li>Si lo cuentan distinto, falta foco. Si lo cuentan igual, funciona.</li>
+        <li>Pediles que mencionen una palabra que recuerden 2 minutos después. Si nadie recuerda, está vacío.</li>
+        <li>Eliminá adjetivos uno por uno: si la oración sigue funcionando, sobraban.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuánto debe medir?</summary><p>Landing: 60-120 palabras. Brief comercial: hasta 200. Más largo y la gente deja de leer.</p></details>
+      <details><summary>¿Qué tiene que incluir?</summary><p>Quiénes somos, qué hacemos, para quién, qué nos diferencia y cómo contactarnos.</p></details>
+      <details><summary>¿En qué tono escribirlo?</summary><p>El que mantenga consistencia con el resto de la marca. Lo importante es que sea el mismo en todos lados.</p></details>
+      <details><summary>¿Hay que poner foto del equipo?</summary><p>Ayuda a humanizar, pero solo si las fotos son buenas. Una foto de stock genérica resta más de lo que suma.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .au-out { margin-top: 1.25rem; }
+  .au-item { padding: 1.25rem 1.5rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.65; white-space: pre-wrap; }
+  .au-item:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const brand = document.getElementById('au-brand') as HTMLInputElement;
+  const year = document.getElementById('au-year') as HTMLInputElement;
+  const what = document.getElementById('au-what') as HTMLInputElement;
+  const who = document.getElementById('au-who') as HTMLInputElement;
+  const diff = document.getElementById('au-diff') as HTMLInputElement;
+  const tone = document.getElementById('au-tone') as HTMLSelectElement;
+  const gen = document.getElementById('au-gen') as HTMLButtonElement;
+  const out = document.getElementById('au-out')!;
+
+  function generate() {
+    const B = brand.value.trim() || 'Aurum';
+    const Y = year.value.trim() || '2022';
+    const W = what.value.trim() || 'herramientas digitales';
+    const Wh = who.value.trim() || 'pequeñas empresas';
+    const D = diff.value.trim() || 'con menos fricción';
+    const t = tone.value;
+
+    let p = '';
+    if (t === 'warm') {
+      p = `En ${B} construimos ${W} para ${Wh}. Empezamos en ${Y} con una idea simple: que cualquiera pudiera resolver lo suyo ${D}, sin perder horas en procesos viejos. Hoy seguimos con esa premisa: producto claro, soporte cercano y mejoras constantes.\n\nSi querés saber más sobre cómo ${B} puede ayudarte, escribinos. Respondemos rápido y con personas, no con bots.`;
+    } else if (t === 'formal') {
+      p = `${B} es una empresa fundada en ${Y} dedicada a ${W} para ${Wh}. La compañía se diferencia ${D}, ofreciendo soluciones diseñadas para responder a las exigencias actuales del mercado.\n\nDesde su fundación, ${B} ha trabajado con foco en la transparencia, la calidad técnica y el acompañamiento profesional, posicionándose como una alternativa confiable en su categoría.`;
+    } else {
+      p = `Cuando lancé ${B} en ${Y}, la pregunta era simple: ¿por qué ${Wh} todavía pierde tantas horas en algo que debería ser obvio? La respuesta era clara — faltaba una herramienta pensada desde la práctica, no desde el manual.\n\nHoy ${B} es eso: ${W} ${D}. Hecho por gente que entiende el dolor desde adentro.`;
+    }
+
+    out.innerHTML = '';
+    const el = document.createElement('div');
+    el.className = 'au-item';
+    el.textContent = p;
+    el.title = 'Click para copiar';
+    el.addEventListener('click', () => { navigator.clipboard.writeText(p); const orig = el.textContent; el.textContent = '✓ Copiado'; setTimeout(() => el.textContent = orig!, 800); });
+    out.appendChild(el);
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

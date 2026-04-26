@@ -1,0 +1,244 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de datos de prueba CSV y JSON | Genfy';
+const description = 'Generá datasets sintéticos con nombres, emails, direcciones y más. Exportá como CSV o JSON listo para importar a tu base de datos o tests.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve este generador?', acceptedAnswer: { '@type': 'Answer', text: 'Para crear datasets de prueba listos para importar: CSV para Excel/SQL, JSON para fixtures de tests o seeds de bases de datos.' } },
+    { '@type': 'Question', name: '¿Cuántas filas puedo generar?', acceptedAnswer: { '@type': 'Answer', text: 'Hasta 1.000 por sesión para no saturar el navegador. Para volúmenes mayores, usá scripts con Faker en Node o Python.' } },
+    { '@type': 'Question', name: '¿Los datos son únicos?', acceptedAnswer: { '@type': 'Answer', text: 'Las combinaciones se generan al azar. Para volúmenes pequeños podés tener duplicados ocasionales (mismo nombre + email). Validá unicidad si tu test lo requiere.' } },
+    { '@type': 'Question', name: '¿Puedo importar el CSV directo a SQL?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Usamos comillas dobles para campos con coma y escape RFC 4180. Compatible con PostgreSQL COPY, MySQL LOAD DATA INFILE y BigQuery.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Datos / Testing"
+    title="Generador de datos de prueba (CSV / JSON)"
+    intro="Creá un dataset sintético con las columnas que elijas y exportalo como CSV o JSON. Útil para seeds de bases de datos, fixtures de tests y prototipos."
+  >
+    <div slot="tool" class="csv-tool">
+      <label>Columnas a incluir</label>
+      <div class="csv-cols">
+        <label><input type="checkbox" value="id" checked /> id</label>
+        <label><input type="checkbox" value="firstName" checked /> firstName</label>
+        <label><input type="checkbox" value="lastName" checked /> lastName</label>
+        <label><input type="checkbox" value="email" checked /> email</label>
+        <label><input type="checkbox" value="phone" /> phone</label>
+        <label><input type="checkbox" value="city" /> city</label>
+        <label><input type="checkbox" value="country" /> country</label>
+        <label><input type="checkbox" value="age" /> age</label>
+        <label><input type="checkbox" value="signupDate" /> signupDate</label>
+        <label><input type="checkbox" value="isActive" /> isActive</label>
+        <label><input type="checkbox" value="balance" /> balance</label>
+      </div>
+
+      <div class="csv-controls">
+        <div>
+          <label for="csv-rows">Filas</label>
+          <input id="csv-rows" type="number" min="1" max="1000" value="50" />
+        </div>
+        <div>
+          <label for="csv-format">Formato</label>
+          <select id="csv-format">
+            <option value="csv" selected>CSV</option>
+            <option value="json">JSON</option>
+            <option value="json-lines">JSON Lines</option>
+            <option value="sql">SQL INSERT</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="csv-gen" class="btn btn-primary" type="button">Generar dataset</button>
+
+      <textarea id="csv-out" class="mono" rows="14" readonly></textarea>
+      <div class="csv-actions">
+        <button id="csv-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+        <button id="csv-dl" class="btn btn-ghost" type="button">Descargar archivo</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué genera este tool</h2>
+      <p>
+        Datasets sintéticos con las columnas que elijas, listos para importar:
+      </p>
+      <ul>
+        <li><strong>id</strong>: entero secuencial.</li>
+        <li><strong>firstName, lastName</strong>: combinaciones realistas.</li>
+        <li><strong>email</strong>: derivado del nombre, en dominio <code>example.com</code>.</li>
+        <li><strong>phone</strong>: formato E.164.</li>
+        <li><strong>city, country</strong>: ciudades y países plausibles.</li>
+        <li><strong>age</strong>: entero entre 18 y 75.</li>
+        <li><strong>signupDate</strong>: ISO 8601, dentro de los últimos 3 años.</li>
+        <li><strong>isActive</strong>: booleano (~80% true).</li>
+        <li><strong>balance</strong>: decimal con dos decimales, entre -500 y 5000.</li>
+      </ul>
+
+      <h2>Formatos de salida</h2>
+      <ol>
+        <li><strong>CSV.</strong> Compatible con Excel, Google Sheets y casi cualquier base de datos. Usamos UTF-8, separador coma y comillas dobles según RFC 4180.</li>
+        <li><strong>JSON.</strong> Array de objetos. Usalo para fixtures de tests JavaScript/Python, seeds, o consumir desde scripts.</li>
+        <li><strong>JSON Lines.</strong> Un objeto JSON por línea. Eficiente para procesar streams (jq, Spark, BigQuery import).</li>
+        <li><strong>SQL INSERT.</strong> Statements listos para pegar en un cliente SQL. Genera CREATE TABLE comentado para que ajustes el esquema.</li>
+      </ol>
+
+      <h2>Cómo importar a tu base de datos</h2>
+      <p>
+        Cada motor tiene su comando preferido para cargar CSV:
+      </p>
+      <ul>
+        <li><strong>PostgreSQL:</strong> <code>COPY usuarios FROM '/path/usuarios.csv' DELIMITER ',' CSV HEADER;</code></li>
+        <li><strong>MySQL:</strong> <code>LOAD DATA INFILE '/path/usuarios.csv' INTO TABLE usuarios FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;</code></li>
+        <li><strong>SQLite:</strong> <code>.mode csv</code> seguido de <code>.import usuarios.csv usuarios</code>.</li>
+        <li><strong>BigQuery:</strong> consola web o <code>bq load --source_format=CSV ...</code>.</li>
+        <li><strong>MongoDB:</strong> <code>mongoimport --type=json --file=usuarios.json --collection=usuarios</code>.</li>
+      </ul>
+
+      <h2>Tamaños recomendados de datasets</h2>
+      <p>
+        El tamaño correcto depende de qué probás:
+      </p>
+      <ol>
+        <li><strong>10-50 filas:</strong> tests funcionales, validación visual de tablas.</li>
+        <li><strong>100-500 filas:</strong> tests de paginación, búsquedas, ordenamientos.</li>
+        <li><strong>1.000-10.000 filas:</strong> tests de performance básica de consultas.</li>
+        <li><strong>10.000+ filas:</strong> tests de carga, índices, planes de ejecución. Para esos volúmenes, conviene un script con Faker.</li>
+      </ol>
+
+      <h2>Buenas prácticas con datos sintéticos</h2>
+      <ul>
+        <li><strong>Marcá la fuente.</strong> Una columna <code>source = 'synthetic'</code> permite filtrar los datos generados al limpiar la base.</li>
+        <li><strong>Reproducibilidad.</strong> Si necesitás regenerar el mismo dataset para CI, usá un seed fijo (este tool no lo soporta; usá Faker con seed para eso).</li>
+        <li><strong>No mezcles con producción.</strong> Mantené datasets sintéticos en bases distintas o tablas con prefijo <code>test_</code>.</li>
+        <li><strong>Versioná los fixtures.</strong> Si un dataset funciona bien para un test, commitealo al repo.</li>
+        <li><strong>Cuidado con las PII.</strong> Aún siendo sintéticos, ciertos datos pueden parecer personales. Documentá claramente que son falsos.</li>
+      </ul>
+
+      <h2>Cuándo usar Faker en lugar de este tool</h2>
+      <p>
+        Faker (en Node, Python, Ruby) está mejor para casos automatizados: generás dentro de
+        tu código, con seed para reproducibilidad, locale específico, y cantidad ilimitada.
+      </p>
+      <p>
+        Este generador gana cuando necesitás un dataset rápido sin tocar código: poblar
+        rápido una tabla en staging, mostrar una demo, hacer un mockup. La diferencia entre
+        "5 minutos sin escribir código" y "20 minutos integrando Faker".
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve?</summary><p>Para crear datasets listos para importar: CSV para Excel/SQL, JSON para fixtures de tests o seeds.</p></details>
+      <details><summary>¿Cuántas filas?</summary><p>Hasta 1.000 por sesión. Para volúmenes mayores, scripts con Faker.</p></details>
+      <details><summary>¿Son únicos los datos?</summary><p>Random. Para volúmenes pequeños puede haber duplicados ocasionales. Validá unicidad si es crítico.</p></details>
+      <details><summary>¿Importable a SQL?</summary><p>Sí. RFC 4180 con escape correcto. Compatible con PostgreSQL COPY, MySQL LOAD DATA y BigQuery.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .csv-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.5rem 1rem; margin-bottom: 1.25rem; padding: 1rem; background: var(--bg-inset); border-radius: var(--radius); }
+  .csv-cols label { display: flex; align-items: center; gap: 0.5rem; font-weight: 400; font-size: 0.9375rem; color: var(--text-soft); cursor: pointer; margin: 0; font-family: var(--font-mono); font-size: 0.8125rem; }
+  .csv-controls { display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.8125rem; background: var(--bg-inset); resize: vertical; margin: 1rem 0 0.75rem; }
+  .csv-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+</style>
+
+<script>
+  const FIRST = ['Juan','Maria','Carlos','Ana','Luis','Laura','Pedro','Sofia','Diego','Lucia','John','Mary','James','Sarah','Robert','Linda','Michael','Susan'];
+  const LAST = ['Garcia','Lopez','Smith','Johnson','Williams','Rodriguez','Gonzalez','Brown','Davis','Wilson'];
+  const CITY = [['Buenos Aires','Argentina'],['Madrid','Spain'],['Mexico City','Mexico'],['New York','USA'],['London','UK'],['Bogota','Colombia'],['Santiago','Chile'],['Lima','Peru'],['Berlin','Germany'],['Paris','France']];
+
+  const cols = document.querySelectorAll<HTMLInputElement>('.csv-cols input[type="checkbox"]');
+  const rowsEl = document.getElementById('csv-rows') as HTMLInputElement;
+  const fmt = document.getElementById('csv-format') as HTMLSelectElement;
+  const out = document.getElementById('csv-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('csv-gen') as HTMLButtonElement;
+  const copy = document.getElementById('csv-copy') as HTMLButtonElement;
+  const dl = document.getElementById('csv-dl') as HTMLButtonElement;
+
+  function pick<T>(arr: T[]): T { const a = new Uint32Array(1); crypto.getRandomValues(a); return arr[a[0] % arr.length]; }
+  function rand(min: number, max: number): number { const a = new Uint32Array(1); crypto.getRandomValues(a); return min + (a[0] % (max - min + 1)); }
+
+  function buildRow(i: number): Record<string, any> {
+    const fn = pick(FIRST), ln = pick(LAST);
+    const ct = pick(CITY);
+    const date = new Date(Date.now() - rand(0, 1095) * 86400000);
+    const row: Record<string, any> = {
+      id: i + 1,
+      firstName: fn,
+      lastName: ln,
+      email: `${fn.toLowerCase()}.${ln.toLowerCase()}${rand(1,99)}@example.com`,
+      phone: `+1${rand(200,999)}${rand(1000000,9999999)}`,
+      city: ct[0],
+      country: ct[1],
+      age: rand(18, 75),
+      signupDate: date.toISOString().slice(0, 10),
+      isActive: rand(1, 10) > 2,
+      balance: (rand(-50000, 500000) / 100).toFixed(2),
+    };
+    return row;
+  }
+  function selectedCols(): string[] {
+    const arr: string[] = [];
+    cols.forEach(c => { if (c.checked) arr.push(c.value); });
+    return arr;
+  }
+  function csvEscape(v: any): string {
+    const s = String(v);
+    if (/[",\n]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
+    return s;
+  }
+  function generate() {
+    const n = Math.min(1000, Math.max(1, parseInt(rowsEl.value || '50', 10)));
+    const sel = selectedCols();
+    if (!sel.length) { out.value = '/* Seleccioná al menos una columna */'; return; }
+    const rows: Record<string, any>[] = [];
+    for (let i = 0; i < n; i++) {
+      const r = buildRow(i);
+      const filtered: Record<string, any> = {};
+      sel.forEach(k => filtered[k] = r[k]);
+      rows.push(filtered);
+    }
+    if (fmt.value === 'csv') {
+      const head = sel.join(',');
+      const body = rows.map(r => sel.map(k => csvEscape(r[k])).join(',')).join('\n');
+      out.value = head + '\n' + body;
+    } else if (fmt.value === 'json') {
+      out.value = JSON.stringify(rows, null, 2);
+    } else if (fmt.value === 'json-lines') {
+      out.value = rows.map(r => JSON.stringify(r)).join('\n');
+    } else {
+      const tbl = 'usuarios';
+      const head = `-- CREATE TABLE ${tbl} (${sel.join(', ')});\n`;
+      const body = rows.map(r => `INSERT INTO ${tbl} (${sel.join(', ')}) VALUES (${sel.map(k => typeof r[k] === 'string' ? `'${String(r[k]).replace(/'/g, "''")}'` : r[k]).join(', ')});`).join('\n');
+      out.value = head + body;
+    }
+  }
+  gen.addEventListener('click', generate);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copiado</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copiar'; delete copy.dataset.copied; }, 1400);
+  });
+  dl.addEventListener('click', () => {
+    if (!out.value) return;
+    const ext = fmt.value === 'csv' ? 'csv' : fmt.value === 'sql' ? 'sql' : 'json';
+    const blob = new Blob([out.value], { type: 'text/plain;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `dataset.${ext}`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+  generate();
+</script>

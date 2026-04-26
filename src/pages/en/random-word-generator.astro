@@ -1,0 +1,151 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Random Word Generator | Genfy';
+const description = 'Generate random English words instantly. Great for games, creative writing, brainstorming, vocabulary practice and writing prompts.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a random word generator for?', acceptedAnswer: { '@type': 'Answer', text: 'Use it to break creative blocks, build writing prompts, play Pictionary or Scattergories, and design vocabulary or association exercises.' } },
+    { '@type': 'Question', name: 'How random are the words?', acceptedAnswer: { '@type': 'Answer', text: 'We use crypto.getRandomValues, the browser cryptographic generator. It is far more uniform than Math.random and has no predictable patterns.' } },
+    { '@type': 'Question', name: 'Can I filter by category?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — nouns, verbs, adjectives or all. You can also filter by word length to get short, medium or long words depending on your use case.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text / Words" title="Random Word Generator"
+    intro="Random English words to unlock your next idea: brainstorming, games, writing prompts and vocabulary practice.">
+
+    <div slot="tool" class="rw">
+      <div class="rw-row">
+        <div>
+          <label for="rw-amount">Amount</label>
+          <input id="rw-amount" type="number" min="1" max="50" value="5" />
+        </div>
+        <div>
+          <label for="rw-cat">Category</label>
+          <select id="rw-cat">
+            <option value="all">All</option>
+            <option value="noun">Nouns</option>
+            <option value="verb">Verbs</option>
+            <option value="adj">Adjectives</option>
+          </select>
+        </div>
+        <div>
+          <label for="rw-len">Length</label>
+          <select id="rw-len">
+            <option value="any">Any</option>
+            <option value="short">Short (3-5)</option>
+            <option value="med">Medium (6-8)</option>
+            <option value="long">Long (9+)</option>
+          </select>
+        </div>
+      </div>
+      <button id="rw-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="rw-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="rw-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why use random words to create</h2>
+      <p>
+        When you're stuck, your brain keeps falling into the same associations. An external word
+        — pulled at random — forces a new connection: if you're writing about marketing and
+        "window" appears, your brain tries to bridge the concepts and unexpected angles emerge.
+        It's the basis of Edward de Bono's "random stimulus" technique and Brian Eno's
+        Oblique Strategies.
+      </p>
+
+      <h2>Concrete uses for the generator</h2>
+      <ul>
+        <li><strong>Pictionary, charades and Scattergories.</strong> One word per turn, then go.</li>
+        <li><strong>Writing prompts.</strong> Three random words and a 200-word story that includes them.</li>
+        <li><strong>Creative brainstorming.</strong> Force connections between your problem and an unrelated concept.</li>
+        <li><strong>Language vocabulary.</strong> Generate words and translate or use them in sentences.</li>
+        <li><strong>Naming exploration.</strong> Add to your initial pool when searching for a brand name.</li>
+      </ul>
+
+      <h2>Nouns, verbs or adjectives</h2>
+      <p>
+        The category filter helps when you need a specific grammatical pattern: three nouns for a
+        title, a verb for a slogan like "Move", an adjective for a brand mood. If it doesn't
+        matter, leave it on "all" — the mix usually produces richer associations than a single
+        part of speech.
+      </p>
+
+      <h2>Length filter</h2>
+      <p>
+        Short words work better for fast games, hashtags and product names. Long words add
+        texture for literary prompts and pronunciation drills. If you're building flashcards or
+        example sentences, medium words (6-8 letters) are the sweet spot for learning without
+        frustration.
+      </p>
+
+      <h2>How to work with the output</h2>
+      <p>
+        A simple technique: generate 10 words, scan the list, and circle the 3 that catch your
+        attention without thinking. Those three are your prompt. Discard the rest. Quick,
+        emotional choices are more useful than trying to "pick well" — that's exactly what
+        randomness is meant to bypass.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is it for?</summary><p>To break creative blocks, play games, build writing prompts, vocabulary exercises and brainstorming.</p></details>
+      <details><summary>How random are the words?</summary><p>We use crypto.getRandomValues — far more uniform than Math.random and without predictable patterns.</p></details>
+      <details><summary>Can I pick a category?</summary><p>Yes: nouns, verbs, adjectives or all. You can also filter by word length.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const NOUNS = ["table","door","garden","window","road","city","mountain","river","book","computer","keyboard","chair","fan","notebook","pencil","kitchen","bathroom","hallway","staircase","ceiling","wall","floor","painting","mirror","clock","bed","blanket","pillow","dog","cat","horse","rabbit","tiger","bear","squirrel","wolf","lamb","bird","eagle","sparrow","bee","ant","butterfly","fly","fish","whale","dolphin","shark","crab","octopus","apple","orange","banana","melon","watermelon","strawberry","lemon","grape","pear","peach","plum","tomato","onion","garlic","potato","carrot","lettuce","spinach","rice","bread","cheese","milk","egg","meat","chicken","fish","pasta","soup","salad","dessert","ice cream","cake","cookie","chocolate","coffee","air","fire","earth","water","stone","sand","snow","ice","wind","cloud","thunder","rain","sun","light","shadow","heat","cold","silence","noise","music","song","dance","party","trip","work","school","office","factory","shop","market","street","avenue","square","park","bridge","ship","train","car","bicycle","plane","rocket","message","letter","envelope","stamp","paper","ink","pen","machine","engine","button","cable","screen","speaker","microphone","camera","photo","video","movie","story","tale","novel","poem","essay","word","phrase","paragraph","chapter","idea","dream","memory","hope","joy","sadness","fear","love","friendship","family","child","mother","father","grandparent","brother","cousin","friend","neighbor","client","boss","team","company","project","plan","goal","achievement","failure","success","challenge","problem","solution"];
+  const VERBS = ["run","walk","jump","swim","fly","read","write","sing","dance","laugh","cry","eat","drink","sleep","dream","think","create","build","break","fix","open","close","push","pull","carry","move","leave","take","give","receive","buy","sell","lend","pay","charge","save","spend","invest","earn","lose","play","work","study","teach","learn","explain","ask","answer","talk","listen","look","see","hear","smell","touch","feel","love","hate","fear","hope","need","want","can","know","meet","find","lose","search","hide","show","conceal","reveal","tell","add","subtract","measure","weigh","cut","join","separate","mix","cook","clean","tidy","decorate","paint","draw","photograph","film","record","edit","publish","share","send","receive","accept","reject","approve","deny","allow","forbid","command","obey","lead","follow","guide","plan","decide","choose"];
+  const ADJ = ["small","big","tall","short","wide","narrow","long","brief","thick","thin","light","heavy","fast","slow","strong","weak","hard","soft","smooth","rough","gentle","bumpy","clean","dirty","new","old","young","ancient","modern","fresh","hot","cold","warm","dry","damp","wet","clear","dark","bright","dim","colorful","neutral","cheerful","sad","brave","shy","kind","rude","polite","sincere","loyal","generous","stingy","creative","practical","curious","boring","funny","serious","calm","anxious","safe","dangerous","healthy","sick","tired","awake","hungry","full","rich","poor","expensive","cheap","useful","useless","easy","difficult","simple","complex","rare","common","unique","typical","famous","unknown","free","busy","quiet","loud","pleasant","annoying","comfortable","uncomfortable","open","closed","complete","empty","full","whole","broken","perfect"];
+
+  const amountEl = document.getElementById('rw-amount') as HTMLInputElement;
+  const catEl = document.getElementById('rw-cat') as HTMLSelectElement;
+  const lenEl = document.getElementById('rw-len') as HTMLSelectElement;
+  const out = document.getElementById('rw-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('rw-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('rw-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function pool() {
+    const c = catEl.value;
+    if (c === 'noun') return NOUNS;
+    if (c === 'verb') return VERBS;
+    if (c === 'adj') return ADJ;
+    return [...NOUNS, ...VERBS, ...ADJ];
+  }
+  function lenOk(w: string) {
+    const L = w.length; const f = lenEl.value;
+    if (f === 'short') return L <= 5;
+    if (f === 'med') return L >= 6 && L <= 8;
+    if (f === 'long') return L >= 9;
+    return true;
+  }
+  function generate() {
+    const n = Math.max(1, Math.min(50, parseInt(amountEl.value || '5', 10)));
+    const p = pool().filter(lenOk);
+    const list = p.length ? p : pool();
+    const arr: string[] = [];
+    for (let i = 0; i < n; i++) arr.push(pick(list));
+    out.value = arr.join('\n');
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

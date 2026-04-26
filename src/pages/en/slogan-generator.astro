@@ -1,0 +1,186 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Slogan Generator | Genfy';
+const description = 'Generate catchy slogans in seconds. Mix brand, benefit and tone and get 20+ slogan ideas ready for campaigns, websites or packaging.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good slogan?', acceptedAnswer: { '@type': 'Answer', text: 'Three to seven words, clear rhythm, a concrete benefit or promise, and instant comprehension. If it needs explanation, it does not work.' } },
+    { '@type': 'Question', name: 'Are slogan and tagline the same?', acceptedAnswer: { '@type': 'Answer', text: 'No. A slogan is campaign-specific and changes over time. A tagline lives next to the logo for years and captures the brand DNA.' } },
+    { '@type': 'Question', name: 'How long should a slogan be?', acceptedAnswer: { '@type': 'Answer', text: 'Three to seven words is the sweet spot for memorability. Longer dilutes; shorter often feels generic unless the brand is very strong.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Branding" title="Slogan Generator"
+    intro="Drop in your brand, the core benefit and the tone. Genfy combines rhythm, structure and promise to give you 20 slogans ready to validate.">
+
+    <div slot="tool" class="sg">
+      <label for="sg-brand">Brand</label>
+      <input id="sg-brand" type="text" placeholder="e.g. Aurum" value="Aurum" />
+
+      <label for="sg-benefit" style="margin-top:1rem">Benefit or promise (1-3 words)</label>
+      <input id="sg-benefit" type="text" placeholder="save time, sleep better..." value="sleep better" />
+
+      <label for="sg-tone" style="margin-top:1rem">Tone</label>
+      <select id="sg-tone">
+        <option value="confident">Confident and direct</option>
+        <option value="warm">Warm and human</option>
+        <option value="minimal">Minimal</option>
+        <option value="aspirational">Aspirational</option>
+      </select>
+
+      <button id="sg-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 slogans</button>
+
+      <div id="sg-out" class="sg-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Anatomy of a slogan that works</h2>
+      <p>
+        A slogan isn't a pretty sentence: it's verbal engineering. The ones that survive a decade share four traits: rhythm (the count of stressed syllables feels musical), a concrete promise (not "quality" but "in 30 minutes or it's free"), an active verb, and zero internal jargon.
+      </p>
+      <p>
+        Think "Just Do It", "Think Different", "Got Milk?". Three to five words, an imperative or invitation, and an emotional benefit anyone recognizes. None of them explain the product. All of them trigger a mental image.
+      </p>
+
+      <h2>The four structures that consistently work</h2>
+      <ul>
+        <li><strong>Imperative + benefit:</strong> "Save hours, not minutes." Works for SaaS, productivity and services.</li>
+        <li><strong>Promise with a number:</strong> "Your first invoice in 60 seconds." The number anchors credibility and communicates speed.</li>
+        <li><strong>Antithesis:</strong> "Less noise, more results." Creates contrast; the symmetry makes it memorable.</li>
+        <li><strong>Simple definition:</strong> "Email, without the effort." Useful when the product needs category positioning.</li>
+      </ul>
+
+      <h2>Mistakes that kill a slogan</h2>
+      <p>
+        The most common one is abstraction: "Innovation, quality and commitment" says nothing because anyone could sign it. Another is using words your customer doesn't use to describe the problem. If your customer says "drowning in email", your slogan should say "drowning", not "communication overload".
+      </p>
+      <p>
+        Avoid vague metaphors ("unlock your potential") and burned-out adjectives: revolutionary, unique, leading, premium. The moment you say it about yourself, it stops being true.
+      </p>
+
+      <h2>How to validate a slogan before printing it</h2>
+      <ol>
+        <li><strong>Bar test.</strong> Say it out loud to someone who doesn't know your brand. Do they repeat it back correctly? Do they get what you do?</li>
+        <li><strong>SERP test.</strong> Google it. If yours is identical to another's, that asset is taken.</li>
+        <li><strong>5-second test.</strong> Show it next to the logo for 5 seconds. Can the person recite it after?</li>
+        <li><strong>Translation test.</strong> Translate to Spanish and Portuguese if you plan to expand. If it loses charm, don't bet a campaign on it.</li>
+        <li><strong>Competitor test.</strong> Could a competitor sign it without changing anything? If yes, it's not yours.</li>
+      </ol>
+
+      <h2>Slogan, tagline, claim and headline</h2>
+      <p>
+        These are four different animals. The <strong>slogan</strong> is campaign-bound: it changes every 1-3 years. The <strong>tagline</strong> rides next to the logo for the brand's whole life. The <strong>claim</strong> is legal and functional: "100% organic cotton". The <strong>headline</strong> lives in a single piece (an ad, a landing). Mixing them up gives you a brand that changes identity every time the marketing team turns over.
+      </p>
+
+      <h2>When a slogan isn't what you need</h2>
+      <p>
+        If your product still lacks clear positioning or you're pre-launch, a slogan is premature. First define the pain you solve and for whom. The words come after. We've watched founders spend weeks on the slogan before they had a landing that converts — the right order is the opposite.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good slogan?</summary><p>Three to seven words, clear rhythm, a concrete promise and instant comprehension. If it needs explanation, it doesn't work.</p></details>
+      <details><summary>Are slogan and tagline the same?</summary><p>No. A slogan is campaign-specific and changes. A tagline lives with the logo for years and captures brand DNA.</p></details>
+      <details><summary>How long should a slogan be?</summary><p>Three to seven words is the sweet spot. Longer dilutes; shorter often feels generic.</p></details>
+      <details><summary>Can I trademark a slogan?</summary><p>Yes. In the US through the USPTO; in the UK through UKIPO; in the EU through EUIPO. The mark protects a specific commercial use, not the phrase in the abstract.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .sg-out { display: grid; grid-template-columns: 1fr; gap: 0.5rem; margin-top: 1.25rem; }
+  .sg-item { padding: 0.75rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; font-weight: 500; }
+  .sg-item:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const TPL = {
+    confident: [
+      '{B}, no fluff.',
+      'Make {b} simple.',
+      '{B}, seriously.',
+      'Built for {b}.',
+      '{Brand}: {b}, effortlessly.',
+      'The straight way to {b}.',
+      'Less friction, more {b}.',
+      '{B}. Period.',
+      'Engineered to {b}.',
+      'Start to {b} today.',
+    ],
+    warm: [
+      '{Brand} helps you {b}.',
+      'With you every step to {b}.',
+      'So {b} feels natural.',
+      'Your partner to {b}.',
+      'Made with care to {b}.',
+      'Right beside you when you want to {b}.',
+      '{B}, with you.',
+      'The human way to {b}.',
+      'For people who want to {b}.',
+      'Where {b} feels easy.',
+    ],
+    minimal: [
+      '{Brand}. {B}.',
+      'Just {b}.',
+      '{B}, nothing else.',
+      'The essentials to {b}.',
+      'Less, better: {b}.',
+      '{B}. That\'s it.',
+      'Simple. {B}.',
+      '{Brand} = {b}.',
+      'One way: {b}.',
+      'Only what you need to {b}.',
+    ],
+    aspirational: [
+      'For those who dare to {b}.',
+      'The standard for {b}.',
+      '{B} like never before.',
+      'A new chapter for {b}.',
+      'Where {b} begins.',
+      'Reimagining how to {b}.',
+      '{B}, elevated.',
+      'The next way to {b}.',
+      'Live it. Feel it. {B}.',
+      'Beyond {b}.',
+    ],
+  };
+
+  const brand = document.getElementById('sg-brand') as HTMLInputElement;
+  const benefit = document.getElementById('sg-benefit') as HTMLInputElement;
+  const tone = document.getElementById('sg-tone') as HTMLSelectElement;
+  const gen = document.getElementById('sg-gen') as HTMLButtonElement;
+  const out = document.getElementById('sg-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function generate() {
+    const Brand = brand.value.trim() || 'Brand';
+    const b = (benefit.value.trim() || 'move forward').toLowerCase();
+    const B = cap(b);
+    const list = TPL[tone.value as keyof typeof TPL];
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < Math.min(20, list.length) && attempts < 200) {
+      attempts++;
+      const t = pick(list);
+      set.add(t.replace(/\{Brand\}/g, Brand).replace(/\{B\}/g, B).replace(/\{b\}/g, b));
+    }
+    out.innerHTML = '';
+    [...set].forEach(s => {
+      const el = document.createElement('div');
+      el.className = 'sg-item';
+      el.textContent = s;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(s); el.textContent = '✓ ' + s; setTimeout(() => el.textContent = s, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

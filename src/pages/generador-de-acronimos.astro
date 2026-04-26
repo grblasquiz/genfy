@@ -1,0 +1,293 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de acrónimos online gratis | Genfy';
+const description = 'Convertí frases en acrónimos memorables, o generá significados creativos para una sigla. Ideal para nombres de proyectos, programas y campañas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es un acrónimo?', acceptedAnswer: { '@type': 'Answer', text: 'Es una palabra formada con las letras o sílabas iniciales de una frase, leída como una sola unidad. "OVNI" (Objeto Volador No Identificado) es un acrónimo.' } },
+    { '@type': 'Question', name: '¿En qué se diferencia de una sigla?', acceptedAnswer: { '@type': 'Answer', text: 'Una sigla se deletrea (R-A-E). Un acrónimo se lee como palabra (RAE → "rae"). Acá generamos cualquiera de los dos formatos.' } },
+    { '@type': 'Question', name: '¿Para qué sirve el modo inverso?', acceptedAnswer: { '@type': 'Answer', text: 'Te da significados creativos para una sigla existente. Útil para naming, equipos, programas y campañas internas.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto / Words" title="Generador de acrónimos"
+    intro="De frase a acrónimo, o de sigla a significado creativo. Ideal para nombres de proyectos, programas internos, campañas y siglas memorables.">
+
+    <div slot="tool" class="ac">
+      <div>
+        <label for="ac-mode">Modo</label>
+        <select id="ac-mode">
+          <option value="phrase">Frase → Acrónimo</option>
+          <option value="reverse">Sigla → Significados</option>
+        </select>
+      </div>
+      <div id="ac-phrase-block">
+        <label for="ac-input">Frase a abreviar</label>
+        <input id="ac-input" type="text" placeholder="Ej: Sistema Integrado de Gestión" />
+      </div>
+      <div id="ac-reverse-block" hidden>
+        <label for="ac-letters">Sigla (3-6 letras)</label>
+        <input id="ac-letters" type="text" placeholder="Ej: TEAM" maxlength="6" />
+        <label for="ac-context">Contexto (opcional)</label>
+        <select id="ac-context">
+          <option value="business">Negocios</option>
+          <option value="tech">Tecnología</option>
+          <option value="education">Educación</option>
+          <option value="general">General</option>
+        </select>
+      </div>
+      <button id="ac-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="ac-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="ac-out" rows="10" readonly style="margin-top:1rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Acrónimo vs. sigla: la diferencia</h2>
+      <p>
+        Una <strong>sigla</strong> se forma con las iniciales de varias palabras y se deletrea
+        (BCE: B-C-E). Un <strong>acrónimo</strong> también usa iniciales (o sílabas), pero se
+        lee como una palabra única (UNESCO, OVNI, RAE leída "rae"). En la práctica, los
+        acrónimos son más memorables porque entran al lenguaje hablado como cualquier otra
+        palabra. Por eso muchas marcas y programas internos los buscan.
+      </p>
+
+      <h2>Modo "frase → acrónimo"</h2>
+      <p>
+        Funciona como ayuda para nombrar un proyecto. Ingresás la frase ("Programa de Apoyo a
+        la Innovación Local") y el generador te muestra el acrónimo (PAIL). Si la sigla no
+        suena bien, podés probar reordenar las palabras o usar sinónimos: muchas veces "PAIL"
+        sale mejor como "PILA" simplemente cambiando el orden. Esa iteración es parte del
+        naming serio.
+      </p>
+
+      <h2>Modo "sigla → significados"</h2>
+      <p>
+        El modo inverso es útil cuando ya tenés una palabra (TEAM, FUEGO, AGIL) y querés
+        encontrarle un significado que la justifique. El generador propone palabras que empiezan
+        con cada letra, dentro del contexto que elijas. Después vos elegís la combinación que
+        más sentido le dé al proyecto.
+      </p>
+
+      <h2>Cómo elegir un buen acrónimo</h2>
+      <ol>
+        <li><strong>Que se pueda pronunciar.</strong> "PNRTS" no se lee, "POSTA" sí. Buscá vocales.</li>
+        <li><strong>Corto.</strong> 3-5 letras es la zona dulce. Más letras pierde memoria.</li>
+        <li><strong>Sin ambigüedad.</strong> Si tu acrónimo coincide con uno famoso (FBI, ONU), va a haber confusión en SEO y conversaciones.</li>
+        <li><strong>Sin doble sentido en otros idiomas.</strong> Una marca latinoamericana llamada "PEDO" funciona mal.</li>
+        <li><strong>Que contenga algo del concepto.</strong> Los mejores acrónimos no son arbitrarios: la sigla refuerza el significado de la palabra.</li>
+      </ol>
+
+      <h2>Ejemplos famosos</h2>
+      <ul>
+        <li><strong>NASA</strong> — National Aeronautics and Space Administration.</li>
+        <li><strong>OTAN</strong> — Organización del Tratado del Atlántico Norte.</li>
+        <li><strong>SCUBA</strong> — Self-Contained Underwater Breathing Apparatus.</li>
+        <li><strong>RADAR</strong> — Radio Detection And Ranging.</li>
+        <li><strong>LASER</strong> — Light Amplification by Stimulated Emission of Radiation.</li>
+      </ul>
+      <p>
+        Todos estos casos comparten una característica: la palabra resultante <em>parece</em> un
+        sustantivo natural. Ese es el gold standard del acrónimo.
+      </p>
+
+      <h2>Errores comunes</h2>
+      <ul>
+        <li><strong>Forzar la frase para que dé un acrónimo lindo.</strong> Si terminás escribiendo "Programa Avanzado de Modernización" solo porque querés que diga PAM, la frase pierde claridad.</li>
+        <li><strong>Acrónimos demasiado meta.</strong> "TQM" para "Total Quality Management" es fácil, pero "PEPSI" como acrónimo de algo forzado pierde toda la chispa.</li>
+        <li><strong>Mezcla mayúsculas/minúsculas inconsistente.</strong> Decidí desde el principio: ¿NASA o Nasa? Y mantenelo.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es un acrónimo?</summary><p>Una palabra formada con las iniciales o sílabas de una frase, que se lee como una sola unidad.</p></details>
+      <details><summary>¿Diferencia con sigla?</summary><p>La sigla se deletrea (R-A-E). El acrónimo se pronuncia como palabra (UNESCO).</p></details>
+      <details><summary>¿Modo inverso?</summary><p>Te da significados creativos para una sigla existente.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ac input, .ac select { margin-bottom: 1rem; }
+</style>
+
+<script>
+  const modeEl = document.getElementById('ac-mode') as HTMLSelectElement;
+  const phraseBlock = document.getElementById('ac-phrase-block') as HTMLElement;
+  const reverseBlock = document.getElementById('ac-reverse-block') as HTMLElement;
+  const inp = document.getElementById('ac-input') as HTMLInputElement;
+  const lettersEl = document.getElementById('ac-letters') as HTMLInputElement;
+  const ctxEl = document.getElementById('ac-context') as HTMLSelectElement;
+  const out = document.getElementById('ac-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('ac-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('ac-copy') as HTMLButtonElement;
+
+  const STOP = new Set(["de","la","el","los","las","y","o","del","al","a","en","para","con","por","un","una","unos","unas"]);
+
+  const POOLS: Record<string, Record<string, string[]>> = {
+    business: {
+      A: ["Acción","Acuerdo","Análisis","Avance","Alianza"],
+      B: ["Beneficio","Balance","Base","Bienestar"],
+      C: ["Calidad","Crecimiento","Compromiso","Cliente","Cambio"],
+      D: ["Desarrollo","Decisión","Datos","Diseño","Determinación"],
+      E: ["Estrategia","Equipo","Eficiencia","Excelencia","Empuje"],
+      F: ["Foco","Futuro","Fuerza","Finanzas","Flexibilidad"],
+      G: ["Gestión","Gente","Ganar","Global","Generosidad"],
+      H: ["Honestidad","Humildad","Habilidad","Horizonte"],
+      I: ["Innovación","Iniciativa","Impacto","Inversión","Integridad"],
+      J: ["Juicio","Justicia","Jerarquía"],
+      K: ["Know-how","Klave"],
+      L: ["Liderazgo","Lealtad","Logro","Largo-plazo"],
+      M: ["Mercado","Mejora","Misión","Marca","Método"],
+      N: ["Negocio","Nivel","Necesidad","Norte"],
+      O: ["Objetivo","Operación","Oportunidad","Organización"],
+      P: ["Proyecto","Plan","Producto","Performance","Productividad"],
+      Q: ["Calidad","Quórum"],
+      R: ["Resultados","Resiliencia","Rendimiento","Responsabilidad"],
+      S: ["Servicio","Solución","Sistema","Soporte","Sinergia"],
+      T: ["Trabajo","Talento","Transformación","Tiempo","Técnica"],
+      U: ["Unidad","Usuario","Utilidad"],
+      V: ["Valor","Visión","Velocidad","Ventaja"],
+      W: ["Workshop"],
+      X: ["Excelencia"],
+      Y: ["Yield"],
+      Z: ["Zona","Zenit"],
+    },
+    tech: {
+      A: ["API","Arquitectura","Algoritmo","Automatización","Análisis"],
+      B: ["Base de datos","Backend","Build","Backup"],
+      C: ["Cloud","Código","Continuo","Configuración","CI/CD"],
+      D: ["Despliegue","Desarrollo","Datos","Dashboard"],
+      E: ["Endpoint","Eficiencia","Escalabilidad","Equipo"],
+      F: ["Framework","Funcionalidad","Flujo","Feature"],
+      G: ["Gateway","Generación","Git"],
+      H: ["Hardware","Hosting","Heurística"],
+      I: ["Integración","Interfaz","Infraestructura","Iteración"],
+      J: ["Job","JSON"],
+      K: ["Kernel","Kanban"],
+      L: ["Latencia","Logs","Lenguaje"],
+      M: ["Monitoreo","Microservicio","Modelo","Migración"],
+      N: ["Node","Nube","Network"],
+      O: ["Optimización","Orquestación","Open source"],
+      P: ["Pipeline","Plataforma","Performance","Producto"],
+      Q: ["Query","Quality"],
+      R: ["Release","Refactor","Runtime","Rendimiento"],
+      S: ["Sistema","Servicio","Software","Stack","Seguridad"],
+      T: ["Testing","Tecnología","Tracking"],
+      U: ["Usuario","UX","Update"],
+      V: ["Versión","Validación","Variable"],
+      W: ["Workflow","Webhook"],
+      X: ["XML"],
+      Y: ["YAML"],
+      Z: ["Zero-downtime"],
+    },
+    education: {
+      A: ["Aprendizaje","Aula","Atención","Acompañamiento"],
+      B: ["Base","Bibliografía","Beneficio"],
+      C: ["Conocimiento","Currícula","Comprensión","Constancia","Comunidad"],
+      D: ["Docente","Dedicación","Desarrollo","Disciplina"],
+      E: ["Educación","Estudiante","Experiencia","Excelencia","Empatía"],
+      F: ["Formación","Familia","Futuro","Fundamentos"],
+      G: ["Grupo","Guía","Generación"],
+      H: ["Hábito","Habilidad","Honestidad"],
+      I: ["Inclusión","Investigación","Inteligencia","Innovación"],
+      J: ["Juego","Juventud"],
+      K: ["Kit"],
+      L: ["Lectura","Liderazgo","Lenguaje"],
+      M: ["Método","Motivación","Mentor"],
+      N: ["Nivel","Noción"],
+      O: ["Objetivo","Oportunidad","Organización"],
+      P: ["Participación","Profesor","Práctica","Proyecto"],
+      Q: ["Calidad","Quórum"],
+      R: ["Rendimiento","Recurso","Respeto"],
+      S: ["Saber","Sentido","Solidaridad"],
+      T: ["Tutoría","Trabajo","Talento"],
+      U: ["Unidad","Universidad"],
+      V: ["Valor","Vocación"],
+      W: ["Workshop"],
+      X: ["Excelencia"],
+      Y: ["Yo"],
+      Z: ["Zona"],
+    },
+    general: {
+      A: ["Acción","Amistad","Aventura","Arte"],
+      B: ["Bienestar","Balance","Belleza"],
+      C: ["Conexión","Coraje","Crecimiento","Confianza"],
+      D: ["Disciplina","Dedicación","Desafío"],
+      E: ["Esfuerzo","Empatía","Energía"],
+      F: ["Familia","Foco","Futuro"],
+      G: ["Generosidad","Gratitud","Gozo"],
+      H: ["Hábito","Honestidad","Humildad"],
+      I: ["Iniciativa","Integridad","Inspiración"],
+      J: ["Justicia","Juego","Juventud"],
+      K: ["Karma"],
+      L: ["Lealtad","Libertad","Luz"],
+      M: ["Movimiento","Memoria","Mejora"],
+      N: ["Naturaleza","Norte"],
+      O: ["Optimismo","Orden","Origen"],
+      P: ["Paciencia","Propósito","Pasión"],
+      Q: ["Calidad"],
+      R: ["Respeto","Resiliencia","Razón"],
+      S: ["Sabiduría","Sinceridad","Servicio"],
+      T: ["Trabajo","Talento","Tiempo"],
+      U: ["Unidad","Universo (concepto)"],
+      V: ["Valor","Verdad","Visión"],
+      W: ["Will"],
+      X: ["Excelencia"],
+      Y: ["Yo"],
+      Z: ["Zona"],
+    },
+  };
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+
+  modeEl.addEventListener('change', () => {
+    const r = modeEl.value === 'reverse';
+    phraseBlock.hidden = r; reverseBlock.hidden = !r;
+  });
+
+  function generate() {
+    if (modeEl.value === 'phrase') {
+      const v = (inp.value || '').trim();
+      if (!v) { out.value = ''; return; }
+      const tokens = v.split(/\s+/).filter(t => !STOP.has(t.toLowerCase()));
+      const acro = tokens.map(t => t.charAt(0).toUpperCase()).join('');
+      const lines: string[] = [
+        `Acrónimo: ${acro}`,
+        '',
+        'Variantes:',
+        `• ${acro}`,
+        `• ${tokens.map(t => t.slice(0,2)).join('').toUpperCase()}`,
+        `• ${tokens.map(t => t.charAt(0)).join('').toLowerCase()}`,
+      ];
+      out.value = lines.join('\n');
+    } else {
+      const letters = (lettersEl.value || '').toUpperCase().replace(/[^A-Z]/g, '');
+      if (!letters) { out.value = ''; return; }
+      const ctx = ctxEl.value;
+      const pool = POOLS[ctx] || POOLS.general;
+      const lines: string[] = [];
+      for (let i = 0; i < 5; i++) {
+        const expansion = letters.split('').map(L => {
+          const arr = pool[L] || pool['A'];
+          return pick(arr);
+        });
+        lines.push(`${letters} → ${expansion.join(' ')}`);
+      }
+      out.value = lines.join('\n');
+    }
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  inp.value = "Sistema Integrado de Gestión";
+  generate();
+</script>

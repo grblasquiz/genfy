@@ -1,0 +1,192 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Brief de naming gratis | Genfy';
+const description = 'Generá un brief profesional de naming para pasarle a una agencia, freelancer o equipo interno. Estructurado, completo y listo para usar en 2 minutos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve un brief de naming?', acceptedAnswer: { '@type': 'Answer', text: 'Es el documento que recibe una agencia o freelancer de naming antes de empezar a trabajar. Define objetivos, restricciones, tono, audiencia y referencias para que el output sea relevante.' } },
+    { '@type': 'Question', name: '¿Cuánto debe medir un brief?', acceptedAnswer: { '@type': 'Answer', text: 'Entre 1 y 3 páginas. Más corto se queda sin contexto; más largo se vuelve diluido y la agencia termina ignorando partes.' } },
+    { '@type': 'Question', name: '¿Qué errores evitar al armar un brief?', acceptedAnswer: { '@type': 'Answer', text: 'No definir audiencia clara, no listar palabras prohibidas, no dar ejemplos de marcas que admirás y no explicitar el TLD/dominio que esperás.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Branding" title="Brief de naming"
+    intro="Completá los campos. Genfy estructura todo en un brief profesional listo para enviarle a tu agencia, freelancer o equipo interno. Copialo y mandalo.">
+
+    <div slot="tool" class="nb">
+      <label for="nb-cat">Categoría / industria</label>
+      <input id="nb-cat" type="text" placeholder="fintech para freelancers" value="fintech para freelancers" />
+
+      <label for="nb-prod" style="margin-top:1rem">Qué hace el producto / servicio</label>
+      <input id="nb-prod" type="text" placeholder="facturación electrónica, pagos..." value="facturación electrónica en un click" />
+
+      <label for="nb-aud" style="margin-top:1rem">Audiencia objetivo</label>
+      <input id="nb-aud" type="text" placeholder="freelancers de LATAM 25-45..." value="freelancers de LATAM 25-45 años" />
+
+      <label for="nb-tone" style="margin-top:1rem">Tono</label>
+      <input id="nb-tone" type="text" placeholder="cercano, claro, sin jerga..." value="cercano, claro, sin jerga contable" />
+
+      <label for="nb-ref" style="margin-top:1rem">Marcas que admirás (3 max)</label>
+      <input id="nb-ref" type="text" placeholder="Stripe, Mercado Libre, Notion..." value="Stripe, Mercado Libre, Notion" />
+
+      <label for="nb-avoid" style="margin-top:1rem">Palabras prohibidas</label>
+      <input id="nb-avoid" type="text" placeholder="soluciones, líderes, innovador..." value="soluciones, líderes, innovador" />
+
+      <label for="nb-tld" style="margin-top:1rem">TLD esperado</label>
+      <input id="nb-tld" type="text" placeholder=".com, .io, .ai..." value=".com" />
+
+      <button id="nb-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar brief</button>
+
+      <div id="nb-out" class="nb-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué un brief de naming hace la diferencia</h2>
+      <p>
+        Pedirle nombres a una agencia o freelancer sin brief es como pedirle a un arquitecto que te haga una casa sin decirle cuántos cuartos, qué presupuesto ni en qué clima. Va a entregar algo, pero las chances de que sea lo que necesitás son bajas. El brief no es burocracia: es el documento que separa a un proyecto de naming de tres días vs. tres meses con seis revisiones.
+      </p>
+      <p>
+        Un buen brief hace cuatro cosas. Alinea expectativas (presupuesto, plazos, cantidad de propuestas). Define restricciones (palabras prohibidas, TLD esperado, idiomas a verificar). Da contexto (audiencia, tono, competidores). Y ahorra rondas de feedback: la agencia llega ya con la dirección correcta.
+      </p>
+
+      <h2>Las nueve secciones imprescindibles</h2>
+      <ol>
+        <li><strong>Categoría e industria.</strong> Una oración: qué tipo de empresa.</li>
+        <li><strong>Producto o servicio.</strong> Qué hace, en lenguaje del cliente.</li>
+        <li><strong>Audiencia.</strong> Quién compra, edad, contexto, qué problema vive.</li>
+        <li><strong>Tono.</strong> 3-5 adjetivos del estilo de comunicación esperado.</li>
+        <li><strong>Marcas que admirás.</strong> Máximo 3, con una línea de por qué.</li>
+        <li><strong>Palabras prohibidas.</strong> Lo que jamás debería aparecer en una propuesta.</li>
+        <li><strong>Restricciones técnicas.</strong> TLD, idiomas a verificar (inglés, portugués, mandarín), App Store si es app.</li>
+        <li><strong>Cantidad y formato de entrega.</strong> Cuántos nombres en cada ronda, en qué formato (slide, doc, audio).</li>
+        <li><strong>Plazos y presupuesto.</strong> Cuándo necesitás cerrar y cuánto vas a pagar.</li>
+      </ol>
+
+      <h2>Errores que matan un brief antes de empezar</h2>
+      <ul>
+        <li><strong>"Quiero algo creativo."</strong> No es brief, es vacío. Dale palabras concretas.</li>
+        <li><strong>No listar audiencia.</strong> Sin saber a quién le hablás, cualquier nombre puede ser válido o ninguno.</li>
+        <li><strong>No definir TLD.</strong> Si esperás .com pero la agencia prioriza nombres "creativos" sin verificar disponibilidad, perdés tiempo.</li>
+        <li><strong>Listar 15 marcas que admirás.</strong> Con tres alcanza. Más diluye.</li>
+        <li><strong>No definir presupuesto.</strong> Una agencia top cobra 8.000-30.000 USD por un proyecto de naming. Un freelancer 500-2.000. Mezclar expectativas con presupuestos no encaja.</li>
+      </ul>
+
+      <h2>Cómo evaluar las propuestas que recibas</h2>
+      <p>
+        Una vez que recibas la primera ronda, evaluá cada nombre contra estos cinco filtros, en este orden:
+      </p>
+      <ol>
+        <li><strong>¿Pasa el filtro de las palabras prohibidas?</strong> Si entra alguna, descartá.</li>
+        <li><strong>¿Es pronunciable en los idiomas del brief?</strong> Si requiere explicación, problema.</li>
+        <li><strong>¿El dominio en el TLD esperado está libre o es alcanzable?</strong> Sin esto, el nombre no es viable.</li>
+        <li><strong>¿No conflictúa con marcas registradas en USPTO o INPI?</strong> Búsqueda básica de 5 minutos.</li>
+        <li><strong>¿Te lo imaginás dicho 1.000 veces en pitches y llamadas?</strong> Si hay incomodidad al pronunciarlo, dejalo.</li>
+      </ol>
+      <p>
+        Después de filtrar, te suelen quedar 5 a 8 finalistas de una ronda inicial de 30 a 50. Esa es la cifra esperable.
+      </p>
+
+      <h2>Plazos típicos de un proyecto de naming serio</h2>
+      <p>
+        Una agencia profesional entrega así: semana 1, brief y descubrimiento; semana 2, primera ronda de 30-50 nombres con explicación detrás de cada uno; semana 3, ronda de feedback y filtrado a 8-12 finalistas; semana 4, validación legal y de dominios; semana 5, decisión y entrega de documentación. Total 4-6 semanas. Si alguien promete entregarte un nombre serio en 48 horas, está vendiendo creatividad sin método.
+      </p>
+
+      <h2>Qué hacer después de recibir el brief de vuelta</h2>
+      <p>
+        Una vez tengas el ganador, tres pasos: registrar el dominio en .com (aunque tu primario sea .io), iniciar el trámite de marca en INPI o USPTO, y reservar handles en Instagram, X, LinkedIn y TikTok. En ese orden. El registro de marca demora 8-18 meses; los handles se toman en horas.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve un brief?</summary><p>Es el input que recibe una agencia o freelancer antes de proponer nombres. Define objetivos, restricciones y tono.</p></details>
+      <details><summary>¿Cuánto debe medir?</summary><p>1 a 3 páginas. Más corto: sin contexto. Más largo: diluido.</p></details>
+      <details><summary>¿Errores comunes?</summary><p>No definir audiencia, no listar palabras prohibidas, no explicitar TLD, no dar ejemplos.</p></details>
+      <details><summary>¿Cuánto cuesta un proyecto de naming?</summary><p>Freelancer: 500-2.000 USD. Agencia: 8.000-30.000 USD. Boutique top: 50.000+ USD.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .nb-out { margin-top: 1.25rem; }
+  .nb-doc { padding: 1.5rem 1.75rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; white-space: pre-wrap; font-size: 0.9375rem; }
+  .nb-doc:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const cat = document.getElementById('nb-cat') as HTMLInputElement;
+  const prod = document.getElementById('nb-prod') as HTMLInputElement;
+  const aud = document.getElementById('nb-aud') as HTMLInputElement;
+  const tone = document.getElementById('nb-tone') as HTMLInputElement;
+  const ref = document.getElementById('nb-ref') as HTMLInputElement;
+  const avoid = document.getElementById('nb-avoid') as HTMLInputElement;
+  const tld = document.getElementById('nb-tld') as HTMLInputElement;
+  const gen = document.getElementById('nb-gen') as HTMLButtonElement;
+  const out = document.getElementById('nb-out')!;
+
+  function generate() {
+    const C = cat.value.trim() || 'a definir';
+    const P = prod.value.trim() || 'a definir';
+    const A = aud.value.trim() || 'a definir';
+    const T = tone.value.trim() || 'a definir';
+    const R = ref.value.trim() || 'a definir';
+    const Av = avoid.value.trim() || 'a definir';
+    const Tld = tld.value.trim() || '.com';
+
+    const doc = `BRIEF DE NAMING
+
+1. CATEGORÍA E INDUSTRIA
+${C}
+
+2. PRODUCTO / SERVICIO
+${P}
+
+3. AUDIENCIA OBJETIVO
+${A}
+
+4. TONO DE MARCA
+${T}
+
+5. MARCAS DE REFERENCIA (admiradas)
+${R}
+
+6. PALABRAS PROHIBIDAS
+${Av}
+
+7. RESTRICCIONES TÉCNICAS
+- TLD requerido: ${Tld} disponible o alcanzable.
+- Verificación en INPI (Argentina) y USPTO (EE.UU.).
+- Verificación de handles en Instagram, X, LinkedIn y TikTok.
+- Sin connotaciones negativas en inglés y portugués.
+
+8. ENTREGA ESPERADA
+- Ronda 1: 30-50 nombres con racional breve por nombre.
+- Ronda 2: 8-12 finalistas tras filtrado conjunto.
+- Ronda 3: 3 candidatos validados (dominio + marca registrada).
+
+9. PLAZO
+- Total estimado: 4-6 semanas.
+
+10. CRITERIOS DE EVALUACIÓN
+Cada propuesta debe pasar:
+(a) Pronunciable en español e inglés sin explicación.
+(b) Sin coincidencia con palabras prohibidas.
+(c) Dominio ${Tld} libre o adquirible.
+(d) Sin conflicto inmediato en USPTO / INPI.
+(e) Memorable tras una sola exposición de 5 segundos.`;
+
+    out.innerHTML = '';
+    const el = document.createElement('div');
+    el.className = 'nb-doc';
+    el.textContent = doc;
+    el.title = 'Click para copiar el brief completo';
+    el.addEventListener('click', () => { navigator.clipboard.writeText(doc); const orig = el.textContent; el.textContent = '✓ Brief copiado al portapapeles'; setTimeout(() => el.textContent = orig!, 1200); });
+    out.appendChild(el);
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

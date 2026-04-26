@@ -1,0 +1,112 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+import { GUINEA_PIG_NAMES, SMALL_PET_STYLES } from '../../lib/small-pet-names';
+
+const title = 'Guinea Pig Name Generator | Genfy';
+const description = 'Cute, funny or food-themed: find the perfect name for your guinea pig. 60+ ideas in English and Spanish — free instant generator.';
+const stylesEN = SMALL_PET_STYLES.en;
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Do guinea pigs learn their name?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Guinea pigs are very social and, paired with food and gentle handling for 2-3 weeks, recognize their name and wheek when called.' } },
+    { '@type': 'Question', name: 'Multiple guinea pig names — what to mind?', acceptedAnswer: { '@type': 'Answer', text: 'Make them phonetically distinct. If you have two, avoid Coco and Cookie — they\'re too similar. Better: Pumpkin + Pip.' } },
+    { '@type': 'Question', name: 'Serious or cute name?', acceptedAnswer: { '@type': 'Answer', text: 'For guinea pigs, cute and food names are most popular. Their round shape invites Cookie, Popcorn, Marshmallow.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="en" tag="Pets" title="Guinea Pig Name Generator"
+    intro="Cute, funny or food-themed: find the name that fits your guinea pig best. Click and get 12 ideas in seconds.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Style</label>
+      <select id="cn-style">
+        {Object.entries(stylesEN).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mix of all</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 names</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a guinea pig name</h2>
+      <p>
+        Guinea pigs (or cavies) are one of the most social small pets: they live in pairs or groups,
+        wheek loudly when they hear the fridge open, and learn their name impressively fast. The
+        name should be easy to call across the room and distinct from any cage-mate's name.
+      </p>
+      <ul>
+        <li><strong>1-2 syllables.</strong> Cookie, Pip, Mochi work better than something elaborate.</li>
+        <li><strong>Soft, high-pitched sounds.</strong> Cavies respond best to higher tones.</li>
+        <li><strong>If you have two, distinct sounds.</strong> Not Cookie + Coco. Better: Pumpkin + Pip.</li>
+        <li><strong>Pair it with food.</strong> Say the name right before offering bell pepper or lettuce — in 2 weeks they associate.</li>
+      </ul>
+
+      <h2>Names by style</h2>
+      <ul>
+        <li><strong>Cute</strong> (Cookie, Pip, Pumpkin, Bumble): the most common, fits almost any guinea pig.</li>
+        <li><strong>Food</strong> (Biscuit, Caramel, Truffle, Popcorn): plays on the image of the round, snack-loving cavy.</li>
+        <li><strong>Funny</strong> (Sir Squeaks, Captain Cuddles, Doctor Wheek): for big personalities.</li>
+      </ul>
+
+      <h2>By color and coat</h2>
+      <ul>
+        <li><strong>White:</strong> Cotton, Cloud, Marshmallow, Pearl.</li>
+        <li><strong>Orange:</strong> Pumpkin, Mango, Caramel, Tangerine.</li>
+        <li><strong>Black:</strong> Inky, Truffle, Shadow, Coal.</li>
+        <li><strong>Patchy:</strong> Patches, Pinto, Spot, Marble.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <ol>
+        <li>Too-similar names for multiple cavies: you lose track and they don't learn.</li>
+        <li>Elaborate names you end up shortening anyway.</li>
+        <li>Not using the name because "they're tiny": they understand more than you think — they're very social.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Do guinea pigs learn their name?</summary><p>Yes. Paired with food and gentle handling for 2-3 weeks they recognize it and wheek when called.</p></details>
+      <details><summary>Multiple guinea pig names?</summary><p>Make them phonetically distinct. Better: Pumpkin + Pip than Cookie + Coco.</p></details>
+      <details><summary>Serious or cute name?</summary><p>Cute and food names are most popular for guinea pigs.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: GUINEA_PIG_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.cute.en, ...DATA.food.en, ...DATA.funny.en];
+    else pool = DATA[s].en;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de declaración de misión gratis | Genfy';
+const description = 'Generá una declaración de misión empresarial clara, breve y con foco. Ideal para web, pitch deck, brief de marca o documento interno de equipo.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuánto debe medir una declaración de misión?', acceptedAnswer: { '@type': 'Answer', text: 'Idealmente entre 12 y 25 palabras. Una sola oración que el equipo pueda repetir de memoria. Si necesita un párrafo, no es misión: es presentación.' } },
+    { '@type': 'Question', name: '¿Diferencia entre misión y visión?', acceptedAnswer: { '@type': 'Answer', text: 'La misión es lo que hacés hoy y para quién. La visión es a dónde querés llegar a 5-10 años. La misión motiva el día a día; la visión orienta la estrategia.' } },
+    { '@type': 'Question', name: '¿Sirve para empresas pequeñas?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, y especialmente. Una empresa pequeña con misión clara filtra mejor decisiones, contrata más afinado y comunica con menos esfuerzo. Es uno de los pocos activos que no cuesta dinero.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Branding" title="Generador de declaración de misión"
+    intro="Cargá qué hacés, para quién y cómo. Genfy estructura tu misión en una oración clara, breve y memorable que el equipo puede repetir de memoria.">
+
+    <div slot="tool" class="ms">
+      <label for="ms-what">¿Qué hacés? (verbo + producto)</label>
+      <input id="ms-what" type="text" placeholder="Ofrecemos software de gestión..." value="Ayudamos a freelancers a facturar" />
+
+      <label for="ms-who" style="margin-top:1rem">¿Para quién?</label>
+      <input id="ms-who" type="text" placeholder="pequeñas empresas, freelancers..." value="freelancers de LATAM" />
+
+      <label for="ms-how" style="margin-top:1rem">¿Cómo? (qué te hace distinto)</label>
+      <input id="ms-how" type="text" placeholder="con menos clicks, sin papeles..." value="en menos de un minuto, sin contadores" />
+
+      <button id="ms-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 6 versiones</button>
+
+      <div id="ms-out" class="ms-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es una declaración de misión y por qué importa</h2>
+      <p>
+        La misión es la oración que responde, en menos de 25 palabras, qué hace tu empresa, para quién y por qué. No es marketing; es operación. Una buena misión filtra decisiones de producto ("¿esto nos acerca o nos aleja?"), filtra contrataciones ("¿esta persona conecta con esto?") y filtra clientes ("¿estamos vendiendo a quien queremos?").
+      </p>
+      <p>
+        Las grandes misiones tienen tres componentes: una acción concreta (verbo en presente), un público específico (no "todos", sino un segmento real), y una promesa diferencial (qué hacés mejor o distinto que el resto). Si te falta uno de los tres, lo que tenés es un eslogan, no una misión.
+      </p>
+
+      <h2>Anatomía de las misiones que funcionan</h2>
+      <ul>
+        <li><strong>Stripe:</strong> "Aumentar el PIB de internet." Ambiciosa, breve, accionable.</li>
+        <li><strong>Patagonia:</strong> "Estamos en el negocio para salvar nuestro planeta natal." Clara y filtra todas las decisiones de la empresa.</li>
+        <li><strong>Mercado Libre:</strong> "Democratizar el comercio y el dinero a través de la tecnología." Ancha pero específica en su mecanismo.</li>
+        <li><strong>Notion:</strong> "Hacer que el software sea moldeable, así cualquiera puede crear sus propias herramientas." Enfocada y accionable.</li>
+      </ul>
+      <p>
+        Notá que ninguna habla de "ser líderes en su rubro" ni de "calidad y excelencia". Eso es lenguaje vacío. Las misiones que funcionan son verbos.
+      </p>
+
+      <h2>La fórmula práctica en tres bloques</h2>
+      <p>Si tenés que escribirla en 10 minutos, usá esta estructura:</p>
+      <ol>
+        <li><strong>Verbo + objeto:</strong> "Ayudamos a freelancers a facturar."</li>
+        <li><strong>Para quién (específico):</strong> "...freelancers de LATAM..."</li>
+        <li><strong>Cómo (diferencial):</strong> "...en menos de un minuto, sin contadores."</li>
+      </ol>
+      <p>
+        Resultado: "Ayudamos a freelancers de LATAM a facturar en menos de un minuto, sin contadores." 17 palabras. Cumple los tres componentes y se puede repetir de memoria.
+      </p>
+
+      <h2>Errores que vacían una misión</h2>
+      <p>
+        El más frecuente: usar adjetivos vacíos. "Ofrecemos productos de calidad superior con foco en la innovación y la satisfacción del cliente." Esa frase la podría firmar cualquier empresa del mundo. Si cambiás el sujeto y sigue funcionando, no es tu misión.
+      </p>
+      <p>
+        Otros: meter más de un objetivo ("ayudamos a empresas, freelancers y estudiantes a..." pierde foco), usar jerga interna que el cliente no entiende, ser tan ambicioso que ya no es accionable ("cambiar el mundo"), o copiar la misión de un competidor cambiando dos palabras.
+      </p>
+
+      <h2>Misión vs. visión vs. valores</h2>
+      <p>
+        Estas tres se confunden y conviene separarlas:
+      </p>
+      <ul>
+        <li><strong>Misión:</strong> qué hacés hoy, para quién, cómo. Presente.</li>
+        <li><strong>Visión:</strong> a dónde vas en 5-10 años. Futuro.</li>
+        <li><strong>Valores:</strong> cómo se comporta el equipo en el camino. Cultura.</li>
+      </ul>
+      <p>
+        La misión motiva el día a día y guía decisiones tácticas. La visión motiva el largo plazo y guía la estrategia. Los valores filtran personas. Las tres deberían poder convivir en una página A4 con espacio para respirar.
+      </p>
+
+      <h2>Cómo testear tu misión antes de adoptarla</h2>
+      <ol>
+        <li>Hacé que cada miembro del equipo la repita de memoria 24 horas después.</li>
+        <li>Pedile a alguien externo que la lea y te diga qué empresa imagina.</li>
+        <li>Probá si filtra decisiones reales: ¿esta nueva feature nos acerca o nos aleja?</li>
+        <li>Verificá que no podría firmarla un competidor sin cambiar nada.</li>
+        <li>Confirmá que no use adjetivos vacíos: calidad, innovación, excelencia, líder.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuánto debe medir?</summary><p>Entre 12 y 25 palabras. Una oración que el equipo repita de memoria.</p></details>
+      <details><summary>¿Diferencia entre misión y visión?</summary><p>Misión: qué hacés hoy. Visión: a dónde vas a 5-10 años. Misión motiva el día; visión orienta la estrategia.</p></details>
+      <details><summary>¿Sirve para empresas pequeñas?</summary><p>Especialmente. Filtra decisiones, contrataciones y clientes con menos esfuerzo.</p></details>
+      <details><summary>¿Con qué frecuencia revisarla?</summary><p>Cada 2-3 años o tras un pivot importante. Si la cambiás cada 6 meses, no era misión, era marketing.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ms-out { display: grid; grid-template-columns: 1fr; gap: 0.5rem; margin-top: 1.25rem; }
+  .ms-item { padding: 0.875rem 1.125rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .ms-item:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const TPL = [
+    '{what} para {who} {how}.',
+    'Existimos para {what} para {who}, {how}.',
+    'Nuestra misión: {what} para {who}, {how}.',
+    '{what} para {who}. {How}.',
+    'Construimos para que {who} pueda {whatLow}, {how}.',
+    'Hacemos que {who} {whatLow} {how}.',
+  ];
+
+  const what = document.getElementById('ms-what') as HTMLInputElement;
+  const who = document.getElementById('ms-who') as HTMLInputElement;
+  const how = document.getElementById('ms-how') as HTMLInputElement;
+  const gen = document.getElementById('ms-gen') as HTMLButtonElement;
+  const out = document.getElementById('ms-out')!;
+
+  function generate() {
+    const W = what.value.trim() || 'Ayudamos a empresas a crecer';
+    const wLow = W.charAt(0).toLowerCase() + W.slice(1);
+    const wh = who.value.trim() || 'pymes';
+    const h = how.value.trim() || 'sin fricción';
+    const H = h.charAt(0).toUpperCase() + h.slice(1);
+    out.innerHTML = '';
+    TPL.forEach(t => {
+      const s = t.replace(/\{what\}/g, W).replace(/\{whatLow\}/g, wLow).replace(/\{who\}/g, wh).replace(/\{how\}/g, h).replace(/\{How\}/g, H);
+      const el = document.createElement('div');
+      el.className = 'ms-item';
+      el.textContent = s;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(s); el.textContent = '✓ ' + s; setTimeout(() => el.textContent = s, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

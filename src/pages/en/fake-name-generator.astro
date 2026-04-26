@@ -1,0 +1,194 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Fake Name Generator for Testing | Genfy';
+const description = 'Generate realistic fake first and last names for testing, fixtures and demo data. US, Hispanic or mixed. Nothing is sent to a server.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a fake name generator for?', acceptedAnswer: { '@type': 'Answer', text: 'To populate test databases, automated test fixtures, UI prototypes and demos without using real personal data.' } },
+    { '@type': 'Question', name: 'Could the names match real people?', acceptedAnswer: { '@type': 'Answer', text: 'Combinations are randomly generated from common first and last name lists. Statistically, some combinations may match real people: only use the data for testing.' } },
+    { '@type': 'Question', name: 'Can I use them in production?', acceptedAnswer: { '@type': 'Answer', text: 'No. This data is only for development, staging or demo environments. Never use it as the actual name of a user in production.' } },
+    { '@type': 'Question', name: 'Why not just use Faker?', acceptedAnswer: { '@type': 'Answer', text: 'Faker is great when you already have code. This generator works when you need 5 or 50 names quickly with no install — designers, QA and prototypes.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Data / Testing"
+    title="Fake Name Generator"
+    intro="Create realistic first and last names for test environments. Useful for fixtures, seeds, UI prototypes and demos. Never use real data in testing."
+  >
+    <div slot="tool" class="names-tool">
+      <div class="names-controls">
+        <div>
+          <label for="names-style">Style</label>
+          <select id="names-style">
+            <option value="en" selected>US / UK</option>
+            <option value="es">Hispanic</option>
+            <option value="mix">Mixed</option>
+          </select>
+        </div>
+        <div>
+          <label for="names-gender">Gender</label>
+          <select id="names-gender">
+            <option value="any" selected>Any</option>
+            <option value="m">Male</option>
+            <option value="f">Female</option>
+          </select>
+        </div>
+        <div>
+          <label for="names-count">Quantity</label>
+          <input id="names-count" type="number" min="1" max="100" value="10" />
+        </div>
+      </div>
+
+      <div class="names-toggles">
+        <label><input type="checkbox" id="names-two-last" /> Two last names</label>
+        <label><input type="checkbox" id="names-with-email" /> Include email</label>
+      </div>
+
+      <button id="names-gen" class="btn btn-primary" type="button">Generate names</button>
+
+      <textarea id="names-out" class="mono" rows="12" readonly></textarea>
+      <button id="names-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy all</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>When you need test names</h2>
+      <p>
+        Any project that touches personal data benefits from having fake names on tap:
+        automated tests, seeds for staging environments, screenshots for presentations, UI
+        prototypes and client demos. Using real names or team-member names introduces two
+        problems: privacy and test bias ("it always works for John Smith").
+      </p>
+      <p>
+        The lists in this generator combine the most common first names in the US and UK with
+        equally common last names. The Hispanic variant uses typical Spanish and Latin American
+        names.
+      </p>
+
+      <h2>What each name includes</h2>
+      <ul>
+        <li><strong>First name:</strong> one or two given names depending on settings.</li>
+        <li><strong>Last name:</strong> one or two surnames.</li>
+        <li><strong>Optional email:</strong> derived from the name, on standard test domains (<code>example.com</code>, <code>test.com</code>).</li>
+      </ul>
+
+      <h2>Test data best practices</h2>
+      <ol>
+        <li><strong>Never use real data in staging.</strong> Anonymize or use synthetic data like this. If an outsider gets access to the environment, they shouldn't see identifiable info.</li>
+        <li><strong>Mark data as synthetic.</strong> A flag in the database, an obviously fake domain (<code>@example.com</code>) or a name prefix prevents confusion.</li>
+        <li><strong>Test edge cases.</strong> Very long names, accents, non-Latin characters, apostrophes. Most form bugs surface with atypical data.</li>
+        <li><strong>Vary the set.</strong> If all your test names are <code>John Smith</code>, you're not testing sorting, search or real edge cases.</li>
+      </ol>
+
+      <h2>Names and privacy</h2>
+      <p>
+        Even with random combinations, statistically some <code>John Smith</code> exists in the
+        real world. So:
+      </p>
+      <ul>
+        <li>Use the data only in non-production environments.</li>
+        <li>Combine with test addresses (<code>123 Test Street</code>) and emails on fake domains.</li>
+        <li>Document in the repo or wiki that this data is synthetic.</li>
+        <li>Never send actual emails to those generated contacts.</li>
+      </ul>
+
+      <h2>When Faker is the better choice</h2>
+      <p>
+        If you already have automated tests or a seed script, install Faker
+        (<code>@faker-js/faker</code> for Node, <code>faker</code> for Python,
+        <code>FactoryBot</code> + <code>Faker</code> for Ruby). It gives you more control:
+        specific locale, advanced data types (addresses, phones, IBAN), reproducibility by
+        seed.
+      </p>
+      <p>
+        This generator helps when you need something fast without involving code: a designer
+        filling mockups, a PM building a demo, a QA filling a manual form.
+      </p>
+
+      <h2>Real-world testing combo</h2>
+      <p>In serious projects, a practical combination:</p>
+      <ol>
+        <li>Faker in tests (fast, reproducible, integrated).</li>
+        <li>This generator for big copy-paste fixtures (50-row CSV to import).</li>
+        <li>Full synthetic data (name + address + email + phone) for staging seeds.</li>
+        <li>Cypress or Playwright validation against the generated names.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is it for?</summary><p>To populate tests, fixtures, prototypes and demos without using real personal data.</p></details>
+      <details><summary>Could they match real people?</summary><p>Statistically yes, some combinations may match. Only use this data for testing.</p></details>
+      <details><summary>Can I use them in production?</summary><p>No. Only development, staging or demos. Never as a real user name.</p></details>
+      <details><summary>Why not Faker?</summary><p>Faker is great when you already write code. This generator is for quick ad-hoc use.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .names-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .names-controls { grid-template-columns: 1fr; } }
+  .names-toggles { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .names-toggles label { display: flex; align-items: center; gap: 0.5rem; font-weight: 400; font-size: 0.9375rem; color: var(--text-soft); cursor: pointer; margin: 0; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; margin: 1rem 0 0.75rem; }
+</style>
+
+<script>
+  const ES_M = ['Juan','Carlos','Luis','Pedro','Miguel','Diego','Andres','Pablo','Daniel','Javier','Francisco','Antonio','Manuel','Roberto','Alejandro'];
+  const ES_F = ['Maria','Ana','Laura','Carmen','Lucia','Sofia','Elena','Patricia','Marta','Cristina','Paula','Carolina','Andrea','Daniela','Camila'];
+  const ES_LAST = ['Garcia','Rodriguez','Gonzalez','Fernandez','Lopez','Martinez','Sanchez','Perez','Gomez','Diaz','Moreno','Alvarez','Romero','Torres','Vazquez','Ramirez'];
+  const EN_M = ['John','James','Robert','Michael','William','David','Richard','Joseph','Thomas','Charles','Christopher','Daniel','Matthew','Anthony','Mark','Donald','Steven','Andrew','Paul','Joshua','Kenneth','Kevin','Brian','Edward','Ronald','Jason','Justin','Brandon','Tyler','Adam'];
+  const EN_F = ['Mary','Patricia','Jennifer','Linda','Elizabeth','Barbara','Susan','Jessica','Sarah','Karen','Nancy','Lisa','Margaret','Betty','Sandra','Ashley','Kimberly','Emily','Donna','Michelle','Carol','Amanda','Melissa','Deborah','Stephanie','Rebecca','Laura','Sharon','Cynthia','Amy'];
+  const EN_LAST = ['Smith','Johnson','Williams','Brown','Jones','Miller','Davis','Wilson','Anderson','Thomas','Taylor','Moore','Martin','Jackson','Thompson','White','Harris','Clark','Lewis','Walker','Hall','Allen','Young','King','Wright','Scott','Green','Baker','Adams','Nelson'];
+
+  const style = document.getElementById('names-style') as HTMLSelectElement;
+  const gender = document.getElementById('names-gender') as HTMLSelectElement;
+  const count = document.getElementById('names-count') as HTMLInputElement;
+  const twoLast = document.getElementById('names-two-last') as HTMLInputElement;
+  const withEmail = document.getElementById('names-with-email') as HTMLInputElement;
+  const out = document.getElementById('names-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('names-gen') as HTMLButtonElement;
+  const copy = document.getElementById('names-copy') as HTMLButtonElement;
+
+  function pick<T>(arr: T[]): T { const a = new Uint32Array(1); crypto.getRandomValues(a); return arr[a[0] % arr.length]; }
+
+  function generate() {
+    const n = Math.min(100, Math.max(1, parseInt(count.value || '10', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) {
+      let useEs = style.value === 'es';
+      if (style.value === 'mix') useEs = Math.random() > 0.5;
+      let g = gender.value;
+      if (g === 'any') g = Math.random() > 0.5 ? 'm' : 'f';
+      const firstPool = useEs ? (g === 'm' ? ES_M : ES_F) : (g === 'm' ? EN_M : EN_F);
+      const lastPool = useEs ? ES_LAST : EN_LAST;
+      const first = pick(firstPool);
+      const last1 = pick(lastPool);
+      const last2 = twoLast.checked ? ' ' + pick(lastPool) : '';
+      let line = `${first} ${last1}${last2}`;
+      if (withEmail.checked) {
+        const local = `${first}.${last1}`.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+        line += ` | ${local}@example.com`;
+      }
+      lines.push(line);
+    }
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', generate);
+  [style, gender, count, twoLast, withEmail].forEach(el => el.addEventListener('change', generate));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copied</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copy all'; delete copy.dataset.copied; }, 1400);
+  });
+  generate();
+</script>

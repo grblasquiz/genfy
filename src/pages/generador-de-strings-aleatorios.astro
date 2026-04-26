@@ -1,0 +1,201 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de strings aleatorios | Genfy';
+const description = 'Generá strings aleatorios con cualquier alfabeto: letras, números, símbolos o un set personalizado. Ideal para tokens, slugs y testing.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué diferencia hay con el generador de contraseñas?', acceptedAnswer: { '@type': 'Answer', text: 'Este genera cadenas con cualquier alfabeto y longitud, sin restricciones de "fortaleza". Pensado para slugs, IDs cortos, tokens internos y datos de prueba, no para login humano.' } },
+    { '@type': 'Question', name: '¿Sirve como ID corto tipo nanoid?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Con alfabeto base62 y longitud 21, obtenés ~125 bits de entropía, equivalente a un nanoid estándar.' } },
+    { '@type': 'Question', name: '¿Cómo se calcula la entropía?', acceptedAnswer: { '@type': 'Answer', text: 'Bits de entropía = longitud × log2(tamaño del alfabeto). Por ejemplo, 16 caracteres con alfabeto de 36 = 16 × log2(36) ≈ 82 bits.' } },
+    { '@type': 'Question', name: '¿Puedo usarlo para passwords?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, pero el generador de contraseñas está más afinado para ese caso (tipos de caracteres separados, indicador de fortaleza). Acá tenés más flexibilidad de alfabeto.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech"
+    title="Generador de strings aleatorios"
+    intro="Generá cadenas aleatorias con el alfabeto y longitud que necesites. Útil para tokens, slugs, IDs cortos, datos de prueba y nombres de archivos únicos."
+  >
+    <div slot="tool" class="rs-tool">
+      <div class="rs-output">
+        <input id="rs-out" class="mono" readonly aria-label="String generado" />
+        <button id="rs-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+      <div id="rs-entropy" class="rs-entropy">—</div>
+
+      <div class="rs-row">
+        <label for="rs-len">Longitud</label>
+        <input id="rs-len" type="number" min="1" max="256" value="16" />
+      </div>
+
+      <div class="rs-toggles">
+        <label><input type="checkbox" id="rs-up" checked /> A-Z</label>
+        <label><input type="checkbox" id="rs-low" checked /> a-z</label>
+        <label><input type="checkbox" id="rs-num" checked /> 0-9</label>
+        <label><input type="checkbox" id="rs-sym" /> !@#$%^&amp;*</label>
+        <label><input type="checkbox" id="rs-dash" /> - _</label>
+      </div>
+
+      <div class="rs-row">
+        <label for="rs-custom">Alfabeto personalizado (opcional, sobrescribe lo anterior)</label>
+        <input id="rs-custom" type="text" placeholder="Ej: ABCDEF0123" />
+      </div>
+
+      <div class="rs-row">
+        <label for="rs-bulk">Cantidad</label>
+        <input id="rs-bulk" type="number" min="1" max="500" value="1" />
+      </div>
+
+      <button id="rs-gen" class="btn btn-primary" type="button">Generar</button>
+
+      <textarea id="rs-list" class="mono" rows="6" readonly hidden></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Cuándo usar un string aleatorio</h2>
+      <p>
+        Los strings aleatorios cumplen funciones muy distintas según el contexto. No son lo mismo
+        que una contraseña, aunque por dentro se generan igual. Casos típicos:
+      </p>
+      <ul>
+        <li><strong>Tokens internos:</strong> claves de invitación a un beta, links de descarga firmados, tokens de reset de contraseña.</li>
+        <li><strong>IDs cortos:</strong> alternativa a UUID cuando importa la legibilidad o el largo (slugs en URLs, IDs visibles).</li>
+        <li><strong>Nombres de archivo únicos:</strong> para evitar colisiones al subir a S3, R2 o GCS.</li>
+        <li><strong>Datos de prueba:</strong> rellenar campos de texto en seeds y fixtures sin que se vean realistas.</li>
+        <li><strong>Códigos de cupón:</strong> cuando querés algo más corto que un UUID pero igual seguro.</li>
+      </ul>
+
+      <h2>Cómo elegir el alfabeto</h2>
+      <p>
+        El alfabeto afecta la legibilidad, la entropía por caracter y dónde podés usar el string.
+      </p>
+      <ul>
+        <li><strong>Solo dígitos (10):</strong> 3.32 bits/caracter. Para códigos de un solo uso (OTP).</li>
+        <li><strong>Alfanumérico minúsculas (36):</strong> 5.17 bits/caracter. Bueno para slugs en URLs.</li>
+        <li><strong>Base62 (62):</strong> 5.95 bits/caracter. Estándar para IDs cortos y tokens.</li>
+        <li><strong>Hexadecimal (16):</strong> 4 bits/caracter. Compatible con casi todo.</li>
+        <li><strong>Con símbolos (~95):</strong> 6.57 bits/caracter. Solo cuando el destino los soporta.</li>
+      </ul>
+
+      <h2>Cómo se calcula la entropía</h2>
+      <p>
+        La fórmula es <code>bits = longitud × log2(N)</code>, donde N es el tamaño del alfabeto.
+        Algunos ejemplos prácticos:
+      </p>
+      <ol>
+        <li>16 caracteres alfanuméricos = 95 bits. Suficiente para cualquier token interno.</li>
+        <li>21 caracteres base62 = 125 bits. El default de nanoid.</li>
+        <li>32 hex = 128 bits. Equivale a un UUID v4.</li>
+        <li>43 base62 = 256 bits. Para claves maestras de cifrado.</li>
+      </ol>
+      <p>
+        Por debajo de 64 bits, asumí que un atacante puede romperlo. Por encima de 128 bits, está
+        fuera de alcance incluso con cómputo masivo.
+      </p>
+
+      <h2>Buenas prácticas para tokens</h2>
+      <ul>
+        <li>Si el token va en URL, evitá símbolos que requieran escapado.</li>
+        <li>Si lo van a leer humanos, evitá caracteres ambiguos (0, O, 1, l, I).</li>
+        <li>Guardá un hash si el token sirve para autenticar, no el texto plano.</li>
+        <li>Asociale una expiración real, no infinita.</li>
+        <li>Logueá uso (al menos creación, primer uso y último uso).</li>
+      </ul>
+
+      <h2>Cuándo NO usar este generador</h2>
+      <p>
+        No lo uses como contraseña principal de una cuenta humana: el generador de contraseñas
+        está afinado para eso. Tampoco para identificadores que tengan que coordinarse entre
+        sistemas distribuidos: ahí UUID v4 o v7 es la opción correcta. Y no lo uses para datos
+        que necesiten ser estables: cada generación produce algo distinto, salvo que copies y
+        pegues.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Diferencia con el generador de contraseñas?</summary><p>Este genera cadenas con cualquier alfabeto y longitud. El de contraseñas está optimizado para login humano con indicador de fortaleza.</p></details>
+      <details><summary>¿Sirve como ID corto tipo nanoid?</summary><p>Sí. Base62 con longitud 21 da ~125 bits, igual que nanoid por default.</p></details>
+      <details><summary>¿Cómo se calcula la entropía?</summary><p>bits = longitud × log2(tamaño del alfabeto). 16 caracteres con alfabeto de 36 ≈ 82 bits.</p></details>
+      <details><summary>¿Puedo usarlo para passwords?</summary><p>Sí, pero el generador específico de contraseñas tiene UI más afinada para ese caso.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rs-output { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
+  .rs-output input { font-family: var(--font-mono); font-size: 1rem; background: var(--bg-inset); }
+  .rs-output .btn { min-width: 92px; }
+  .rs-entropy { font-size: 0.8125rem; color: var(--text-subtle); margin-bottom: 1.25rem; }
+  .rs-row { margin-bottom: 1rem; }
+  .rs-row label { margin-bottom: 0.4375rem; }
+  .rs-toggles { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem 1rem; margin-bottom: 1rem; }
+  .rs-toggles label { font-weight: 400; font-size: 0.9375rem; color: var(--text-soft); display: flex; align-items: center; gap: 0.5rem; margin: 0; cursor: pointer; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; margin-top: 1rem; }
+</style>
+
+<script>
+  const out = document.getElementById('rs-out') as HTMLInputElement;
+  const copy = document.getElementById('rs-copy') as HTMLButtonElement;
+  const gen = document.getElementById('rs-gen') as HTMLButtonElement;
+  const lenEl = document.getElementById('rs-len') as HTMLInputElement;
+  const up = document.getElementById('rs-up') as HTMLInputElement;
+  const low = document.getElementById('rs-low') as HTMLInputElement;
+  const num = document.getElementById('rs-num') as HTMLInputElement;
+  const sym = document.getElementById('rs-sym') as HTMLInputElement;
+  const dash = document.getElementById('rs-dash') as HTMLInputElement;
+  const custom = document.getElementById('rs-custom') as HTMLInputElement;
+  const bulk = document.getElementById('rs-bulk') as HTMLInputElement;
+  const list = document.getElementById('rs-list') as HTMLTextAreaElement;
+  const ent = document.getElementById('rs-entropy')!;
+
+  function pool(): string {
+    if (custom.value.trim()) return custom.value;
+    let p = '';
+    if (up.checked) p += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (low.checked) p += 'abcdefghijklmnopqrstuvwxyz';
+    if (num.checked) p += '0123456789';
+    if (sym.checked) p += '!@#$%^&*()';
+    if (dash.checked) p += '-_';
+    return p;
+  }
+  function one(): string {
+    const p = pool(); if (!p) return '';
+    const length = Math.min(256, Math.max(1, parseInt(lenEl.value || '16', 10)));
+    const arr = new Uint32Array(length); crypto.getRandomValues(arr);
+    let s = ''; for (let i = 0; i < length; i++) s += p[arr[i] % p.length];
+    return s;
+  }
+  function generate() {
+    const p = pool();
+    if (!p) { out.value = ''; list.hidden = true; ent.textContent = 'Activá al menos un set'; return; }
+    const length = Math.min(256, Math.max(1, parseInt(lenEl.value || '16', 10)));
+    const bits = length * Math.log2(p.length);
+    ent.textContent = `Alfabeto de ${p.length} caracteres · ${Math.round(bits)} bits de entropía`;
+    const n = Math.min(500, Math.max(1, parseInt(bulk.value || '1', 10)));
+    if (n === 1) { out.value = one(); list.hidden = true; }
+    else {
+      const arr: string[] = []; for (let i = 0; i < n; i++) arr.push(one());
+      out.value = arr[0]; list.value = arr.join('\n'); list.hidden = false;
+    }
+  }
+  gen.addEventListener('click', generate);
+  [lenEl, up, low, num, sym, dash, custom, bulk].forEach(el => el.addEventListener('input', generate));
+  async function doCopy() {
+    const txt = !list.hidden ? list.value : out.value;
+    if (!txt) return;
+    await navigator.clipboard.writeText(txt);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copiado</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copiar'; delete copy.dataset.copied; }, 1400);
+  }
+  copy.addEventListener('click', doCopy);
+  generate();
+</script>

@@ -1,0 +1,185 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Meeting Agenda Generator | Genfy';
+const description = 'Build a clear meeting agenda with objective, time-boxed topics, owners and next steps. Professional template for remote and in-person teams.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What does a good meeting agenda need?', acceptedAnswer: { '@type': 'Answer', text: 'A clear objective, time-boxed topics with owners, expected decisions, and a final next-steps block with owner and deadline.' } },
+    { '@type': 'Question', name: 'How far in advance should I send it?', acceptedAnswer: { '@type': 'Answer', text: 'At least 24 hours ahead. Gives attendees time to prepare and, if the meeting wasn\'t necessary, to cancel in time.' } },
+    { '@type': 'Question', name: 'How do I keep a meeting on track?', acceptedAnswer: { '@type': 'Answer', text: 'Time per topic, a facilitator with authority to cut tangents, and a parking lot at the end for off-topic items.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Work" title="Meeting Agenda Generator"
+    intro="Fill the form and get a professional agenda with objective, time-boxed topics, owners and next steps. Ready to paste into the calendar invite.">
+
+    <div slot="tool" class="ag">
+      <label for="ag-title">Meeting title</label>
+      <input id="ag-title" type="text" placeholder="Weekly marketing sync" value="Weekly marketing sync" />
+
+      <div class="ag-row">
+        <div>
+          <label for="ag-date">Date</label>
+          <input id="ag-date" type="text" placeholder="Monday, April 28" value="Monday, April 28" />
+        </div>
+        <div>
+          <label for="ag-duration">Duration (min)</label>
+          <input id="ag-duration" type="number" min="15" max="180" step="15" value="45" />
+        </div>
+      </div>
+
+      <label for="ag-objective">Objective (one sentence)</label>
+      <input id="ag-objective" type="text" placeholder="Decide focus of next campaign and assign owners" value="Decide focus of next campaign and assign owners" />
+
+      <label for="ag-attendees">Attendees (comma separated)</label>
+      <input id="ag-attendees" type="text" placeholder="Alex, Sam, Jordan" value="Alex, Sam, Jordan, Taylor" />
+
+      <label for="ag-items">Topics (one per line, format: topic | minutes | owner)</label>
+      <textarea id="ag-items" rows="6" placeholder="Q1 campaign results | 10 | Sam
+Competitor analysis | 10 | Jordan
+Next campaign brief | 15 | Alex
+Assign owners and deadlines | 5 | All">Q1 campaign results | 10 | Sam
+Competitor analysis | 10 | Jordan
+Next campaign brief | 15 | Alex
+Assign owners and deadlines | 5 | All</textarea>
+
+      <div class="ag-actions">
+        <button id="ag-gen" class="btn btn-primary" type="button">Generate agenda</button>
+        <button id="ag-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+      </div>
+
+      <textarea id="ag-out" rows="16" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.875rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why the agenda decides the meeting's quality</h2>
+      <p>
+        Meetings without an agenda are not meetings — they're calls with a calendar entry.
+        A clear agenda does three things: it filters who needs to be there (if your name
+        doesn't appear next to any item, you don't need to attend), it forces a decision
+        (every item needs a concrete output), and it leaves a trail for those who weren't
+        there. The gap between a professional agenda and the typical "topic 1, topic 2,
+        topic 3" is enormous.
+      </p>
+
+      <h2>The 5 parts of every professional agenda</h2>
+      <ol>
+        <li><strong>Objective in one sentence.</strong> If you can't write it, the meeting shouldn't exist yet. "Marketing sync" is not an objective. "Decide the focus of the next campaign and assign owners" is.</li>
+        <li><strong>Topics with time and owner.</strong> Each item has minutes assigned (sum should equal total duration) and a person responsible for moving it. Without time-boxing, the first topic eats everything.</li>
+        <li><strong>Pre-read if applicable.</strong> Documents to read beforehand. This cuts effective duration in half: the meeting stops being "for informing" and becomes "for deciding".</li>
+        <li><strong>Expected decisions.</strong> Mark which decisions are made in this meeting and which are deferred. Groups without explicit decision items end up meeting again next week.</li>
+        <li><strong>Next steps at the end.</strong> Action + owner + date. No owner, no action; no date, no urgency.</li>
+      </ol>
+
+      <h2>Time rules per meeting type</h2>
+      <ul>
+        <li><strong>Standup / daily</strong>: 15 minutes max, standing, three questions per person. More than that is a symptom, not a solution.</li>
+        <li><strong>Planning</strong>: 1 hour per 2-week sprint as a ceiling. If you need more, the backlog wasn't prepared properly.</li>
+        <li><strong>Decision meeting</strong>: 30-45 minutes. Walk in with a proposal, walk out with a decision.</li>
+        <li><strong>Retrospective</strong>: 45-60 minutes. Worth it when there are concrete actions with owners — not when it's catharsis.</li>
+        <li><strong>1:1</strong>: 30 minutes biweekly. More frequent is micromanagement; less is disconnection.</li>
+        <li><strong>Brainstorm</strong>: 60 minutes. Needs prep beforehand (defined problem, clear constraints) or it devolves into a chat.</li>
+      </ul>
+
+      <h2>The parking lot: keep meetings on track</h2>
+      <p>
+        The "parking lot" is a block at the end where off-topic items raised during the
+        meeting get noted. When someone tosses a topic that wasn't on the agenda, the
+        facilitator parks it without discussion. After the meeting, those items get
+        triaged: some go to a future meeting, some get resolved async, some are noise.
+        Without a parking lot, those items eat time meant for the planned topics.
+      </p>
+
+      <h2>Async-first: when you don't need a meeting</h2>
+      <p>
+        Before drafting the agenda, ask whether the meeting is necessary. Three quick
+        heuristics: (1) if all you'll do is inform, send a doc; (2) if one person can make
+        the decision, let them and broadcast it; (3) if you need feedback from several,
+        open a collaborative doc with a deadline. The only meetings worth running are the
+        ones that require live conversation between multiple heads: complex decisions with
+        tradeoffs, strategic alignment, conflicts to resolve.
+      </p>
+
+      <h2>Before you send the invite</h2>
+      <ol>
+        <li>Does the agenda fit the duration? If not, drop topics or split into two meetings.</li>
+        <li>Does every topic have an owner? If there are orphan items, assign before sending.</li>
+        <li>Who must attend? Only the people listed as owners or decision-makers. Everyone else gets the minutes after.</li>
+        <li>Is there a pre-read? Attach it with clear instructions ("Read sections 1-3").</li>
+        <li>When do you send it? Minimum 24 hours ahead, 48 if it requires prep.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What does a good meeting agenda need?</summary><p>A clear objective, time-boxed topics with owners, expected decisions, and a next-steps block at the end with owner and deadline.</p></details>
+      <details><summary>How far in advance should I send the agenda?</summary><p>At least 24 hours before. Gives attendees time to prepare — and if the meeting wasn't necessary, to cancel in time.</p></details>
+      <details><summary>How do I keep a meeting on track?</summary><p>Time per topic, a facilitator empowered to cut tangents, and a parking lot at the end for off-topic items.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ag-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .ag label { margin-top: 0.875rem; }
+  .ag label:first-child { margin-top: 0; }
+  .ag-actions { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+  @media (max-width: 600px) { .ag-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const t = document.getElementById('ag-title') as HTMLInputElement;
+  const d = document.getElementById('ag-date') as HTMLInputElement;
+  const dur = document.getElementById('ag-duration') as HTMLInputElement;
+  const obj = document.getElementById('ag-objective') as HTMLInputElement;
+  const att = document.getElementById('ag-attendees') as HTMLInputElement;
+  const items = document.getElementById('ag-items') as HTMLTextAreaElement;
+  const out = document.getElementById('ag-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('ag-gen') as HTMLButtonElement;
+  const copy = document.getElementById('ag-copy') as HTMLButtonElement;
+
+  function generate() {
+    const lines = items.value.split('\n').filter(Boolean);
+    let totalMin = 0;
+    const parsed = lines.map((l, i) => {
+      const [topic = '', mins = '', owner = ''] = l.split('|').map(x => x.trim());
+      const m = parseInt(mins, 10) || 0;
+      totalMin += m;
+      return `${i + 1}. ${topic} — ${m || '?'} min — ${owner || '?'}`;
+    });
+
+    const text = [
+      `📋 ${t.value}`,
+      ``,
+      `Date: ${d.value}`,
+      `Duration: ${dur.value} min (planned: ${totalMin} min)`,
+      `Attendees: ${att.value}`,
+      ``,
+      `🎯 Objective`,
+      obj.value,
+      ``,
+      `📝 Agenda`,
+      ...parsed,
+      ``,
+      `✅ Next steps`,
+      `[Action] — [Owner] — [Deadline]`,
+      ``,
+      `🅿️ Parking lot (off-topic items that come up)`,
+    ].join('\n');
+    out.value = text;
+  }
+
+  gen.addEventListener('click', generate);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copied';
+    setTimeout(() => { icon.textContent = 'Copy'; }, 1400);
+  });
+  generate();
+</script>

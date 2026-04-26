@@ -1,0 +1,159 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de keywords de marca gratis | Genfy';
+const description = 'Generá un set de keywords descriptivas, emocionales y de categoría para tu marca. Útil para brief de naming, SEO, pitch deck o moodboard.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve un set de keywords de marca?', acceptedAnswer: { '@type': 'Answer', text: 'Sirven para alinear al equipo creativo, diseñar moodboards, escribir copy consistente, detectar palabras prohibidas y orientar al diseñador o agencia de naming.' } },
+    { '@type': 'Question', name: '¿Cuántas keywords debería tener una marca?', acceptedAnswer: { '@type': 'Answer', text: 'Entre 15 y 25 distribuidas en tres grupos: descriptivas (qué hace), emocionales (cómo se siente) y de categoría (con quién compite). Más de 30 deja de servir como filtro.' } },
+    { '@type': 'Question', name: '¿Las uso para SEO o para branding?', acceptedAnswer: { '@type': 'Answer', text: 'Las dos cosas. Las descriptivas ayudan al SEO; las emocionales al posicionamiento; las de categoría a la diferenciación competitiva.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Branding" title="Generador de keywords de marca"
+    intro="Cargá categoría y arquetipo. Genfy te devuelve un set balanceado de keywords descriptivas, emocionales y de categoría — listo para brief, moodboard o naming.">
+
+    <div slot="tool" class="bk">
+      <label for="bk-cat">Categoría / industria</label>
+      <input id="bk-cat" type="text" placeholder="finanzas, salud, software..." value="software" />
+
+      <label for="bk-arch" style="margin-top:1rem">Arquetipo</label>
+      <select id="bk-arch">
+        <option value="sage">Sage (sabio, confiable)</option>
+        <option value="hero">Hero (logro, fuerza)</option>
+        <option value="caregiver">Caregiver (cuidado)</option>
+        <option value="creator">Creator (originalidad)</option>
+        <option value="explorer">Explorer (libertad)</option>
+        <option value="ruler">Ruler (autoridad)</option>
+      </select>
+
+      <button id="bk-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar set de keywords</button>
+
+      <div id="bk-out" class="bk-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué son las keywords de marca y por qué se usan</h2>
+      <p>
+        Las keywords de marca son el vocabulario base con el que tu marca se describe a sí misma y al mundo. No son SEO keywords (aunque se solapan); son las 15 a 25 palabras que cualquiera que trabaje en tu marca — diseñador, redactor, fundador, agencia — debería poder usar como guía sin pedir contexto.
+      </p>
+      <p>
+        Una buena lista de keywords de marca cumple tres funciones simultáneas. Es un filtro: si una pieza nueva no usa ninguna de esas palabras o sugiere lo contrario, probablemente esté fuera de marca. Es un brief: bajás esa lista a un diseñador y obtenés un moodboard mejor que con cinco páginas de descripción. Y es una herramienta de alineación: el equipo discute con palabras concretas en vez de impresiones vagas.
+      </p>
+
+      <h2>Los tres grupos imprescindibles</h2>
+      <p>Una lista funcional debe tener tres categorías balanceadas:</p>
+      <ol>
+        <li><strong>Descriptivas (8-10 palabras):</strong> qué hace la marca, qué resuelve, qué herramientas usa. Son las más cercanas al SEO. Ejemplo: facturación, automatización, freelancers, electrónica.</li>
+        <li><strong>Emocionales (5-8 palabras):</strong> cómo se siente la marca. Conectan con el arquetipo. Ejemplo: claro, accesible, cercano, riguroso, profesional.</li>
+        <li><strong>De categoría / competencia (3-5 palabras):</strong> qué espacio ocupa. Ejemplo: SaaS, fintech, B2B, LATAM, vertical.</li>
+      </ol>
+      <p>
+        Si todas tus palabras son descriptivas, tu marca va a sonar funcional pero sin alma. Si todas son emocionales, va a parecer publicidad de detergente. El balance es el activo.
+      </p>
+
+      <h2>Cómo elegir las palabras correctas</h2>
+      <p>
+        Pensá las keywords como tres listas paralelas. Para las descriptivas, escribí qué resolvés y qué hacés en lenguaje del cliente, no del rubro. "Facturar en un click" en lugar de "emisión de comprobantes electrónicos clase A". Para las emocionales, identificá tu arquetipo (Sage, Hero, Caregiver, Creator, Explorer, Ruler) y bajá 5-8 palabras que ese arquetipo encarnaría. Para las de categoría, listá con quién compartís SERP y panel de competencia.
+      </p>
+
+      <h2>Palabras prohibidas: el activo invisible</h2>
+      <p>
+        Tan importante como las que entran son las que salen. Una marca seria también define sus palabras prohibidas: las que jamás usaría. Si tu marca es Sage (clara, confiable), probablemente prohibís "loco", "viral" o "rompedor". Si es Hero (logro), prohibís "modesto" o "tranquilo". Tener esa lista de exclusión evita que un copywriter junior introduzca términos que rompen el tono.
+      </p>
+
+      <h2>Aplicaciones prácticas del set de keywords</h2>
+      <ul>
+        <li><strong>Brief de naming:</strong> el set de palabras es el insumo principal para que un naming-agent o agencia te devuelva opciones alineadas.</li>
+        <li><strong>Moodboard de diseño:</strong> 15 keywords en Pinterest devuelven 100 imágenes que arman el universo visual.</li>
+        <li><strong>Manual de copy:</strong> es la base del style guide. "Usá estas, evitá estas otras."</li>
+        <li><strong>SEO de contenido:</strong> las descriptivas alimentan tu calendario editorial.</li>
+        <li><strong>Diferenciación competitiva:</strong> comparar tu set vs. el del competidor revela espacios de posicionamiento sin ocupar.</li>
+      </ul>
+
+      <h2>Cómo mantener vivas las keywords</h2>
+      <p>
+        Una lista no se hace y se guarda en un drive olvidado. Se revisa una vez al año, idealmente en el cierre del plan anual. Si en ese año pivoteaste, expandiste a una categoría nueva o cambiaste el cliente ideal, las keywords cambian. Mantenerlas actualizadas es lo que diferencia a las marcas que se sienten coherentes durante años de las que envejecen rápido.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirven?</summary><p>Brief, moodboard, copy consistente y naming. Es la base verbal de la marca.</p></details>
+      <details><summary>¿Cuántas debería tener?</summary><p>15 a 25 distribuidas entre descriptivas, emocionales y de categoría. Más de 30 deja de filtrar.</p></details>
+      <details><summary>¿SEO o branding?</summary><p>Las dos. Descriptivas para SEO, emocionales para posicionamiento, de categoría para diferenciación.</p></details>
+      <details><summary>¿Cuándo actualizarlas?</summary><p>Una vez al año o tras un pivot importante.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bk-out { margin-top: 1.25rem; display: grid; gap: 1rem; }
+  .bk-group { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); }
+  .bk-group h4 { margin: 0 0 0.75rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-subtle); }
+  .bk-tags { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+  .bk-tag { padding: 0.3125rem 0.625rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-xs); font-size: 0.875rem; cursor: pointer; transition: border-color 0.1s; }
+  .bk-tag:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const DESC: Record<string, string[]> = {
+    software: ['plataforma', 'API', 'integración', 'automatización', 'flujo', 'dashboard', 'tiempo real', 'escalable', 'cloud'],
+    finanzas: ['transparencia', 'inversión', 'ahorro', 'patrimonio', 'rendimiento', 'liquidez', 'planificación', 'fintech', 'banca'],
+    salud: ['bienestar', 'prevención', 'consulta', 'diagnóstico', 'evidencia', 'profesional', 'tratamiento', 'seguimiento', 'historia'],
+    default: ['solución', 'servicio', 'producto', 'plataforma', 'experiencia', 'flujo', 'proceso', 'sistema', 'herramienta'],
+  };
+  const EMOTION: Record<string, string[]> = {
+    sage: ['claro', 'confiable', 'preciso', 'sereno', 'riguroso', 'transparente', 'inteligente', 'sólido'],
+    hero: ['fuerte', 'audaz', 'ambicioso', 'imparable', 'directo', 'enérgico', 'decidido', 'valiente'],
+    caregiver: ['cercano', 'cálido', 'humano', 'protector', 'paciente', 'empático', 'cuidadoso', 'amable'],
+    creator: ['original', 'curioso', 'expresivo', 'libre', 'auténtico', 'fluido', 'imaginativo', 'distinto'],
+    explorer: ['libre', 'abierto', 'curioso', 'inquieto', 'aventurero', 'fresco', 'descubridor', 'amplio'],
+    ruler: ['premium', 'autoritativo', 'estable', 'sólido', 'institucional', 'serio', 'imponente', 'establecido'],
+  };
+  const CAT: Record<string, string[]> = {
+    software: ['SaaS', 'B2B', 'B2C', 'API-first', 'self-serve'],
+    finanzas: ['fintech', 'banca digital', 'wealth tech', 'B2C', 'institucional'],
+    salud: ['healthtech', 'telemedicina', 'B2C', 'preventivo', 'consultorio'],
+    default: ['B2B', 'B2C', 'D2C', 'vertical', 'horizontal'],
+  };
+
+  const cat = document.getElementById('bk-cat') as HTMLInputElement;
+  const arch = document.getElementById('bk-arch') as HTMLSelectElement;
+  const gen = document.getElementById('bk-gen') as HTMLButtonElement;
+  const out = document.getElementById('bk-out')!;
+
+  function makeGroup(title: string, words: string[]) {
+    const g = document.createElement('div');
+    g.className = 'bk-group';
+    g.innerHTML = `<h4>${title}</h4><div class="bk-tags"></div>`;
+    const tags = g.querySelector('.bk-tags')!;
+    words.forEach(w => {
+      const t = document.createElement('span');
+      t.className = 'bk-tag';
+      t.textContent = w;
+      t.title = 'Click para copiar';
+      t.addEventListener('click', () => { navigator.clipboard.writeText(w); t.textContent = '✓ ' + w; setTimeout(() => t.textContent = w, 700); });
+      tags.appendChild(t);
+    });
+    return g;
+  }
+
+  function generate() {
+    const c = cat.value.trim().toLowerCase();
+    const a = arch.value;
+    const desc = DESC[c] || DESC.default;
+    const emo = EMOTION[a as keyof typeof EMOTION];
+    const ca = CAT[c] || CAT.default;
+    out.innerHTML = '';
+    out.appendChild(makeGroup('Descriptivas', desc));
+    out.appendChild(makeGroup('Emocionales', emo));
+    out.appendChild(makeGroup('Categoría', ca));
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

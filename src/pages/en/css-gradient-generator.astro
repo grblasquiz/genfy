@@ -1,0 +1,174 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free CSS Gradient Generator | Genfy';
+const description = 'Build linear, radial and conic CSS gradients with live preview. Copy ready-to-paste code, multi-stop support and modern background styles.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is the difference between linear and radial?', acceptedAnswer: { '@type': 'Answer', text: 'Linear travels in a straight direction (top-bottom, left-right or any angle). Radial starts from a center point and expands as a circle or ellipse.' } },
+    { '@type': 'Question', name: 'Do gradients hurt performance?', acceptedAnswer: { '@type': 'Answer', text: 'Barely. CSS gradients render on the GPU and weigh less than a JPG with the same effect. Optimize only if you are animating many at once.' } },
+    { '@type': 'Question', name: 'Are they cross-browser?', acceptedAnswer: { '@type': 'Answer', text: 'Linear and radial: yes, for over a decade. Conic-gradient is supported in Chrome, Safari and Firefox since 2020. For IE11, fall back to a solid color.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design" title="CSS gradient generator"
+    intro="Design linear, radial or conic gradients with live preview. Tweak colors, angles and stops; copy the CSS ready to paste into your stylesheet.">
+
+    <div slot="tool" class="grad-tool">
+      <div class="grad-controls">
+        <div>
+          <label for="g-type">Type</label>
+          <select id="g-type">
+            <option value="linear" selected>Linear</option>
+            <option value="radial">Radial</option>
+            <option value="conic">Conic</option>
+          </select>
+        </div>
+        <div>
+          <label for="g-angle">Angle (linear) / Position</label>
+          <input id="g-angle" type="range" min="0" max="360" value="135" />
+        </div>
+        <div>
+          <label for="g-c1">Color 1</label>
+          <input id="g-c1" type="color" value="#059669" />
+        </div>
+        <div>
+          <label for="g-c2">Color 2</label>
+          <input id="g-c2" type="color" value="#0ea5e9" />
+        </div>
+        <div>
+          <label for="g-c3">Color 3 (optional)</label>
+          <input id="g-c3" type="color" value="#a855f7" />
+        </div>
+        <div class="grad-3-toggle">
+          <label><input id="g-use3" type="checkbox" /> Use 3 colors</label>
+        </div>
+      </div>
+
+      <div id="g-preview" class="g-preview"></div>
+
+      <label for="g-css">Generated CSS</label>
+      <textarea id="g-css" rows="3" readonly></textarea>
+      <div class="g-actions">
+        <button id="g-copy" class="btn btn-primary" type="button">Copy CSS</button>
+        <button id="g-rand" class="btn btn-ghost" type="button">Random</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Linear, radial and conic: when to use each</h2>
+      <p>
+        CSS supports three native gradient types. Each solves a different visual problem,
+        and mixing them without judgment is the fastest way to make an interface feel
+        cluttered.
+      </p>
+      <ul>
+        <li><strong>linear-gradient:</strong> the most common one. Great for hero sections, dimensional buttons and headers that need a subtle transition between zones. Defined with an angle (<code>135deg</code>) or a keyword (<code>to right</code>).</li>
+        <li><strong>radial-gradient:</strong> emulates a light source. Useful for spotlight effects, backgrounds centered on a CTA, screen mocks with a vignette. Accepts a shape (<code>circle</code> or <code>ellipse</code>) and a position (<code>at top left</code>).</li>
+        <li><strong>conic-gradient:</strong> rotates around a point. The right tool for pie charts, spinners, color pickers and "loading ring" effects without SVG.</li>
+      </ul>
+
+      <h2>Stops: the detail that separates good from great</h2>
+      <p>
+        By default, two colors blend 50/50 linearly. But you can control exactly where
+        each color transitions with stops:
+      </p>
+      <pre><code>linear-gradient(135deg, #059669 0%, #0ea5e9 60%, #a855f7 100%)</code></pre>
+      <p>
+        Moving the second color to 60% instead of 50% lets the first dominate more.
+        For hard splits with no blending, place two stops at the same position:
+        <code>#059669 50%, #0ea5e9 50%</code>.
+      </p>
+
+      <h2>Mesh gradients: the new trend</h2>
+      <p>
+        "Mesh" gradients (Stripe, Vercel-style) aren't a separate CSS property: they're
+        <strong>several radial-gradients stacked with transparency</strong>. Three or four
+        radials with different colors, positioned in opposite corners, produce that
+        organic effect that's now everywhere on tech landings.
+      </p>
+
+      <h2>When NOT to use gradients</h2>
+      <ul>
+        <li>Behind long text. They reduce contrast and tire the eyes.</li>
+        <li>On secondary buttons. Reserve that visual weight for the primary CTA.</li>
+        <li>Animated at 60fps on low-end mobile. Animating <code>background-position</code> can tank frame rate.</li>
+        <li>On dense card backgrounds. If you already have shadows, borders and content, the gradient is overkill.</li>
+      </ul>
+
+      <h2>Performance and accessibility</h2>
+      <p>
+        A CSS gradient weighs zero kilobytes and renders on the GPU. Always better than
+        a PNG/JPG. But mind accessibility: if a gradient sits behind text, ensure a
+        4.5:1 contrast ratio against both the lightest <em>and</em> the darkest stop.
+        When in doubt, layer a solid <code>rgba()</code> overlay between gradient and text.
+      </p>
+
+      <h2>Copy and export</h2>
+      <p>
+        The generated CSS goes straight into your stylesheet as
+        <code>background: ...;</code>. With Tailwind you can use
+        <code>className="bg-[linear-gradient(...)]"</code>. If you'll reuse the gradient
+        across components, store it as a variable:
+        <code>--brand-grad: linear-gradient(...);</code>.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Linear vs radial?</summary><p>Linear goes in a straight direction (an angle). Radial starts from a point and expands as a circle or ellipse.</p></details>
+      <details><summary>Do they hurt performance?</summary><p>Barely. They render on the GPU and beat any equivalent JPG.</p></details>
+      <details><summary>Cross-browser?</summary><p>Linear and radial for over a decade. Conic since 2020 in modern Chrome/Safari/Firefox.</p></details>
+      <details><summary>How do I create mesh gradients?</summary><p>Stack 3–4 radial-gradients with transparency at different corners inside the same <code>background</code> property.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .grad-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; align-items: end; }
+  .grad-3-toggle { grid-column: 1 / -1; font-size: 0.875rem; color: var(--text-soft); }
+  .g-preview { width: 100%; height: 220px; border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1rem; }
+  textarea#g-css { font-family: var(--font-mono); font-size: 0.8125rem; }
+  .g-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+  pre { background: var(--bg-inset); padding: 0.75rem 1rem; border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto; font-family: var(--font-mono); font-size: 0.8125rem; }
+  @media (max-width: 600px) { .grad-controls { grid-template-columns: 1fr 1fr; } }
+</style>
+
+<script>
+  const type = document.getElementById('g-type') as HTMLSelectElement;
+  const angle = document.getElementById('g-angle') as HTMLInputElement;
+  const c1 = document.getElementById('g-c1') as HTMLInputElement;
+  const c2 = document.getElementById('g-c2') as HTMLInputElement;
+  const c3 = document.getElementById('g-c3') as HTMLInputElement;
+  const use3 = document.getElementById('g-use3') as HTMLInputElement;
+  const preview = document.getElementById('g-preview') as HTMLDivElement;
+  const css = document.getElementById('g-css') as HTMLTextAreaElement;
+  const copy = document.getElementById('g-copy') as HTMLButtonElement;
+  const rand = document.getElementById('g-rand') as HTMLButtonElement;
+
+  function build() {
+    const colors = use3.checked ? [c1.value, c2.value, c3.value] : [c1.value, c2.value];
+    let g = '';
+    if (type.value === 'linear') g = `linear-gradient(${angle.value}deg, ${colors.join(', ')})`;
+    else if (type.value === 'radial') g = `radial-gradient(circle at ${angle.value}% 50%, ${colors.join(', ')})`;
+    else g = `conic-gradient(from ${angle.value}deg, ${colors.join(', ')})`;
+    preview.style.background = g;
+    css.value = `background: ${g};`;
+  }
+  [type, angle, c1, c2, c3, use3].forEach(el => el.addEventListener('input', build));
+  copy.addEventListener('click', () => {
+    navigator.clipboard.writeText(css.value);
+    copy.textContent = 'Copied!';
+    setTimeout(() => { copy.textContent = 'Copy CSS'; }, 1200);
+  });
+  rand.addEventListener('click', () => {
+    const h = () => '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    c1.value = h(); c2.value = h(); c3.value = h();
+    angle.value = String(Math.floor(Math.random() * 360));
+    build();
+  });
+  build();
+</script>

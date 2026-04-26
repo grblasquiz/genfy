@@ -1,0 +1,196 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Tirar moneda online: cara o ceca | Genfy';
+const description = 'Tirá una moneda virtual y obtené cara o ceca al instante. Animación 3D, historial de resultados y modo "mejor de N tiradas". Justo y al azar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Es realmente 50/50?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Usamos crypto.getRandomValues, que distribuye los resultados de manera uniforme. Una moneda física real tiene un sesgo mínimo (cerca del 51% al lado en que aterriza); la nuestra es perfectamente equilibrada.' } },
+    { '@type': 'Question', name: '¿Para qué sirve tirar una moneda online?', acceptedAnswer: { '@type': 'Answer', text: 'Para decisiones binarias rápidas: quién paga la cena, quién empieza un juego de mesa, decidir entre dos opciones equivalentes. También en clase, para decidir orden de equipos.' } },
+    { '@type': 'Question', name: '¿Puedo tirar varias veces seguidas?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Activá modo "mejor de N" y la moneda se tira N veces; gana la cara que sale más veces. Útil para decisiones que necesitan más certeza estadística.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Random" title="Tirar moneda (cara o ceca)"
+    intro="Una moneda virtual con animación 3D, historial de resultados y modo mejor-de-N. Decidí lo que tengas que decidir, justo y al azar.">
+
+    <div slot="tool" class="cf-tool">
+      <div class="cf-stage">
+        <div id="cf-coin" class="cf-coin">
+          <div class="cf-side cf-heads">CARA</div>
+          <div class="cf-side cf-tails">CECA</div>
+        </div>
+      </div>
+
+      <div id="cf-result" class="cf-result">Tocá "tirar"</div>
+
+      <div class="cf-controls">
+        <div>
+          <label for="cf-mode">Modo</label>
+          <select id="cf-mode">
+            <option value="1" selected>Una tirada</option>
+            <option value="3">Mejor de 3</option>
+            <option value="5">Mejor de 5</option>
+            <option value="7">Mejor de 7</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="cf-actions">
+        <button id="cf-flip" class="btn btn-primary" type="button">Tirar moneda</button>
+        <button id="cf-reset" class="btn btn-ghost" type="button">Reiniciar historial</button>
+      </div>
+
+      <div class="cf-history">
+        <strong>Historial:</strong>
+        <span id="cf-stats">— caras / — cecas</span>
+        <div id="cf-list" class="cf-list"></div>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>El sesgo invisible de las monedas reales</h2>
+      <p>
+        Aunque "tirar una moneda" es sinónimo de azar perfecto, los estudios muestran que
+        las monedas reales tienen un sesgo: caen ligeramente más veces (alrededor del 51%)
+        del lado en que estaban antes de tirarse. El físico Persi Diaconis publicó en
+        2007 un análisis que demuestra este efecto. Una moneda virtual no tiene ese sesgo:
+        es exactamente 50/50.
+      </p>
+
+      <h2>Cómo decide nuestro generador</h2>
+      <p>
+        Generamos un número aleatorio con <code>crypto.getRandomValues</code>. Si es par,
+        cara; impar, ceca. La distribución es estadísticamente uniforme, comprobable con
+        cualquier test de chi-cuadrado: tirá 10000 veces y vas a ver una división muy
+        cercana a 5000-5000.
+      </p>
+
+      <h2>Para qué sirve tirar una moneda</h2>
+      <ul>
+        <li><strong>Decisiones binarias triviales:</strong> ¿pizza o sushi?, ¿salgo a correr o no?</li>
+        <li><strong>Resolver empates:</strong> dos personas quieren la misma silla / postre / tarea.</li>
+        <li><strong>Orden en juegos:</strong> quién empieza un partido, quién saca primero en tenis.</li>
+        <li><strong>Educación:</strong> demostrar probabilidad, distribución binomial, ley de los grandes números.</li>
+        <li><strong>Asignar roles aleatoriamente:</strong> equipo A o equipo B, presentación corta o larga.</li>
+      </ul>
+
+      <h2>Mejor de N: cuándo conviene</h2>
+      <p>
+        Si tirar una vez te parece poco, probá "mejor de 3" o "mejor de 5". Estadísticamente
+        sigue siendo 50/50 en cada tirada individual, pero el ganador del set tiene mayor
+        confianza: una decisión "mejor de 5" tiene resultados que se sienten menos azarosos
+        sin dejar de ser justos. En deportes esto se usa formalmente: 3 sets de tenis, 7
+        partidos de NBA finals.
+      </p>
+
+      <h2>La falacia del jugador</h2>
+      <p>
+        Si la moneda salió cara 5 veces seguidas, mucha gente cree que "ahora le toca a
+        ceca". Es falso: cada tirada es independiente, y la probabilidad de cara sigue
+        siendo 50%. Esta falacia (gambler's fallacy) está documentada desde 1796 y es la
+        razón por la que muchos pierden plata en casinos. El azar no tiene memoria.
+      </p>
+
+      <h2>El truco de la moneda "fija"</h2>
+      <p>
+        Hay maneras de hacer que una moneda física dé un resultado u otro: girarla en
+        lugar de tirarla, atraparla en la mano vs dejarla caer al piso, etc. Con un
+        sesgo de hasta 51%, sumado a un mago entrenado, una moneda puede llegar al 80%
+        de un mismo lado. La virtual es a prueba de eso: no podés influenciar
+        <code>crypto.getRandomValues</code>.
+      </p>
+
+      <h2>Casos donde NO usar moneda</h2>
+      <ol>
+        <li>Decisiones importantes con consecuencias reales: trabajo, mudanza, ruptura. Una moneda no aporta información, solo decide por vos cuando ya sabés la respuesta.</li>
+        <li>Sorteos con valor económico: necesitás un sistema certificado y, idealmente, presencia notarial.</li>
+        <li>Cuando hay una opción objetivamente mejor: si una alternativa es claramente superior, no le des la decisión a la moneda.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Es 50/50?</summary><p>Sí. Usamos crypto.getRandomValues con distribución uniforme. Una moneda física tiene sesgo de ~51%; la nuestra no.</p></details>
+      <details><summary>¿Para qué sirve?</summary><p>Decisiones binarias rápidas, resolver empates, orden en juegos, demostrar probabilidad en clase.</p></details>
+      <details><summary>¿Mejor de N?</summary><p>Sí. Tira N veces y gana la cara más frecuente. No cambia las chances individuales, pero el set total tiene más certeza.</p></details>
+      <details><summary>¿Funciona offline?</summary><p>Sí. Una vez cargada la página, todo se calcula en el navegador.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cf-stage { display: flex; align-items: center; justify-content: center; padding: 2rem; min-height: 240px; perspective: 1000px; }
+  .cf-coin { width: 160px; height: 160px; position: relative; transform-style: preserve-3d; transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.3, 1); }
+  .cf-coin.flipping { transition: transform 2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .cf-side { position: absolute; inset: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; letter-spacing: 0.05em; color: #fff; backface-visibility: hidden; box-shadow: 0 8px 24px rgba(9,9,11,0.2), inset 0 -8px 16px rgba(0,0,0,0.15); }
+  .cf-heads { background: linear-gradient(135deg, #f59e0b, #b45309); }
+  .cf-tails { background: linear-gradient(135deg, #64748b, #1e293b); transform: rotateY(180deg); }
+  .cf-result { text-align: center; font-size: 1.5rem; font-weight: 700; padding: 1rem; background: var(--bg-inset); border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1rem; }
+  .cf-controls { margin-bottom: 1rem; }
+  .cf-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .cf-history { padding: 1rem; background: var(--bg-inset); border-radius: var(--radius); border: 1px solid var(--border); font-size: 0.875rem; }
+  .cf-list { margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.25rem; }
+  .cf-list span { display: inline-block; padding: 0.125rem 0.5rem; border-radius: var(--radius-sm); font-size: 0.75rem; font-weight: 600; }
+  .cf-list .h { background: #fef3c7; color: #92400e; }
+  .cf-list .t { background: #e2e8f0; color: #334155; }
+</style>
+
+<script>
+  const coin = document.getElementById('cf-coin') as HTMLDivElement;
+  const result = document.getElementById('cf-result')!;
+  const flipBtn = document.getElementById('cf-flip') as HTMLButtonElement;
+  const resetBtn = document.getElementById('cf-reset') as HTMLButtonElement;
+  const modeEl = document.getElementById('cf-mode') as HTMLSelectElement;
+  const stats = document.getElementById('cf-stats')!;
+  const list = document.getElementById('cf-list')!;
+
+  let history: ('h' | 't')[] = [];
+  let baseRot = 0;
+
+  function flipOnce(): 'h' | 't' {
+    const arr = new Uint32Array(1);
+    window.crypto.getRandomValues(arr);
+    return arr[0] % 2 === 0 ? 'h' : 't';
+  }
+  function animate(side: 'h' | 't') {
+    return new Promise<void>(resolve => {
+      const spins = 4 + Math.floor(Math.random() * 3);
+      const final = side === 'h' ? 0 : 180;
+      baseRot += spins * 360 + (final - (baseRot % 360));
+      coin.classList.add('flipping');
+      coin.style.transform = `rotateY(${baseRot}deg)`;
+      setTimeout(() => { coin.classList.remove('flipping'); resolve(); }, 1800);
+    });
+  }
+  async function flip() {
+    flipBtn.disabled = true;
+    const n = parseInt(modeEl.value);
+    let h = 0, t = 0;
+    let last: 'h' | 't' = 'h';
+    for (let i = 0; i < n; i++) {
+      last = flipOnce();
+      if (last === 'h') h++; else t++;
+      history.push(last);
+      await animate(last);
+    }
+    if (n === 1) {
+      result.textContent = last === 'h' ? '¡CARA!' : '¡CECA!';
+    } else {
+      result.textContent = h > t ? `Ganó CARA (${h}-${t})` : `Ganó CECA (${t}-${h})`;
+    }
+    const totalH = history.filter(x => x === 'h').length;
+    const totalT = history.length - totalH;
+    stats.textContent = `${totalH} caras / ${totalT} cecas`;
+    list.innerHTML = history.map(x => `<span class="${x}">${x === 'h' ? 'C' : 'X'}</span>`).join('');
+    flipBtn.disabled = false;
+  }
+  flipBtn.addEventListener('click', flip);
+  resetBtn.addEventListener('click', () => {
+    history = []; stats.textContent = '— caras / — cecas'; list.innerHTML = '';
+    result.textContent = 'Tocá "tirar"';
+  });
+</script>

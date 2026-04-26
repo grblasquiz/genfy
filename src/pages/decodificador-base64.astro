@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Decodificador Base64 online | Genfy';
+const description = 'Decodificá texto Base64 a UTF-8 al instante. Soporte para variante URL-safe y padding ausente. 100% en tu navegador.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace este decodificador?', acceptedAnswer: { '@type': 'Answer', text: 'Convierte una cadena Base64 (estándar o URL-safe) de vuelta al texto UTF-8 original. Detecta automáticamente la variante y agrega padding si falta.' } },
+    { '@type': 'Question', name: '¿Por qué da error "Invalid character"?', acceptedAnswer: { '@type': 'Answer', text: 'La cadena tiene caracteres que no son Base64 válidos (espacios, saltos de línea sucios, caracteres extraños). El decodificador limpia espacios automáticamente; si igual falla, revisá que sea realmente Base64.' } },
+    { '@type': 'Question', name: '¿Puedo decodificar imágenes y archivos binarios?', acceptedAnswer: { '@type': 'Answer', text: 'Esta herramienta está pensada para texto. Para archivos binarios, conviene usar utilidades de terminal como base64 -d en Linux/Mac.' } },
+    { '@type': 'Question', name: '¿Es privado?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Todo se procesa en tu navegador con atob. Nada se envía a un servidor ni se loguea.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech"
+    title="Decodificador Base64"
+    intro="Convertí cualquier cadena Base64 al texto original. Detecta automáticamente la variante URL-safe y agrega el padding faltante si hace falta."
+  >
+    <div slot="tool" class="b64-tool">
+      <label for="b64-in">Texto Base64</label>
+      <textarea id="b64-in" class="mono" rows="6" placeholder="Pegá la cadena Base64 aquí…">SG9sYSwgbXVuZG8=</textarea>
+
+      <div id="b64-status" class="b64-status">—</div>
+
+      <label for="b64-out">Texto decodificado</label>
+      <textarea id="b64-out" rows="6" readonly></textarea>
+      <button id="b64-copy" class="btn btn-primary" type="button"><span class="copy-icon">Copiar resultado</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo funciona la decodificación</h2>
+      <p>
+        Decodificar Base64 es el proceso inverso de la codificación: cada 4 caracteres de la
+        cadena se convierten en 3 bytes de salida. El decodificador hace tres pasos:
+      </p>
+      <ol>
+        <li>Limpia espacios, saltos de línea y caracteres no válidos.</li>
+        <li>Si detecta variante URL-safe (presencia de <code>-</code> o <code>_</code>), los reemplaza por <code>+</code> y <code>/</code>.</li>
+        <li>Agrega <code>=</code> de padding hasta que la longitud sea múltiplo de 4.</li>
+      </ol>
+      <p>
+        Después aplica <code>atob</code> (la primitiva nativa del navegador) y reinterpreta los
+        bytes como UTF-8 con <code>TextDecoder</code>. Eso permite mostrar correctamente
+        acentos, eñes, emojis y caracteres no latinos.
+      </p>
+
+      <h2>Errores frecuentes al decodificar</h2>
+      <ul>
+        <li><strong>Cadenas con espacios o saltos de línea.</strong> El email a veces parte el Base64 en líneas de 76 caracteres con saltos. Limpialos antes (este decoder lo hace solo).</li>
+        <li><strong>Padding ausente.</strong> Cadenas tipo JWT no llevan <code>=</code> al final. Agregás <code>=</code> hasta llegar a múltiplo de 4 (este decoder lo hace solo).</li>
+        <li><strong>Variante URL-safe sin convertir.</strong> Si tu cadena tiene <code>-</code> o <code>_</code>, el decoder estándar tira error. Convertí o usá un decoder que lo soporte.</li>
+        <li><strong>Datos no-UTF-8.</strong> Si decodificás algo que no era texto (imagen binaria), vas a ver caracteres ininteligibles. Es lo esperable.</li>
+      </ul>
+
+      <h2>Ejemplos de uso real</h2>
+      <p>
+        El decodificador de Base64 aparece en muchos contextos cotidianos del desarrollo:
+      </p>
+      <ul>
+        <li><strong>Inspeccionar JWT.</strong> El payload de un JWT es Base64 URL-safe. Decodificarlo te muestra los claims (sub, iat, exp, etc.).</li>
+        <li><strong>Leer Basic Auth.</strong> Si capturás un header <code>Authorization: Basic ...</code>, decodificalo para ver <code>usuario:password</code>.</li>
+        <li><strong>Inspeccionar data URIs.</strong> El SVG embebido como <code>data:image/svg+xml;base64,...</code> se puede decodificar para leer el XML.</li>
+        <li><strong>Variables de entorno binarias.</strong> Algunas herramientas guardan claves SSH o certificados como Base64 en variables; decodificás para usarlos.</li>
+        <li><strong>Configuraciones de Kubernetes.</strong> Los Secret de K8s están en Base64. <code>kubectl get secret ... -o yaml</code> los muestra codificados; el decoder revela el valor real.</li>
+      </ul>
+
+      <h2>Base64 y seguridad</h2>
+      <p>
+        Volvemos a recalcarlo: Base64 no es cifrado. Si encontraste una clave o token en Base64
+        en un commit público, asumí que está comprometido y rotalo. Cualquier scanner automático
+        lo decodifica en milisegundos.
+      </p>
+      <p>
+        Tampoco confundas un hash con Base64. Algunos hashes (bcrypt, por ejemplo) tienen
+        formato similar a Base64 pero no son intercambiables: bcrypt usa una variante propia con
+        alfabeto diferente y el hash no es decodificable, es one-way.
+      </p>
+
+      <h2>Si la cadena no decodifica bien</h2>
+      <p>
+        Verificá tres cosas en orden:
+      </p>
+      <ol>
+        <li>¿La cadena tiene caracteres extraños copiados accidentalmente? Borrá comillas, espacios extra y BOM.</li>
+        <li>¿Es realmente Base64 o es Base32, Base58 (Bitcoin) o Hex? Se confunden seguido.</li>
+        <li>¿Los datos originales eran texto? Si era binario, el resultado va a ser ilegible.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace este decodificador?</summary><p>Convierte una cadena Base64 (estándar o URL-safe) al texto UTF-8 original. Detecta la variante y agrega padding si falta.</p></details>
+      <details><summary>¿Por qué da error "Invalid character"?</summary><p>La cadena tiene caracteres no Base64. El decoder limpia espacios solo; si igual falla, revisá si es realmente Base64.</p></details>
+      <details><summary>¿Funciona con archivos binarios?</summary><p>Pensado para texto. Para binarios usá utilidades de terminal como base64 -d.</p></details>
+      <details><summary>¿Es privado?</summary><p>Sí, todo en tu navegador con atob. Nada se envía a un servidor.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .b64-tool textarea { font-family: var(--font-mono); margin-bottom: 1rem; resize: vertical; }
+  .b64-tool textarea#b64-out { font-family: var(--font-sans); }
+  .b64-tool textarea[readonly] { background: var(--bg-inset); }
+  .b64-status { font-size: 0.8125rem; color: var(--text-subtle); margin-bottom: 1rem; min-height: 1.25rem; }
+  .b64-status.ok { color: var(--accent); }
+  .b64-status.err { color: var(--danger); }
+</style>
+
+<script>
+  const inp = document.getElementById('b64-in') as HTMLTextAreaElement;
+  const out = document.getElementById('b64-out') as HTMLTextAreaElement;
+  const status = document.getElementById('b64-status')!;
+  const copy = document.getElementById('b64-copy') as HTMLButtonElement;
+
+  function decode(): void {
+    let s = inp.value.trim();
+    if (!s) { out.value = ''; status.textContent = '—'; status.className = 'b64-status'; return; }
+    s = s.replace(/[\s\r\n]+/g, '');
+    const isUrl = /[-_]/.test(s);
+    if (isUrl) s = s.replace(/-/g, '+').replace(/_/g, '/');
+    while (s.length % 4 !== 0) s += '=';
+    try {
+      const bin = atob(s);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      out.value = new TextDecoder('utf-8').decode(bytes);
+      status.textContent = isUrl ? 'OK · variante URL-safe' : 'OK · variante estándar';
+      status.className = 'b64-status ok';
+    } catch (e) {
+      out.value = '';
+      status.textContent = 'Error: la cadena no es Base64 válida';
+      status.className = 'b64-status err';
+    }
+  }
+  inp.addEventListener('input', decode);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copiado</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copiar resultado'; delete copy.dataset.copied; }, 1400);
+  });
+  decode();
+</script>

@@ -1,0 +1,155 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free YouTube Title Generator | Genfy';
+const description = 'Generate YouTube titles optimized for CTR. Drop in topic and number. Genfy returns 12 versions with curiosity, numbers and concrete promise.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How long can a YouTube title be?', acceptedAnswer: { '@type': 'Answer', text: '100 characters max, but only 60 are visible on mobile and 70 on desktop before the cut. Important content up front.' } },
+    { '@type': 'Question', name: 'Title or thumbnail — which weighs more?', acceptedAnswer: { '@type': 'Answer', text: 'Thumbnail decides the first click; title decides the second. Without a good thumbnail, no title saves the video. But a viral thumbnail with a bad title confuses and tanks retention.' } },
+    { '@type': 'Question', name: 'Do keywords help in the title?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. YouTube ranks by title, description, tag and script keywords. Main keyword goes at the front of the title.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="YouTube Title Generator"
+    intro="Drop in topic, keyword and number. Genfy returns 12 titles optimized for CTR, within the 60-70 visible characters.">
+
+    <div slot="tool" class="yt">
+      <label for="yt-topic">Video topic</label>
+      <input id="yt-topic" type="text" placeholder="how to invoice as a freelancer..." value="how to invoice as a freelancer" />
+
+      <label for="yt-kw" style="margin-top:1rem">Main keyword</label>
+      <input id="yt-kw" type="text" placeholder="invoice, productivity, store..." value="invoice" />
+
+      <label for="yt-num" style="margin-top:1rem">Key number</label>
+      <input id="yt-num" type="text" placeholder="5 minutes, 30%, $300..." value="5 minutes" />
+
+      <button id="yt-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 titles</button>
+
+      <div id="yt-out" class="yt-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why YouTube titles play by their own rules</h2>
+      <p>
+        On YouTube, the title works in pair with the thumbnail. People decide in under a second whether to click — and that decision is 60% thumbnail, 40% title. But the title has a second critical job: SEO. YouTube ranks videos by keywords in the title, description and transcript. So a good title does two things at once: maximize CTR and load search keywords.
+      </p>
+      <p>
+        A healthy click-through rate sits between 6% and 12%. Above 12%, you scale. Below 4%, the algorithm stops promoting you even if the video is great. The title is leverage — not production.
+      </p>
+
+      <h2>The five formulas with the best measured CTR</h2>
+      <ol>
+        <li><strong>Number + benefit:</strong> "How to invoice in 5 minutes as a freelancer."</li>
+        <li><strong>Curiosity without clickbait:</strong> "What I learned billing wrong for 3 years."</li>
+        <li><strong>Direct question:</strong> "Does your invoice have this error?"</li>
+        <li><strong>Comparison or contrast:</strong> "Invoicing as a freelancer vs. as a company."</li>
+        <li><strong>"How + goal + without obstacle":</strong> "How to invoice without an accountant."</li>
+      </ol>
+
+      <h2>The mobile factor almost nobody optimizes</h2>
+      <p>
+        On mobile (60% of traffic) YouTube shows ~60 characters before the cut. If your title is "How to invoice as a freelancer in 5 minutes without an accountant in 2026", viewers see "How to invoice as a freelancer in 5 minutes without an a..." and the rest is lost. Keyword and main promise in the first 50 characters. Add context after.
+      </p>
+
+      <h2>Mistakes that kill CTR</h2>
+      <ul>
+        <li><strong>Too long:</strong> 90+ characters lose the promise on mobile.</li>
+        <li><strong>Vague or generic:</strong> "Things about marketing" loses to "5 marketing mistakes that cost you money."</li>
+        <li><strong>Excessive caps:</strong> "WATCH THIS NOW" lowers credibility and CTR.</li>
+        <li><strong>Unfulfilled clickbait:</strong> kills retention, kills recommendation.</li>
+        <li><strong>No keyword:</strong> the video doesn't surface in relevant searches.</li>
+        <li><strong>Too many emojis up front:</strong> 1 is fine, 3+ is noise.</li>
+      </ul>
+
+      <h2>The title + thumbnail balance</h2>
+      <p>
+        Title and thumbnail shouldn't repeat the same information — they should complement. If the thumbnail shows a crossed-out invoice with a red zero, the title shouldn't say "invoice". Have the title carry the other half: "The mistake that makes you overpay."
+      </p>
+      <p>
+        Practical rule: the thumbnail creates visual curiosity; the title partly resolves it and promises the rest. When both hold, CTR climbs.
+      </p>
+
+      <h2>YouTube SEO: what really matters</h2>
+      <ol>
+        <li><strong>Absolute and relative watch time.</strong> The most important. How much of the video gets watched and compared to other channel uploads.</li>
+        <li><strong>Thumbnail / title CTR.</strong> If low, no promotion. If high, it scales.</li>
+        <li><strong>Title and description keywords.</strong> Title weighs more; description adds context.</li>
+        <li><strong>Engagement: likes, comments, shares.</strong> Secondary but important signals.</li>
+        <li><strong>Tags.</strong> Mild influence; help YouTube understand category and suggestions.</li>
+      </ol>
+
+      <h2>When to use parentheses and brackets</h2>
+      <p>
+        Parentheses and brackets in the title lift CTR when they signal extra value: "(with free template)", "[2026]", "(no accountant)". Don't use them to repeat what's already in the title — they work when they add increment.
+      </p>
+
+      <h2>How to iterate titles without reset</h2>
+      <p>
+        YouTube allows editing the title without losing ranking as long as the topic doesn't change. Testing 2-3 title versions in the first 48-72 hours (while the algorithm is measuring CTR) can triple reach. After the first week, changing the title moves the needle little.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How long can it be?</summary><p>100 max, but only 60 visible on mobile. Important up front.</p></details>
+      <details><summary>Title or thumbnail more important?</summary><p>Thumbnail decides first click; title decides second. Both make CTR.</p></details>
+      <details><summary>Do keywords help?</summary><p>Yes. YouTube ranks by title keywords. Main keyword up front.</p></details>
+      <details><summary>Edit the title later?</summary><p>In the first 48-72 hours, yes — helps optimize CTR. After, little impact.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .yt-out { margin-top: 1.25rem; display: grid; gap: 0.5rem; }
+  .yt-item { padding: 0.75rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; display: flex; justify-content: space-between; align-items: center; gap: 1rem; line-height: 1.4; }
+  .yt-item:hover { border-color: var(--accent); }
+  .yt-text { flex: 1; }
+  .yt-len { font-size: 0.75rem; color: var(--text-subtle); font-family: var(--font-mono); white-space: nowrap; }
+</style>
+
+<script>
+  const topic = document.getElementById('yt-topic') as HTMLInputElement;
+  const kw = document.getElementById('yt-kw') as HTMLInputElement;
+  const num = document.getElementById('yt-num') as HTMLInputElement;
+  const gen = document.getElementById('yt-gen') as HTMLButtonElement;
+  const out = document.getElementById('yt-out')!;
+
+  function generate() {
+    const T = topic.value.trim() || 'your topic';
+    const Tc = T.charAt(0).toUpperCase() + T.slice(1);
+    const K = kw.value.trim() || 'topic';
+    const Kc = K.charAt(0).toUpperCase() + K.slice(1);
+    const N = num.value.trim() || '5 minutes';
+
+    const list = [
+      `How to ${T} in ${N}`,
+      `${N}: the short way to ${T}`,
+      `What I learned ${T} (3 years of mistakes)`,
+      `${Kc}: the quick guide`,
+      `${Kc} without losing hours`,
+      `5 mistakes when you ${T} (and how to avoid them)`,
+      `${Tc} in ${N} (step by step)`,
+      `${Kc} right? This changes everything`,
+      `${Tc}: the truth nobody tells you`,
+      `${Kc} for beginners (2026)`,
+      `${Tc} (with free template)`,
+      `Before vs. after learning to ${T}`,
+    ];
+
+    out.innerHTML = '';
+    list.forEach(s => {
+      const el = document.createElement('div');
+      el.className = 'yt-item';
+      el.title = 'Click to copy';
+      el.innerHTML = `<span class="yt-text">${s}</span><span class="yt-len">${s.length}/100</span>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(s); const o = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = o, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

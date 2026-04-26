@@ -1,0 +1,230 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Out-of-Office Reply Generator | Genfy';
+const description = 'Generate your out-of-office message: vacation, day off, business trip or leave. Professional tone, ready to copy for Gmail and Outlook.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What should an OOO message include?', acceptedAnswer: { '@type': 'Answer', text: 'Return date, alternate contact and a sketch of what happens with urgent messages. Keep it short — 4 to 6 lines.' } },
+    { '@type': 'Question', name: 'Formal or casual?', acceptedAnswer: { '@type': 'Answer', text: 'Depends on your context. In B2B, formal and concise. In relaxed companies, casual is fine. The point is clarity.' } },
+    { '@type': 'Question', name: 'Do I need to share the reason?', acceptedAnswer: { '@type': 'Answer', text: 'No. Saying "out of the office" is enough. For medical or personal leave, never share private details.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Work" title="Out-of-Office Reply Generator"
+    intro="Your out-of-office message, ready for Gmail or Outlook. Vacation, business trip, leave or day off. Configure dates and alternate contact.">
+
+    <div slot="tool" class="oo">
+      <div class="oo-row">
+        <div>
+          <label for="oo-type">Reason</label>
+          <select id="oo-type">
+            <option value="vacation">Vacation</option>
+            <option value="trip">Business trip</option>
+            <option value="dayoff">Day off</option>
+            <option value="leave">Leave</option>
+            <option value="generic">Generic</option>
+          </select>
+        </div>
+        <div>
+          <label for="oo-tone">Tone</label>
+          <select id="oo-tone">
+            <option value="formal">Formal</option>
+            <option value="casual">Casual</option>
+          </select>
+        </div>
+      </div>
+      <div class="oo-row">
+        <div>
+          <label for="oo-from">From</label>
+          <input id="oo-from" type="date" />
+        </div>
+        <div>
+          <label for="oo-to">To</label>
+          <input id="oo-to" type="date" />
+        </div>
+      </div>
+      <div class="oo-row">
+        <div>
+          <label for="oo-name">Your name</label>
+          <input id="oo-name" type="text" value="Sarah" />
+        </div>
+        <div>
+          <label for="oo-altname">Alternate contact (name)</label>
+          <input id="oo-altname" type="text" value="Daniel Chen" />
+        </div>
+      </div>
+      <div class="oo-row">
+        <div>
+          <label for="oo-altemail">Alternate contact (email)</label>
+          <input id="oo-altemail" type="email" value="daniel@company.com" />
+        </div>
+        <div>
+          <label for="oo-lang">Bilingual (add ES)</label>
+          <select id="oo-lang">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+          </select>
+        </div>
+      </div>
+      <button id="oo-gen" class="btn btn-primary" type="button">Generate message</button>
+      <button id="oo-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="oo-out" rows="14" readonly style="margin-top:1rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What a good OOO looks like</h2>
+      <p>
+        An out-of-office reply does four things: confirms you got the email, says when you're
+        back, offers an alternative for urgent matters, and stays short. What it should NOT do
+        is apologize at length, share personal details, or sound defensive. You're on
+        vacation / in a meeting / at a conference: that's normal and nobody needs your
+        permission.
+      </p>
+
+      <h2>Recommended structure</h2>
+      <ol>
+        <li><strong>Brief greeting.</strong> "Hi, thanks for writing."</li>
+        <li><strong>Status and dates.</strong> "I'm out of the office until [date]."</li>
+        <li><strong>What happens meanwhile.</strong> "I'll reply when I return." (Be honest if you won't read email.)</li>
+        <li><strong>Alternate contact.</strong> "For urgent matters, please reach [name] at [email]."</li>
+        <li><strong>Simple close.</strong> "Best / Thanks for your patience."</li>
+      </ol>
+
+      <h2>Formal vs. casual</h2>
+      <p>
+        Tone is dictated by your industry and role. In finance, law, corporate B2B: formal,
+        concise, no emojis. In creative agencies, startups, relaxed-culture companies: casual,
+        first person, an emoji is fine. The goal is that your OOO doesn't clash with the rest
+        of your emails.
+      </p>
+
+      <h2>Bilingual: when and how</h2>
+      <p>
+        If you work with international clients, a bilingual version (English + Spanish) is
+        worth having. The generator builds it automatically. Rule: put your primary work
+        language first, secondary second. Separate with a horizontal line or "---" for
+        readability.
+      </p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>"I'll check email occasionally".</strong> Then everyone writes anyway. Be honest: "I will not check email until I return."</li>
+        <li><strong>Personal details.</strong> "I'm at the hospital with my mother." Don't share.</li>
+        <li><strong>No alternate contact.</strong> For real urgencies, always leave someone.</li>
+        <li><strong>Massive message.</strong> Over 8 lines and people skip it.</li>
+        <li><strong>Forgetting to disable it.</strong> You're back Monday and the message is still on for a week — looks unprofessional. Use auto-end dates.</li>
+      </ul>
+
+      <h2>Set it up in Gmail and Outlook</h2>
+      <ol>
+        <li><strong>Gmail.</strong> Settings → General → Vacation responder → enable, dates, message, save.</li>
+        <li><strong>Outlook 365.</strong> Settings → Mail → Automatic replies → enable, time window, message (internal/external if you want to differentiate).</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What to include?</summary><p>Return date, alternate contact, urgent-message handling. Short: 4-6 lines.</p></details>
+      <details><summary>Formal or casual?</summary><p>Depends on your culture. The goal is clarity.</p></details>
+      <details><summary>Share the reason?</summary><p>Not needed. "Out of the office" is enough.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .oo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .oo-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const typeEl = document.getElementById('oo-type') as HTMLSelectElement;
+  const toneEl = document.getElementById('oo-tone') as HTMLSelectElement;
+  const fromEl = document.getElementById('oo-from') as HTMLInputElement;
+  const toEl = document.getElementById('oo-to') as HTMLInputElement;
+  const nameEl = document.getElementById('oo-name') as HTMLInputElement;
+  const altnameEl = document.getElementById('oo-altname') as HTMLInputElement;
+  const altemailEl = document.getElementById('oo-altemail') as HTMLInputElement;
+  const langEl = document.getElementById('oo-lang') as HTMLSelectElement;
+  const out = document.getElementById('oo-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('oo-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('oo-copy') as HTMLButtonElement;
+
+  function fmtEn(s: string) {
+    if (!s) return '';
+    const d = new Date(s + 'T12:00:00');
+    return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  }
+  function fmtEs(s: string) {
+    if (!s) return '';
+    const d = new Date(s + 'T12:00:00');
+    return d.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  function buildEn() {
+    const t = typeEl.value; const tone = toneEl.value;
+    const from = fmtEn(fromEl.value); const to = fmtEn(toEl.value);
+    const name = nameEl.value; const altname = altnameEl.value; const altemail = altemailEl.value;
+    const reasons: Record<string,{f:string;c:string}> = {
+      vacation: { f: "I am currently on vacation", c: "I'm on vacation" },
+      trip: { f: "I am on a business trip", c: "I'm on a business trip" },
+      dayoff: { f: "I am out of the office today", c: "I'm taking the day off" },
+      leave: { f: "I am on leave", c: "I'm on leave" },
+      generic: { f: "I am out of the office", c: "I'm out of the office" },
+    };
+    const r = reasons[t];
+    const action = tone === 'formal' ? r.f : r.c;
+    const greeting = tone === 'formal' ? "Thank you for your message." : "Hi! Thanks for writing.";
+    const ret = (from && to) ? ` from ${from} until ${to}` : (to ? ` until ${to}` : '');
+    const altLine = altname && altemail
+      ? (tone === 'formal'
+          ? `For urgent matters, please contact ${altname} at ${altemail}.`
+          : `For anything urgent, ping ${altname} (${altemail}).`)
+      : '';
+    const close = tone === 'formal'
+      ? `I will reply upon my return.\n\nKind regards,\n${name}`
+      : `I'll get back to you when I return.\n\nThanks for your patience!\n${name}`;
+    return `${greeting}\n\n${action}${ret}.\n${altLine ? altLine + '\n' : ''}\n${close}`;
+  }
+  function buildEs() {
+    const t = typeEl.value; const tone = toneEl.value;
+    const from = fmtEs(fromEl.value); const to = fmtEs(toEl.value);
+    const name = nameEl.value; const altname = altnameEl.value; const altemail = altemailEl.value;
+    const reasons: Record<string,{f:string;c:string}> = {
+      vacation: { f: "Estaré de vacaciones", c: "Estoy de vacaciones" },
+      trip: { f: "Me encuentro en un viaje de trabajo", c: "Estoy de viaje" },
+      dayoff: { f: "Hoy estoy fuera de la oficina", c: "Tengo el día libre" },
+      leave: { f: "Me encuentro en licencia", c: "Estoy con licencia" },
+      generic: { f: "Estaré fuera de la oficina", c: "Estoy fuera de la oficina" },
+    };
+    const r = reasons[t];
+    const action = tone === 'formal' ? r.f : r.c;
+    const greeting = tone === 'formal' ? "Estimado/a, gracias por su mensaje." : "¡Hola! Gracias por escribir.";
+    const ret = (from && to) ? ` desde el ${from} hasta el ${to}` : (to ? ` hasta el ${to}` : '');
+    const altLine = altname && altemail
+      ? (tone === 'formal'
+          ? `Para temas urgentes, por favor contacte a ${altname} a ${altemail}.`
+          : `Si es urgente, escribile a ${altname} (${altemail}).`)
+      : '';
+    const close = tone === 'formal'
+      ? `Responderé su mensaje a la brevedad al regreso.\n\nSaludos cordiales,\n${name}`
+      : `Te respondo cuando vuelva.\n\n¡Gracias por la paciencia!\n${name}`;
+    return `${greeting}\n\n${action}${ret}.\n${altLine ? altLine + '\n' : ''}\n${close}`;
+  }
+  function generate() {
+    let msg = buildEn();
+    if (langEl.value === 'yes') msg += '\n\n---\n\n' + buildEs();
+    out.value = msg;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

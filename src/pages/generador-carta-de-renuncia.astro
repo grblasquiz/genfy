@@ -1,0 +1,198 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de carta de renuncia | Genfy';
+const description = 'Carta de renuncia profesional, lista para imprimir o enviar por email. Tono formal, fechas, motivo opcional. Editá y copiá al instante.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuánto debo dar de aviso?', acceptedAnswer: { '@type': 'Answer', text: 'En Argentina, la Ley de Contrato de Trabajo establece 15 días para empleados sin antigüedad mayor. En España y otros países, 15 días naturales es el estándar. Verificá tu contrato y convenio.' } },
+    { '@type': 'Question', name: '¿Tengo que dar el motivo?', acceptedAnswer: { '@type': 'Answer', text: 'No es obligatorio. Una carta puede limitarse a fechas y agradecimiento. Si lo das, mantenelo breve y neutral ("nuevo proyecto profesional").' } },
+    { '@type': 'Question', name: '¿La envío por email o impresa?', acceptedAnswer: { '@type': 'Answer', text: 'Lo más sólido es entregarla impresa con firma, y mandarla por email como respaldo. Para empleos remotos, email firmado digitalmente alcanza.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Trabajo / Work" title="Generador de carta de renuncia"
+    intro="Carta formal, profesional y lista para enviar. Configurá fechas, motivo opcional y tono. Editá el resultado, copialo o imprimilo.">
+
+    <div slot="tool" class="rl">
+      <div class="rl-row">
+        <div>
+          <label for="rl-name">Tu nombre</label>
+          <input id="rl-name" type="text" value="Martín Rodríguez" />
+        </div>
+        <div>
+          <label for="rl-position">Tu puesto</label>
+          <input id="rl-position" type="text" value="Analista de Marketing" />
+        </div>
+      </div>
+      <div class="rl-row">
+        <div>
+          <label for="rl-company">Empresa</label>
+          <input id="rl-company" type="text" value="Acme S.A." />
+        </div>
+        <div>
+          <label for="rl-manager">Persona destinataria</label>
+          <input id="rl-manager" type="text" value="Sra. Laura García" />
+        </div>
+      </div>
+      <div class="rl-row">
+        <div>
+          <label for="rl-letter-date">Fecha de la carta</label>
+          <input id="rl-letter-date" type="date" />
+        </div>
+        <div>
+          <label for="rl-last-day">Último día de trabajo</label>
+          <input id="rl-last-day" type="date" />
+        </div>
+      </div>
+      <div class="rl-row">
+        <div>
+          <label for="rl-reason">Motivo (opcional)</label>
+          <select id="rl-reason">
+            <option value="none">Sin motivo (recomendado)</option>
+            <option value="career">Nuevo proyecto profesional</option>
+            <option value="personal">Razones personales</option>
+            <option value="health">Razones de salud</option>
+            <option value="study">Continuar estudios</option>
+          </select>
+        </div>
+        <div>
+          <label for="rl-tone">Tono</label>
+          <select id="rl-tone">
+            <option value="formal">Formal</option>
+            <option value="warm">Cordial</option>
+          </select>
+        </div>
+      </div>
+      <button id="rl-gen" class="btn btn-primary" type="button">Generar carta</button>
+      <button id="rl-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="rl-out" rows="18" style="margin-top:1rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Una buena carta de renuncia hace tres cosas</h2>
+      <p>
+        Comunica la decisión de forma clara, deja una fecha precisa, y mantiene la puerta
+        profesional abierta. Eso es todo. No es el momento para reclamos, mensajes pasivo-
+        agresivos, ni declaraciones extensas. Cuanto más corta y profesional, mejor: vas a
+        seguir trabajando con esa gente unas semanas más, y muchas veces te van a contactar en
+        el futuro.
+      </p>
+
+      <h2>Estructura recomendada</h2>
+      <ol>
+        <li><strong>Fecha y destinatario.</strong> Arriba a la derecha la fecha; abajo el nombre del manager directo.</li>
+        <li><strong>Apertura.</strong> "Por la presente, le comunico mi decisión de renunciar al puesto de [puesto]."</li>
+        <li><strong>Fecha efectiva.</strong> "Mi último día de trabajo será el [fecha]." (Cumpliendo el preaviso.)</li>
+        <li><strong>Agradecimiento.</strong> "Agradezco la oportunidad y la experiencia adquirida."</li>
+        <li><strong>Compromiso de transición.</strong> "Quedo a disposición para colaborar con la transición."</li>
+        <li><strong>Cierre y firma.</strong> "Saludos cordiales, [Nombre]"</li>
+      </ol>
+
+      <h2>Sobre el preaviso</h2>
+      <p>
+        El plazo legal varía por país. En Argentina (Ley 20.744), el trabajador con menos de 5
+        años de antigüedad debe dar 15 días; con más, 30 días. En España (Estatuto de los
+        Trabajadores), el preaviso es el que establece el convenio colectivo, comúnmente 15
+        días naturales. En México (LFT), 30 días. En cualquier caso, el contrato individual o
+        el convenio colectivo pueden estipular plazos mayores. Revisá tu situación
+        específica antes de definir la fecha.
+      </p>
+
+      <h2>Motivo: cuándo darlo y cuándo no</h2>
+      <p>
+        Legalmente nunca es obligatorio. En la práctica, dar un motivo neutral suaviza la
+        comunicación y cierra preguntas: "para asumir un nuevo proyecto profesional" o
+        "por razones personales". Lo que NO conviene escribir: críticas a la empresa,
+        comparaciones con otros trabajos, conflictos con compañeros, ni el nombre de tu nuevo
+        empleador. Eso lo conversás en persona si querés y con criterio.
+      </p>
+
+      <h2>Errores comunes</h2>
+      <ul>
+        <li><strong>Renunciar por chat.</strong> Una carta formal protege a las dos partes ante reclamos futuros.</li>
+        <li><strong>Cartas largas.</strong> Más de 1 página y nadie las lee. 4-6 párrafos cortos es lo ideal.</li>
+        <li><strong>Tono emocional.</strong> Aunque te vayas mal, la carta tiene que sonar profesional. Lo emocional es para tu diario.</li>
+        <li><strong>Acortar el preaviso sin acuerdo.</strong> Puede generar deducción del último sueldo. Acordá por escrito si pedís retirarte antes.</li>
+        <li><strong>Firmar sin guardar copia.</strong> Siempre conservá una copia firmada y sellada por la empresa.</li>
+      </ul>
+
+      <h2>Después de la carta</h2>
+      <p>
+        Una vez entregada, pediles formalmente que confirmen recepción. Pediles también el
+        certificado de trabajo, el comprobante del último sueldo y la liquidación final con
+        suficiente anticipación. Y, si te ofrecen contraoferta, pensala con la cabeza fría:
+        las estadísticas dicen que el 70% de la gente que acepta contraoferta se va de la
+        empresa dentro de los siguientes 12 meses.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuánto preaviso?</summary><p>Depende del país y antigüedad. Argentina: 15-30 días. Verificá tu contrato.</p></details>
+      <details><summary>¿Dar motivo?</summary><p>No obligatorio. Si lo das, neutral y breve.</p></details>
+      <details><summary>¿Email o impresa?</summary><p>Ideal: impresa con firma + email de respaldo.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rl-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rl-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const nameEl = document.getElementById('rl-name') as HTMLInputElement;
+  const positionEl = document.getElementById('rl-position') as HTMLInputElement;
+  const companyEl = document.getElementById('rl-company') as HTMLInputElement;
+  const managerEl = document.getElementById('rl-manager') as HTMLInputElement;
+  const letterDateEl = document.getElementById('rl-letter-date') as HTMLInputElement;
+  const lastDayEl = document.getElementById('rl-last-day') as HTMLInputElement;
+  const reasonEl = document.getElementById('rl-reason') as HTMLSelectElement;
+  const toneEl = document.getElementById('rl-tone') as HTMLSelectElement;
+  const out = document.getElementById('rl-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('rl-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('rl-copy') as HTMLButtonElement;
+
+  function fmt(s: string) {
+    if (!s) return '[fecha]';
+    const d = new Date(s + 'T12:00:00');
+    return d.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  function generate() {
+    const name = nameEl.value || '[Tu nombre]';
+    const pos = positionEl.value || '[puesto]';
+    const company = companyEl.value || '[empresa]';
+    const manager = managerEl.value || 'Equipo de Recursos Humanos';
+    const ld = fmt(letterDateEl.value);
+    const last = fmt(lastDayEl.value);
+    const r = reasonEl.value;
+    const reasonText = r === 'career' ? 'al haber decidido asumir un nuevo proyecto profesional'
+      : r === 'personal' ? 'por razones personales'
+      : r === 'health' ? 'por razones de salud'
+      : r === 'study' ? 'para continuar mi formación académica'
+      : '';
+    const warm = toneEl.value === 'warm';
+    const greeting = warm ? `Estimado/a ${manager},` : `Sr./Sra. ${manager}:`;
+    const opening = `Por la presente, le comunico mi decisión de renunciar al puesto de ${pos} en ${company}${reasonText ? ', ' + reasonText : ''}.`;
+    const dateLine = `Mi último día de trabajo será el ${last}, cumpliendo con el plazo de preaviso correspondiente.`;
+    const thanks = warm
+      ? `Quiero agradecer sinceramente la oportunidad de haber formado parte del equipo. Me llevo aprendizajes valiosos y una experiencia profesional significativa.`
+      : `Aprovecho la ocasión para agradecer la oportunidad brindada y la experiencia adquirida durante este período.`;
+    const transition = `Quedo a disposición para colaborar en lo que sea necesario para la transición de mis responsabilidades, capacitar a quien me suceda y dejar las tareas en orden.`;
+    const close = warm ? `Saludos cordiales,\n\n${name}` : `Sin otro particular, saludo atentamente,\n\n${name}`;
+
+    out.value = `${ld}\n\n${greeting}\n\n${opening}\n\n${dateLine}\n\n${thanks}\n\n${transition}\n\n${close}`;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

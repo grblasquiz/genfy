@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+import { VINTAGE_NAMES, NAME_STYLES } from '../lib/baby-names';
+
+const title = 'Generador de nombres vintage / antiguos | Genfy';
+const description = 'Nombres clásicos de principios del siglo XX que vuelven a estar de moda. Walter, Hazel, Edna, Frank y +30 ideas más.';
+
+const stylesES = { male: NAME_STYLES.es.male, female: NAME_STYLES.es.female };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué los nombres vintage vuelven?', acceptedAnswer: { '@type': 'Answer', text: 'Por el ciclo de los 100 años: lo que usaban los bisabuelos suena fresco para los nietos. Hazel, Pearl, Walter, Frank vuelven con fuerza desde 2018.' } },
+    { '@type': 'Question', name: '¿Qué nombres vintage funcionan hoy?', acceptedAnswer: { '@type': 'Answer', text: 'Hazel, Pearl, Vera, Mae para mujeres; Walter, Frank, Hugh, Roy para varones. Tienen presencia, son cortos y suenan auténticos sin ser raros.' } },
+    { '@type': 'Question', name: '¿Es lo mismo que un nombre clásico?', acceptedAnswer: { '@type': 'Answer', text: 'No exactamente. Los clásicos (Juan, María) nunca dejan de usarse; los vintage estuvieron olvidados 50-80 años y vuelven con un toque retro.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="es" tag="Personas" title="Generador de nombres vintage / antiguos"
+    intro="Nombres del 1900-1950 que vuelven con frescura: Walter, Hazel, Edna, Frank. Click y obtené 12 ideas con sabor retro.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Género</label>
+      <select id="cn-style">
+        {Object.entries(stylesES).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mezcla</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 12 nombres</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los nombres vintage están de moda</h2>
+      <p>
+        En sociolingüística existe la regla de los 100 años: un nombre cae en desuso, queda
+        asociado a una generación de abuelos, después se olvida, y cuando reaparece dos
+        generaciones después suena fresco. Eso explica por qué Hazel, Pearl, Walter o Frank — que
+        sonaban "viejos" en los 70 — vuelven hoy a los Top 100.
+      </p>
+
+      <h2>Nombres vintage que están volviendo</h2>
+      <ul>
+        <li><strong>Femeninos:</strong> Hazel, Pearl, Vera, Mae, Ruby, Edith, Ada, Mabel, Florence, Beatrice, Edna. Algunos ya están en el Top 50 de EE.UU. desde 2020.</li>
+        <li><strong>Masculinos:</strong> Walter, Frank, Hugh, Roy, Arthur, Ernest, Harold, Earl, Ralph. Arthur en particular crece a doble dígito cada año.</li>
+      </ul>
+
+      <h2>Por qué funcionan hoy</h2>
+      <ul>
+        <li><strong>Cortos pero con presencia.</strong> Vera, Hugh, Mae son 1 sílaba y aún así no son comunes hoy.</li>
+        <li><strong>Apellido de novela.</strong> Walter Hawthorne, Hazel Carmichael — suenan literarios sin esfuerzo.</li>
+        <li><strong>Pronunciables en cualquier idioma.</strong> Pearl, Frank, Ada, Edna funcionan en español, inglés, francés.</li>
+        <li><strong>Significado claro.</strong> Pearl = perla, Hazel = avellana, Vera = verdad. Más concretos que muchos nombres modernos inventados.</li>
+      </ul>
+
+      <h2>Cómo elegir un nombre vintage que no suene "viejo"</h2>
+      <ol>
+        <li>Buscá los rankings de hoy. Si el nombre ya está en el Top 100 (Hazel, Arthur), tenés señal de que está volviendo.</li>
+        <li>Evitá los que aún cargan estigma. Mildred, Bertha, Wilma, Doris, Ethel todavía no terminaron su ciclo: muchos los van a asociar a una abuela específica.</li>
+        <li>Combinalo con un segundo nombre moderno. Hazel Mía, Walter Liam — el contraste suaviza.</li>
+        <li>Pensá los apodos. Walter → Walt, Hazel → Hazy, Vera → V. Si te gustan, va.</li>
+      </ol>
+
+      <h2>Nombres vintage en español</h2>
+      <p>
+        En el mundo hispano, el ciclo retro también funciona: Norma, Hilda, Eulalia, Otilia (de los
+        años 30-50) están empezando a recuperarse en algunos países. Por el lado masculino, Edmundo,
+        Alfredo, Federico, Reinaldo siguen siendo poco usados pero ganan espacio entre padres que
+        buscan algo distinto.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Por qué los nombres vintage vuelven?</summary><p>Por el ciclo de los 100 años: lo que usaban los bisabuelos suena fresco para los nietos.</p></details>
+      <details><summary>¿Qué nombres vintage funcionan hoy?</summary><p>Hazel, Pearl, Vera, Mae para mujeres; Walter, Frank, Hugh, Arthur para varones.</p></details>
+      <details><summary>¿Es lo mismo que un nombre clásico?</summary><p>No. Los clásicos nunca dejaron de usarse; los vintage estuvieron olvidados 50-80 años y vuelven con un toque retro.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: VINTAGE_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.male.es, ...DATA.female.es];
+    else pool = DATA[s].es;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

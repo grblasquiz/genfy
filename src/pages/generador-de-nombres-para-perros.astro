@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+import { DOG_NAMES, DOG_STYLES } from '../lib/dog-names';
+
+const title = 'Generador de nombres para perros | Genfy';
+const description = 'Encontrá el nombre ideal para tu perro: chicos, medianos, grandes o divertidos. +200 ideas en español e inglés, generador instantáneo gratis.';
+
+const stylesES = DOG_STYLES.es;
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuál es el mejor nombre para un perro?', acceptedAnswer: { '@type': 'Answer', text: 'Uno corto de 1 o 2 sílabas, que termine en vocal y no se confunda con comandos como "siéntate" o "no". Eso ayuda al entrenamiento.' } },
+    { '@type': 'Question', name: '¿Los perros aprenden su nombre rápido?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Asociado con premios y voz alegre, un perro reconoce su nombre en 1 a 3 semanas, y un cachorro suele aprenderlo más rápido aún.' } },
+    { '@type': 'Question', name: '¿Puedo cambiarle el nombre a un perro adoptado?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Asociá el nombre nuevo con comida, juego y caricias durante 2 a 3 semanas y se adapta sin problemas.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="es" tag="Mascotas" title="Generador de nombres para perros"
+    intro="Para tu cachorro o tu perro adulto: chicos, medianos, grandes o divertidos. Click y obtené 12 ideas en segundos.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Estilo</label>
+      <select id="cn-style">
+        {Object.entries(stylesES).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mezcla de todo</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 12 nombres</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de tu perro</h2>
+      <p>
+        El nombre del perro es una herramienta de entrenamiento, no solo un detalle estético. Lo vas a
+        decir miles de veces y tu perro tiene que entenderlo claro y rápido. Los entrenadores
+        profesionales suelen coincidir en cuatro reglas básicas:
+      </p>
+      <ul>
+        <li><strong>1 o 2 sílabas, máximo 3.</strong> "Rocky", "Lola", "Pancho" funcionan; "Maximiliano del Sur" no.</li>
+        <li><strong>Que termine en vocal abierta.</strong> Las vocales a/o/i son más audibles a la distancia.</li>
+        <li><strong>Que no rime con un comando.</strong> Si decís "no", evitá "Coco". Si decís "ya", evitá "Lala".</li>
+        <li><strong>Que no se confunda con otros nombres de la casa.</strong> Si tu hijo es Mateo, no llames al perro Mato.</li>
+        <li><strong>Probá una semana antes de oficializarlo.</strong> Si después de 7 días no te sale natural en la calle o en la veterinaria, cambialo.</li>
+      </ul>
+
+      <h2>Nombres por tamaño: ¿qué encaja con cada perro?</h2>
+      <p>
+        No es ciencia exacta, pero hay tendencias claras en lo que la gente le pone a un Yorkshire vs
+        un Gran Danés. Lo registran los rankings de clínicas veterinarias en Argentina, México y España
+        cada año:
+      </p>
+      <ul>
+        <li><strong>Perros chicos</strong> (Pancho, Toto, Lola, Coco): nombres tiernos, suaves, fáciles de gritar en la plaza.</li>
+        <li><strong>Perros medianos</strong> (Rocky, Bruno, Roxy, Cooper): mezcla equilibrada entre energía y cariño.</li>
+        <li><strong>Perros grandes</strong> (Bear, Hugo, Coronel, Capitán): nombres con presencia, que suenan respetables.</li>
+        <li><strong>Divertidos</strong> (Choripán, Ñoqui, Empanada): para personalidades fuertes y dueños con humor.</li>
+      </ul>
+
+      <h2>Tendencias actuales</h2>
+      <p>
+        En los últimos 5 años los rankings argentinos y españoles muestran un crecimiento fuerte de
+        nombres "humanos" (Lola, Olivia, Tomás, Felipe) por encima de los clásicos tipo Toby o Firulais.
+        En Estados Unidos pasa algo parecido según los datos de Rover: Bella, Charlie, Cooper,
+        Daisy y Buddy lideran cada año. Los nombres derivados de comida (Galleta, Mochi, Pumpkin) también
+        crecieron mucho desde 2020, sobre todo en hogares jóvenes.
+      </p>
+
+      <h2>Errores comunes al ponerle nombre a un perro</h2>
+      <ol>
+        <li>Elegir un nombre largo "porque suena imponente" y terminar usando un apodo. Si el apodo lo decís 10 veces más, el apodo es el nombre real.</li>
+        <li>Usar un nombre que rima con "no", "ya" o el nombre de otra mascota.</li>
+        <li>Nombres de bromas internas que envejecen mal: lo que es chistoso a los 6 meses puede dar vergüenza en la veterinaria.</li>
+        <li>Cambiar de nombre varias veces en el primer mes. Confunde al perro y retrasa el entrenamiento.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuál es el mejor nombre para un perro?</summary><p>Uno corto de 1 o 2 sílabas, que termine en vocal y no se confunda con comandos como "siéntate" o "no". Eso ayuda al entrenamiento.</p></details>
+      <details><summary>¿Los perros aprenden su nombre rápido?</summary><p>Sí. Asociado con premios y voz alegre, un perro reconoce su nombre en 1 a 3 semanas, y un cachorro suele aprenderlo más rápido aún.</p></details>
+      <details><summary>¿Puedo cambiarle el nombre a un perro adoptado?</summary><p>Sí. Asociá el nombre nuevo con comida, juego y caricias durante 2 a 3 semanas y se adapta sin problemas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: DOG_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.small.es, ...DATA.medium.es, ...DATA.large.es, ...DATA.funny.es];
+    else pool = DATA[s].es;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

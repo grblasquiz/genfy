@@ -1,0 +1,196 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Resignation Letter Generator | Genfy';
+const description = 'Professional 2-week notice resignation letter, ready to print or send by email. Formal tone, dates, optional reason. Edit and copy instantly.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How much notice should I give?', acceptedAnswer: { '@type': 'Answer', text: 'In the US, two weeks is the professional standard for most roles. Senior positions may require 30 days. Always check your employment contract.' } },
+    { '@type': 'Question', name: 'Do I need to give a reason?', acceptedAnswer: { '@type': 'Answer', text: 'Not required. A letter can simply state dates and gratitude. If you include a reason, keep it brief and neutral ("new professional opportunity").' } },
+    { '@type': 'Question', name: 'Email or printed?', acceptedAnswer: { '@type': 'Answer', text: 'The strongest move is a printed signed copy delivered in person, plus email as backup. For remote roles, a digitally signed email is enough.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Work" title="Resignation Letter Generator"
+    intro="Formal, professional letter ready to send. Configure dates, optional reason and tone. Edit the result, copy or print.">
+
+    <div slot="tool" class="rl">
+      <div class="rl-row">
+        <div>
+          <label for="rl-name">Your name</label>
+          <input id="rl-name" type="text" value="Sarah Mitchell" />
+        </div>
+        <div>
+          <label for="rl-position">Your position</label>
+          <input id="rl-position" type="text" value="Marketing Analyst" />
+        </div>
+      </div>
+      <div class="rl-row">
+        <div>
+          <label for="rl-company">Company</label>
+          <input id="rl-company" type="text" value="Acme Inc." />
+        </div>
+        <div>
+          <label for="rl-manager">Recipient</label>
+          <input id="rl-manager" type="text" value="Daniel Chen" />
+        </div>
+      </div>
+      <div class="rl-row">
+        <div>
+          <label for="rl-letter-date">Letter date</label>
+          <input id="rl-letter-date" type="date" />
+        </div>
+        <div>
+          <label for="rl-last-day">Last working day</label>
+          <input id="rl-last-day" type="date" />
+        </div>
+      </div>
+      <div class="rl-row">
+        <div>
+          <label for="rl-reason">Reason (optional)</label>
+          <select id="rl-reason">
+            <option value="none">No reason (recommended)</option>
+            <option value="career">New professional opportunity</option>
+            <option value="personal">Personal reasons</option>
+            <option value="health">Health reasons</option>
+            <option value="study">Continue studies</option>
+          </select>
+        </div>
+        <div>
+          <label for="rl-tone">Tone</label>
+          <select id="rl-tone">
+            <option value="formal">Formal</option>
+            <option value="warm">Warm</option>
+          </select>
+        </div>
+      </div>
+      <button id="rl-gen" class="btn btn-primary" type="button">Generate letter</button>
+      <button id="rl-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="rl-out" rows="18" style="margin-top:1rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>A good resignation letter does three things</h2>
+      <p>
+        It communicates the decision clearly, sets a precise date, and keeps the professional
+        door open. That's it. This is not the moment for grievances, passive-aggressive
+        notes, or long declarations. The shorter and more professional, the better — you'll
+        be working with these people for a few more weeks, and many will reach out in your
+        future.
+      </p>
+
+      <h2>Recommended structure</h2>
+      <ol>
+        <li><strong>Date and recipient.</strong> Date at the top; recipient (your direct manager) below.</li>
+        <li><strong>Opening.</strong> "Please accept this letter as formal notice of my resignation from the position of [title]."</li>
+        <li><strong>Effective date.</strong> "My last day of work will be [date]." (Honoring the notice period.)</li>
+        <li><strong>Gratitude.</strong> "I appreciate the opportunity and the experience gained."</li>
+        <li><strong>Transition commitment.</strong> "I will do everything I can to ensure a smooth transition."</li>
+        <li><strong>Close and signature.</strong> "Sincerely, [Name]"</li>
+      </ol>
+
+      <h2>About the notice period</h2>
+      <p>
+        In the US, two weeks (10 business days) is the professional standard for most roles —
+        not legally required at-will, but breaking it damages references. Senior or
+        contracted positions may have 30-day or longer notice clauses. In the UK and EU,
+        notice is statutory and depends on tenure and contract. Always check your employment
+        agreement before setting the last day.
+      </p>
+
+      <h2>Reason: when to share, when not</h2>
+      <p>
+        Legally never required. In practice, a neutral reason softens the conversation and
+        closes follow-up questions: "to take on a new professional opportunity" or "for
+        personal reasons". What you should NOT write: critiques of the company, comparisons
+        with other jobs, conflicts with coworkers, or the name of your new employer. Save
+        that for the conversation, with discretion.
+      </p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Resigning by chat.</strong> A formal letter protects both parties from future disputes.</li>
+        <li><strong>Long letters.</strong> More than one page goes unread. 4-6 short paragraphs is ideal.</li>
+        <li><strong>Emotional tone.</strong> Even if you're leaving on bad terms, the letter must sound professional. Save emotion for your journal.</li>
+        <li><strong>Shortening notice without agreement.</strong> Leaving early without consent can affect references and final pay. Negotiate in writing.</li>
+        <li><strong>Signing without keeping a copy.</strong> Always keep a signed copy acknowledged by HR or your manager.</li>
+      </ul>
+
+      <h2>After the letter</h2>
+      <p>
+        Once delivered, formally request acknowledgment of receipt. Ask early for HR
+        documents: final pay, COBRA info, retirement rollover packets. And if they offer a
+        counter-offer, think it through with a cool head — research suggests roughly 70% of
+        people who accept counter-offers leave within 12 months anyway.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How much notice?</summary><p>US standard is 2 weeks for most roles. Check your contract.</p></details>
+      <details><summary>Share the reason?</summary><p>Not required. If you do, keep it neutral and brief.</p></details>
+      <details><summary>Email or printed?</summary><p>Ideal: printed signed + email backup.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rl-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rl-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const nameEl = document.getElementById('rl-name') as HTMLInputElement;
+  const positionEl = document.getElementById('rl-position') as HTMLInputElement;
+  const companyEl = document.getElementById('rl-company') as HTMLInputElement;
+  const managerEl = document.getElementById('rl-manager') as HTMLInputElement;
+  const letterDateEl = document.getElementById('rl-letter-date') as HTMLInputElement;
+  const lastDayEl = document.getElementById('rl-last-day') as HTMLInputElement;
+  const reasonEl = document.getElementById('rl-reason') as HTMLSelectElement;
+  const toneEl = document.getElementById('rl-tone') as HTMLSelectElement;
+  const out = document.getElementById('rl-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('rl-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('rl-copy') as HTMLButtonElement;
+
+  function fmt(s: string) {
+    if (!s) return '[date]';
+    const d = new Date(s + 'T12:00:00');
+    return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  }
+  function generate() {
+    const name = nameEl.value || '[Your name]';
+    const pos = positionEl.value || '[position]';
+    const company = companyEl.value || '[Company]';
+    const manager = managerEl.value || 'Hiring Manager';
+    const ld = fmt(letterDateEl.value);
+    const last = fmt(lastDayEl.value);
+    const r = reasonEl.value;
+    const reasonText = r === 'career' ? ' to pursue a new professional opportunity'
+      : r === 'personal' ? ' for personal reasons'
+      : r === 'health' ? ' for health reasons'
+      : r === 'study' ? ' to continue my studies'
+      : '';
+    const warm = toneEl.value === 'warm';
+    const greeting = `Dear ${manager},`;
+    const opening = `Please accept this letter as formal notice of my resignation from the position of ${pos} at ${company}${reasonText}.`;
+    const dateLine = `My last working day will be ${last}, in accordance with the standard notice period.`;
+    const thanks = warm
+      ? `I want to sincerely thank you for the opportunity to be part of the team. I'm leaving with valuable lessons and a meaningful professional experience.`
+      : `I would like to thank you for the opportunity and the experience gained during my time at the company.`;
+    const transition = `I am committed to ensuring a smooth transition. I will be glad to help train my replacement, document ongoing work, and complete handover of my responsibilities before my last day.`;
+    const close = warm ? `Warm regards,\n\n${name}` : `Sincerely,\n\n${name}`;
+
+    out.value = `${ld}\n\n${greeting}\n\n${opening}\n\n${dateLine}\n\n${thanks}\n\n${transition}\n\n${close}`;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

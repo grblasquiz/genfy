@@ -1,0 +1,158 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombres de app gratis | Genfy';
+const description = 'Generá nombres de app cortos, memorables y aptos para App Store y Google Play. Optimizados para ranking ASO, ícono y voz: piensa Calm, Headspace, Notion.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuántos caracteres puede tener un nombre de app?', acceptedAnswer: { '@type': 'Answer', text: 'App Store permite hasta 30 caracteres en el nombre. Google Play permite 30 también, pero solo se ven 12-14 bajo el ícono. Lo ideal es que la palabra principal tenga 8 caracteres o menos.' } },
+    { '@type': 'Question', name: '¿Conviene meter palabra clave en el nombre?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, pero como subtítulo, no como marca. "Calm: Sleep & Meditation" funciona mejor que "Sleep Meditation App". La marca es el activo, las keywords ayudan al ASO.' } },
+    { '@type': 'Question', name: '¿Cómo evito conflictos en App Store?', acceptedAnswer: { '@type': 'Answer', text: 'Buscá el nombre exacto en App Store y Google Play antes de registrarlo. Apple rechaza apps con nombres demasiado similares a apps existentes, especialmente si la otra está más establecida.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Branding" title="Generador de nombres de app"
+    intro="Cargá categoría y estilo. Genfy te devuelve nombres pensados para que se vean bien debajo del ícono, ranqueen en ASO y no choquen con apps existentes.">
+
+    <div slot="tool" class="an">
+      <label for="an-kw">Categoría / función</label>
+      <input id="an-kw" type="text" placeholder="meditación, fitness, finanzas..." value="fitness" />
+
+      <label for="an-style" style="margin-top:1rem">Estilo</label>
+      <select id="an-style">
+        <option value="emotion">Emocional (Calm, Headspace)</option>
+        <option value="action">Acción (Loop, Focus)</option>
+        <option value="latin">Latín (Aurum, Lumen)</option>
+        <option value="invented">Inventado (Notion, Tovi)</option>
+      </select>
+
+      <button id="an-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="an-out" class="an-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los nombres de app tienen reglas propias</h2>
+      <p>
+        Una app vive en el lock screen, debajo de un ícono y al lado de cientos de competidores. Eso impone restricciones que no aplican a otras marcas. El nombre tiene que verse completo en 12-14 caracteres (lo que muestra Google Play debajo del ícono), tiene que ser pronunciable cuando alguien dicta a Siri o Google Assistant, y tiene que sobrevivir a la búsqueda en App Store, donde Apple penaliza nombres demasiado similares a apps establecidas.
+      </p>
+      <p>
+        Las apps que dominan sus categorías cumplen un patrón: una sola palabra emocional o accionable. Calm, Headspace, Notion, Linear, Things, Bear, Reflect, Loom. Ninguna usa "App" en el nombre. Ninguna pasa los 8 caracteres de marca pura.
+      </p>
+
+      <h2>El sistema "marca + subtítulo": cómo lo usan los referentes</h2>
+      <p>
+        En App Store, lo que ranquea es la combinación nombre + subtítulo. El nombre debe ser corto y memorable; el subtítulo carga las keywords que el algoritmo lee. Ejemplo:
+      </p>
+      <ul>
+        <li><strong>Calm</strong> — Sleep & Meditation</li>
+        <li><strong>Headspace</strong> — Meditation & Sleep</li>
+        <li><strong>Notion</strong> — Notes, Docs, Tasks</li>
+        <li><strong>Bear</strong> — Markdown Notes</li>
+      </ul>
+      <p>
+        Si tu app se llama "Sleep Meditation App", estás quemando el activo de marca y obligándote a competir solo por keywords. El nombre breve te da diferenciación; el subtítulo te da ranking.
+      </p>
+
+      <h2>Cómo evitar el rechazo de Apple</h2>
+      <p>
+        Apple rechaza nombres por tres motivos: similitud con apps existentes (especialmente si la otra es más conocida), uso de marcas registradas que no son tuyas, y nombres engañosos sobre la función. Antes de invertir en branding, hacé tres búsquedas: el nombre exacto en App Store y Google Play, y una búsqueda en USPTO. Si tu nombre es "Loom" y querés competir con Loom, ya perdiste; si tu nombre es "Loomly" y la otra es "Loom", probablemente también.
+      </p>
+
+      <h2>ASO: lo que no te dice el manual</h2>
+      <ol>
+        <li><strong>El nombre pesa más que el subtítulo en el ranking.</strong> Una keyword en el nombre vale 5x lo que vale en el subtítulo.</li>
+        <li><strong>Pero no metas todo.</strong> "Calm Sleep Meditation Mindfulness" se lee espantoso y baja conversión. Marca + 2-3 palabras máximo.</li>
+        <li><strong>El nombre no se puede cambiar fácil.</strong> Cambiarlo después de tener miles de descargas hunde el ranking 2-3 semanas. Decidilo bien al principio.</li>
+        <li><strong>Apple cuenta caracteres con espacios.</strong> Tenés 30, no más. Aprovechalos.</li>
+        <li><strong>El subtítulo de App Store es indexable; el de Google Play, no tanto.</strong> Optimizá distinto en cada plataforma.</li>
+      </ol>
+
+      <h2>Errores que vemos repetir</h2>
+      <p>
+        Usar "App" o "AI" como muleta en el nombre. Dos sílabas pesadas que en lugar de marca comunican "no se nos ocurrió nada mejor". Ninguna de las apps top 100 tiene esas palabras en el nombre.
+      </p>
+      <p>
+        Otros: nombres que solo funcionan en español si pensás escalar a EE.UU., nombres con caracteres especiales (rompen URLs y deep links), y nombres que no se entienden cuando los dictás a Siri ("Genfy" funciona; "Xqty" no).
+      </p>
+
+      <h2>Test rápido antes de publicar</h2>
+      <ol>
+        <li>Decilo a Siri / Google Assistant: "abrí [nombre]". ¿Lo entiende?</li>
+        <li>Mostralo debajo de un ícono cuadrado. ¿Se lee completo en pantalla?</li>
+        <li>Buscalo en App Store y Google Play: ¿hay otra app dominante?</li>
+        <li>Búsqueda USPTO: ¿hay marca registrada en clase 9 (software)?</li>
+        <li>Test del bar: 3 personas que no lo conocen. ¿Lo deletrean igual?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántos caracteres puede tener?</summary><p>App Store: 30. Google Play muestra 12-14 debajo del ícono. La marca pura ideal: 8 caracteres o menos.</p></details>
+      <details><summary>¿Meter palabra clave en el nombre?</summary><p>Mejor en el subtítulo. La marca es el activo; el subtítulo carga keywords para ASO.</p></details>
+      <details><summary>¿Cómo evito conflictos?</summary><p>Buscá nombre exacto en App Store, Google Play y USPTO antes de registrar.</p></details>
+      <details><summary>¿Puedo cambiarlo después?</summary><p>Sí, pero el ranking cae 2-3 semanas. Decidí bien al principio.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .an-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .an-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .an-item:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const EMOTION = ['Calm', 'Joy', 'Bliss', 'Soul', 'Bloom', 'Glow', 'Spark', 'Pulse', 'Echo', 'Aura', 'Flux', 'Moss', 'Bee'];
+  const ACTION = ['Loop', 'Focus', 'Flow', 'Step', 'Lift', 'Track', 'Shift', 'Sprint', 'Aim', 'Chase', 'Climb', 'Reach', 'Sync'];
+  const LATIN = ['Aurum', 'Lumen', 'Vita', 'Nova', 'Magna', 'Prima', 'Lux', 'Fortis', 'Pura', 'Clara'];
+  const MOD = ['Lumo', 'Zera', 'Vexa', 'Brio', 'Tono', 'Quira', 'Nido', 'Plux', 'Reki', 'Tovi', 'Yumi', 'Tilo'];
+
+  const kw = document.getElementById('an-kw') as HTMLInputElement;
+  const style = document.getElementById('an-style') as HTMLSelectElement;
+  const gen = document.getElementById('an-gen') as HTMLButtonElement;
+  const out = document.getElementById('an-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = style.value;
+    let arr: string[] = EMOTION;
+    if (s === 'action') arr = ACTION;
+    else if (s === 'latin') arr = LATIN;
+    else if (s === 'invented') arr = MOD;
+    const set = new Set<string>(arr.slice(0, 13));
+    out.innerHTML = '';
+    [...set].slice(0, 20).forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'an-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+    // shuffle and add combos
+    let i = 0;
+    while (out.children.length < 20 && i < 100) {
+      i++;
+      let n = '';
+      if (s === 'emotion') n = pick(EMOTION) + pick(ACTION).toLowerCase();
+      else if (s === 'action') n = pick(ACTION) + pick(EMOTION).toLowerCase();
+      else if (s === 'latin') n = pick(LATIN) + (Math.random() > 0.5 ? '' : pick(MOD).toLowerCase().slice(0, 2));
+      else n = pick(MOD) + pick(MOD).toLowerCase().slice(0, 2);
+      if (n.length <= 12) {
+        const el = document.createElement('div');
+        el.className = 'an-item';
+        el.textContent = n;
+        el.title = 'Click para copiar';
+        el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+        out.appendChild(el);
+      }
+    }
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

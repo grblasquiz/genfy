@@ -1,0 +1,191 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de códigos de referencia | Genfy';
+const description = 'Códigos de referencia únicos para tickets, expedientes, casos, transacciones y procesos internos. Configurables: alfanumérico, longitud, prefijo.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve un código de referencia?', acceptedAnswer: { '@type': 'Answer', text: 'Para identificar de forma única un ticket, un expediente, un caso o una transacción dentro de un sistema. Permite buscar y seguir el ítem sin ambigüedad.' } },
+    { '@type': 'Question', name: '¿Diferencia con un ID de base de datos?', acceptedAnswer: { '@type': 'Answer', text: 'Un ID de base es interno y secuencial. Un código de referencia es público (lo ve el cliente) y suele ser alfanumérico, más resistente a errores de tipeo.' } },
+    { '@type': 'Question', name: '¿Por qué incluir letras y números?', acceptedAnswer: { '@type': 'Answer', text: 'Aumenta el espacio de combinaciones por carácter, lo que permite códigos más cortos. Un código de 8 alfanuméricos tiene más combinaciones que uno de 12 numéricos.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Trabajo / Work" title="Generador de códigos de referencia"
+    intro="Códigos únicos para tickets, expedientes, casos y transacciones. Configurá prefijo, longitud y alfabeto. Listos para sistemas de soporte, CRM y operaciones.">
+
+    <div slot="tool" class="rc">
+      <div class="rc-row">
+        <div>
+          <label for="rc-prefix">Prefijo</label>
+          <input id="rc-prefix" type="text" value="REF" maxlength="6" />
+        </div>
+        <div>
+          <label for="rc-len">Longitud del código</label>
+          <input id="rc-len" type="number" value="8" min="4" max="16" />
+        </div>
+        <div>
+          <label for="rc-amount">Cantidad</label>
+          <input id="rc-amount" type="number" value="10" min="1" max="100" />
+        </div>
+      </div>
+      <div class="rc-row">
+        <div>
+          <label for="rc-set">Caracteres</label>
+          <select id="rc-set">
+            <option value="alnum">Alfanuméricos</option>
+            <option value="alpha">Solo letras</option>
+            <option value="num">Solo números</option>
+            <option value="safe">Sin confusos (sin O,0,I,1)</option>
+          </select>
+        </div>
+        <div>
+          <label for="rc-case">Mayúsculas</label>
+          <select id="rc-case">
+            <option value="upper">Mayúsculas</option>
+            <option value="mixed">Mixtas</option>
+          </select>
+        </div>
+        <div>
+          <label for="rc-grp">Agrupado</label>
+          <select id="rc-grp">
+            <option value="0">Sin agrupar</option>
+            <option value="3">Cada 3 (XXX-XXX)</option>
+            <option value="4" selected>Cada 4 (XXXX-XXXX)</option>
+          </select>
+        </div>
+      </div>
+      <button id="rc-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="rc-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="rc-out" rows="12" readonly style="margin-top:1rem; font-family: var(--font-mono);"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Cuándo usar un código de referencia</h2>
+      <p>
+        Un código de referencia (también llamado ticket ID, case number, transaction ref) es lo
+        que el cliente o el operador citan cuando hablan del ítem: "Hola, tengo un problema con
+        el ticket REF-A8K2-9XPL". Sirve donde un ID numérico simple no alcanza, ya sea por
+        seguridad (no querés exponer cuántos tickets llevás), legibilidad (los humanos
+        confunden números largos) o ergonomía (un código de 8 caracteres se dicta por teléfono;
+        un UUID no).
+      </p>
+
+      <h2>Diseño según el caso de uso</h2>
+      <ul>
+        <li><strong>Tickets de soporte.</strong> 6-8 caracteres alfanuméricos sin confusos. Ejemplo: <code>REF-A8K2</code>.</li>
+        <li><strong>Expedientes legales.</strong> Más largo (10-12), incluye año: <code>EXP-2026-A8K2</code>.</li>
+        <li><strong>Transacciones de pago.</strong> 12-16 caracteres, con checksum si es posible: <code>TXN-XK7N-9PMA-2025</code>.</li>
+        <li><strong>Códigos de validación de email.</strong> Cortos (4-6), válidos por unos minutos.</li>
+        <li><strong>Cupones de descuento.</strong> Legibles y memorables, 6-8 caracteres en mayúsculas.</li>
+      </ul>
+
+      <h2>Por qué evitar caracteres confusos</h2>
+      <p>
+        En tipografías sans-serif estándar, "O" y "0", "I" y "1", "B" y "8", "S" y "5" son
+        prácticamente idénticos. Si tu código se escribe a mano (en un papel, formulario o
+        pizarra) los errores de transcripción saltan al 5-10%. La opción "sin confusos" del
+        generador remueve estos pares — sacrificás 4 caracteres del alfabeto y a cambio
+        ganás un código que se lee bien en cualquier formato.
+      </p>
+
+      <h2>Combinaciones: cuántas necesitás</h2>
+      <p>
+        Un código alfanumérico de 8 caracteres en mayúsculas tiene 36⁸ ≈ 2.8 billones de
+        combinaciones. Más que suficiente para cualquier negocio razonable. Para un sistema con
+        millones de tickets al año, 10 caracteres dan margen sobrado. La regla de oro:
+        calculá tu volumen anual esperado, multiplicá por 1000, y elegí longitud para evitar
+        colisiones. Para 100k tickets/año, 8 chars sobran.
+      </p>
+
+      <h2>Mayúsculas vs. mixtas</h2>
+      <p>
+        Mayúsculas es siempre más seguro: en transcripción, el ojo distingue mejor, y el
+        usuario no se confunde. Mixtas (Aa) duplica las combinaciones por carácter, pero
+        introduce el problema de "case-sensitivity": si tu sistema lo trata case-insensitive,
+        no estás ganando nada y sí riesgo. Para uso humano, mayúsculas. Para uso solo
+        máquina-a-máquina, mixtas con base64.
+      </p>
+
+      <h2>Agrupación</h2>
+      <p>
+        Agrupar el código en bloques (XXXX-XXXX) ayuda a la memoria visual y a la dictación.
+        El cerebro recuerda 4 grupos de 4 mejor que 16 caracteres seguidos. Stripe, Apple, y
+        casi todos los servicios serios agrupan sus códigos. El estándar de teléfonos
+        argentinos (XX-XXXX-XXXX) tiene la misma lógica.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve?</summary><p>Para identificar de forma única tickets, expedientes, casos o transacciones.</p></details>
+      <details><summary>¿Diferencia con ID de base?</summary><p>El ID es interno y numérico; el código de referencia es público, alfanumérico y resistente a errores.</p></details>
+      <details><summary>¿Por qué letras y números?</summary><p>Más combinaciones por carácter, así se necesitan códigos más cortos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rc-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rc-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const prefixEl = document.getElementById('rc-prefix') as HTMLInputElement;
+  const lenEl = document.getElementById('rc-len') as HTMLInputElement;
+  const amountEl = document.getElementById('rc-amount') as HTMLInputElement;
+  const setEl = document.getElementById('rc-set') as HTMLSelectElement;
+  const caseEl = document.getElementById('rc-case') as HTMLSelectElement;
+  const grpEl = document.getElementById('rc-grp') as HTMLSelectElement;
+  const out = document.getElementById('rc-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('rc-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('rc-copy') as HTMLButtonElement;
+
+  const SETS = {
+    alnum: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
+    alpha: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    num: '0123456789',
+    safe: 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789',
+  };
+  function rint(max: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return i[0] % max; }
+  function makeCode(len: number, set: string, mixed: boolean) {
+    let s = '';
+    for (let i = 0; i < len; i++) {
+      let c = set.charAt(rint(set.length));
+      if (mixed && rint(2) === 1) c = c.toLowerCase();
+      s += c;
+    }
+    return s;
+  }
+  function group(s: string, n: number) {
+    if (!n) return s;
+    const out: string[] = [];
+    for (let i = 0; i < s.length; i += n) out.push(s.slice(i, i + n));
+    return out.join('-');
+  }
+  function generate() {
+    const prefix = (prefixEl.value || '').toUpperCase();
+    const len = Math.max(4, Math.min(16, parseInt(lenEl.value || '8', 10)));
+    const n = Math.max(1, Math.min(100, parseInt(amountEl.value || '10', 10)));
+    const set = SETS[setEl.value as keyof typeof SETS] || SETS.alnum;
+    const mixed = caseEl.value === 'mixed';
+    const grp = parseInt(grpEl.value, 10) || 0;
+    const arr: string[] = [];
+    for (let i = 0; i < n; i++) {
+      const code = group(makeCode(len, set, mixed), grp);
+      arr.push(prefix ? `${prefix}-${code}` : code);
+    }
+    out.value = arr.join('\n');
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

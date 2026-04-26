@@ -1,0 +1,163 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Newsletter Name Generator | Genfy';
+const description = 'Generate memorable newsletter names for Substack, Beehiiv or your own platform. Built for ranking, conversion and long shelf life.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good newsletter name?', acceptedAnswer: { '@type': 'Answer', text: 'It communicates topic or angle in fewer than 4 words, is easy to type, and is clear when said out loud. The Hustle, Morning Brew and Stratechery all clear those three.' } },
+    { '@type': 'Question', name: 'My name or a brand name?', acceptedAnswer: { '@type': 'Answer', text: 'Your name works if you want to build a personal audience and eventually sell. A brand works if you want to scale to a team or sell the asset. Substack and Beehiiv support both models.' } },
+    { '@type': 'Question', name: 'How long should the name be?', acceptedAnswer: { '@type': 'Answer', text: '1 to 3 words is ideal. Fits in the email header, the X handle, the domain. More words usually means less memorable.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Newsletter Name Generator"
+    intro="Drop in topic and style. Genfy returns names built for Substack, Beehiiv or your own domain. Memorable, brandable, internal-search friendly.">
+
+    <div slot="tool" class="nl">
+      <label for="nl-topic">Newsletter topic</label>
+      <input id="nl-topic" type="text" placeholder="finance, tech, productivity..." value="tech" />
+
+      <label for="nl-style" style="margin-top:1rem">Style</label>
+      <select id="nl-style">
+        <option value="brief">Brief / Daily (Morning Brew, The Hustle)</option>
+        <option value="memo">Memo / Notes (Stratechery, Sidebar)</option>
+        <option value="visual">Visual / Editorial (Dense Discovery)</option>
+        <option value="modern">Modern / invented</option>
+      </select>
+
+      <button id="nl-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="nl-out" class="nl-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why newsletter names are their own category</h2>
+      <p>
+        A newsletter lives in the inbox and competes with hundreds of emails. The name is the first thing the reader sees when an email lands — before the subject line. That gives it a different function: not just SEO or branding, but <strong>instant recognition</strong>. People should be able to identify your newsletter in 0.5 seconds without reading the content.
+      </p>
+      <p>
+        That's why dominant names (Morning Brew, The Hustle, Stratechery, Lenny's Newsletter, The Browser) share patterns: 1-3 words, no special characters, easy to type, almost always with a temporal or tonal descriptor.
+      </p>
+
+      <h2>The four families of newsletter names</h2>
+      <ul>
+        <li><strong>Brief / Daily:</strong> Morning Brew, The Hustle, The Daily Brief. Communicate format and frequency. Best for daily or weekly curations.</li>
+        <li><strong>Memo / Notes:</strong> Stratechery, Sidebar, Notes from a Small Press. Imply analysis or personal thought. Best for thematic deep-dives.</li>
+        <li><strong>Visual / Editorial:</strong> Dense Discovery, Why is this interesting?, Tedium. For newsletters with strong editorial curation.</li>
+        <li><strong>Personal:</strong> Lenny's Newsletter, Casey Newton's Platformer, Ben Thompson's Stratechery. When the asset is the person behind it.</li>
+      </ul>
+
+      <h2>Common newsletter naming mistakes</h2>
+      <ul>
+        <li><strong>Too descriptive:</strong> "The Marketing for Founders Weekly Digest" loses memorability.</li>
+        <li><strong>Too abstract:</strong> "Threads" tells the new reader nothing.</li>
+        <li><strong>Special characters:</strong> ampersands break URLs and emails.</li>
+        <li><strong>Already taken on Substack or Beehiiv:</strong> verify before choosing.</li>
+        <li><strong>Doesn't work as a social handle:</strong> @brandname must be free.</li>
+        <li><strong>Conflict with a known trademark:</strong> "Apple Weekly" gets you legal trouble fast.</li>
+      </ul>
+
+      <h2>Substack vs. Beehiiv vs. own domain</h2>
+      <p>Where you host slightly changes the naming constraints.</p>
+      <ul>
+        <li><strong>Substack:</strong> name.substack.com. The subdomain is a cosmetic tax; buying your own domain is worth it once you grow.</li>
+        <li><strong>Beehiiv:</strong> allows custom domain from day one at no extra cost. Better day-one SEO.</li>
+        <li><strong>Own domain + ConvertKit / Mailchimp:</strong> full control but more setup work.</li>
+      </ul>
+      <p>
+        On Substack, the subdomain (name.substack.com) appends "substack" to every shared link — a brand cost. Beehiiv supports custom domain free. Owning the domain on any ESP is the cleanest, but takes more infra.
+      </p>
+
+      <h2>How to test the name before launching</h2>
+      <ol>
+        <li>Say it out loud: does it land without explanation?</li>
+        <li>Type it from memory: easy?</li>
+        <li>Check the handle on X, Instagram, LinkedIn, TikTok.</li>
+        <li>Search the .com domain — buy it even if you'll use Substack.</li>
+        <li>Search Substack and Beehiiv — any other newsletter with that name?</li>
+        <li>Google search: what does the current SERP show?</li>
+        <li>USPTO if you'll trademark in the future.</li>
+      </ol>
+
+      <h2>When to rename a newsletter</h2>
+      <p>
+        Renaming is expensive — you lose accumulated inbox recognition, Substack/Beehiiv ranking, URL redirection. Justified only if: 1) you changed your core topic, 2) a trademark conflict, 3) you scaled from solo to collective. In any other case, keep the name and diversify via sections, special editions or spinoffs.
+      </p>
+
+      <h2>The subtitle or tagline of the newsletter</h2>
+      <p>
+        If your name is brandable rather than descriptive, the subtitle carries the promise. "Stratechery" alone says nothing, but "Strategy and analysis of the strategy and business of technology" closes the loop. On Substack and Beehiiv the subtitle shows next to the name on every landing and email — use it well.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good name?</summary><p>Communicates topic or angle in few words, easy to type, clear when spoken.</p></details>
+      <details><summary>My name or a brand name?</summary><p>Personal if you're building your own audience. Brand if you want to scale or sell.</p></details>
+      <details><summary>How long should it be?</summary><p>1-3 words optimal. More dilutes memorability.</p></details>
+      <details><summary>Substack or Beehiiv?</summary><p>Substack is popular. Beehiiv supports custom domain free. Own domain is cleanest.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .nl-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .nl-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 500; cursor: pointer; transition: border-color 0.1s; }
+  .nl-item:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const BRIEF_PRE = ['Morning', 'Daily', 'Weekly', 'Sunday', 'Friday', 'The Daily', 'The Weekly'];
+  const BRIEF_SUF = ['Brief', 'Brew', 'Notes', 'Memo', 'Wire', 'Cut', 'Drop', 'Roundup'];
+  const MEMO_PRE = ['Notes on', 'Memos from', 'Sidebar', 'Notebook', 'Annotations', 'Margins of'];
+  const MEMO_SUF = ['Notes', 'Memo', 'Notebook', 'Letters'];
+  const VISUAL = ['Dense Discovery', 'Wide Open', 'Slow Drip', 'Quiet Letter', 'Open Notebook', 'Curated', 'Sidetrack'];
+  const MOD_BASE = ['Lumen', 'Brio', 'Quira', 'Plux', 'Vexa', 'Tono', 'Wave', 'Reki', 'Yumi', 'Tovi'];
+  const MOD_SUF = ['', '', ' Letter', ' Notes', ' Brief', ' Weekly'];
+
+  const topic = document.getElementById('nl-topic') as HTMLInputElement;
+  const style = document.getElementById('nl-style') as HTMLSelectElement;
+  const gen = document.getElementById('nl-gen') as HTMLButtonElement;
+  const out = document.getElementById('nl-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function generate() {
+    const T = cap(topic.value.trim() || 'topic');
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'brief') {
+        if (Math.random() > 0.5) name = pick(BRIEF_PRE) + ' ' + T;
+        else name = T + ' ' + pick(BRIEF_SUF);
+      } else if (s === 'memo') {
+        if (Math.random() > 0.5) name = pick(MEMO_PRE) + ' ' + T;
+        else name = T + ' ' + pick(MEMO_SUF);
+      } else if (s === 'visual') {
+        name = pick(VISUAL);
+      } else {
+        name = pick(MOD_BASE) + pick(MOD_SUF);
+      }
+      if (name.length <= 30) set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'nl-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

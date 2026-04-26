@@ -1,0 +1,166 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombres de podcast gratis | Genfy';
+const description = 'Generá nombres de podcast memorables y SERP-friendly. Pensados para Apple Podcasts, Spotify y búsqueda. Optimizados para iTunes search behavior.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno a un nombre de podcast?', acceptedAnswer: { '@type': 'Answer', text: 'Que sea fácil de buscar (sin homófonos), descriptivo del tema o claramente brandeable, único en Apple Podcasts y Spotify, y que se entienda al ser dicho en voz alta.' } },
+    { '@type': 'Question', name: '¿Cuántos caracteres puede tener?', acceptedAnswer: { '@type': 'Answer', text: 'Apple Podcasts permite hasta 255 caracteres pero solo se ven 30-40 antes del corte en mobile. Mantelo bajo 30 caracteres para evitar truncado.' } },
+    { '@type': 'Question', name: '¿Conviene meter palabra clave en el título?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, una. Apple Podcasts y Spotify ranquean por palabras del título. Si tu podcast es sobre marketing, "marketing" o un sinónimo en el título sube el ranking.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de nombres de podcast"
+    intro="Cargá tema y estilo. Genfy te devuelve nombres pensados para que se busquen bien en Apple Podcasts y Spotify, sin homófonos ni nombres ya tomados.">
+
+    <div slot="tool" class="pc">
+      <label for="pc-topic">Tema del podcast</label>
+      <input id="pc-topic" type="text" placeholder="marketing, finanzas, salud..." value="marketing" />
+
+      <label for="pc-style" style="margin-top:1rem">Estilo</label>
+      <select id="pc-style">
+        <option value="descriptive">Descriptivo (qué cubre)</option>
+        <option value="conversational">Conversacional (charla, café)</option>
+        <option value="brandable">Brandeable (palabra única)</option>
+        <option value="contrast">Contraste (X vs Y)</option>
+      </select>
+
+      <button id="pc-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="pc-out" class="pc-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los nombres de podcast tienen restricciones únicas</h2>
+      <p>
+        Un podcast vive en una app de búsqueda — Apple Podcasts, Spotify, Overcast, Pocket Casts. Eso pone el SEO interno como restricción primaria: si tu nombre no se encuentra fácil, no existe. La gente teclea por aproximación: si no recuerdan el nombre exacto, prueban con la temática + palabras como "podcast", "show", "talks". Tu nombre tiene que aparecer ahí.
+      </p>
+      <p>
+        Eso convierte los nombres puramente brandeables en una apuesta: ganan los primeros que llegan a una categoría (The Tim Ferriss Show, How I Built This), pero los que llegan después con nombres descriptivos suelen rankear mejor sin marketing inicial.
+      </p>
+
+      <h2>Las cuatro familias de nombres de podcast</h2>
+      <ul>
+        <li><strong>Descriptivos:</strong> "Marketing Against the Grain", "The Indie Hackers Podcast". Comunican el tema en el nombre. SEO fuerte de día uno.</li>
+        <li><strong>Conversacionales:</strong> "The Joe Rogan Experience", "Café Marketing", "On Purpose with Jay Shetty". Sugieren conversación, no producto. Funcionan para entrevistas y charlas.</li>
+        <li><strong>Brandeables:</strong> "Serial", "Reply All", "Lex Fridman Podcast". Una palabra o frase única. Requieren más marketing pero diferencian más.</li>
+        <li><strong>Contraste / pregunta:</strong> "How I Built This", "Why We Buy", "The Daily". Crea curiosidad e implica un beneficio cognitivo concreto.</li>
+      </ul>
+
+      <h2>El comportamiento de búsqueda en Apple Podcasts y Spotify</h2>
+      <p>
+        Los datos de Apple Podcasts (2024) muestran que el 70% de los descubrimientos vienen de búsqueda interna. Los términos más buscados son temáticos: "marketing podcast", "true crime", "money podcast". Si tu título no contiene ninguna de esas palabras o un sinónimo claro, dependés 100% de marketing externo.
+      </p>
+      <p>
+        Por eso los podcasts que crecen orgánico suelen tener un nombre conversacional + descriptor: "Marketing Made Simple", "The Money Podcast", "On Marketing". El sistema de ranking de Apple le da peso a las primeras palabras del título.
+      </p>
+
+      <h2>Errores que arruinan un nombre de podcast</h2>
+      <ul>
+        <li><strong>Demasiado largo.</strong> Más de 30 caracteres se truncan en mobile.</li>
+        <li><strong>Homófonos:</strong> nombres que se confunden al escribirlos. "C-Note" vs "See Note".</li>
+        <li><strong>Caracteres especiales:</strong> los acentos rompen búsquedas en algunas apps.</li>
+        <li><strong>Nombres ya tomados:</strong> Apple permite duplicados pero hunde el ranking.</li>
+        <li><strong>Demasiado descriptivo del primer episodio:</strong> si en 6 meses cambia el foco, el nombre te limita.</li>
+        <li><strong>Sin palabra clave:</strong> "Stories from the Edge" no te ayuda a aparecer en búsquedas.</li>
+      </ul>
+
+      <h2>Cómo validar el nombre antes de lanzarlo</h2>
+      <ol>
+        <li>Buscalo en Apple Podcasts. ¿Aparece otro con el mismo nombre? ¿Cuántos seguidores tiene?</li>
+        <li>Buscalo en Spotify. La cobertura es distinta a Apple.</li>
+        <li>Buscalo en Google + "podcast". Mirá los primeros 10 resultados.</li>
+        <li>Verificá USPTO si pensás registrar marca (clase 41, entretenimiento).</li>
+        <li>Disponibilidad del dominio .com o un .com.ar / .es / equivalente local.</li>
+        <li>Handles en Instagram, X, TikTok y YouTube — vas a necesitar todos para promocionar.</li>
+      </ol>
+
+      <h2>Cuándo usar tu propio nombre vs. un nombre de marca</h2>
+      <p>
+        Si sos personalidad reconocida en tu nicho, tu nombre + "Podcast" funciona ("The Tim Ferriss Show"). Si no, conviene un nombre de marca: te permite cambiar de host, vender, escalar. Apple Podcasts permite cambiar el nombre del host pero no fácilmente el del show. Pensá a 5 años, no a 1.
+      </p>
+
+      <h2>El subtítulo y la descripción: dónde cargar más SEO</h2>
+      <p>
+        Si tu nombre es brandeable y no descriptivo, podés cargar el SEO en el subtítulo (Apple lo permite) y la descripción. "Marketing podcast for B2B SaaS founders" en la descripción te puede dar más alcance que en el nombre. Pero solo funciona si las palabras coinciden con cómo busca la gente, no con cómo describís internamente el show.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno a un nombre de podcast?</summary><p>Fácil de buscar, sin homófonos, único en Apple/Spotify, claro al decirse en voz alta.</p></details>
+      <details><summary>¿Cuántos caracteres?</summary><p>Hasta 255, pero solo 30-40 visibles en mobile. Mantelo bajo 30.</p></details>
+      <details><summary>¿Meter palabra clave?</summary><p>Sí, una. Apple y Spotify ranquean por palabras del título.</p></details>
+      <details><summary>¿Mi nombre o uno de marca?</summary><p>Tu nombre si sos figura conocida. Marca si querés escalar o cambiar de host.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pc-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .pc-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 500; cursor: pointer; transition: border-color 0.1s; line-height: 1.4; }
+  .pc-item:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const DESC_PRE = ['The', 'Inside', 'On', 'About', 'The Daily', 'The Weekly'];
+  const DESC_SUF = ['Podcast', 'Show', 'Hour', 'Brief', 'Notes', 'Talks'];
+  const CONV_PRE = ['Café', 'Charlas de', 'Hablando de', 'Sobremesa de', 'Entre', 'Después de'];
+  const CONV_SUF = ['', '', '', '', '', ''];
+  const BRAND = ['Lumen', 'Brio', 'Quira', 'Plux', 'Vexa', 'Tono', 'Onda', 'Reki', 'Yumi', 'Tovi', 'Aurum', 'Nido', 'Vela'];
+  const CONTRAST_PATS = ['{T} vs. {T2}', 'Más allá de {T}', 'Antes y después de {T}', 'El verdadero {T}', '¿Por qué {T}?'];
+  const CONTRAST_T2: Record<string, string[]> = {
+    marketing: ['ventas', 'producto', 'datos'],
+    finanzas: ['economía', 'inversión', 'patrimonio'],
+    default: ['práctica', 'teoría', 'realidad'],
+  };
+
+  const topic = document.getElementById('pc-topic') as HTMLInputElement;
+  const style = document.getElementById('pc-style') as HTMLSelectElement;
+  const gen = document.getElementById('pc-gen') as HTMLButtonElement;
+  const out = document.getElementById('pc-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function generate() {
+    const T = cap(topic.value.trim() || 'tema');
+    const Tlow = T.toLowerCase();
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'descriptive') {
+        const pre = pick(DESC_PRE);
+        const suf = pick(DESC_SUF);
+        name = `${pre} ${T} ${suf}`.trim();
+      } else if (s === 'conversational') {
+        name = pick(CONV_PRE) + ' ' + T;
+      } else if (s === 'brandable') {
+        name = pick(BRAND) + (Math.random() > 0.5 ? ' Podcast' : '');
+      } else if (s === 'contrast') {
+        const t2arr = CONTRAST_T2[Tlow] || CONTRAST_T2.default;
+        const pat = pick(CONTRAST_PATS);
+        name = pat.replace('{T}', T).replace('{T2}', cap(pick(t2arr)));
+      }
+      if (name.length <= 30) set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'pc-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

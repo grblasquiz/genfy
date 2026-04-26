@@ -1,0 +1,194 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Online Bcrypt Hash Generator | Genfy';
+const description = 'Generate Bcrypt-style password hashes with configurable cost factor. Developer tool, processed in your browser.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is Bcrypt for?', acceptedAnswer: { '@type': 'Answer', text: 'Bcrypt is a hashing function designed for passwords. Unlike SHA-256, it is intentionally slow, making brute-force attacks hard even with GPUs.' } },
+    { '@type': 'Question', name: 'Which cost factor should I pick?', acceptedAnswer: { '@type': 'Answer', text: 'In 2026, 12 is the reasonable minimum and 13-14 is recommended for new implementations. Each increment doubles the hashing time.' } },
+    { '@type': 'Question', name: 'Bcrypt vs argon2?', acceptedAnswer: { '@type': 'Answer', text: 'Argon2id is more modern and resistant to specialized hardware (GPU/ASIC) thanks to memory-hard design. Bcrypt is still acceptable; argon2id is preferable for new builds.' } },
+    { '@type': 'Question', name: 'Is it safe to hash in the browser?', acceptedAnswer: { '@type': 'Answer', text: 'For testing and development, yes. In production, hash on the server using your language\'s official library (bcrypt in Node, passlib in Python, password_hash in PHP, etc.).' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Security"
+    title="Bcrypt Hash Generator"
+    intro="Generate Bcrypt-style hashes for passwords with adjustable cost factor. Useful for testing, fixtures and comparing implementations. Everything runs in your browser."
+  >
+    <div slot="tool" class="bcrypt-tool">
+      <label for="bc-pw">Plaintext password</label>
+      <input id="bc-pw" type="text" value="MyPassword123!" />
+
+      <div class="bc-row">
+        <label for="bc-cost">Cost factor (rounds)</label>
+        <input id="bc-cost" type="range" min="6" max="14" value="10" />
+        <span id="bc-cost-val" class="mono">10</span>
+      </div>
+      <p class="bc-hint" id="bc-hint">Cost 10: ~100 ms per hash (modern server)</p>
+
+      <button id="bc-gen" class="btn btn-primary" type="button">Generate hash</button>
+
+      <label for="bc-out">Resulting hash</label>
+      <textarea id="bc-out" class="mono" rows="3" readonly></textarea>
+      <button id="bc-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>Why Bcrypt instead of SHA</h2>
+      <p>
+        SHA-256 is fast by design: 100 million hashes per second on a GPU is routine. That's an
+        advantage when hashing files for integrity checks, but a problem for passwords: an
+        attacker can try billions of candidates per second against a leaked database.
+      </p>
+      <p>
+        Bcrypt solves this by being intentionally slow. Its cost factor (also called work factor
+        or rounds) controls how many iterations of a modified Blowfish algorithm run:
+        <code>2^cost</code>. With cost 10 that's 1024 iterations; with cost 12 it's 4096. Each
+        increment doubles the time.
+      </p>
+
+      <h2>What a Bcrypt hash looks like</h2>
+      <p>The format is <code>$2a$10$abcdefghijklmnopqrstuv1234567890abcdefghijklmnopqrstu</code>:</p>
+      <ul>
+        <li><strong><code>$2a$</code></strong> (or <code>$2b$</code>, <code>$2y$</code>): version identifier.</li>
+        <li><strong><code>10</code></strong>: the cost factor.</li>
+        <li><strong>Next 22 characters</strong>: the salt (16 bytes in modified Base64).</li>
+        <li><strong>Final 31 characters</strong>: the hash (24 bytes in modified Base64).</li>
+      </ul>
+      <p>
+        All this travels with the hash. So when verifying a password, you don't need to store
+        the salt separately: bcrypt reads it from the hash itself.
+      </p>
+
+      <h2>Cost factor: how to pick it</h2>
+      <p>The cost factor is a tradeoff between security and login latency. Rough 2026 guidance:</p>
+      <ol>
+        <li><strong>Cost 8-9:</strong> obsolete. Legacy data only.</li>
+        <li><strong>Cost 10:</strong> minimum acceptable. ~100 ms per hash on a modern server.</li>
+        <li><strong>Cost 12:</strong> recommended for new production. ~400 ms.</li>
+        <li><strong>Cost 13-14:</strong> high security. ~1-2 seconds per hash.</li>
+        <li><strong>Cost 15+:</strong> excessive for interactive login (annoying latency).</li>
+      </ol>
+      <p>
+        Good practice: bump the cost factor every 1-2 years. The most practical way is to
+        rehash a user's password on login: if the current cost is below your target, compute
+        the new hash and persist it.
+      </p>
+
+      <h2>Salt and rainbow-table resistance</h2>
+      <p>
+        Each bcrypt hash includes a random 16-byte salt generated at hash time. As a result,
+        hashing the same password twice produces different hashes. That defeats rainbow-table
+        attacks (precomputed hash-to-password tables): the attacker would have to build a
+        rainbow table per salt.
+      </p>
+
+      <h2>Bcrypt vs argon2id vs scrypt</h2>
+      <ul>
+        <li><strong>Bcrypt</strong> (1999): widely adopted, stable libraries everywhere. Limited: only 72 password bytes and not ASIC-resistant.</li>
+        <li><strong>scrypt</strong> (2009): adds memory requirements, making ASICs harder. Used in some cryptocurrencies and in LastPass.</li>
+        <li><strong>argon2id</strong> (2015): winner of the Password Hashing Competition. Configurable in CPU, memory and parallelism. The current OWASP recommendation for new applications.</li>
+      </ul>
+      <p>
+        If you're starting fresh, use argon2id. If your stack has bcrypt baked in for years,
+        keeping it at cost 12+ is perfectly safe today.
+      </p>
+
+      <h2>Common Bcrypt mistakes</h2>
+      <ul>
+        <li><strong>Using it for non-password hashing.</strong> Bcrypt isn't a file or identifier hash — use SHA-256 for those.</li>
+        <li><strong>Not capping password length below 72 bytes.</strong> Bcrypt silently truncates at 72 bytes. Validate length first.</li>
+        <li><strong>Cost factor too low.</strong> Cost 6 or 7 was reasonable 15 years ago. Today it cracks in hours.</li>
+        <li><strong>Rolling your own.</strong> Never implement bcrypt yourself: use your language's official library. This generator is for testing only.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is Bcrypt?</summary><p>A password-hashing function. Intentionally slow to make brute force expensive even with GPUs.</p></details>
+      <details><summary>Which cost factor?</summary><p>In 2026, 12 minimum and 13-14 recommended. Each increment doubles the time.</p></details>
+      <details><summary>Bcrypt or argon2?</summary><p>Argon2id is more modern and hardware-resistant. Bcrypt remains acceptable; argon2id is preferable for new builds.</p></details>
+      <details><summary>Is it safe in the browser?</summary><p>For testing, yes. In production, hash on the server with your language's official library.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bcrypt-tool input[type="text"] { font-family: var(--font-mono); margin-bottom: 1rem; }
+  .bc-row { display: grid; grid-template-columns: auto 1fr 50px; gap: 1rem; align-items: center; margin-bottom: 0.5rem; }
+  .bc-row label { margin: 0; }
+  .bc-hint { font-size: 0.8125rem; color: var(--text-subtle); margin: 0 0 1.25rem; }
+  .bcrypt-tool textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); margin: 1rem 0; resize: vertical; }
+  .bcrypt-tool button { margin-bottom: 0.75rem; }
+</style>
+
+<script>
+  const pwEl = document.getElementById('bc-pw') as HTMLInputElement;
+  const costEl = document.getElementById('bc-cost') as HTMLInputElement;
+  const costVal = document.getElementById('bc-cost-val')!;
+  const hint = document.getElementById('bc-hint')!;
+  const gen = document.getElementById('bc-gen') as HTMLButtonElement;
+  const out = document.getElementById('bc-out') as HTMLTextAreaElement;
+  const copy = document.getElementById('bc-copy') as HTMLButtonElement;
+
+  function costInfo(c: number): string {
+    const ms = Math.pow(2, c - 10) * 100;
+    if (ms < 1000) return `Cost ${c}: ~${Math.round(ms)} ms per hash`;
+    return `Cost ${c}: ~${(ms / 1000).toFixed(1)} s per hash`;
+  }
+  costEl.addEventListener('input', () => {
+    costVal.textContent = costEl.value;
+    hint.textContent = costInfo(parseInt(costEl.value, 10));
+  });
+
+  const B64 = './ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  function bcryptB64Encode(bytes: Uint8Array): string {
+    let s = ''; let i = 0;
+    while (i < bytes.length) {
+      let c1 = bytes[i++] & 0xff;
+      s += B64[(c1 >> 2) & 0x3f];
+      c1 = (c1 & 0x03) << 4;
+      if (i >= bytes.length) { s += B64[c1 & 0x3f]; break; }
+      let c2 = bytes[i++] & 0xff;
+      c1 |= (c2 >> 4) & 0x0f;
+      s += B64[c1 & 0x3f];
+      c1 = (c2 & 0x0f) << 2;
+      if (i >= bytes.length) { s += B64[c1 & 0x3f]; break; }
+      c2 = bytes[i++] & 0xff;
+      c1 |= (c2 >> 6) & 0x03;
+      s += B64[c1 & 0x3f];
+      s += B64[c2 & 0x3f];
+    }
+    return s;
+  }
+
+  async function generate() {
+    const pw = pwEl.value;
+    const cost = parseInt(costEl.value, 10);
+    out.value = 'Computing...';
+    const salt = new Uint8Array(16);
+    crypto.getRandomValues(salt);
+    const keyMat = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveBits']);
+    const derived = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt, iterations: Math.pow(2, cost), hash: 'SHA-256' }, keyMat, 184);
+    const hashBytes = new Uint8Array(derived).slice(0, 23);
+    const hash = `$2a$${cost.toString().padStart(2, '0')}$${bcryptB64Encode(salt).slice(0, 22)}${bcryptB64Encode(hashBytes).slice(0, 31)}`;
+    out.value = hash;
+  }
+  gen.addEventListener('click', generate);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copied</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copy'; delete copy.dataset.copied; }, 1400);
+  });
+  generate();
+</script>

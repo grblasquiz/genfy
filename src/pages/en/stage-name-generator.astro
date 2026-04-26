@@ -1,0 +1,121 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+import { STAGE_NAME_PARTS } from '../../lib/persona-names';
+
+const title = 'Stage Name Generator | Genfy';
+const description = 'Generate a memorable stage name for musicians, DJs, actors or creators. Short, punchy and elegant styles in English and Spanish.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why use a stage name?', acceptedAnswer: { '@type': 'Answer', text: 'It\'s more memorable, sounds better on a marquee, separates you from private life, and is often easier to pronounce and remember than your legal name.' } },
+    { '@type': 'Question', name: 'How do I pick a stage name?', acceptedAnswer: { '@type': 'Answer', text: 'Short, unique on Spotify and Instagram, easy to pronounce and search, and matched to your genre or style.' } },
+    { '@type': 'Question', name: 'Do I need to register it legally?', acceptedAnswer: { '@type': 'Answer', text: 'Not required, but worth trademarking once your career picks up to avoid conflicts with same-name artists.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="en" tag="People" title="Stage Name Generator"
+    intro="For musicians, DJs, actors, comedians or creators: names with stage presence. Click and get 12 ideas in seconds.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Style</label>
+      <select id="cn-style">
+        <option value="punchy">Single punchy word</option>
+        <option value="short-name">Short name + stage surname</option>
+        <option value="single">Short name only</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 names</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why artists use stage names</h2>
+      <p>
+        Reginald Dwight is Elton John. Stefani Germanotta is Lady Gaga. Aubrey Drake Graham
+        signs as Drake. The reasons are consistent: a stage name is more memorable, easier to pronounce, and
+        keeps your stage identity separate from your private life. In music, comedy and film,
+        stage names are the rule rather than the exception.
+      </p>
+
+      <h2>How to build a strong stage name</h2>
+      <ol>
+        <li><strong>Short.</strong> 1-3 syllables for single-word names; max 4-5 for first + last combos.</li>
+        <li><strong>Unique.</strong> Search Spotify, Apple Music, Instagram, TikTok before using it. If five other artists have that name, drop it.</li>
+        <li><strong>Pronounceable.</strong> If nobody knows how to say it, nobody recommends you by mouth.</li>
+        <li><strong>Searchable.</strong> "The" and generic words are SEO killers. "River" is more searchable than "The Music".</li>
+        <li><strong>Genre-matched.</strong> Soft names (Velvet, Sail) suit indie folk; hard ones (Zero, Wolf) suit electronic or rock.</li>
+      </ol>
+
+      <h2>Types of stage names</h2>
+      <ul>
+        <li><strong>Single punchy word:</strong> River, Zero, North, Copper. Memorable, unique, easy to shout at a show.</li>
+        <li><strong>Short name + stage surname:</strong> Lia Marlow, River Vance, Otto Stone. Sounds like a real person, but stylized.</li>
+        <li><strong>Initials:</strong> J.M., S.K. — common in hip-hop and electronic.</li>
+        <li><strong>One word from your real name:</strong> Adele (Adele Adkins), Drake (Aubrey Drake Graham). If your real name has a strong word, use it.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <ol>
+        <li>Names too close to existing artists (legal trouble).</li>
+        <li>Generic words impossible to search ("The Sound", "Music").</li>
+        <li>Special characters or emojis: cute on social, painful on SEO and platforms.</li>
+        <li>Names too long: people only call you by the first word anyway.</li>
+      </ol>
+
+      <h2>Practical checks before committing</h2>
+      <p>
+        Search Spotify, secure the handle on Instagram and TikTok, register the .com (or your
+        market's TLD), and consider trademarking once you start earning. Cross-platform consistency
+        is what multiplies your reach.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Why use a stage name?</summary><p>More memorable, easier to pronounce, separates stage from private identity.</p></details>
+      <details><summary>How to pick one?</summary><p>Short, unique, easy to pronounce and search, genre-matched.</p></details>
+      <details><summary>Register legally?</summary><p>Not required, but worth trademarking when your career picks up.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: STAGE_NAME_PARTS }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const mode = styleEl.value;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < 12 && attempts < 300) {
+      attempts++;
+      let combo;
+      if (mode === 'punchy') combo = pick(DATA.punchy.en);
+      else if (mode === 'short-name') combo = pick(DATA.short.en) + ' ' + pick(DATA.surnames.en);
+      else combo = pick(DATA.short.en);
+      set.add(combo);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 900); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

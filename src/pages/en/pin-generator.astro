@@ -1,0 +1,211 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Random PIN Generator | Genfy';
+const description = 'Generate secure 4 to 12-digit PINs for cards, alarms, safes and accounts. 100% free, runs entirely in your browser, no signup required.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many digits should a secure PIN have?', acceptedAnswer: { '@type': 'Answer', text: 'For ATM cards, 4 digits is standard. For phones and apps, 6-8 digits. For critical systems without lockout, 10-12 digits.' } },
+    { '@type': 'Question', name: 'Is a 4-digit PIN safe?', acceptedAnswer: { '@type': 'Answer', text: 'Only if the system locks the account after 3-5 failed attempts, like an ATM. Without lockout, a 4-digit PIN cracks in milliseconds.' } },
+    { '@type': 'Question', name: 'Which PINs should I avoid?', acceptedAnswer: { '@type': 'Answer', text: 'Avoid birth years, sequences (1234, 1111), keypad patterns and the most common ones (1234, 0000, 1111, 1212). A random PIN solves all of those.' } },
+    { '@type': 'Question', name: 'Does Genfy store the generated PINs?', acceptedAnswer: { '@type': 'Answer', text: 'No. Everything is generated in your browser using crypto.getRandomValues. Nothing is sent to a server or logged anywhere.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Security"
+    title="Random PIN Generator"
+    intro="Create unguessable numeric PINs for cards, alarms, apps and devices. Pick how many digits you need. Everything runs in your browser."
+  >
+    <div slot="tool" class="pin-tool">
+      <div class="pin-output">
+        <input id="pin-out" class="mono pin-display" readonly aria-label="Generated PIN" />
+        <button id="pin-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+      </div>
+
+      <div class="pin-controls">
+        <div class="pin-len-row">
+          <label for="pin-len">Number of digits</label>
+          <span id="pin-len-val" class="mono">6</span>
+        </div>
+        <input id="pin-len" type="range" min="3" max="12" value="6" />
+      </div>
+
+      <div class="pin-toggles">
+        <label><input type="checkbox" id="pin-no-rep" /> No repeated digits</label>
+        <label><input type="checkbox" id="pin-no-seq" checked /> Avoid sequences (1234, 9876)</label>
+      </div>
+
+      <div class="pin-actions">
+        <button id="pin-gen" class="btn btn-primary" type="button">Generate another PIN</button>
+        <button id="pin-bulk" class="btn btn-ghost" type="button">Generate 10</button>
+      </div>
+
+      <div id="pin-bulk-out" class="pin-bulk mono" hidden></div>
+    </div>
+
+    <div slot="content">
+      <h2>What is a PIN generator for?</h2>
+      <p>
+        A PIN (Personal Identification Number) is a short numeric key used wherever a full keyboard
+        isn't practical: ATMs, alarm panels, electronic locks, smart locks, SIM cards, point-of-sale
+        terminals and mobile apps. Unlike a regular password, a PIN only uses digits, which limits
+        its entropy and forces it to rely on extra mechanisms like lockout after failed attempts.
+      </p>
+      <p>
+        Genfy's generator uses <code>crypto.getRandomValues</code>, the browser's cryptographic API,
+        to produce each digit at random. That's a huge improvement over picking one "off the top of
+        your head" — humans repeat patterns (dates, repeats, sequences) that are the very first
+        things any automated attack tries.
+      </p>
+
+      <h2>How many digits should you pick?</h2>
+      <ul>
+        <li><strong>Bank cards and ATMs:</strong> 4 digits. The card is locked after 3 failed attempts, so brute force is impossible. Just avoid obvious dates and patterns.</li>
+        <li><strong>Phone unlock and apps:</strong> 6 digits is the new standard (iOS and Android both recommend it). About 100x stronger than 4 digits.</li>
+        <li><strong>Home safes and combination locks:</strong> 6-8 digits. These rarely have lockout, so length matters more.</li>
+        <li><strong>Alarm panels with quick disarm:</strong> 4-6 digits. Balance security with how fast you can punch it in under stress.</li>
+        <li><strong>Critical systems without lockout:</strong> 8-12 digits. Without auto-lockout, every extra digit multiplies the attack cost by ten.</li>
+      </ul>
+
+      <h2>How PIN strength is calculated</h2>
+      <p>
+        An N-digit PIN has 10^N possible combinations. Sounds plenty, but compare:
+      </p>
+      <ol>
+        <li>4 digits = 10,000 combinations. A computer tries them all in milliseconds.</li>
+        <li>6 digits = 1,000,000. Still trivial without lockout, fine with one.</li>
+        <li>8 digits = 100,000,000. Starts to slow down even dedicated hardware.</li>
+        <li>10 digits = 10 billion. Comparable to a short lowercase password.</li>
+      </ol>
+      <p>
+        That's why a PIN should never be the only defense for an important account. Always
+        combine it with attempt lockout, a second factor (SMS, authenticator app) or biometric
+        protection.
+      </p>
+
+      <h2>Common PIN mistakes</h2>
+      <p>
+        Studies of real data breaches show that more than 25% of 4-digit PINs fall in the top
+        20 most-used. The most common are <code>1234</code>, <code>1111</code>, <code>0000</code>,
+        <code>1212</code> and <code>7777</code>. Birth years (<code>1985</code>, <code>1990</code>)
+        and diagonal keypad patterns also rank high.
+      </p>
+      <ul>
+        <li>Don't use your birth date, your partner's, your kids', or anniversaries.</li>
+        <li>Avoid repeated digits (<code>4444</code>) and sequences (<code>1234</code>, <code>4321</code>).</li>
+        <li>Don't reuse the same PIN on your card, phone and alarm.</li>
+        <li>Don't write it on an unencrypted note or a slip in your wallet.</li>
+      </ul>
+
+      <h2>How to memorize a random PIN</h2>
+      <p>Generating a random PIN is step one; remembering it is step two. Techniques that work:</p>
+      <ul>
+        <li><strong>Chunking.</strong> A 6-digit PIN like <code>473829</code> is easier as <code>47-38-29</code>.</li>
+        <li><strong>Numeric association.</strong> Find a personal meaning after the fact: "47 is my street number plus 4".</li>
+        <li><strong>Spaced repetition.</strong> The first three days are critical: use it several times or store it temporarily in a password manager until it sticks.</li>
+      </ul>
+
+      <h2>Privacy of this generator</h2>
+      <p>
+        Everything happens in your browser. No server, no analytics on the PINs, no tracking
+        cookies. If you close the tab without copying, the PIN is gone forever, which is
+        exactly what you want.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many digits should a secure PIN have?</summary><p>For ATM cards, 4 digits. For phones and apps, 6-8. For critical systems without lockout, 10-12.</p></details>
+      <details><summary>Is a 4-digit PIN safe?</summary><p>Only if the system locks the account after a few failed tries, like an ATM. Without lockout, 4 digits crack in milliseconds.</p></details>
+      <details><summary>Which PINs should I avoid?</summary><p>Birth years, sequences (1234, 1111), keypad patterns and the most common ones (1234, 0000, 1111, 1212). A random PIN solves all of those.</p></details>
+      <details><summary>Does Genfy store the PINs?</summary><p>No. Everything runs in your browser via crypto.getRandomValues. Nothing is sent to a server or logged.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pin-output { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .pin-display { font-size: 1.75rem; letter-spacing: 0.25em; padding: 1rem; text-align: center; background: var(--bg-inset); }
+  .pin-output .btn { min-width: 92px; }
+  .pin-controls { margin-bottom: 1.25rem; }
+  .pin-len-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem; }
+  .pin-len-row label { margin: 0; }
+  .pin-toggles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.5rem 1.25rem; margin-bottom: 1.25rem; }
+  .pin-toggles label { display: flex; align-items: center; gap: 0.5rem; font-weight: 400; font-size: 0.9375rem; color: var(--text-soft); cursor: pointer; margin: 0; }
+  .pin-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .pin-bulk { margin-top: 1.25rem; padding: 1rem; background: var(--bg-inset); border-radius: var(--radius); white-space: pre; font-size: 1rem; line-height: 1.8; letter-spacing: 0.15em; }
+</style>
+
+<script>
+  const out = document.getElementById('pin-out') as HTMLInputElement;
+  const copy = document.getElementById('pin-copy') as HTMLButtonElement;
+  const gen = document.getElementById('pin-gen') as HTMLButtonElement;
+  const bulk = document.getElementById('pin-bulk') as HTMLButtonElement;
+  const len = document.getElementById('pin-len') as HTMLInputElement;
+  const lenVal = document.getElementById('pin-len-val')!;
+  const noRep = document.getElementById('pin-no-rep') as HTMLInputElement;
+  const noSeq = document.getElementById('pin-no-seq') as HTMLInputElement;
+  const bulkOut = document.getElementById('pin-bulk-out') as HTMLDivElement;
+
+  function randDigit(): number {
+    const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] % 10;
+  }
+  function isSeq(p: string): boolean {
+    if (/(.)\1{2,}/.test(p)) return true;
+    let asc = 1, desc = 1;
+    for (let i = 1; i < p.length; i++) {
+      if (+p[i] === +p[i-1] + 1) asc++; else asc = 1;
+      if (+p[i] === +p[i-1] - 1) desc++; else desc = 1;
+      if (asc >= 4 || desc >= 4) return true;
+    }
+    return false;
+  }
+  function generate(): string {
+    const length = parseInt(len.value, 10);
+    for (let attempt = 0; attempt < 50; attempt++) {
+      let pin = '';
+      const used = new Set<number>();
+      let ok = true;
+      for (let i = 0; i < length; i++) {
+        let d = randDigit();
+        if (noRep.checked) {
+          let tries = 0;
+          while (used.has(d) && tries < 20) { d = randDigit(); tries++; }
+          if (used.has(d)) { ok = false; break; }
+          used.add(d);
+        }
+        pin += d;
+      }
+      if (!ok) continue;
+      if (noSeq.checked && isSeq(pin)) continue;
+      return pin;
+    }
+    return Array.from({length: parseInt(len.value, 10)}, randDigit).join('');
+  }
+  function render() { out.value = generate(); bulkOut.hidden = true; }
+  len.addEventListener('input', () => { lenVal.textContent = len.value; render(); });
+  [noRep, noSeq].forEach(el => el.addEventListener('change', render));
+  gen.addEventListener('click', render);
+  bulk.addEventListener('click', () => {
+    const lines: string[] = [];
+    for (let i = 0; i < 10; i++) lines.push(generate());
+    bulkOut.textContent = lines.join('\n');
+    bulkOut.hidden = false;
+  });
+  async function doCopy() {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copied</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copy'; delete copy.dataset.copied; }, 1400);
+  }
+  copy.addEventListener('click', doCopy);
+  render();
+</script>

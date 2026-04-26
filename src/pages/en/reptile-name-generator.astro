@@ -1,0 +1,114 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+import { REPTILE_NAMES, AQUATIC_STYLES } from '../../lib/aquatic-names';
+
+const title = 'Reptile Name Generator | Genfy';
+const description = 'Cool, funny or cute: find the perfect name for your lizard, iguana, gecko or snake. 50+ ideas in English and Spanish — free.';
+const stylesEN = { cool: AQUATIC_STYLES.en.cool, funny: AQUATIC_STYLES.en.funny, cute: AQUATIC_STYLES.en.cute };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Do reptiles learn their name?', acceptedAnswer: { '@type': 'Answer', text: 'Not like dogs. Reptiles respond more to routines and smell. They can still associate sounds with feeding time.' } },
+    { '@type': 'Question', name: 'Good name for my gecko?', acceptedAnswer: { '@type': 'Answer', text: 'Short and sweet (Pip, Mochi, Coco, Spot) or cool (Rex, Spike, Shadow). What matters is that it feels natural to say.' } },
+    { '@type': 'Question', name: 'Intimidating or cute name?', acceptedAnswer: { '@type': 'Answer', text: 'Depends on the reptile. A 5-foot iguana with a cute name (Cookie, Mochi) is fun by contrast. A snake with a cool name (Spike, Shadow) fits more naturally.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="en" tag="Pets" title="Reptile Name Generator"
+    intro="For your lizard, gecko, iguana, snake or other reptile: cool, funny or cute. Click and get 12 fresh ideas.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Style</label>
+      <select id="cn-style">
+        {Object.entries(stylesEN).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mix of all</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 names</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a reptile name</h2>
+      <p>
+        Reptiles are a different kind of pet: silent, observant, faces that don't change. That gives
+        you two great naming strategies — go cool and imposing (Rex, Spike, Shadow) or play the
+        cute-contrast card (Mochi, Cookie, Pip). Both work; the only rule is it should feel natural
+        when you say it.
+      </p>
+      <ul>
+        <li><strong>By species.</strong> A python earns a name with presence, a bearded dragon fits epic or cute, a leopard gecko works with anything.</li>
+        <li><strong>By color or pattern.</strong> Spot, Stripes, Sandy, Mossy — descriptive and timeless.</li>
+        <li><strong>Mind longevity.</strong> Some lizards live 20 years, pythons even longer. The name has to last.</li>
+        <li><strong>Short for daily use.</strong> Even if you register "Lord Spike Magnus", you'll call them Spike.</li>
+      </ul>
+
+      <h2>Names by style</h2>
+      <ul>
+        <li><strong>Cool</strong> (Rex, Spike, Shadow, Slither, Ember): the most popular, especially for iguanas, bearded dragons and snakes.</li>
+        <li><strong>Funny</strong> (Sir Slithers, Captain Tail, Mr. Hiss, Noodle, Snek): for big scaly personalities.</li>
+        <li><strong>Cute</strong> (Mochi, Pip, Coco, Hazel): contrast works beautifully on scaly animals.</li>
+      </ul>
+
+      <h2>By species</h2>
+      <ul>
+        <li><strong>Leopard gecko:</strong> Mochi, Pip, Spot, Sandy. The cute archetype.</li>
+        <li><strong>Bearded dragon:</strong> Rex, Spike, Cookie, Ember. Presence + warmth.</li>
+        <li><strong>Iguana:</strong> Spike, Slither, Rex, Smaug.</li>
+        <li><strong>Snake:</strong> Shadow, Slither, Noodle, Spike.</li>
+        <li><strong>Chameleon:</strong> Mossy, Color, Pip, Sandy.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <ol>
+        <li>Intimidating names that don't match a 5-inch gecko.</li>
+        <li>Inside jokes that don't survive 15-20 years of pet ownership.</li>
+        <li>Assuming reptiles don't respond: many learn to associate your voice with feeding and safe handling.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Do reptiles learn their name?</summary><p>Not like dogs. They respond more to routines and smell, but can associate sounds with feeding.</p></details>
+      <details><summary>Good name for my gecko?</summary><p>Short and sweet (Pip, Mochi, Coco) or cool (Rex, Spike, Shadow).</p></details>
+      <details><summary>Intimidating or cute?</summary><p>Both work. Cute-contrast on a scaly pet is often the win.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: REPTILE_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.cool.en, ...DATA.funny.en, ...DATA.cute.en];
+    else pool = DATA[s].en;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

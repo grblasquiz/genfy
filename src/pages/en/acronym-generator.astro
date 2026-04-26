@@ -1,0 +1,292 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Acronym Generator | Genfy';
+const description = 'Turn phrases into memorable acronyms, or generate creative meanings for an existing acronym. Great for projects, programs and campaigns.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is an acronym?', acceptedAnswer: { '@type': 'Answer', text: 'A word formed from the initial letters or syllables of a phrase, read as a single unit. "NASA" and "SCUBA" are acronyms.' } },
+    { '@type': 'Question', name: 'How is it different from an initialism?', acceptedAnswer: { '@type': 'Answer', text: 'An initialism is spelled out (F-B-I). An acronym is pronounced as a word (NATO, SCUBA). The generator produces both formats.' } },
+    { '@type': 'Question', name: 'What is reverse mode for?', acceptedAnswer: { '@type': 'Answer', text: 'It gives you creative meanings for an existing acronym. Useful for naming projects, programs and internal campaigns.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text / Words" title="Acronym Generator"
+    intro="From phrase to acronym, or from acronym to creative meaning. Great for project names, internal programs, campaigns and memorable initialisms.">
+
+    <div slot="tool" class="ac">
+      <div>
+        <label for="ac-mode">Mode</label>
+        <select id="ac-mode">
+          <option value="phrase">Phrase → Acronym</option>
+          <option value="reverse">Acronym → Meanings</option>
+        </select>
+      </div>
+      <div id="ac-phrase-block">
+        <label for="ac-input">Phrase to abbreviate</label>
+        <input id="ac-input" type="text" placeholder="e.g. Strategic Planning System" />
+      </div>
+      <div id="ac-reverse-block" hidden>
+        <label for="ac-letters">Acronym (3-6 letters)</label>
+        <input id="ac-letters" type="text" placeholder="e.g. TEAM" maxlength="6" />
+        <label for="ac-context">Context (optional)</label>
+        <select id="ac-context">
+          <option value="business">Business</option>
+          <option value="tech">Technology</option>
+          <option value="education">Education</option>
+          <option value="general">General</option>
+        </select>
+      </div>
+      <button id="ac-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="ac-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="ac-out" rows="10" readonly style="margin-top:1rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Acronym vs. initialism: the difference</h2>
+      <p>
+        An <strong>initialism</strong> uses initials but is spelled out (FBI: F-B-I). An
+        <strong>acronym</strong> also uses initials (or syllables) but is read as a single
+        word (NATO, SCUBA, RADAR). In practice, acronyms are more memorable because they enter
+        spoken language like any other word. That's why so many brands and internal programs
+        chase them.
+      </p>
+
+      <h2>"Phrase → acronym" mode</h2>
+      <p>
+        Works as a naming aid. You enter the phrase ("Strategic Planning System") and the
+        generator returns the acronym (SPS). If it doesn't sound right, try reordering the
+        words or using synonyms — sometimes "SPS" reads better as "PSS" by changing word order.
+        That iteration is part of serious naming.
+      </p>
+
+      <h2>"Acronym → meanings" mode</h2>
+      <p>
+        Reverse mode is useful when you already have a word (TEAM, FUEL, AGILE) and you need to
+        find a meaning that justifies it. The generator suggests words starting with each
+        letter, within the context you choose. Then you pick the combination that fits your
+        project best.
+      </p>
+
+      <h2>How to choose a good acronym</h2>
+      <ol>
+        <li><strong>Pronounceable.</strong> "PNRTS" doesn't read; "POSTA" does. Look for vowels.</li>
+        <li><strong>Short.</strong> 3-5 letters is the sweet spot. Longer loses memorability.</li>
+        <li><strong>No ambiguity.</strong> If your acronym matches a famous one (FBI, UN), you'll fight for SEO and confuse conversations.</li>
+        <li><strong>No bad meanings in other languages.</strong> A brand called "FART" has a hard sell abroad.</li>
+        <li><strong>Echo the concept.</strong> The best acronyms aren't arbitrary: the word reinforces the meaning.</li>
+      </ol>
+
+      <h2>Famous examples</h2>
+      <ul>
+        <li><strong>NASA</strong> — National Aeronautics and Space Administration.</li>
+        <li><strong>NATO</strong> — North Atlantic Treaty Organization.</li>
+        <li><strong>SCUBA</strong> — Self-Contained Underwater Breathing Apparatus.</li>
+        <li><strong>RADAR</strong> — Radio Detection And Ranging.</li>
+        <li><strong>LASER</strong> — Light Amplification by Stimulated Emission of Radiation.</li>
+      </ul>
+      <p>
+        All of these share one thing: the resulting word feels like a natural noun. That's the
+        gold standard.
+      </p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Forcing the phrase to fit a pretty acronym.</strong> If you write "Program Advanced for Modernization" only because you want it to spell PAM, the phrase loses clarity.</li>
+        <li><strong>Overly meta acronyms.</strong> "TQM" for "Total Quality Management" works, but stretching common words into acronyms loses charm.</li>
+        <li><strong>Inconsistent caps.</strong> Decide from day one: NASA or Nasa? Stick to it.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is an acronym?</summary><p>A word formed from initials or syllables of a phrase, read as one unit.</p></details>
+      <details><summary>Difference vs initialism?</summary><p>Initialism is spelled (F-B-I); acronym is pronounced as a word (NATO).</p></details>
+      <details><summary>Reverse mode?</summary><p>Gives creative meanings for an existing acronym.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ac input, .ac select { margin-bottom: 1rem; }
+</style>
+
+<script>
+  const modeEl = document.getElementById('ac-mode') as HTMLSelectElement;
+  const phraseBlock = document.getElementById('ac-phrase-block') as HTMLElement;
+  const reverseBlock = document.getElementById('ac-reverse-block') as HTMLElement;
+  const inp = document.getElementById('ac-input') as HTMLInputElement;
+  const lettersEl = document.getElementById('ac-letters') as HTMLInputElement;
+  const ctxEl = document.getElementById('ac-context') as HTMLSelectElement;
+  const out = document.getElementById('ac-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('ac-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('ac-copy') as HTMLButtonElement;
+
+  const STOP = new Set(["of","the","a","an","and","or","to","for","in","on","at","with","by"]);
+
+  const POOLS: Record<string, Record<string, string[]>> = {
+    business: {
+      A: ["Action","Agreement","Analysis","Advance","Alliance"],
+      B: ["Benefit","Balance","Base","Brand"],
+      C: ["Customer","Commitment","Change","Capability","Culture"],
+      D: ["Development","Decision","Data","Design","Drive"],
+      E: ["Excellence","Efficiency","Engagement","Energy","Empathy"],
+      F: ["Focus","Future","Force","Finance","Flexibility"],
+      G: ["Growth","Goals","Global","Gain"],
+      H: ["Honesty","Humility","Hands-on"],
+      I: ["Innovation","Initiative","Impact","Investment","Integrity"],
+      J: ["Judgment","Justice"],
+      K: ["Knowledge","Key"],
+      L: ["Leadership","Loyalty","Long-term"],
+      M: ["Market","Mission","Management","Method"],
+      N: ["Network","Need","North"],
+      O: ["Objective","Operation","Opportunity","Organization"],
+      P: ["Project","Plan","Product","Performance","Productivity"],
+      Q: ["Quality","Quorum"],
+      R: ["Results","Resilience","Responsibility"],
+      S: ["Service","Solution","System","Support","Synergy"],
+      T: ["Team","Talent","Transformation","Time","Technique"],
+      U: ["Unity","User","Utility"],
+      V: ["Value","Vision","Velocity","Vantage"],
+      W: ["Workshop","Workflow"],
+      X: ["Excellence"],
+      Y: ["Yield"],
+      Z: ["Zone","Zenith"],
+    },
+    tech: {
+      A: ["API","Architecture","Algorithm","Automation","Analytics"],
+      B: ["Backend","Build","Backup","Branch"],
+      C: ["Cloud","Code","Continuous","Configuration","CI/CD"],
+      D: ["Deployment","Development","Data","Dashboard"],
+      E: ["Endpoint","Efficiency","Engineering"],
+      F: ["Framework","Feature","Flow","Function"],
+      G: ["Gateway","Generation","Git"],
+      H: ["Hardware","Hosting","Heuristic"],
+      I: ["Integration","Interface","Infrastructure","Iteration"],
+      J: ["Job","JSON"],
+      K: ["Kernel","Kanban"],
+      L: ["Latency","Logs","Language"],
+      M: ["Monitoring","Microservice","Model","Migration"],
+      N: ["Node","Network","Notebook"],
+      O: ["Optimization","Orchestration","Open source"],
+      P: ["Pipeline","Platform","Performance","Product"],
+      Q: ["Query","Quality"],
+      R: ["Release","Refactor","Runtime"],
+      S: ["System","Service","Software","Stack","Security"],
+      T: ["Testing","Tooling","Tracking"],
+      U: ["User","UX","Update"],
+      V: ["Version","Validation","Variable"],
+      W: ["Workflow","Webhook"],
+      X: ["XML"],
+      Y: ["YAML"],
+      Z: ["Zero-downtime"],
+    },
+    education: {
+      A: ["Achievement","Attention","Awareness"],
+      B: ["Base","Bibliography","Benefit"],
+      C: ["Curriculum","Comprehension","Community","Consistency"],
+      D: ["Discipline","Development","Dedication"],
+      E: ["Education","Empathy","Excellence","Engagement"],
+      F: ["Formation","Family","Future","Fundamentals"],
+      G: ["Group","Guidance","Generation"],
+      H: ["Habit","Honesty","Humility"],
+      I: ["Inclusion","Inquiry","Innovation"],
+      J: ["Joy","Journey"],
+      K: ["Kit","Knowledge"],
+      L: ["Literacy","Leadership","Language"],
+      M: ["Method","Motivation","Mentor"],
+      N: ["Notice","Nurture"],
+      O: ["Objective","Opportunity","Organization"],
+      P: ["Participation","Practice","Project"],
+      Q: ["Quality","Quest"],
+      R: ["Reading","Resource","Respect"],
+      S: ["Skill","Study","Solidarity"],
+      T: ["Tutoring","Training","Talent"],
+      U: ["Unity","University"],
+      V: ["Value","Vocation"],
+      W: ["Workshop","Wisdom"],
+      X: ["Excellence"],
+      Y: ["Youth"],
+      Z: ["Zone"],
+    },
+    general: {
+      A: ["Action","Adventure","Art","Awareness"],
+      B: ["Balance","Beauty","Belief"],
+      C: ["Connection","Courage","Growth","Confidence"],
+      D: ["Discipline","Dedication","Drive"],
+      E: ["Effort","Empathy","Energy"],
+      F: ["Family","Focus","Future"],
+      G: ["Generosity","Gratitude","Joy"],
+      H: ["Habit","Honesty","Humility"],
+      I: ["Initiative","Integrity","Inspiration"],
+      J: ["Justice","Joy","Journey"],
+      K: ["Kindness","Knowledge"],
+      L: ["Loyalty","Liberty","Light"],
+      M: ["Movement","Memory","Mastery"],
+      N: ["Nature","North"],
+      O: ["Optimism","Order","Origin"],
+      P: ["Patience","Purpose","Passion"],
+      Q: ["Quality"],
+      R: ["Respect","Resilience","Reason"],
+      S: ["Wisdom","Sincerity","Service"],
+      T: ["Trust","Talent","Time"],
+      U: ["Unity","Understanding"],
+      V: ["Value","Truth","Vision"],
+      W: ["Will","Wisdom"],
+      X: ["Excellence"],
+      Y: ["Youth"],
+      Z: ["Zone"],
+    },
+  };
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+
+  modeEl.addEventListener('change', () => {
+    const r = modeEl.value === 'reverse';
+    phraseBlock.hidden = r; reverseBlock.hidden = !r;
+  });
+
+  function generate() {
+    if (modeEl.value === 'phrase') {
+      const v = (inp.value || '').trim();
+      if (!v) { out.value = ''; return; }
+      const tokens = v.split(/\s+/).filter(t => !STOP.has(t.toLowerCase()));
+      const acro = tokens.map(t => t.charAt(0).toUpperCase()).join('');
+      const lines: string[] = [
+        `Acronym: ${acro}`,
+        '',
+        'Variants:',
+        `• ${acro}`,
+        `• ${tokens.map(t => t.slice(0,2)).join('').toUpperCase()}`,
+        `• ${tokens.map(t => t.charAt(0)).join('').toLowerCase()}`,
+      ];
+      out.value = lines.join('\n');
+    } else {
+      const letters = (lettersEl.value || '').toUpperCase().replace(/[^A-Z]/g, '');
+      if (!letters) { out.value = ''; return; }
+      const ctx = ctxEl.value;
+      const pool = POOLS[ctx] || POOLS.general;
+      const lines: string[] = [];
+      for (let i = 0; i < 5; i++) {
+        const expansion = letters.split('').map(L => {
+          const arr = pool[L] || pool['A'];
+          return pick(arr);
+        });
+        lines.push(`${letters} → ${expansion.join(' ')}`);
+      }
+      out.value = lines.join('\n');
+    }
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  inp.value = "Strategic Planning System";
+  generate();
+</script>

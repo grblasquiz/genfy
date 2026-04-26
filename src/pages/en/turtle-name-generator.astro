@@ -1,0 +1,114 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+import { TURTLE_NAMES, AQUATIC_STYLES } from '../../lib/aquatic-names';
+
+const title = 'Turtle Name Generator | Genfy';
+const description = 'Classic, funny or food-themed: find the perfect name for your turtle. 50+ ideas in English and Spanish — free instant generator.';
+const stylesEN = { classic: AQUATIC_STYLES.en.classic, funny: AQUATIC_STYLES.en.funny, food: AQUATIC_STYLES.en.food };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Do turtles recognize their name?', acceptedAnswer: { '@type': 'Answer', text: 'They associate sounds with food. They don\'t "respond" like a dog, but they can learn that a sound means feeding time.' } },
+    { '@type': 'Question', name: 'How long do pet turtles live?', acceptedAnswer: { '@type': 'Answer', text: '20 to 40 years, sometimes up to 60. The name needs to age well — pick carefully.' } },
+    { '@type': 'Question', name: 'Serious or funny name for a turtle?', acceptedAnswer: { '@type': 'Answer', text: 'Both work. A solemn Tank ages well; so does Captain Shell. The key is whether you\'ll still love it in 20 years.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="en" tag="Pets" title="Turtle Name Generator"
+    intro="Classic, funny or food-themed: find the name that fits your turtle best. Click and get 12 fresh ideas.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Style</label>
+      <select id="cn-style">
+        {Object.entries(stylesEN).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mix of all</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 names</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a turtle name</h2>
+      <p>
+        Turtles are the longest-lived pets in the average household. A Russian tortoise can live 40
+        years, a Mediterranean tortoise more than 60. That changes the rules: the name has to age
+        gracefully, survive school changes, moves and partners.
+      </p>
+      <ul>
+        <li><strong>Think long-term.</strong> What's funny at 12 may embarrass you at 40. When in doubt, pick something timeless.</li>
+        <li><strong>Short wins.</strong> Shelly, Cooper, Tank. Long names always become nicknames.</li>
+      </ul>
+      <ul>
+        <li><strong>By speed or personality.</strong> Speedy, Squirt — descriptive and endearing.</li>
+        <li><strong>By shell color.</strong> Mossy, Pebble, Sandy work great.</li>
+      </ul>
+
+      <h2>Names by style</h2>
+      <ul>
+        <li><strong>Classic</strong> (Shelly, Speedy, Squirt, Cooper): timeless, the most common.</li>
+        <li><strong>Funny</strong> (Sir Slowpoke, Captain Shell, Doctor Slow): for big personalities.</li>
+        <li><strong>Food</strong> (Cookie, Mochi, Truffle, Hazel): cute and memorable.</li>
+      </ul>
+
+      <h2>Trends</h2>
+      <p>
+        US and UK turtle keepers consistently pick Shelly, Speedy, Cooper and Squirt (the latter
+        thanks to <em>Finding Nemo</em>). Tank and Bumper rank high for larger species. Longevity is
+        a real factor: on keeper forums, half the regrets are about names that stopped being cute
+        after a decade.
+      </p>
+
+      <h2>Common mistakes</h2>
+      <ol>
+        <li>Long, elaborate names — most end up as nicknames.</li>
+        <li>Inside jokes that don't survive 30 years.</li>
+        <li>Assuming the turtle doesn't notice. They do associate sounds with food consistently.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Do turtles recognize their name?</summary><p>They associate sounds with food. They can learn a sound means feeding time.</p></details>
+      <details><summary>How long do pet turtles live?</summary><p>20 to 40 years, sometimes up to 60. The name needs to last decades.</p></details>
+      <details><summary>Serious or funny name?</summary><p>Both work. The key is whether you'll still love it in 20 years.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: TURTLE_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.classic.en, ...DATA.funny.en, ...DATA.food.en];
+    else pool = DATA[s].en;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

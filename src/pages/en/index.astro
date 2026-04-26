@@ -23,10 +23,10 @@ const description = 'Hundreds of free online generators: secure passwords, busin
   <section id="generators" class="generators">
     <div class="section-head">
       <h2>Featured generators</h2>
-      <a href="/en/generators" class="section-link">See all →</a>
+      <a href="/en/generators" class="section-link">See all {GENERATORS.length} →</a>
     </div>
     <div class="grid-cards">
-      {GENERATORS.map(g => (
+      {GENERATORS.slice(0, 12).map(g => (
         <a class="gcard" href={urlFor(g, lang)}>
           <span class="gcard-emoji">{g.emoji}</span>
           <span class="gcard-title">{g.title.en}</span>

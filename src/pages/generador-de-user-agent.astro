@@ -1,0 +1,224 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de User Agent aleatorio | Genfy';
+const description = 'Generá strings User Agent realistas para Chrome, Firefox, Safari y Edge en distintos sistemas operativos. Útil para testing, scraping y QA.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es el User Agent?', acceptedAnswer: { '@type': 'Answer', text: 'Una cadena de texto que el navegador envía en cada request HTTP para identificar qué navegador, versión y sistema operativo lo originó. El servidor lo usa para adaptar respuestas.' } },
+    { '@type': 'Question', name: '¿Para qué genero User Agents?', acceptedAnswer: { '@type': 'Answer', text: 'Para tests funcionales que dependen del UA, fixtures de logs, validación de detección de bots y simulación de tráfico variado en entornos no productivos.' } },
+    { '@type': 'Question', name: '¿Sirve para evitar bloqueos en scraping?', acceptedAnswer: { '@type': 'Answer', text: 'Cambiar el UA es solo una de varias señales que un sitio puede usar para detectar bots. Hoy se complementan con TLS fingerprinting, comportamiento del mouse y otros. Por sí solo, no garantiza nada.' } },
+    { '@type': 'Question', name: '¿Está dejando de usarse el User Agent?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Chrome y otros navegadores están migrando a User-Agent Client Hints (Sec-CH-UA). El UA tradicional sigue funcionando pero su contenido cada vez es más reducido y predecible.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech"
+    title="Generador de User Agent aleatorio"
+    intro="User Agents realistas de Chrome, Firefox, Safari y Edge en Windows, macOS, Linux, Android e iOS. Para testing, fixtures, logs y simulación de tráfico variado."
+  >
+    <div slot="tool" class="ua-tool">
+      <div class="ua-controls">
+        <div>
+          <label for="ua-browser">Navegador</label>
+          <select id="ua-browser">
+            <option value="any" selected>Cualquiera</option>
+            <option value="chrome">Chrome</option>
+            <option value="firefox">Firefox</option>
+            <option value="safari">Safari</option>
+            <option value="edge">Edge</option>
+          </select>
+        </div>
+        <div>
+          <label for="ua-os">Sistema</label>
+          <select id="ua-os">
+            <option value="any" selected>Cualquiera</option>
+            <option value="windows">Windows</option>
+            <option value="mac">macOS</option>
+            <option value="linux">Linux</option>
+            <option value="android">Android</option>
+            <option value="ios">iOS</option>
+          </select>
+        </div>
+        <div>
+          <label for="ua-count">Cantidad</label>
+          <input id="ua-count" type="number" min="1" max="100" value="10" />
+        </div>
+      </div>
+
+      <button id="ua-gen" class="btn btn-primary" type="button">Generar User Agents</button>
+
+      <textarea id="ua-out" class="mono" rows="14" readonly></textarea>
+      <button id="ua-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar todos</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es el User Agent</h2>
+      <p>
+        El User Agent es una cadena que tu navegador envía en cada request HTTP, en el header
+        <code>User-Agent</code>. Identifica qué software hace el pedido: navegador, versión,
+        sistema operativo y a veces detalles adicionales como motor de renderizado.
+      </p>
+      <p>
+        Un UA típico de Chrome en Windows 11 se ve así:
+      </p>
+      <ul>
+        <li><code>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36</code></li>
+      </ul>
+      <p>
+        Esa estructura tiene razones históricas. <em>Mozilla/5.0</em> está al inicio porque
+        servidores antiguos esperaban "Mozilla" para servir contenido moderno. <em>AppleWebKit</em>
+        y <em>KHTML</em> aparecen porque Chrome derivó de WebKit, que derivó de KHTML. Es un
+        fósil de compatibilidad acumulado a lo largo de 30 años.
+      </p>
+
+      <h2>Casos de uso legítimos</h2>
+      <ol>
+        <li><strong>Tests automatizados.</strong> Verificar que tu sistema detecta correctamente móvil/desktop, browser específico y entrega el bundle adecuado.</li>
+        <li><strong>Fixtures de logs.</strong> Poblar tablas de analytics con UAs variados para probar dashboards.</li>
+        <li><strong>Detección de bots.</strong> Validar que tu servicio rechaza UAs sospechosos (vacíos, "curl/7.x", "python-requests/").</li>
+        <li><strong>Demos visuales.</strong> Mostrar capturas con UAs realistas en lugar de "user-agent-1".</li>
+        <li><strong>Bug reports.</strong> Si un usuario reporta un bug "en su navegador", reproducir con su UA exacto.</li>
+      </ol>
+
+      <h2>El futuro: Client Hints</h2>
+      <p>
+        Chrome y otros navegadores están reduciendo el detalle del User Agent tradicional como
+        medida anti-fingerprinting. En su lugar promueven los <strong>User-Agent Client Hints</strong>:
+        headers HTTP separados (<code>Sec-CH-UA</code>, <code>Sec-CH-UA-Platform</code>,
+        <code>Sec-CH-UA-Mobile</code>) que el servidor pide explícitamente cuando los necesita.
+      </p>
+      <p>
+        En la práctica, el UA tradicional sigue funcionando y va a seguir un buen tiempo, pero
+        cada vez tiene menos información útil. Si tu lógica depende del UA para algo serio,
+        empezá a migrar a Client Hints.
+      </p>
+
+      <h2>Cuándo NO usar User Agents falsos</h2>
+      <ul>
+        <li><strong>Para violar términos de servicio.</strong> Si un sitio prohíbe scraping en sus ToS, falsificar el UA no lo legaliza.</li>
+        <li><strong>Para acceder a contenido geo-restringido.</strong> El UA no incluye geo. Necesitás VPN, y eso se rige por las leyes de tu país.</li>
+        <li><strong>Para suplantar a un usuario real.</strong> Si el UA va junto con cookies de otro usuario, es fraude.</li>
+        <li><strong>Para evadir métricas de uso.</strong> Si tu app cobra por dispositivo, falsificar UA puede infringir el contrato.</li>
+      </ul>
+
+      <h2>Detección moderna de bots</h2>
+      <p>
+        Hace 10 años, el User Agent alcanzaba para diferenciar humanos de bots. Hoy los sistemas
+        anti-bot serios (Cloudflare, hCaptcha, Akamai) usan decenas de señales:
+      </p>
+      <ul>
+        <li>TLS fingerprint (JA3/JA4): cómo tu cliente negocia el handshake.</li>
+        <li>HTTP/2 fingerprint: orden y prioridad de headers.</li>
+        <li>Client Hints: el servidor te pide un dato y compara con lo que esperaba.</li>
+        <li>Comportamiento del mouse y teclado.</li>
+        <li>Canvas fingerprint, WebGL fingerprint.</li>
+        <li>Cookies persistentes.</li>
+      </ul>
+      <p>
+        Cambiar solo el UA y esperar pasar como humano no funciona contra estos sistemas.
+        Hablá con el sitio si necesitás acceso programático: la mayoría tiene API.
+      </p>
+
+      <h2>UA vs userAgentData</h2>
+      <p>
+        En navegadores modernos podés usar <code>navigator.userAgentData</code> para obtener
+        información estructurada en lugar de parsear la string. Devuelve un objeto con
+        <code>brands</code>, <code>mobile</code>, <code>platform</code>. Es el equivalente JS
+        a Client Hints. Compatibilidad: todo Chromium reciente; Firefox y Safari aún no lo
+        implementan.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es el User Agent?</summary><p>Cadena que el navegador envía en cada request HTTP para identificarse. Sirve para que el servidor adapte la respuesta.</p></details>
+      <details><summary>¿Para qué generarlos?</summary><p>Tests funcionales, fixtures de logs, detección de bots, demos y bug reports.</p></details>
+      <details><summary>¿Sirve para evitar bloqueos en scraping?</summary><p>Solo en parte. Hoy se combinan UA + TLS fingerprint + comportamiento. Solo cambiar UA no garantiza nada.</p></details>
+      <details><summary>¿Está dejando de usarse?</summary><p>Sí. Migración a User-Agent Client Hints (Sec-CH-UA). El UA tradicional sigue pero con cada vez menos información.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ua-controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .ua-controls { grid-template-columns: 1fr; } }
+  textarea { font-family: var(--font-mono); font-size: 0.75rem; background: var(--bg-inset); resize: vertical; margin: 1rem 0 0.75rem; word-break: break-all; }
+</style>
+
+<script>
+  const CHROME_VERS = ['120.0.0.0','121.0.0.0','122.0.0.0','123.0.0.0','124.0.0.0','125.0.0.0','126.0.0.0'];
+  const FF_VERS = ['122.0','123.0','124.0','125.0','126.0','127.0'];
+  const SAFARI_VERS = ['16.6','17.0','17.1','17.2','17.3','17.4'];
+  const EDGE_VERS = ['120.0.0.0','121.0.0.0','122.0.0.0','123.0.0.0','124.0.0.0'];
+  const IOS_VERS = ['16_6','17_0','17_2','17_4'];
+  const ANDROID_VERS = ['12','13','14'];
+  const OSX_VERS = ['10_15_7','12_7','13_5','14_2'];
+
+  function rand(min: number, max: number): number { const a = new Uint32Array(1); crypto.getRandomValues(a); return min + (a[0] % (max - min + 1)); }
+  function pick<T>(arr: T[]): T { return arr[rand(0, arr.length - 1)]; }
+
+  function build(browser: string, os: string): string {
+    if (browser === 'chrome') {
+      const v = pick(CHROME_VERS);
+      if (os === 'windows') return `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${v} Safari/537.36`;
+      if (os === 'mac') return `Mozilla/5.0 (Macintosh; Intel Mac OS X ${pick(OSX_VERS)}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${v} Safari/537.36`;
+      if (os === 'linux') return `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${v} Safari/537.36`;
+      if (os === 'android') return `Mozilla/5.0 (Linux; Android ${pick(ANDROID_VERS)}; SM-S918B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${v} Mobile Safari/537.36`;
+      return `Mozilla/5.0 (iPhone; CPU iPhone OS ${pick(IOS_VERS)} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/${v} Mobile/15E148 Safari/604.1`;
+    }
+    if (browser === 'firefox') {
+      const v = pick(FF_VERS);
+      if (os === 'windows') return `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:${v}) Gecko/20100101 Firefox/${v}`;
+      if (os === 'mac') return `Mozilla/5.0 (Macintosh; Intel Mac OS X ${pick(OSX_VERS).replace(/_/g, '.')}; rv:${v}) Gecko/20100101 Firefox/${v}`;
+      if (os === 'linux') return `Mozilla/5.0 (X11; Linux x86_64; rv:${v}) Gecko/20100101 Firefox/${v}`;
+      if (os === 'android') return `Mozilla/5.0 (Android ${pick(ANDROID_VERS)}; Mobile; rv:${v}) Gecko/${v} Firefox/${v}`;
+      return `Mozilla/5.0 (iPhone; CPU iPhone OS ${pick(IOS_VERS)} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/${v} Mobile/15E148 Safari/605.1.15`;
+    }
+    if (browser === 'safari') {
+      const v = pick(SAFARI_VERS);
+      if (os === 'mac' || os === 'windows' || os === 'linux') return `Mozilla/5.0 (Macintosh; Intel Mac OS X ${pick(OSX_VERS)}) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/${v} Safari/605.1.15`;
+      return `Mozilla/5.0 (iPhone; CPU iPhone OS ${pick(IOS_VERS)} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/${v} Mobile/15E148 Safari/604.1`;
+    }
+    // edge
+    const v = pick(EDGE_VERS);
+    if (os === 'windows' || os === 'linux') return `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${v} Safari/537.36 Edg/${v}`;
+    return `Mozilla/5.0 (Macintosh; Intel Mac OS X ${pick(OSX_VERS)}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${v} Safari/537.36 Edg/${v}`;
+  }
+
+  const browser = document.getElementById('ua-browser') as HTMLSelectElement;
+  const os = document.getElementById('ua-os') as HTMLSelectElement;
+  const count = document.getElementById('ua-count') as HTMLInputElement;
+  const out = document.getElementById('ua-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('ua-gen') as HTMLButtonElement;
+  const copy = document.getElementById('ua-copy') as HTMLButtonElement;
+
+  function generate() {
+    const n = Math.min(100, Math.max(1, parseInt(count.value || '10', 10)));
+    const browsers = ['chrome','firefox','safari','edge'];
+    const oses = ['windows','mac','linux','android','ios'];
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) {
+      const b = browser.value === 'any' ? pick(browsers) : browser.value;
+      const o = os.value === 'any' ? pick(oses) : os.value;
+      lines.push(build(b, o));
+    }
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', generate);
+  [browser, os, count].forEach(el => el.addEventListener('change', generate));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copiado</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copiar todos'; delete copy.dataset.copied; }, 1400);
+  });
+  generate();
+</script>

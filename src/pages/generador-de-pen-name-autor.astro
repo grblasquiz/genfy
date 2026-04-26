@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+import { PEN_NAME_PARTS } from '../lib/persona-names';
+
+const title = 'Generador de seudónimo de autor (pen name) | Genfy';
+const description = 'Generá un seudónimo elegante y memorable para firmar tu novela, ensayo o blog. +50 nombres y apellidos en español e inglés.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué usar un seudónimo de autor?', acceptedAnswer: { '@type': 'Answer', text: 'Para separar la vida pública de la privada, para escribir en un género distinto al que ya publicás, para tener un nombre más memorable o pronunciable, o por preferencia personal.' } },
+    { '@type': 'Question', name: '¿Es legal publicar bajo seudónimo?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Casi todos los países permiten publicar bajo seudónimo. Para contratos editoriales y derechos de autor, normalmente se firma con tu nombre legal pero la obra aparece con el seudónimo.' } },
+    { '@type': 'Question', name: '¿Cómo elijo un buen seudónimo?', acceptedAnswer: { '@type': 'Answer', text: 'Que sea memorable, fácil de pronunciar, único (chequealo en Google y Goodreads), y que combine bien con el género en el que escribís.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="es" tag="Personas" title="Generador de seudónimo de autor"
+    intro="Para firmar tu novela, ensayo o blog: nombres con presencia literaria. Click y obtené 12 ideas en segundos.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Estilo</label>
+      <select id="cn-style">
+        <option value="male">Masculinos</option>
+        <option value="female">Femeninos</option>
+        <option value="initial">Con inicial (E. Castellanos)</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 12 seudónimos</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué muchos autores usan seudónimos</h2>
+      <p>
+        Stephen King escribió como Richard Bachman. J.K. Rowling firma sus thrillers como Robert
+        Galbraith. George Orwell se llamaba Eric Blair. Las razones son consistentes desde hace
+        siglos:
+      </p>
+      <ul>
+        <li><strong>Separar identidades.</strong> Tu nombre real para tu trabajo "serio", el seudónimo para ficción, comedia o erótica.</li>
+        <li><strong>Cambiar de género literario.</strong> Si publicás romance bajo tu nombre, los lectores esperan más romance. Un seudónimo te libera.</li>
+        <li><strong>Privacidad.</strong> No querés que cualquier lector sepa dónde vivís ni te busque en redes con tu nombre legal.</li>
+        <li><strong>Mejor branding.</strong> Tu nombre legal puede ser largo, difícil de pronunciar o muy común. Un seudónimo bien elegido vende.</li>
+      </ul>
+
+      <h2>Cómo construir un buen seudónimo</h2>
+      <ol>
+        <li><strong>Memorable.</strong> Una mezcla de sonidos comunes y poco comunes. Ni demasiado raro ("Xrtul Mphi") ni demasiado genérico ("Juan García").</li>
+        <li><strong>Único.</strong> Buscalo en Google y Goodreads antes de comprometerte. Si ya hay un autor con ese nombre, descartalo.</li>
+        <li><strong>Acorde al género.</strong> Una novela de ciencia ficción dura encaja con un nombre limpio (Howard Sutton). Una novela romántica histórica funciona con algo más evocador (Beatrice Hawthorne).</li>
+        <li><strong>Pensá la longevidad.</strong> ¿Vas a firmar 10 libros con este nombre? Que te siga gustando.</li>
+        <li><strong>Iniciales.</strong> Una inicial ambigua (J.K. Rowling, S.E. Hinton) puede funcionar si querés que el género del autor no sesgue al lector.</li>
+      </ol>
+
+      <h2>Estilos por género</h2>
+      <ul>
+        <li><strong>Literatura general:</strong> apellido sólido (Castellanos, Hawthorne), nombre clásico (Eduardo, Helen).</li>
+        <li><strong>Thriller / suspenso:</strong> apellidos cortos y duros (Knox, Reed, Vance), nombres directos (Henry, Ada).</li>
+        <li><strong>Romance:</strong> apellidos elegantes (Hawthorne, Castellanos, Lacroix), nombres suaves (Beatrice, Camille).</li>
+        <li><strong>Ciencia ficción:</strong> sonidos limpios y modernos (Vance, Holloway).</li>
+      </ul>
+
+      <h2>Aspectos legales</h2>
+      <p>
+        En la mayoría de los países podés publicar bajo seudónimo sin problemas legales. Lo que se
+        firma en el contrato editorial es tu nombre legal, y el seudónimo aparece como "p.k.a."
+        (professionally known as) o "que escribe como". Los derechos de autor son tuyos
+        independientemente del nombre con que figure el libro.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Por qué usar un seudónimo de autor?</summary><p>Para separar vida pública y privada, escribir en un género distinto, tener un nombre más memorable, o por preferencia personal.</p></details>
+      <details><summary>¿Es legal publicar bajo seudónimo?</summary><p>Sí. Se firma con tu nombre legal y la obra aparece con el seudónimo.</p></details>
+      <details><summary>¿Cómo elijo un buen seudónimo?</summary><p>Memorable, único, fácil de pronunciar, acorde al género en que escribís.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: PEN_NAME_PARTS }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const mode = styleEl.value;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < 12 && attempts < 300) {
+      attempts++;
+      let combo;
+      if (mode === 'male') combo = pick(DATA.firstMale.es) + ' ' + pick(DATA.surnames.es);
+      else if (mode === 'female') combo = pick(DATA.firstFemale.es) + ' ' + pick(DATA.surnames.es);
+      else {
+        const isMale = Math.random() > 0.5;
+        const first = isMale ? pick(DATA.firstMale.es) : pick(DATA.firstFemale.es);
+        combo = first.charAt(0) + '. ' + pick(DATA.surnames.es);
+      }
+      set.add(combo);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 900); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

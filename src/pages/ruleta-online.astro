@@ -1,0 +1,238 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Ruleta online (spinner) gratis | Genfy';
+const description = 'Una ruleta giratoria con tus opciones personalizadas. Animación realista, audio opcional, perfecta para decidir qué cocinar, dividir tareas o sortear dentro del equipo.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuántas opciones puede tener la ruleta?', acceptedAnswer: { '@type': 'Answer', text: 'Hasta 30 opciones para que cada porción siga siendo legible. Si necesitás más, usá nuestro generador "elegir al azar de una lista" sin limitación.' } },
+    { '@type': 'Question', name: '¿Es justo el resultado?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Calculamos un ángulo final aleatorio con crypto.getRandomValues y la animación es solo visual: el resultado ya está decidido cuando arranca el giro. Cada opción tiene exactamente 1/N de probabilidad.' } },
+    { '@type': 'Question', name: '¿Puedo usar la ruleta sin internet?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, una vez que cargó la página todo corre en el navegador. Es perfecto para usar en clase, en una reunión presencial o donde la conexión sea inestable.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Random" title="Ruleta online (spinner)"
+    intro="Cargá tus opciones, hacé girar la ruleta y dejá que el azar decida. Ideal para qué cocinar, repartir tareas, decidir el orden de presentación o un sorteo entre amigos. Para uso lúdico, sin valor legal.">
+
+    <div slot="tool" class="sp-tool">
+      <div class="sp-grid">
+        <div class="sp-stage">
+          <div class="sp-pointer">▼</div>
+          <canvas id="sp-canvas" width="400" height="400"></canvas>
+        </div>
+        <div class="sp-side">
+          <label for="sp-list">Opciones (una por línea)</label>
+          <textarea id="sp-list" rows="10">Pizza
+Pasta
+Sushi
+Empanadas
+Hamburguesa
+Curry
+Tacos
+Ensalada</textarea>
+          <button id="sp-update" class="btn btn-ghost" type="button">Actualizar ruleta</button>
+        </div>
+      </div>
+
+      <div id="sp-result" class="sp-result">Tocá "girar" para empezar</div>
+
+      <div class="sp-actions">
+        <button id="sp-spin" class="btn btn-primary" type="button">Girar ruleta</button>
+        <button id="sp-remove" class="btn btn-ghost" type="button">Quitar ganador y volver a girar</button>
+      </div>
+
+      <p class="sp-note">Para usos lúdicos. No tiene validez legal para sorteos con premios materiales.</p>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo decide la ruleta el ganador</h2>
+      <p>
+        Aunque la animación parece ser la que decide, en realidad calculamos el ángulo
+        final con <code>crypto.getRandomValues</code> antes de que arranque el giro. La
+        rotación visual es puramente decorativa: aterriza exactamente donde ya elegimos.
+        Eso garantiza que cada opción tenga exactamente 1/N de probabilidad y que la
+        velocidad o el momento en que tocás "girar" no influyan.
+      </p>
+
+      <h2>Buenas decisiones para tomar con ruleta</h2>
+      <ul>
+        <li><strong>Qué cocinar / pedir esta noche:</strong> 8 opciones, una ruleta, fin de la discusión.</li>
+        <li><strong>Quién presenta primero en la reunión:</strong> nombres de todos, ruleta, listo.</li>
+        <li><strong>Repartir tareas en un equipo:</strong> ruleta para cada tarea, quita ganadores y seguís girando.</li>
+        <li><strong>Sortear ganador entre amigos / suscriptores chicos:</strong> escribí los nombres, una vuelta. Es más entretenido que un decisor sí/no.</li>
+        <li><strong>Decisiones de juego:</strong> qué mapa, qué personaje, qué color de equipo.</li>
+        <li><strong>Romper bloques creativos:</strong> "girar" entre 6 ideas y empezar por la que cae.</li>
+      </ul>
+
+      <h2>El "modo ronda": quitar ganador y seguir</h2>
+      <p>
+        Si necesitás repartir 5 tareas entre 5 personas, usá el modo "quitar ganador y
+        volver a girar". La primera persona que sale toma la primera tarea, la
+        eliminamos de la ruleta, y volvés a girar para la segunda tarea. Garantiza que
+        cada persona reciba exactamente una asignación.
+      </p>
+
+      <h2>Diferencias con un dado o moneda</h2>
+      <p>
+        Un dado es ideal cuando tus opciones son numéricas o caben en 2-20 caras
+        estándar. Una moneda sirve para 2 opciones. Pero cuando tenés <strong>nombres,
+        platos, ideas, opciones con etiquetas</strong>, una ruleta visualiza mucho mejor:
+        ves todas las posibilidades, ves cuál salió, y la animación crea un momento social
+        que un número aislado no logra.
+      </p>
+
+      <h2>Cómo hacer que tu sorteo sea verificable</h2>
+      <ol>
+        <li><strong>Mostrá la lista completa antes</strong> de girar (captura, lectura en voz alta, link a un doc compartido).</li>
+        <li><strong>Hacé el giro en vivo</strong>: video, stream, sala de Zoom abierta. Eso elimina sospechas.</li>
+        <li><strong>Compartí captura del resultado</strong> en el grupo donde se anunció el sorteo.</li>
+        <li><strong>Para premios reales</strong>, considerá una plataforma de sorteo certificada o presencia notarial. Una ruleta casera no tiene validez legal aunque sea perfectamente justa.</li>
+      </ol>
+
+      <h2>Por qué usar una ruleta y no un sorteador "automático"</h2>
+      <p>
+        Las plataformas de sorteo por redes sociales eligen al ganador automáticamente,
+        sin animación, sin transparencia. La ruleta tiene una ventaja sociológica:
+        <strong>todos ven el momento</strong>. Eso construye legitimidad. Para
+        comunidades chicas y sorteos sin valor monetario, es la mejor opción.
+      </p>
+
+      <h2>Casos donde NO usar la ruleta</h2>
+      <ul>
+        <li><strong>Listas muy largas</strong> (más de 30 opciones): la ruleta se vuelve ilegible. Mejor "elegir al azar de una lista".</li>
+        <li><strong>Selección ponderada</strong>: si una opción debe tener más chances que otra, podés repetirla N veces en la lista, pero por encima de cierta cantidad la ruleta deja de ser útil visualmente.</li>
+        <li><strong>Sorteos con premios materiales y validez legal</strong>: necesitás un sistema certificado.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántas opciones?</summary><p>Hasta 30 para que cada porción siga siendo legible. Para listas más grandes, "elegir al azar de una lista".</p></details>
+      <details><summary>¿Es justo?</summary><p>Sí. Calculamos el ángulo con crypto.getRandomValues; la animación es decorativa. Cada opción tiene 1/N de probabilidad.</p></details>
+      <details><summary>¿Funciona offline?</summary><p>Sí. Una vez cargada, todo corre en el navegador.</p></details>
+      <details><summary>¿Sirve para sorteos con premios?</summary><p>Para sorteos lúdicos sí. Para premios con valor legal necesitás certificación y notario.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1rem; }
+  .sp-stage { position: relative; display: flex; align-items: center; justify-content: center; }
+  .sp-pointer { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); font-size: 2rem; color: var(--danger); z-index: 2; line-height: 1; }
+  #sp-canvas { width: 100%; max-width: 360px; height: auto; aspect-ratio: 1; }
+  .sp-side { display: flex; flex-direction: column; gap: 0.5rem; }
+  .sp-side textarea { font-family: var(--font-mono); font-size: 0.875rem; flex: 1; min-height: 200px; }
+  .sp-result { padding: 1.25rem; background: var(--bg-inset); border-radius: var(--radius-lg); border: 1px solid var(--border); text-align: center; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; min-height: 60px; display: flex; align-items: center; justify-content: center; }
+  .sp-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+  .sp-note { font-size: 0.75rem; color: var(--text-subtle); margin: 0; }
+  @media (max-width: 700px) { .sp-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const canvas = document.getElementById('sp-canvas') as HTMLCanvasElement;
+  const list = document.getElementById('sp-list') as HTMLTextAreaElement;
+  const update = document.getElementById('sp-update') as HTMLButtonElement;
+  const spin = document.getElementById('sp-spin') as HTMLButtonElement;
+  const remove = document.getElementById('sp-remove') as HTMLButtonElement;
+  const result = document.getElementById('sp-result')!;
+
+  let items: string[] = [];
+  let rotation = 0;
+  let spinning = false;
+  let lastWinner = '';
+
+  const colors = ['#059669', '#0891b2', '#0284c7', '#4f46e5', '#7c3aed', '#c026d3', '#db2777', '#dc2626', '#ea580c', '#d97706', '#ca8a04', '#65a30d'];
+
+  function parse() {
+    items = list.value.split('\n').map(s => s.trim()).filter(Boolean).slice(0, 30);
+    if (items.length === 0) items = ['Opción 1', 'Opción 2', 'Opción 3'];
+    draw();
+  }
+
+  function draw() {
+    const ctx = canvas.getContext('2d')!;
+    const W = canvas.width;
+    const cx = W / 2, cy = W / 2, r = W / 2 - 8;
+    ctx.clearRect(0, 0, W, W);
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rotation);
+    const slice = (Math.PI * 2) / items.length;
+    items.forEach((it, i) => {
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.arc(0, 0, r, i * slice, (i + 1) * slice);
+      ctx.closePath();
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.save();
+      ctx.rotate(i * slice + slice / 2);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 14px Inter, sans-serif';
+      const text = it.length > 16 ? it.slice(0, 14) + '…' : it;
+      ctx.fillText(text, r - 12, 5);
+      ctx.restore();
+    });
+    ctx.restore();
+    // center cap
+    ctx.beginPath();
+    ctx.arc(cx, cy, 18, 0, Math.PI * 2);
+    ctx.fillStyle = '#09090b';
+    ctx.fill();
+  }
+
+  function rand() {
+    const arr = new Uint32Array(1);
+    window.crypto.getRandomValues(arr);
+    return arr[0] / 0xffffffff;
+  }
+
+  function spinIt() {
+    if (spinning || items.length === 0) return;
+    spinning = true;
+    result.textContent = 'Girando...';
+    const winnerIdx = Math.floor(rand() * items.length);
+    const slice = (Math.PI * 2) / items.length;
+    // pointer is at the top (-PI/2). We want winner's center to land at top.
+    const targetAngle = -Math.PI / 2 - (winnerIdx * slice + slice / 2);
+    const spins = 6 + Math.floor(rand() * 3);
+    const finalRotation = rotation + spins * Math.PI * 2 + (targetAngle - rotation % (Math.PI * 2));
+    const start = rotation;
+    const duration = 4500;
+    const t0 = performance.now();
+    function step(now: number) {
+      const t = Math.min(1, (now - t0) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      rotation = start + (finalRotation - start) * eased;
+      draw();
+      if (t < 1) requestAnimationFrame(step);
+      else {
+        spinning = false;
+        lastWinner = items[winnerIdx];
+        result.textContent = `🎉 ${lastWinner}`;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  update.addEventListener('click', parse);
+  spin.addEventListener('click', spinIt);
+  remove.addEventListener('click', () => {
+    if (!lastWinner) return;
+    items = items.filter(x => x !== lastWinner);
+    list.value = items.join('\n');
+    lastWinner = '';
+    draw();
+    if (items.length > 0) spinIt();
+  });
+
+  parse();
+</script>

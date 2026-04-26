@@ -1,0 +1,216 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Test Credit Card Generator (Luhn) | Genfy';
+const description = 'Generate Luhn-valid credit card numbers for testing. Visa, Mastercard, Amex and others. QA only — these are not real cards.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Do these numbers work in a real store?', acceptedAnswer: { '@type': 'Answer', text: 'No. They pass local Luhn checksum validation but are not issued by any bank. Real processors (Stripe, Adyen) reject them immediately.' } },
+    { '@type': 'Question', name: 'What are they good for then?', acceptedAnswer: { '@type': 'Answer', text: 'For testing form-format validation, unit tests for Luhn calculation, and cases where your system validates the number before sending it to the processor.' } },
+    { '@type': 'Question', name: 'Are there official test cards?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Each processor publishes its own sandbox test cards. Stripe uses 4242 4242 4242 4242, Adyen uses 4111 1111 1111 1111, Square uses 4111 1111 1111 1111.' } },
+    { '@type': 'Question', name: 'Is it legal to generate them?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. They are random numbers with a valid check digit. They do not constitute a real card or represent access to anyone\'s funds. Similar to generating fake names.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Data / Testing"
+    title="Test Credit Card Generator (Luhn)"
+    intro="Synthetic card numbers that pass Luhn validation, with proper issuer BIN (Visa, Mastercard, Amex). For local testing only — these are not real cards."
+  >
+    <div slot="tool" class="card-tool">
+      <div class="card-controls">
+        <div>
+          <label for="card-brand">Brand</label>
+          <select id="card-brand">
+            <option value="visa" selected>Visa</option>
+            <option value="mastercard">Mastercard</option>
+            <option value="amex">American Express</option>
+            <option value="discover">Discover</option>
+            <option value="diners">Diners Club</option>
+            <option value="jcb">JCB</option>
+          </select>
+        </div>
+        <div>
+          <label for="card-count">Quantity</label>
+          <input id="card-count" type="number" min="1" max="50" value="5" />
+        </div>
+      </div>
+
+      <div class="card-toggles">
+        <label><input type="checkbox" id="card-format" checked /> Format with spaces</label>
+        <label><input type="checkbox" id="card-extra" /> Include CVV and expiry</label>
+      </div>
+
+      <button id="card-gen" class="btn btn-primary" type="button">Generate cards</button>
+
+      <textarea id="card-out" class="mono" rows="10" readonly></textarea>
+      <button id="card-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>What the Luhn algorithm is</h2>
+      <p>
+        Luhn (also called "mod 10") is a checksum that catches typos in card numbers. Hans
+        Peter Luhn at IBM designed it in 1954. It's not cryptographic security — anyone can
+        compute it. Its only purpose is detecting human-entry errors.
+      </p>
+      <p>
+        The algorithm: walk the digits right to left. Multiply the digits in even positions
+        (counting from 1 on the right, so even = 2, 4, 6...) by 2. If the result exceeds 9,
+        subtract 9 (or sum the digits). Sum all digits. If the total is a multiple of 10, the
+        number is Luhn-valid.
+      </p>
+
+      <h2>Card number anatomy</h2>
+      <ul>
+        <li><strong>BIN/IIN:</strong> the first 6-8 digits identify the issuer (bank). That's why numbers start differently per brand.</li>
+        <li><strong>Account number:</strong> the middle digits. Identify the holder within the issuer.</li>
+        <li><strong>Luhn check digit:</strong> the last digit. Calculated so the total satisfies mod 10.</li>
+      </ul>
+      <p>Brands have assigned ranges:</p>
+      <ol>
+        <li><strong>Visa:</strong> starts with 4. Length: 13, 16 or 19.</li>
+        <li><strong>Mastercard:</strong> starts with 51-55 or 2221-2720. Length: 16.</li>
+        <li><strong>American Express:</strong> starts with 34 or 37. Length: 15.</li>
+        <li><strong>Discover:</strong> starts with 6011, 644-649 or 65. Length: 16.</li>
+        <li><strong>Diners Club:</strong> starts with 36, 38 or 300-305. Length: 14-19.</li>
+        <li><strong>JCB:</strong> starts with 35. Length: 16.</li>
+      </ol>
+
+      <h2>Official test cards by processor</h2>
+      <p>
+        If you want to test a full checkout, you don't want these numbers — you want what each
+        processor publishes for sandbox mode. Those work only in test environments. Common
+        ones:
+      </p>
+      <ul>
+        <li><strong>Stripe:</strong> 4242 4242 4242 4242 (Visa, success). 4000 0000 0000 0002 (declined). Docs: stripe.com/docs/testing.</li>
+        <li><strong>PayPal:</strong> the PayPal sandbox includes its own test card when you create a tester account.</li>
+        <li><strong>Square:</strong> 4111 1111 1111 1111 (Visa). 5105 1051 0510 5100 (Mastercard).</li>
+        <li><strong>Braintree:</strong> 4111 1111 1111 1111 (Visa). 5555 5555 5555 4444 (Mastercard).</li>
+        <li><strong>Adyen:</strong> 4111 1111 1111 1111 with CVV 737 and expiry 03/30.</li>
+      </ul>
+
+      <h2>What generic Luhn-valid numbers ARE good for</h2>
+      <p>
+        Real cases where you need a number that passes Luhn but never reaches the processor:
+      </p>
+      <ol>
+        <li><strong>Validator unit tests.</strong> If your code rejects Luhn-invalid cards, you need valid cases to confirm it accepts them.</li>
+        <li><strong>E2E tests with mocked processor.</strong> Your app's form requires Luhn-valid on the frontend, but the backend is stubbed.</li>
+        <li><strong>Form validation outside checkout.</strong> If you store cards in an internal app (e.g. a manual payment management system), you want to validate format without charging.</li>
+        <li><strong>Visual demos.</strong> Showing payment UIs with numbers that "look real" without using a real one.</li>
+      </ol>
+
+      <h2>What you must NEVER do</h2>
+      <ul>
+        <li><strong>Try them on real checkouts.</strong> It's attempted fraud, even if they don't work. Your IP gets logged.</li>
+        <li><strong>Share them as if they were real.</strong> Plainly deceptive.</li>
+        <li><strong>Use them as identity credentials.</strong> Some systems use cards for identity verification. A Luhn-valid number is not an identity.</li>
+        <li><strong>Store them unflagged.</strong> If you persist them, mark them clearly as synthetic.</li>
+      </ul>
+
+      <h2>PCI DSS and synthetic data</h2>
+      <p>
+        The PCI DSS standard (which governs cardholder data handling) acknowledges that
+        synthetic data falls outside its scope: if the number doesn't correspond to a real
+        account, it isn't a PAN ("Primary Account Number") in the standard's sense. That lets
+        you use them in development environments without treating the database as a PCI
+        system.
+      </p>
+      <p>
+        Even so, isolate the data: don't mix production with synthetic, don't log the numbers
+        in accessible systems, don't email them.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Do they work in real stores?</summary><p>No. They pass Luhn but aren't issued by any bank. Stripe, Adyen and others reject them.</p></details>
+      <details><summary>What for then?</summary><p>For format validation testing, Luhn unit tests and local validation before reaching the processor.</p></details>
+      <details><summary>Are there official test cards?</summary><p>Yes. Each processor publishes sandbox cards: Stripe 4242 4242 4242 4242, Adyen 4111 1111 1111 1111, etc.</p></details>
+      <details><summary>Is it legal?</summary><p>Yes. Random numbers with a valid checksum. They don't represent access to any funds.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .card-controls { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .card-controls { grid-template-columns: 1fr; } }
+  .card-toggles { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .card-toggles label { display: flex; align-items: center; gap: 0.5rem; font-weight: 400; font-size: 0.9375rem; color: var(--text-soft); cursor: pointer; margin: 0; }
+  textarea { font-family: var(--font-mono); font-size: 0.9375rem; background: var(--bg-inset); resize: vertical; margin: 1rem 0 0.75rem; }
+</style>
+
+<script>
+  const BRANDS: Record<string, { prefixes: string[], length: number, cvvLen: number }> = {
+    visa: { prefixes: ['4'], length: 16, cvvLen: 3 },
+    mastercard: { prefixes: ['51','52','53','54','55'], length: 16, cvvLen: 3 },
+    amex: { prefixes: ['34','37'], length: 15, cvvLen: 4 },
+    discover: { prefixes: ['6011','65'], length: 16, cvvLen: 3 },
+    diners: { prefixes: ['36','38','300','301','302','303','304','305'], length: 14, cvvLen: 3 },
+    jcb: { prefixes: ['3528','3529','353','354','355','356','357','358'], length: 16, cvvLen: 3 },
+  };
+  function rand(min: number, max: number): number { const a = new Uint32Array(1); crypto.getRandomValues(a); return min + (a[0] % (max - min + 1)); }
+  function pick<T>(arr: T[]): T { return arr[rand(0, arr.length - 1)]; }
+  function luhnCheckDigit(num: string): number {
+    let sum = 0;
+    for (let i = 0; i < num.length; i++) {
+      let d = parseInt(num[num.length - 1 - i], 10);
+      if (i % 2 === 0) { d *= 2; if (d > 9) d -= 9; }
+      sum += d;
+    }
+    return (10 - (sum % 10)) % 10;
+  }
+  function generateCard(brand: string): string {
+    const b = BRANDS[brand];
+    let n = pick(b.prefixes);
+    while (n.length < b.length - 1) n += rand(0, 9);
+    n += luhnCheckDigit(n);
+    return n;
+  }
+  function formatNumber(n: string, brand: string): string {
+    if (brand === 'amex') return `${n.slice(0,4)} ${n.slice(4,10)} ${n.slice(10)}`;
+    return n.match(/.{1,4}/g)?.join(' ') ?? n;
+  }
+  const brand = document.getElementById('card-brand') as HTMLSelectElement;
+  const count = document.getElementById('card-count') as HTMLInputElement;
+  const fmt = document.getElementById('card-format') as HTMLInputElement;
+  const extra = document.getElementById('card-extra') as HTMLInputElement;
+  const out = document.getElementById('card-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('card-gen') as HTMLButtonElement;
+  const copy = document.getElementById('card-copy') as HTMLButtonElement;
+  function generate() {
+    const n = Math.min(50, Math.max(1, parseInt(count.value || '5', 10)));
+    const lines: string[] = [];
+    const b = BRANDS[brand.value];
+    for (let i = 0; i < n; i++) {
+      const num = generateCard(brand.value);
+      let line = fmt.checked ? formatNumber(num, brand.value) : num;
+      if (extra.checked) {
+        const cvv = String(rand(0, Math.pow(10, b.cvvLen) - 1)).padStart(b.cvvLen, '0');
+        const month = String(rand(1, 12)).padStart(2, '0');
+        const year = String(new Date().getFullYear() + rand(1, 5)).slice(-2);
+        line += ` | ${month}/${year} | CVV ${cvv}`;
+      }
+      lines.push(line);
+    }
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', generate);
+  [brand, count, fmt, extra].forEach(el => el.addEventListener('change', generate));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copied</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copy'; delete copy.dataset.copied; }, 1400);
+  });
+  generate();
+</script>

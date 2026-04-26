@@ -1,0 +1,211 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'MD5, SHA-1, SHA-256 and SHA-512 Hash Generator | Genfy';
+const description = 'Compute MD5, SHA-1, SHA-256 and SHA-512 hashes in your browser. Useful for verifying files, data integrity and signatures. No server.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a hash and what is it for?', acceptedAnswer: { '@type': 'Answer', text: 'A hash is a fixed-size fingerprint of any data. Used to verify a file was not modified, index content and detect duplicates.' } },
+    { '@type': 'Question', name: 'Is MD5 still safe?', acceptedAnswer: { '@type': 'Answer', text: 'Not for cryptography. MD5 and SHA-1 are broken for collision resistance. They work for non-critical checksums but not for signatures, password hashing or adversarial integrity.' } },
+    { '@type': 'Question', name: 'Which one should I use for passwords?', acceptedAnswer: { '@type': 'Answer', text: 'None of these. Use bcrypt, argon2id or scrypt for passwords. Fast hashes (SHA-256) crack too quickly when applied to passwords.' } },
+    { '@type': 'Question', name: 'Is my text sent to a server?', acceptedAnswer: { '@type': 'Answer', text: 'No. Everything is computed with the Web Crypto API in your browser (except MD5, which is legacy and computed in pure JS). Nothing leaves your device.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Security"
+    title="MD5 / SHA Hash Generator"
+    intro="Compute MD5, SHA-1, SHA-256 and SHA-512 hashes from any text. Useful for integrity checks, file comparison and checksums."
+  >
+    <div slot="tool" class="hash-tool">
+      <label for="hash-in">Text to hash</label>
+      <textarea id="hash-in" rows="5" placeholder="Paste your text here…">Hello world</textarea>
+
+      <div class="hash-results">
+        <div class="hash-row">
+          <label class="hash-label">MD5</label>
+          <input id="hash-md5" class="mono" readonly />
+          <button class="btn btn-ghost hash-copy" data-target="hash-md5" type="button">Copy</button>
+        </div>
+        <div class="hash-row">
+          <label class="hash-label">SHA-1</label>
+          <input id="hash-sha1" class="mono" readonly />
+          <button class="btn btn-ghost hash-copy" data-target="hash-sha1" type="button">Copy</button>
+        </div>
+        <div class="hash-row">
+          <label class="hash-label">SHA-256</label>
+          <input id="hash-sha256" class="mono" readonly />
+          <button class="btn btn-ghost hash-copy" data-target="hash-sha256" type="button">Copy</button>
+        </div>
+        <div class="hash-row">
+          <label class="hash-label">SHA-512</label>
+          <input id="hash-sha512" class="mono" readonly />
+          <button class="btn btn-ghost hash-copy" data-target="hash-sha512" type="button">Copy</button>
+        </div>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>What a hash function is</h2>
+      <p>
+        A hash function takes input of any size and returns a fixed-size string. The same input
+        always produces the same output. Changing a single bit drastically changes the result
+        (the avalanche effect). That makes them useful as fingerprints: if two hashes match,
+        the data is the same.
+      </p>
+      <p>
+        Cryptographic hash functions also resist inversion: given a hash, deducing the input is
+        computationally impossible. And collisions: finding two distinct inputs that produce the
+        same hash is very hard... when the function isn't broken.
+      </p>
+
+      <h2>MD5, SHA-1, SHA-256 and SHA-512</h2>
+      <ul>
+        <li><strong>MD5</strong> (1991, 128 bits). Broken since 2004 for collision resistance. Useful only for non-adversarial checksums.</li>
+        <li><strong>SHA-1</strong> (1995, 160 bits). Broken in 2017 (the SHAttered attack). Google and Microsoft removed it from TLS. Don't use it for signatures.</li>
+        <li><strong>SHA-256</strong> (2001, 256 bits). Part of the SHA-2 family. Still secure and the current standard for TLS, Bitcoin, Git since 2018, SSL certificates and digital signatures.</li>
+        <li><strong>SHA-512</strong> (2001, 512 bits). Same family as SHA-256 but with 1024-bit blocks. Faster on 64-bit hardware and useful when you need a larger output.</li>
+      </ul>
+
+      <h2>Correct use cases</h2>
+      <ol>
+        <li><strong>Verifying downloads.</strong> When a site publishes the SHA-256 of an installer, you can compute it locally and compare.</li>
+        <li><strong>File integrity.</strong> Detect corruption in transfers, backups and disks.</li>
+        <li><strong>Indexing and deduplication.</strong> Stores like S3 or Git use hashes to identify identical content without comparing bytes.</li>
+        <li><strong>Proof of existence.</strong> Publishing the hash of a document acts as a cryptographic timestamp.</li>
+        <li><strong>Derived identifiers.</strong> A deterministic hash creates a stable ID from input fields.</li>
+      </ol>
+
+      <h2>When NOT to use these hashes</h2>
+      <p>
+        These functions are fast. Good for verification, terrible for passwords: an attacker can
+        try billions per second. For passwords, use slow, salted functions:
+      </p>
+      <ul>
+        <li><strong>bcrypt:</strong> the historical standard, configurable cost factor. Use Genfy's <a href="/en/bcrypt-generator">bcrypt generator</a>.</li>
+        <li><strong>argon2id:</strong> winner of the Password Hashing Competition (2015). GPU/ASIC resistant.</li>
+        <li><strong>scrypt:</strong> also resistant to specialized hardware.</li>
+      </ul>
+      <p>
+        Don't use MD5 or SHA-1 for anything that requires collision resistance (signatures,
+        certificates, adversarial integrity). For all of that, SHA-256 minimum.
+      </p>
+
+      <h2>How hashes are computed here</h2>
+      <p>
+        SHA-1, SHA-256 and SHA-512 use the browser's Web Crypto API
+        (<code>crypto.subtle.digest</code>) — a standard, native, fast implementation. MD5
+        isn't in Web Crypto (precisely because it's deprecated for crypto), so it's computed
+        in pure JavaScript. Everything happens locally; nothing is sent.
+      </p>
+
+      <h2>Practical example: verifying an installer</h2>
+      <p>
+        When you download Node.js or Python from the official site, the SHA-256 usually appears
+        next to the link. The right process:
+      </p>
+      <ol>
+        <li>Get the file from the official site (not an unknown mirror).</li>
+        <li>Open a terminal and run <code>shasum -a 256 file.dmg</code> (Mac/Linux) or <code>certutil -hashfile file.exe SHA256</code> (Windows).</li>
+        <li>Compare the result with the published value. If they match, the file wasn't tampered with.</li>
+      </ol>
+      <p>
+        For short text snippets, this generator works. For large files, the command-line tool
+        is more convenient.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a hash?</summary><p>A fixed-size fingerprint of any data. Used to verify integrity, index content and detect duplicates.</p></details>
+      <details><summary>Is MD5 still safe?</summary><p>Not for crypto. MD5 and SHA-1 are broken for collision resistance. They work for non-critical checksums.</p></details>
+      <details><summary>Which one for passwords?</summary><p>None of these. Use bcrypt, argon2id or scrypt. Fast hashes like SHA-256 crack too quickly applied to passwords.</p></details>
+      <details><summary>Is my text sent to a server?</summary><p>No. Everything is computed with Web Crypto API in your browser. Nothing leaves your device.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .hash-tool textarea { font-family: var(--font-mono); margin-bottom: 1.5rem; resize: vertical; }
+  .hash-results { display: grid; gap: 0.75rem; }
+  .hash-row { display: grid; grid-template-columns: 90px 1fr 92px; gap: 0.5rem; align-items: center; }
+  .hash-label { font-size: 0.8125rem; font-weight: 600; color: var(--text-subtle); margin: 0; font-family: var(--font-mono); }
+  .hash-row input { font-family: var(--font-mono); font-size: 0.8125rem; background: var(--bg-inset); }
+  @media (max-width: 600px) { .hash-row { grid-template-columns: 1fr; } .hash-label { margin-bottom: 0.25rem; } }
+</style>
+
+<script>
+  const input = document.getElementById('hash-in') as HTMLTextAreaElement;
+  const md5El = document.getElementById('hash-md5') as HTMLInputElement;
+  const sha1El = document.getElementById('hash-sha1') as HTMLInputElement;
+  const sha256El = document.getElementById('hash-sha256') as HTMLInputElement;
+  const sha512El = document.getElementById('hash-sha512') as HTMLInputElement;
+
+  function md5(str: string): string {
+    function toHex(num: number): string { let s = ''; for (let i = 0; i < 4; i++) { const v = (num >>> (i * 8)) & 0xff; s += v.toString(16).padStart(2, '0'); } return s; }
+    function add32(a: number, b: number): number { return (a + b) & 0xffffffff; }
+    function ff(a:number,b:number,c:number,d:number,x:number,s:number,t:number){const n=add32(add32(a,(b&c)|(~b&d)),add32(x,t));return add32((n<<s)|(n>>>(32-s)),b);}
+    function gg(a:number,b:number,c:number,d:number,x:number,s:number,t:number){const n=add32(add32(a,(b&d)|(c&~d)),add32(x,t));return add32((n<<s)|(n>>>(32-s)),b);}
+    function hh(a:number,b:number,c:number,d:number,x:number,s:number,t:number){const n=add32(add32(a,b^c^d),add32(x,t));return add32((n<<s)|(n>>>(32-s)),b);}
+    function ii(a:number,b:number,c:number,d:number,x:number,s:number,t:number){const n=add32(add32(a,c^(b|~d)),add32(x,t));return add32((n<<s)|(n>>>(32-s)),b);}
+    const enc = new TextEncoder().encode(str);
+    const len = enc.length;
+    const nBlocks = (((len + 8) >>> 6) + 1);
+    const blocks = new Int32Array(nBlocks * 16);
+    for (let i = 0; i < len; i++) blocks[i >> 2] |= enc[i] << ((i % 4) * 8);
+    blocks[len >> 2] |= 0x80 << ((len % 4) * 8);
+    blocks[nBlocks * 16 - 2] = len * 8;
+    let a = 1732584193, b = -271733879, c = -1732584194, d = 271733878;
+    for (let i = 0; i < blocks.length; i += 16) {
+      const oa=a,ob=b,oc=c,od=d;
+      a=ff(a,b,c,d,blocks[i],7,-680876936);d=ff(d,a,b,c,blocks[i+1],12,-389564586);c=ff(c,d,a,b,blocks[i+2],17,606105819);b=ff(b,c,d,a,blocks[i+3],22,-1044525330);
+      a=ff(a,b,c,d,blocks[i+4],7,-176418897);d=ff(d,a,b,c,blocks[i+5],12,1200080426);c=ff(c,d,a,b,blocks[i+6],17,-1473231341);b=ff(b,c,d,a,blocks[i+7],22,-45705983);
+      a=ff(a,b,c,d,blocks[i+8],7,1770035416);d=ff(d,a,b,c,blocks[i+9],12,-1958414417);c=ff(c,d,a,b,blocks[i+10],17,-42063);b=ff(b,c,d,a,blocks[i+11],22,-1990404162);
+      a=ff(a,b,c,d,blocks[i+12],7,1804603682);d=ff(d,a,b,c,blocks[i+13],12,-40341101);c=ff(c,d,a,b,blocks[i+14],17,-1502002290);b=ff(b,c,d,a,blocks[i+15],22,1236535329);
+      a=gg(a,b,c,d,blocks[i+1],5,-165796510);d=gg(d,a,b,c,blocks[i+6],9,-1069501632);c=gg(c,d,a,b,blocks[i+11],14,643717713);b=gg(b,c,d,a,blocks[i],20,-373897302);
+      a=gg(a,b,c,d,blocks[i+5],5,-701558691);d=gg(d,a,b,c,blocks[i+10],9,38016083);c=gg(c,d,a,b,blocks[i+15],14,-660478335);b=gg(b,c,d,a,blocks[i+4],20,-405537848);
+      a=gg(a,b,c,d,blocks[i+9],5,568446438);d=gg(d,a,b,c,blocks[i+14],9,-1019803690);c=gg(c,d,a,b,blocks[i+3],14,-187363961);b=gg(b,c,d,a,blocks[i+8],20,1163531501);
+      a=gg(a,b,c,d,blocks[i+13],5,-1444681467);d=gg(d,a,b,c,blocks[i+2],9,-51403784);c=gg(c,d,a,b,blocks[i+7],14,1735328473);b=gg(b,c,d,a,blocks[i+12],20,-1926607734);
+      a=hh(a,b,c,d,blocks[i+5],4,-378558);d=hh(d,a,b,c,blocks[i+8],11,-2022574463);c=hh(c,d,a,b,blocks[i+11],16,1839030562);b=hh(b,c,d,a,blocks[i+14],23,-35309556);
+      a=hh(a,b,c,d,blocks[i+1],4,-1530992060);d=hh(d,a,b,c,blocks[i+4],11,1272893353);c=hh(c,d,a,b,blocks[i+7],16,-155497632);b=hh(b,c,d,a,blocks[i+10],23,-1094730640);
+      a=hh(a,b,c,d,blocks[i+13],4,681279174);d=hh(d,a,b,c,blocks[i],11,-358537222);c=hh(c,d,a,b,blocks[i+3],16,-722521979);b=hh(b,c,d,a,blocks[i+6],23,76029189);
+      a=hh(a,b,c,d,blocks[i+9],4,-640364487);d=hh(d,a,b,c,blocks[i+12],11,-421815835);c=hh(c,d,a,b,blocks[i+15],16,530742520);b=hh(b,c,d,a,blocks[i+2],23,-995338651);
+      a=ii(a,b,c,d,blocks[i],6,-198630844);d=ii(d,a,b,c,blocks[i+7],10,1126891415);c=ii(c,d,a,b,blocks[i+14],15,-1416354905);b=ii(b,c,d,a,blocks[i+5],21,-57434055);
+      a=ii(a,b,c,d,blocks[i+12],6,1700485571);d=ii(d,a,b,c,blocks[i+3],10,-1894986606);c=ii(c,d,a,b,blocks[i+10],15,-1051523);b=ii(b,c,d,a,blocks[i+1],21,-2054922799);
+      a=ii(a,b,c,d,blocks[i+8],6,1873313359);d=ii(d,a,b,c,blocks[i+15],10,-30611744);c=ii(c,d,a,b,blocks[i+6],15,-1560198380);b=ii(b,c,d,a,blocks[i+13],21,1309151649);
+      a=ii(a,b,c,d,blocks[i+4],6,-145523070);d=ii(d,a,b,c,blocks[i+11],10,-1120210379);c=ii(c,d,a,b,blocks[i+2],15,718787259);b=ii(b,c,d,a,blocks[i+9],21,-343485551);
+      a=add32(a,oa);b=add32(b,ob);c=add32(c,oc);d=add32(d,od);
+    }
+    return toHex(a) + toHex(b) + toHex(c) + toHex(d);
+  }
+  async function sha(algo: string, str: string): Promise<string> {
+    const data = new TextEncoder().encode(str);
+    const buf = await crypto.subtle.digest(algo, data);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+  async function update() {
+    const v = input.value;
+    md5El.value = md5(v);
+    sha1El.value = await sha('SHA-1', v);
+    sha256El.value = await sha('SHA-256', v);
+    sha512El.value = await sha('SHA-512', v);
+  }
+  input.addEventListener('input', update);
+  document.querySelectorAll<HTMLButtonElement>('.hash-copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const tgt = document.getElementById(btn.dataset.target!) as HTMLInputElement;
+      if (!tgt.value) return;
+      await navigator.clipboard.writeText(tgt.value);
+      btn.dataset.copied = 'true';
+      const orig = btn.textContent;
+      btn.textContent = '✓ Copied';
+      setTimeout(() => { btn.textContent = orig; delete btn.dataset.copied; }, 1400);
+    });
+  });
+  update();
+</script>

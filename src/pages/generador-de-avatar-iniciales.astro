@@ -1,0 +1,218 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de avatar con iniciales | Genfy';
+const description = 'Generá avatares con iniciales y color de fondo derivado del nombre. Estilo Slack, Linear o Notion. Descargable como PNG en alta resolución.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo se elige el color del avatar?', acceptedAnswer: { '@type': 'Answer', text: 'Hasheamos el nombre y mapeamos el resultado a un hue HSL. Eso garantiza que el mismo nombre siempre devuelva el mismo color, pero dos nombres distintos casi siempre dan colores distintos.' } },
+    { '@type': 'Question', name: '¿Cuántas iniciales se muestran?', acceptedAnswer: { '@type': 'Answer', text: 'Una si el nombre es de una sola palabra, dos si tiene apellido. Para nombres compuestos largos preferimos las primeras dos letras del nombre y apellido, no nombres del medio.' } },
+    { '@type': 'Question', name: '¿En qué resolución descarga?', acceptedAnswer: { '@type': 'Answer', text: 'PNG de 512x512px, suficiente para perfil de redes sociales, foto de equipo en una landing y avatares de app sin pixelado.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño" title="Generador de avatar con iniciales"
+    intro="Generá avatares con iniciales y color de fondo derivado del nombre. Estilo Slack, Linear o Notion. Descargable como PNG en 512px.">
+
+    <div slot="tool" class="av-tool">
+      <div class="av-controls">
+        <div>
+          <label for="av-name">Nombre completo</label>
+          <input id="av-name" type="text" value="Martin Rodriguez" placeholder="Ej: Ana López" />
+        </div>
+        <div>
+          <label for="av-shape">Forma</label>
+          <select id="av-shape">
+            <option value="circle" selected>Circular</option>
+            <option value="rounded">Cuadrado redondeado</option>
+            <option value="square">Cuadrado</option>
+          </select>
+        </div>
+        <div>
+          <label for="av-style">Estilo</label>
+          <select id="av-style">
+            <option value="solid" selected>Color sólido</option>
+            <option value="gradient">Gradiente</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="av-preview-wrap">
+        <canvas id="av-canvas" width="512" height="512"></canvas>
+      </div>
+
+      <div class="av-actions">
+        <button id="av-dl" class="btn btn-primary" type="button">Descargar PNG</button>
+        <button id="av-shuffle" class="btn btn-ghost" type="button">Otro color</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los avatares con iniciales son la solución correcta</h2>
+      <p>
+        Cuando una app tiene millones de usuarios y la mayoría no sube foto, mostrar el
+        ícono genérico (silueta gris) genera una experiencia visual aburrida y muy
+        repetitiva. La solución que adoptaron Slack, Linear, Notion, Linear y Google
+        Workspace es la misma: <strong>iniciales sobre un color derivado del nombre</strong>.
+        El resultado es identidad visual sin pedir nada al usuario.
+      </p>
+
+      <h2>Cómo se deriva el color</h2>
+      <p>
+        La técnica clásica: hashear el nombre a un número, mapearlo a un hue de 0-360 y
+        usar saturación y luminosidad fijas. Eso garantiza:
+      </p>
+      <ul>
+        <li>El mismo nombre siempre devuelve el mismo color (consistencia entre sesiones).</li>
+        <li>Dos nombres distintos casi siempre dan colores distintos (distribución uniforme en el círculo cromático).</li>
+        <li>Saturación y luminosidad controladas evitan que salgan colores ilegibles o muy pastel.</li>
+      </ul>
+      <pre><code set:html={`function hashHue(s) &#123;
+  let h = 0;
+  for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0;
+  return Math.abs(h) % 360;
+&#125;`}></code></pre>
+
+      <h2>Cuántas iniciales mostrar</h2>
+      <p>
+        Una sola inicial parece pobre, tres se sienten cargadas. El estándar es <strong>dos
+        letras</strong>: la primera del nombre y la primera del apellido. Para nombres de
+        una sola palabra (handles, nombres únicos), usá la primera letra grande. Para
+        nombres compuestos largos, ignorá los nombres del medio.
+      </p>
+
+      <h2>Tipografía y tamaño correctos</h2>
+      <p>
+        Las iniciales deben ocupar entre 35% y 45% del diámetro del avatar. Usá una
+        sans-serif geométrica con buen peso (Inter Bold, Geist Medium, SF Pro Display
+        Semibold). Texto blanco sobre fondo de color saturado pasa contraste AA con
+        margen.
+      </p>
+
+      <h2>Avatares cuadrados vs circulares</h2>
+      <ul>
+        <li><strong>Circular:</strong> el más universal, asociado a "persona". Slack, X, Twitter, casi todas las redes sociales.</li>
+        <li><strong>Cuadrado redondeado:</strong> moderno, asociado a "workspace" o "equipo". Linear, Notion, Vercel.</li>
+        <li><strong>Cuadrado puro:</strong> raro en avatares de persona, común en logos de equipo o canales (Discord servers, Slack workspaces).</li>
+      </ul>
+
+      <h2>Casos de uso</h2>
+      <ol>
+        <li><strong>Aplicaciones SaaS</strong> donde la mayoría no sube foto.</li>
+        <li><strong>Sistemas de comentarios</strong> en blogs o documentación.</li>
+        <li><strong>Equipos en una landing page</strong>: si todavía no tenés fotos profesionales del equipo, iniciales con color quedan mil veces mejor que silueta.</li>
+        <li><strong>Membership cards y certificados</strong>: agregan personalidad sin diseño manual.</li>
+        <li><strong>Apps de gestión interna</strong>: usuarios con permisos diferentes pueden tener color de fondo distinto (admin = gradient brand, viewers = gris).</li>
+      </ol>
+
+      <h2>Avatares con gradiente: la diferencia premium</h2>
+      <p>
+        Un solo color de fondo se ve correcto. Un gradiente sutil (mismo hue, dos
+        luminosidades) se ve premium. Es el detalle que diferencia un avatar genérico de
+        uno que se siente diseñado. Probá los dos modos en este generador.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo se elige el color?</summary><p>Hasheamos el nombre y mapeamos a un hue HSL. Mismo nombre = mismo color, distintos nombres casi siempre dan colores distintos.</p></details>
+      <details><summary>¿Cuántas iniciales?</summary><p>Una si es nombre único, dos si tiene apellido (primera letra del nombre + primera del apellido).</p></details>
+      <details><summary>¿Resolución?</summary><p>PNG 512x512px. Suficiente para perfil de redes, foto de equipo y avatares de app sin pixelado.</p></details>
+      <details><summary>¿Puedo cambiar el color?</summary><p>Sí. Tocá "Otro color" para forzar un nuevo hue al azar manteniendo las mismas iniciales.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .av-controls { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .av-preview-wrap { display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--bg-inset); border-radius: var(--radius-lg); margin-bottom: 1rem; }
+  #av-canvas { width: 220px; height: 220px; max-width: 100%; }
+  .av-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  pre { background: var(--bg-inset); padding: 0.75rem 1rem; border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto; font-family: var(--font-mono); font-size: 0.8125rem; }
+  @media (max-width: 600px) { .av-controls { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const nameEl = document.getElementById('av-name') as HTMLInputElement;
+  const shape = document.getElementById('av-shape') as HTMLSelectElement;
+  const style = document.getElementById('av-style') as HTMLSelectElement;
+  const canvas = document.getElementById('av-canvas') as HTMLCanvasElement;
+  const dl = document.getElementById('av-dl') as HTMLButtonElement;
+  const shuffle = document.getElementById('av-shuffle') as HTMLButtonElement;
+
+  let hueOffset = 0;
+
+  function getInitials(name: string): string {
+    const parts = name.trim().split(/\s+/).filter(Boolean);
+    if (parts.length === 0) return '?';
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+  function hashHue(s: string): number {
+    let h = 0;
+    for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0;
+    return (Math.abs(h) + hueOffset) % 360;
+  }
+  function hslToHex(h: number, s: number, l: number) {
+    s /= 100; l /= 100;
+    const k = (n: number) => (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    const toHex = (x: number) => Math.round(x * 255).toString(16).padStart(2, '0');
+    return '#' + toHex(f(0)) + toHex(f(8)) + toHex(f(4));
+  }
+
+  function draw() {
+    const ctx = canvas.getContext('2d')!;
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    const hue = hashHue(nameEl.value || 'A');
+    ctx.save();
+    if (shape.value === 'circle') {
+      ctx.beginPath();
+      ctx.arc(W / 2, H / 2, W / 2, 0, Math.PI * 2);
+      ctx.clip();
+    } else if (shape.value === 'rounded') {
+      const r = 96;
+      ctx.beginPath();
+      ctx.moveTo(r, 0); ctx.lineTo(W - r, 0); ctx.quadraticCurveTo(W, 0, W, r);
+      ctx.lineTo(W, H - r); ctx.quadraticCurveTo(W, H, W - r, H);
+      ctx.lineTo(r, H); ctx.quadraticCurveTo(0, H, 0, H - r);
+      ctx.lineTo(0, r); ctx.quadraticCurveTo(0, 0, r, 0); ctx.closePath();
+      ctx.clip();
+    }
+
+    if (style.value === 'gradient') {
+      const grad = ctx.createLinearGradient(0, 0, W, H);
+      grad.addColorStop(0, hslToHex(hue, 65, 55));
+      grad.addColorStop(1, hslToHex((hue + 30) % 360, 70, 45));
+      ctx.fillStyle = grad;
+    } else {
+      ctx.fillStyle = hslToHex(hue, 60, 50);
+    }
+    ctx.fillRect(0, 0, W, H);
+
+    const initials = getInitials(nameEl.value);
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 220px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(initials, W / 2, H / 2 + 12);
+    ctx.restore();
+  }
+
+  nameEl.addEventListener('input', draw);
+  shape.addEventListener('change', draw);
+  style.addEventListener('change', draw);
+  shuffle.addEventListener('click', () => { hueOffset = (hueOffset + 73) % 360; draw(); });
+  dl.addEventListener('click', () => {
+    const url = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = url; a.download = 'avatar.png'; a.click();
+  });
+  draw();
+</script>

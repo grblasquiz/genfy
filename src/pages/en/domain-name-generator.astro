@@ -1,0 +1,143 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Domain Name Generator | Genfy';
+const description = 'Generate short, pronounceable, available domain ideas. Mix keywords, modern suffixes and TLDs (.com, .io, .ai) to find the right domain for your project.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Which TLD should I use?', acceptedAnswer: { '@type': 'Answer', text: '.com is still the SEO and trust standard. .io and .ai are strong in tech. .co and .app work for SaaS. Use your country TLD if your business is local.' } },
+    { '@type': 'Question', name: 'Long descriptive or short invented domain?', acceptedAnswer: { '@type': 'Answer', text: 'If available, prioritize short, pronounceable and invented. Long descriptive domains tend to lock you into your current product and make pivots painful.' } },
+    { '@type': 'Question', name: 'How do I check availability?', acceptedAnswer: { '@type': 'Answer', text: 'Search Namecheap, GoDaddy, Cloudflare Registrar or Porkbun. Run a WHOIS lookup to see whether it is parked or truly free.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Branding" title="Domain Name Generator"
+    intro="Mix keywords, modern suffixes and TLDs to find short, pronounceable, memorable domains. Built for startups, brands and personal projects.">
+
+    <div slot="tool" class="dn">
+      <label for="dn-kw">Keywords (comma separated)</label>
+      <input id="dn-kw" type="text" placeholder="cloud, smart, data..." value="cloud, smart" />
+
+      <label for="dn-tld" style="margin-top:1rem">TLD</label>
+      <select id="dn-tld">
+        <option value=".com">.com</option>
+        <option value=".io">.io</option>
+        <option value=".ai">.ai</option>
+        <option value=".co">.co</option>
+        <option value=".app">.app</option>
+        <option value=".dev">.dev</option>
+      </select>
+
+      <button id="dn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 domains</button>
+
+      <div id="dn-out" class="dn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>The domain is still the most expensive asset to change</h2>
+      <p>
+        Your domain conditions your brand, your email, your SEO and the customer's perception before they even click. Changing it later means losing organic positioning, breaking inbound links and re-educating your audience from zero. That's why it deserves twice the time you'd think reasonable.
+      </p>
+      <p>
+        The ideal domain hits four conditions: it's short (2 to 14 characters), it spells well over the phone, it has no ambiguous characters (zero/O, one/L, hyphens), and the .com is free or reachable. If you can't hit all four, prioritize pronunciation and .com over anything else.
+      </p>
+
+      <h2>Which TLD to pick by project type</h2>
+      <ul>
+        <li><strong>.com</strong> — still the world standard. Best initial SEO, highest perceived trust, and the reflex when people type a URL. If it's free, take it.</li>
+        <li><strong>.io / .ai</strong> — perfect for tech, SaaS and AI. They feel modern but renew expensive (.ai sits at 70-90 USD/year).</li>
+        <li><strong>.co</strong> — solid fallback when the .com is taken. "co = company" shortcut. Works well in the US and LATAM.</li>
+        <li><strong>.app / .dev</strong> — force HTTPS by default, ideal for mobile apps and developer tools. Slightly limiting if your product expands later.</li>
+        <li><strong>Country TLDs</strong> (.co.uk, .ca, .com.au) — use when your business is local. Globally, .com still wins.</li>
+      </ul>
+
+      <h2>How to combine keywords to find free domains</h2>
+      <p>The most effective techniques for 2026:</p>
+      <ol>
+        <li><strong>Modern suffixes:</strong> -ly, -ify, -io, -hub, -lab, -kit. Spotify, Calendly, Bitly. Instant SaaS feel.</li>
+        <li><strong>Action prefixes:</strong> Get, Use, Try, Hello, Open, Smart. GetCarter, HelloFresh, OpenAI.</li>
+        <li><strong>Compounded real words:</strong> Snowflake, Mailchimp, Substack. Memorable because they trigger imagery.</li>
+        <li><strong>Neutral Latin:</strong> Aurum, Lumen, Vita, Nova, Magna. Adds gravitas and tends to be more available than common English words.</li>
+        <li><strong>Short acronyms:</strong> IBM, AWS, BMW. Works only if you'll spend on marketing.</li>
+      </ol>
+
+      <h2>Common mistakes when picking a domain</h2>
+      <p>
+        The most expensive: not validating it spells correctly over the phone. If a person asks "is that with a K or a C?", you lose a customer every time. Second: using hyphens. Third: weird TLDs (.click, .biz, .info) the user associates with scams. Fourth: not checking the handle on socials — if the domain is free but @brand is taken on Instagram, you'll have a brand consistency problem from day one.
+      </p>
+
+      <h2>After generating: the buy-and-validate flow</h2>
+      <ol>
+        <li>Search at Namecheap, Cloudflare Registrar or Porkbun. Cloudflare is the cheapest at-cost (no markup).</li>
+        <li>Run WHOIS — a domain may appear "taken" but actually be for sale on GoDaddy Auctions or Sedo.</li>
+        <li>If parked, offer with discipline: premium generic domains run 5,000-50,000 USD; an invented free one is 12 USD/year.</li>
+        <li>Before buying: check the handle on Instagram, X, TikTok, LinkedIn and YouTube. Knowem or Namecheckr does it in one step.</li>
+        <li>Buy the .com even if you'll use .io or .ai as primary — always redirect. Users type .com by reflex.</li>
+        <li>Enable WHOIS privacy and 5-year auto-renew so you don't lose it through neglect.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Which TLD should I use?</summary><p>.com is still the standard. .io and .ai for tech. .co and .app for SaaS. Country TLD if local.</p></details>
+      <details><summary>Long descriptive or short invented?</summary><p>If free, win with short, invented and pronounceable. Long descriptive ones lock you into today's product.</p></details>
+      <details><summary>How do I check availability?</summary><p>Namecheap, GoDaddy, Cloudflare Registrar or Porkbun. WHOIS tells you if it's parked.</p></details>
+      <details><summary>How much does a domain cost?</summary><p>.com averages 12 USD/year, .io 35-50 USD, .ai 70-90 USD. Parked premiums start at 1,000 USD.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .dn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .dn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; font-family: var(--font-mono); font-size: 0.9375rem; }
+  .dn-item:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const PREFIX = ['get', 'use', 'try', 'hello', 'open', 'smart', 'go', 'my', 'cloud', 'meta', 'neo', 'co'];
+  const SUFFIX = ['ly', 'ify', 'io', 'hub', 'lab', 'kit', 'ai', 'app', 'flow', 'core', 'wave', 'box'];
+  const LATIN = ['aurum', 'lumen', 'vita', 'nova', 'magna', 'prima', 'lux', 'fortis', 'pura', 'clara'];
+  const MOD = ['lumo', 'zera', 'vexa', 'brio', 'tono', 'quira', 'nido', 'plux', 'reki', 'tovi'];
+
+  const kw = document.getElementById('dn-kw') as HTMLInputElement;
+  const tld = document.getElementById('dn-tld') as HTMLSelectElement;
+  const gen = document.getElementById('dn-gen') as HTMLButtonElement;
+  const out = document.getElementById('dn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+    const t = tld.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 300) {
+      attempts++;
+      const w = words.length ? pick(words) : pick(MOD);
+      const r = Math.random();
+      let d = '';
+      if (r < 0.2) d = pick(PREFIX) + w;
+      else if (r < 0.4) d = w + pick(SUFFIX);
+      else if (r < 0.55) d = pick(MOD) + w;
+      else if (r < 0.7 && words.length >= 2) d = words[0] + words[1];
+      else if (r < 0.85) d = pick(LATIN) + (words.length ? w : '');
+      else d = w + pick(MOD);
+      d = d.replace(/[^a-z0-9]/g, '');
+      if (d.length >= 4 && d.length <= 16) set.add(d + t);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'dn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

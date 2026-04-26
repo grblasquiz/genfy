@@ -1,0 +1,113 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+import { HORSE_NAMES, PET_OTHER_STYLES } from '../../lib/bird-horse-names';
+
+const title = 'Horse Name Generator | Genfy';
+const description = 'Classic, elegant or funny: find the perfect name for your horse, mare or pony. 60+ ideas in English and Spanish — free instant generator.';
+const stylesEN = { classic: PET_OTHER_STYLES.en.classic, elegant: PET_OTHER_STYLES.en.elegant, funny: PET_OTHER_STYLES.en.funny };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Do horses learn their name?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Paired with a calm voice, treats and grooming, a horse recognizes its name and responds when called within a few months.' } },
+    { '@type': 'Question', name: 'Short or long name better?', acceptedAnswer: { '@type': 'Answer', text: 'For daily use, short: 1-3 syllables. For show registries, names can be long, but the barn always uses a nickname.' } },
+    { '@type': 'Question', name: 'How are racehorse names chosen?', acceptedAnswer: { '@type': 'Answer', text: 'They usually combine the sire or dam\'s name with an evocative word, and must be unique in the national stud book. For pleasure horses there are no rules.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="en" tag="Pets" title="Horse Name Generator"
+    intro="For your horse, mare or pony: classic, elegant or funny. Click and get 12 ideas in seconds.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Style</label>
+      <select id="cn-style">
+        {Object.entries(stylesEN).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mix of all</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 names</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a horse name</h2>
+      <p>
+        Horses are smart and learn their name fast when paired with soft voice, grooming and treats.
+        The name should reflect three things: the horse's character, its appearance, and — if you'll
+        compete — how well it sounds shouted across a ring.
+      </p>
+      <ul>
+        <li><strong>1-3 syllables for daily use.</strong> In the barn and at a gallop, short wins. Thunder, Star, Bandit work.</li>
+        <li><strong>By color or marking.</strong> Shadow, Silver, Star (forehead spot), Blaze (white stripe), Patches — descriptive and timeless.</li>
+        <li><strong>By character.</strong> Bandit for a mischievous one, Storm for a strong one, Belle for a friendly mare.</li>
+        <li><strong>Mind the registry.</strong> If you'll compete, check national stud-book rules — names usually have to be unique.</li>
+      </ul>
+
+      <h2>Names by style</h2>
+      <ul>
+        <li><strong>Classic</strong> (Thunder, Storm, Bandit, Shadow): the most-used in English-speaking barns. Timeless and present.</li>
+        <li><strong>Elegant</strong> (Prince, Belle, Duchess, Ruby): for show horses, riding-school horses, calm temperaments.</li>
+        <li><strong>Funny</strong> (Sir Trotsalot, Captain Hoof, Lord Mane): for big personalities and owners with humor.</li>
+      </ul>
+
+      <h2>Naming traditions</h2>
+      <p>
+        In US ranches and English riding schools, classics like Thunder, Shadow, Star and Buck have
+        topped the rankings for decades. For Triple Crown racehorses, registered names are full
+        phrases ("American Pharoah", "Justify") but every horse has a 1-2 syllable barn nickname.
+        In Spain and Latin America, gaucho-tradition names like Bayo, Pampa, Tordillo are still
+        common alongside elegant ones (Príncipe, Bella, Real).
+      </p>
+
+      <h2>Common mistakes</h2>
+      <ol>
+        <li>Long official names with no planned nickname — you end up inventing one and managing two.</li>
+        <li>Names that rhyme with cues like "trot", "stop" or "go".</li>
+        <li>Renaming an adult horse that already responds to another name: takes months.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Do horses learn their name?</summary><p>Yes. Paired with calm voice, treats and grooming, a horse recognizes its name and responds within a few months.</p></details>
+      <details><summary>Short or long name?</summary><p>Daily use, short: 1-3 syllables. Show registries can be long but always have a nickname.</p></details>
+      <details><summary>How are racehorse names chosen?</summary><p>Usually a combination of the sire/dam's name and an evocative word — must be unique in the registry.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: HORSE_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.classic.en, ...DATA.elegant.en, ...DATA.funny.en];
+    else pool = DATA[s].en;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

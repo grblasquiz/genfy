@@ -1,0 +1,190 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Naming Brief Generator | Genfy';
+const description = 'Generate a professional naming brief to send an agency, freelancer or internal team. Structured, complete and ready to use in 2 minutes.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a naming brief for?', acceptedAnswer: { '@type': 'Answer', text: 'It is the document a naming agency or freelancer receives before starting work. It defines objectives, constraints, tone, audience and references so the output is relevant.' } },
+    { '@type': 'Question', name: 'How long should a brief be?', acceptedAnswer: { '@type': 'Answer', text: '1 to 3 pages. Shorter lacks context; longer dilutes and the agency ends up ignoring parts.' } },
+    { '@type': 'Question', name: 'What mistakes should I avoid?', acceptedAnswer: { '@type': 'Answer', text: 'Not defining a clear audience, not listing forbidden words, not giving brand references, and not specifying the expected TLD/domain.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Branding" title="Naming Brief Generator"
+    intro="Fill the fields. Genfy structures everything into a professional brief ready to send to your agency, freelancer or internal team. Copy and ship.">
+
+    <div slot="tool" class="nb">
+      <label for="nb-cat">Category / industry</label>
+      <input id="nb-cat" type="text" placeholder="fintech for freelancers" value="fintech for freelancers" />
+
+      <label for="nb-prod" style="margin-top:1rem">What the product / service does</label>
+      <input id="nb-prod" type="text" placeholder="invoicing, payments..." value="one-click electronic invoicing" />
+
+      <label for="nb-aud" style="margin-top:1rem">Target audience</label>
+      <input id="nb-aud" type="text" placeholder="US freelancers 25-45..." value="US freelancers 25-45" />
+
+      <label for="nb-tone" style="margin-top:1rem">Tone</label>
+      <input id="nb-tone" type="text" placeholder="close, clear, no jargon..." value="close, clear, no accounting jargon" />
+
+      <label for="nb-ref" style="margin-top:1rem">Reference brands (3 max)</label>
+      <input id="nb-ref" type="text" placeholder="Stripe, Notion, Linear..." value="Stripe, Notion, Linear" />
+
+      <label for="nb-avoid" style="margin-top:1rem">Forbidden words</label>
+      <input id="nb-avoid" type="text" placeholder="solutions, leading, innovative..." value="solutions, leading, innovative" />
+
+      <label for="nb-tld" style="margin-top:1rem">Expected TLD</label>
+      <input id="nb-tld" type="text" placeholder=".com, .io, .ai..." value=".com" />
+
+      <button id="nb-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate brief</button>
+
+      <div id="nb-out" class="nb-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why a naming brief makes the difference</h2>
+      <p>
+        Asking an agency or freelancer for names without a brief is like asking an architect to build a house without saying how many rooms, what budget or what climate. They'll deliver something, but the odds it's what you need are low. The brief isn't bureaucracy: it's the document that separates a 3-day naming project from a 3-month one with six revisions.
+      </p>
+      <p>
+        A good brief does four things. Aligns expectations (budget, deadlines, number of proposals). Defines constraints (forbidden words, expected TLD, languages to verify). Provides context (audience, tone, competitors). And saves feedback rounds: the agency starts in the right direction.
+      </p>
+
+      <h2>The nine essential sections</h2>
+      <ol>
+        <li><strong>Category and industry.</strong> One sentence: what type of company.</li>
+        <li><strong>Product or service.</strong> What it does, in customer language.</li>
+        <li><strong>Audience.</strong> Who buys, age, context, what problem they live with.</li>
+        <li><strong>Tone.</strong> 3-5 adjectives of expected communication style.</li>
+        <li><strong>Brands you admire.</strong> Maximum 3, with one line on why.</li>
+        <li><strong>Forbidden words.</strong> What should never appear in a proposal.</li>
+        <li><strong>Technical constraints.</strong> TLD, languages to verify (Spanish, French, Mandarin), App Store if it's an app.</li>
+        <li><strong>Quantity and delivery format.</strong> How many names per round, in what format (slide, doc, audio).</li>
+        <li><strong>Deadlines and budget.</strong> When you need to close and what you'll pay.</li>
+      </ol>
+
+      <h2>Mistakes that kill a brief before it starts</h2>
+      <ul>
+        <li><strong>"I want something creative."</strong> Not a brief — empty. Use concrete words.</li>
+        <li><strong>No audience defined.</strong> Without knowing who you're talking to, any name can be valid or none.</li>
+        <li><strong>No TLD defined.</strong> If you expect .com but the agency prioritizes "creative" names without checking availability, you lose time.</li>
+        <li><strong>Listing 15 reference brands.</strong> Three is enough. More dilutes.</li>
+        <li><strong>No budget defined.</strong> A top agency charges 8,000-30,000 USD. A freelancer 500-2,000. Mismatched expectations break the project.</li>
+      </ul>
+
+      <h2>How to evaluate the proposals you receive</h2>
+      <p>Once you have the first round, run each name through these five filters, in this order:</p>
+      <ol>
+        <li><strong>Does it pass the forbidden-words filter?</strong> If any slip in, drop them.</li>
+        <li><strong>Pronounceable in the brief's languages?</strong> If it needs explanation, problem.</li>
+        <li><strong>Domain in the expected TLD free or reachable?</strong> Without this, not viable.</li>
+        <li><strong>No conflict with USPTO / EUIPO trademarks?</strong> 5-minute basic search.</li>
+        <li><strong>Can you imagine saying it 1,000 times in pitches and calls?</strong> If it feels awkward, drop it.</li>
+      </ol>
+      <p>
+        After filtering, you typically end up with 5 to 8 finalists from an initial round of 30-50. That's the expected ratio.
+      </p>
+
+      <h2>Typical timelines for a serious naming project</h2>
+      <p>
+        A professional agency delivers like this: week 1, brief and discovery; week 2, first round of 30-50 names with rationale per name; week 3, feedback round and shortlist to 8-12; week 4, legal and domain validation; week 5, decision and documentation. Total 4-6 weeks. If someone promises a serious name in 48 hours, they're selling creativity without method.
+      </p>
+
+      <h2>What to do after winning the name</h2>
+      <p>
+        Three steps once you have the winner: register the .com domain (even if your primary will be .io), file the trademark with USPTO, UKIPO or EUIPO depending on your market, and reserve handles on Instagram, X, LinkedIn and TikTok. In that order. Trademark registration takes 8-18 months; handles get taken in hours.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a brief for?</summary><p>The input an agency or freelancer receives before proposing names. Defines objectives, constraints and tone.</p></details>
+      <details><summary>How long should it be?</summary><p>1-3 pages. Shorter: no context. Longer: diluted.</p></details>
+      <details><summary>Common mistakes?</summary><p>No audience, no forbidden words, no TLD, no examples.</p></details>
+      <details><summary>How much does naming cost?</summary><p>Freelancer: 500-2,000 USD. Agency: 8,000-30,000 USD. Top boutique: 50,000+ USD.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .nb-out { margin-top: 1.25rem; }
+  .nb-doc { padding: 1.5rem 1.75rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; white-space: pre-wrap; font-size: 0.9375rem; }
+  .nb-doc:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const cat = document.getElementById('nb-cat') as HTMLInputElement;
+  const prod = document.getElementById('nb-prod') as HTMLInputElement;
+  const aud = document.getElementById('nb-aud') as HTMLInputElement;
+  const tone = document.getElementById('nb-tone') as HTMLInputElement;
+  const ref = document.getElementById('nb-ref') as HTMLInputElement;
+  const avoid = document.getElementById('nb-avoid') as HTMLInputElement;
+  const tld = document.getElementById('nb-tld') as HTMLInputElement;
+  const gen = document.getElementById('nb-gen') as HTMLButtonElement;
+  const out = document.getElementById('nb-out')!;
+
+  function generate() {
+    const C = cat.value.trim() || 'TBD';
+    const P = prod.value.trim() || 'TBD';
+    const A = aud.value.trim() || 'TBD';
+    const T = tone.value.trim() || 'TBD';
+    const R = ref.value.trim() || 'TBD';
+    const Av = avoid.value.trim() || 'TBD';
+    const Tld = tld.value.trim() || '.com';
+
+    const doc = `NAMING BRIEF
+
+1. CATEGORY / INDUSTRY
+${C}
+
+2. PRODUCT / SERVICE
+${P}
+
+3. TARGET AUDIENCE
+${A}
+
+4. BRAND TONE
+${T}
+
+5. REFERENCE BRANDS (admired)
+${R}
+
+6. FORBIDDEN WORDS
+${Av}
+
+7. TECHNICAL CONSTRAINTS
+- Required TLD: ${Tld} available or reachable.
+- Trademark verification: USPTO (US), UKIPO (UK), EUIPO (EU).
+- Handle verification on Instagram, X, LinkedIn and TikTok.
+- No negative connotations in Spanish or French.
+
+8. EXPECTED DELIVERY
+- Round 1: 30-50 names with brief rationale per name.
+- Round 2: 8-12 finalists after joint filtering.
+- Round 3: 3 candidates with domain + trademark validation.
+
+9. TIMELINE
+- Estimated total: 4-6 weeks.
+
+10. EVALUATION CRITERIA
+Each proposal must pass:
+(a) Pronounceable in English and Spanish without explanation.
+(b) No match against forbidden words.
+(c) ${Tld} domain available or buyable.
+(d) No immediate conflict with USPTO / EUIPO records.
+(e) Memorable after a single 5-second exposure.`;
+
+    out.innerHTML = '';
+    const el = document.createElement('div');
+    el.className = 'nb-doc';
+    el.textContent = doc;
+    el.title = 'Click to copy full brief';
+    el.addEventListener('click', () => { navigator.clipboard.writeText(doc); const orig = el.textContent; el.textContent = '✓ Brief copied to clipboard'; setTimeout(() => el.textContent = orig!, 1200); });
+    out.appendChild(el);
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

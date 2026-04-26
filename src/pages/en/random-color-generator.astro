@@ -1,0 +1,173 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random Color Generator | Genfy';
+const description = 'Generate a random color in HEX, RGB and HSL instantly. Great for quick design, mocks, palette ideas or breaking creative block.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How is the random color generated?', acceptedAnswer: { '@type': 'Answer', text: 'We pick three random numbers between 0 and 255 for R, G and B and convert to HEX. Internally we use crypto.getRandomValues for uniform distribution where supported.' } },
+    { '@type': 'Question', name: 'Can I constrain lightness?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Pick "light", "dark" or "vibrant" mode and we restrict HSL ranges to avoid grayish or pastel results when you do not want them.' } },
+    { '@type': 'Question', name: 'What is a random color good for?', acceptedAnswer: { '@type': 'Answer', text: 'Starting palettes when you are stuck, assigning colors to users or tags, building quick mocks without deciding each color manually.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design" title="Random color generator"
+    intro="Pick a random color in HEX, RGB and HSL instantly. Filter by light, dark or vibrant to avoid grayish results.">
+
+    <div slot="tool" class="rc-tool">
+      <div id="rc-preview" class="rc-preview"></div>
+
+      <div class="rc-codes">
+        <div class="code-row"><span class="lbl">HEX</span><code id="rc-hex">#059669</code></div>
+        <div class="code-row"><span class="lbl">RGB</span><code id="rc-rgb">rgb(5, 150, 105)</code></div>
+        <div class="code-row"><span class="lbl">HSL</span><code id="rc-hsl">hsl(160, 94%, 30%)</code></div>
+      </div>
+
+      <div class="rc-controls">
+        <label for="rc-mode">Mode</label>
+        <select id="rc-mode">
+          <option value="any" selected>Any</option>
+          <option value="light">Light (backgrounds)</option>
+          <option value="dark">Dark (text)</option>
+          <option value="vibrant">Vibrant (accent)</option>
+          <option value="pastel">Pastel</option>
+        </select>
+      </div>
+
+      <div class="rc-actions">
+        <button id="rc-gen" class="btn btn-primary" type="button">Generate new color</button>
+        <button id="rc-copy" class="btn btn-ghost" type="button">Copy HEX</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>What random colors are good for</h2>
+      <p>
+        Generating a random color sounds like a gimmick but has real use cases: breaking
+        creative block (sometimes the color that pops up sparks an idea), assigning unique
+        colors to users or tags in an app, creating quick mocks without deciding every
+        palette manually, and stress-testing a UI against unexpected color choices.
+      </p>
+
+      <h2>The problem with pure randomness</h2>
+      <p>
+        Three random numbers between 0 and 255 produce statistically valid but visually
+        disappointing results: most are grayish, brown, or very dark. RGB space isn't
+        distributed the way the human eye perceives color. That's why we offer modes:
+      </p>
+      <ul>
+        <li><strong>Light:</strong> high lightness (75-95% in HSL), moderate saturation. Ideal as backgrounds.</li>
+        <li><strong>Dark:</strong> low lightness (10-25%), variable saturation. For text or headings on light backgrounds.</li>
+        <li><strong>Vibrant:</strong> high saturation (70-95%), medium lightness (45-60%). Accents, CTAs.</li>
+        <li><strong>Pastel:</strong> medium-low saturation (30-50%), high lightness (75-85%). Soft style, illustrations.</li>
+      </ul>
+
+      <h2>How to assign colors to users without clashes</h2>
+      <p>
+        If you need colors to identify users or tags (Slack, Linear, Notion-style), don't
+        use pure random: derive the color from the name. Simple technique: hash the string
+        into a number, map it to a hue from 0–360, and fix saturation and lightness.
+        That guarantees the same name always returns the same color <em>and</em> that
+        two similar names give different colors.
+      </p>
+      <pre><code>function nameToColor(name) &lcub;
+  let h = 0;
+  for (const c of name) h = (h * 31 + c.charCodeAt(0)) | 0;
+  return `hsl($&lcub;Math.abs(h) % 360&rcub;, 65%, 55%)`;
+&rcub;</code></pre>
+
+      <h2>Crypto-secure random vs Math.random</h2>
+      <p>
+        <code>Math.random()</code> is a PRNG, not cryptographically secure, but for picking
+        colors it's fine. You only need <code>crypto.getRandomValues</code> if you're
+        generating tokens, passwords or unique IDs. For design, Math.random is enough and
+        cheaper.
+      </p>
+
+      <h2>Three practical uses</h2>
+      <ol>
+        <li><strong>Visual brainstorming:</strong> generate 20 colors fast, lock the 3 that catch your eye.</li>
+        <li><strong>User avatars:</strong> background derived from the name, white initials on top.</li>
+        <li><strong>Tags and categories:</strong> first color of the project = random, the rest derived (same hue, different lightness).</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How is the color generated?</summary><p>Random R, G, B between 0 and 255 (or restricted in HSL if you picked a mode), then converted to HEX.</p></details>
+      <details><summary>Can I limit lightness?</summary><p>Yes. "Light", "dark", "vibrant" or "pastel" mode filters HSL ranges automatically.</p></details>
+      <details><summary>What is it for?</summary><p>Visual brainstorming, assigning colors to users/tags, generating quick mocks.</p></details>
+      <details><summary>Is it mathematically uniform?</summary><p>In "any" mode, yes. In other modes we restrict ranges deliberately for visually useful results.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rc-preview { width: 100%; height: 220px; border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1rem; transition: background 0.3s; }
+  .rc-codes { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+  .code-row { display: grid; grid-template-columns: 60px 1fr; gap: 0.75rem; align-items: center; padding: 0.625rem 0.875rem; background: var(--bg-inset); border-radius: var(--radius); border: 1px solid var(--border); }
+  .code-row .lbl { font-size: 0.75rem; font-weight: 600; color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.05em; }
+  .code-row code { background: transparent; border: 0; padding: 0; font-size: 0.875rem; }
+  .rc-controls { margin-bottom: 1rem; }
+  .rc-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  pre { background: var(--bg-inset); padding: 0.75rem 1rem; border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto; font-family: var(--font-mono); font-size: 0.8125rem; }
+</style>
+
+<script>
+  const preview = document.getElementById('rc-preview') as HTMLDivElement;
+  const hexEl = document.getElementById('rc-hex')!;
+  const rgbEl = document.getElementById('rc-rgb')!;
+  const hslEl = document.getElementById('rc-hsl')!;
+  const mode = document.getElementById('rc-mode') as HTMLSelectElement;
+  const gen = document.getElementById('rc-gen') as HTMLButtonElement;
+  const copy = document.getElementById('rc-copy') as HTMLButtonElement;
+
+  function hslToRgb(h: number, s: number, l: number) {
+    s /= 100; l /= 100;
+    const k = (n: number) => (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    return { r: Math.round(f(0) * 255), g: Math.round(f(8) * 255), b: Math.round(f(4) * 255) };
+  }
+  function build() {
+    let r: number, g: number, b: number, h: number, s: number, l: number;
+    if (mode.value === 'any') {
+      r = Math.floor(Math.random() * 256); g = Math.floor(Math.random() * 256); b = Math.floor(Math.random() * 256);
+      const rr = r/255, gg = g/255, bb = b/255;
+      const max = Math.max(rr,gg,bb), min = Math.min(rr,gg,bb);
+      let hh = 0, ss = 0; const ll = (max+min)/2;
+      if (max !== min) {
+        const d = max-min; ss = ll>0.5 ? d/(2-max-min) : d/(max+min);
+        if (max===rr) hh = ((gg-bb)/d + (gg<bb?6:0));
+        else if (max===gg) hh = (bb-rr)/d+2; else hh = (rr-gg)/d+4;
+        hh*=60;
+      }
+      h = Math.round(hh); s = Math.round(ss*100); l = Math.round(ll*100);
+    } else {
+      h = Math.floor(Math.random() * 360);
+      if (mode.value === 'light') { s = 30 + Math.random()*40; l = 75 + Math.random()*15; }
+      else if (mode.value === 'dark') { s = 30 + Math.random()*60; l = 10 + Math.random()*15; }
+      else if (mode.value === 'vibrant') { s = 70 + Math.random()*25; l = 45 + Math.random()*15; }
+      else { s = 30 + Math.random()*20; l = 75 + Math.random()*10; }
+      const rgb = hslToRgb(h, s, l);
+      r = rgb.r; g = rgb.g; b = rgb.b;
+      s = Math.round(s); l = Math.round(l);
+    }
+    const hex = '#' + [r,g,b].map(x => x.toString(16).padStart(2,'0')).join('').toUpperCase();
+    preview.style.background = hex;
+    hexEl.textContent = hex;
+    rgbEl.textContent = `rgb(${r}, ${g}, ${b})`;
+    hslEl.textContent = `hsl(${h}, ${s}%, ${l}%)`;
+  }
+  gen.addEventListener('click', build);
+  mode.addEventListener('change', build);
+  copy.addEventListener('click', () => {
+    navigator.clipboard.writeText(hexEl.textContent!);
+    copy.textContent = 'Copied!';
+    setTimeout(() => { copy.textContent = 'Copy HEX'; }, 1200);
+  });
+  build();
+</script>

@@ -1,0 +1,162 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random Emoji Generator | Genfy';
+const description = 'Generate one or many random emojis. Filter by category (faces, animals, food, sports), copy to clipboard and add them to messages or handles.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Where do the emojis come from?', acceptedAnswer: { '@type': 'Answer', text: 'We use the official Unicode set (15+). Each emoji renders with the user\'s OS font, so it looks identical to WhatsApp, iMessage, Slack and any modern app.' } },
+    { '@type': 'Question', name: 'What is a random emoji good for?', acceptedAnswer: { '@type': 'Answer', text: 'Creative inspiration, breaking social media block, finding emojis you forgot existed, or just for fun. Some designers use them as prompts for sketches.' } },
+    { '@type': 'Question', name: 'Does it work on mobile?', acceptedAnswer: { '@type': 'Answer', text: 'Perfectly. Responsive UI and emojis show with the phone\'s native set (Apple on iOS, Google on Android, Samsung on its devices).' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Random" title="Random emoji generator"
+    intro="Pick one or many emojis at random. Filter by category, copy with one click, and find emojis you forgot existed.">
+
+    <div slot="tool" class="em-tool">
+      <div class="em-controls">
+        <div>
+          <label for="em-cat">Category</label>
+          <select id="em-cat">
+            <option value="all" selected>All</option>
+            <option value="faces">Faces & emotion</option>
+            <option value="hands">Hands & gestures</option>
+            <option value="animals">Animals & nature</option>
+            <option value="food">Food & drink</option>
+            <option value="sport">Activities / sports</option>
+            <option value="travel">Travel & places</option>
+            <option value="objects">Objects</option>
+            <option value="symbols">Symbols</option>
+          </select>
+        </div>
+        <div>
+          <label for="em-count">Count</label>
+          <input id="em-count" type="number" value="1" min="1" max="50" />
+        </div>
+      </div>
+
+      <div id="em-result" class="em-result">🎲</div>
+
+      <div class="em-actions">
+        <button id="em-gen" class="btn btn-primary" type="button">Generate emoji(s)</button>
+        <button id="em-copy" class="btn btn-ghost" type="button">Copy</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>How Unicode standardizes emojis</h2>
+      <p>
+        Each emoji is a Unicode character (or sequence) with a fixed code point: 🐕 is
+        <code>U+1F415</code>, ❤️ is <code>U+2764 U+FE0F</code>. Apple, Google, Samsung,
+        Microsoft and Mozilla design their own visual versions, but the character is
+        universal: paste an emoji from iPhone to Android and both render the same idea
+        in their respective styles. That's how emojis became a global language.
+      </p>
+
+      <h2>What random emoji is good for</h2>
+      <ul>
+        <li><strong>Creative inspiration:</strong> illustrators and designers use them as prompts for daily sketches.</li>
+        <li><strong>Breaking social media block:</strong> if you can't think how to end a post, a random emoji nudges you in a surprising direction.</li>
+        <li><strong>Education:</strong> language games (associate emoji with word), random-element story building.</li>
+        <li><strong>List icons:</strong> in docs or slides, a random emoji is more memorable than a bullet point.</li>
+        <li><strong>Visual brainstorming:</strong> "design a brand for this combination of three emojis".</li>
+      </ul>
+
+      <h2>Official Unicode categories</h2>
+      <p>
+        The standard groups emojis into eight main categories: Smileys & Emotion, People
+        & Body, Animals & Nature, Food & Drink, Travel & Places, Activities, Objects,
+        Symbols, and Flags. Our tool merges some so the filter stays practical, but it
+        respects Unicode ordering internally.
+      </p>
+
+      <h2>The world's most-used emoji</h2>
+      <p>
+        Based on Unicode's annual reports (drawn from Twitter / X and other data),
+        consistently most used is 😂 (face with tears of joy), followed by ❤️ and 🥺.
+        Apple's "Emoji Day" on July 17 was chosen because that's the date shown on the
+        calendar emoji 📅 in iOS. Details that will keep you thinking.
+      </p>
+
+      <h2>When NOT to use emojis</h2>
+      <ol>
+        <li><strong>Formal work communications:</strong> in an email to an important client or in a contract, leave them out.</li>
+        <li><strong>Serious document typography:</strong> an emoji breaks the visual flow of legal or academic text.</li>
+        <li><strong>Senior audiences:</strong> a percentage of people over 60 don't yet read emojis as feelings. Be explicit.</li>
+        <li><strong>SEO and URLs:</strong> some browsers support emojis in URLs but search engines handle them inconsistently.</li>
+      </ol>
+
+      <h2>Skin tones and diversity</h2>
+      <p>
+        Since Unicode 8.0 (2015), people and hand emojis support skin-tone modifiers
+        (Fitzpatrick scale). 👋 can be 👋🏻, 👋🏼, 👋🏽, 👋🏾 or 👋🏿. Technique: two code points
+        concatenated. Most platforms remember your last preference.
+      </p>
+
+      <h2>Technical curiosities</h2>
+      <ul>
+        <li><strong>Some emojis are combinations</strong>: 👨‍👩‍👧‍👦 (family) is 4 individual emojis joined with ZWJ (Zero-Width Joiner) characters. On older systems they show as four separate people.</li>
+        <li><strong>The "tofu" 􏿾</strong>: when a system lacks the font for an emoji, it shows an empty square. That's "tofu". Happens with very new emojis on outdated systems.</li>
+        <li><strong>Geo-political flags</strong>: Unicode avoids taking sides on territorial disputes, which is why some regions have flags and others don't.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Where do they come from?</summary><p>Official Unicode 15+. Each renders with the OS font (Apple, Google, Samsung).</p></details>
+      <details><summary>What is it for?</summary><p>Creative inspiration, breaking blocks, discovering new emojis, visual brainstorming.</p></details>
+      <details><summary>On mobile?</summary><p>Yes. Responsive. Renders with the phone's native set.</p></details>
+      <details><summary>Filter by category?</summary><p>Yes. 8 categories plus an "all" option.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .em-controls { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .em-result { padding: 2.5rem 1.5rem; background: var(--bg-inset); border-radius: var(--radius-lg); border: 1px solid var(--border); text-align: center; font-size: 4rem; line-height: 1.3; word-break: break-word; min-height: 120px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .em-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  @media (max-width: 600px) { .em-controls { grid-template-columns: 1fr 1fr; } .em-result { font-size: 3rem; } }
+</style>
+
+<script>
+  const EMOJIS: Record<string, string[]> = {
+    faces: ['😀','😃','😄','😁','😆','😅','🤣','😂','🙂','🙃','😉','😊','😇','🥰','😍','🤩','😘','😗','😚','😙','😋','😛','😜','🤪','😝','🤑','🤗','🤭','🫢','🫣','🤫','🤔','🫡','🤐','🤨','😐','😑','😶','🫥','😏','😒','🙄','😬','🤥','😌','😔','😪','🤤','😴','😷','🤒','🤕','🤢','🤮','🤧','🥵','🥶','🥴','😵','🤯','🤠','🥳','🥸','😎','🤓','🧐','😕','🫤','😟','🙁','😮','😯','😲','😳','🥺','🥹','😦','😧','😨','😰','😥','😢','😭','😱','😖','😣','😞','😓','😩','😫','🥱','😤','😡','😠','🤬','😈','👿','💀','💩','🤡','👻','👽','🤖','😺','😸','😹','😻','😼','😽','🙀','😿','😾'],
+    hands: ['👋','🤚','🖐️','✋','🖖','🫱','🫲','🫳','🫴','👌','🤌','🤏','✌️','🤞','🫰','🤟','🤘','🤙','👈','👉','👆','🖕','👇','☝️','🫵','👍','👎','✊','👊','🤛','🤜','👏','🙌','🫶','👐','🤲','🤝','🙏','✍️','💅','🤳','💪','🦾','🦿','🦵','🦶','👂','🦻','👃','🧠','🫀','🫁','🦷','🦴','👀','👁️','👅','👄','🫦'],
+    animals: ['🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐻‍❄️','🐨','🐯','🦁','🐮','🐷','🐽','🐸','🐵','🙈','🙉','🙊','🐒','🐔','🐧','🐦','🐤','🐣','🐥','🦆','🦅','🦉','🦇','🐺','🐗','🐴','🦄','🐝','🪱','🐛','🦋','🐌','🐞','🐜','🪰','🪲','🪳','🦟','🦗','🕷️','🦂','🐢','🐍','🦎','🦖','🦕','🐙','🦑','🦐','🦞','🦀','🐡','🐠','🐟','🐬','🐳','🐋','🦈','🦭','🐊','🐅','🐆','🦓','🦍','🦧','🦣','🐘','🦛','🦏','🐪','🐫','🦒','🦘','🦬','🐃','🐂','🐄','🐎','🐖','🐏','🐑','🦙','🐐','🦌','🐕','🐩','🦮','🐕‍🦺','🐈','🐈‍⬛','🪶','🐓','🦃','🦤','🦚','🦜','🦢','🦩','🕊️','🐇','🦝','🦨','🦡','🦫','🦦','🦥','🐁','🐀','🐿️','🦔','🐾','🐉','🐲','🌵','🎄','🌲','🌳','🌴','🪵','🌱','🌿','☘️','🍀','🎍','🪴','🎋','🍃','🍂','🍁','🍄','🐚','🪨','🌾','💐','🌷','🌹','🥀','🌺','🌸','🌼','🌻'],
+    food: ['🍏','🍎','🍐','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶️','🫑','🌽','🥕','🫒','🧄','🧅','🥔','🍠','🥐','🥯','🍞','🥖','🥨','🧀','🥚','🍳','🧈','🥞','🧇','🥓','🥩','🍗','🍖','🦴','🌭','🍔','🍟','🍕','🫓','🥪','🥙','🧆','🌮','🌯','🫔','🥗','🥘','🫕','🥫','🍝','🍜','🍲','🍛','🍣','🍱','🥟','🦪','🍤','🍙','🍚','🍘','🍥','🥠','🥮','🍢','🍡','🍧','🍨','🍦','🥧','🧁','🍰','🎂','🍮','🍭','🍬','🍫','🍿','🍩','🍪','🌰','🥜','🍯','🥛','🍼','🫖','☕','🍵','🧃','🥤','🧋','🍶','🍺','🍻','🥂','🍷','🥃','🍸','🍹','🧉','🍾','🧊','🥄','🍴','🍽️','🥣','🥡','🥢','🧂'],
+    sport: ['⚽','🏀','🏈','⚾','🥎','🎾','🏐','🏉','🥏','🎱','🪀','🏓','🏸','🏒','🏑','🥍','🏏','🪃','🥅','⛳','🪁','🏹','🎣','🤿','🥊','🥋','🎽','🛹','🛼','🛷','⛸️','🥌','🎿','⛷️','🏂','🪂','🏋️','🤼','🤸','⛹️','🤺','🤾','🏌️','🏇','🧘','🏄','🏊','🤽','🚣','🧗','🚵','🚴','🏆','🥇','🥈','🥉','🏅','🎖️','🏵️','🎗️','🎫','🎟️','🎪','🤹','🩰','🎭','🎨','🎬','🎤','🎧','🎼','🎹','🥁','🪘','🎷','🎺','🎸','🪕','🎻','🪗','🎲','♟️','🎯','🎳','🎮','🎰','🧩'],
+    travel: ['🚗','🚕','🚙','🚌','🚎','🏎️','🚓','🚑','🚒','🚐','🛻','🚚','🚛','🚜','🦯','🦽','🦼','🛴','🚲','🛵','🏍️','🛺','🚨','🚔','🚍','🚘','🚖','🚡','🚠','🚟','🚃','🚋','🚞','🚝','🚄','🚅','🚈','🚂','🚆','🚇','🚊','🚉','✈️','🛫','🛬','🛩️','💺','🛰️','🚀','🛸','🚁','🛶','⛵','🚤','🛥️','🛳️','⛴️','🚢','⚓','🪝','⛽','🚧','🚦','🚥','🚏','🗺️','🗿','🗽','🗼','🏰','🏯','🏟️','🎡','🎢','🎠','⛲','⛱️','🏖️','🏝️','🏜️','🌋','⛰️','🏔️','🗻','🏕️','⛺','🛖','🏠','🏡','🏘️','🏚️','🏗️','🏭','🏢','🏬','🏣','🏤','🏥','🏦','🏨','🏪','🏫','🏩','💒','🏛️','⛪','🕌','🕍','🛕','🕋','⛩️','🛤️','🛣️'],
+    objects: ['⌚','📱','📲','💻','⌨️','🖥️','🖨️','🖱️','🖲️','🕹️','🗜️','💽','💾','💿','📀','📼','📷','📸','📹','🎥','📽️','🎞️','📞','☎️','📟','📠','📺','📻','🎙️','🎚️','🎛️','🧭','⏱️','⏲️','⏰','🕰️','⌛','⏳','📡','🔋','🪫','🔌','💡','🔦','🕯️','🪔','🧯','🛢️','💸','💵','💴','💶','💷','🪙','💰','💳','🧾','💎','⚖️','🪜','🧰','🪛','🔧','🔨','⚒️','🛠️','⛏️','🪚','🔩','⚙️','🪤','🧱','⛓️','🧲','🚬','⚰️','🪦','⚱️','🏺','🔮','📿','🧿','🪄','💈','🔭','🔬','🕳️','🩻','🩹','🩺','💊','💉','🩸','🧬','🦠','🧫','🧪','🌡️','🧹','🪠','🧺','🧻','🚽','🚰','🚿','🛁','🛀','🧼','🪥','🪒','🧽','🪣','🧴','🛎️','🔑','🗝️','🚪','🪑','🛋️','🛏️','🛌','🧸','🪆','🖼️','🪞','🪟','🛍️','🛒','🎁','🎈','🎏','🎀','🪄','🪅','🪩','🎊','🎉','🎎','🏮','🎐','🧧','✉️','📩','📨','📧','💌','📥','📤','📦','🏷️','🪧','📪','📫','📬','📭','📮','📯','📜','📃','📄','📑','🧾','📊','📈','📉','🗒️','🗓️','📆','📅','🗑️','📇','🗃️','🗳️','🗄️','📋','📁','📂','🗂️','🗞️','📰','📓','📔','📒','📕','📗','📘','📙','📚','📖','🔖','🧷','🔗','📎','🖇️','📐','📏','🧮','📌','📍','✂️','🖊️','🖋️','✒️','🖌️','🖍️','📝','✏️','🔍','🔎','🔏','🔐','🔒','🔓'],
+    symbols: ['❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','💔','❤️‍🔥','❤️‍🩹','💖','💗','💓','💞','💕','💟','❣️','💌','💢','💥','💫','💦','💨','🕳️','💬','👁️‍🗨️','🗨️','🗯️','💭','💤','♻️','✅','🎶','🎵','🔇','🔈','🔉','🔊','🔔','🔕','📢','📣','📯','🎚️','🎛️','💯','🔢','🔠','🔡','🔤','🔼','⬆️','↗️','➡️','↘️','⬇️','↙️','⬅️','↖️','↕️','↔️','↩️','↪️','⤴️','⤵️','🔀','🔁','🔂','▶️','⏩','⏭️','⏯️','◀️','⏪','⏮️','🔼','⏫','🔽','⏬','⏸️','⏹️','⏺️','⏏️','🎦','🔅','🔆','📶','📳','📴','♀️','♂️','⚧️','✖️','➕','➖','➗','♾️','‼️','⁉️','❓','❔','❕','❗','〰️','💱','💲','⚕️','♻️','⚜️','🔱','📛','🔰','⭕','✅','☑️','✔️','❌','❎','➰','➿','〽️','✳️','✴️','❇️','©️','®️','™️','#️⃣','*️⃣','0️⃣','1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟']
+  };
+  function all() { return Object.values(EMOJIS).flat(); }
+  const cat = document.getElementById('em-cat') as HTMLSelectElement;
+  const count = document.getElementById('em-count') as HTMLInputElement;
+  const result = document.getElementById('em-result')!;
+  const gen = document.getElementById('em-gen') as HTMLButtonElement;
+  const copy = document.getElementById('em-copy') as HTMLButtonElement;
+
+  function rand(max: number) {
+    const arr = new Uint32Array(1);
+    window.crypto.getRandomValues(arr);
+    return arr[0] % max;
+  }
+  function pick() {
+    const set = cat.value === 'all' ? all() : EMOJIS[cat.value];
+    const n = Math.max(1, Math.min(50, parseInt(count.value) || 1));
+    const out: string[] = [];
+    for (let i = 0; i < n; i++) out.push(set[rand(set.length)]);
+    result.textContent = out.join(' ');
+  }
+  gen.addEventListener('click', pick);
+  copy.addEventListener('click', () => {
+    navigator.clipboard.writeText(result.textContent || '');
+    copy.textContent = 'Copied!';
+    setTimeout(() => { copy.textContent = 'Copy'; }, 1200);
+  });
+  pick();
+</script>

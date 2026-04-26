@@ -1,0 +1,110 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+import { RABBIT_NAMES, SMALL_PET_STYLES } from '../../lib/small-pet-names';
+
+const title = 'Rabbit Name Generator | Genfy';
+const description = 'Cute, funny or food-themed: find the perfect name for your rabbit. Free instant generator with 60+ ideas.';
+const stylesEN = SMALL_PET_STYLES.en;
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Do rabbits learn their name?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Rabbits recognize their name when they hear it consistently paired with food and gentle handling, though they learn slower than dogs.' } },
+    { '@type': 'Question', name: 'What\'s a good name for a white rabbit?', acceptedAnswer: { '@type': 'Answer', text: 'Cotton, Snowball, Marshmallow, Cloud, Pearl — anything that evokes softness and white.' } },
+    { '@type': 'Question', name: 'Short or long names for rabbits?', acceptedAnswer: { '@type': 'Answer', text: 'Short, ideally 1 or 2 syllables. Easier for the rabbit to associate and easier for you to use daily.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="en" tag="Pets" title="Rabbit Name Generator"
+    intro="Cute, funny or food-themed: find the name that fits your rabbit best. Click and get 12 fresh ideas.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Style</label>
+      <select id="cn-style">
+        {Object.entries(stylesEN).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mix of all</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 names</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a name for your rabbit</h2>
+      <p>
+        Rabbits are smart enough to learn their name, but the learning is slower than with dogs.
+        For it to stick, aim for something simple, easy to repeat, and unlike words you use every day.
+      </p>
+      <ul>
+        <li><strong>1 or 2 syllables.</strong> Coco, Cookie, Bun, Pip work better than long names.</li>
+        <li><strong>Soft, high-pitched sounds.</strong> Rabbits respond to sweet, higher tones.</li>
+        <li><strong>Pair it with food.</strong> Say the name right before offering a piece of carrot or apple. After 2-3 weeks they associate.</li>
+        <li><strong>Match coat or personality.</strong> Cotton for a white one, Bouncer for a hyper one, Honey for a calm one.</li>
+      </ul>
+
+      <h2>Names by style</h2>
+      <ul>
+        <li><strong>Cute</strong> (Cotton, Cookie, Pip, Marshmallow): classic, fits almost any house rabbit.</li>
+        <li><strong>Food</strong> (Carrot, Biscuit, Truffle, Mochi): leans into something rabbits love and sounds adorable.</li>
+        <li><strong>Funny</strong> (Sir Hopsalot, Captain Carrot, Bouncer): great for big personalities in small bodies.</li>
+      </ul>
+
+      <h2>Trends in rabbit names</h2>
+      <p>
+        US and UK exotic-vet directories show consistent top picks year after year: Cookie, Bun,
+        Thumper, Coco, Mochi, Cotton. Food names are up since 2020 — especially Pumpkin, Biscuit and
+        Truffle. Single-word soft names dominate over anything elaborate.
+      </p>
+
+      <h2>Common mistakes</h2>
+      <ol>
+        <li>Long names that get cut to a 1-syllable nickname anyway.</li>
+        <li>Assuming rabbits don't learn their name and never using it. They do, but only if they hear it consistently.</li>
+        <li>Switching names too often in the first weeks.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Do rabbits learn their name?</summary><p>Yes. Rabbits recognize their name when they hear it consistently paired with food and gentle handling, though they learn slower than dogs.</p></details>
+      <details><summary>What's a good name for a white rabbit?</summary><p>Cotton, Snowball, Marshmallow, Cloud, Pearl — anything that evokes softness and white.</p></details>
+      <details><summary>Short or long names for rabbits?</summary><p>Short, ideally 1 or 2 syllables. Easier for the rabbit to associate and easier for you to use daily.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: RABBIT_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.cute.en, ...DATA.food.en, ...DATA.funny.en];
+    else pool = DATA[s].en;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

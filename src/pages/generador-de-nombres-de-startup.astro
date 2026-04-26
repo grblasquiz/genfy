@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombres de startup gratis | Genfy';
+const description = 'Generá nombres de startup pensados para Y Combinator, Demo Days e inversores. Cortos, registrables, con .com posible y feel moderno tipo Stripe, Linear o Notion.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno a un nombre de startup?', acceptedAnswer: { '@type': 'Answer', text: 'Corto, pronunciable en inglés, registrable, con .com alcanzable y sin connotaciones raras. Stripe, Notion, Linear, Vercel y Figma cumplen los cinco filtros.' } },
+    { '@type': 'Question', name: '¿Cuándo nombro la startup, antes o después de tener producto?', acceptedAnswer: { '@type': 'Answer', text: 'Lo ideal es tener el problema y el primer prototipo claros antes. Pero si el equipo necesita un nombre para empezar, usá uno tentativo y reservalo solo si pasa los filtros.' } },
+    { '@type': 'Question', name: '¿Importa el .com para una startup?', acceptedAnswer: { '@type': 'Answer', text: 'Mucho. El .com sigue siendo el reflejo de los inversores y el cliente. Si no podés tener .com, asegurate al menos un .io o .ai sólido y considerá comprar el .com más adelante.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Branding" title="Generador de nombres de startup"
+    intro="Cortos, modernos y registrables. Nombres pensados para founders que necesitan algo que funcione en pitch deck, App Store y URL al mismo tiempo.">
+
+    <div slot="tool" class="sn">
+      <label for="sn-kw">Palabras clave (en inglés funciona mejor)</label>
+      <input id="sn-kw" type="text" placeholder="finance, ai, sleep..." value="data, ai" />
+
+      <label for="sn-style" style="margin-top:1rem">Estilo</label>
+      <select id="sn-style">
+        <option value="yc">YC-friendly (Stripe, Linear, Notion)</option>
+        <option value="latin">Latín neutro (Aurum, Lumen)</option>
+        <option value="modern">Inventado moderno</option>
+        <option value="ai">AI / SaaS (-ai, -ly, -ify)</option>
+      </select>
+
+      <button id="sn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="sn-out" class="sn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los nombres de startup son una categoría aparte</h2>
+      <p>
+        Una startup necesita un nombre que cumpla más restricciones que una empresa tradicional. Tiene que funcionar en un pitch deck a inversores anglosajones, sonar bien al teléfono cuando levantes capital, registrarse en App Store sin conflictos, y tener el .com alcanzable. Cinco filtros que la mayoría de los nombres "creativos" no pasa.
+      </p>
+      <p>
+        Por eso el patrón YC (Stripe, Linear, Notion, Vercel, Figma, Loom) se volvió dominante: una palabra, dos sílabas, pronunciable globalmente, sin connotaciones culturales fuertes y con feel moderno sin ser obvio.
+      </p>
+
+      <h2>El "patrón YC": qué tienen en común los nombres que funcionan</h2>
+      <ul>
+        <li><strong>Una sola palabra.</strong> Stripe, Vercel, Notion. No "Cloud Stripe Inc". Una palabra ancla mejor en la memoria.</li>
+        <li><strong>Dos sílabas, máximo tres.</strong> "Stri-pe", "No-tion", "Li-near". Más sílabas y se diluye.</li>
+        <li><strong>Vocales abiertas.</strong> Las "a", "o", "i" abiertas suenan amigables. "Notion", "Asana", "Loom".</li>
+        <li><strong>Sin doble significado raro.</strong> Pasa el filtro de Google + "meaning" en español, francés, portugués, mandarín.</li>
+        <li><strong>.com alcanzable.</strong> Disponible o comprable por menos del 1% del seed round.</li>
+      </ul>
+
+      <h2>Tres caminos legítimos al nombre de startup</h2>
+      <ol>
+        <li><strong>Palabra real con giro:</strong> Stripe (banda magnética → bandas de pago), Notion (la idea → la app de notas), Asana (postura de yoga → flujo de trabajo). Tomás una palabra existente y le cargás nuevo significado.</li>
+        <li><strong>Mash-up de dos palabras:</strong> Snowflake, Mailchimp, Datadog. Une dos cosas reconocibles y crea imagen mental.</li>
+        <li><strong>Inventado puro:</strong> Vercel, Klarna, Spotify. Es 100% registrable pero requiere más marketing para que la gente entienda qué hacés.</li>
+      </ol>
+
+      <h2>Errores típicos en nombres de startup</h2>
+      <p>
+        El más común es el "AI-stuffing": agregar "AI" al final como muleta (ResumeAI, MarketingAI, ContractAI). Funciona en 2024 para SEO, pero es estratégicamente débil: en 5 años "AI" será como decir "online" en 2010, y vas a tener que reposicionar. Si tu nombre tiene sentido sin "AI", agregalo solo en el subtítulo, no en la marca.
+      </p>
+      <p>
+        Otros errores: nombres que solo funcionan en español (no escalan globalmente), nombres con caracteres acentuados (rompen URLs y emails), nombres demasiado descriptivos del primer producto (te limitan al pivotar) y nombres impronunciables para angloparlantes si pensás levantar en EE.UU.
+      </p>
+
+      <h2>Validación pre-incorporación</h2>
+      <p>
+        Antes de incorporar la sociedad o aceptar un cheque, hacé esto en orden:
+      </p>
+      <ol>
+        <li>Búsqueda en Google del nombre exacto: ¿qué SERP devuelve?</li>
+        <li>Búsqueda en USPTO (tmsearch.uspto.gov) y EUIPO si pensás operar global.</li>
+        <li>Búsqueda en INPI Argentina si vas a incorporar acá.</li>
+        <li>Disponibilidad del dominio .com — si está parqueado, mandá oferta antes de cerrar el nombre.</li>
+        <li>Handle en X, Instagram, LinkedIn y GitHub. Knowem.com lo verifica en bulk.</li>
+        <li>Búsqueda en App Store y Google Play: ¿hay otra app con ese nombre? Si la hay, no la vas a poder publicar.</li>
+        <li>Test de pronunciación con 3 hablantes nativos de inglés, sin contexto. ¿Lo deletrean igual que vos?</li>
+      </ol>
+
+      <h2>Cuándo cambiar el nombre de tu startup</h2>
+      <p>
+        Cambiar el nombre cuesta caro (rebrand, dominio, app, marketing acumulado), pero hay tres situaciones donde rinde: 1) tu nombre actual te limita a un solo segmento y querés ampliar, 2) hay un conflicto legal real con un competidor más grande, 3) tu nombre suena local y necesitás expandirte globalmente. Twitter → X fue el segundo. Backrub → Google fue el tercero. Si tu motivo no encaja en alguna de las tres, probablemente sea ego, no estrategia.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno a un nombre de startup?</summary><p>Corto, pronunciable en inglés, registrable, con .com alcanzable y sin connotaciones raras.</p></details>
+      <details><summary>¿Antes o después de tener producto?</summary><p>Lo ideal: con problema y prototipo claro. Si necesitás algo para arrancar, usá tentativo y validá antes de imprimir.</p></details>
+      <details><summary>¿Importa el .com?</summary><p>Sí. Es el reflejo de inversores y clientes. Si no es posible, .io o .ai sólido y planificá comprar el .com.</p></details>
+      <details><summary>¿Puedo usar "AI" en el nombre?</summary><p>Funciona en SEO 2024 pero es débil estratégicamente. Mejor en subtítulo que en marca.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .sn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .sn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .sn-item:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const YC_ROOTS = ['Stri', 'Lin', 'Ver', 'Lo', 'No', 'Fig', 'Ram', 'Reb', 'Pli', 'Rip', 'Pla', 'Mer', 'Cod', 'Ari', 'Bre', 'Sup'];
+  const YC_ENDS = ['pe', 'ear', 'cel', 'om', 'tion', 'ma', 'p', 'ase', 'gma', 'ker', 'ply', 'ge', 'ce', 'go', 'wn'];
+  const LATIN = ['Aurum', 'Lumen', 'Vita', 'Nova', 'Magna', 'Prima', 'Lux', 'Fortis', 'Pura', 'Clara', 'Forma', 'Verum', 'Sapiens', 'Anima', 'Domus'];
+  const MOD = ['Lumo', 'Zera', 'Vexa', 'Brio', 'Tono', 'Quira', 'Nido', 'Plux', 'Reki', 'Tovi', 'Yumi', 'Tilo', 'Rema', 'Vola'];
+  const AI_SUF = ['ai', 'ly', 'ify', 'flow', 'kit', 'lab', 'io'];
+
+  const kw = document.getElementById('sn-kw') as HTMLInputElement;
+  const style = document.getElementById('sn-style') as HTMLSelectElement;
+  const gen = document.getElementById('sn-gen') as HTMLButtonElement;
+  const out = document.getElementById('sn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 300) {
+      attempts++;
+      let name = '';
+      if (s === 'yc') name = pick(YC_ROOTS) + pick(YC_ENDS);
+      else if (s === 'latin') name = pick(LATIN);
+      else if (s === 'modern') name = pick(MOD);
+      else if (s === 'ai') {
+        const w = words.length ? pick(words) : pick(MOD).toLowerCase();
+        name = cap(w) + pick(AI_SUF).charAt(0).toUpperCase() + pick(AI_SUF).slice(1);
+        if (Math.random() > 0.5) name = cap(w) + pick(AI_SUF);
+      }
+      if (name.length >= 4 && name.length <= 14) set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'sn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

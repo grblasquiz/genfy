@@ -1,0 +1,168 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de palabras inventadas gratis | Genfy';
+const description = 'Generá palabras inventadas que suenan reales: ideal para nombres de productos, marcas, personajes, juegos y mundos de ficción.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirven las palabras inventadas?', acceptedAnswer: { '@type': 'Answer', text: 'Para naming de productos, nombres de marca, personajes de novelas, juegos de rol, mundos de ciencia ficción y dominios disponibles.' } },
+    { '@type': 'Question', name: '¿Cómo se construyen?', acceptedAnswer: { '@type': 'Answer', text: 'Combinamos sílabas comunes del español con patrones de pronunciación naturales (consonante + vocal + consonante). El resultado se siente como una palabra real aunque no exista.' } },
+    { '@type': 'Question', name: '¿Se puede usar para una marca?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, pero verificá disponibilidad de marca registrada y de dominio antes de avanzar. Una palabra inventada no garantiza que esté libre.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto / Words" title="Generador de palabras inventadas"
+    intro="Palabras nuevas que suenan reales. Ideal para nombres de marca, productos, personajes y mundos de ficción.">
+
+    <div slot="tool" class="mw">
+      <div class="mw-row">
+        <div>
+          <label for="mw-amount">Cantidad</label>
+          <input id="mw-amount" type="number" min="1" max="30" value="10" />
+        </div>
+        <div>
+          <label for="mw-syl">Sílabas</label>
+          <select id="mw-syl">
+            <option value="2">2 sílabas</option>
+            <option value="3" selected>3 sílabas</option>
+            <option value="4">4 sílabas</option>
+          </select>
+        </div>
+        <div>
+          <label for="mw-style">Estilo</label>
+          <select id="mw-style">
+            <option value="brand">Marca/producto</option>
+            <option value="fantasy">Fantasía</option>
+            <option value="tech">Tech</option>
+          </select>
+        </div>
+      </div>
+      <button id="mw-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="mw-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="mw-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono);"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué generar palabras inventadas</h2>
+      <p>
+        Las marcas más reconocibles del mundo casi nunca son palabras del diccionario:
+        Spotify, Skype, Vimeo, Wattpad, Nubank. Una palabra inventada tiene tres ventajas que
+        un nombre descriptivo no tiene: es protegible legalmente, es buscable (poca
+        competencia en SEO), y deja espacio para que la marca le imprima un significado propio.
+        El costo: necesita más inversión para que la gente entienda qué hacés.
+      </p>
+
+      <h2>Cómo se construyen</h2>
+      <p>
+        El generador combina sílabas comunes (CVC y CV) con patrones que se pronuncian fácil en
+        español o inglés. Variando el largo y el estilo, obtenés palabras que se sienten
+        familiares aunque no existan. Para naming de marca conviene 2-3 sílabas (más fácil de
+        recordar y de escribir). Para fantasía, 3-4 funcionan mejor (suenan más exóticas). Para
+        tech, las cortas y con vocales fuertes ("a", "i") tienden a ganar.
+      </p>
+
+      <h2>Estilos: cuándo usar cada uno</h2>
+      <ul>
+        <li><strong>Marca/producto.</strong> Sonidos suaves, fáciles de pronunciar en varios idiomas. Pensado para empresas y apps.</li>
+        <li><strong>Fantasía.</strong> Sonidos más complejos, vocales largas y consonantes inusuales. Para personajes, lugares y razas en ficción.</li>
+        <li><strong>Tech.</strong> Cortas, con consonantes fuertes y un toque de "saber-tecnológico". Para SaaS, herramientas y proyectos open source.</li>
+      </ul>
+
+      <h2>Cómo evaluar una palabra inventada</h2>
+      <ol>
+        <li><strong>Decila en voz alta.</strong> Si tenés que pensarla para pronunciar, descartala.</li>
+        <li><strong>Escribila al dictado.</strong> Pedile a alguien que la escuche y la escriba. Si lo hace mal, no funciona como dominio.</li>
+        <li><strong>Buscala.</strong> Si Google la corrige automáticamente a otra cosa, no es buena.</li>
+        <li><strong>Verificá significados accidentales.</strong> Tu palabra puede significar algo en otro idioma. Hacé una búsqueda en Reverso o DeepL.</li>
+        <li><strong>Chequeá disponibilidad.</strong> Marca registrada (INPI/USPTO), dominio .com, usuarios de Instagram, X y TikTok.</li>
+      </ol>
+
+      <h2>Errores comunes al usarlas</h2>
+      <ul>
+        <li><strong>Demasiado parecida a un competidor.</strong> Si ya hay "Skype", no le pongas "Skiype" — confunde y compite por SEO.</li>
+        <li><strong>Difícil de explicar al teléfono.</strong> Si tenés que deletrear cada vez, la marca pierde fricción comercial.</li>
+        <li><strong>Demasiado larga.</strong> Más de 3 sílabas ya cuesta de memorizar para naming de marca.</li>
+        <li><strong>Sin "alma".</strong> Las mejores palabras inventadas evocan algo (movimiento, luz, claridad). Las peores parecen un código.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirven?</summary><p>Para naming de marca, productos, personajes, juegos de rol y mundos de ficción.</p></details>
+      <details><summary>¿Cómo se arman?</summary><p>Combinando sílabas comunes con patrones de pronunciación naturales (CVC y CV).</p></details>
+      <details><summary>¿Sirven para una marca?</summary><p>Sí, pero verificá disponibilidad de marca y dominio antes de invertir.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .mw-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .mw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const SETS: Record<string, { c: string[]; v: string[] }> = {
+    brand: {
+      c: ["b","c","d","f","g","l","m","n","p","r","s","t","v","z","ch","ll"],
+      v: ["a","e","i","o","u","ia","io","ea","ai"],
+    },
+    fantasy: {
+      c: ["d","l","m","n","r","s","t","v","th","sh","kh","gr","dr","fl","str"],
+      v: ["a","e","i","o","u","ae","io","ya","yi","au"],
+    },
+    tech: {
+      c: ["b","d","g","k","l","m","n","p","r","s","t","v","x","z"],
+      v: ["a","e","i","o","u","ai","io"],
+    },
+  };
+
+  const amountEl = document.getElementById('mw-amount') as HTMLInputElement;
+  const sylEl = document.getElementById('mw-syl') as HTMLSelectElement;
+  const styleEl = document.getElementById('mw-style') as HTMLSelectElement;
+  const out = document.getElementById('mw-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('mw-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('mw-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+
+  // Forbidden tokens to filter (mythology-related). Compare lowercase.
+  const FORBIDDEN = ["loki","thor","zeus","apolo","apollo","atena","athena","artemis","hera","hades","helios","selene","atlas","orion","aquiles","achilles","nyx","rhea","veritas","solis","terra","klio","aurelius","luna","astra","aurora","iris","stella","osiris","anubis","isis","ra","vishnu","shiva","kali","odin","freya","mercurio","mercury","fenix","phoenix"];
+
+  function makeOne(): string {
+    const set = SETS[styleEl.value];
+    const sy = parseInt(sylEl.value, 10);
+    let w = "";
+    for (let i = 0; i < sy; i++) {
+      w += pick(set.c) + pick(set.v);
+    }
+    // Capitalize for branding feel
+    w = w.charAt(0).toUpperCase() + w.slice(1);
+    return w;
+  }
+  function safe(w: string) {
+    const lo = w.toLowerCase();
+    return !FORBIDDEN.some(f => lo.includes(f));
+  }
+  function generate() {
+    const n = Math.max(1, Math.min(30, parseInt(amountEl.value || '10', 10)));
+    const arr: string[] = [];
+    let attempts = 0;
+    while (arr.length < n && attempts < n * 10) {
+      const w = makeOne();
+      if (safe(w) && !arr.includes(w)) arr.push(w);
+      attempts++;
+    }
+    out.value = arr.join('\n');
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

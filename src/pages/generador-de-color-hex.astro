@@ -1,0 +1,184 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de color hex gratis | Genfy';
+const description = 'Generá códigos de color HEX al instante con vista previa visual. Convertí entre HEX, RGB y HSL, y obtené el código exacto listo para CSS.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es un código HEX?', acceptedAnswer: { '@type': 'Answer', text: 'Es la forma más compacta de representar un color en CSS. Seis caracteres hexadecimales (0-9 y A-F) que codifican rojo, verde y azul: dos por canal. #FF0000 es rojo puro, #000000 negro, #FFFFFF blanco.' } },
+    { '@type': 'Question', name: '¿HEX de 3 dígitos vs 6 dígitos?', acceptedAnswer: { '@type': 'Answer', text: 'El de 3 dígitos es una abreviatura: #F00 equivale a #FF0000. Solo permite 4096 colores; el de 6 dígitos da los 16.7 millones del estándar RGB. Usá 6 siempre que puedas.' } },
+    { '@type': 'Question', name: '¿Qué significa el #?', acceptedAnswer: { '@type': 'Answer', text: 'El símbolo # indica que lo que sigue es un valor hexadecimal. CSS lo requiere; algunas APIs (como Slack o Notion) lo aceptan opcional.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño" title="Generador de color hex"
+    intro="Generá un código HEX al instante con preview visual. Convertí entre HEX, RGB y HSL, y copiá el código exacto listo para usar en CSS, Figma, Tailwind o cualquier herramienta.">
+
+    <div slot="tool" class="hex-tool">
+      <div id="hex-preview" class="hex-preview"></div>
+
+      <div class="hex-controls">
+        <div>
+          <label for="hex-input">HEX</label>
+          <input id="hex-input" type="text" value="#059669" maxlength="7" spellcheck="false" />
+        </div>
+        <div>
+          <label for="hex-picker">Picker</label>
+          <input id="hex-picker" type="color" value="#059669" />
+        </div>
+      </div>
+
+      <div class="hex-formats">
+        <div class="fmt"><span class="lbl">HEX</span><code id="fmt-hex">#059669</code><button class="btn-tiny" data-copy="fmt-hex" type="button">Copiar</button></div>
+        <div class="fmt"><span class="lbl">RGB</span><code id="fmt-rgb">rgb(5, 150, 105)</code><button class="btn-tiny" data-copy="fmt-rgb" type="button">Copiar</button></div>
+        <div class="fmt"><span class="lbl">HSL</span><code id="fmt-hsl">hsl(160, 94%, 30%)</code><button class="btn-tiny" data-copy="fmt-hsl" type="button">Copiar</button></div>
+      </div>
+
+      <div class="hex-actions">
+        <button id="hex-rand" class="btn btn-primary" type="button">Generar HEX aleatorio</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo se lee un código HEX</h2>
+      <p>
+        Un HEX como <code>#059669</code> son tres pares de dígitos hexadecimales:
+        <strong>05</strong> (rojo), <strong>96</strong> (verde), <strong>69</strong> (azul).
+        Cada par va de <code>00</code> (0, ausencia total) a <code>FF</code> (255, máximo).
+        Por eso <code>#FF0000</code> es rojo puro y <code>#000000</code> es negro absoluto.
+        Conocer esa lógica permite ajustar colores a mano: subir el primer par sube el rojo,
+        bajar los tres pares oscurece todo.
+      </p>
+
+      <h2>HEX vs RGB vs HSL</h2>
+      <ul>
+        <li><strong>HEX:</strong> compacto, ideal para handoff diseño-desarrollo. Sin alpha en CSS hasta hace poco (hoy <code>#RRGGBBAA</code> sí existe).</li>
+        <li><strong>RGB:</strong> <code>rgb(5 150 105 / 0.8)</code> permite alpha siempre. Útil para overlays y semitransparencias.</li>
+        <li><strong>HSL:</strong> <code>hsl(160 94% 30%)</code> se entiende como humano. H = hue (matiz), S = saturación, L = luminosidad. Cambiar L sin tocar H es la forma correcta de generar variantes claras/oscuras de un mismo color.</li>
+      </ul>
+
+      <h2>Sintaxis válidas en CSS</h2>
+      <p>Todos estos representan el mismo color y son válidos:</p>
+      <pre><code>color: #059669;
+color: #059669FF;       /* con alpha */
+color: rgb(5, 150, 105);
+color: rgb(5 150 105);  /* moderno */
+color: rgb(5 150 105 / 0.8);
+color: hsl(160 94% 30%);</code></pre>
+
+      <h2>Color names: cuándo conviene</h2>
+      <p>
+        CSS soporta 147 nombres reservados (<code>tomato</code>, <code>steelblue</code>,
+        <code>rebeccapurple</code>). Son útiles para prototipos rápidos, pero en producción
+        siempre usá HEX o variables CSS: los nombres no admiten ajuste fino y en design
+        tokens son una pesadilla.
+      </p>
+
+      <h2>HEX abreviado y cuándo no usarlo</h2>
+      <p>
+        <code>#F00</code> es válido y equivale a <code>#FF0000</code>: cada dígito se
+        duplica. Pero solo cubre 4096 colores (16³) en lugar de 16.7 millones (256³).
+        Para diseño profesional, sticky a 6 dígitos. Para CSS minimalista de prototipos,
+        está bien.
+      </p>
+
+      <h2>HEX con alpha (#RRGGBBAA)</h2>
+      <p>
+        Soportado en todos los navegadores modernos desde 2018. Los dos últimos dígitos
+        son la opacidad: <code>FF</code> = 100%, <code>80</code> ≈ 50%, <code>00</code> = 0%.
+        Útil para overlays oscuros: <code>#00000080</code> es negro al 50%.
+      </p>
+
+      <h2>Convertir HEX a otros formatos sin perder precisión</h2>
+      <p>
+        HEX y RGB son matemáticamente equivalentes: la conversión es exacta en ambos
+        sentidos. HEX↔HSL pasa por RGB y puede generar pequeños errores de redondeo (&lt;1%
+        de variación), por eso los design tokens serios siempre guardan el HEX o RGB como
+        fuente de verdad y derivan HSL al vuelo.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es un código HEX?</summary><p>Una forma compacta de representar un color en CSS: 6 caracteres hexadecimales que codifican R, G y B (dos por canal).</p></details>
+      <details><summary>¿HEX de 3 vs 6 dígitos?</summary><p>El de 3 es abreviatura (<code>#F00</code> = <code>#FF0000</code>). Solo cubre 4096 colores; el de 6, 16.7 millones.</p></details>
+      <details><summary>¿Qué significa el #?</summary><p>Indica que lo que sigue es un valor hexadecimal. CSS lo requiere; algunas APIs lo aceptan opcional.</p></details>
+      <details><summary>¿Soporta transparencia?</summary><p>Sí, agregando dos dígitos al final: <code>#059669CC</code> ≈ 80% opaco. Disponible en todos los navegadores modernos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .hex-preview { width: 100%; height: 180px; border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 1rem; transition: background 0.2s; }
+  .hex-controls { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem; align-items: end; }
+  #hex-input { font-family: var(--font-mono); text-transform: uppercase; }
+  #hex-picker { padding: 0.25rem; height: 42px; cursor: pointer; }
+  .hex-formats { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+  .fmt { display: grid; grid-template-columns: 60px 1fr auto; gap: 0.75rem; align-items: center; padding: 0.625rem 0.875rem; background: var(--bg-inset); border-radius: var(--radius); border: 1px solid var(--border); }
+  .fmt .lbl { font-size: 0.75rem; font-weight: 600; color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.05em; }
+  .fmt code { background: transparent; border: 0; padding: 0; font-size: 0.875rem; }
+  .btn-tiny { font-size: 0.75rem; padding: 0.25rem 0.625rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); cursor: pointer; }
+  .btn-tiny:hover { background: var(--bg-card); border-color: var(--border-strong); }
+  .hex-actions { display: flex; gap: 0.5rem; }
+</style>
+
+<script>
+  const input = document.getElementById('hex-input') as HTMLInputElement;
+  const picker = document.getElementById('hex-picker') as HTMLInputElement;
+  const preview = document.getElementById('hex-preview') as HTMLDivElement;
+  const fmtHex = document.getElementById('fmt-hex')!;
+  const fmtRgb = document.getElementById('fmt-rgb')!;
+  const fmtHsl = document.getElementById('fmt-hsl')!;
+  const rand = document.getElementById('hex-rand') as HTMLButtonElement;
+
+  function hexToRgb(h: string) {
+    h = h.replace('#', '');
+    if (h.length === 3) h = h.split('').map(c => c + c).join('');
+    return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16) };
+  }
+  function rgbToHsl({ r, g, b }: { r: number; g: number; b: number }) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h = 0, s = 0; const l = (max + min) / 2;
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      if (max === r) h = ((g - b) / d + (g < b ? 6 : 0));
+      else if (max === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
+      h *= 60;
+    }
+    return { h: Math.round(h), s: Math.round(s * 100), l: Math.round(l * 100) };
+  }
+  function update(hex: string) {
+    if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
+    preview.style.background = hex;
+    const rgb = hexToRgb(hex);
+    const hsl = rgbToHsl(rgb);
+    fmtHex.textContent = hex.toUpperCase();
+    fmtRgb.textContent = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+    fmtHsl.textContent = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+    picker.value = hex;
+  }
+  input.addEventListener('input', () => update(input.value));
+  picker.addEventListener('input', () => { input.value = picker.value.toUpperCase(); update(picker.value); });
+  rand.addEventListener('click', () => {
+    const h = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase();
+    input.value = h;
+    update(h);
+  });
+  document.querySelectorAll('.btn-tiny').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = (btn as HTMLElement).dataset.copy!;
+      const txt = document.getElementById(id)!.textContent!;
+      navigator.clipboard.writeText(txt);
+      const orig = btn.textContent;
+      btn.textContent = '¡copiado!';
+      setTimeout(() => { btn.textContent = orig; }, 900);
+    });
+  });
+  update('#059669');
+</script>

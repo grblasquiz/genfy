@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de taglines gratis | Genfy';
+const description = 'Generá taglines memorables que acompañen a tu logo durante años. Cargá marca, categoría y arquetipo y obtené 20 ideas con ritmo y peso de marca.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué diferencia un tagline de un slogan?', acceptedAnswer: { '@type': 'Answer', text: 'El tagline es permanente y resume la esencia de la marca. El slogan es temporal y vende un beneficio puntual de campaña.' } },
+    { '@type': 'Question', name: '¿Cuánto debería durar un tagline?', acceptedAnswer: { '@type': 'Answer', text: 'Un buen tagline debería poder convivir con tu marca al menos 5 a 10 años. Si lo cambiás cada año, en realidad estás escribiendo slogans.' } },
+    { '@type': 'Question', name: '¿Puedo usar un tagline con un arquetipo?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Identificar el arquetipo (Sage, Hero, Caregiver, Creator) ayuda a darle consistencia tonal al tagline y a todo el sistema verbal de la marca.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Branding" title="Generador de taglines"
+    intro="Cargá tu marca, categoría y arquetipo. Obtené taglines pensados para vivir junto al logo durante años: cortos, atemporales y con peso de marca.">
+
+    <div slot="tool" class="tg">
+      <label for="tg-brand">Marca</label>
+      <input id="tg-brand" type="text" placeholder="Ej: Lumen" value="Lumen" />
+
+      <label for="tg-cat" style="margin-top:1rem">Categoría (1-2 palabras)</label>
+      <input id="tg-cat" type="text" placeholder="finanzas, salud, software..." value="finanzas" />
+
+      <label for="tg-arch" style="margin-top:1rem">Arquetipo</label>
+      <select id="tg-arch">
+        <option value="sage">Sage (sabio, claridad)</option>
+        <option value="hero">Hero (logro, valor)</option>
+        <option value="caregiver">Caregiver (cuidado, cercanía)</option>
+        <option value="creator">Creator (originalidad)</option>
+        <option value="explorer">Explorer (libertad)</option>
+      </select>
+
+      <button id="tg-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 taglines</button>
+
+      <div id="tg-out" class="tg-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es un tagline y por qué importa</h2>
+      <p>
+        El tagline es la frase que acompaña al logotipo y resume la promesa de la marca en una respiración. No es un slogan, no es un claim publicitario, no es el lema de la campaña actual: es el ADN verbal de la empresa, comprimido en cinco a ocho palabras que puedan sobrevivir 10 años sin envejecer.
+      </p>
+      <p>
+        Cuando funciona, el tagline cumple tres funciones simultáneas. Posiciona la marca dentro de su categoría, transmite tono (serio, juguetón, tecnológico, humano) y le da al equipo interno un punto de referencia para tomar decisiones creativas: si una pieza nueva no respeta el espíritu del tagline, probablemente esté fuera de marca.
+      </p>
+
+      <h2>Tagline vs. slogan: la diferencia que casi nadie respeta</h2>
+      <p>
+        Un slogan es de campaña: vive 6 a 18 meses y suele venderse desde un beneficio funcional ("dos por uno los martes"). Un tagline es estructural: vive con el logo. "Just Do It" es tagline. "Find your greatness" fue slogan de campaña. Confundirlos es lo que hace que muchas marcas terminen con cinco frases distintas en su web y ningún ancla.
+      </p>
+
+      <h2>Las cinco estructuras de tagline más usadas</h2>
+      <ul>
+        <li><strong>Beneficio emocional:</strong> "Vivilo. Sentilo." Funciona para lifestyle y consumo.</li>
+        <li><strong>Posicionamiento de categoría:</strong> "El correo serio." Útil cuando hay competidores más ruidosos.</li>
+        <li><strong>Promesa de marca:</strong> "Hacemos viajar simple." Combina verbo + atributo de categoría.</li>
+        <li><strong>Definición filosófica:</strong> "Pensar diferente." Solo funciona si la marca tiene historia o autoridad.</li>
+        <li><strong>Lugar emocional:</strong> "Donde nacen las ideas." Crea pertenencia.</li>
+      </ul>
+
+      <h2>Arquetipos: el atajo para mantener tono consistente</h2>
+      <p>
+        Carl Jung describió 12 arquetipos universales. La teoría de marcas los usa para asegurar consistencia: una marca Sage (Google, IBM) habla con autoridad y claridad; una Hero (Nike, Tesla) habla en imperativos y supera obstáculos; una Caregiver (Dove, Volvo) habla con calidez y protección; una Creator (Lego, Adobe) habla de originalidad y transformación; una Explorer (Patagonia, Jeep) habla de libertad y descubrimiento. Definir tu arquetipo antes de escribir el tagline es lo que separa a las marcas que suenan coherentes de las que parecen escritas por cinco personas distintas.
+      </p>
+
+      <h2>Errores que arruinan un tagline</h2>
+      <ol>
+        <li><strong>Demasiado largo.</strong> Si pasa de 8 palabras, deja de ser tagline y se convierte en una descripción.</li>
+        <li><strong>Adjetivos vacíos.</strong> "Innovador, único, líder" lo dice cualquiera. No identifica.</li>
+        <li><strong>Jerga interna.</strong> Si tu cliente no usa esas palabras, no van.</li>
+        <li><strong>Imitación del competidor.</strong> Si cambiás el logo y el tagline sigue funcionando para Nike, no es tu tagline.</li>
+        <li><strong>Demasiado específico al producto actual.</strong> Si en dos años pivoteás, el tagline queda inservible.</li>
+      </ol>
+
+      <h2>Cómo testear un tagline antes de adoptarlo</h2>
+      <p>
+        Mostralo bajo el logo durante 5 segundos a 10 personas que no conozcan la marca. Hacé tres preguntas: ¿Qué creés que hace esta empresa? ¿Cómo te hace sentir? ¿Lo recordás dentro de un minuto? Si la mayoría falla en alguna, todavía no está listo. Y antes de imprimirlo en cualquier soporte, registralo en INPI o USPTO si pensás defenderlo legalmente.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué diferencia un tagline de un slogan?</summary><p>El tagline es permanente y resume la marca. El slogan es de campaña y se renueva.</p></details>
+      <details><summary>¿Cuánto debería durar un tagline?</summary><p>Pensalo para vivir 5 a 10 años. Si lo cambiás cada año, son slogans, no taglines.</p></details>
+      <details><summary>¿Puedo usar un tagline con un arquetipo?</summary><p>Sí. Definir el arquetipo antes ayuda a que el tagline y todo el sistema verbal sean consistentes.</p></details>
+      <details><summary>¿Tengo que registrarlo?</summary><p>Si pensás defenderlo legalmente, registralo como marca denominativa en el INPI o USPTO.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tg-out { display: grid; grid-template-columns: 1fr; gap: 0.5rem; margin-top: 1.25rem; }
+  .tg-item { padding: 0.75rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; font-weight: 500; }
+  .tg-item:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const TPL = {
+    sage: ['{Brand}. Pensar mejor.', 'Claridad para {c}.', 'La forma inteligente de {c}.', 'Saber, antes que decidir.', 'Donde {c} se entiende.', '{Brand}: claridad en {c}.', 'Decisiones más limpias.', 'El conocimiento, simple.', 'Pensamiento aplicado a {c}.', 'Menos ruido en {c}.'],
+    hero: ['Atrévete a {c}.', '{Brand}: superá tu {c}.', 'Hacé que {c} pase.', 'No hay {c} sin acción.', '{Brand}. Más fuerte cada día.', 'El próximo nivel de {c}.', 'Lograr es la única opción.', 'Vencé el {c}.', 'Hecho para ganadores en {c}.', '{Brand}: la versión más alta de {c}.'],
+    caregiver: ['{Brand} te cuida en {c}.', 'Cerca tuyo, siempre.', 'Hecho con cuidado para {c}.', 'Tu mano firme en {c}.', 'Donde {c} es protección.', '{Brand}: cuidar es nuestro oficio.', 'Acompañar cada {c}.', 'El lado humano de {c}.', 'Pensado en vos, en cada {c}.', 'Cuidamos lo que importa en {c}.'],
+    creator: ['{Brand}. Crear sin límites.', 'Donde {c} se reinventa.', 'Hacé tu propio {c}.', 'Originalidad aplicada a {c}.', '{Brand}: crear, romper, repetir.', 'La creatividad como método.', 'Cada {c} es nuestro lienzo.', 'Diseñá tu {c}.', 'Imaginá. Ejecutá. {Brand}.', 'Crear es el verbo.'],
+    explorer: ['{Brand}. Más allá de {c}.', 'Sin mapa para {c}.', 'Tu próxima frontera en {c}.', 'Explorá {c} sin límites.', '{Brand}: el camino largo a {c}.', 'Para los que buscan en {c}.', 'Libertad para {c}.', 'Descubrí cómo es realmente {c}.', '{Brand}: nuevas rutas en {c}.', 'Buscar es el plan.'],
+  };
+
+  const brand = document.getElementById('tg-brand') as HTMLInputElement;
+  const cat = document.getElementById('tg-cat') as HTMLInputElement;
+  const arch = document.getElementById('tg-arch') as HTMLSelectElement;
+  const gen = document.getElementById('tg-gen') as HTMLButtonElement;
+  const out = document.getElementById('tg-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const Brand = brand.value.trim() || 'Marca';
+    const c = (cat.value.trim() || 'tu rubro').toLowerCase();
+    const list = TPL[arch.value as keyof typeof TPL];
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < Math.min(20, list.length) && attempts < 200) {
+      attempts++;
+      const t = pick(list);
+      set.add(t.replace(/\{Brand\}/g, Brand).replace(/\{c\}/g, c));
+    }
+    out.innerHTML = '';
+    [...set].forEach(s => {
+      const el = document.createElement('div');
+      el.className = 'tg-item';
+      el.textContent = s;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(s); el.textContent = '✓ ' + s; setTimeout(() => el.textContent = s, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,159 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de frases motivacionales gratis | Genfy';
+const description = 'Frases motivacionales prácticas y bíblicas. Sin clichés New Age. Listas para copiar en redes, presentaciones, journaling o el mensaje del día.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué tipo de frases motivacionales son?', acceptedAnswer: { '@type': 'Answer', text: 'Hay dos modos: práctico (citas reales y recordatorios secularizados sobre disciplina, hábitos y trabajo) y bíblico (versículos sobre fortaleza y perseverancia).' } },
+    { '@type': 'Question', name: '¿Funcionan las frases motivacionales?', acceptedAnswer: { '@type': 'Answer', text: 'Funcionan como recordatorio rápido, no como sustituto del trabajo. Sirven para recentrarte 30 segundos antes de una decisión, no para resolver el problema por vos.' } },
+    { '@type': 'Question', name: '¿Sirven para redes sociales?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Copiá la frase y pegala en Instagram, LinkedIn o cualquier red. Para mejores resultados, agregá una línea propia explicando por qué la elegiste hoy.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Inspiración" title="Generador de frases motivacionales"
+    intro="Frases prácticas y versículos bíblicos para tu día, una presentación, un post o tu cuaderno. Sin paganismo ni clichés vacíos.">
+
+    <div slot="tool" class="mq">
+      <div>
+        <label for="mq-mode">Modo</label>
+        <select id="mq-mode">
+          <option value="practical">Práctico</option>
+          <option value="biblical">Bíblico</option>
+        </select>
+      </div>
+      <div class="mq-card">
+        <p id="mq-text" class="mq-quote">—</p>
+      </div>
+      <button id="mq-gen" class="btn btn-primary" type="button">Otra frase</button>
+      <button id="mq-copy" class="btn btn-ghost" type="button">Copiar</button>
+    </div>
+
+    <div slot="content">
+      <h2>Motivación que no se autoengaña</h2>
+      <p>
+        Hay un tipo de frase motivacional que promete demasiado y entrega poco: "creé tu
+        realidad", "el universo te apoya". Suena bonito, pero la evidencia muestra que ese tipo
+        de mensaje en exceso genera frustración cuando los resultados no aparecen. Las frases
+        de este generador apuntan a otra cosa: recordarte una verdad práctica (el éxito viene
+        de la consistencia, no del entusiasmo) o anclar un valor concreto (la disciplina, la
+        humildad, la perseverancia).
+      </p>
+
+      <h2>Modo práctico vs. modo bíblico</h2>
+      <ul>
+        <li><strong>Práctico.</strong> Frases sobre hábitos, disciplina, trabajo a largo plazo, manejo del fracaso. Útiles para entornos profesionales y para quien prefiere un tono secular.</li>
+        <li><strong>Bíblico.</strong> Versículos sobre fortaleza, descanso, paciencia y propósito. Útiles para devocionales, momentos de oración, journaling de fe.</li>
+      </ul>
+
+      <h2>Cómo usarlas para que funcionen</h2>
+      <p>
+        Una frase no resuelve nada por sí sola. Pero combinada con un hábito de revisión diario
+        (la lees a la mañana, escribís una línea de intención en tu cuaderno, la chequeás a la
+        noche) puede mover decisiones reales. Es como una brújula chica: no te lleva al
+        destino, te ayuda a chequear el rumbo cuando estás perdido.
+      </p>
+
+      <h2>Cómo armar tu propio rotador</h2>
+      <p>
+        Una técnica útil: cada lunes, generá 5 frases y elegí la que te resuene más. Esa es tu
+        frase de la semana. Anotala en un papel y dejala visible. Al lunes siguiente, reflexioná
+        2 minutos sobre cómo influyó la frase en alguna decisión. Después generá la próxima.
+        Así pasás de consumir frases a entrenar un criterio propio.
+      </p>
+
+      <h2>Para presentaciones y redes</h2>
+      <p>
+        Si vas a usar una frase en una slide o en LinkedIn, no la dejes flotando: contá brevemente
+        por qué te impactó. La frase aporta autoridad; tu reflexión aporta humanidad. La mezcla
+        rinde más en alcance que cualquiera de las dos partes solas. Y siempre, siempre, atribuí
+        bien la cita.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué tipo de frases son?</summary><p>Dos modos: práctico (recordatorios sobre disciplina y hábitos) y bíblico (versículos).</p></details>
+      <details><summary>¿Funcionan?</summary><p>Como recordatorio rápido para recentrarte. No reemplazan el trabajo, lo acompañan.</p></details>
+      <details><summary>¿Sirven para redes?</summary><p>Sí. Copialas y agregales una línea propia para mejor alcance.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .mq .mq-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin: 1rem 0; }
+  .mq-quote { font-size: 1.2rem; line-height: 1.55; color: var(--text); margin: 0; }
+</style>
+
+<script>
+  const PRACTICAL = [
+    "El éxito viene de la consistencia, no del entusiasmo.",
+    "Los resultados grandes son la suma de decisiones chicas y repetidas.",
+    "Empezá antes de estar listo. La preparación se da en el camino.",
+    "La disciplina pesa kilos. El arrepentimiento pesa toneladas.",
+    "Hacé el trabajo aburrido con el mismo cuidado que el divertido.",
+    "Lo difícil no es saber qué hacer; es hacerlo cuando no tenés ganas.",
+    "Las metas se cumplen con sistemas, no con motivación.",
+    "Tu yo del futuro está hecho de las decisiones de tu yo del presente.",
+    "No podés ganar tiempo, pero podés dejar de perderlo.",
+    "Si dudás de una decisión, escribila en una hoja. Lo que no aguanta el papel no aguanta la vida.",
+    "Hacé una cosa por día que tu yo de seis meses te agradezca.",
+    "Lo barato sale caro. Lo cómodo sale más caro.",
+    "El que pregunta dos veces aprende. El que pregunta una vez aprende a la mitad.",
+    "Tu trabajo te define menos de lo que pensás, pero te entrena más de lo que creés.",
+    "Cuando no sepas qué hacer, hacé algo simple, pero hacelo bien.",
+    "Las personas serias hacen lo que prometen, incluso cuando ya no les conviene.",
+    "El mejor momento para empezar fue ayer. El segundo mejor es ahora.",
+    "Lo que parece talento en otros casi siempre es repetición.",
+    "El silencio es una herramienta. Aprendé cuándo usarla.",
+    "Mejor terminado que perfecto. Pero mejor decente que apurado.",
+    "El feedback duro de hoy es la mejora real de mañana.",
+    "No hay atajo a las cosas que valen la pena.",
+    "Pequeño y constante le gana a grande y esporádico.",
+    "Si está roto, repáralo. Si funciona, no lo toques. Si no sabés cuál de las dos, preguntá.",
+    "Lo que medís, mejorás.",
+  ];
+  const BIBLICAL = [
+    "Todo lo puedo en Cristo que me fortalece. — Filipenses 4:13",
+    "Bástate mi gracia; porque mi poder se perfecciona en la debilidad. — 2 Corintios 12:9",
+    "El Señor es mi pastor, nada me faltará. — Salmo 23:1",
+    "Confía en el Señor con todo tu corazón, y no te apoyes en tu propia inteligencia. — Proverbios 3:5",
+    "Encomienda al Señor tus obras, y tus pensamientos serán afirmados. — Proverbios 16:3",
+    "Esfuérzate y sé valiente; no temas, ni desmayes, porque el Señor tu Dios estará contigo. — Josué 1:9",
+    "Los que esperan en el Señor renovarán sus fuerzas. — Isaías 40:31",
+    "Pedid, y se os dará; buscad, y hallaréis; llamad, y se os abrirá. — Mateo 7:7",
+    "El temor del Señor es el principio de la sabiduría. — Proverbios 9:10",
+    "Como el hierro se afila con el hierro, así el hombre afila a su prójimo. — Proverbios 27:17",
+    "Mejor son dos que uno; porque tienen mejor paga de su trabajo. — Eclesiastés 4:9",
+    "Todo tiene su tiempo, y todo lo que se quiere debajo del cielo tiene su hora. — Eclesiastés 3:1",
+    "Dichoso el hombre que halla la sabiduría. — Proverbios 3:13",
+    "El que cree, no tendrá que apresurarse. — Isaías 28:16",
+    "Aunque ande en valle de sombra de muerte, no temeré mal alguno. — Salmo 23:4",
+    "El Señor peleará por vosotros, y vosotros estaréis tranquilos. — Éxodo 14:14",
+    "Mejor es el fin del negocio que su principio. — Eclesiastés 7:8",
+    "El que en lo poco es fiel, también en lo más es fiel. — Lucas 16:10",
+    "Hijo mío, no menosprecies la disciplina del Señor. — Proverbios 3:11",
+    "El gozo del Señor es vuestra fortaleza. — Nehemías 8:10",
+  ];
+
+  const modeEl = document.getElementById('mq-mode') as HTMLSelectElement;
+  const text = document.getElementById('mq-text') as HTMLElement;
+  const genBtn = document.getElementById('mq-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('mq-copy') as HTMLButtonElement;
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const list = modeEl.value === 'biblical' ? BIBLICAL : PRACTICAL;
+    text.textContent = pick(list);
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!text.textContent) return;
+    await navigator.clipboard.writeText(text.textContent);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

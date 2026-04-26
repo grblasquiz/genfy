@@ -1,0 +1,183 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Online HMAC Generator (SHA-256, SHA-512) | Genfy';
+const description = 'Compute HMAC with SHA-1, SHA-256, SHA-384 and SHA-512 in your browser. Useful for signing webhooks, APIs and verifying integrity.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is HMAC?', acceptedAnswer: { '@type': 'Answer', text: 'HMAC (Hash-based Message Authentication Code) combines a secret key with a cryptographic hash to authenticate a message. Used for signing webhooks and APIs.' } },
+    { '@type': 'Question', name: 'How is it different from a regular hash?', acceptedAnswer: { '@type': 'Answer', text: 'A regular hash (SHA-256) verifies integrity but anyone can recompute it. HMAC requires a secret key: only those with the key can generate or verify the signature.' } },
+    { '@type': 'Question', name: 'Which algorithm should I pick?', acceptedAnswer: { '@type': 'Answer', text: 'HMAC-SHA-256 is the current standard and enough for almost everything. SHA-512 offers more bits but is rarely needed. SHA-1 is deprecated for new uses.' } },
+    { '@type': 'Question', name: 'Is it safe to compute HMAC in the browser?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, it uses the native Web Crypto API. Still, in production the signature must be computed on the server: if the client generates it, the secret is exposed.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Security"
+    title="HMAC Generator"
+    intro="Compute HMAC with SHA-1, SHA-256, SHA-384 or SHA-512. Useful for signing webhooks (Stripe, GitHub), authenticating API requests and integrity checks with shared keys."
+  >
+    <div slot="tool" class="hmac-tool">
+      <label for="hmac-msg">Message</label>
+      <textarea id="hmac-msg" rows="4" placeholder="Paste the message body here…">Hello world</textarea>
+
+      <label for="hmac-key">Secret key</label>
+      <input id="hmac-key" type="text" value="my-secret-key" />
+
+      <div class="hmac-row">
+        <div>
+          <label for="hmac-algo">Algorithm</label>
+          <select id="hmac-algo">
+            <option value="SHA-1">HMAC-SHA-1</option>
+            <option value="SHA-256" selected>HMAC-SHA-256</option>
+            <option value="SHA-384">HMAC-SHA-384</option>
+            <option value="SHA-512">HMAC-SHA-512</option>
+          </select>
+        </div>
+        <div>
+          <label for="hmac-fmt">Output</label>
+          <select id="hmac-fmt">
+            <option value="hex" selected>Hexadecimal</option>
+            <option value="base64">Base64</option>
+            <option value="base64url">Base64 URL-safe</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="hmac-out">HMAC</label>
+      <textarea id="hmac-out" class="mono" rows="3" readonly></textarea>
+      <button id="hmac-copy" class="btn btn-primary" type="button"><span class="copy-icon">Copy</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>What HMAC solves</h2>
+      <p>
+        A hash like SHA-256 tells you whether two messages are identical, but not who generated
+        them. Anyone can compute SHA-256 of a message, so it's useless for authenticating the
+        source. HMAC fixes that by combining the message with a secret key in a specific way:
+        only someone who knows the key can produce the correct HMAC.
+      </p>
+      <p>
+        It's standardized in RFC 2104 (1997) and built on top of any cryptographic hash. Common
+        variants today are HMAC-SHA-256, HMAC-SHA-384 and HMAC-SHA-512. HMAC-SHA-1 still works
+        but is no longer recommended for new builds.
+      </p>
+
+      <h2>How HMAC is constructed</h2>
+      <p>
+        Simplified: <code>HMAC(K, m) = H((K' xor opad) || H((K' xor ipad) || m))</code>, where:
+      </p>
+      <ul>
+        <li><code>H</code>: the underlying hash function (SHA-256, SHA-512, etc.).</li>
+        <li><code>K'</code>: the key normalized to the block size (zero-padded or hashed if too long).</li>
+        <li><code>ipad</code>, <code>opad</code>: specific constants (0x36 and 0x5C repeated).</li>
+        <li><code>m</code>: the message.</li>
+      </ul>
+      <p>
+        That double pass is what makes HMAC resistant to length-extension attacks that affect
+        naive schemes like <code>H(K || m)</code>.
+      </p>
+
+      <h2>Typical use cases</h2>
+      <ol>
+        <li><strong>Webhook verification.</strong> Stripe, GitHub, Slack and others sign every webhook with HMAC. Your server recomputes with the shared secret and compares.</li>
+        <li><strong>API authentication.</strong> AWS Signature v4, for example, uses HMAC-SHA-256 to sign every request.</li>
+        <li><strong>Signed cookies.</strong> Frameworks like Express or Django sign cookies to detect tampering.</li>
+        <li><strong>Single-use tokens.</strong> A timestamped token can carry its HMAC to prevent forgery without a database table.</li>
+        <li><strong>JWT with HS256.</strong> Internally uses HMAC-SHA-256.</li>
+      </ol>
+
+      <h2>HMAC best practices</h2>
+      <ul>
+        <li><strong>Constant-time comparison.</strong> Use <code>crypto.timingSafeEqual</code> in Node, <code>hmac.compare_digest</code> in Python. String-to-string comparison enables timing attacks.</li>
+        <li><strong>Key of at least 256 bits.</strong> For HMAC-SHA-256, a random 32-byte key is recommended. For HMAC-SHA-512, 64 bytes.</li>
+        <li><strong>Don't reuse the key for other purposes.</strong> A key should serve a single role.</li>
+        <li><strong>Rotate keys.</strong> Like any secret, they should rotate periodically.</li>
+        <li><strong>Include a timestamp.</strong> To prevent replay attacks, sign body plus timestamp and reject old signatures.</li>
+      </ul>
+
+      <h2>HMAC vs asymmetric signatures</h2>
+      <p>
+        HMAC uses a shared key: both signer and verifier know it. That's simple and fast, but
+        it means either party can produce valid signatures — you can't prove who signed.
+      </p>
+      <p>
+        Asymmetric signatures (RSA, ECDSA, EdDSA) use a private key to sign and a public key to
+        verify. Only the private-key holder can sign, so you can attribute signatures. The
+        downside: they're slower and the private key needs strong protection.
+      </p>
+      <p>
+        For webhooks between two parties that already trust each other, HMAC is ideal. For
+        public distribution or auditability, prefer asymmetric signatures.
+      </p>
+
+      <h2>Privacy of this generator</h2>
+      <p>
+        Everything is computed with <code>crypto.subtle.sign</code>, the browser's native
+        implementation. Your message and key never leave your device. In production, you still
+        shouldn't trust the browser to compute HMAC: the secret has to live on the server.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is HMAC?</summary><p>A construction that combines a hash and a secret key to authenticate messages. Lets you verify a message comes from someone with the key.</p></details>
+      <details><summary>Different from a hash?</summary><p>Anyone can recompute a plain hash. HMAC requires the key: only key holders can generate or verify.</p></details>
+      <details><summary>Which algorithm?</summary><p>HMAC-SHA-256 is the standard. SHA-512 offers more bits but rarely needed. SHA-1 deprecated.</p></details>
+      <details><summary>Safe in the browser?</summary><p>Yes, uses Web Crypto. In production, signing must happen server-side to keep the secret safe.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .hmac-tool textarea { font-family: var(--font-mono); margin-bottom: 1rem; resize: vertical; }
+  .hmac-tool textarea#hmac-out { background: var(--bg-inset); }
+  .hmac-tool input[type="text"] { font-family: var(--font-mono); margin-bottom: 1rem; }
+  .hmac-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .hmac-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const msg = document.getElementById('hmac-msg') as HTMLTextAreaElement;
+  const key = document.getElementById('hmac-key') as HTMLInputElement;
+  const algo = document.getElementById('hmac-algo') as HTMLSelectElement;
+  const fmt = document.getElementById('hmac-fmt') as HTMLSelectElement;
+  const out = document.getElementById('hmac-out') as HTMLTextAreaElement;
+  const copy = document.getElementById('hmac-copy') as HTMLButtonElement;
+
+  async function compute(): Promise<void> {
+    if (!key.value) { out.value = ''; return; }
+    try {
+      const enc = new TextEncoder();
+      const k = await crypto.subtle.importKey('raw', enc.encode(key.value), { name: 'HMAC', hash: algo.value }, false, ['sign']);
+      const sig = await crypto.subtle.sign('HMAC', k, enc.encode(msg.value));
+      const bytes = new Uint8Array(sig);
+      let result = '';
+      if (fmt.value === 'hex') {
+        result = Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+      } else {
+        let bin = ''; for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+        result = btoa(bin);
+        if (fmt.value === 'base64url') result = result.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      }
+      out.value = result;
+    } catch (e) { out.value = 'Error: invalid key or unsupported browser.'; }
+  }
+  [msg, key, algo, fmt].forEach(el => el.addEventListener('input', compute));
+  algo.addEventListener('change', compute);
+  fmt.addEventListener('change', compute);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copied</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copy'; delete copy.dataset.copied; }, 1400);
+  });
+  compute();
+</script>

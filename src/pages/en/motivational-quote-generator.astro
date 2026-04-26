@@ -1,0 +1,158 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Motivational Quote Generator | Genfy';
+const description = 'Practical and biblical motivational quotes. No New Age clichés. Ready to copy for social, slides, journaling or your daily reminder.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What kind of motivational quotes are these?', acceptedAnswer: { '@type': 'Answer', text: 'Two modes: practical (real quotes and reminders about discipline, habits and work) and biblical (verses on strength and perseverance).' } },
+    { '@type': 'Question', name: 'Do motivational quotes work?', acceptedAnswer: { '@type': 'Answer', text: 'They work as a quick reminder, not a substitute for the work. Useful to recenter for 30 seconds before a decision — not to solve the problem for you.' } },
+    { '@type': 'Question', name: 'Are they good for social?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Copy and paste to Instagram, LinkedIn or anywhere. For better reach, add one personal line on why you picked it today.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Inspiration" title="Motivational Quote Generator"
+    intro="Practical lines and biblical verses for your day, a presentation, a post or your notebook. No New Age fluff, no empty clichés.">
+
+    <div slot="tool" class="mq">
+      <div>
+        <label for="mq-mode">Mode</label>
+        <select id="mq-mode">
+          <option value="practical">Practical</option>
+          <option value="biblical">Biblical</option>
+        </select>
+      </div>
+      <div class="mq-card">
+        <p id="mq-text" class="mq-quote">—</p>
+      </div>
+      <button id="mq-gen" class="btn btn-primary" type="button">Another quote</button>
+      <button id="mq-copy" class="btn btn-ghost" type="button">Copy</button>
+    </div>
+
+    <div slot="content">
+      <h2>Motivation that doesn't fool you</h2>
+      <p>
+        There's a kind of motivational quote that promises too much and delivers little:
+        "create your reality", "the universe supports you". Sounds nice, but evidence shows
+        that style of message in excess produces frustration when results don't show up. The
+        quotes here aim somewhere else: remind you of a practical truth (success comes from
+        consistency, not enthusiasm) or anchor a concrete value (discipline, humility,
+        perseverance).
+      </p>
+
+      <h2>Practical vs. biblical mode</h2>
+      <ul>
+        <li><strong>Practical.</strong> Lines about habits, discipline, long-term work and dealing with failure. Useful in professional settings and for a secular tone.</li>
+        <li><strong>Biblical.</strong> Verses on strength, rest, patience and purpose. Useful for devotionals, prayer time and faith-based journaling.</li>
+      </ul>
+
+      <h2>How to use them so they actually work</h2>
+      <p>
+        A quote alone solves nothing. But combined with a daily review habit (read it in the
+        morning, write a one-line intention in your notebook, check in at night) it can shift
+        real decisions. It's a small compass: it doesn't get you to the destination, it helps
+        you check direction when you feel lost.
+      </p>
+
+      <h2>Build your own rotator</h2>
+      <p>
+        A useful technique: every Monday, generate 5 quotes and pick the one that resonates
+        most. That's your quote of the week. Write it on paper and keep it visible. Next Monday,
+        spend 2 minutes reflecting on how it influenced any decision. Then generate the next
+        one. You go from consuming quotes to training your own judgment.
+      </p>
+
+      <h2>For presentations and social</h2>
+      <p>
+        If you'll use a quote in a slide or on LinkedIn, don't leave it floating: briefly say
+        why it hit you. The quote brings authority; your reflection brings humanity. The mix
+        outperforms either piece alone in reach. And always, always attribute correctly.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What kind of quotes?</summary><p>Two modes: practical (reminders about discipline, habits) and biblical (verses).</p></details>
+      <details><summary>Do they work?</summary><p>As a quick reminder to recenter. They don't replace the work — they accompany it.</p></details>
+      <details><summary>Good for social?</summary><p>Yes. Copy and add a personal line for better reach.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .mq .mq-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin: 1rem 0; }
+  .mq-quote { font-size: 1.2rem; line-height: 1.55; color: var(--text); margin: 0; }
+</style>
+
+<script>
+  const PRACTICAL = [
+    "Success comes from consistency, not enthusiasm.",
+    "Big outcomes are the sum of small, repeated decisions.",
+    "Start before you're ready. Preparation happens on the way.",
+    "Discipline weighs ounces. Regret weighs tons.",
+    "Do the boring work with the same care as the exciting work.",
+    "The hard part isn't knowing what to do; it's doing it when you don't feel like it.",
+    "Goals are reached with systems, not motivation.",
+    "Your future self is built from the decisions of your present self.",
+    "You can't gain time, but you can stop wasting it.",
+    "If you doubt a decision, write it down. What can't survive on paper can't survive in life.",
+    "Do one thing today your six-months-from-now self will thank you for.",
+    "Cheap is expensive. Comfortable is more expensive.",
+    "The one who asks twice learns. The one who asks once learns half.",
+    "Your job defines you less than you think and trains you more than you believe.",
+    "When in doubt, do something simple — but do it well.",
+    "Serious people do what they promised, even when it no longer suits them.",
+    "The best time to start was yesterday. The second best is now.",
+    "What looks like talent in others is almost always repetition.",
+    "Silence is a tool. Learn when to use it.",
+    "Done beats perfect. But decent beats rushed.",
+    "Hard feedback today is real improvement tomorrow.",
+    "There's no shortcut to things worth having.",
+    "Small and steady beats big and sporadic.",
+    "If it's broken, fix it. If it works, leave it. If you can't tell, ask.",
+    "What gets measured gets better.",
+  ];
+  const BIBLICAL = [
+    "I can do all things through Christ who strengthens me. — Philippians 4:13",
+    "My grace is sufficient for you, for my power is made perfect in weakness. — 2 Corinthians 12:9",
+    "The Lord is my shepherd; I shall not want. — Psalm 23:1",
+    "Trust in the Lord with all your heart, and lean not on your own understanding. — Proverbs 3:5",
+    "Commit your work to the Lord, and your plans will be established. — Proverbs 16:3",
+    "Be strong and courageous; do not be afraid, for the Lord your God is with you. — Joshua 1:9",
+    "Those who hope in the Lord will renew their strength. — Isaiah 40:31",
+    "Ask, and it will be given to you; seek, and you will find. — Matthew 7:7",
+    "The fear of the Lord is the beginning of wisdom. — Proverbs 9:10",
+    "Iron sharpens iron, and one man sharpens another. — Proverbs 27:17",
+    "Two are better than one, because they have a good reward for their toil. — Ecclesiastes 4:9",
+    "For everything there is a season, and a time for every matter under heaven. — Ecclesiastes 3:1",
+    "Blessed is the one who finds wisdom. — Proverbs 3:13",
+    "The one who believes will not be in haste. — Isaiah 28:16",
+    "Even though I walk through the valley of the shadow of death, I will fear no evil. — Psalm 23:4",
+    "The Lord will fight for you; you need only be still. — Exodus 14:14",
+    "Better is the end of a thing than its beginning. — Ecclesiastes 7:8",
+    "Whoever is faithful in very little is also faithful in much. — Luke 16:10",
+    "My son, do not despise the Lord's discipline. — Proverbs 3:11",
+    "The joy of the Lord is your strength. — Nehemiah 8:10",
+  ];
+
+  const modeEl = document.getElementById('mq-mode') as HTMLSelectElement;
+  const text = document.getElementById('mq-text') as HTMLElement;
+  const genBtn = document.getElementById('mq-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('mq-copy') as HTMLButtonElement;
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const list = modeEl.value === 'biblical' ? BIBLICAL : PRACTICAL;
+    text.textContent = pick(list);
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!text.textContent) return;
+    await navigator.clipboard.writeText(text.textContent);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

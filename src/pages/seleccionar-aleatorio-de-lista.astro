@@ -1,0 +1,193 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Seleccionar al azar de una lista | Genfy';
+const description = 'Pegá una lista y elegí uno o varios elementos al azar. Sin repetición opcional, perfecto para sortear ganadores, decidir grupos o elegir qué cocinar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo cargo la lista?', acceptedAnswer: { '@type': 'Answer', text: 'Pegá los elementos uno por línea, o separados por comas. Detectamos automáticamente el formato y limpiamos espacios.' } },
+    { '@type': 'Question', name: '¿Puedo elegir varios sin repetir?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Indicá cuántos querés sacar y activá "sin repetición". Mezclamos la lista con Fisher-Yates y tomamos los primeros N.' } },
+    { '@type': 'Question', name: '¿Sirve para sortear premios?', acceptedAnswer: { '@type': 'Answer', text: 'Para sorteos informales (entre amigos, equipo, comunidad chica) sí. Para sorteos con premios materiales y validez legal, necesitás un sistema certificado y notario.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Random" title="Seleccionar aleatoriamente de una lista"
+    intro="Pegá tu lista (un elemento por línea o separados por coma), elegí cuántos querés sacar y listo. Modo sin repetición disponible para mezclar grupos.">
+
+    <div slot="tool" class="rl-tool">
+      <div>
+        <label for="rl-list">Tu lista</label>
+        <textarea id="rl-list" rows="10" placeholder="Un elemento por línea&#10;Pizza&#10;Pasta&#10;Sushi&#10;Tacos">Pizza
+Pasta
+Sushi
+Empanadas
+Hamburguesa
+Ensalada
+Tacos
+Curry</textarea>
+      </div>
+
+      <div class="rl-controls">
+        <div>
+          <label for="rl-count">Cuántos elegir</label>
+          <input id="rl-count" type="number" value="1" min="1" max="100" />
+        </div>
+        <div class="rl-toggle">
+          <label><input id="rl-unique" type="checkbox" checked /> Sin repetición</label>
+        </div>
+      </div>
+
+      <div class="rl-actions">
+        <button id="rl-pick" class="btn btn-primary" type="button">Elegir al azar</button>
+        <button id="rl-shuffle" class="btn btn-ghost" type="button">Mezclar toda la lista</button>
+        <button id="rl-clear" class="btn btn-ghost" type="button">Limpiar</button>
+      </div>
+
+      <div id="rl-result" class="rl-result">
+        <div class="rl-result-label">Resultado</div>
+        <div id="rl-out" class="rl-out">—</div>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Para qué sirve elegir al azar de una lista</h2>
+      <p>
+        Es la herramienta más simple del mundo y sin embargo se usa todos los días en
+        oficinas, escuelas, casas y comunidades online:
+      </p>
+      <ul>
+        <li><strong>Sortear ganadores:</strong> en una comunidad de Discord o un grupo de WhatsApp, pegás los nombres y sacás uno.</li>
+        <li><strong>Decidir qué comer:</strong> 10 platos, sacá 1.</li>
+        <li><strong>Asignar tareas:</strong> 5 personas, 5 tareas, mezclás y cada uno toma la suya.</li>
+        <li><strong>Formar grupos:</strong> 30 personas, querés 5 grupos de 6. Mezclás y dividís.</li>
+        <li><strong>Elegir película/libro/podcast:</strong> tu watchlist con 50 títulos, elegís uno y empezás.</li>
+        <li><strong>Tomar muestras estadísticas:</strong> de 1000 clientes, sacás 50 al azar para encuestar.</li>
+      </ul>
+
+      <h2>Cómo funciona internamente</h2>
+      <p>
+        Cuando activás "sin repetición", aplicamos el algoritmo de
+        <strong>Fisher-Yates shuffle</strong>:
+      </p>
+      <pre><code>for (let i = arr.length - 1; i > 0; i--) &lcub;
+  const j = Math.floor(Math.random() * (i + 1));
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+&rcub;</code></pre>
+      <p>
+        Cada permutación posible tiene exactamente la misma probabilidad de aparecer. Es
+        el algoritmo estándar de la industria desde 1938 (Ronald Fisher y Frank Yates,
+        de ahí el nombre); todas las funciones <code>shuffle</code> de bibliotecas serias
+        lo usan.
+      </p>
+
+      <h2>El sesgo del shuffle ingenuo</h2>
+      <p>
+        Mucha gente implementa shuffle así:
+        <code>arr.sort(() =&gt; Math.random() - 0.5)</code>. Es <strong>incorrecto</strong>:
+        produce permutaciones sesgadas porque <code>sort</code> no espera una función de
+        comparación que devuelva valores aleatorios. En arrays grandes, ciertos elementos
+        terminan más cerca del principio que otros. Si te importa la justicia (sorteos,
+        algoritmos de selección), usá Fisher-Yates.
+      </p>
+
+      <h2>Buenas prácticas para sorteos confiables</h2>
+      <ol>
+        <li><strong>Compartí la lista antes</strong> del sorteo, para que todos puedan verificar que su nombre estaba.</li>
+        <li><strong>Pegá una captura del resultado</strong> en el grupo o canal donde se sortea.</li>
+        <li><strong>Hacé el sorteo en vivo</strong> (stream, sala de Zoom). Eso elimina dudas.</li>
+        <li><strong>Si hay premios materiales</strong>, considerá una plataforma con timestamp verificable o presencia notarial. Un sorteo casero, por más bien intencionado, no tiene validez legal.</li>
+      </ol>
+
+      <h2>Variantes útiles</h2>
+      <p>
+        El generador soporta dos modos: <strong>elegir N elementos</strong> (toma una
+        muestra) y <strong>mezclar toda la lista</strong> (devuelve todos los elementos
+        en orden aleatorio). El segundo modo es ideal para asignar orden de presentación,
+        formar parejas (mezclás, agarrás de a 2), o reorganizar una playlist.
+      </p>
+
+      <h2>Casos donde NO funciona bien</h2>
+      <ul>
+        <li><strong>Listas con duplicados</strong> donde el duplicado importa: si tenés "Juan, Juan, María", Juan tiene el doble de chances. Si querés equiprobabilidad por nombre, dedupliques antes.</li>
+        <li><strong>Selección ponderada</strong>: si "Juan" debe tener más chances que "María" (rifas con números diferentes por participante), este generador no es la herramienta. Necesitás multiplicar las entradas en la lista o usar selección ponderada.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo cargo la lista?</summary><p>Un elemento por línea, o separados por coma. Detectamos el formato automáticamente.</p></details>
+      <details><summary>¿Sin repetición?</summary><p>Sí. Aplicamos Fisher-Yates shuffle para garantizar que cada permutación sea igualmente probable.</p></details>
+      <details><summary>¿Sirve para premios?</summary><p>Sorteos informales sí. Para premios materiales con validez legal, necesitás certificación y notario.</p></details>
+      <details><summary>¿Qué tan grande puede ser la lista?</summary><p>Probada hasta 100.000 elementos sin problema. El navegador limita la memoria, no nuestro algoritmo.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  textarea#rl-list { font-family: var(--font-mono); font-size: 0.875rem; min-height: 200px; }
+  .rl-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; align-items: end; }
+  .rl-toggle { font-size: 0.875rem; color: var(--text-soft); }
+  .rl-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .rl-result { padding: 1.25rem; background: var(--bg-inset); border-radius: var(--radius-lg); border: 1px solid var(--border); }
+  .rl-result-label { font-size: 0.75rem; font-weight: 600; color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+  .rl-out { font-size: 1.125rem; font-weight: 500; line-height: 1.6; min-height: 40px; }
+  .rl-out .pick { display: inline-block; padding: 0.25rem 0.75rem; background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: var(--radius); margin: 0.25rem 0.25rem 0.25rem 0; font-weight: 600; }
+  pre { background: var(--bg-inset); padding: 0.75rem 1rem; border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto; font-family: var(--font-mono); font-size: 0.8125rem; }
+  @media (max-width: 600px) { .rl-controls { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const list = document.getElementById('rl-list') as HTMLTextAreaElement;
+  const count = document.getElementById('rl-count') as HTMLInputElement;
+  const unique = document.getElementById('rl-unique') as HTMLInputElement;
+  const pickBtn = document.getElementById('rl-pick') as HTMLButtonElement;
+  const shuffleBtn = document.getElementById('rl-shuffle') as HTMLButtonElement;
+  const clearBtn = document.getElementById('rl-clear') as HTMLButtonElement;
+  const out = document.getElementById('rl-out')!;
+
+  function parse(): string[] {
+    const raw = list.value.trim();
+    if (!raw) return [];
+    const items = raw.includes(',') && !raw.includes('\n')
+      ? raw.split(',')
+      : raw.split('\n');
+    return items.map(s => s.trim()).filter(Boolean);
+  }
+  function rand(max: number) {
+    const arr = new Uint32Array(1);
+    window.crypto.getRandomValues(arr);
+    return arr[0] % max;
+  }
+  function shuffle<T>(a: T[]): T[] {
+    const arr = a.slice();
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = rand(i + 1);
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+  function render(items: string[]) {
+    out.innerHTML = items.map(x => `<span class="pick">${x.replace(/</g, '<')}</span>`).join('');
+  }
+  pickBtn.addEventListener('click', () => {
+    const items = parse();
+    if (items.length === 0) { out.textContent = 'Cargá una lista primero.'; return; }
+    let n = Math.max(1, Math.min(items.length, parseInt(count.value) || 1));
+    if (unique.checked) {
+      render(shuffle(items).slice(0, n));
+    } else {
+      const picks: string[] = [];
+      for (let i = 0; i < n; i++) picks.push(items[rand(items.length)]);
+      render(picks);
+    }
+  });
+  shuffleBtn.addEventListener('click', () => {
+    const items = parse();
+    if (items.length === 0) { out.textContent = 'Cargá una lista primero.'; return; }
+    render(shuffle(items));
+  });
+  clearBtn.addEventListener('click', () => { list.value = ''; out.textContent = '—'; });
+</script>

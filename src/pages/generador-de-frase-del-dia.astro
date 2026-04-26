@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de frase del día gratis | Genfy';
+const description = 'Frases del día con autor real: pensadores modernos, científicos, líderes y proverbios bíblicos. Ideal para inspiración, redes y journaling.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿De dónde salen las frases?', acceptedAnswer: { '@type': 'Answer', text: 'Son citas reales de pensadores modernos, científicos, líderes y proverbios bíblicos. Cada una está atribuida a su autor.' } },
+    { '@type': 'Question', name: '¿Sirven para redes y presentaciones?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Podés copiar la frase con autor para Instagram, LinkedIn, slides, newsletters o cualquier formato.' } },
+    { '@type': 'Question', name: '¿Las frases son exactas?', acceptedAnswer: { '@type': 'Answer', text: 'Tratamos de usar versiones reconocidas en español. Como con cualquier cita, recomendamos verificar la fuente original antes de publicaciones formales.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Inspiración" title="Generador de frase del día"
+    intro="Una frase real, con autor, lista para inspirar tu día, una reunión, un post o tu cuaderno. Volvé a generar para descubrir más.">
+
+    <div slot="tool" class="qd">
+      <div class="qd-card">
+        <p id="qd-text" class="qd-quote">—</p>
+        <p id="qd-author" class="qd-author">—</p>
+      </div>
+      <button id="qd-gen" class="btn btn-primary" type="button">Otra frase</button>
+      <button id="qd-copy" class="btn btn-ghost" type="button">Copiar</button>
+    </div>
+
+    <div slot="content">
+      <h2>Frases con peso real</h2>
+      <p>
+        Hay generadores que repiten "citas" inventadas o atribuidas mal. Acá usamos frases con
+        autor verificable: pensadores y líderes modernos como Steve Jobs, Maya Angelou, Marie
+        Curie o Albert Einstein, junto con proverbios bíblicos que llevan siglos resonando.
+        Una buena frase no se mide por su belleza estética sino por cuánto te queda dando
+        vueltas después de leerla.
+      </p>
+
+      <h2>Cómo usarlas en tu día</h2>
+      <ul>
+        <li><strong>Como apertura.</strong> En la primera diapositiva de una presentación o el primer mail del lunes.</li>
+        <li><strong>Como prompt de journaling.</strong> Leés la frase, abrís el cuaderno, escribís 5 minutos sobre por qué te impactó (o por qué no).</li>
+        <li><strong>Como recordatorio.</strong> Una frase corta pegada en el escritorio funciona mejor que un objetivo abstracto.</li>
+        <li><strong>Como contenido.</strong> Citá la frase y agregá tu interpretación. Es un formato simple que rinde en LinkedIn e Instagram.</li>
+      </ul>
+
+      <h2>Por qué las frases motivacionales sí funcionan (a veces)</h2>
+      <p>
+        Una frase no cambia tu vida sola. Pero leer "Tu trabajo va a llenar gran parte de tu
+        vida, y la única forma de estar realmente satisfecho es hacer lo que considerás trabajo
+        excelente" (Steve Jobs) en un día de duda puede empujarte a tomar la decisión que ya
+        sabías. Las citas funcionan como espejos: te muestran lo que ya pensás, articulado
+        mejor. Por eso la misma frase impacta a una persona y a otra le suena hueca.
+      </p>
+
+      <h2>Cita correctamente</h2>
+      <p>
+        Cuando uses una frase en redes o en una presentación, escribí el nombre del autor
+        completo. Si la frase es bíblica, mencioná el libro y capítulo (por ejemplo,
+        "Proverbios 3:5"). Atribuir mal una cita es una de las formas más simples de perder
+        credibilidad — y es facilísimo de chequear con una búsqueda de 30 segundos.
+      </p>
+
+      <h2>Frases en LinkedIn: una guía práctica</h2>
+      <p>
+        Si vas a postear citas en LinkedIn, no la dejes sola: agregá una línea propia explicando
+        por qué la elegiste hoy. La frase aporta autoridad; tu reflexión aporta humanidad. La
+        combinación rinde más en alcance e interacción que cualquiera de las dos partes
+        separadas.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿De dónde salen las frases?</summary><p>Son citas reales atribuidas a pensadores modernos, científicos, líderes y proverbios bíblicos.</p></details>
+      <details><summary>¿Sirven para redes?</summary><p>Sí, podés copiar frase y autor para cualquier formato.</p></details>
+      <details><summary>¿Son exactas?</summary><p>Usamos versiones reconocidas. Para usos formales, verificá siempre la fuente original.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .qd-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; }
+  .qd-quote { font-size: 1.25rem; line-height: 1.5; color: var(--text); margin: 0; }
+  .qd-author { color: var(--text-soft); margin-top: 1rem; font-style: italic; }
+</style>
+
+<script>
+  const QUOTES: { t: string; a: string }[] = [
+    { t: "Tu trabajo va a llenar gran parte de tu vida, y la única forma de estar realmente satisfecho es hacer lo que considerás trabajo excelente.", a: "Steve Jobs" },
+    { t: "La gente puede olvidar lo que dijiste, pero nunca olvidará cómo la hiciste sentir.", a: "Maya Angelou" },
+    { t: "Nada en la vida debe ser temido, solo entendido. Es hora de entender más para temer menos.", a: "Marie Curie" },
+    { t: "La imaginación es más importante que el conocimiento.", a: "Albert Einstein" },
+    { t: "Una mujer es como una bolsita de té: nunca sabés qué tan fuerte es hasta que la metés en agua caliente.", a: "Eleanor Roosevelt" },
+    { t: "Sé el cambio que querés ver en el mundo.", a: "Mahatma Gandhi" },
+    { t: "Confía en el Señor con todo tu corazón, y no te apoyes en tu propia inteligencia.", a: "Proverbios 3:5" },
+    { t: "El temor del Señor es el principio de la sabiduría.", a: "Proverbios 9:10" },
+    { t: "Encomienda al Señor tus obras, y tus pensamientos serán afirmados.", a: "Proverbios 16:3" },
+    { t: "Todo tiene su tiempo, y todo lo que se quiere debajo del cielo tiene su hora.", a: "Eclesiastés 3:1" },
+    { t: "Mejor son dos que uno; porque tienen mejor paga de su trabajo.", a: "Eclesiastés 4:9" },
+    { t: "El que ama el dinero, no se saciará de dinero.", a: "Eclesiastés 5:10" },
+    { t: "Dichoso el hombre que halla la sabiduría, y el hombre que obtiene la inteligencia.", a: "Proverbios 3:13" },
+    { t: "Como el hierro se afila con el hierro, así el hombre afila a su prójimo.", a: "Proverbios 27:17" },
+    { t: "Mejor es el fin del negocio que su principio.", a: "Eclesiastés 7:8" },
+    { t: "Salmo 23: El Señor es mi pastor, nada me faltará.", a: "Salmo 23:1" },
+    { t: "Aunque ande en valle de sombra de muerte, no temeré mal alguno, porque tú estarás conmigo.", a: "Salmo 23:4" },
+    { t: "Todo lo puedo en Cristo que me fortalece.", a: "Filipenses 4:13" },
+    { t: "Bástate mi gracia; porque mi poder se perfecciona en la debilidad.", a: "2 Corintios 12:9" },
+    { t: "El conocimiento habla, pero la sabiduría escucha.", a: "Jimi Hendrix" },
+    { t: "El secreto del cambio es enfocar toda tu energía no en pelear lo viejo, sino en construir lo nuevo.", a: "Dan Millman" },
+    { t: "El éxito es ir de fracaso en fracaso sin perder el entusiasmo.", a: "Winston Churchill" },
+    { t: "Quien se mueve sigue adelante, quien no se mueve queda atrás. Esa es la regla.", a: "Johann Wolfgang von Goethe" },
+    { t: "Lo que se puede medir, se puede mejorar.", a: "Peter Drucker" },
+    { t: "El cliente más insatisfecho es tu mejor fuente de aprendizaje.", a: "Bill Gates" },
+    { t: "La calidad nunca es un accidente; siempre es el resultado de un esfuerzo inteligente.", a: "John Ruskin" },
+    { t: "Hacé lo que podás, con lo que tenés, donde estés.", a: "Theodore Roosevelt" },
+    { t: "Si pensás que la educación es cara, probá la ignorancia.", a: "Derek Bok" },
+    { t: "El único modo de hacer un trabajo excelente es amar lo que hacés.", a: "Steve Jobs" },
+    { t: "El éxito no es definitivo, el fracaso no es fatal: lo que cuenta es el coraje para continuar.", a: "Winston Churchill" },
+    { t: "La disciplina es el puente entre las metas y los logros.", a: "Jim Rohn" },
+    { t: "El futuro pertenece a quienes creen en la belleza de sus sueños.", a: "Eleanor Roosevelt" },
+    { t: "Si no podés explicarlo en términos simples, no lo entendés bien.", a: "Albert Einstein" },
+    { t: "El que quiera mover el mundo, primero debe moverse a sí mismo.", a: "Sócrates citado por Erasmo (atribuido)" },
+    { t: "No subestimes nunca el poder de la gente común haciendo cosas extraordinarias.", a: "Howard Zinn" },
+    { t: "El precio de cualquier cosa es la cantidad de vida que cambiás por ella.", a: "Henry David Thoreau" },
+    { t: "Tu instinto es la suma de todas tus experiencias pasadas. Escuchalo.", a: "Maya Angelou" },
+    { t: "Si todo está bajo control, vas demasiado lento.", a: "Mario Andretti" },
+    { t: "El mejor momento para plantar un árbol fue hace veinte años. El segundo mejor momento es hoy.", a: "Proverbio popular" },
+    { t: "Lo importante no es lo que te pasa, sino lo que hacés con lo que te pasa.", a: "Aldous Huxley" },
+  ];
+
+  const text = document.getElementById('qd-text') as HTMLElement;
+  const author = document.getElementById('qd-author') as HTMLElement;
+  const genBtn = document.getElementById('qd-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('qd-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const q = pick(QUOTES);
+    text.textContent = `"${q.t}"`;
+    author.textContent = `— ${q.a}`;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    const s = `${text.textContent}\n${author.textContent}`;
+    await navigator.clipboard.writeText(s);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

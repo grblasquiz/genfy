@@ -1,0 +1,153 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free About-Us Paragraph Generator | Genfy';
+const description = 'Generate a clear, human, focused About-Us paragraph. Ready for a landing page, footer, sales proposal or pitch deck.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How long should an About-Us paragraph be?', acceptedAnswer: { '@type': 'Answer', text: 'For a landing, 60 to 120 words is the sweet spot. For a sales brief, up to 200. Longer and people stop reading.' } },
+    { '@type': 'Question', name: 'What should it include?', acceptedAnswer: { '@type': 'Answer', text: 'Who you are (name, year, context), what you do, for whom, what makes you different, and how to reach you. In that order.' } },
+    { '@type': 'Question', name: 'What tone should I use?', acceptedAnswer: { '@type': 'Answer', text: 'Match the rest of the brand. If your brand is warm, write in first person. If institutional, third person. Consistency matters more than the style itself.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Branding" title="About-Us Paragraph Generator"
+    intro="Drop in name, year, what you do, for whom and what makes you different. Genfy returns a natural paragraph in the tone you choose, ready for a landing, footer or sales brief.">
+
+    <div slot="tool" class="au">
+      <label for="au-brand">Company name</label>
+      <input id="au-brand" type="text" placeholder="Aurum" value="Aurum" />
+
+      <label for="au-year" style="margin-top:1rem">Founding year</label>
+      <input id="au-year" type="text" placeholder="2022" value="2022" />
+
+      <label for="au-what" style="margin-top:1rem">What you do</label>
+      <input id="au-what" type="text" placeholder="invoicing software..." value="electronic invoicing tools" />
+
+      <label for="au-who" style="margin-top:1rem">For whom</label>
+      <input id="au-who" type="text" placeholder="freelancers, SMBs..." value="freelancers in the US" />
+
+      <label for="au-diff" style="margin-top:1rem">Differentiator</label>
+      <input id="au-diff" type="text" placeholder="no spreadsheets, one click..." value="without accountants or spreadsheets" />
+
+      <label for="au-tone" style="margin-top:1rem">Tone</label>
+      <select id="au-tone">
+        <option value="warm">Warm (first person, close)</option>
+        <option value="formal">Institutional (third person)</option>
+        <option value="founder">Founder voice</option>
+      </select>
+
+      <button id="au-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate paragraph</button>
+
+      <div id="au-out" class="au-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why a good "About Us" paragraph carries more weight than it seems</h2>
+      <p>
+        On most websites, the About page is the second-most visited after the home. People want to know who they're dealing with before they buy or hire. Yet most companies fill it with empty text, packed with generic adjectives: "leaders in the market, committed to quality and innovation." That paragraph adds no value. It's noise.
+      </p>
+      <p>
+        A good About paragraph does four things in under 120 words: it answers who you are, what you do, for whom, and why they'd choose you. It doesn't talk about the company; it talks about the customer and how you help them.
+      </p>
+
+      <h2>The four-block structure</h2>
+      <ol>
+        <li><strong>Identity and origin:</strong> "Aurum was founded in 2022..." — one sentence to anchor the reader.</li>
+        <li><strong>What you do:</strong> "...we build electronic invoicing tools..."</li>
+        <li><strong>For whom:</strong> "...for US freelancers..."</li>
+        <li><strong>Differentiator:</strong> "...who need to invoice without accountants or spreadsheets." Closes with the concrete promise.</li>
+      </ol>
+      <p>
+        Done well, the paragraph fits in 60-120 words and has rhythm: short sentence, medium sentence, short sentence. People read two sentences, decide whether to continue, and the third is the one that closes.</p>
+
+      <h2>Common mistakes that empty out the paragraph</h2>
+      <ul>
+        <li><strong>Empty adjectives:</strong> "leading", "innovative", "committed". Identify nothing.</li>
+        <li><strong>Unfocused chronology:</strong> "Founded in 1992 by John Smith as a family business..." Nobody cares about the genealogy.</li>
+        <li><strong>Talking about yourself instead of the customer:</strong> "Our mission is to be the best..." Better: "We help freelancers..."</li>
+        <li><strong>Jargon:</strong> "We deploy omnichannel hyperautomation solutions..." If your customer doesn't say those words, drop them.</li>
+        <li><strong>Excessive length:</strong> 400 words of About don't get read. 120 do.</li>
+      </ul>
+
+      <h2>Tone: first person, third person, or founder voice</h2>
+      <ul>
+        <li><strong>First person plural ("we"):</strong> warm, direct. Works for SaaS, agencies, startups. "We believe..."</li>
+        <li><strong>Third person ("Aurum is..."):</strong> institutional, formal. Works for finance, legal, healthcare, government.</li>
+        <li><strong>Founder voice ("When I started Aurum in 2022..."):</strong> personal, narrative. Works for founder-led companies, especially in consulting or creator economy.</li>
+      </ul>
+      <p>
+        The choice matters less than the consistency: if you pick "we" on the About page, the rest of the site should keep it.
+      </p>
+
+      <h2>Where to show it and where not to</h2>
+      <p>
+        The full paragraph lives on /about. A shorter version — 30-50 words — goes in the site footer for SEO and brand reinforcement. A longer version — 200-300 words — goes in the sales proposal or pitch deck. Same information, three lengths by context.
+      </p>
+
+      <h2>How to test whether your paragraph works</h2>
+      <ol>
+        <li>Show it to 3 people who don't know the company. Ask them to describe what you do in one sentence.</li>
+        <li>If they describe it differently, focus is missing. If they describe it the same, it works.</li>
+        <li>Ask them to recall one word two minutes later. If nobody can, it's empty.</li>
+        <li>Strip adjectives one by one: if the sentence still works, they were filler.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How long should it be?</summary><p>Landing: 60-120 words. Sales brief: up to 200. Longer and people stop reading.</p></details>
+      <details><summary>What should it include?</summary><p>Who you are, what you do, for whom, what makes you different, and how to reach you.</p></details>
+      <details><summary>What tone?</summary><p>Whatever stays consistent with the rest of the brand. Same tone everywhere matters most.</p></details>
+      <details><summary>Should I include team photos?</summary><p>It helps humanize, but only if the photos are real and good. Generic stock subtracts more than it adds.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .au-out { margin-top: 1.25rem; }
+  .au-item { padding: 1.25rem 1.5rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.65; white-space: pre-wrap; }
+  .au-item:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const brand = document.getElementById('au-brand') as HTMLInputElement;
+  const year = document.getElementById('au-year') as HTMLInputElement;
+  const what = document.getElementById('au-what') as HTMLInputElement;
+  const who = document.getElementById('au-who') as HTMLInputElement;
+  const diff = document.getElementById('au-diff') as HTMLInputElement;
+  const tone = document.getElementById('au-tone') as HTMLSelectElement;
+  const gen = document.getElementById('au-gen') as HTMLButtonElement;
+  const out = document.getElementById('au-out')!;
+
+  function generate() {
+    const B = brand.value.trim() || 'Aurum';
+    const Y = year.value.trim() || '2022';
+    const W = what.value.trim() || 'digital tools';
+    const Wh = who.value.trim() || 'small businesses';
+    const D = diff.value.trim() || 'with less friction';
+    const t = tone.value;
+
+    let p = '';
+    if (t === 'warm') {
+      p = `At ${B} we build ${W} for ${Wh}. We started in ${Y} with a simple idea: anyone should be able to handle their work ${D}, without burning hours on outdated processes. We've kept the same premise ever since: clear product, close support, steady improvements.\n\nIf you want to learn how ${B} can help, write us. We answer fast, with humans, not bots.`;
+    } else if (t === 'formal') {
+      p = `${B} is a company founded in ${Y}, dedicated to ${W} for ${Wh}. The company differentiates itself ${D}, providing solutions designed to meet today's market demands.\n\nSince its founding, ${B} has worked with a focus on transparency, technical quality and professional support, positioning itself as a trusted alternative in its category.`;
+    } else {
+      p = `When I started ${B} in ${Y}, the question was simple: why are ${Wh} still losing so many hours on something that should be obvious? The answer was clear — there was no tool built from practice, only from manuals.\n\nToday ${B} is exactly that: ${W} ${D}. Built by people who understand the pain from the inside.`;
+    }
+
+    out.innerHTML = '';
+    const el = document.createElement('div');
+    el.className = 'au-item';
+    el.textContent = p;
+    el.title = 'Click to copy';
+    el.addEventListener('click', () => { navigator.clipboard.writeText(p); const orig = el.textContent; el.textContent = '✓ Copied'; setTimeout(() => el.textContent = orig!, 800); });
+    out.appendChild(el);
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

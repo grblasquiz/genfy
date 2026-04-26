@@ -1,0 +1,113 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+import { BIRD_NAMES, PET_OTHER_STYLES } from '../../lib/bird-horse-names';
+
+const title = 'Bird Name Generator | Genfy';
+const description = 'Cute, classic or funny: find the perfect name for your parrot, canary, parakeet or bird. 50+ ideas in English and Spanish — free.';
+const stylesEN = { cute: PET_OTHER_STYLES.en.cute, classic: PET_OTHER_STYLES.en.classic, funny: PET_OTHER_STYLES.en.funny };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Do birds learn their names?', acceptedAnswer: { '@type': 'Answer', text: 'Parrots and cockatoos do — many can even say their names. Canaries and parakeets associate the sound but don\'t verbalize it.' } },
+    { '@type': 'Question', name: 'Good name for a parakeet?', acceptedAnswer: { '@type': 'Answer', text: 'Tweety, Sky, Sunny, Kiwi, Mango, Pip — short, cheerful, easy to whistle.' } },
+    { '@type': 'Question', name: 'Better to pick a name a parrot can repeat?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, for parrots especially. Names with clear syllables and open vowels (Coco, Polly, Charlie) are easiest to imitate.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="en" tag="Pets" title="Bird Name Generator"
+    intro="For your parrot, canary, parakeet or any bird: cute, classic or funny. Click and get 12 ideas in seconds.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Style</label>
+      <select id="cn-style">
+        {Object.entries(stylesEN).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mix of all</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 names</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a bird's name</h2>
+      <p>
+        Birds are different from other pets: many imitate sounds, some live 30+ years, and all are
+        very sensitive to tone. The name has to do several jobs at once: sound natural when you
+        speak to them, be easy to imitate (if it's a parrot), and age well — your macaw may
+        outlive your car.
+      </p>
+      <ul>
+        <li><strong>Clear syllables.</strong> Especially for parrots: Co-co, Po-lly, Char-lie are easy to learn and imitate.</li>
+        <li><strong>Open vowels.</strong> A, O, I reproduce best in parrot speech.</li>
+        <li><strong>Think long term.</strong> A macaw can live 50 years — the name has to survive.</li>
+        <li><strong>By color or personality.</strong> Sunny for a yellow canary, Mango for an orange one, Sky for a blue parakeet.</li>
+      </ul>
+
+      <h2>Names by style</h2>
+      <ul>
+        <li><strong>Cute</strong> (Tweety, Sunny, Kiwi, Mango): perfect for canaries, parakeets and small birds.</li>
+        <li><strong>Classic</strong> (Charlie, Polly, Rio, Sky): traditional, work for parrots in English-speaking households.</li>
+        <li><strong>Funny</strong> (Sir Tweets-a-lot, Captain Feather, Lord Beak): for big personalities.</li>
+      </ul>
+
+      <h2>By species</h2>
+      <ul>
+        <li><strong>Parrot / cockatoo:</strong> classic imitable names (Polly, Charlie, Rio).</li>
+        <li><strong>Canary:</strong> bright, cheerful (Sunny, Tweety, Lemon).</li>
+        <li><strong>Parakeet:</strong> short and sweet (Sky, Kiwi, Pip).</li>
+        <li><strong>Cockatiel:</strong> a bit of personality (Charlie, Olive, Henry).</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <ol>
+        <li>Names too complex for a parrot to learn.</li>
+        <li>Names that rhyme with words you say constantly at home.</li>
+        <li>Changing the name once the bird already responds: hard to walk back.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Do birds learn their names?</summary><p>Parrots and cockatoos do — many can even say their names. Canaries and parakeets associate the sound but don't verbalize it.</p></details>
+      <details><summary>Good name for a parakeet?</summary><p>Tweety, Sky, Sunny, Kiwi, Mango, Pip — short, cheerful, easy to whistle.</p></details>
+      <details><summary>Better to pick a name a parrot can repeat?</summary><p>Yes. Clear syllables and open vowels (Coco, Polly, Charlie) are easiest to imitate.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: BIRD_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.cute.en, ...DATA.classic.en, ...DATA.funny.en];
+    else pool = DATA[s].en;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

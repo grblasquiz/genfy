@@ -1,0 +1,155 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Tweet & Thread Generator | Genfy';
+const description = 'Generate viral tweets and structured threads. Drop in topic and format. Genfy returns hook, body and close ready to publish on X.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many characters does a tweet have?', acceptedAnswer: { '@type': 'Answer', text: '280 for free accounts. 25,000 for X Premium. But the tweets that perform best usually run 100-200 characters: better feed performance and more shares.' } },
+    { '@type': 'Question', name: 'When should I use a single tweet vs a thread?', acceptedAnswer: { '@type': 'Answer', text: 'Single tweet for opinions, observations, quotes. Thread for stories, tutorials, tip lists, event analyses or case studies of 7+ steps.' } },
+    { '@type': 'Question', name: 'What makes a good first tweet in a thread?', acceptedAnswer: { '@type': 'Answer', text: 'Clear promise, specific hook, signal-over-noise ratio. The most-read open with something concrete: "How to X in Y minutes", "5 things I learned doing Z", or a thread on something people want to know.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Tweet & Thread Generator"
+    intro="Drop in topic and format. Genfy returns a single tweet or a full thread with hook, body and structured close.">
+
+    <div slot="tool" class="tw">
+      <label for="tw-topic">Topic</label>
+      <input id="tw-topic" type="text" placeholder="how to invoice as a freelancer..." value="how to charge better as a freelancer" />
+
+      <label for="tw-num" style="margin-top:1rem">Key number</label>
+      <input id="tw-num" type="text" placeholder="5 points, 30%, 4 hours..." value="5 points" />
+
+      <label for="tw-format" style="margin-top:1rem">Format</label>
+      <select id="tw-format">
+        <option value="single">Single tweet</option>
+        <option value="thread">Thread (5 tweets)</option>
+      </select>
+
+      <button id="tw-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate</button>
+
+      <div id="tw-out" class="tw-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why X plays by different rules than Instagram or LinkedIn</h2>
+      <p>
+        On X (formerly Twitter), the feed is a high-speed scroll river. People read 1-2 seconds per tweet. That forces the opposite of LinkedIn: be brief, direct, one idea per tweet, and create a measurable emotion (surprise, curiosity, outrage, identification) in that second and a half.
+      </p>
+      <p>
+        The most-shared tweets usually run 100-200 characters — half the limit. Shorter often says nothing; longer loses rhythm. The magic is saying just enough.
+      </p>
+
+      <h2>When a single tweet vs a thread makes sense</h2>
+      <ul>
+        <li><strong>Single tweet:</strong> opinions, observations, loose data, brand lines. If what you want to say fits in 200 characters and the idea stands alone.</li>
+        <li><strong>Thread:</strong> tutorials, lists (top 5, 7 lessons), case studies, event analysis, narratives. If your content has 5+ sequential points or a story with beginning, middle and end.</li>
+      </ul>
+
+      <h2>The first tweet of a thread: the most expensive asset</h2>
+      <p>The thread lives or dies on tweet 1. If it doesn't hook, the next 6 tweets see 90% less reach. Three structures that work:</p>
+      <ol>
+        <li><strong>Concrete promise + number:</strong> "5 things I learned billing wrong for 3 years. A short guide:"</li>
+        <li><strong>Confession + utility:</strong> "I lost $4,000 not knowing this about invoicing. Don't repeat it:"</li>
+        <li><strong>Question + delayed answer:</strong> "How do top-reputation freelancers charge? I researched. Here it is:"</li>
+      </ol>
+
+      <h2>How to structure a thread that gets read end to end</h2>
+      <ol>
+        <li><strong>Tweet 1 — hook:</strong> concrete promise + number. 100-200 characters.</li>
+        <li><strong>Tweet 2 — quick context:</strong> why this matters for the reader.</li>
+        <li><strong>Tweet 3-N — one per point:</strong> each idea in its tweet. Don't pack two points in one.</li>
+        <li><strong>Second-to-last — synthesis:</strong> one line that closes the idea.</li>
+        <li><strong>Last — CTA:</strong> "If this helped, RT the first tweet." Converts reach into distribution.</li>
+      </ol>
+
+      <h2>Common mistakes that sink threads</h2>
+      <ul>
+        <li><strong>Too many tweets.</strong> Past 12 it tires. 7-9 is the sweet spot.</li>
+        <li><strong>Explicit numbering on every tweet.</strong> 1/9, 2/9, etc. Used to work; now lowers engagement.</li>
+        <li><strong>Repeating the same verb or structure.</strong> Vary: imperative, question, statement, example.</li>
+        <li><strong>Closing without a CTA.</strong> Ask for RT or follow.</li>
+        <li><strong>Unfulfilled promise.</strong> If tweet 1 promises 5 points, deliver 5. If a story, finish it.</li>
+      </ul>
+
+      <h2>Hashtags and mentions on X</h2>
+      <p>
+        On X, hashtags barely help — 0-1 relevant hashtag is the max. More reads as spam and lowers engagement. Mentions (@) help when they're to relevant people in your niche who can RT. But don't tag 10 people: filters detect engagement bait.
+      </p>
+
+      <h2>When to post for max reach</h2>
+      <p>
+        General 2024-2025 data: Tuesday-Thursday between 8-10 AM and 6-8 PM in your audience's local time. Very early Mondays and post-5 PM Fridays underperform. But the most important rule is consistency: 3-5 daily tweets for 90 days beats any "optimal" once-a-week strategy.
+      </p>
+
+      <h2>X Premium: are the 25,000 characters worth it?</h2>
+      <p>
+        Only if you're publishing a column or long analysis that doesn't fit a thread. For nearly everything else, threads still outperform: fragmented reading suits scroll habits better than a massive text block.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many characters?</summary><p>280 free, 25,000 with Premium. Sweet spot: 100-200.</p></details>
+      <details><summary>Single or thread?</summary><p>Single: opinions, observations. Thread: lists, tutorials, stories.</p></details>
+      <details><summary>What makes a good first tweet?</summary><p>Clear promise, specific hook, a concrete number or confession.</p></details>
+      <details><summary>How many hashtags?</summary><p>0-1. More reads as spam and lowers engagement.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tw-out { margin-top: 1.25rem; display: grid; gap: 0.5rem; }
+  .tw-tweet { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.55; white-space: pre-wrap; position: relative; }
+  .tw-tweet:hover { border-color: var(--accent); }
+  .tw-num { position: absolute; top: 0.625rem; right: 0.875rem; font-size: 0.75rem; color: var(--text-subtle); font-family: var(--font-mono); }
+  .tw-len { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const topic = document.getElementById('tw-topic') as HTMLInputElement;
+  const num = document.getElementById('tw-num') as HTMLInputElement;
+  const fmt = document.getElementById('tw-format') as HTMLSelectElement;
+  const gen = document.getElementById('tw-gen') as HTMLButtonElement;
+  const out = document.getElementById('tw-out')!;
+
+  function makeTweet(text: string, label: string) {
+    const el = document.createElement('div');
+    el.className = 'tw-tweet';
+    el.title = 'Click to copy';
+    el.innerHTML = text.replace(/\n/g, '<br>') + `<span class="tw-num">${label}</span><div class="tw-len">${text.length} characters</div>`;
+    el.addEventListener('click', () => { navigator.clipboard.writeText(text); const o = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = o, 800); });
+    return el;
+  }
+
+  function generate() {
+    const T = topic.value.trim() || 'my topic';
+    const N = num.value.trim() || '5 things';
+    out.innerHTML = '';
+
+    if (fmt.value === 'single') {
+      const tweets = [
+        `${N} about ${T} worth knowing. I learned them late — you don't have to.`,
+        `${T.charAt(0).toUpperCase() + T.slice(1)} isn't the hard part. The hard part is knowing what to stop doing.`,
+        `If I had to pick one thing to improve at ${T}, it would be this: measure before optimizing.`,
+      ];
+      tweets.forEach((t, i) => out.appendChild(makeTweet(t, `v${i+1}`)));
+    } else {
+      const thread = [
+        `${N} about ${T}. I learned them by making every mistake along the way. Here they are ↓`,
+        `Before starting: the difference between someone who solves this well and someone losing time isn't talent. It's method.`,
+        `1. Start simple. The first version is to learn from, not to be perfect.`,
+        `2. Measure from day 1. Without data, every decision is just opinion in disguise.`,
+        `3. Iterate weekly. Compound beats brilliant in 6 months.`,
+        `If this helped, RT the first tweet. I publish things like this every week.`,
+      ];
+      thread.forEach((t, i) => out.appendChild(makeTweet(t, `${i+1}/${thread.length}`)));
+    }
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

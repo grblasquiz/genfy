@@ -1,0 +1,148 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Startup Name Generator | Genfy';
+const description = 'Generate startup names built for Y Combinator, Demo Days and investors. Short, registrable, with reachable .com and the modern feel of Stripe, Linear or Notion.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good startup name?', acceptedAnswer: { '@type': 'Answer', text: 'Short, pronounceable in English, registrable, with reachable .com and no awkward connotations. Stripe, Notion, Linear, Vercel and Figma all clear the five filters.' } },
+    { '@type': 'Question', name: 'Should I name the startup before or after building the product?', acceptedAnswer: { '@type': 'Answer', text: 'Ideally with the problem and prototype clear. If the team needs a name to start, use a placeholder and only lock it in once it passes the filters.' } },
+    { '@type': 'Question', name: 'Does .com matter for a startup?', acceptedAnswer: { '@type': 'Answer', text: 'A lot. .com is still the reflex for investors and customers. If you cannot get .com, secure a strong .io or .ai and plan to buy the .com later.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Branding" title="Startup Name Generator"
+    intro="Short, modern, registrable. Names built for founders who need something that works in a pitch deck, the App Store and a URL all at once.">
+
+    <div slot="tool" class="sn">
+      <label for="sn-kw">Keywords</label>
+      <input id="sn-kw" type="text" placeholder="finance, ai, sleep..." value="data, ai" />
+
+      <label for="sn-style" style="margin-top:1rem">Style</label>
+      <select id="sn-style">
+        <option value="yc">YC-friendly (Stripe, Linear, Notion)</option>
+        <option value="latin">Neutral Latin (Aurum, Lumen)</option>
+        <option value="modern">Modern invented</option>
+        <option value="ai">AI / SaaS (-ai, -ly, -ify)</option>
+      </select>
+
+      <button id="sn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="sn-out" class="sn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why startup names are their own category</h2>
+      <p>
+        A startup needs a name that satisfies more constraints than a traditional company. It has to land in a pitch deck for English-speaking investors, sound clean over the phone when you're fundraising, register on the App Store without conflicts, and have a reachable .com. Five filters most "creative" names fail.
+      </p>
+      <p>
+        That's why the YC pattern (Stripe, Linear, Notion, Vercel, Figma, Loom) became dominant: one word, two syllables, globally pronounceable, free of strong cultural connotations, modern without being on-the-nose.
+      </p>
+
+      <h2>The "YC pattern": what working names share</h2>
+      <ul>
+        <li><strong>Single word.</strong> Stripe, Vercel, Notion. Not "Cloud Stripe Inc". One word anchors better in memory.</li>
+        <li><strong>Two syllables, three max.</strong> "Stri-pe", "No-tion", "Li-near". More syllables dilute.</li>
+        <li><strong>Open vowels.</strong> Open "a", "o", "i" sound friendly. "Notion", "Asana", "Loom".</li>
+        <li><strong>No weird double meaning.</strong> Passes the Google + "meaning" check in Spanish, French, Portuguese, Mandarin.</li>
+        <li><strong>Reachable .com.</strong> Available or buyable for less than 1% of the seed round.</li>
+      </ul>
+
+      <h2>Three legitimate paths to a startup name</h2>
+      <ol>
+        <li><strong>Real word with a twist:</strong> Stripe (magnetic strip → payment rails), Notion (the idea → notes app), Asana (yoga pose → workflow). Take an existing word and load it with new meaning.</li>
+        <li><strong>Two-word mash-up:</strong> Snowflake, Mailchimp, Datadog. Combines two recognizable things and creates imagery.</li>
+        <li><strong>Pure invention:</strong> Vercel, Klarna, Spotify. 100% registrable but needs marketing to teach what you do.</li>
+      </ol>
+
+      <h2>Common startup-name mistakes</h2>
+      <p>
+        The most common is "AI-stuffing": adding "AI" as a crutch (ResumeAI, MarketingAI, ContractAI). Works for 2024 SEO but is strategically weak: in five years "AI" will read like "online" did in 2010, and you'll have to reposition. If your name works without "AI", keep it in the subtitle, not the brand.
+      </p>
+      <p>
+        Other mistakes: names that only work in one language (don't scale), accented characters (break URLs and emails), too-descriptive of the first product (limit pivots), and names unpronounceable to English speakers if you'll fundraise in the US.
+      </p>
+
+      <h2>Pre-incorporation validation</h2>
+      <p>Before incorporating or accepting a check, in this order:</p>
+      <ol>
+        <li>Google the exact name: what does the SERP show?</li>
+        <li>USPTO trademark search at tmsearch.uspto.gov; EUIPO if you'll operate globally.</li>
+        <li>Local trademark office (UKIPO, IP Australia, CIPO) for your incorporation country.</li>
+        <li>.com domain availability — if parked, send the offer before locking the name.</li>
+        <li>Handles on X, Instagram, LinkedIn and GitHub. Knowem.com checks in bulk.</li>
+        <li>App Store and Google Play search: another app already there? You won't be able to publish.</li>
+        <li>Pronunciation test with 3 native English speakers, no context. Do they spell it the same way?</li>
+      </ol>
+
+      <h2>When to rename your startup</h2>
+      <p>
+        Renaming is expensive (rebrand, domain, app, accumulated marketing) but three situations justify it: 1) the current name limits you to one segment and you want to expand, 2) a real legal conflict with a larger competitor, 3) the name sounds too local and you need to scale globally. Twitter → X was case 2. Backrub → Google was case 3. If your reason doesn't fit, it's probably ego, not strategy.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good startup name?</summary><p>Short, English-pronounceable, registrable, with reachable .com and no awkward connotations.</p></details>
+      <details><summary>Before or after the product?</summary><p>Ideally with problem and prototype clear. If you need something to start, use a placeholder and validate before printing.</p></details>
+      <details><summary>Does .com matter?</summary><p>Yes. It's the reflex for investors and customers. If unreachable, secure .io or .ai and plan to buy .com.</p></details>
+      <details><summary>Can I use "AI" in the name?</summary><p>Works for 2024 SEO but is strategically weak. Better in the subtitle than the brand.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .sn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .sn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .sn-item:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const YC_ROOTS = ['Stri', 'Lin', 'Ver', 'Lo', 'No', 'Fig', 'Ram', 'Reb', 'Pli', 'Rip', 'Pla', 'Mer', 'Cod', 'Ari', 'Bre', 'Sup'];
+  const YC_ENDS = ['pe', 'ear', 'cel', 'om', 'tion', 'ma', 'p', 'ase', 'gma', 'ker', 'ply', 'ge', 'ce', 'go', 'wn'];
+  const LATIN = ['Aurum', 'Lumen', 'Vita', 'Nova', 'Magna', 'Prima', 'Lux', 'Fortis', 'Pura', 'Clara', 'Forma', 'Verum', 'Sapiens', 'Anima', 'Domus'];
+  const MOD = ['Lumo', 'Zera', 'Vexa', 'Brio', 'Tono', 'Quira', 'Nido', 'Plux', 'Reki', 'Tovi', 'Yumi', 'Tilo', 'Rema', 'Vola'];
+  const AI_SUF = ['ai', 'ly', 'ify', 'flow', 'kit', 'lab', 'io'];
+
+  const kw = document.getElementById('sn-kw') as HTMLInputElement;
+  const style = document.getElementById('sn-style') as HTMLSelectElement;
+  const gen = document.getElementById('sn-gen') as HTMLButtonElement;
+  const out = document.getElementById('sn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 300) {
+      attempts++;
+      let name = '';
+      if (s === 'yc') name = pick(YC_ROOTS) + pick(YC_ENDS);
+      else if (s === 'latin') name = pick(LATIN);
+      else if (s === 'modern') name = pick(MOD);
+      else if (s === 'ai') {
+        const w = words.length ? pick(words) : pick(MOD).toLowerCase();
+        name = cap(w) + pick(AI_SUF);
+      }
+      if (name.length >= 4 && name.length <= 14) set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'sn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,235 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Online Spinner / Wheel | Genfy';
+const description = 'A spinning wheel with your custom options. Realistic animation, perfect to decide what to eat, split tasks or run a small team raffle.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many options can the wheel hold?', acceptedAnswer: { '@type': 'Answer', text: 'Up to 30 so each slice stays readable. For more, use our "random pick from list" generator without that limit.' } },
+    { '@type': 'Question', name: 'Is the result fair?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. We pick the final angle with crypto.getRandomValues and the animation is purely visual: the result is decided before the spin starts. Each option has exactly 1/N probability.' } },
+    { '@type': 'Question', name: 'Does it work offline?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Once the page loads everything runs in the browser. Perfect for class, in-person meetings or unstable connections.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Random" title="Online spinner / wheel"
+    intro="Load your options, spin the wheel, let chance decide. Great for what to eat, splitting tasks, presentation order or a small-team raffle. For fun use, not legally binding for prizes.">
+
+    <div slot="tool" class="sp-tool">
+      <div class="sp-grid">
+        <div class="sp-stage">
+          <div class="sp-pointer">▼</div>
+          <canvas id="sp-canvas" width="400" height="400"></canvas>
+        </div>
+        <div class="sp-side">
+          <label for="sp-list">Options (one per line)</label>
+          <textarea id="sp-list" rows="10">Pizza
+Pasta
+Sushi
+Burgers
+Curry
+Tacos
+Salad
+Ramen</textarea>
+          <button id="sp-update" class="btn btn-ghost" type="button">Update wheel</button>
+        </div>
+      </div>
+
+      <div id="sp-result" class="sp-result">Hit "spin" to start</div>
+
+      <div class="sp-actions">
+        <button id="sp-spin" class="btn btn-primary" type="button">Spin</button>
+        <button id="sp-remove" class="btn btn-ghost" type="button">Remove winner and spin again</button>
+      </div>
+
+      <p class="sp-note">For fun use. Not legally binding for prizes.</p>
+    </div>
+
+    <div slot="content">
+      <h2>How the wheel decides the winner</h2>
+      <p>
+        Although the animation looks like the decider, we actually compute the final
+        angle with <code>crypto.getRandomValues</code> before the spin starts. The visual
+        rotation is purely decorative: it lands exactly where we already chose. That
+        guarantees each option has 1/N probability and that spin speed or click timing
+        can't influence the outcome.
+      </p>
+
+      <h2>Good decisions for the wheel</h2>
+      <ul>
+        <li><strong>What to cook / order tonight:</strong> 8 options, one wheel, debate over.</li>
+        <li><strong>Who presents first in the meeting:</strong> everyone's name, spin, done.</li>
+        <li><strong>Splitting team tasks:</strong> spin for each task, remove winners, keep going.</li>
+        <li><strong>Drawing a winner among friends / small subscriber base:</strong> type names, one spin. More entertaining than yes/no.</li>
+        <li><strong>Game choices:</strong> which map, which character, which team color.</li>
+        <li><strong>Breaking creative blocks:</strong> spin between 6 ideas and start with whatever lands.</li>
+      </ul>
+
+      <h2>"Round mode": remove winner and continue</h2>
+      <p>
+        If you need to assign 5 tasks among 5 people, use "remove winner and spin again".
+        First person who comes up takes task 1, gets removed from the wheel, you spin
+        again for task 2. Guarantees each person ends up with exactly one assignment.
+      </p>
+
+      <h2>Difference vs a die or coin</h2>
+      <p>
+        A die is ideal when your options are numeric or fit 2-20 standard faces. A coin
+        works for 2 options. But when you have <strong>names, dishes, ideas,
+        labeled choices</strong>, a wheel visualizes much better: you see all
+        possibilities, you see which one landed, and the animation creates a social
+        moment that an isolated number can't.
+      </p>
+
+      <h2>How to make your draw verifiable</h2>
+      <ol>
+        <li><strong>Show the full list before</strong> spinning (screenshot, read aloud, shared doc).</li>
+        <li><strong>Run the spin live</strong>: video, stream, open Zoom room. Removes suspicion.</li>
+        <li><strong>Share the result screenshot</strong> in the channel where the draw was announced.</li>
+        <li><strong>For real prizes</strong>, consider a certified raffle platform or notary presence. A homemade wheel has no legal weight even when perfectly fair.</li>
+      </ol>
+
+      <h2>Why a wheel beats an "automatic" draw</h2>
+      <p>
+        Social-media raffle platforms pick a winner automatically, no animation, no
+        transparency. The wheel has a sociological advantage: <strong>everyone sees the
+        moment</strong>. That builds legitimacy. For small communities and non-monetary
+        draws, it's the best option.
+      </p>
+
+      <h2>When NOT to use the wheel</h2>
+      <ul>
+        <li><strong>Very long lists</strong> (more than 30 options): the wheel becomes unreadable. Use "random pick from list".</li>
+        <li><strong>Weighted selection</strong>: you can repeat an option N times, but past a certain count the wheel stops being visually useful.</li>
+        <li><strong>Real-prize raffles with legal validity</strong>: you need a certified system.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many options?</summary><p>Up to 30 for legible slices. Larger lists: "random pick from list".</p></details>
+      <details><summary>Fair?</summary><p>Yes. Angle picked with crypto.getRandomValues; animation is decorative. Each option = 1/N probability.</p></details>
+      <details><summary>Works offline?</summary><p>Yes. Once loaded, everything runs in the browser.</p></details>
+      <details><summary>For prize raffles?</summary><p>For fun use, yes. For real prizes with legal validity, you need certification and a notary.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1rem; }
+  .sp-stage { position: relative; display: flex; align-items: center; justify-content: center; }
+  .sp-pointer { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); font-size: 2rem; color: var(--danger); z-index: 2; line-height: 1; }
+  #sp-canvas { width: 100%; max-width: 360px; height: auto; aspect-ratio: 1; }
+  .sp-side { display: flex; flex-direction: column; gap: 0.5rem; }
+  .sp-side textarea { font-family: var(--font-mono); font-size: 0.875rem; flex: 1; min-height: 200px; }
+  .sp-result { padding: 1.25rem; background: var(--bg-inset); border-radius: var(--radius-lg); border: 1px solid var(--border); text-align: center; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; min-height: 60px; display: flex; align-items: center; justify-content: center; }
+  .sp-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+  .sp-note { font-size: 0.75rem; color: var(--text-subtle); margin: 0; }
+  @media (max-width: 700px) { .sp-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const canvas = document.getElementById('sp-canvas') as HTMLCanvasElement;
+  const list = document.getElementById('sp-list') as HTMLTextAreaElement;
+  const update = document.getElementById('sp-update') as HTMLButtonElement;
+  const spin = document.getElementById('sp-spin') as HTMLButtonElement;
+  const remove = document.getElementById('sp-remove') as HTMLButtonElement;
+  const result = document.getElementById('sp-result')!;
+
+  let items: string[] = [];
+  let rotation = 0;
+  let spinning = false;
+  let lastWinner = '';
+
+  const colors = ['#059669', '#0891b2', '#0284c7', '#4f46e5', '#7c3aed', '#c026d3', '#db2777', '#dc2626', '#ea580c', '#d97706', '#ca8a04', '#65a30d'];
+
+  function parse() {
+    items = list.value.split('\n').map(s => s.trim()).filter(Boolean).slice(0, 30);
+    if (items.length === 0) items = ['Option 1', 'Option 2', 'Option 3'];
+    draw();
+  }
+
+  function draw() {
+    const ctx = canvas.getContext('2d')!;
+    const W = canvas.width;
+    const cx = W / 2, cy = W / 2, r = W / 2 - 8;
+    ctx.clearRect(0, 0, W, W);
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rotation);
+    const slice = (Math.PI * 2) / items.length;
+    items.forEach((it, i) => {
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.arc(0, 0, r, i * slice, (i + 1) * slice);
+      ctx.closePath();
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.save();
+      ctx.rotate(i * slice + slice / 2);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 14px Inter, sans-serif';
+      const text = it.length > 16 ? it.slice(0, 14) + '…' : it;
+      ctx.fillText(text, r - 12, 5);
+      ctx.restore();
+    });
+    ctx.restore();
+    ctx.beginPath();
+    ctx.arc(cx, cy, 18, 0, Math.PI * 2);
+    ctx.fillStyle = '#09090b';
+    ctx.fill();
+  }
+
+  function rand() {
+    const arr = new Uint32Array(1);
+    window.crypto.getRandomValues(arr);
+    return arr[0] / 0xffffffff;
+  }
+
+  function spinIt() {
+    if (spinning || items.length === 0) return;
+    spinning = true;
+    result.textContent = 'Spinning...';
+    const winnerIdx = Math.floor(rand() * items.length);
+    const slice = (Math.PI * 2) / items.length;
+    const targetAngle = -Math.PI / 2 - (winnerIdx * slice + slice / 2);
+    const spins = 6 + Math.floor(rand() * 3);
+    const finalRotation = rotation + spins * Math.PI * 2 + (targetAngle - rotation % (Math.PI * 2));
+    const start = rotation;
+    const duration = 4500;
+    const t0 = performance.now();
+    function step(now: number) {
+      const t = Math.min(1, (now - t0) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      rotation = start + (finalRotation - start) * eased;
+      draw();
+      if (t < 1) requestAnimationFrame(step);
+      else {
+        spinning = false;
+        lastWinner = items[winnerIdx];
+        result.textContent = `🎉 ${lastWinner}`;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  update.addEventListener('click', parse);
+  spin.addEventListener('click', spinIt);
+  remove.addEventListener('click', () => {
+    if (!lastWinner) return;
+    items = items.filter(x => x !== lastWinner);
+    list.value = items.join('\n');
+    lastWinner = '';
+    draw();
+    if (items.length > 0) spinIt();
+  });
+
+  parse();
+</script>

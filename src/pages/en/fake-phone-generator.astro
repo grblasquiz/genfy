@@ -1,0 +1,208 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Fake Phone Number Generator for Testing | Genfy';
+const description = 'Generate phone numbers with realistic format for the US, UK, Canada and other countries. For fixtures, forms and QA, without calling anyone.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Do these numbers belong to anyone?', acceptedAnswer: { '@type': 'Answer', text: 'We generate the digits at random within each country format. Statistically, some may match real lines: only use them for testing and never call.' } },
+    { '@type': 'Question', name: 'Are there reserved ranges for testing?', acceptedAnswer: { '@type': 'Answer', text: 'In the US, 555-0100 to 555-0199 is reserved for fiction. The UK reserves 0113 4960000-4960999. Other countries do not have official reserved ranges.' } },
+    { '@type': 'Question', name: 'Do they pass form validation?', acceptedAnswer: { '@type': 'Answer', text: 'Yes for format and libphonenumber. Real existence checks (SMS verification) reject them, which is what you want in testing.' } },
+    { '@type': 'Question', name: 'Can I use them for WhatsApp Business or SMS?', acceptedAnswer: { '@type': 'Answer', text: 'No. For those cases you need real lines or provider sandbox services (Twilio test credentials, Meta sandbox).' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Data / Testing"
+    title="Fake Phone Number Generator"
+    intro="Numbers with the correct format for the US, UK, Canada and others. Designed for fixtures, forms and synthetic data. Don't call these numbers."
+  >
+    <div slot="tool" class="phone-tool">
+      <div class="phone-controls">
+        <div>
+          <label for="phone-country">Country</label>
+          <select id="phone-country">
+            <option value="us" selected>United States (+1)</option>
+            <option value="uk">United Kingdom (+44)</option>
+            <option value="ca">Canada (+1)</option>
+            <option value="au">Australia (+61)</option>
+            <option value="de">Germany (+49)</option>
+          </select>
+        </div>
+        <div>
+          <label for="phone-type">Type</label>
+          <select id="phone-type">
+            <option value="mobile" selected>Mobile</option>
+            <option value="landline">Landline</option>
+          </select>
+        </div>
+        <div>
+          <label for="phone-format">Format</label>
+          <select id="phone-format">
+            <option value="intl" selected>International (+1 415…)</option>
+            <option value="local">Local (415-…)</option>
+            <option value="e164">E.164 (+1415…)</option>
+          </select>
+        </div>
+        <div>
+          <label for="phone-count">Quantity</label>
+          <input id="phone-count" type="number" min="1" max="100" value="10" />
+        </div>
+      </div>
+
+      <button id="phone-gen" class="btn btn-primary" type="button">Generate phones</button>
+
+      <textarea id="phone-out" class="mono" rows="12" readonly></textarea>
+      <button id="phone-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy all</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>Why country format matters</h2>
+      <p>
+        Each country has its own numbering rules: how many digits a mobile has, which prefix
+        separates mobile from landline, when the area-code zero is dropped. A serious library
+        like <code>libphonenumber</code> (Google) understands these rules for every country and
+        rejects numbers that don't comply.
+      </p>
+      <p>
+        If your generator emits malformed numbers, your tests pass in CI and fail in production
+        when a real number arrives. Better start with correct synthetic data.
+      </p>
+
+      <h2>Formats by country</h2>
+      <ul>
+        <li><strong>United States:</strong> +1 [3-digit area] [7 digits]. Example: +1 415 555 1234.</li>
+        <li><strong>United Kingdom:</strong> +44 [10 digits]. Mobiles start with 7. Example: +44 7700 900123.</li>
+        <li><strong>Canada:</strong> Same plan as the US (+1). Example: +1 416 555 1234.</li>
+        <li><strong>Australia:</strong> +61 [9 digits]. Mobiles start with 4. Example: +61 412 345 678.</li>
+        <li><strong>Germany:</strong> +49 [variable length]. Mobiles 15x, 16x, 17x. Example: +49 151 12345678.</li>
+      </ul>
+
+      <h2>E.164 vs local vs international</h2>
+      <ol>
+        <li><strong>E.164</strong> (<code>+14155551234</code>): the technical format, digits-only with a leading +. The canonical format for storing in a database and sending over an API. It's what Twilio, Stripe and almost every service uses.</li>
+        <li><strong>International</strong> (<code>+1 415 555 1234</code>): human-readable, with spaces and dashes. Useful for UI display.</li>
+        <li><strong>Local</strong> (<code>(415) 555-1234</code>): the format an American recognizes at a glance. No country code.</li>
+      </ol>
+      <p>
+        Best practice: always store in E.164 and format for display. That avoids ambiguity when
+        a number moves between countries.
+      </p>
+
+      <h2>Reserved ranges for fiction</h2>
+      <p>
+        Some countries reserve specific ranges for fiction, examples and testing. If you need
+        a guaranteed "unassigned" number:
+      </p>
+      <ul>
+        <li><strong>United States:</strong> 555-0100 through 555-0199 (FCC-mandated for fiction).</li>
+        <li><strong>United Kingdom:</strong> 0113 4960000 to 4960999 (Ofcom).</li>
+        <li><strong>Australia:</strong> +61 7 7010 0000 through +61 7 7010 9999.</li>
+        <li><strong>Other countries:</strong> no official ranges. Use generated data carefully.</li>
+      </ul>
+
+      <h2>When NOT to use fake numbers</h2>
+      <p>These numbers are good for populating tables, validating forms and showing UIs. They aren't good for:</p>
+      <ul>
+        <li><strong>Real SMS testing.</strong> Twilio, MessageBird and others have testing modes with magic numbers that confirm delivery without actually sending.</li>
+        <li><strong>Code verification.</strong> If your flow texts a code, fake numbers don't receive.</li>
+        <li><strong>WhatsApp Business validation.</strong> You need a real number verified by Meta.</li>
+        <li><strong>Live demos where someone might actually call.</strong> You're sending traffic to a random person.</li>
+      </ul>
+
+      <h2>Combining with other synthetic data</h2>
+      <p>A realistic fixture combines name + email + address + phone. Tips:</p>
+      <ol>
+        <li>The phone country code should match the address. A "New York" user with a German phone is a sign of a sloppy fixture.</li>
+        <li>The area code should be plausible for the city: New York uses 212, 646, 718 — not 415 (San Francisco).</li>
+        <li>For mass tests, mix countries: it helps surface i18n bugs.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Do they belong to someone?</summary><p>We generate digits at random. Statistically some may match real lines: only use for testing, never call.</p></details>
+      <details><summary>Reserved ranges?</summary><p>In the US, 555-0100 to 555-0199. UK has 0113 4960000-4960999. Many countries don't have official reserved ranges.</p></details>
+      <details><summary>Pass form validation?</summary><p>Yes for format and libphonenumber. Real SMS verification rejects them, which is what you want.</p></details>
+      <details><summary>Use for WhatsApp/SMS?</summary><p>No. You need real lines or provider sandboxes (Twilio test, Meta sandbox).</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .phone-controls { display: grid; grid-template-columns: repeat(2, 1fr) repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 700px) { .phone-controls { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .phone-controls { grid-template-columns: 1fr; } }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; margin: 1rem 0 0.75rem; }
+</style>
+
+<script>
+  function rand(min: number, max: number): number { const a = new Uint32Array(1); crypto.getRandomValues(a); return min + (a[0] % (max - min + 1)); }
+  function digits(n: number): string { let s = ''; for (let i = 0; i < n; i++) s += rand(0, 9); return s; }
+
+  const country = document.getElementById('phone-country') as HTMLSelectElement;
+  const type = document.getElementById('phone-type') as HTMLSelectElement;
+  const format = document.getElementById('phone-format') as HTMLSelectElement;
+  const count = document.getElementById('phone-count') as HTMLInputElement;
+  const out = document.getElementById('phone-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('phone-gen') as HTMLButtonElement;
+  const copy = document.getElementById('phone-copy') as HTMLButtonElement;
+
+  function build(): string {
+    const c = country.value;
+    const isMobile = type.value === 'mobile';
+    const fmt = format.value;
+    if (c === 'us' || c === 'ca') {
+      const area = ['415','212','310','646','312','617','305','206','512','718'][rand(0,9)];
+      const exch = '5' + digits(2);
+      const num = '01' + digits(2);
+      if (fmt === 'e164') return `+1${area}${exch}${num}`;
+      if (fmt === 'local') return `(${area}) ${exch}-${num}`;
+      return `+1 ${area} ${exch} ${num}`;
+    }
+    if (c === 'uk') {
+      const lead = isMobile ? '7' + digits(3) : '20' + digits(2);
+      const num = digits(6);
+      if (fmt === 'e164') return `+44${lead}${num}`;
+      if (fmt === 'local') return `0${lead} ${num.slice(0,3)} ${num.slice(3)}`;
+      return `+44 ${lead} ${num.slice(0,3)} ${num.slice(3)}`;
+    }
+    if (c === 'au') {
+      const lead = isMobile ? '4' + digits(2) : '2' + digits(1);
+      const num = digits(6);
+      if (fmt === 'e164') return `+61${lead}${num}`;
+      if (fmt === 'local') return `0${lead} ${num.slice(0,3)} ${num.slice(3)}`;
+      return `+61 ${lead} ${num.slice(0,3)} ${num.slice(3)}`;
+    }
+    if (c === 'de') {
+      const lead = isMobile ? '15' + digits(1) : '30';
+      const num = digits(8);
+      if (fmt === 'e164') return `+49${lead}${num}`;
+      if (fmt === 'local') return `0${lead} ${num.slice(0,4)} ${num.slice(4)}`;
+      return `+49 ${lead} ${num.slice(0,4)} ${num.slice(4)}`;
+    }
+    return '';
+  }
+  function generate() {
+    const n = Math.min(100, Math.max(1, parseInt(count.value || '10', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) lines.push(build());
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', generate);
+  [country, type, format, count].forEach(el => el.addEventListener('change', generate));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copied</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copy all'; delete copy.dataset.copied; }, 1400);
+  });
+  generate();
+</script>

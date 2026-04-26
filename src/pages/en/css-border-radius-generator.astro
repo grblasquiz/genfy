@@ -1,0 +1,173 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'CSS Border-Radius Generator | Genfy';
+const description = 'Generate CSS border-radius with live preview. Independent corners, asymmetric blob shapes, px or %. Copy ready-to-paste code.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'px vs % in border-radius?', acceptedAnswer: { '@type': 'Answer', text: 'px is a fixed radius (12px is always 12px). % depends on element size (50% on a square gives a circle). Use px for buttons; 50% for circular avatars.' } },
+    { '@type': 'Question', name: 'What is a blob border-radius?', acceptedAnswer: { '@type': 'Answer', text: 'An organic shape achieved using different radii per corner with horizontal/vertical syntax (60% 40% 30% 70% / 30% 60% 40% 70%). Trendy on SaaS landings.' } },
+    { '@type': 'Question', name: 'Is there a max radius?', acceptedAnswer: { '@type': 'Answer', text: 'No. If you exceed half the side, corners meet and the element becomes oval or circular. 9999px is a common trick to force pill shape at any height.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design" title="CSS border-radius generator"
+    intro="Design border-radius with live preview. Independent corners, asymmetric blob shapes, px or %. The CSS updates instantly.">
+
+    <div slot="tool" class="br-tool">
+      <div class="br-controls">
+        <div><label for="br-tl">Top left <span class="val" id="v-tl">12</span></label><input id="br-tl" type="range" min="0" max="200" value="12" /></div>
+        <div><label for="br-tr">Top right <span class="val" id="v-tr">12</span></label><input id="br-tr" type="range" min="0" max="200" value="12" /></div>
+        <div><label for="br-br">Bottom right <span class="val" id="v-br">12</span></label><input id="br-br" type="range" min="0" max="200" value="12" /></div>
+        <div><label for="br-bl">Bottom left <span class="val" id="v-bl">12</span></label><input id="br-bl" type="range" min="0" max="200" value="12" /></div>
+        <div>
+          <label for="br-unit">Unit</label>
+          <select id="br-unit"><option value="px" selected>px</option><option value="%">%</option></select>
+        </div>
+        <div class="br-toggle"><label><input id="br-link" type="checkbox" checked /> Link all 4 corners</label></div>
+      </div>
+
+      <div class="br-preview-wrap">
+        <div id="br-preview" class="br-preview">Preview</div>
+      </div>
+
+      <label for="br-css">Generated CSS</label>
+      <textarea id="br-css" rows="2" readonly></textarea>
+      <div class="br-actions">
+        <button id="br-copy" class="btn btn-primary" type="button">Copy CSS</button>
+        <button id="br-blob" class="btn btn-ghost" type="button">Blob shape</button>
+        <button id="br-pill" class="btn btn-ghost" type="button">Pill</button>
+        <button id="br-circle" class="btn btn-ghost" type="button">Circle</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>The full border-radius syntax</h2>
+      <p>
+        At its simplest, <code>border-radius: 12px;</code> applies the same radius to all
+        four corners. But CSS supports a powerful longhand:
+      </p>
+      <pre><code>border-radius: 12px 24px 12px 24px;
+/* top-left, top-right, bottom-right, bottom-left (clockwise from top-left) */
+
+border-radius: 60% 40% 30% 70% / 30% 60% 40% 70%;
+/* horizontal radii / vertical radii — blob shapes */</code></pre>
+
+      <h2>px, %, em: which to use when</h2>
+      <ul>
+        <li><strong>px:</strong> fixed, predictable radius. Great for buttons, cards, inputs. <code>8px</code> is always 8px.</li>
+        <li><strong>%:</strong> radius relative to element size. <code>50%</code> on a square gives a perfect circle. Useful for avatars and circular elements in general.</li>
+        <li><strong>em / rem:</strong> scales with font-size. Useful if your system uses a rhythmic unit (8px base, 16px, etc.).</li>
+        <li><strong>9999px:</strong> common trick for "pill shape": an absurdly large radius that always reaches half the height, producing perfectly rounded ends regardless of element height.</li>
+      </ul>
+
+      <h2>What radius for what component</h2>
+      <ol>
+        <li><strong>Inputs and buttons:</strong> 6-10px. Higher feels "childish"; lower feels "dated".</li>
+        <li><strong>Cards:</strong> 12-16px. More generous than buttons to differentiate hierarchy.</li>
+        <li><strong>Modals and popovers:</strong> 16-24px. Communicates that they're floating elements.</li>
+        <li><strong>Avatars:</strong> 50% (circular) or 8px (square with soft corners, Telegram/Linear style).</li>
+        <li><strong>Tags and badges:</strong> 9999px (pill) or 4-6px (rectangular).</li>
+      </ol>
+
+      <h2>Border-radius in design systems</h2>
+      <p>
+        Serious design systems define a radius scale, never arbitrary values:
+        <code>--radius-xs: 4px; --radius: 8px; --radius-lg: 12px; --radius-xl: 16px;</code>.
+        Prevents components ending up with random radii that break consistency. Tailwind
+        bakes this in with <code>rounded-sm</code>, <code>rounded</code>,
+        <code>rounded-lg</code>, etc.
+      </p>
+
+      <h2>The blob shape trick</h2>
+      <p>
+        The <code>border-radius: A% B% C% D% / E% F% G% H%</code> syntax allows different
+        horizontal and vertical radii. Asymmetric combinations produce organic shapes that
+        became popular on SaaS landings. Example:
+        <code>30% 70% 70% 30% / 30% 30% 70% 70%</code>. Use sparingly: animated they're
+        lovely; static and overused they feel arbitrary.
+      </p>
+
+      <h2>Border-radius on images and backgrounds</h2>
+      <p>
+        Works fine on <code>&lt;img&gt;</code> and background-image elements. Important:
+        <code>overflow: hidden</code> on the container if you want to clip content that
+        spills out (e.g. an image inside a card with rounded corners). For SVG, prefer
+        <code>clip-path</code> over border-radius.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>px vs %?</summary><p>px is fixed. % depends on size (50% on square = circle). Buttons: px. Circular avatars: %.</p></details>
+      <details><summary>What's a blob?</summary><p>Organic shape with different radii per corner, using horizontal/vertical syntax (A% B% C% D% / E% F% G% H%).</p></details>
+      <details><summary>Max radius?</summary><p>None. If you exceed half the side, corners meet. <code>9999px</code> forces pill shape at any height.</p></details>
+      <details><summary>Works on images?</summary><p>Yes. For SVG use <code>clip-path</code>; for divs with content, add <code>overflow: hidden</code>.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .br-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; margin-bottom: 1rem; }
+  .br-controls label { display: flex; justify-content: space-between; align-items: center; }
+  .br-controls .val { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-subtle); }
+  .br-controls .br-toggle { grid-column: 1 / -1; font-size: 0.875rem; color: var(--text-soft); }
+  .br-preview-wrap { display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--bg-inset); border-radius: var(--radius-lg); margin-bottom: 1rem; min-height: 280px; }
+  .br-preview { width: 240px; height: 180px; background: linear-gradient(135deg, #059669, #0ea5e9); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; transition: border-radius 0.1s; }
+  textarea#br-css { font-family: var(--font-mono); font-size: 0.8125rem; }
+  .br-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+  pre { background: var(--bg-inset); padding: 0.75rem 1rem; border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto; font-family: var(--font-mono); font-size: 0.8125rem; }
+  @media (max-width: 600px) { .br-controls { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const ids = ['tl', 'tr', 'br', 'bl'];
+  const sliders: Record<string, HTMLInputElement> = {};
+  ids.forEach(id => { sliders[id] = document.getElementById('br-' + id) as HTMLInputElement; });
+  const unit = document.getElementById('br-unit') as HTMLSelectElement;
+  const link = document.getElementById('br-link') as HTMLInputElement;
+  const preview = document.getElementById('br-preview') as HTMLDivElement;
+  const css = document.getElementById('br-css') as HTMLTextAreaElement;
+  const copy = document.getElementById('br-copy') as HTMLButtonElement;
+
+  function build() {
+    ids.forEach(id => { document.getElementById('v-' + id)!.textContent = sliders[id].value; });
+    const u = unit.value;
+    const v = ids.map(id => sliders[id].value + u);
+    const same = v.every(x => x === v[0]);
+    const radius = same ? v[0] : v.join(' ');
+    preview.style.borderRadius = radius;
+    css.value = `border-radius: ${radius};`;
+  }
+  ids.forEach(id => sliders[id].addEventListener('input', () => {
+    if (link.checked) ids.forEach(j => { if (j !== id) sliders[j].value = sliders[id].value; });
+    build();
+  }));
+  unit.addEventListener('change', () => {
+    if (unit.value === '%') ids.forEach(id => { sliders[id].max = '100'; if (parseInt(sliders[id].value) > 100) sliders[id].value = '50'; });
+    else ids.forEach(id => { sliders[id].max = '200'; });
+    build();
+  });
+  link.addEventListener('change', () => { if (link.checked) ids.forEach(id => { sliders[id].value = sliders.tl.value; }); build(); });
+  copy.addEventListener('click', () => {
+    navigator.clipboard.writeText(css.value);
+    copy.textContent = 'Copied!';
+    setTimeout(() => { copy.textContent = 'Copy CSS'; }, 1200);
+  });
+  document.getElementById('br-blob')!.addEventListener('click', () => {
+    preview.style.borderRadius = '60% 40% 30% 70% / 30% 60% 40% 70%';
+    css.value = 'border-radius: 60% 40% 30% 70% / 30% 60% 40% 70%;';
+  });
+  document.getElementById('br-pill')!.addEventListener('click', () => {
+    preview.style.borderRadius = '9999px';
+    css.value = 'border-radius: 9999px;';
+  });
+  document.getElementById('br-circle')!.addEventListener('click', () => {
+    preview.style.borderRadius = '50%';
+    css.value = 'border-radius: 50%;';
+  });
+  build();
+</script>

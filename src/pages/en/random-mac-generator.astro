@@ -1,0 +1,217 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random MAC Address Generator | Genfy';
+const description = 'Generate random MAC addresses with real vendor prefix (Apple, Cisco, Dell) or locally administered. For network testing, fixtures and configuration.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a MAC address?', acceptedAnswer: { '@type': 'Answer', text: 'A unique 48-bit identifier assigned to each network interface in a device. Used for communication within a local network.' } },
+    { '@type': 'Question', name: 'What is the OUI?', acceptedAnswer: { '@type': 'Answer', text: 'The first 24 bits (3 bytes) identify the manufacturer. IEEE assigns OUIs (Organizationally Unique Identifier) to each network-hardware company.' } },
+    { '@type': 'Question', name: 'Can generated MACs match real devices?', acceptedAnswer: { '@type': 'Answer', text: 'If you pick a real OUI, yes — you may produce addresses that some day will exist. For safe use, pick MACs with the locally administered bit set (second LSB of the first byte = 1).' } },
+    { '@type': 'Question', name: 'What are they good for in testing?', acceptedAnswer: { '@type': 'Answer', text: 'For MAC filtering tests on switches and APs, network inventory fixtures, device simulation in tools like Mininet or GNS3, and synthetic data.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Tech"
+    title="Random MAC Address Generator"
+    intro="MAC addresses with real vendor prefix or locally administered. Useful for network testing, static DHCP configuration, simulators and synthetic data."
+  >
+    <div slot="tool" class="mac-tool">
+      <div class="mac-controls">
+        <div>
+          <label for="mac-vendor">Vendor / OUI</label>
+          <select id="mac-vendor">
+            <option value="random" selected>Random (locally administered)</option>
+            <option value="apple">Apple (00:1B:63)</option>
+            <option value="cisco">Cisco (00:1A:A1)</option>
+            <option value="dell">Dell (00:14:22)</option>
+            <option value="hp">HP (00:1F:29)</option>
+            <option value="intel">Intel (00:1B:21)</option>
+            <option value="vmware">VMware (00:50:56)</option>
+            <option value="raspberry">Raspberry Pi (B8:27:EB)</option>
+          </select>
+        </div>
+        <div>
+          <label for="mac-format">Format</label>
+          <select id="mac-format">
+            <option value="colon" selected>Colon (00:1A:2B:3C:4D:5E)</option>
+            <option value="dash">Dash (00-1A-2B-3C-4D-5E)</option>
+            <option value="cisco">Cisco (001a.2b3c.4d5e)</option>
+            <option value="plain">No separator (001A2B3C4D5E)</option>
+          </select>
+        </div>
+        <div>
+          <label for="mac-case">Case</label>
+          <select id="mac-case">
+            <option value="upper" selected>Uppercase</option>
+            <option value="lower">Lowercase</option>
+          </select>
+        </div>
+        <div>
+          <label for="mac-count">Quantity</label>
+          <input id="mac-count" type="number" min="1" max="100" value="10" />
+        </div>
+      </div>
+
+      <button id="mac-gen" class="btn btn-primary" type="button">Generate MACs</button>
+
+      <textarea id="mac-out" class="mono" rows="12" readonly></textarea>
+      <button id="mac-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy all</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>MAC address structure</h2>
+      <p>
+        A MAC (Media Access Control) address is 48 bits, typically expressed as six
+        colon-separated hex bytes: <code>00:1A:2B:3C:4D:5E</code>. It's a unique identifier
+        assigned to each network interface, layer 2 of the OSI model.
+      </p>
+      <p>The 48 bits split into two parts:</p>
+      <ul>
+        <li><strong>OUI (Organizationally Unique Identifier):</strong> the first 24 bits (3 bytes). Identify the manufacturer. IEEE assigns OUIs to network-hardware companies.</li>
+        <li><strong>NIC (Network Interface Controller):</strong> the last 24 bits. The manufacturer assigns them sequentially to each device they produce.</li>
+      </ul>
+      <p>
+        That's 16.7 million addresses per OUI. Big companies have multiple OUIs to avoid running
+        out of numbers.
+      </p>
+
+      <h2>Special bits in the first byte</h2>
+      <p>The first byte of a MAC has two bits with special meaning:</p>
+      <ol>
+        <li><strong>Least significant bit (I/G):</strong> 0 if unicast (single destination), 1 if multicast (multiple destinations).</li>
+        <li><strong>Second-least significant bit (U/L):</strong> 0 if universal (IEEE-assigned), 1 if locally administered (configured by the admin).</li>
+      </ol>
+      <p>
+        By convention, locally administered MACs are what you should use for tests and virtual
+        machines, since they guarantee no collision with any existing real device. That means
+        the first byte ends in 2, 6, A or E (in hex).
+      </p>
+
+      <h2>Common OUIs to recognize</h2>
+      <ul>
+        <li><strong>00:1B:63, 00:23:DF, AC:DE:48:</strong> Apple.</li>
+        <li><strong>00:1A:A1, 00:23:04:</strong> Cisco Systems.</li>
+        <li><strong>00:14:22:</strong> Dell.</li>
+        <li><strong>00:1F:29, 00:1A:4B:</strong> HP.</li>
+        <li><strong>00:1B:21, 00:1B:77:</strong> Intel.</li>
+        <li><strong>00:50:56:</strong> VMware (virtual machines).</li>
+        <li><strong>52:54:00:</strong> QEMU/KVM.</li>
+        <li><strong>08:00:27:</strong> VirtualBox.</li>
+        <li><strong>B8:27:EB, DC:A6:32, E4:5F:01:</strong> Raspberry Pi Foundation.</li>
+      </ul>
+      <p>
+        Sites like wireshark.org/tools/oui-lookup.html let you look up which company owns any
+        OUI.
+      </p>
+
+      <h2>Privacy: MAC randomization</h2>
+      <p>
+        Since 2014, iOS and Android phones randomize their MAC when scanning Wi-Fi networks to
+        prevent tracking. Without it, a store could repeatedly detect the same customer.
+        Today, the OS generates a fresh MAC for each network it associates with (sometimes
+        between associations).
+      </p>
+      <p>
+        If your system depends on MAC for device identification, remember that MAC may
+        change. Combine with other stable identifiers.
+      </p>
+
+      <h2>Practical testing applications</h2>
+      <ol>
+        <li><strong>Switch MAC filters.</strong> Test allow/block lists with MACs from various vendors.</li>
+        <li><strong>DHCP with static reservations.</strong> Assign fixed IPs to specific MACs in your lab.</li>
+        <li><strong>Inventory tests.</strong> Simulate a fleet of 1,000 devices without owning them.</li>
+        <li><strong>Network simulation.</strong> Mininet, GNS3 and other simulators require MACs.</li>
+        <li><strong>MAC-based VLANs.</strong> Test VLAN-assignment logic by manufacturer.</li>
+      </ol>
+
+      <h2>Common mistakes with MACs</h2>
+      <ul>
+        <li><strong>Using made-up OUIs.</strong> If your MAC starts with <code>FF:FF:FF</code>, that's broadcast, not a vendor. Use a real OUI or locally administered.</li>
+        <li><strong>Generating all bits randomly.</strong> The first byte will likely be universal, which can collide with a real device in production.</li>
+        <li><strong>Confusing formats.</strong> Cisco uses <code>001a.2b3c.4d5e</code>. Linux uses <code>00:1a:2b:3c:4d:5e</code>. Conversion is trivial but you have to do it.</li>
+        <li><strong>Ignoring duplicates.</strong> Two equal MACs on a network break ARP. With random testing, the chance is tiny but non-zero.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a MAC?</summary><p>A unique 48-bit identifier for each network interface. Layer 2 OSI, communication inside the local network.</p></details>
+      <details><summary>What is the OUI?</summary><p>The first 3 bytes identify the manufacturer. IEEE assigns OUIs to network-hardware companies.</p></details>
+      <details><summary>Can they match real devices?</summary><p>If you use a real OUI, yes. For safe use, locally administered MAC (first byte ends in 2, 6, A or E).</p></details>
+      <details><summary>What for in testing?</summary><p>MAC filters, static DHCP, simulators, inventory fixtures and synthetic data.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .mac-controls { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .mac-controls { grid-template-columns: 1fr; } }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; margin: 1rem 0 0.75rem; }
+</style>
+
+<script>
+  const VENDORS: Record<string, string> = {
+    apple: '001B63',
+    cisco: '001AA1',
+    dell: '001422',
+    hp: '001F29',
+    intel: '001B21',
+    vmware: '005056',
+    raspberry: 'B827EB',
+  };
+  function rand(min: number, max: number): number { const a = new Uint32Array(1); crypto.getRandomValues(a); return min + (a[0] % (max - min + 1)); }
+  function hex(n: number): string { return n.toString(16).padStart(2, '0'); }
+
+  const vendor = document.getElementById('mac-vendor') as HTMLSelectElement;
+  const fmt = document.getElementById('mac-format') as HTMLSelectElement;
+  const cs = document.getElementById('mac-case') as HTMLSelectElement;
+  const count = document.getElementById('mac-count') as HTMLInputElement;
+  const out = document.getElementById('mac-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('mac-gen') as HTMLButtonElement;
+  const copy = document.getElementById('mac-copy') as HTMLButtonElement;
+
+  function buildMac(): string {
+    let bytes: string[];
+    if (vendor.value === 'random') {
+      let first = rand(0, 255);
+      first = (first & 0xFE) | 0x02;
+      bytes = [hex(first)];
+      for (let i = 0; i < 5; i++) bytes.push(hex(rand(0, 255)));
+    } else {
+      const oui = VENDORS[vendor.value];
+      bytes = [oui.slice(0,2), oui.slice(2,4), oui.slice(4,6)];
+      for (let i = 0; i < 3; i++) bytes.push(hex(rand(0, 255)));
+    }
+    let s: string;
+    if (fmt.value === 'colon') s = bytes.join(':');
+    else if (fmt.value === 'dash') s = bytes.join('-');
+    else if (fmt.value === 'cisco') s = `${bytes[0]}${bytes[1]}.${bytes[2]}${bytes[3]}.${bytes[4]}${bytes[5]}`;
+    else s = bytes.join('');
+    return cs.value === 'upper' ? s.toUpperCase() : s.toLowerCase();
+  }
+  function generate() {
+    const n = Math.min(100, Math.max(1, parseInt(count.value || '10', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) lines.push(buildMac());
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', generate);
+  [vendor, fmt, cs, count].forEach(el => el.addEventListener('change', generate));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copied</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copy all'; delete copy.dataset.copied; }, 1400);
+  });
+  generate();
+</script>

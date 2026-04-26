@@ -1,0 +1,161 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'CSS Box-Shadow Generator | Genfy';
+const description = 'Design CSS shadows with live preview. Tweak offset, blur, spread and color; multi-shadow and inset support. Copy ready code for your stylesheet.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is inset box-shadow?', acceptedAnswer: { '@type': 'Answer', text: 'Casts the shadow inside the element, simulating reversed depth. Useful for pressed inputs, sunken areas or bevel effects.' } },
+    { '@type': 'Question', name: 'Can I stack multiple shadows?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Separate each shadow with a comma inside the same box-shadow property. Stacking 2-3 shadows is how Stripe and Linear get realistic depth.' } },
+    { '@type': 'Question', name: 'Why does my shadow look cheap?', acceptedAnswer: { '@type': 'Answer', text: 'Usually opacity too high and blur too low. Realistic shadows use rgba with 4-12% alpha, 8-30px blur and a slight downward offset. Multi-shadow helps a lot.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design" title="CSS box-shadow generator"
+    intro="Design CSS shadows with live preview. Tweak offset, blur, spread and color; stack multiple layers for realistic depth. Copy the code straight into your stylesheet.">
+
+    <div slot="tool" class="bs-tool">
+      <div class="bs-controls">
+        <div><label for="bs-x">Offset X (px) <span class="val" id="v-x">0</span></label><input id="bs-x" type="range" min="-50" max="50" value="0" /></div>
+        <div><label for="bs-y">Offset Y (px) <span class="val" id="v-y">12</span></label><input id="bs-y" type="range" min="-50" max="50" value="12" /></div>
+        <div><label for="bs-blur">Blur (px) <span class="val" id="v-blur">28</span></label><input id="bs-blur" type="range" min="0" max="100" value="28" /></div>
+        <div><label for="bs-spread">Spread (px) <span class="val" id="v-spread">0</span></label><input id="bs-spread" type="range" min="-30" max="30" value="0" /></div>
+        <div><label for="bs-color">Color</label><input id="bs-color" type="color" value="#09090b" /></div>
+        <div><label for="bs-alpha">Opacity (%) <span class="val" id="v-alpha">12</span></label><input id="bs-alpha" type="range" min="0" max="100" value="12" /></div>
+        <div class="bs-toggle"><label><input id="bs-inset" type="checkbox" /> inset (inner shadow)</label></div>
+      </div>
+
+      <div class="bs-preview-wrap">
+        <div id="bs-preview" class="bs-preview"></div>
+      </div>
+
+      <label for="bs-css">Generated CSS</label>
+      <textarea id="bs-css" rows="2" readonly></textarea>
+      <div class="bs-actions">
+        <button id="bs-copy" class="btn btn-primary" type="button">Copy CSS</button>
+        <button id="bs-preset" class="btn btn-ghost" type="button">Stripe-like preset</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Anatomy of box-shadow</h2>
+      <p>
+        The CSS syntax is <code>box-shadow: x y blur spread color;</code>:
+      </p>
+      <ul>
+        <li><strong>X:</strong> horizontal offset. Positive = right. For realistic shadows almost always 0.</li>
+        <li><strong>Y:</strong> vertical offset. Positive = down. Usually 4-20px to emulate top-down lighting.</li>
+        <li><strong>Blur:</strong> shadow softness. Low values (0-4px) give brutalist hard shadows; high (20-50px) give modern soft ones.</li>
+        <li><strong>Spread:</strong> how much the shadow expands before blur. Negative shrinks, positive enlarges. Almost always 0.</li>
+        <li><strong>Color:</strong> ideally rgba with low opacity (4-15%). Pure black at 100% looks plastic.</li>
+      </ul>
+
+      <h2>The multi-shadow trick</h2>
+      <p>
+        The "premium" shadows you see on Stripe, Vercel or Linear aren't a single shadow:
+        they're <strong>two or three stacked</strong>. One short and crisp close to the
+        element (1-2px Y, low blur, medium opacity), and a long diffuse one further down
+        (8-20px Y, high blur, low opacity). It mimics how real light casts both a direct
+        and an indirect shadow.
+      </p>
+      <pre><code>box-shadow:
+  0 1px 2px rgba(9, 9, 11, 0.06),
+  0 4px 12px rgba(9, 9, 11, 0.08);</code></pre>
+
+      <h2>Inset: when to use it</h2>
+      <p>
+        An <code>inset</code> shadow goes inside the element and simulates reversed depth.
+        Legit uses: pressed-state inputs, containers that look sunken into the page,
+        active drop zones. Illegit use: <em>every</em> button (2010s skeuomorphism — it
+        does not age well).
+      </p>
+
+      <h2>Shadows in dark mode</h2>
+      <p>
+        Shadows are far less visible on dark backgrounds: black on black is nearly
+        invisible. Solutions:
+      </p>
+      <ol>
+        <li><strong>Light borders</strong> instead of shadows: <code>border: 1px solid rgba(255,255,255,0.08)</code>.</li>
+        <li><strong>Higher opacity</strong> shadows (20-40% instead of 8-12%) with bigger blur.</li>
+        <li><strong>Colored shadows</strong>: in dark mode, a low-opacity shadow tinted with your brand color produces a "glow" rather than depth.</li>
+      </ol>
+
+      <h2>Performance: when it can tank your frame rate</h2>
+      <p>
+        Box-shadow is computed on the CPU (not GPU). Animating blur on 100 elements at
+        once tanks the frame rate. If you need to animate shadows (e.g. on hover), use
+        <code>transform</code> instead of changing blur, or use
+        <code>filter: drop-shadow()</code> which is GPU-accelerated and respects
+        transparent edges (useful for SVG and images with backgrounds).
+      </p>
+
+      <h2>Four shadows that work in any UI</h2>
+      <ul>
+        <li><strong>Card subtle:</strong> <code>0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)</code></li>
+        <li><strong>Card hover:</strong> <code>0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05)</code></li>
+        <li><strong>Modal / popover:</strong> <code>0 12px 32px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.06)</code></li>
+        <li><strong>Floating button:</strong> <code>0 6px 20px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.08)</code></li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is inset?</summary><p>Inner shadow: reversed depth. Useful for pressed inputs or drop zones.</p></details>
+      <details><summary>Multi-shadow?</summary><p>Yes: comma-separate. Stacking 2-3 produces the realistic Stripe-like effect.</p></details>
+      <details><summary>Why does it look cheap?</summary><p>Opacity too high, blur too low. Realistic ones use 4-12% alpha, 8-30px blur, slight downward offset.</p></details>
+      <details><summary>Performance?</summary><p>Box-shadow runs on CPU. To animate many elements, prefer <code>transform</code> or <code>filter: drop-shadow</code>.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bs-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; margin-bottom: 1rem; }
+  .bs-controls label { display: flex; justify-content: space-between; align-items: center; }
+  .bs-controls .val { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-subtle); }
+  .bs-controls .bs-toggle { grid-column: 1 / -1; font-size: 0.875rem; color: var(--text-soft); }
+  .bs-preview-wrap { display: flex; align-items: center; justify-content: center; padding: 4rem 2rem; background: var(--bg-inset); border-radius: var(--radius-lg); margin-bottom: 1rem; min-height: 240px; }
+  .bs-preview { width: 200px; height: 130px; background: var(--bg-card); border-radius: var(--radius-lg); transition: box-shadow 0.1s; }
+  textarea#bs-css { font-family: var(--font-mono); font-size: 0.8125rem; }
+  .bs-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+  pre { background: var(--bg-inset); padding: 0.75rem 1rem; border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto; font-family: var(--font-mono); font-size: 0.8125rem; }
+  @media (max-width: 600px) { .bs-controls { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const ids = ['x', 'y', 'blur', 'spread', 'alpha'];
+  const el: Record<string, HTMLInputElement> = {};
+  ids.forEach(id => { el[id] = document.getElementById('bs-' + id) as HTMLInputElement; });
+  const color = document.getElementById('bs-color') as HTMLInputElement;
+  const inset = document.getElementById('bs-inset') as HTMLInputElement;
+  const preview = document.getElementById('bs-preview') as HTMLDivElement;
+  const css = document.getElementById('bs-css') as HTMLTextAreaElement;
+  const copy = document.getElementById('bs-copy') as HTMLButtonElement;
+  const preset = document.getElementById('bs-preset') as HTMLButtonElement;
+
+  function build() {
+    ids.forEach(id => { document.getElementById('v-' + id)!.textContent = el[id].value; });
+    const hex = color.value.replace('#', '');
+    const r = parseInt(hex.slice(0, 2), 16);
+    const g = parseInt(hex.slice(2, 4), 16);
+    const b = parseInt(hex.slice(4, 6), 16);
+    const a = (parseInt(el.alpha.value) / 100).toFixed(2);
+    const shadow = `${inset.checked ? 'inset ' : ''}${el.x.value}px ${el.y.value}px ${el.blur.value}px ${el.spread.value}px rgba(${r}, ${g}, ${b}, ${a})`;
+    preview.style.boxShadow = shadow;
+    css.value = `box-shadow: ${shadow};`;
+  }
+  [...Object.values(el), color, inset].forEach(e => e.addEventListener('input', build));
+  copy.addEventListener('click', () => {
+    navigator.clipboard.writeText(css.value);
+    copy.textContent = 'Copied!';
+    setTimeout(() => { copy.textContent = 'Copy CSS'; }, 1200);
+  });
+  preset.addEventListener('click', () => {
+    css.value = 'box-shadow: 0 1px 3px rgba(9,9,11,0.06), 0 4px 12px rgba(9,9,11,0.08);';
+    preview.style.boxShadow = '0 1px 3px rgba(9,9,11,0.06), 0 4px 12px rgba(9,9,11,0.08)';
+  });
+  build();
+</script>

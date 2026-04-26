@@ -1,0 +1,151 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Quote of the Day Generator | Genfy';
+const description = 'Quote of the day with real authors: modern thinkers, scientists, leaders and biblical proverbs. Perfect for inspiration, social posts and journaling.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Where do the quotes come from?', acceptedAnswer: { '@type': 'Answer', text: 'They are real quotes from modern thinkers, scientists, leaders and biblical proverbs. Each is attributed to its author.' } },
+    { '@type': 'Question', name: 'Are they good for social and slides?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Copy quote and author for Instagram, LinkedIn, slides, newsletters or any format.' } },
+    { '@type': 'Question', name: 'Are the quotes verbatim?', acceptedAnswer: { '@type': 'Answer', text: 'We use widely recognized versions. As with any quotation, verify the original source for formal use.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Inspiration" title="Quote of the Day Generator"
+    intro="A real quote with a real author, ready to inspire your day, a meeting, a post or your notebook. Generate again to discover more.">
+
+    <div slot="tool" class="qd">
+      <div class="qd-card">
+        <p id="qd-text" class="qd-quote">—</p>
+        <p id="qd-author" class="qd-author">—</p>
+      </div>
+      <button id="qd-gen" class="btn btn-primary" type="button">Another quote</button>
+      <button id="qd-copy" class="btn btn-ghost" type="button">Copy</button>
+    </div>
+
+    <div slot="content">
+      <h2>Quotes that actually carry weight</h2>
+      <p>
+        Many generators recycle invented or misattributed "quotes". Here we use lines with
+        verifiable authors: modern thinkers and leaders like Steve Jobs, Maya Angelou, Marie
+        Curie or Albert Einstein, alongside biblical proverbs that have resonated for centuries.
+        A great quote isn't measured by its prettiness — it's measured by how long it stays in
+        your head after you read it.
+      </p>
+
+      <h2>How to use them in your day</h2>
+      <ul>
+        <li><strong>As an opener.</strong> First slide of a presentation or first line of your Monday email.</li>
+        <li><strong>As a journaling prompt.</strong> Read it, open the notebook, write for 5 minutes about why it hit you (or why it didn't).</li>
+        <li><strong>As a reminder.</strong> A short quote on a sticky note works better than an abstract goal.</li>
+        <li><strong>As content.</strong> Quote the line and add your interpretation. It's a simple format that performs on LinkedIn and Instagram.</li>
+      </ul>
+
+      <h2>Why motivational quotes sometimes work</h2>
+      <p>
+        A line of text doesn't change your life. But reading "Your work is going to fill a large
+        part of your life, and the only way to be truly satisfied is to do what you believe is
+        great work" (Steve Jobs) on a doubtful day can push you toward the decision you already
+        knew. Quotes work like mirrors: they show you what you already think, articulated
+        better. That's why the same quote lands for one person and feels hollow to another.
+      </p>
+
+      <h2>Cite correctly</h2>
+      <p>
+        When you use a quote on social or a presentation, write the author's full name. If the
+        quote is biblical, mention the book and verse (e.g., "Proverbs 3:5"). Misattributing a
+        quote is one of the easiest ways to lose credibility — and it's trivial to fact-check
+        with a 30-second search.
+      </p>
+
+      <h2>Quotes on LinkedIn: a practical guide</h2>
+      <p>
+        If you're going to post quotes on LinkedIn, don't drop them naked: add one personal line
+        explaining why you picked this one today. The quote brings authority; your reflection
+        brings humanity. The combination outperforms either piece on its own in reach and
+        engagement.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Where do the quotes come from?</summary><p>Real quotes from modern thinkers, scientists, leaders and biblical proverbs.</p></details>
+      <details><summary>Are they good for social?</summary><p>Yes — copy quote and author for any format.</p></details>
+      <details><summary>Are they verbatim?</summary><p>We use widely recognized versions. For formal use, verify the original source.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .qd-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; }
+  .qd-quote { font-size: 1.25rem; line-height: 1.5; color: var(--text); margin: 0; }
+  .qd-author { color: var(--text-soft); margin-top: 1rem; font-style: italic; }
+</style>
+
+<script>
+  const QUOTES: { t: string; a: string }[] = [
+    { t: "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work.", a: "Steve Jobs" },
+    { t: "People will forget what you said, people will forget what you did, but people will never forget how you made them feel.", a: "Maya Angelou" },
+    { t: "Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less.", a: "Marie Curie" },
+    { t: "Imagination is more important than knowledge.", a: "Albert Einstein" },
+    { t: "A woman is like a tea bag — you can't tell how strong she is until you put her in hot water.", a: "Eleanor Roosevelt" },
+    { t: "Be the change that you wish to see in the world.", a: "Mahatma Gandhi" },
+    { t: "Trust in the Lord with all your heart, and lean not on your own understanding.", a: "Proverbs 3:5" },
+    { t: "The fear of the Lord is the beginning of wisdom.", a: "Proverbs 9:10" },
+    { t: "Commit your work to the Lord, and your plans will be established.", a: "Proverbs 16:3" },
+    { t: "For everything there is a season, and a time for every matter under heaven.", a: "Ecclesiastes 3:1" },
+    { t: "Two are better than one, because they have a good reward for their toil.", a: "Ecclesiastes 4:9" },
+    { t: "He who loves money will not be satisfied with money.", a: "Ecclesiastes 5:10" },
+    { t: "Blessed is the one who finds wisdom, and the one who gets understanding.", a: "Proverbs 3:13" },
+    { t: "Iron sharpens iron, and one man sharpens another.", a: "Proverbs 27:17" },
+    { t: "Better is the end of a thing than its beginning.", a: "Ecclesiastes 7:8" },
+    { t: "The Lord is my shepherd; I shall not want.", a: "Psalm 23:1" },
+    { t: "Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me.", a: "Psalm 23:4" },
+    { t: "I can do all things through Christ who strengthens me.", a: "Philippians 4:13" },
+    { t: "My grace is sufficient for you, for my power is made perfect in weakness.", a: "2 Corinthians 12:9" },
+    { t: "Knowledge speaks, but wisdom listens.", a: "Jimi Hendrix" },
+    { t: "The secret of change is to focus all of your energy not on fighting the old, but on building the new.", a: "Dan Millman" },
+    { t: "Success is going from failure to failure without losing enthusiasm.", a: "Winston Churchill" },
+    { t: "What is not started today is never finished tomorrow.", a: "Johann Wolfgang von Goethe" },
+    { t: "What gets measured gets managed.", a: "Peter Drucker" },
+    { t: "Your most unhappy customers are your greatest source of learning.", a: "Bill Gates" },
+    { t: "Quality is never an accident; it is always the result of intelligent effort.", a: "John Ruskin" },
+    { t: "Do what you can, with what you have, where you are.", a: "Theodore Roosevelt" },
+    { t: "If you think education is expensive, try ignorance.", a: "Derek Bok" },
+    { t: "The only way to do great work is to love what you do.", a: "Steve Jobs" },
+    { t: "Success is not final, failure is not fatal: it is the courage to continue that counts.", a: "Winston Churchill" },
+    { t: "Discipline is the bridge between goals and accomplishment.", a: "Jim Rohn" },
+    { t: "The future belongs to those who believe in the beauty of their dreams.", a: "Eleanor Roosevelt" },
+    { t: "If you can't explain it simply, you don't understand it well enough.", a: "Albert Einstein" },
+    { t: "Never doubt that a small group of thoughtful, committed citizens can change the world.", a: "Margaret Mead" },
+    { t: "The price of anything is the amount of life you exchange for it.", a: "Henry David Thoreau" },
+    { t: "Your instinct is the sum of all your past experiences. Listen to it.", a: "Maya Angelou" },
+    { t: "If everything seems under control, you're not going fast enough.", a: "Mario Andretti" },
+    { t: "The best time to plant a tree was twenty years ago. The second best time is now.", a: "Popular proverb" },
+    { t: "It's not what happens to you, but how you react to it that matters.", a: "Aldous Huxley" },
+    { t: "Whether you think you can or think you can't, you're right.", a: "Henry Ford" },
+  ];
+
+  const text = document.getElementById('qd-text') as HTMLElement;
+  const author = document.getElementById('qd-author') as HTMLElement;
+  const genBtn = document.getElementById('qd-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('qd-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const q = pick(QUOTES);
+    text.textContent = `"${q.t}"`;
+    author.textContent = `— ${q.a}`;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    const s = `${text.textContent}\n${author.textContent}`;
+    await navigator.clipboard.writeText(s);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

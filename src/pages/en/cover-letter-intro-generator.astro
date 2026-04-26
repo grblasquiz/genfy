@@ -1,0 +1,185 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Cover Letter Intro Generator | Genfy';
+const description = 'Generate the perfect opening for your cover letter. Lead with achievement, not "I am writing to apply". Copy-ready in seconds.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why is the intro the most important part?', acceptedAnswer: { '@type': 'Answer', text: 'Recruiters decide in 6-10 seconds whether to keep reading or move on. A weak intro kills the letter before the second paragraph.' } },
+    { '@type': 'Question', name: 'Why not start with "I am writing to apply"?', acceptedAnswer: { '@type': 'Answer', text: 'It states obvious info that wastes space. Opening with a concrete achievement or specific data hooks the reader from line one.' } },
+    { '@type': 'Question', name: 'Do these templates work for LinkedIn?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. The same rules apply to LinkedIn messages, Easy Apply notes and direct emails to the hiring manager.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Work" title="Cover Letter Intro Generator"
+    intro="The first line decides whether they keep reading. Generate openers with concrete achievements, specific data or referrals — no clichés.">
+
+    <div slot="tool" class="cl">
+      <div class="cl-row">
+        <div>
+          <label for="cl-role">Role you're applying for</label>
+          <input id="cl-role" type="text" value="Senior Marketing Manager" />
+        </div>
+        <div>
+          <label for="cl-company">Company</label>
+          <input id="cl-company" type="text" value="Acme Inc." />
+        </div>
+      </div>
+      <div class="cl-row">
+        <div>
+          <label for="cl-years">Years of experience</label>
+          <input id="cl-years" type="number" value="6" min="0" max="40" />
+        </div>
+        <div>
+          <label for="cl-area">Primary area</label>
+          <input id="cl-area" type="text" value="digital marketing" />
+        </div>
+      </div>
+      <div class="cl-row">
+        <div>
+          <label for="cl-achievement">Best achievement (one sentence)</label>
+          <input id="cl-achievement" type="text" value="led the launch of a product that generated $2M in its first year" />
+        </div>
+      </div>
+      <div class="cl-row">
+        <div>
+          <label for="cl-style">Opening style</label>
+          <select id="cl-style">
+            <option value="achievement">Achievement-led</option>
+            <option value="why-here">Why this company</option>
+            <option value="referral">Internal referral</option>
+            <option value="research">Specific research finding</option>
+          </select>
+        </div>
+      </div>
+      <button id="cl-gen" class="btn btn-primary" type="button">Generate 3 versions</button>
+      <button id="cl-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="cl-out" rows="14" readonly style="margin-top:1rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>The most important rule: lead with the achievement, not the intent</h2>
+      <p>
+        The most common mistake in cover letters is the opener "I am writing to apply for the
+        Marketing Manager role posted on Indeed". That sentence adds nothing the reader doesn't
+        know — they're already reading your application, they already know the role. Wasted
+        paragraph. The modern professional rule: open with concrete data about you. Your most
+        relevant achievement. A number that matters. A specific observation about the company
+        that proves you researched.
+      </p>
+
+      <h2>Four opener styles that work</h2>
+      <ul>
+        <li><strong>Achievement-led.</strong> "Over the last three years, I led the launch of a product that generated $2M in its first year." Works when your record speaks for itself.</li>
+        <li><strong>Why this company.</strong> "I've followed [company]'s work since 2020, and what stood out most was your decision to [concrete fact]." Works for companies you genuinely admire.</li>
+        <li><strong>Internal referral.</strong> "[Name], head of [area], suggested I apply after we discussed [topic]." Works when you have a real referral.</li>
+        <li><strong>Research finding.</strong> "Reading [company]'s last quarterly report, I noticed segment [X] grew Y%. My experience in [area] aligns directly with that growth." Works for analytical roles.</li>
+      </ul>
+
+      <h2>Data that DOES belong in the intro</h2>
+      <ol>
+        <li><strong>Tangible numbers.</strong> "20% increase", "10 million users", "$500k budget managed".</li>
+        <li><strong>Recognizable names.</strong> If you worked at well-known companies or studied at top programs, mention it briefly.</li>
+        <li><strong>Time.</strong> "Over 5 years at X" gives more context than "I have experience".</li>
+        <li><strong>Comparative scope.</strong> "Team of 3 I scaled to 12" tells more than "led a team".</li>
+      </ol>
+
+      <h2>Data that does NOT belong in the intro</h2>
+      <ul>
+        <li>Your name (it's on the resume).</li>
+        <li>The role you're applying for (they know).</li>
+        <li>Where you found the posting (irrelevant for evaluation).</li>
+        <li>Your availability (that goes at the end, if anywhere).</li>
+        <li>Begging language ("I would appreciate the opportunity to", "looking forward to your prompt response").</li>
+      </ul>
+
+      <h2>Recommended length</h2>
+      <p>
+        The ideal intro is 2-3 sentences totaling 35-60 words. Enough to plant a strong data
+        point and steer the reader to the next paragraph. Longer dilutes; shorter feels
+        truncated. If your best achievement doesn't fit in one sentence, use two — don't
+        compress past clarity.
+      </p>
+
+      <h2>Tailor to the role</h2>
+      <p>
+        The achievement you put in the intro must connect with what the role asks for. If the
+        posting says "experience leading remote teams", your intro should include a number
+        about the size of the remote team you led. If it says "ecommerce experience", your
+        intro should carry an ecommerce metric. That alignment is the difference between 100
+        identical letters and yours.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Why is the intro most important?</summary><p>Recruiters decide in 6-10 seconds. A weak intro kills the letter.</p></details>
+      <details><summary>Why not "I am writing to apply"?</summary><p>Obvious info, wasted space. Opening with achievement creates interest.</p></details>
+      <details><summary>Works on LinkedIn?</summary><p>Yes. Same rules for Easy Apply and direct messages.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cl-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .cl-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const roleEl = document.getElementById('cl-role') as HTMLInputElement;
+  const companyEl = document.getElementById('cl-company') as HTMLInputElement;
+  const yearsEl = document.getElementById('cl-years') as HTMLInputElement;
+  const areaEl = document.getElementById('cl-area') as HTMLInputElement;
+  const achEl = document.getElementById('cl-achievement') as HTMLInputElement;
+  const styleEl = document.getElementById('cl-style') as HTMLSelectElement;
+  const out = document.getElementById('cl-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('cl-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('cl-copy') as HTMLButtonElement;
+
+  function generate() {
+    const role = roleEl.value || '[role]';
+    const company = companyEl.value || '[Company]';
+    const years = yearsEl.value || 'X';
+    const area = areaEl.value || '[area]';
+    const ach = achEl.value || '[your top achievement]';
+    const s = styleEl.value;
+    let lines: string[] = [];
+    if (s === 'achievement') {
+      lines = [
+        `Over my ${years} years in ${area}, I ${ach}. That's why the ${role} opening at ${company} caught my attention: the role lines up almost exactly with the kind of impact I've been building.`,
+        `${ach} — that's the line that best defines my last ${years} years in ${area}. When I saw the ${role} role at ${company}, I knew it was the place where that kind of work scales.`,
+        `After ${years} years in ${area}, one achievement still defines how I work: ${ach}. That's why I'm applying for the ${role} role at ${company}.`,
+      ];
+    } else if (s === 'why-here') {
+      lines = [
+        `I've been following ${company}'s work for a while, and the way you've positioned yourselves over the past year stood out to me. With ${years} years in ${area}, I believe I can contribute exactly to the kind of growth you're building in the ${role} role.`,
+        `Few companies in the market think about ${area} the way ${company} does. I'm applying for the ${role} role with ${years} years of experience and one recent achievement I find relevant: ${ach}.`,
+        `What sets ${company} apart from most of its category is execution. After ${years} years in ${area}, where I ${ach}, I want to contribute to that kind of work in the ${role} role.`,
+      ];
+    } else if (s === 'referral') {
+      lines = [
+        `[Referrer name], from the ${area} team at ${company}, suggested I apply for the ${role} role. After a conversation about the role's challenges, I believe my ${years} years in ${area} (where I ${ach}) match what the team needs.`,
+        `Talking with [Referrer name] about ${company}'s 2026 priorities encouraged me to apply for the ${role} role. I bring ${years} years in ${area}, with one connected achievement: ${ach}.`,
+        `[Referrer name] sent me the ${role} posting noting that the team specifically needs profiles like mine. With ${years} years in ${area}, my highest-impact case was: ${ach}.`,
+      ];
+    } else {
+      lines = [
+        `Reading ${company}'s recent public report, I noticed a concrete move in ${area} that aligns with what I've been doing: ${ach}. That's why I'm applying for the ${role} role, with ${years} years of experience in the field.`,
+        `One data point from ${company}'s last year stood out to me and connects with my work: ${ach}. I have ${years} years in ${area} and the ${role} role seems built for profiles with that kind of track record.`,
+        `After reading how ${company} is approaching ${area}, I decided to apply for the ${role} role. My recent professional story backs it: ${ach}, after ${years} years in the field.`,
+      ];
+    }
+    out.value = lines.map((l, i) => `Version ${i + 1}:\n${l}`).join('\n\n');
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

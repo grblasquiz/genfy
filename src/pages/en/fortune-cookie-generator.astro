@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Fortune Cookie Generator | Genfy';
+const description = 'Crack open a virtual fortune cookie and get a random message. Short, clean and fun lines. Great for sharing online and group games.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Is it like a real fortune cookie?', acceptedAnswer: { '@type': 'Answer', text: 'It\'s the digital version: click "open", the cookie reveals a random message. No calories and no kitchen mess.' } },
+    { '@type': 'Question', name: 'Are the messages serious or playful?', acceptedAnswer: { '@type': 'Answer', text: 'A mix: practical lines, warm reminders and small playful nudges. All clean and family-friendly.' } },
+    { '@type': 'Question', name: 'Can I use it for events?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — perfect for online meetings, team retros, classroom ice-breakers and family games. Each person opens a cookie and shares the message.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Fun" title="Fortune Cookie Generator"
+    intro="A virtual cookie with a random message inside. Brighten your day, break the ice in a meeting, or add some fun to a group chat.">
+
+    <div slot="tool" class="fc">
+      <div class="fc-card">
+        <p id="fc-text" class="fc-msg">Click "Open" to reveal your message.</p>
+      </div>
+      <button id="fc-gen" class="btn btn-primary" type="button">Open cookie</button>
+      <button id="fc-copy" class="btn btn-ghost" type="button">Copy</button>
+    </div>
+
+    <div slot="content">
+      <h2>Where the fortune cookie comes from</h2>
+      <p>
+        Although many people associate it with China, the modern fortune cookie was actually
+        born in California in the early 20th century, in Japanese bakeries serving folded
+        sesame cookies with a message inside. It became popular in Chinese-American
+        restaurants in the 1950s and from there spread worldwide. The short, slightly
+        enigmatic line is part of the charm: a brief message leaves room for everyone to
+        interpret it their own way.
+      </p>
+
+      <h2>How the digital version works</h2>
+      <p>
+        The generator picks a line from a curated bank using crypto.getRandomValues, the
+        browser cryptographic generator. Each opening is independent and lines don't repeat
+        often. We don't store your result: the cookie stays only on your screen until you
+        close the tab.
+      </p>
+
+      <h2>Creative uses</h2>
+      <ul>
+        <li><strong>Online meeting ice-breaker.</strong> Each person opens a cookie and shares the message in 30 seconds.</li>
+        <li><strong>Team retros.</strong> A light closer: the cookie as the sprint's "moral".</li>
+        <li><strong>Class with kids or teens.</strong> Start a module with a random line — great for creative writing.</li>
+        <li><strong>Birthdays and events.</strong> Print message screenshots to slip into actual cookies.</li>
+        <li><strong>Message of the day.</strong> One cookie first thing in the morning, simple and enough.</li>
+      </ul>
+
+      <h2>The humor of fortune cookies</h2>
+      <p>
+        The best thing about fortune cookies is that they mix serious and playful. Sometimes
+        practical advice, sometimes something absurd. That unpredictability is the point: if
+        every message were wise, it would be a self-help book. If every one were a joke, the
+        magic would be gone. The mix is what keeps it alive.
+      </p>
+
+      <h2>A note on interpretation</h2>
+      <p>
+        Cookies don't predict the future and don't make decisions for you. They're tiny
+        triggers that surface your own themes. If a message hit you, it's worth asking why —
+        that's the useful information. The rest is just for fun and the group chat.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Is it like a real one?</summary><p>Yes — digital version: click, the cookie shows a random message.</p></details>
+      <details><summary>What's the tone?</summary><p>A mix of practical, warm and playful lines. All clean and family-friendly.</p></details>
+      <details><summary>Good for events?</summary><p>Yes: meetings, retros, classes and ice-breakers.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .fc-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 1rem; min-height: 110px; display: flex; align-items: center; }
+  .fc-msg { font-size: 1.2rem; line-height: 1.55; margin: 0; color: var(--text); }
+</style>
+
+<script>
+  const FORTUNES = [
+    "A small conversation today will open a big door tomorrow.",
+    "What you're putting off is easier than it looks. Start anyway.",
+    "This week's failure is next quarter's lesson.",
+    "A pleasant surprise is closer than you think.",
+    "The best advice today will come from the least expected person.",
+    "Trust the simple idea. The complicated ones are usually excuses.",
+    "Your patience with yourself will multiply your results this month.",
+    "Silence is the right answer today.",
+    "Saying yes to everything is saying no to something important.",
+    "Today you'll understand something that hasn't made sense for a while.",
+    "What you lost made room for something better. Look at the room.",
+    "An old friend is thinking of you right now.",
+    "Start early. The day pays double when you beat the noise.",
+    "What matters isn't how many steps — it's that they keep going the same way.",
+    "Today's laugh is next week's good health.",
+    "The best project of your life is closer than you think. Just keep going.",
+    "Ask for what you need. People can't read your mind.",
+    "A bit of organization today saves a crisis the day after tomorrow.",
+    "Your gut is right about the thing you're doubting.",
+    "Eating slowly is an act of respect for your body.",
+    "You're closer to the win than to the start. Don't ease up.",
+    "One good conversation today is worth ten meetings.",
+    "When in doubt, rest. Clarity arrives after rest.",
+    "Today you'll learn something you weren't looking for.",
+    "Genuine praise is contagious. Start it.",
+    "What you save today goes unnoticed; what you save in a year transforms.",
+    "The right project picks you, not the other way around.",
+    "A seed planted in silence grows just the same.",
+    "Your generosity will come back in unexpected form.",
+    "Today is a good day to forgive someone (yourself included).",
+    "Talk less than you want; listen more than you usually do.",
+    "A simple idea well executed beats a brilliant idea waiting.",
+    "The mistake you made doesn't define you. What you do next does.",
+    "Your calm is contagious. Hold on to it.",
+    "An answer arrives this week, where you least look for it.",
+  ];
+
+  const text = document.getElementById('fc-text') as HTMLElement;
+  const genBtn = document.getElementById('fc-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('fc-copy') as HTMLButtonElement;
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    text.textContent = pick(FORTUNES);
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!text.textContent) return;
+    await navigator.clipboard.writeText(text.textContent);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+</script>

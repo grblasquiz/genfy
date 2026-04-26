@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+import { STAGE_NAME_PARTS } from '../lib/persona-names';
+
+const title = 'Generador de nombre artístico (stage name) | Genfy';
+const description = 'Generá un nombre artístico memorable para músicos, DJs, actores o creadores. Estilos cortos, contundentes y elegantes en español e inglés.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué usar un nombre artístico?', acceptedAnswer: { '@type': 'Answer', text: 'Porque es más memorable, suena mejor en marquesinas, te separa de tu vida privada, y muchas veces es más fácil de pronunciar y recordar que tu nombre real.' } },
+    { '@type': 'Question', name: '¿Cómo elijo un nombre artístico?', acceptedAnswer: { '@type': 'Answer', text: 'Que sea corto, único en Spotify e Instagram, fácil de pronunciar y de buscar, y acorde al género o estilo en el que trabajás.' } },
+    { '@type': 'Question', name: '¿Hay que registrarlo legalmente?', acceptedAnswer: { '@type': 'Answer', text: 'No es obligatorio, pero si tu carrera empieza a moverse conviene registrarlo como marca para evitar conflictos con homónimos.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="es" tag="Personas" title="Generador de nombre artístico"
+    intro="Para músicos, DJs, actores, comediantes o creadores: nombres con presencia escénica. Click y obtené 12 ideas en segundos.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Estilo</label>
+      <select id="cn-style">
+        <option value="punchy">Una palabra contundente</option>
+        <option value="short-name">Nombre corto + apellido escénico</option>
+        <option value="single">Solo nombre corto</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 12 nombres</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los artistas usan nombre escénico</h2>
+      <p>
+        Reginald Dwight es Elton John. Stefani Germanotta es Lady Gaga. Aubrey Drake Graham
+        firma como Drake. Las razones son consistentes: un nombre artístico es más memorable, mejor
+        pronunciable, y separa la identidad escénica de la privada. En música, comedia y cine, los
+        nombres escénicos son la regla, no la excepción.
+      </p>
+
+      <h2>Cómo construir un buen nombre escénico</h2>
+      <ol>
+        <li><strong>Corto.</strong> 1-3 sílabas para nombres de una sola palabra; máximo 4-5 para combinaciones nombre + apellido.</li>
+        <li><strong>Único.</strong> Buscalo en Spotify, Apple Music, Instagram, TikTok antes de usarlo. Si ya hay 5 artistas con ese nombre, descartalo.</li>
+        <li><strong>Pronunciable.</strong> Si nadie sabe cómo decirlo, no te van a recomendar boca a boca.</li>
+        <li><strong>Buscable.</strong> "The" o palabras genéricas son tu enemigo en SEO. "Río" es más buscable que "The Music".</li>
+        <li><strong>Acorde al género.</strong> Un nombre suave (Velvet, Sail) encaja con indie folk; uno duro (Zero, Wolf) con electrónica o rock.</li>
+      </ol>
+
+      <h2>Tipos de nombres escénicos</h2>
+      <ul>
+        <li><strong>Una sola palabra contundente:</strong> Río, Cero, Norte, Cobre. Memorable, único, fácil de gritar en un show.</li>
+        <li><strong>Nombre corto + apellido escénico:</strong> Lía Marlow, Río Vance, Otto Stone. Suena como una persona real, pero estilizada.</li>
+        <li><strong>Iniciales:</strong> J.M., S.K. — usado en hip-hop y electrónica.</li>
+        <li><strong>Una sola palabra de tu nombre real:</strong> Adele (Adele Adkins), Drake (Aubrey Drake Graham). Si tu nombre real ya tiene una palabra fuerte, aprovechala.</li>
+      </ul>
+
+      <h2>Errores comunes</h2>
+      <ol>
+        <li>Nombres demasiado parecidos a otros artistas (que terminan en juicio).</li>
+        <li>Palabras genéricas imposibles de buscar ("The Sound", "Music").</li>
+        <li>Nombres con caracteres especiales o emojis: lindos en redes, problemáticos en SEO y plataformas.</li>
+        <li>Nombres muy largos: la gente te llama por la primera palabra y al final solo importa esa.</li>
+      </ol>
+
+      <h2>Aspectos prácticos</h2>
+      <p>
+        Antes de comprometerte: revisá nombres en Spotify, asegurate de que el handle esté libre en
+        Instagram y TikTok, registrá el dominio .com (o el que aplique a tu mercado), y considerá
+        registrarlo como marca cuando empieces a generar ingresos. La consistencia entre plataformas
+        es lo que multiplica tu alcance.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Por qué usar un nombre artístico?</summary><p>Es más memorable, mejor pronunciable, y separa identidad escénica de privada.</p></details>
+      <details><summary>¿Cómo elijo uno?</summary><p>Corto, único en Spotify e Instagram, fácil de pronunciar y buscar, acorde al género.</p></details>
+      <details><summary>¿Hay que registrarlo?</summary><p>No es obligatorio, pero conviene registrarlo como marca cuando tu carrera arranque.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: STAGE_NAME_PARTS }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const mode = styleEl.value;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < 12 && attempts < 300) {
+      attempts++;
+      let combo;
+      if (mode === 'punchy') combo = pick(DATA.punchy.es);
+      else if (mode === 'short-name') combo = pick(DATA.short.es) + ' ' + pick(DATA.surnames.es);
+      else combo = pick(DATA.short.es);
+      set.add(combo);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 900); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

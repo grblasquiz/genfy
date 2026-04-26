@@ -1,0 +1,165 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombres de newsletter gratis | Genfy';
+const description = 'Generá nombres de newsletter memorables para Substack, Beehiiv o tu propia plataforma. Pensados para ranqueo, conversión y vida larga.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno a un nombre de newsletter?', acceptedAnswer: { '@type': 'Answer', text: 'Que comunique tema o ángulo en menos de 4 palabras, sea fácil de teclear y se entienda al ser dicho en voz alta. Una buena newsletter como The Hustle, Morning Brew o Stratechery cumple las tres.' } },
+    { '@type': 'Question', name: '¿Conviene mi nombre o un nombre de marca?', acceptedAnswer: { '@type': 'Answer', text: 'Tu nombre funciona si querés construir audiencia personal y eventualmente vender. Una marca funciona si querés escalar a equipo o vender el activo. Substack y Beehiiv permiten ambos modelos.' } },
+    { '@type': 'Question', name: '¿Cuánto debe medir el nombre?', acceptedAnswer: { '@type': 'Answer', text: '1 a 3 palabras es lo óptimo. Cabe en el header de email, en el handle de Twitter, en el dominio. Más palabras suele significar menos memorable.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de nombres de newsletter"
+    intro="Cargá tema y estilo. Genfy te devuelve nombres pensados para Substack, Beehiiv o tu propio dominio. Memorables, brandeables y compatibles con SEO interno.">
+
+    <div slot="tool" class="nl">
+      <label for="nl-topic">Tema de la newsletter</label>
+      <input id="nl-topic" type="text" placeholder="finanzas, tech, productividad..." value="tech" />
+
+      <label for="nl-style" style="margin-top:1rem">Estilo</label>
+      <select id="nl-style">
+        <option value="brief">Brief / Daily (Morning Brew, The Hustle)</option>
+        <option value="memo">Memo / Notes (Stratechery, Sidebar)</option>
+        <option value="visual">Visual / Editorial (Dense Discovery)</option>
+        <option value="modern">Moderno / inventado</option>
+      </select>
+
+      <button id="nl-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="nl-out" class="nl-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los nombres de newsletter son su propia categoría</h2>
+      <p>
+        Una newsletter vive en la bandeja de entrada y compite con cientos de emails. El nombre es lo primero que el lector ve cuando llega un email — antes que el asunto. Eso le da una función diferente: no es solo SEO o branding, es <strong>reconocimiento instantáneo</strong>. La gente debería poder identificar tu newsletter en 0,5 segundos sin leer el contenido.
+      </p>
+      <p>
+        Por eso los nombres que dominan el espacio (Morning Brew, The Hustle, Stratechery, Lenny's Newsletter, The Browser) comparten patrones: 1-3 palabras, sin caracteres especiales, fáciles de teclear y casi siempre con un descriptor temporal o tonal.
+      </p>
+
+      <h2>Las cuatro familias de nombres de newsletter</h2>
+      <ul>
+        <li><strong>Brief / Daily:</strong> Morning Brew, The Hustle, The Daily Brief. Comunican formato y frecuencia. Ideal para curaciones diarias o semanales.</li>
+        <li><strong>Memo / Notes:</strong> Stratechery, Sidebar, Notes from a Small Press. Implican análisis o pensamiento personal. Para deep-dives temáticos.</li>
+        <li><strong>Visual / Editorial:</strong> Dense Discovery, Why is this interesting?, Tedium. Para newsletters con curaduría editorial fuerte.</li>
+        <li><strong>Personal:</strong> Lenny's Newsletter, Casey Newton's Platformer, Ben Thompson's Stratechery. Cuando el activo es la persona detrás.</li>
+      </ul>
+
+      <h2>Errores típicos en nombres de newsletter</h2>
+      <ul>
+        <li><strong>Demasiado descriptivo:</strong> "The Marketing for Founders Weekly Digest" pierde memoria.</li>
+        <li><strong>Demasiado abstracto:</strong> "Threads" no le dice nada al lector que no te conoce.</li>
+        <li><strong>Caracteres especiales:</strong> acentos, ampersands rompen URLs y emails.</li>
+        <li><strong>Ya tomado en Substack o Beehiiv:</strong> verificá antes de elegir.</li>
+        <li><strong>No funciona en handle de redes:</strong> @nombredemarca debe estar libre.</li>
+        <li><strong>Conflicto con marca conocida:</strong> "Apple Weekly" te trae problemas legales rápido.</li>
+      </ul>
+
+      <h2>Substack vs. Beehiiv vs. dominio propio</h2>
+      <p>
+        Donde alojás cambia ligeramente las restricciones del nombre.
+      </p>
+      <ul>
+        <li><strong>Substack:</strong> nombre.substack.com. Tener subdomain en el nombre es un peaje cosmético; conviene comprar dominio propio cuando crezcas.</li>
+        <li><strong>Beehiiv:</strong> permite dominio propio desde el inicio sin costo extra. Mejor SEO de día uno.</li>
+        <li><strong>Dominio propio + ConvertKit / Mailchimp:</strong> control total pero más trabajo de setup.</li>
+      </ul>
+      <p>
+        Si vas con Substack, el subdomain (nombre.substack.com) le agrega "substack" a cada link compartido — es un costo de marca. Beehiiv permite custom domain gratis. Dominio propio en cualquier ESP es lo más limpio pero requiere más infra.
+      </p>
+
+      <h2>Cómo testear el nombre antes de lanzarlo</h2>
+      <ol>
+        <li>Decilo en voz alta: ¿se entiende sin explicación?</li>
+        <li>Tipealo de memoria: ¿es fácil de escribir?</li>
+        <li>Buscá el handle en Twitter, Instagram, LinkedIn, TikTok.</li>
+        <li>Buscá el dominio .com — y compralo aunque uses Substack.</li>
+        <li>Buscalo en Substack y Beehiiv — ¿hay otra newsletter con ese nombre?</li>
+        <li>Búsqueda Google: ¿cuál es el SERP que devuelve hoy?</li>
+        <li>USPTO o INPI si pensás registrar marca a futuro.</li>
+      </ol>
+
+      <h2>Cuándo cambiar el nombre de una newsletter</h2>
+      <p>
+        Cambiar el nombre cuesta mucho — perdés reconocimiento de bandeja de entrada acumulado, ranking en Substack/Beehiiv, redirección de URLs. Solo justifica el cambio si: 1) cambiaste de tema central, 2) hay conflicto legal con marca registrada, 3) escalaste de personal a colectivo. En cualquier otro caso, mantené el nombre y diversificá con secciones, ediciones especiales o spinoffs.
+      </p>
+
+      <h2>El subtítulo o tagline de la newsletter</h2>
+      <p>
+        Si tu nombre es brandeable y no descriptivo, el subtítulo carga la promesa. "Stratechery" no dice nada solo, pero "Strategy and analysis of the strategy and business of the technology" cierra el círculo. En Substack y Beehiiv el subtítulo se ve junto al nombre en cada landing y en cada email — usalo bien.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno a un nombre?</summary><p>Comunica tema o ángulo en pocas palabras, fácil de teclear, claro al decirse.</p></details>
+      <details><summary>¿Mi nombre o de marca?</summary><p>Personal si construís audiencia propia. Marca si querés escalar a equipo o vender.</p></details>
+      <details><summary>¿Cuánto debe medir?</summary><p>1 a 3 palabras óptimo. Más se vuelve menos memorable.</p></details>
+      <details><summary>¿Substack o Beehiiv?</summary><p>Substack es popular. Beehiiv permite custom domain gratis. Dominio propio es lo más limpio.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .nl-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .nl-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 500; cursor: pointer; transition: border-color 0.1s; }
+  .nl-item:hover { border-color: var(--accent); }
+</style>
+
+<script>
+  const BRIEF_PRE = ['Morning', 'Daily', 'Weekly', 'Sunday', 'Friday', 'The Daily', 'The Weekly'];
+  const BRIEF_SUF = ['Brief', 'Brew', 'Notes', 'Memo', 'Wire', 'Cut', 'Drop', 'Roundup'];
+  const MEMO_PRE = ['Notes on', 'Memos from', 'Sidebar', 'Notebook', 'Annotations', 'Margins of'];
+  const MEMO_SUF = ['Notes', 'Memo', 'Notebook', 'Letters'];
+  const VISUAL = ['Dense Discovery', 'Wide Open', 'Slow Drip', 'Quiet Letter', 'Open Notebook', 'Curated', 'Sidetrack'];
+  const MOD_BASE = ['Lumen', 'Brio', 'Quira', 'Plux', 'Vexa', 'Tono', 'Onda', 'Reki', 'Yumi', 'Tovi'];
+  const MOD_SUF = ['', '', ' Letter', ' Notes', ' Brief', ' Weekly'];
+
+  const topic = document.getElementById('nl-topic') as HTMLInputElement;
+  const style = document.getElementById('nl-style') as HTMLSelectElement;
+  const gen = document.getElementById('nl-gen') as HTMLButtonElement;
+  const out = document.getElementById('nl-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function generate() {
+    const T = cap(topic.value.trim() || 'tema');
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'brief') {
+        if (Math.random() > 0.5) name = pick(BRIEF_PRE) + ' ' + T;
+        else name = T + ' ' + pick(BRIEF_SUF);
+      } else if (s === 'memo') {
+        if (Math.random() > 0.5) name = pick(MEMO_PRE) + ' ' + T;
+        else name = T + ' ' + pick(MEMO_SUF);
+      } else if (s === 'visual') {
+        name = pick(VISUAL);
+      } else {
+        name = pick(MOD_BASE) + pick(MOD_SUF);
+      }
+      if (name.length <= 30) set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'nl-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

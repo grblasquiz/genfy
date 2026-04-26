@@ -1,0 +1,151 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Email Subject Line Generator | Genfy';
+const description = 'Generate email subject lines with high open rates. Short, actionable, with numbers or curiosity. Ready for newsletters, sales or cold email.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many characters should a subject line have?', acceptedAnswer: { '@type': 'Answer', text: '30 to 50 is the sweet spot. On mobile (60% of opens) lines get cut at 35-40. Important content goes up front.' } },
+    { '@type': 'Question', name: 'Should I use emojis in subject lines?', acceptedAnswer: { '@type': 'Answer', text: 'It depends. In B2C lifestyle they lift opens 5-15%. In serious B2B and cold email they hurt credibility. A/B test before deciding.' } },
+    { '@type': 'Question', name: 'Which formulas have the best open rate?', acceptedAnswer: { '@type': 'Answer', text: 'Curiosity (without clickbait), promised concrete benefit, personalization with name or location, and real (not fake) urgency.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Email Subject Line Generator"
+    intro="Drop in topic and audience. Genfy applies the five formulas with the best open rates and returns 12 subject lines ready for A/B testing.">
+
+    <div slot="tool" class="es">
+      <label for="es-topic">Email topic</label>
+      <input id="es-topic" type="text" placeholder="new course, discount..." value="invoicing tips" />
+
+      <label for="es-aud" style="margin-top:1rem">Audience</label>
+      <input id="es-aud" type="text" placeholder="freelancers, founders..." value="freelancers" />
+
+      <label for="es-num" style="margin-top:1rem">Key number (optional)</label>
+      <input id="es-num" type="text" placeholder="4 hours, $300, 30%..." value="4 hours" />
+
+      <button id="es-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 subject lines</button>
+
+      <div id="es-out" class="es-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why the subject line outweighs the body</h2>
+      <p>
+        If nobody opens the email, the body doesn't exist. The industry treats open rate as a vanity metric, but it's the first math function of email marketing: any body optimization gets multiplied by the open rate. A perfect body at 15% open rate is worth less than a decent body at 35%.
+      </p>
+      <p>
+        That's why obsessing over the subject pays. A good list reaches 35-45% open rate; an excellent one, 50%+. The gap isn't in the body — it's in how the subject was written.
+      </p>
+
+      <h2>The five formulas with the best measured open rates</h2>
+      <ol>
+        <li><strong>Curiosity without clickbait:</strong> "What I learned billing wrong for 3 years." Promises a useful story. Doesn't deceive.</li>
+        <li><strong>Specific number + benefit:</strong> "Save 4 hours a month invoicing." Numbers anchor credibility.</li>
+        <li><strong>Direct question:</strong> "Was your last invoice wrong?" Triggers internal-response reflex.</li>
+        <li><strong>Real personalization:</strong> "Sarah, this is for you." Works only if the base supports it and you don't overuse.</li>
+        <li><strong>Real urgency (not fake):</strong> "Closes Friday." Only if true. Fake urgency burns the list fast.</li>
+      </ol>
+
+      <h2>The mobile factor almost nobody optimizes</h2>
+      <p>
+        Over 60% of emails open on mobile, where Gmail and Apple Mail show ~35-40 characters of the subject before cutting. If your subject is "Discover how to save 4 hours a month invoicing as a freelancer", the reader sees "Discover how to save 4 hours a m..." and that decides the open.
+      </p>
+      <p>Practical rule: critical content in the first 30 characters. Number, question, name. Details after.</p>
+
+      <h2>Common mistakes that tank open rate</h2>
+      <ul>
+        <li><strong>All caps:</strong> "EXCLUSIVE OFFER" triggers spam filters and drops opens 15%.</li>
+        <li><strong>Multiple exclamations:</strong> "!!!Don't miss this!!!" hurts credibility.</li>
+        <li><strong>Spam trigger words:</strong> "Free", "winner", "click now", "100% free" combined raise risk.</li>
+        <li><strong>Generic subjects:</strong> "Newsletter of the week" loses to 200 inbox competitors.</li>
+        <li><strong>Too long:</strong> 70+ characters lose half the message on mobile.</li>
+        <li><strong>Deceit:</strong> promising X and delivering Y burns the list. Once trust dies, it doesn't come back.</li>
+      </ul>
+
+      <h2>How to combine subject and preheader</h2>
+      <p>
+        The preheader is the second line that shows before opening. Most leave it empty or auto-pulled. A good preheader complements the subject: if the subject creates curiosity, the preheader deepens it; if it promises benefit, the preheader quantifies. Example:
+      </p>
+      <ul>
+        <li><strong>Subject:</strong> "What I learned billing wrong."</li>
+        <li><strong>Preheader:</strong> "3 years of mistakes I'll save you from in 4 minutes."</li>
+      </ul>
+      <p>That combination lifts open rate 30-40% over a subject with empty preheader.</p>
+
+      <h2>Subject A/B testing: how to do it right</h2>
+      <ol>
+        <li>Test one variable at a time (number vs no number, question vs statement).</li>
+        <li>Minimum 1,000 sends per variant for statistical significance.</li>
+        <li>Measure 24-48 hours; later opens are noise.</li>
+        <li>Adopt the winner and test a new variable. Compounding iteration delivers the best results.</li>
+      </ol>
+
+      <h2>When not to use emoji in the subject</h2>
+      <p>
+        Serious B2B cold email (CXO, procurement, legal): never. Lifestyle newsletters, ecommerce, fitness, food: yes, but one only and at the start. Transactional email: never. Rule: when in doubt, don't.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many characters?</summary><p>30-50 optimal. Mobile cuts at 35-40. Critical part up front.</p></details>
+      <details><summary>Emojis or no?</summary><p>B2C lifestyle: yes. Serious B2B: no. A/B test before deciding.</p></details>
+      <details><summary>Best formulas?</summary><p>Curiosity, number + benefit, direct question, real personalization, real urgency.</p></details>
+      <details><summary>What to avoid?</summary><p>All caps, multiple exclamations, spam trigger words, generic subjects.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .es-out { margin-top: 1.25rem; display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+  .es-item { padding: 0.75rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .es-item:hover { border-color: var(--accent); }
+  .es-text { flex: 1; }
+  .es-len { font-size: 0.75rem; color: var(--text-subtle); font-family: var(--font-mono); }
+</style>
+
+<script>
+  const topic = document.getElementById('es-topic') as HTMLInputElement;
+  const aud = document.getElementById('es-aud') as HTMLInputElement;
+  const num = document.getElementById('es-num') as HTMLInputElement;
+  const gen = document.getElementById('es-gen') as HTMLButtonElement;
+  const out = document.getElementById('es-out')!;
+
+  function generate() {
+    const T = topic.value.trim() || 'your topic';
+    const Tc = T.charAt(0).toUpperCase() + T.slice(1);
+    const A = aud.value.trim() || 'readers';
+    const N = num.value.trim() || '30%';
+
+    const list = [
+      `${N} less on ${T}`,
+      `What I learned about ${T}`,
+      `${Tc}: the quick guide`,
+      `Is ${T} costing you time?`,
+      `${Tc} in 5 minutes`,
+      `For ${A}: ${T}`,
+      `${N} saved on ${T}`,
+      `${Tc} without the hassle`,
+      `How I solved ${T}`,
+      `This is for ${A}`,
+      `${Tc} (short version)`,
+      `Your plan for ${T}`,
+    ];
+
+    out.innerHTML = '';
+    list.forEach(s => {
+      const el = document.createElement('div');
+      el.className = 'es-item';
+      el.title = 'Click to copy';
+      el.innerHTML = `<span class="es-text">${s}</span><span class="es-len">${s.length}</span>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(s); const orig = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

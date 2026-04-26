@@ -1,0 +1,139 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de oraciones aleatorias gratis | Genfy';
+const description = 'Generá oraciones aleatorias en español al instante. Útil para escritura creativa, prompts, ejercicios de gramática y juegos de palabras.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve el generador de oraciones?', acceptedAnswer: { '@type': 'Answer', text: 'Sirve como prompt de escritura, ejercicio de gramática, base para improvisación y para destrabar textos cuando no sabés cómo arrancar.' } },
+    { '@type': 'Question', name: '¿Las oraciones tienen sentido?', acceptedAnswer: { '@type': 'Answer', text: 'Tienen estructura gramatical correcta (sujeto + verbo + complemento) pero combinaciones absurdas a propósito. Esa rareza es lo que dispara la creatividad.' } },
+    { '@type': 'Question', name: '¿Puedo elegir el tono?', acceptedAnswer: { '@type': 'Answer', text: 'Sí: cotidiano, surrealista o pregunta. Cada modo arma plantillas distintas.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto / Words" title="Generador de oraciones aleatorias"
+    intro="Oraciones al azar para arrancar a escribir, practicar gramática o jugar a improvisar. Elegí cuántas y en qué tono.">
+
+    <div slot="tool" class="rs">
+      <div class="rs-row">
+        <div>
+          <label for="rs-amount">Cantidad</label>
+          <input id="rs-amount" type="number" min="1" max="20" value="3" />
+        </div>
+        <div>
+          <label for="rs-mode">Tono</label>
+          <select id="rs-mode">
+            <option value="daily">Cotidiano</option>
+            <option value="surreal">Surrealista</option>
+            <option value="question">Pregunta</option>
+          </select>
+        </div>
+      </div>
+      <button id="rs-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="rs-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="rs-out" rows="10" readonly style="margin-top:1rem; font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Para qué sirve generar oraciones al azar</h2>
+      <p>
+        La oración aleatoria es un prompt más poderoso que la palabra suelta porque ya tiene
+        estructura: alguien, hace algo, en algún lado. Tu cerebro la lee como una mini-escena y
+        empieza a llenar el contexto. Es ideal para arrancar un texto, un cuento corto, un
+        sketch de improvisación, una clase de idiomas, o simplemente vencer la página en blanco.
+      </p>
+
+      <h2>Tres modos, tres usos</h2>
+      <ul>
+        <li><strong>Cotidiano.</strong> Frases verosímiles para ejercicios de gramática, dictados o aprendizaje de español como segunda lengua.</li>
+        <li><strong>Surrealista.</strong> Combinaciones inesperadas que disparan ideas para guiones, poesía o publicidad.</li>
+        <li><strong>Pregunta.</strong> Buenas para prompts de podcast, dinámicas grupales y journaling.</li>
+      </ul>
+
+      <h2>Cómo lo usan los escritores</h2>
+      <p>
+        Una técnica conocida en talleres de escritura es generar tres oraciones aleatorias y
+        escribir un texto de 300 palabras donde aparezcan literales. La restricción de tener que
+        encajarlas obliga a tomar decisiones narrativas que probablemente no hubieras tomado.
+        El resultado casi siempre es más original que un texto sin restricción.
+      </p>
+
+      <h2>Improvisación y juegos en grupo</h2>
+      <p>
+        En clases de teatro o talleres creativos, el generador funciona como "primera línea":
+        un actor lee la oración y otro continúa. En reuniones de equipo aburridas, sirve como
+        ice-breaker no obvio: cada uno cuenta cómo entendió la frase. La rareza obliga a
+        bajar la guardia y eso es justo lo que necesita un grupo nuevo.
+      </p>
+
+      <h2>Practicar idiomas</h2>
+      <p>
+        Si estás aprendiendo español, generá una oración cotidiana y traducila a tu idioma sin
+        diccionario. Después comparala con una traducción real. Es un ejercicio rápido, no
+        memoriza patrones repetidos y entrena el músculo de leer estructura, no palabras
+        sueltas.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve?</summary><p>Como prompt de escritura, ejercicio de gramática, base de improvisación y para vencer la página en blanco.</p></details>
+      <details><summary>¿Tienen sentido?</summary><p>Tienen estructura gramatical correcta. En modo surrealista las combinaciones son absurdas a propósito.</p></details>
+      <details><summary>¿Puedo elegir el tono?</summary><p>Sí: cotidiano, surrealista o pregunta.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rs-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const SUBJ = ["El gato","La maestra","Mi vecino","El cartero","Una niña","El cocinero","El programador","La doctora","Mi abuela","El piloto","El jardinero","La cantante","El estudiante","Un turista","El mecánico"];
+  const VERB = ["camina hacia","mira","llama a","dibuja","busca","encuentra","explica","pierde","arregla","describe","saluda a","escucha a","escribe sobre","fotografía","compra"];
+  const OBJ = ["la ventana abierta","un mapa antiguo","el tren de las siete","una taza de té","el banco del parque","tres cajas de cartón","el último capítulo","una bicicleta roja","la lluvia de marzo","el silencio del lunes","una carta sin firmar","el portón del fondo","los apuntes de ayer","una conversación olvidada","el reloj de la sala"];
+  const SURR_S = ["El silencio","Una pregunta","El martes","Mi sombra","La duda","Un recuerdo","El frío","Tu nombre","La distancia","Una pausa"];
+  const SURR_V = ["sabe a","camina como","duerme entre","escribe sobre","negocia con","huele a","baila con","discute con","se parece a","se esconde en"];
+  const SURR_O = ["café tibio","una pregunta sin respuesta","los miércoles lentos","el bolsillo de un abrigo","una versión más joven","cuadernos rotos","un domingo de niebla","la primera vez que mentiste","una promesa pequeña","las paredes blancas"];
+  const Q_TPL = [
+    (a:string,b:string) => `¿Qué harías si ${a} ${b}?`,
+    (a:string,b:string) => `¿Por qué ${a} siempre ${b}?`,
+    (a:string,b:string) => `¿Cómo describirías ${a} a alguien que ${b}?`,
+    (a:string,b:string) => `¿Cuándo fue la última vez que ${a} ${b}?`,
+    (a:string,b:string) => `¿Qué pasaría si mañana ${a} ${b}?`,
+  ];
+  const Q_A = ["el invierno llegara temprano","tu jefe te pidiera la verdad","tuvieras que mudarte mañana","encontraras una carta vieja","no existieran los lunes","todos hablaran un mismo idioma","te tocara empezar de cero","no hubiera relojes en la casa","alguien te ofreciera dos vidas","perdieras la conexión a internet"];
+  const Q_B = ["tomarías la primera decisión","te quedarías en silencio","cambiarías de planes","dirías la verdad completa","caminarías sin mirar atrás","reescribirías esa historia","aceptarías el riesgo","pedirías ayuda","perdonarías sin condiciones","te mudarías sin avisar"];
+
+  const amountEl = document.getElementById('rs-amount') as HTMLInputElement;
+  const modeEl = document.getElementById('rs-mode') as HTMLSelectElement;
+  const out = document.getElementById('rs-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('rs-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('rs-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function makeOne() {
+    const m = modeEl.value;
+    if (m === 'daily') return `${pick(SUBJ)} ${pick(VERB)} ${pick(OBJ)}.`;
+    if (m === 'surreal') return `${pick(SURR_S)} ${pick(SURR_V)} ${pick(SURR_O)}.`;
+    const tpl = pick(Q_TPL); return tpl(pick(Q_A), pick(Q_B));
+  }
+  function generate() {
+    const n = Math.max(1, Math.min(20, parseInt(amountEl.value || '3', 10)));
+    const arr: string[] = [];
+    for (let i = 0; i < n; i++) arr.push(makeOne());
+    out.value = arr.join('\n\n');
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

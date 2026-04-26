@@ -1,0 +1,208 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de UUID v4 online | Genfy';
+const description = 'Generá UUIDs v4 (y v7) aleatorios, individuales o en lote. Compatible con bases de datos, APIs y testing. Funciona 100% en tu navegador.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es un UUID y para qué sirve?', acceptedAnswer: { '@type': 'Answer', text: 'Un UUID (Universally Unique Identifier) es un identificador de 128 bits que casi nunca se repite. Se usa como clave primaria en bases de datos, ID de objetos en APIs y trazas distribuidas.' } },
+    { '@type': 'Question', name: '¿Diferencia entre UUID v4 y v7?', acceptedAnswer: { '@type': 'Answer', text: 'v4 es completamente aleatorio. v7 incorpora un timestamp Unix en milisegundos al principio, lo que lo hace ordenable cronológicamente y mejora el rendimiento de los índices B-tree.' } },
+    { '@type': 'Question', name: '¿Pueden colisionar dos UUIDs?', acceptedAnswer: { '@type': 'Answer', text: 'En la práctica, no. Generar suficientes UUID v4 como para tener un 50% de chance de colisión requeriría 2.71 trillones de UUIDs. Es seguro asumir que cada uno será único.' } },
+    { '@type': 'Question', name: '¿Es mejor UUID o ULID/CUID?', acceptedAnswer: { '@type': 'Answer', text: 'UUID está estandarizado (RFC 4122) y soportado en todos lados. ULID y CUID son alternativas más cortas y ordenables, útiles cuando importa la legibilidad y el orden temporal.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech"
+    title="Generador de UUID"
+    intro="Generá identificadores únicos universales (UUID) según la RFC 4122. Versión 4 (aleatorio) o versión 7 (ordenable por tiempo). Individuales o en lote."
+  >
+    <div slot="tool" class="uuid-tool">
+      <div class="uuid-output">
+        <input id="uuid-out" class="mono" readonly aria-label="UUID generado" />
+        <button id="uuid-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+
+      <div class="uuid-controls">
+        <div>
+          <label for="uuid-ver">Versión</label>
+          <select id="uuid-ver">
+            <option value="4" selected>UUID v4 (aleatorio)</option>
+            <option value="7">UUID v7 (con timestamp)</option>
+          </select>
+        </div>
+        <div>
+          <label for="uuid-case">Mayúsculas</label>
+          <select id="uuid-case">
+            <option value="lower" selected>Minúsculas</option>
+            <option value="upper">Mayúsculas</option>
+          </select>
+        </div>
+        <div>
+          <label for="uuid-bulk">Cantidad</label>
+          <input id="uuid-bulk" type="number" min="1" max="500" value="1" />
+        </div>
+      </div>
+
+      <div class="uuid-actions">
+        <button id="uuid-gen" class="btn btn-primary" type="button">Generar</button>
+      </div>
+
+      <textarea id="uuid-list" class="mono" rows="6" readonly hidden></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>¿Qué es un UUID?</h2>
+      <p>
+        Un UUID (Universally Unique Identifier) es un identificador de 128 bits especificado en
+        la RFC 4122. Se representa como 32 caracteres hexadecimales separados en cinco grupos por
+        guiones: <code>xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx</code>, donde <code>M</code> indica
+        la versión y <code>N</code> los bits de variante. Existen siete versiones; las más
+        usadas hoy son v4 y v7.
+      </p>
+      <p>
+        Su propósito es resolver el problema de generar identificadores únicos en sistemas
+        distribuidos sin coordinarse con un servidor central. Si dos máquinas generan UUIDs al
+        mismo tiempo, la probabilidad de colisión es despreciable.
+      </p>
+
+      <h2>UUID v4 vs UUID v7</h2>
+      <p>
+        <strong>UUID v4</strong> es 122 bits de aleatoriedad pura, con 6 bits fijos de versión y
+        variante. Excelente para casos donde no querés revelar nada sobre el orden de creación
+        ni la frecuencia.
+      </p>
+      <p>
+        <strong>UUID v7</strong> (estandarizado en RFC 9562, 2024) coloca un timestamp Unix de
+        48 bits al principio, seguido de 74 bits de aleatoriedad. Resultado: los UUIDs son
+        ordenables por tiempo, lo que mejora drásticamente el rendimiento de los índices B-tree
+        en bases de datos como PostgreSQL o MySQL. Si insertás millones de filas con UUIDs v4,
+        el índice se fragmenta; con v7, no.
+      </p>
+
+      <h2>Cuándo usar UUID en lugar de un entero autoincremental</h2>
+      <ul>
+        <li><strong>APIs públicas:</strong> los UUIDs no revelan cuántos registros tenés ni a qué velocidad crecen.</li>
+        <li><strong>Sistemas distribuidos:</strong> múltiples nodos pueden generar IDs sin coordinarse.</li>
+        <li><strong>Migración entre bases:</strong> los IDs no chocan al fusionar datasets.</li>
+        <li><strong>IDs visibles para el usuario:</strong> evitan el patrón "ID 1, ID 2..." que invita a enumerar.</li>
+        <li><strong>Frontend optimista:</strong> el cliente puede crear el UUID antes de que el servidor confirme.</li>
+      </ul>
+
+      <h2>Cuándo seguir usando autoincremental</h2>
+      <p>
+        Los UUID no son gratis. Ocupan más espacio (16 bytes vs 4-8 de un entero), son más caros
+        de comparar y generan índices más grandes. En tablas internas con miles de millones de
+        filas y consultas críticas, un BIGINT autoincremental sigue ganando. Algunas estrategias
+        híbridas guardan ambos: la PK interna es BIGINT, el UUID es público.
+      </p>
+
+      <h2>Probabilidad de colisión</h2>
+      <p>
+        Aplicando la paradoja del cumpleaños, para tener 50% de chance de colisión entre UUIDs v4
+        habría que generar 2.71 × 10^18 (2,7 trillones) de identificadores. A 1.000 millones por
+        segundo, llevaría unos 85 años de cómputo continuo. En la práctica, podés tratar al UUID
+        como único sin preocuparte.
+      </p>
+
+      <h2>Validación e inserción</h2>
+      <p>
+        El formato es siempre el mismo: 8-4-4-4-12 caracteres hexadecimales. PostgreSQL tiene un
+        tipo <code>uuid</code> nativo que ocupa 16 bytes. MySQL no, pero podés usar
+        <code>BINARY(16)</code> con UUID_TO_BIN/BIN_TO_UUID. SQLite y MongoDB lo guardan
+        directamente como string.
+      </p>
+
+      <h2>Privacidad y reproducibilidad</h2>
+      <p>
+        Genfy usa <code>crypto.randomUUID()</code> cuando está disponible (todos los navegadores
+        modernos) y un fallback con <code>crypto.getRandomValues</code> si no. Todo es
+        client-side: nada se loguea ni se envía.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es un UUID y para qué sirve?</summary><p>Un UUID es un identificador único de 128 bits (RFC 4122). Se usa como clave primaria, ID en APIs y trazas distribuidas.</p></details>
+      <details><summary>¿Diferencia entre UUID v4 y v7?</summary><p>v4 es 100% aleatorio. v7 incluye un timestamp y es ordenable cronológicamente, lo que mejora los índices de bases de datos.</p></details>
+      <details><summary>¿Pueden colisionar?</summary><p>Estadísticamente no. Generar trillones de UUIDs sería necesario para tener 50% de chance de colisión.</p></details>
+      <details><summary>¿UUID o ULID/CUID?</summary><p>UUID está estandarizado y soportado en todos lados. ULID/CUID son más cortos y ordenables; útiles cuando importa la legibilidad.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .uuid-output { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .uuid-output input { font-family: var(--font-mono); font-size: 1rem; background: var(--bg-inset); }
+  .uuid-output .btn { min-width: 92px; }
+  .uuid-controls { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
+  @media (max-width: 600px) { .uuid-controls { grid-template-columns: 1fr; } }
+  .uuid-actions { margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; }
+</style>
+
+<script>
+  const out = document.getElementById('uuid-out') as HTMLInputElement;
+  const copy = document.getElementById('uuid-copy') as HTMLButtonElement;
+  const gen = document.getElementById('uuid-gen') as HTMLButtonElement;
+  const ver = document.getElementById('uuid-ver') as HTMLSelectElement;
+  const cs = document.getElementById('uuid-case') as HTMLSelectElement;
+  const bulk = document.getElementById('uuid-bulk') as HTMLInputElement;
+  const list = document.getElementById('uuid-list') as HTMLTextAreaElement;
+
+  function uuidV4(): string {
+    if (typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+    const b = new Uint8Array(16);
+    crypto.getRandomValues(b);
+    b[6] = (b[6] & 0x0f) | 0x40;
+    b[8] = (b[8] & 0x3f) | 0x80;
+    const h: string[] = []; for (let i = 0; i < 16; i++) h.push(b[i].toString(16).padStart(2, '0'));
+    return `${h.slice(0,4).join('')}-${h.slice(4,6).join('')}-${h.slice(6,8).join('')}-${h.slice(8,10).join('')}-${h.slice(10,16).join('')}`;
+  }
+  function uuidV7(): string {
+    const ts = Date.now();
+    const b = new Uint8Array(16);
+    crypto.getRandomValues(b);
+    b[0] = (ts / 2 ** 40) & 0xff;
+    b[1] = (ts / 2 ** 32) & 0xff;
+    b[2] = (ts >>> 24) & 0xff;
+    b[3] = (ts >>> 16) & 0xff;
+    b[4] = (ts >>> 8) & 0xff;
+    b[5] = ts & 0xff;
+    b[6] = (b[6] & 0x0f) | 0x70;
+    b[8] = (b[8] & 0x3f) | 0x80;
+    const h: string[] = []; for (let i = 0; i < 16; i++) h.push(b[i].toString(16).padStart(2, '0'));
+    return `${h.slice(0,4).join('')}-${h.slice(4,6).join('')}-${h.slice(6,8).join('')}-${h.slice(8,10).join('')}-${h.slice(10,16).join('')}`;
+  }
+  function one(): string {
+    const id = ver.value === '7' ? uuidV7() : uuidV4();
+    return cs.value === 'upper' ? id.toUpperCase() : id;
+  }
+  function generate() {
+    const n = Math.min(500, Math.max(1, parseInt(bulk.value || '1', 10)));
+    if (n === 1) {
+      out.value = one(); list.hidden = true;
+    } else {
+      const arr: string[] = []; for (let i = 0; i < n; i++) arr.push(one());
+      out.value = arr[0]; list.value = arr.join('\n'); list.hidden = false;
+    }
+  }
+  gen.addEventListener('click', generate);
+  [ver, cs, bulk].forEach(el => el.addEventListener('change', generate));
+  async function doCopy() {
+    const txt = !list.hidden ? list.value : out.value;
+    if (!txt) return;
+    await navigator.clipboard.writeText(txt);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copiado</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copiar'; delete copy.dataset.copied; }, 1400);
+  }
+  copy.addEventListener('click', doCopy);
+  generate();
+</script>

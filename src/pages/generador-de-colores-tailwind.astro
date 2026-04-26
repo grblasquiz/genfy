@@ -1,0 +1,267 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de colores estilo Tailwind | Genfy';
+const description = 'Generá una escala de 11 tonos (50-950) tipo Tailwind a partir de cualquier color base. Copiá los HEX listos para tu config o usá la paleta oficial completa.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo construye Tailwind sus escalas de color?', acceptedAnswer: { '@type': 'Answer', text: 'Tailwind usa una escala perceptual basada en lightness en HSL/OKLCH ajustada a mano. No es lineal: 500 es el centro semántico, no el medio matemático entre 50 y 950.' } },
+    { '@type': 'Question', name: '¿Para qué sirve cada tono?', acceptedAnswer: { '@type': 'Answer', text: '50-100 fondos sutiles, 200-300 bordes, 400-500 íconos y placeholders, 600-700 botones primarios, 800-900 texto, 950 modo oscuro extremo.' } },
+    { '@type': 'Question', name: '¿Cómo lo agrego a mi tailwind.config?', acceptedAnswer: { '@type': 'Answer', text: 'Copiá el objeto generado dentro de theme.extend.colors.brand. Eso te da clases como bg-brand-500, text-brand-700, border-brand-200.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño" title="Generador de colores estilo Tailwind"
+    intro="Generá una escala de 11 tonos (50-950) a partir de cualquier color base. Listo para tu tailwind.config, también podés ver la paleta oficial completa.">
+
+    <div slot="tool" class="tw-tool">
+      <div class="tw-controls">
+        <div>
+          <label for="tw-base">Color base</label>
+          <input id="tw-base" type="color" value="#059669" />
+        </div>
+        <div>
+          <label for="tw-name">Nombre</label>
+          <input id="tw-name" type="text" value="brand" maxlength="20" />
+        </div>
+        <div class="tw-actions">
+          <button id="tw-gen" class="btn btn-primary" type="button">Generar escala</button>
+          <button id="tw-copy" class="btn btn-ghost" type="button">Copiar config</button>
+        </div>
+      </div>
+
+      <div id="tw-scale" class="tw-scale"></div>
+
+      <label for="tw-out">Tu objeto para tailwind.config</label>
+      <textarea id="tw-out" rows="14" readonly></textarea>
+
+      <details class="tw-official">
+        <summary>Ver paleta oficial completa de Tailwind</summary>
+        <div id="tw-official-grid"></div>
+      </details>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo Tailwind construye sus escalas</h2>
+      <p>
+        Cada color de Tailwind (red, blue, emerald, etc.) tiene 11 tonos: 50, 100, 200,
+        300, 400, 500, 600, 700, 800, 900, 950. No son interpolación lineal de un color
+        base: cada tono está ajustado <em>a mano</em> en lightness y saturation para
+        verse perceptualmente uniforme. Por eso un <code>blue-500</code> y un
+        <code>red-500</code> sienten que pesan lo mismo, aunque matemáticamente son muy
+        distintos.
+      </p>
+
+      <h2>Qué tono usar para qué</h2>
+      <ul>
+        <li><strong>50-100:</strong> fondos sutiles, hover states muy livianos.</li>
+        <li><strong>200-300:</strong> bordes, separadores, fondos de tags y badges.</li>
+        <li><strong>400-500:</strong> íconos secundarios, placeholders, ilustraciones.</li>
+        <li><strong>600-700:</strong> botones primarios, links, CTAs (cumple AA con texto blanco).</li>
+        <li><strong>800-900:</strong> texto sobre fondo claro, headings.</li>
+        <li><strong>950:</strong> texto extremo, modo oscuro intenso, backgrounds en dark mode.</li>
+      </ul>
+
+      <h2>Por qué duplicar la paleta de Tailwind no siempre es buena idea</h2>
+      <p>
+        Si tu marca usa un verde particular, generar una escala desde cero es tentador.
+        Pero las escalas oficiales de Tailwind están testeadas para accesibilidad: el 600
+        casi siempre pasa AA contra blanco, y el 100 contra el 800. Una escala mal
+        balanceada puede romper esa garantía. Si dudás, mantené las escalas oficiales
+        para grises y estados, y agregá solo tu color de marca.
+      </p>
+
+      <h2>Cómo integrarlo en tu proyecto</h2>
+      <pre><code>// tailwind.config.js
+module.exports = &lcub;
+  theme: &lcub;
+    extend: &lcub;
+      colors: &lcub;
+        brand: &lcub; 50: '#...', 100: '#...', /* ... */ 950: '#...' &rcub;,
+      &rcub;,
+    &rcub;,
+  &rcub;,
+&rcub;</code></pre>
+      <p>
+        Ahora tenés clases <code>bg-brand-500</code>, <code>text-brand-700</code>,
+        <code>border-brand-200</code> en todo tu proyecto. Si usás Tailwind 4 con la
+        sintaxis CSS-first, el bloque va dentro de <code>@theme</code>.
+      </p>
+
+      <h2>OKLCH: el futuro de las paletas</h2>
+      <p>
+        Tailwind 4 migró sus colores de RGB a OKLCH, un espacio de color perceptualmente
+        uniforme. La diferencia: en HSL, dos colores con la misma L pueden percibirse muy
+        distintos en brillo (verde y azul al 50% L se ven diferentes). En OKLCH no.
+        Eso permite escalas más naturales, especialmente en magentas y violetas que
+        siempre fueron problemáticos en HSL.
+      </p>
+
+      <h2>Errores frecuentes al generar tu propia escala</h2>
+      <ol>
+        <li><strong>Mantener la misma saturación en todos los tonos.</strong> Los extremos (50 y 950) deben tener menos saturación, sino se ven artificiales.</li>
+        <li><strong>No verificar contraste.</strong> Tu nuevo color-600 puede no pasar AA. Verificalo siempre antes de mandarlo a producción.</li>
+        <li><strong>Duplicar el color base como 500.</strong> A veces el color de marca es muy oscuro y mejor encaja como 600 o 700, generando 500 por interpolación hacia el blanco.</li>
+        <li><strong>Olvidar el 950.</strong> Si hacés modo oscuro, lo vas a necesitar para fondos profundos.</li>
+      </ol>
+
+      <h2>Cuándo NO necesitás una paleta personalizada</h2>
+      <p>
+        Si tu producto está en fase MVP y todavía no decidiste el branding final, usá
+        directamente las escalas oficiales (slate, blue, emerald). Migrar después es
+        trivial; lanzar con una paleta a medio cocinar es lo que cuesta caro.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo construye Tailwind sus escalas?</summary><p>Con lightness perceptual (HSL/OKLCH) ajustada a mano. No es lineal: 500 es el centro semántico, no el medio matemático.</p></details>
+      <details><summary>¿Qué tono uso para qué?</summary><p>50-100 fondos sutiles, 200-300 bordes, 400-500 íconos, 600-700 botones primarios, 800-900 texto, 950 modo oscuro extremo.</p></details>
+      <details><summary>¿Cómo lo agrego a tailwind.config?</summary><p>Pegá el objeto dentro de <code>theme.extend.colors</code>. Tendrás clases como <code>bg-brand-500</code>.</p></details>
+      <details><summary>¿Funciona con Tailwind 4?</summary><p>Sí. En la sintaxis CSS-first, va dentro de <code>@theme</code> como variables CSS.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tw-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; align-items: end; }
+  .tw-actions { grid-column: 1 / -1; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  #tw-base { padding: 0.25rem; height: 42px; cursor: pointer; }
+  .tw-scale { display: grid; grid-template-columns: repeat(11, 1fr); gap: 0.25rem; margin-bottom: 1rem; }
+  .tw-shade { aspect-ratio: 1 / 1.5; border-radius: var(--radius-sm); display: flex; flex-direction: column; justify-content: flex-end; padding: 0.375rem; cursor: pointer; border: 1px solid var(--border); position: relative; transition: transform var(--t-base) var(--ease); }
+  .tw-shade:hover { transform: translateY(-2px); }
+  .tw-shade .num { font-size: 0.625rem; font-weight: 700; opacity: 0.85; }
+  .tw-shade .hex { font-size: 0.625rem; font-family: var(--font-mono); opacity: 0.85; }
+  textarea#tw-out { font-family: var(--font-mono); font-size: 0.8125rem; }
+  .tw-official { margin-top: 1.5rem; }
+  .tw-official summary { cursor: pointer; padding: 0.75rem 1rem; background: var(--bg-inset); border-radius: var(--radius); border: 1px solid var(--border); font-weight: 500; }
+  #tw-official-grid { padding-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .tw-row { display: grid; grid-template-columns: 80px repeat(11, 1fr); gap: 0.125rem; align-items: center; font-size: 0.75rem; }
+  .tw-row .name { font-weight: 600; }
+  .tw-row .cell { aspect-ratio: 1; border-radius: 4px; cursor: pointer; border: 1px solid var(--border-soft); }
+  @media (max-width: 700px) { .tw-scale { grid-template-columns: repeat(6, 1fr); } .tw-controls { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const baseEl = document.getElementById('tw-base') as HTMLInputElement;
+  const nameEl = document.getElementById('tw-name') as HTMLInputElement;
+  const genEl = document.getElementById('tw-gen') as HTMLButtonElement;
+  const copyEl = document.getElementById('tw-copy') as HTMLButtonElement;
+  const scaleEl = document.getElementById('tw-scale') as HTMLDivElement;
+  const outEl = document.getElementById('tw-out') as HTMLTextAreaElement;
+  const officialEl = document.getElementById('tw-official-grid') as HTMLDivElement;
+
+  const stops = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+  const lightnessMap: Record<number, number> = { 50: 97, 100: 94, 200: 86, 300: 76, 400: 64, 500: 52, 600: 44, 700: 36, 800: 28, 900: 20, 950: 12 };
+
+  function hexToHsl(hex: string) {
+    hex = hex.replace('#', '');
+    const r = parseInt(hex.slice(0, 2), 16) / 255;
+    const g = parseInt(hex.slice(2, 4), 16) / 255;
+    const b = parseInt(hex.slice(4, 6), 16) / 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h = 0, s = 0; const l = (max + min) / 2;
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      if (max === r) h = ((g - b) / d + (g < b ? 6 : 0));
+      else if (max === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
+      h *= 60;
+    }
+    return { h, s: s * 100, l: l * 100 };
+  }
+  function hslToHex(h: number, s: number, l: number) {
+    s /= 100; l /= 100;
+    const k = (n: number) => (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    const toHex = (x: number) => Math.round(x * 255).toString(16).padStart(2, '0');
+    return '#' + toHex(f(0)) + toHex(f(8)) + toHex(f(4));
+  }
+  function genScale(hex: string): Record<number, string> {
+    const { h, s } = hexToHsl(hex);
+    const out: Record<number, string> = {};
+    stops.forEach(stop => {
+      const l = lightnessMap[stop];
+      // Reduce saturation at extremes
+      const sAdj = stop <= 100 || stop >= 900 ? s * 0.55 : s;
+      out[stop] = hslToHex(h, Math.min(100, sAdj), l).toUpperCase();
+    });
+    return out;
+  }
+  function render() {
+    const scale = genScale(baseEl.value);
+    scaleEl.innerHTML = '';
+    stops.forEach(stop => {
+      const c = scale[stop];
+      const l = lightnessMap[stop];
+      const sw = document.createElement('div');
+      sw.className = 'tw-shade';
+      sw.style.background = c;
+      sw.style.color = l > 55 ? '#09090b' : '#fafafa';
+      sw.innerHTML = `<span class="num">${stop}</span><span class="hex">${c}</span>`;
+      sw.addEventListener('click', () => {
+        navigator.clipboard.writeText(c);
+        const orig = sw.querySelector('.hex')!.textContent;
+        sw.querySelector('.hex')!.textContent = '¡copiado!';
+        setTimeout(() => { sw.querySelector('.hex')!.textContent = orig; }, 900);
+      });
+      scaleEl.appendChild(sw);
+    });
+    const name = nameEl.value || 'brand';
+    const lines = stops.map(s => `    ${s}: '${scale[s]}',`).join('\n');
+    outEl.value = `colors: {\n  ${name}: {\n${lines}\n  },\n},`;
+  }
+  genEl.addEventListener('click', render);
+  baseEl.addEventListener('input', render);
+  nameEl.addEventListener('input', render);
+  copyEl.addEventListener('click', () => {
+    navigator.clipboard.writeText(outEl.value);
+    copyEl.textContent = '¡Copiado!';
+    setTimeout(() => { copyEl.textContent = 'Copiar config'; }, 1200);
+  });
+
+  // Official Tailwind palette (subset of seed hues)
+  const TW: Record<string, Record<number, string>> = {
+    slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617' },
+    gray: { 50: '#f9fafb', 100: '#f3f4f6', 200: '#e5e7eb', 300: '#d1d5db', 400: '#9ca3af', 500: '#6b7280', 600: '#4b5563', 700: '#374151', 800: '#1f2937', 900: '#111827', 950: '#030712' },
+    zinc: { 50: '#fafafa', 100: '#f4f4f5', 200: '#e4e4e7', 300: '#d4d4d8', 400: '#a1a1aa', 500: '#71717a', 600: '#52525b', 700: '#3f3f46', 800: '#27272a', 900: '#18181b', 950: '#09090b' },
+    red: { 50: '#fef2f2', 100: '#fee2e2', 200: '#fecaca', 300: '#fca5a5', 400: '#f87171', 500: '#ef4444', 600: '#dc2626', 700: '#b91c1c', 800: '#991b1b', 900: '#7f1d1d', 950: '#450a0a' },
+    orange: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12', 950: '#431407' },
+    amber: { 50: '#fffbeb', 100: '#fef3c7', 200: '#fde68a', 300: '#fcd34d', 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', 700: '#b45309', 800: '#92400e', 900: '#78350f', 950: '#451a03' },
+    yellow: { 50: '#fefce8', 100: '#fef9c3', 200: '#fef08a', 300: '#fde047', 400: '#facc15', 500: '#eab308', 600: '#ca8a04', 700: '#a16207', 800: '#854d0e', 900: '#713f12', 950: '#422006' },
+    lime: { 50: '#f7fee7', 100: '#ecfccb', 200: '#d9f99d', 300: '#bef264', 400: '#a3e635', 500: '#84cc16', 600: '#65a30d', 700: '#4d7c0f', 800: '#3f6212', 900: '#365314', 950: '#1a2e05' },
+    green: { 50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac', 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d', 800: '#166534', 900: '#14532d', 950: '#052e16' },
+    emerald: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b', 950: '#022c22' },
+    teal: { 50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a', 950: '#042f2e' },
+    cyan: { 50: '#ecfeff', 100: '#cffafe', 200: '#a5f3fc', 300: '#67e8f9', 400: '#22d3ee', 500: '#06b6d4', 600: '#0891b2', 700: '#0e7490', 800: '#155e75', 900: '#164e63', 950: '#083344' },
+    sky: { 50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd', 300: '#7dd3fc', 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e', 950: '#082f49' },
+    blue: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554' },
+    indigo: { 50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81', 950: '#1e1b4b' },
+    violet: { 50: '#f5f3ff', 100: '#ede9fe', 200: '#ddd6fe', 300: '#c4b5fd', 400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9', 800: '#5b21b6', 900: '#4c1d95', 950: '#2e1065' },
+    purple: { 50: '#faf5ff', 100: '#f3e8ff', 200: '#e9d5ff', 300: '#d8b4fe', 400: '#c084fc', 500: '#a855f7', 600: '#9333ea', 700: '#7e22ce', 800: '#6b21a8', 900: '#581c87', 950: '#3b0764' },
+    fuchsia: { 50: '#fdf4ff', 100: '#fae8ff', 200: '#f5d0fe', 300: '#f0abfc', 400: '#e879f9', 500: '#d946ef', 600: '#c026d3', 700: '#a21caf', 800: '#86198f', 900: '#701a75', 950: '#4a044e' },
+    pink: { 50: '#fdf2f8', 100: '#fce7f3', 200: '#fbcfe8', 300: '#f9a8d4', 400: '#f472b6', 500: '#ec4899', 600: '#db2777', 700: '#be185d', 800: '#9d174d', 900: '#831843', 950: '#500724' },
+    rose: { 50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3', 300: '#fda4af', 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 700: '#be123c', 800: '#9f1239', 900: '#881337', 950: '#4c0519' },
+  };
+  Object.keys(TW).forEach(name => {
+    const row = document.createElement('div');
+    row.className = 'tw-row';
+    row.innerHTML = `<span class="name">${name}</span>` + stops.map(s => `<div class="cell" style="background:${TW[name][s]}" data-hex="${TW[name][s]}" title="${name}-${s}: ${TW[name][s]}"></div>`).join('');
+    officialEl.appendChild(row);
+  });
+  officialEl.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    if (t.classList.contains('cell')) {
+      navigator.clipboard.writeText(t.dataset.hex!);
+      t.style.outline = '2px solid #059669';
+      setTimeout(() => { t.style.outline = ''; }, 600);
+    }
+  });
+
+  render();
+</script>

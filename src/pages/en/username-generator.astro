@@ -1,0 +1,119 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+import { USERNAME_PARTS } from '../../lib/persona-names';
+
+const title = 'Username Generator | Genfy';
+const description = 'Generate unique usernames for Instagram, TikTok, gaming and more. Adjective + noun + suffix combinations in English and Spanish.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do I pick a good username?', acceptedAnswer: { '@type': 'Answer', text: 'Short, easy to remember, unique on the platforms that matter to you, and not exposing personal info like birthdate or city.' } },
+    { '@type': 'Question', name: 'Numbers or letters only?', acceptedAnswer: { '@type': 'Answer', text: 'If your preferred username is taken, a suffix like _hq, .pro or _01 reads better than a string of random digits.' } },
+    { '@type': 'Question', name: 'Same username on every platform?', acceptedAnswer: { '@type': 'Answer', text: 'Ideally yes. Check on namecheckr.com or similar before committing. Cross-platform consistency makes you findable.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="en" tag="Online" title="Username Generator"
+    intro="For Instagram, TikTok, gaming, Discord or any platform. Click and get 12 unique usernames in seconds.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Style</label>
+      <select id="cn-style">
+        <option value="word">Adjective + noun</option>
+        <option value="word-suffix">Adjective + noun + suffix</option>
+        <option value="single">Single word + number</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 usernames</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a username that ages well</h2>
+      <p>
+        Your username identifies you across platforms and is often the first thing people see online.
+        Four rules that show up in every community-management guide:
+      </p>
+      <ul>
+        <li><strong>Short.</strong> 6-15 characters. Beyond that it's hard to remember and type.</li>
+        <li><strong>Unique cross-platform.</strong> Test on namecheckr or similar. If it's free on Instagram, TikTok, X and YouTube, lock it down.</li>
+        <li><strong>No personal data.</strong> Don't include birth year, city or full name. It's a real privacy risk.</li>
+        <li><strong>Think long-term.</strong> "TikTokQueen23" ages badly. Something neutral (bluewolf, subtleriver) lasts years.</li>
+      </ul>
+
+      <h2>Patterns that work</h2>
+      <ul>
+        <li><strong>Adjective + noun:</strong> wildwolf, subtleriver, goldenecho, nightowl. Universal and memorable.</li>
+        <li><strong>Noun + suffix:</strong> falconhq, stormpro, echolab. Reads like a personal brand.</li>
+        <li><strong>Single word + meaningful number:</strong> storm07 (if 7 means something), falcon99. Only if the number matters.</li>
+        <li><strong>Your name + adjective:</strong> coldlucas, freesofia. Personal and searchable.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <ol>
+        <li>Too many random digits ("john_smith_872310"): looks abandoned.</li>
+        <li>Cluttered symbols (xX_pro_Xx): cliché that doesn't age.</li>
+        <li>Different username on every platform: people can't find you.</li>
+        <li>Username with your birthdate: gift to any scammer.</li>
+      </ol>
+
+      <h2>By platform</h2>
+      <ul>
+        <li><strong>Instagram / TikTok:</strong> up to 30 chars, less is always better. Letters + . + _.</li>
+        <li><strong>X / Twitter:</strong> up to 15 chars. As short as possible.</li>
+        <li><strong>Discord:</strong> 2-32 chars. Room for creativity.</li>
+        <li><strong>Gmail:</strong> serious, no random numbers. Your name + surname + a small qualifier if taken.</li>
+        <li><strong>Gaming:</strong> room for expressive picks (nightwolf, silverdragon).</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I pick a good username?</summary><p>Short, memorable, unique on platforms that matter, and not exposing personal info.</p></details>
+      <details><summary>Numbers or letters only?</summary><p>A short suffix (_hq, .pro) reads better than a long digit string.</p></details>
+      <details><summary>Same username everywhere?</summary><p>Ideally yes. Check namecheckr first.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; font-family: var(--font-mono, monospace); font-size: 0.95rem; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: USERNAME_PARTS }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function rand2(){ const i = new Uint32Array(1); crypto.getRandomValues(i); return String(i[0] % 99).padStart(2,'0'); }
+
+  function generate() {
+    const mode = styleEl.value;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < 12 && attempts < 300) {
+      attempts++;
+      let u;
+      if (mode === 'word') u = pick(DATA.adjectives.en) + pick(DATA.nouns.en);
+      else if (mode === 'word-suffix') u = pick(DATA.adjectives.en) + pick(DATA.nouns.en) + (Math.random()>0.5 ? '_' : '') + pick(DATA.suffixes);
+      else u = pick(DATA.nouns.en) + rand2();
+      set.add(u);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 900); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

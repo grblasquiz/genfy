@@ -1,0 +1,158 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de anagramas online gratis | Genfy';
+const description = 'Generá anagramas y permutaciones de cualquier palabra o frase al instante. Útil para juegos, acertijos, naming y enigmas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es un anagrama?', acceptedAnswer: { '@type': 'Answer', text: 'Un anagrama es una nueva palabra o frase formada al reordenar todas las letras de la original. Por ejemplo, "Roma" y "Amor" son anagramas entre sí.' } },
+    { '@type': 'Question', name: '¿Para qué sirve?', acceptedAnswer: { '@type': 'Answer', text: 'Para resolver acertijos, generar nombres divertidos, jugar al Scrabble, escribir poesía y enigmas literarios.' } },
+    { '@type': 'Question', name: '¿Genera todas las permutaciones?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, en modo "Permutaciones". Para palabras de más de 8 letras limitamos la salida porque el total crece factorialmente.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto / Words" title="Generador de anagramas"
+    intro="Reordená las letras de una palabra para descubrir todas las combinaciones posibles. Útil para acertijos, juegos y nombres creativos.">
+
+    <div slot="tool" class="ag">
+      <div>
+        <label for="ag-input">Palabra o frase</label>
+        <input id="ag-input" type="text" placeholder="Ej: ROMA" maxlength="10" />
+      </div>
+      <div class="ag-row">
+        <div>
+          <label for="ag-mode">Modo</label>
+          <select id="ag-mode">
+            <option value="perms">Todas las permutaciones</option>
+            <option value="random">Mezclas al azar (20)</option>
+          </select>
+        </div>
+      </div>
+      <button id="ag-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="ag-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="ag-out" rows="12" readonly style="margin-top:1rem; font-family: var(--font-mono);"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es un anagrama, exactamente</h2>
+      <p>
+        Un anagrama es una palabra o frase formada usando exactamente las mismas letras de la
+        original, sin repetir ni omitir ninguna. "Roma" → "Amor", "Toledo" → "Doleto",
+        "Esmeralda" → "Demaresla". Hay anagramas con sentido (los más buscados, porque son
+        difíciles de encontrar) y anagramas mecánicos (cualquier permutación). Este generador
+        te muestra todos para que vos descubras los que tienen significado.
+      </p>
+
+      <h2>Modos: permutaciones vs. azar</h2>
+      <ul>
+        <li><strong>Todas las permutaciones.</strong> Ideal para palabras cortas (3-7 letras). Te da el universo completo de reordenamientos.</li>
+        <li><strong>Mezclas al azar.</strong> Para palabras o frases largas, donde el total sería gigantesco. Te da 20 mezclas distintas para inspirarte.</li>
+      </ul>
+
+      <h2>Por qué crece tan rápido el número</h2>
+      <p>
+        El total de permutaciones de una palabra es n! ("n factorial"), donde n es la cantidad
+        de letras. Para 4 letras son 24 permutaciones, para 6 son 720, para 8 son 40.320, y
+        para 10 letras son 3.628.800. Por eso el generador limita el largo: con 10 letras tu
+        navegador y tu paciencia no van a alcanzar.
+      </p>
+
+      <h2>Usos concretos</h2>
+      <ul>
+        <li><strong>Acertijos y crucigramas.</strong> Reordenar letras es el corazón de los puzzles.</li>
+        <li><strong>Naming.</strong> "Anagrama" del nombre del fundador para una marca personal sutil.</li>
+        <li><strong>Poesía y juegos literarios.</strong> Los anagramas son técnicas clásicas (Lewis Carroll era fanático).</li>
+        <li><strong>Scrabble y similares.</strong> Para entrenar el ojo a ver palabras escondidas en una rejilla.</li>
+        <li><strong>Pseudónimos.</strong> Muchos autores usaron anagramas de su nombre real como nombre artístico.</li>
+      </ul>
+
+      <h2>Anagramas famosos</h2>
+      <p>
+        "Tom Marvolo Riddle" → "I am Lord Voldemort" (J.K. Rowling armó el villano de Harry
+        Potter como anagrama). "William Shakespeare" → "I am a weakish speller" (chiste
+        clásico). En español, "Salvador Dalí" tiene varios anagramas famosos en tratados sobre
+        su obra. Encontrar uno con sentido completo es difícil, pero el ejercicio agudiza la
+        sensibilidad fonética.
+      </p>
+
+      <h2>Cómo encontrar anagramas con sentido</h2>
+      <ol>
+        <li><strong>Tirá las consonantes y vocales por separado.</strong> Mirar el inventario te ayuda a ver palabras posibles.</li>
+        <li><strong>Buscá pares fijos.</strong> Combinaciones como "ll", "ch" o "rr" reducen el problema.</li>
+        <li><strong>Usá un diccionario inverso mentalmente.</strong> Pensá qué palabras existen con esas letras.</li>
+        <li><strong>Permití frases.</strong> A veces no hay una palabra única, pero sí dos o tres que juntas tienen sentido.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es un anagrama?</summary><p>Una nueva palabra o frase con las mismas letras de la original. Roma y Amor son anagramas.</p></details>
+      <details><summary>¿Para qué sirve?</summary><p>Para acertijos, juegos, naming, poesía y pseudónimos.</p></details>
+      <details><summary>¿Genera todas?</summary><p>Sí en modo permutaciones, hasta 8 letras. Para más, usá modo azar.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ag-row { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1rem 0; }
+</style>
+
+<script>
+  const inp = document.getElementById('ag-input') as HTMLInputElement;
+  const modeEl = document.getElementById('ag-mode') as HTMLSelectElement;
+  const out = document.getElementById('ag-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('ag-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('ag-copy') as HTMLButtonElement;
+
+  function permutations(arr: string[]): string[] {
+    if (arr.length <= 1) return [arr.join('')];
+    const out: Set<string> = new Set();
+    for (let i = 0; i < arr.length; i++) {
+      const rest = arr.slice(0, i).concat(arr.slice(i + 1));
+      const subs = permutations(rest);
+      for (const s of subs) out.add(arr[i] + s);
+    }
+    return Array.from(out);
+  }
+  function shuffle(arr: string[]): string[] {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const r = new Uint32Array(1); crypto.getRandomValues(r);
+      const j = r[0] % (i + 1);
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  function generate() {
+    const v = (inp.value || '').trim();
+    if (!v) { out.value = ''; return; }
+    const letters = v.toUpperCase().split('').filter(c => c !== ' ');
+    const m = modeEl.value;
+    if (m === 'perms') {
+      if (letters.length > 8) { out.value = `Demasiadas letras (${letters.length}). Usá modo "Mezclas al azar" o ingresá hasta 8.`; return; }
+      const perms = permutations(letters);
+      out.value = perms.slice(0, 5040).join('\n');
+    } else {
+      const arr: string[] = [];
+      const seen = new Set<string>();
+      let tries = 0;
+      while (arr.length < 20 && tries < 200) {
+        const w = shuffle(letters).join('');
+        if (!seen.has(w)) { seen.add(w); arr.push(w); }
+        tries++;
+      }
+      out.value = arr.join('\n');
+    }
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  inp.value = "ROMA"; generate();
+</script>

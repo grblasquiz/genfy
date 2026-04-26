@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+import { BABY_GIRL_NAMES, NAME_STYLES } from '../lib/baby-names';
+
+const title = 'Generador de nombres para bebé mujer | Genfy';
+const description = 'Modernos, clásicos o cortos: encontrá el nombre ideal para tu bebé mujer. +50 ideas en español e inglés, generador instantáneo gratis.';
+
+const stylesES = { modern: NAME_STYLES.es.modern, classic: NAME_STYLES.es.classic, short: NAME_STYLES.es.short };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo elijo el nombre de mi bebé?', acceptedAnswer: { '@type': 'Answer', text: 'Pensá en pronunciación en otros idiomas, ritmo con el apellido, posibles burlas en la primaria, y cómo va a sonar en una entrevista de trabajo.' } },
+    { '@type': 'Question', name: '¿Mejor un nombre clásico o moderno?', acceptedAnswer: { '@type': 'Answer', text: 'Los clásicos (María, Sara, Catalina) envejecen mejor; los modernos (Sofía, Olivia, Mía) dominan rankings actuales. Combinar ambos como primer y segundo nombre es una estrategia común.' } },
+    { '@type': 'Question', name: '¿Importa el ritmo con el apellido?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Conviene contraste de sílabas: nombre corto + apellido largo, o viceversa.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="es" tag="Bebés" title="Generador de nombres para bebé mujer"
+    intro="Moderno, clásico o corto: encontrá el nombre que mejor le queda a tu bebé. Click y obtené 12 ideas frescas en segundos.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Estilo</label>
+      <select id="cn-style">
+        {Object.entries(stylesES).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mezcla de todo</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 12 nombres</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de tu bebé</h2>
+      <p>
+        Elegir nombre es una de las decisiones que más se piensa y menos tiempo dura. Entre la
+        primera ecografía y el alta hospitalaria pasan unos siete meses, y al final hay que firmar.
+        Para llegar con la decisión tomada, conviene pasar cada candidato por estos filtros:
+      </p>
+      <ul>
+        <li><strong>Pronunciación universal.</strong> ¿Cómo lo dice un abuelo en español? ¿Un compañero en inglés? ¿Un profesor en italiano? Si genera dudas, anotalo.</li>
+        <li><strong>Ritmo con el apellido.</strong> Leelo en voz alta tres veces. Si suena monótono, cambialo o agregá segundo nombre.</li>
+        <li><strong>Iniciales.</strong> Verificá que las iniciales no formen siglas raras.</li>
+        <li><strong>Burlas posibles.</strong> Pensá las rimas obvias antes que la primaria lo haga.</li>
+        <li><strong>Edad adulta.</strong> ¿Cómo suena dicho por una abogada de 45? ¿Por una maestra jubilada? Si funciona, es un buen candidato.</li>
+      </ul>
+
+      <h2>Estilos: moderno, clásico, corto</h2>
+      <ul>
+        <li><strong>Modernos</strong> (Sofía, Olivia, Mía, Valentina, Camila): los más populares de los últimos 10 años en LATAM, España y EE.UU.</li>
+        <li><strong>Clásicos</strong> (María, Sara, Ana, Beatriz, Clara): atemporales. Si tu apellido es muy elaborado, suelen quedar mejor que un nombre moderno largo.</li>
+        <li><strong>Cortos</strong> (Mía, Eva, Zoe, Lía, Mila): tendencia fuerte en hogares jóvenes. Internacionalizables, fáciles de combinar con segundo nombre.</li>
+      </ul>
+
+      <h2>Tendencias en nombres femeninos</h2>
+      <p>
+        Las estadísticas oficiales de los últimos 5 años (Argentina, México, España, EE.UU., UK)
+        muestran patrones consistentes: los nombres con sonido vocal abierto y final (Sofía, Olivia,
+        Emma, Mía, Camila) lideran en casi todos los países. Los nombres bíblicos del Antiguo
+        Testamento (Sara, Ana, Eva, Ruth, Abigail) tienen un crecimiento sostenido. Los clásicos
+        más largos (Margarita, Mercedes, Inés) bajan como primer nombre y suben como segundos.
+      </p>
+
+      <h2>Errores comunes</h2>
+      <ol>
+        <li>Elegir un nombre solo por moda: en 10 años puede sonar fechado.</li>
+        <li>Iniciales que forman siglas problemáticas.</li>
+        <li>Nombres muy difíciles de pronunciar para tu familia inmediata.</li>
+        <li>Cerrar la decisión sin la pareja: termina en discusión.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo elijo el nombre de mi bebé?</summary><p>Pronunciación, ritmo con el apellido, posibles burlas, y cómo suena en la edad adulta.</p></details>
+      <details><summary>¿Mejor un nombre clásico o moderno?</summary><p>Los clásicos envejecen mejor; los modernos dominan los rankings. Combinar ambos como primer y segundo nombre es una estrategia común.</p></details>
+      <details><summary>¿Importa el ritmo con el apellido?</summary><p>Sí. Conviene contraste de sílabas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: BABY_GIRL_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.modern.es, ...DATA.classic.es, ...DATA.short.es];
+    else pool = DATA[s].es;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

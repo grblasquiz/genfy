@@ -1,0 +1,198 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de direcciones IP aleatorias | Genfy';
+const description = 'Generá direcciones IPv4 e IPv6 aleatorias para testing, fixtures y configuraciones. Públicas, privadas o de un rango específico.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuál es la diferencia entre IPv4 e IPv6?', acceptedAnswer: { '@type': 'Answer', text: 'IPv4 usa 32 bits (4.300 millones de direcciones) y se escribe como 192.168.1.1. IPv6 usa 128 bits (340 sextillones) y se escribe como 2001:db8::1. IPv6 reemplaza a IPv4 a medida que crece internet.' } },
+    { '@type': 'Question', name: '¿Qué son las IP privadas?', acceptedAnswer: { '@type': 'Answer', text: 'Rangos reservados para redes locales: 10.0.0.0/8, 172.16.0.0/12 y 192.168.0.0/16. No son accesibles desde internet pública.' } },
+    { '@type': 'Question', name: '¿Sirven para testing real?', acceptedAnswer: { '@type': 'Answer', text: 'Para tests funcionales y fixtures sí. Para tests que requieren conectividad real, usá rangos reservados como 192.0.2.0/24 (TEST-NET-1).' } },
+    { '@type': 'Question', name: '¿Pueden coincidir con IPs reales?', acceptedAnswer: { '@type': 'Answer', text: 'Si elegís el rango "públicas", sí: cualquier IP pública existe y pertenece a alguien. Para testing seguro, usá rangos privados o de documentación.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech"
+    title="Generador de direcciones IP"
+    intro="Direcciones IPv4 e IPv6 aleatorias para testing, fixtures, configuración de firewalls y datos sintéticos. Pública, privada o rango personalizado."
+  >
+    <div slot="tool" class="ip-tool">
+      <div class="ip-controls">
+        <div>
+          <label for="ip-version">Versión</label>
+          <select id="ip-version">
+            <option value="v4" selected>IPv4</option>
+            <option value="v6">IPv6</option>
+          </select>
+        </div>
+        <div>
+          <label for="ip-type">Tipo</label>
+          <select id="ip-type">
+            <option value="public" selected>Pública</option>
+            <option value="private">Privada (RFC 1918)</option>
+            <option value="docs">Documentación (TEST-NET)</option>
+            <option value="loopback">Loopback (127.x.x.x)</option>
+          </select>
+        </div>
+        <div>
+          <label for="ip-count">Cantidad</label>
+          <input id="ip-count" type="number" min="1" max="100" value="10" />
+        </div>
+      </div>
+
+      <button id="ip-gen" class="btn btn-primary" type="button">Generar IPs</button>
+
+      <textarea id="ip-out" class="mono" rows="12" readonly></textarea>
+      <button id="ip-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar todas</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>Estructura de una dirección IP</h2>
+      <p>
+        Una dirección IP identifica un dispositivo en una red. IPv4 usa 32 bits dividos en
+        cuatro octetos (0-255 cada uno), separados por puntos: <code>192.168.1.1</code>. IPv6
+        usa 128 bits agrupados en ocho bloques de 16 bits cada uno, separados por dos puntos:
+        <code>2001:0db8:85a3:0000:0000:8a2e:0370:7334</code>. La forma compacta omite ceros y
+        usa <code>::</code> para representar grupos consecutivos de ceros.
+      </p>
+      <p>
+        IPv4 tiene capacidad para ~4.300 millones de direcciones únicas, casi todas asignadas
+        ya. IPv6 tiene 340 undecillones, suficiente para cada átomo de la Tierra varias veces.
+      </p>
+
+      <h2>Rangos especiales que conviene conocer</h2>
+      <ul>
+        <li><strong>10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16:</strong> redes privadas (RFC 1918). No ruteable en internet pública.</li>
+        <li><strong>127.0.0.0/8:</strong> loopback. <code>127.0.0.1</code> apunta siempre al propio dispositivo.</li>
+        <li><strong>169.254.0.0/16:</strong> link-local. Se autoasigna cuando un dispositivo no obtiene IP por DHCP.</li>
+        <li><strong>192.0.2.0/24, 198.51.100.0/24, 203.0.113.0/24:</strong> reservadas para documentación (TEST-NET-1, 2, 3). RFC 5737.</li>
+        <li><strong>224.0.0.0/4:</strong> multicast.</li>
+        <li><strong>255.255.255.255:</strong> broadcast limitado.</li>
+        <li><strong>::1/128:</strong> equivalente IPv6 de 127.0.0.1.</li>
+        <li><strong>2001:db8::/32:</strong> IPv6 para documentación. RFC 3849.</li>
+      </ul>
+
+      <h2>Cuándo usar cada tipo</h2>
+      <ol>
+        <li><strong>Pública aleatoria.</strong> Para fixtures donde el realismo importa (logs, geolocalización, analytics). Atención: cualquier pública pertenece a alguien.</li>
+        <li><strong>Privada (RFC 1918).</strong> Para configuraciones de red interna, redes de prueba, ejemplos de firewall.</li>
+        <li><strong>Documentación (TEST-NET).</strong> Cuando necesitás IPs públicas de aspecto real pero garantizadas como no asignadas. Recomendado para documentación pública.</li>
+        <li><strong>Loopback.</strong> Para tests locales donde el host es siempre el mismo dispositivo.</li>
+      </ol>
+
+      <h2>Geolocalización de IPs</h2>
+      <p>
+        Servicios como MaxMind, IP2Location o IPinfo asocian rangos de IP a países, regiones y
+        en algunos casos ciudades. Esa asignación es probabilística: una IP puede aparecer en
+        un país pero el usuario estar en otro (VPN, proxy, móvil con SIM extranjera). Para
+        testing de geolocalización, asegurate de usar IPs cuyo país conocés con certeza, o
+        bases de datos de prueba.
+      </p>
+
+      <h2>IPs en logs y privacidad</h2>
+      <p>
+        En la UE, las IPs públicas son consideradas datos personales por el GDPR cuando se
+        pueden vincular a un usuario. Eso implica:
+      </p>
+      <ul>
+        <li>Documentar el procesamiento en tu política de privacidad.</li>
+        <li>Definir un período de retención (típicamente 30-90 días para logs operativos).</li>
+        <li>Anonimizar (truncar el último octeto: <code>192.168.1.0</code>) cuando solo necesitás stats.</li>
+        <li>Permitir borrado a pedido del usuario.</li>
+      </ul>
+
+      <h2>Errores comunes con IPs en testing</h2>
+      <ol>
+        <li><strong>Usar IPs públicas reales en demos.</strong> Si la IP pertenece a otra empresa, podés sugerir tráfico que no es real. Mejor TEST-NET.</li>
+        <li><strong>Hardcodear 8.8.8.8.</strong> Es válida pero pertenece a Google. En documentación, conviene <code>192.0.2.1</code>.</li>
+        <li><strong>No considerar IPv6.</strong> Cada vez más tráfico es v6. Si tu sistema solo testea v4, podés tener bugs en producción.</li>
+        <li><strong>Validar con regex incompleta.</strong> <code>\d+\.\d+\.\d+\.\d+</code> acepta <code>999.999.999.999</code>. Validá que cada octeto esté entre 0 y 255.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Diferencia entre IPv4 e IPv6?</summary><p>v4: 32 bits (4.3B direcciones). v6: 128 bits (340 sextillones). v6 reemplaza a v4 a medida que crece internet.</p></details>
+      <details><summary>¿Qué son las IP privadas?</summary><p>Rangos para redes locales: 10/8, 172.16/12, 192.168/16. No accesibles desde internet pública.</p></details>
+      <details><summary>¿Sirven para testing real?</summary><p>Para fixtures sí. Para tests con conectividad, usá TEST-NET (192.0.2.0/24).</p></details>
+      <details><summary>¿Coinciden con IPs reales?</summary><p>Las públicas sí. Para testing seguro, privadas o documentación.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ip-controls { display: grid; grid-template-columns: 1fr 1.5fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .ip-controls { grid-template-columns: 1fr; } }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; margin: 1rem 0 0.75rem; }
+</style>
+
+<script>
+  function rand(min: number, max: number): number { const a = new Uint32Array(1); crypto.getRandomValues(a); return min + (a[0] % (max - min + 1)); }
+  const version = document.getElementById('ip-version') as HTMLSelectElement;
+  const type = document.getElementById('ip-type') as HTMLSelectElement;
+  const count = document.getElementById('ip-count') as HTMLInputElement;
+  const out = document.getElementById('ip-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('ip-gen') as HTMLButtonElement;
+  const copy = document.getElementById('ip-copy') as HTMLButtonElement;
+
+  function ipv4(): string {
+    if (type.value === 'private') {
+      const ranges = [
+        () => `10.${rand(0,255)}.${rand(0,255)}.${rand(1,254)}`,
+        () => `172.${rand(16,31)}.${rand(0,255)}.${rand(1,254)}`,
+        () => `192.168.${rand(0,255)}.${rand(1,254)}`,
+      ];
+      return ranges[rand(0,2)]();
+    }
+    if (type.value === 'docs') {
+      const blocks = [[192,0,2],[198,51,100],[203,0,113]];
+      const b = blocks[rand(0,2)];
+      return `${b[0]}.${b[1]}.${b[2]}.${rand(1,254)}`;
+    }
+    if (type.value === 'loopback') return `127.${rand(0,255)}.${rand(0,255)}.${rand(1,254)}`;
+    let a, b, c, d;
+    do { a = rand(1, 223); } while ([10,127,169,172,192,198,203,224].indexOf(a) !== -1);
+    b = rand(0, 255); c = rand(0, 255); d = rand(1, 254);
+    return `${a}.${b}.${c}.${d}`;
+  }
+  function hex(n: number): string { return n.toString(16); }
+  function ipv6(): string {
+    if (type.value === 'docs') {
+      const groups = ['2001','0db8'];
+      for (let i = 0; i < 6; i++) groups.push(hex(rand(0, 0xffff)).padStart(4, '0'));
+      return groups.join(':');
+    }
+    if (type.value === 'loopback') return '::1';
+    if (type.value === 'private') {
+      const groups = ['fd' + hex(rand(0, 0xff)).padStart(2, '0')];
+      for (let i = 0; i < 7; i++) groups.push(hex(rand(0, 0xffff)).padStart(4, '0'));
+      return groups.join(':');
+    }
+    const groups: string[] = [];
+    for (let i = 0; i < 8; i++) groups.push(hex(rand(0, 0xffff)).padStart(4, '0'));
+    return groups.join(':');
+  }
+  function generate() {
+    const n = Math.min(100, Math.max(1, parseInt(count.value || '10', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) lines.push(version.value === 'v4' ? ipv4() : ipv6());
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', generate);
+  [version, type, count].forEach(el => el.addEventListener('change', generate));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copiado</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copiar todas'; delete copy.dataset.copied; }, 1400);
+  });
+  generate();
+</script>

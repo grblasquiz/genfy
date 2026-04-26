@@ -1,0 +1,215 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de PIN aleatorio gratis | Genfy';
+const description = 'Genera códigos PIN numéricos seguros de 4 a 12 dígitos. Ideal para tarjetas, alarmas, cajas fuertes y cuentas. 100% en tu navegador, sin registro.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuántos dígitos debe tener un PIN seguro?', acceptedAnswer: { '@type': 'Answer', text: 'Para tarjetas y cajeros 4 dígitos es el estándar. Para apps, alarmas y dispositivos personales recomendamos 6-8 dígitos. Para sistemas críticos 10-12.' } },
+    { '@type': 'Question', name: '¿Es seguro un PIN de 4 dígitos?', acceptedAnswer: { '@type': 'Answer', text: 'Solo cuando el sistema bloquea la cuenta tras 3-5 intentos fallidos, como los cajeros automáticos. Sin ese bloqueo, un PIN de 4 dígitos se rompe en menos de un segundo.' } },
+    { '@type': 'Question', name: '¿Qué PINs hay que evitar?', acceptedAnswer: { '@type': 'Answer', text: 'Evitá fechas de nacimiento, secuencias (1234, 1111), patrones de teclado y los más comunes (1234, 0000, 1111, 1212). Un PIN aleatorio resuelve todos esos problemas.' } },
+    { '@type': 'Question', name: '¿Genfy guarda los PINs generados?', acceptedAnswer: { '@type': 'Answer', text: 'No. Todo se genera con crypto.getRandomValues en tu navegador. Nada se envía a un servidor ni queda en logs.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Seguridad"
+    title="Generador de PIN aleatorio"
+    intro="Creá códigos PIN numéricos imposibles de adivinar para tarjetas, alarmas, apps y dispositivos. Elegí cuántos dígitos necesitás. Todo se genera en tu navegador."
+  >
+    <div slot="tool" class="pin-tool">
+      <div class="pin-output">
+        <input id="pin-out" class="mono pin-display" readonly aria-label="PIN generado" />
+        <button id="pin-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+
+      <div class="pin-controls">
+        <div class="pin-len-row">
+          <label for="pin-len">Cantidad de dígitos</label>
+          <span id="pin-len-val" class="mono">6</span>
+        </div>
+        <input id="pin-len" type="range" min="3" max="12" value="6" />
+      </div>
+
+      <div class="pin-toggles">
+        <label><input type="checkbox" id="pin-no-rep" /> Sin dígitos repetidos</label>
+        <label><input type="checkbox" id="pin-no-seq" checked /> Evitar secuencias (1234, 9876)</label>
+      </div>
+
+      <div class="pin-actions">
+        <button id="pin-gen" class="btn btn-primary" type="button">Generar otro PIN</button>
+        <button id="pin-bulk" class="btn btn-ghost" type="button">Generar 10</button>
+      </div>
+
+      <div id="pin-bulk-out" class="pin-bulk mono" hidden></div>
+    </div>
+
+    <div slot="content">
+      <h2>¿Para qué sirve un generador de PIN?</h2>
+      <p>
+        Un PIN (<em>Personal Identification Number</em>) es una clave numérica corta usada cuando
+        un teclado completo no es práctico: cajeros automáticos, paneles de alarmas, candados
+        electrónicos, cerraduras inteligentes, tarjetas SIM, sistemas POS y aplicaciones móviles.
+        A diferencia de una contraseña tradicional, un PIN se basa solo en dígitos, lo que limita
+        su entropía y obliga a depender de mecanismos adicionales como bloqueo por intentos.
+      </p>
+      <p>
+        El generador de Genfy usa <code>crypto.getRandomValues</code>, la API criptográfica del
+        navegador, para producir cada dígito de forma aleatoria. La diferencia con elegir uno
+        "de cabeza" es enorme: los humanos repetimos patrones (fechas, dígitos repetidos,
+        secuencias) que están entre los primeros que prueba cualquier ataque automatizado.
+      </p>
+
+      <h2>Cuántos dígitos elegir según el caso</h2>
+      <ul>
+        <li><strong>Tarjetas bancarias y cajeros:</strong> 4 dígitos. El sistema bloquea la tarjeta tras 3 intentos fallidos, así que la fuerza bruta es inviable. Eso sí, evitá fechas y patrones obvios.</li>
+        <li><strong>Aplicaciones del celular y desbloqueo:</strong> 6 dígitos es el nuevo estándar (iOS y Android así lo recomiendan). Mejora 100 veces respecto a 4 dígitos.</li>
+        <li><strong>Cajas fuertes domésticas y candados:</strong> 6-8 dígitos. Estos dispositivos rara vez tienen bloqueo por intentos, así que la longitud importa más.</li>
+        <li><strong>Alarmas con desactivación rápida:</strong> 4-6 dígitos. Buscá el equilibrio entre seguridad y velocidad bajo estrés.</li>
+        <li><strong>Sistemas críticos sin lockout:</strong> 8-12 dígitos. Sin bloqueo automático, cada dígito multiplica por 10 el costo del ataque.</li>
+      </ul>
+
+      <h2>Cómo se calcula la fortaleza de un PIN</h2>
+      <p>
+        Un PIN de N dígitos tiene 10^N combinaciones posibles. Suena bien, pero comparemos:
+      </p>
+      <ol>
+        <li>4 dígitos = 10.000 combinaciones. Una computadora prueba todas en milisegundos.</li>
+        <li>6 dígitos = 1.000.000. Sigue siendo trivial sin bloqueo, pero suficiente con lockout.</li>
+        <li>8 dígitos = 100.000.000. Ya empieza a ser molesto incluso para hardware dedicado.</li>
+        <li>10 dígitos = 10.000 millones. Comparable a una contraseña corta de letras minúsculas.</li>
+      </ol>
+      <p>
+        Por eso un PIN nunca debería ser la única defensa de una cuenta importante. Combinalo
+        siempre con bloqueo por intentos, segundo factor (SMS, app autenticadora) o protección
+        biométrica.
+      </p>
+
+      <h2>Errores frecuentes al elegir un PIN</h2>
+      <p>
+        Estudios sobre filtraciones reales muestran que más del 25% de los PINs de 4 dígitos están
+        entre los 20 más comunes. Los más usados son <code>1234</code>, <code>1111</code>,
+        <code>0000</code>, <code>1212</code> y <code>7777</code>. También son frecuentes los años
+        de nacimiento (<code>1985</code>, <code>1990</code>) y los patrones diagonales del teclado.
+      </p>
+      <ul>
+        <li>No uses tu fecha de nacimiento, ni la de tu pareja, hijos o aniversario.</li>
+        <li>Evitá dígitos repetidos (<code>4444</code>) y secuencias (<code>1234</code>, <code>4321</code>).</li>
+        <li>No reutilices el mismo PIN en tarjeta, celular y alarma.</li>
+        <li>No lo guardes en una nota sin cifrar ni en un papel en la billetera.</li>
+      </ul>
+
+      <h2>Cómo memorizar un PIN aleatorio</h2>
+      <p>
+        Generar un PIN al azar es el primer paso; recordarlo, el segundo. Algunas técnicas que
+        funcionan bien:
+      </p>
+      <ul>
+        <li><strong>Agrupación.</strong> Un PIN de 6 dígitos como <code>473829</code> es más fácil como <code>47-38-29</code>.</li>
+        <li><strong>Asociación numérica.</strong> Buscá un significado personal a posteriori: "47 es el número de mi calle más 4".</li>
+        <li><strong>Repetición espaciada.</strong> Los primeros 3 días son críticos: usalo varias veces o anotalo temporalmente en un gestor de contraseñas hasta que se asiente.</li>
+      </ul>
+
+      <h2>Privacidad de este generador</h2>
+      <p>
+        Todo ocurre en tu navegador. No hay servidor, no hay analítica de los PINs, no hay
+        cookies de tracking. Si cerrás esta pestaña sin copiar el PIN, se pierde para siempre,
+        que es exactamente lo que querés.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántos dígitos debe tener un PIN seguro?</summary><p>Para tarjetas y cajeros, 4 dígitos. Para apps y dispositivos personales, 6-8. Para sistemas críticos sin bloqueo, 10-12.</p></details>
+      <details><summary>¿Es seguro un PIN de 4 dígitos?</summary><p>Solo si el sistema bloquea la cuenta tras pocos intentos fallidos, como un cajero. Sin lockout, 4 dígitos se rompen en milisegundos.</p></details>
+      <details><summary>¿Qué PINs hay que evitar?</summary><p>Fechas de nacimiento, secuencias (1234, 1111), patrones de teclado y los más comunes (1234, 0000, 1111, 1212). Un PIN aleatorio resuelve todos esos problemas.</p></details>
+      <details><summary>¿Genfy guarda los PINs?</summary><p>No. Todo se genera con crypto.getRandomValues en tu navegador. Nada se envía a un servidor ni queda en logs.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pin-output { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .pin-display { font-size: 1.75rem; letter-spacing: 0.25em; padding: 1rem; text-align: center; background: var(--bg-inset); }
+  .pin-output .btn { min-width: 92px; }
+  .pin-controls { margin-bottom: 1.25rem; }
+  .pin-len-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem; }
+  .pin-len-row label { margin: 0; }
+  .pin-toggles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.5rem 1.25rem; margin-bottom: 1.25rem; }
+  .pin-toggles label { display: flex; align-items: center; gap: 0.5rem; font-weight: 400; font-size: 0.9375rem; color: var(--text-soft); cursor: pointer; margin: 0; }
+  .pin-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .pin-bulk { margin-top: 1.25rem; padding: 1rem; background: var(--bg-inset); border-radius: var(--radius); white-space: pre; font-size: 1rem; line-height: 1.8; letter-spacing: 0.15em; }
+</style>
+
+<script>
+  const out = document.getElementById('pin-out') as HTMLInputElement;
+  const copy = document.getElementById('pin-copy') as HTMLButtonElement;
+  const gen = document.getElementById('pin-gen') as HTMLButtonElement;
+  const bulk = document.getElementById('pin-bulk') as HTMLButtonElement;
+  const len = document.getElementById('pin-len') as HTMLInputElement;
+  const lenVal = document.getElementById('pin-len-val')!;
+  const noRep = document.getElementById('pin-no-rep') as HTMLInputElement;
+  const noSeq = document.getElementById('pin-no-seq') as HTMLInputElement;
+  const bulkOut = document.getElementById('pin-bulk-out') as HTMLDivElement;
+
+  function randDigit(): number {
+    const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] % 10;
+  }
+  function isSeq(p: string): boolean {
+    if (/(.)\1{2,}/.test(p)) return true;
+    let asc = 1, desc = 1;
+    for (let i = 1; i < p.length; i++) {
+      if (+p[i] === +p[i-1] + 1) asc++; else asc = 1;
+      if (+p[i] === +p[i-1] - 1) desc++; else desc = 1;
+      if (asc >= 4 || desc >= 4) return true;
+    }
+    return false;
+  }
+  function generate(): string {
+    const length = parseInt(len.value, 10);
+    for (let attempt = 0; attempt < 50; attempt++) {
+      let pin = '';
+      const used = new Set<number>();
+      let ok = true;
+      for (let i = 0; i < length; i++) {
+        let d = randDigit();
+        if (noRep.checked) {
+          let tries = 0;
+          while (used.has(d) && tries < 20) { d = randDigit(); tries++; }
+          if (used.has(d)) { ok = false; break; }
+          used.add(d);
+        }
+        pin += d;
+      }
+      if (!ok) continue;
+      if (noSeq.checked && isSeq(pin)) continue;
+      return pin;
+    }
+    return Array.from({length: parseInt(len.value, 10)}, randDigit).join('');
+  }
+  function render() { out.value = generate(); bulkOut.hidden = true; }
+  len.addEventListener('input', () => { lenVal.textContent = len.value; render(); });
+  [noRep, noSeq].forEach(el => el.addEventListener('change', render));
+  gen.addEventListener('click', render);
+  bulk.addEventListener('click', () => {
+    const lines: string[] = [];
+    for (let i = 0; i < 10; i++) lines.push(generate());
+    bulkOut.textContent = lines.join('\n');
+    bulkOut.hidden = false;
+  });
+  async function doCopy() {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copiado</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copiar'; delete copy.dataset.copied; }, 1400);
+  }
+  copy.addEventListener('click', doCopy);
+  render();
+</script>

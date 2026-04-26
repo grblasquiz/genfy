@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+import { FISH_NAMES, AQUATIC_STYLES } from '../lib/aquatic-names';
+
+const title = 'Generador de nombres para peces | Genfy';
+const description = 'Por color, tiernos o divertidos: encontrá el nombre ideal para tu pez. Generador instantáneo gratis con +60 ideas.';
+
+const stylesES = { color: AQUATIC_STYLES.es.color, cute: AQUATIC_STYLES.es.cute, funny: AQUATIC_STYLES.es.funny };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Vale la pena ponerle nombre a un pez?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Aunque no aprenden el nombre, hablarles puede asociar tu voz con la comida y reduce el estrés cuando te acercás a la pecera.' } },
+    { '@type': 'Question', name: '¿Cómo elijo un nombre para un pez naranja?', acceptedAnswer: { '@type': 'Answer', text: 'Por color: Naranja, Mandarina, Goldie, Coral. O por personalidad: Burbuja si es activo, Pez si es tranquilo.' } },
+    { '@type': 'Question', name: '¿Mejor nombre serio o divertido?', acceptedAnswer: { '@type': 'Answer', text: 'Para peces, los nombres divertidos suelen ser un éxito porque son la mascota con la que más se juega visualmente. Sushi, Burbuja, Capitán Aleta funcionan.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" withSidebar={true} schema={faqSchema}>
+  <GeneratorShell lang="es" tag="Mascotas" title="Generador de nombres para peces"
+    intro="Por color, tierno o divertido: encontrá el nombre que mejor le queda a tu pez. Click y obtené 12 ideas frescas en segundos.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Estilo</label>
+      <select id="cn-style">
+        {Object.entries(stylesES).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mezcla de todo</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 12 nombres</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de tu pez</h2>
+      <p>
+        Los peces no aprenden su nombre como un perro, pero el nombre sigue importando: lo vas a
+        decir cuando lo mostrés a las visitas, lo vas a escribir en notas para el cuidador cuando
+        viajás, y vas a hablarle a la pecera más de lo que pensás. Algunos consejos:
+      </p>
+      <ul>
+        <li><strong>Por color o aspecto.</strong> El criterio más usado para peces. Goldie, Naranja, Coral, Plata, Manchas: directos y memorables.</li>
+        <li><strong>Por personalidad.</strong> Si nada como loco: Burbuja. Si flota tranquilo: Pez. Si esconde: Tímido.</li>
+        <li><strong>Por especie.</strong> Un betta combativo merece un nombre con presencia. Un tetra pequeño funciona con algo dulce.</li>
+        <li><strong>Cortos siempre ganan.</strong> Sobre todo si tenés varios peces: con 6 nombres largos te perdés.</li>
+      </ul>
+
+      <h2>Nombres por estilo</h2>
+      <ul>
+        <li><strong>Por color</strong> (Naranja, Plata, Dorado, Coral, Burbuja): clásicos, descriptivos, fáciles de recordar.</li>
+        <li><strong>Tiernos</strong> (Burbuja, Pecesito, Mochi, Pipo): perfectos para peces chiquitos o coloridos.</li>
+        <li><strong>Divertidos</strong> (Sushi, Filete, Capitán Burbuja, Pez Profundo): para los que tienen sentido del humor.</li>
+      </ul>
+
+      <h2>Tendencias en nombres de peces</h2>
+      <p>
+        Los foros de acuariofilia y las tiendas online en LATAM y España muestran que los nombres
+        más populares para peces dorados son Goldie, Naranja, Sushi, Burbuja y Coral. Para bettas,
+        suelen ser Rey, Capitán o nombres por color (Azulito, Rojo). Para peces de cardumen, la
+        gente tiende a no nombrarlos individualmente y usa colectivos ("los chicos", "los rayitas").
+      </p>
+
+      <h2>Errores comunes</h2>
+      <ol>
+        <li>Nombres muy largos para varios peces que apenas distinguís entre sí.</li>
+        <li>Nombres relacionados con la muerte o la cocina ("Cebiche", "Sashimi") en peces frágiles tipo betta — lo decís y al mes te dura una semana, ojo.</li>
+        <li>No anotar los nombres si son varios: olvidás cuál era cuál.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Vale la pena ponerle nombre a un pez?</summary><p>Sí. Aunque no aprenden el nombre, hablarles puede asociar tu voz con la comida y reduce el estrés cuando te acercás a la pecera.</p></details>
+      <details><summary>¿Cómo elijo un nombre para un pez naranja?</summary><p>Por color: Naranja, Mandarina, Goldie, Coral. O por personalidad: Burbuja si es activo, Pez si es tranquilo.</p></details>
+      <details><summary>¿Mejor nombre serio o divertido?</summary><p>Los nombres divertidos suelen ser un éxito en peces. Sushi, Burbuja, Capitán Aleta funcionan.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: FISH_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.color.es, ...DATA.cute.es, ...DATA.funny.es];
+    else pool = DATA[s].es;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

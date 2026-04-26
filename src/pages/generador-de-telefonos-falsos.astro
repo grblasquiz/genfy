@@ -1,0 +1,220 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de teléfonos falsos para testing | Genfy';
+const description = 'Generá números de teléfono con formato realista para Argentina, México, España y otros países. Para fixtures, formularios y QA, sin llamar a nadie.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Estos números pertenecen a alguien?', acceptedAnswer: { '@type': 'Answer', text: 'Generamos los dígitos al azar dentro del formato correcto del país. Estadísticamente algunos números pueden coincidir con líneas reales: usalos solo para testing y nunca llames.' } },
+    { '@type': 'Question', name: '¿Hay rangos reservados para testing?', acceptedAnswer: { '@type': 'Answer', text: 'En Estados Unidos, el 555-0100 a 555-0199 está reservado para ficción. En España, los 678 000 000 a 678 999 999 nunca se asignan. Argentina y México no tienen rangos oficiales reservados.' } },
+    { '@type': 'Question', name: '¿Validan en formularios?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, en validaciones de formato y libphonenumber. Validaciones que verifican existencia (envío de SMS) los rechazan, que es lo que querés en testing.' } },
+    { '@type': 'Question', name: '¿Sirven para testear WhatsApp Business o SMS?', acceptedAnswer: { '@type': 'Answer', text: 'No. Para esos casos necesitás líneas reales o servicios sandbox del proveedor (Twilio test credentials, sandbox de Meta).' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Datos / Testing"
+    title="Generador de teléfonos falsos"
+    intro="Números con formato correcto para Argentina, México, España y otros países. Pensado para fixtures, formularios y datos sintéticos. No llames a estos números."
+  >
+    <div slot="tool" class="phone-tool">
+      <div class="phone-controls">
+        <div>
+          <label for="phone-country">País</label>
+          <select id="phone-country">
+            <option value="ar" selected>Argentina (+54)</option>
+            <option value="mx">México (+52)</option>
+            <option value="es">España (+34)</option>
+            <option value="co">Colombia (+57)</option>
+            <option value="cl">Chile (+56)</option>
+          </select>
+        </div>
+        <div>
+          <label for="phone-type">Tipo</label>
+          <select id="phone-type">
+            <option value="mobile" selected>Móvil</option>
+            <option value="landline">Fijo</option>
+          </select>
+        </div>
+        <div>
+          <label for="phone-format">Formato</label>
+          <select id="phone-format">
+            <option value="intl" selected>Internacional (+54 9 11…)</option>
+            <option value="local">Local (011-…)</option>
+            <option value="e164">E.164 (+54911…)</option>
+          </select>
+        </div>
+        <div>
+          <label for="phone-count">Cantidad</label>
+          <input id="phone-count" type="number" min="1" max="100" value="10" />
+        </div>
+      </div>
+
+      <button id="phone-gen" class="btn btn-primary" type="button">Generar teléfonos</button>
+
+      <textarea id="phone-out" class="mono" rows="12" readonly></textarea>
+      <button id="phone-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar todos</span></button>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué importa el formato del país</h2>
+      <p>
+        Cada país tiene reglas particulares de numeración: cuántos dígitos tiene un móvil, qué
+        prefijo separa los móviles de los fijos, cuándo se omite el cero del código de área.
+        Una librería seria como <code>libphonenumber</code> (de Google) entiende esas reglas
+        para todos los países, y rechaza números que no las cumplen.
+      </p>
+      <p>
+        Si tu generador da números mal formateados, tus tests pasan en CI y fallan en producción
+        cuando llega un número real. Mejor empezar con datos sintéticos correctos.
+      </p>
+
+      <h2>Formatos por país</h2>
+      <ul>
+        <li><strong>Argentina:</strong> +54 9 [código de área] [número de 6-8 dígitos]. El 9 indica móvil. Ejemplo: +54 9 11 4123-4567.</li>
+        <li><strong>México:</strong> +52 [10 dígitos]. Móviles típicamente 55, 33, 81 según ciudad. Ejemplo: +52 55 1234 5678.</li>
+        <li><strong>España:</strong> +34 [9 dígitos]. Móviles empiezan con 6 o 7, fijos con 9 u 8. Ejemplo: +34 612 345 678.</li>
+        <li><strong>Colombia:</strong> +57 [10 dígitos]. Móviles con 3, fijos con código de área. Ejemplo: +57 300 123 4567.</li>
+        <li><strong>Chile:</strong> +56 [9 dígitos]. Móviles con 9, fijos con 2. Ejemplo: +56 9 1234 5678.</li>
+      </ul>
+
+      <h2>E.164 vs formato local vs internacional</h2>
+      <ol>
+        <li><strong>E.164</strong> (<code>+541141234567</code>): formato técnico, solo dígitos con +. Es el formato canónico para guardar en base de datos y enviar por API. Es el que usa Twilio, Stripe y casi cualquier servicio.</li>
+        <li><strong>Internacional</strong> (<code>+54 11 4123-4567</code>): legible para humanos, con espacios y guiones. Útil para mostrar en UIs.</li>
+        <li><strong>Local</strong> (<code>011-4123-4567</code>): formato que un argentino reconoce a primera vista. No tiene el código de país.</li>
+      </ol>
+      <p>
+        Buena práctica: guardar siempre en E.164 en la base de datos y formatear para mostrar.
+        Eso evita ambigüedades cuando un número se mueve entre países.
+      </p>
+
+      <h2>Rangos reservados para ficción</h2>
+      <p>
+        Algunos países reservan oficialmente rangos específicos para uso en ficción, ejemplos
+        y testing. Si necesitás un número garantizado de "no asignado":
+      </p>
+      <ul>
+        <li><strong>Estados Unidos:</strong> 555-0100 a 555-0199 (RFC y FCC).</li>
+        <li><strong>Reino Unido:</strong> 0113 4960000 a 4960999 (Ofcom).</li>
+        <li><strong>España:</strong> 678 000 000 a 678 999 999 nunca se asignan según CNMC.</li>
+        <li><strong>Otros países hispanos:</strong> no hay rangos oficiales. Usá los datos generados con cuidado.</li>
+      </ul>
+
+      <h2>Cuándo NO usar números falsos</h2>
+      <p>
+        Estos números sirven para popular tablas, validar formularios y mostrar UIs. No sirven
+        para:
+      </p>
+      <ul>
+        <li><strong>Testing de SMS reales.</strong> Twilio, MessageBird y otros tienen modos de testing con números mágicos que confirman entrega sin enviar nada.</li>
+        <li><strong>Verificación por código.</strong> Si tu flujo manda un código por SMS, los números falsos no reciben.</li>
+        <li><strong>Validación de WhatsApp Business.</strong> Necesitás un número real verificado por Meta.</li>
+        <li><strong>Demos en vivo donde la persona pruebe llamar.</strong> Llevás visitas a alguien al azar.</li>
+      </ul>
+
+      <h2>Combinación con otros datos sintéticos</h2>
+      <p>
+        Un fixture realista combina nombre + email + dirección + teléfono. Algunos consejos:
+      </p>
+      <ol>
+        <li>El código de país del teléfono debe coincidir con la dirección. Un usuario "Buenos Aires" con teléfono español es señal de fixture mal armado.</li>
+        <li>El código de área debe ser plausible para la ciudad: Buenos Aires usa 11, no 351 (Córdoba).</li>
+        <li>Para tests masivos, mezclá países: te ayuda a detectar bugs de internacionalización.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Pertenecen a alguien?</summary><p>Generamos los dígitos al azar. Estadísticamente algunos pueden coincidir con líneas reales: usalos solo en testing y nunca llames.</p></details>
+      <details><summary>¿Hay rangos reservados?</summary><p>En US, 555-0100 a 555-0199. España tiene 678 000 000 a 678 999 999. Argentina y México no tienen rangos oficiales reservados.</p></details>
+      <details><summary>¿Pasan validación de formularios?</summary><p>Sí, en formato y libphonenumber. Verificación real por SMS los rechaza, que es lo deseable en testing.</p></details>
+      <details><summary>¿Sirven para WhatsApp/SMS?</summary><p>No. Necesitás líneas reales o sandboxes de proveedores (Twilio test, Meta sandbox).</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .phone-controls { display: grid; grid-template-columns: repeat(2, 1fr) repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 700px) { .phone-controls { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .phone-controls { grid-template-columns: 1fr; } }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; margin: 1rem 0 0.75rem; }
+</style>
+
+<script>
+  function rand(min: number, max: number): number { const a = new Uint32Array(1); crypto.getRandomValues(a); return min + (a[0] % (max - min + 1)); }
+  function digits(n: number): string { let s = ''; for (let i = 0; i < n; i++) s += rand(0, 9); return s; }
+
+  const country = document.getElementById('phone-country') as HTMLSelectElement;
+  const type = document.getElementById('phone-type') as HTMLSelectElement;
+  const format = document.getElementById('phone-format') as HTMLSelectElement;
+  const count = document.getElementById('phone-count') as HTMLInputElement;
+  const out = document.getElementById('phone-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('phone-gen') as HTMLButtonElement;
+  const copy = document.getElementById('phone-copy') as HTMLButtonElement;
+
+  function build(): string {
+    const c = country.value;
+    const isMobile = type.value === 'mobile';
+    const fmt = format.value;
+    if (c === 'ar') {
+      const area = isMobile ? '11' : (['11','221','341','351','261'][rand(0,4)]);
+      const num = digits(8);
+      const m = isMobile ? '9 ' : '';
+      if (fmt === 'e164') return `+549${area}${num}`.replace(/^\+5491/, isMobile ? '+5491' : '+541');
+      if (fmt === 'local') return `0${area}-${num.slice(0,4)}-${num.slice(4)}`;
+      return `+54 ${m}${area} ${num.slice(0,4)}-${num.slice(4)}`;
+    }
+    if (c === 'mx') {
+      const area = isMobile ? (['55','33','81','664'][rand(0,3)]) : (['55','33','81','664'][rand(0,3)]);
+      const num = digits(8);
+      if (fmt === 'e164') return `+52${area}${num}`;
+      if (fmt === 'local') return `${area} ${num.slice(0,4)} ${num.slice(4)}`;
+      return `+52 ${area} ${num.slice(0,4)} ${num.slice(4)}`;
+    }
+    if (c === 'es') {
+      const lead = isMobile ? (rand(0,1) ? '6' : '7') : '9';
+      const num = lead + digits(8);
+      if (fmt === 'e164') return `+34${num}`;
+      if (fmt === 'local') return `${num.slice(0,3)} ${num.slice(3,6)} ${num.slice(6)}`;
+      return `+34 ${num.slice(0,3)} ${num.slice(3,6)} ${num.slice(6)}`;
+    }
+    if (c === 'co') {
+      const area = isMobile ? '3' + digits(2) : (['1','2','4','5'][rand(0,3)]);
+      const num = digits(isMobile ? 7 : 7);
+      if (fmt === 'e164') return `+57${area}${num}`;
+      if (fmt === 'local') return `${area} ${num.slice(0,3)} ${num.slice(3)}`;
+      return `+57 ${area} ${num.slice(0,3)} ${num.slice(3)}`;
+    }
+    if (c === 'cl') {
+      const lead = isMobile ? '9' : '2';
+      const num = digits(8);
+      if (fmt === 'e164') return `+56${lead}${num}`;
+      if (fmt === 'local') return `${lead} ${num.slice(0,4)} ${num.slice(4)}`;
+      return `+56 ${lead} ${num.slice(0,4)} ${num.slice(4)}`;
+    }
+    return '';
+  }
+  function generate() {
+    const n = Math.min(100, Math.max(1, parseInt(count.value || '10', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) lines.push(build());
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', generate);
+  [country, type, format, count].forEach(el => el.addEventListener('change', generate));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.innerHTML = '<span class="copy-toast">✓ Copiado</span>';
+    copy.dataset.copied = 'true';
+    setTimeout(() => { icon.textContent = 'Copiar todos'; delete copy.dataset.copied; }, 1400);
+  });
+  generate();
+</script>
