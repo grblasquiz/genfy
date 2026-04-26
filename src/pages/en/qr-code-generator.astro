@@ -65,7 +65,7 @@ const faqSchema = {
 
       <h2>Tips for a scannable QR</h2>
       <ol>
-        <li><strong>Minimum physical size: ~0.8 inches (2 cm).</strong> Smaller and phones won't focus.</li>
+        <li><strong>Minimum physical size: ~1 inch (2.5 cm) for printed materials, 1.5 inches if it'll be scanned from across a room.</strong> Smaller and phones won't focus.</li>
         <li><strong>Strong contrast.</strong> Black on white is ideal. If you invert (light on dark), many apps fail.</li>
         <li><strong>Quiet zone (white margin).</strong> Leave at least 4 modules of white margin. Without it, scanners miss the boundary.</li>
         <li><strong>Don't stretch.</strong> The QR must be a perfect square.</li>
@@ -91,7 +91,7 @@ const faqSchema = {
         <li><strong>Events</strong>: tickets, attendee check-in.</li>
         <li><strong>WiFi</strong>: guests connect by scanning, no password sharing (format <code>WIFI:T:WPA;S:redName;P:pass;;</code>).</li>
         <li><strong>Contact cards</strong>: vCard in MECARD format.</li>
-        <li><strong>Payments</strong>: most apps (Venmo, PayPal, Bizum) generate their own QR.</li>
+        <li><strong>Payments</strong>: most apps (Venmo, Cash App, Zelle, PayPal, Apple Pay) generate their own QR — those embed a closed payload and you don't need a generator for them.</li>
       </ul>
     </div>
 
