@@ -25,7 +25,7 @@ const faqSchema = {
       <label for="bn-style" style="margin-top:1rem">Estilo</label>
       <select id="bn-style">
         <option value="modern">Moderno (Stripify, Lumora)</option>
-        <option value="latin">Latín / clásico (Aurum, Solis)</option>
+        <option value="latin">Latín / clásico (Aurum, Lumen)</option>
         <option value="real">Palabras reales combinadas</option>
         <option value="prefix">Prefijo + palabra (Neo, Cloud, Get)</option>
         <option value="suffix">Palabra + sufijo (-ly, -io, -ify)</option>
@@ -54,7 +54,7 @@ const faqSchema = {
       <h2>Estilos de nombres y cuándo usar cada uno</h2>
       <ul>
         <li><strong>Moderno / inventado</strong> (Spotify, Zalando, Klarna): bueno para tech y consumo masivo. Es 100% propio, fácil de registrar, pero requiere más marketing para que la gente entienda qué hacés.</li>
-        <li><strong>Latín o clásico</strong> (Veritas, Lumen, Aurum): aporta sensación de seriedad, ideal para legal, finanzas, salud premium o lujo.</li>
+        <li><strong>Latín o clásico</strong> (Aurum, Lumen, Vita): aporta sensación de seriedad, ideal para legal, finanzas, salud premium o lujo.</li>
         <li><strong>Palabras reales combinadas</strong> (Facebook, Snowflake, Mailchimp): le da al usuario una pista del producto y suele ser memorable.</li>
         <li><strong>Prefijo + palabra</strong> (Neobank, GetCarter, CloudKitchen): comunica rápido, pero puede sonar genérico si no se cuida.</li>
         <li><strong>Palabra + sufijo</strong> (Spotify, Shopify, Loomly): suena a software/SaaS al instante. Ojo con la saturación: hay miles de marcas con -ify e -ly.</li>
@@ -99,8 +99,8 @@ const faqSchema = {
 <script>
   const PREFIX = ['Neo', 'Get', 'Cloud', 'Hyper', 'Up', 'Go', 'Sky', 'Lumi', 'Solo', 'Meta', 'Co', 'Open', 'My', 'Smart', 'Quick', 'Easy'];
   const SUFFIX = ['ly', 'io', 'ify', 'fy', 'hub', 'lab', 'kit', 'ix', 'ora', 'eo', 'ai', 'wave', 'box', 'spot', 'core', 'core'];
-  const LATIN = ['Aurum', 'Lumen', 'Veritas', 'Solis', 'Vita', 'Nova', 'Astra', 'Lux', 'Terra', 'Magna', 'Prima', 'Domus', 'Anima', 'Fortis'];
-  const MOD = ['Lumo', 'Zera', 'Klio', 'Vexa', 'Brio', 'Tono', 'Quira', 'Nido', 'Plux', 'Reki', 'Tovi', 'Yumi', 'Noxa', 'Tilo', 'Rema', 'Vola'];
+  const LATIN = ['Aurum', 'Lumen', 'Vita', 'Nova', 'Astra', 'Lux', 'Magna', 'Prima', 'Domus', 'Anima', 'Fortis', 'Pura', 'Clara', 'Forma', 'Verum'];
+  const MOD = ['Lumo', 'Zera', 'Vexa', 'Brio', 'Tono', 'Quira', 'Nido', 'Plux', 'Reki', 'Tovi', 'Yumi', 'Noxa', 'Tilo', 'Rema', 'Vola', 'Felo'];
 
   const kw = document.getElementById('bn-kw') as HTMLInputElement;
   const style = document.getElementById('bn-style') as HTMLSelectElement;
