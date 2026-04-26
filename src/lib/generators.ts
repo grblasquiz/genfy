@@ -43,8 +43,8 @@ export const GENERATORS: GeneratorMeta[] = [
     slug: { es: 'generador-de-nombres-para-gatos', en: 'cat-name-generator' },
     title: { es: 'Generador de nombres para gatos', en: 'Cat name generator' },
     description: {
-      es: 'Encuentra el nombre perfecto para tu gato: tiernos, divertidos, originales o épicos.',
-      en: 'Find the perfect name for your cat: cute, funny, original or epic.',
+      es: 'Encuentra el nombre perfecto para tu gato: tiernos, divertidos u originales.',
+      en: 'Find the perfect name for your cat: cute, funny or original.',
     },
     category: 'fun',
     emoji: '🐱',

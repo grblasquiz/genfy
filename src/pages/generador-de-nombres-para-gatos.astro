@@ -4,17 +4,13 @@ import GeneratorShell from '../components/GeneratorShell.astro';
 import { CAT_NAMES, STYLES } from '../lib/cat-names';
 
 const title = 'Generador de nombres para gatos | Genfy';
-const description = 'Encontrá el nombre perfecto para tu gato: tiernos, divertidos, épicos o de comida. +200 ideas en español e inglés, generador instantáneo gratis.';
+const description = 'Encontrá el nombre perfecto para tu gato: tiernos, divertidos o de comida. +150 ideas en español e inglés, generador instantáneo gratis.';
 
-const allNames = [
-  ...CAT_NAMES.cute.es, ...CAT_NAMES.funny.es, ...CAT_NAMES.epic.es, ...CAT_NAMES.food.es,
-];
-const dataES = JSON.stringify(CAT_NAMES);
 const stylesES = STYLES.es;
 ---
 <Layout title={title} description={description} lang="es" withSidebar={true}>
   <GeneratorShell lang="es" tag="Mascotas" title="Generador de nombres para gatos"
-    intro="Tierno, divertido, épico o foodie: encontrá el nombre que mejor le queda a tu gato. Click en el botón y obtené 12 ideas frescas en segundos.">
+    intro="Tierno, divertido o foodie: encontrá el nombre que mejor le queda a tu gato. Click en el botón y obtené 12 ideas frescas en segundos.">
 
     <div slot="tool" class="cn">
       <label for="cn-style">Estilo</label>
@@ -43,17 +39,17 @@ const stylesES = STYLES.es;
       <h2>Tendencias actuales en nombres para gatos</h2>
       <p>
         Las clínicas veterinarias en Argentina, México, España y Estados Unidos publican
-        rankings cada año. Las constantes son sorprendentes: en los últimos 5 años los nombres
-        de comida (Mochi, Galleta, Mostaza) crecieron un 40%, los mitológicos (Loki, Thor, Atenea)
-        siguen en el top 10 desde la era Marvel, y los nombres "humanos" (Lola, Tomás, Olivia)
-        siguen siendo los preferidos en hogares con niños.
+        rankings cada año. En los últimos 5 años, los nombres de comida (Mochi, Galleta,
+        Mostaza) crecieron un 40%; los nombres "humanos" (Lola, Tomás, Olivia) siguen siendo
+        los preferidos en hogares con niños; y los nombres divertidos derivados de la cultura
+        pop o del aspecto del gato (Doctor Whiskers, Empanada, Pelusa) ganan terreno año a año
+        en redes.
       </p>
 
       <h2>Por categoría: qué tipo de gato encaja con cada estilo</h2>
       <ul>
         <li><strong>Tiernos</strong> (Mishi, Pelusa, Coco): perfectos para gatitos pequeños, mezclas suaves o gatos hogareños y mimosos.</li>
         <li><strong>Divertidos</strong> (Doctor Whiskers, Empanada, Lord Fluff): ideales para gatos con personalidad fuerte o looks particulares.</li>
-        <li><strong>Épicos / mitológicos</strong> (Loki, Atenea, Atlas): excelentes para gatos atléticos, dominantes o de razas grandes (Maine Coon, Bengala).</li>
         <li><strong>Comida y bebidas</strong> (Mocha, Galleta, Wasabi): gatos de colores cálidos, atigrados naranjas, manchas de café con leche.</li>
       </ul>
 
@@ -90,7 +86,7 @@ const stylesES = STYLES.es;
   function generate() {
     const s = styleEl.value;
     let pool = [];
-    if (s === 'all') pool = [...DATA.cute.es, ...DATA.funny.es, ...DATA.epic.es, ...DATA.food.es];
+    if (s === 'all') pool = [...DATA.cute.es, ...DATA.funny.es, ...DATA.food.es];
     else pool = DATA[s].es;
     const set = new Set();
     let attempts = 0;

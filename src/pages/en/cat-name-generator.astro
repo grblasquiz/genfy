@@ -4,12 +4,12 @@ import GeneratorShell from '../../components/GeneratorShell.astro';
 import { CAT_NAMES, STYLES } from '../../lib/cat-names';
 
 const title = 'Cat Name Generator | Genfy';
-const description = 'Find the perfect name for your cat: cute, funny, epic or food-themed. 200+ ideas in English and Spanish — free instant generator.';
+const description = 'Find the perfect name for your cat: cute, funny or food-themed. 150+ ideas in English and Spanish — free instant generator.';
 const stylesEN = STYLES.en;
 ---
 <Layout title={title} description={description} lang="en" withSidebar={true}>
   <GeneratorShell lang="en" tag="Pets" title="Cat Name Generator"
-    intro="Cute, funny, epic or foodie: find the name that fits your cat best. Click the button and get 12 fresh ideas in seconds.">
+    intro="Cute, funny or foodie: find the name that fits your cat best. Click the button and get 12 fresh ideas in seconds.">
 
     <div slot="tool" class="cn">
       <label for="cn-style">Style</label>
@@ -38,18 +38,16 @@ const stylesEN = STYLES.en;
       <h2>Current trends in cat names</h2>
       <p>
         Petplan, Nationwide and Rover publish US/UK rankings every year. A few things stand
-        out: food names (Mochi, Cookie, Pumpkin) jumped roughly 40% in the last five years,
-        mythological names (Loki, Thor, Athena) have been stuck in the top 10 since the
-        Marvel era, and "human" names (Olivia, Charlie, Luna) keep dominating in households
-        with kids. The "weird food" subgenre — Wasabi, Brisket, Pickle — is having a moment
-        on TikTok and the spike is real.
+        out: food names (Mochi, Cookie, Pumpkin) jumped roughly 40% in the last five years;
+        "human" names (Olivia, Charlie, Luna) keep dominating in households with kids; and
+        the "weird food" subgenre — Wasabi, Brisket, Pickle — is having a moment on TikTok
+        and the spike is real.
       </p>
 
       <h2>Per category: which cat fits which style</h2>
       <ul>
         <li><strong>Cute</strong> (Mochi, Cookie, Daisy): perfect for kittens, soft mixes or cuddly indoor cats.</li>
         <li><strong>Funny</strong> (Sir Whiskers, Catzilla, Lord Fluff): great for cats with strong personalities or quirky looks.</li>
-        <li><strong>Epic / mythological</strong> (Loki, Athena, Atlas): excellent for athletic, dominant or large-breed cats (Maine Coon, Bengal).</li>
         <li><strong>Food & drinks</strong> (Mocha, Cookie, Wasabi): warm-colored cats, orange tabbies, milky-coffee patches.</li>
       </ul>
 
@@ -86,7 +84,7 @@ const stylesEN = STYLES.en;
   function generate() {
     const s = styleEl.value;
     let pool = [];
-    if (s === 'all') pool = [...DATA.cute.en, ...DATA.funny.en, ...DATA.epic.en, ...DATA.food.en];
+    if (s === 'all') pool = [...DATA.cute.en, ...DATA.funny.en, ...DATA.food.en];
     else pool = DATA[s].en;
     const set = new Set();
     let attempts = 0;

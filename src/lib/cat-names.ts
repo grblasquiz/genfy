@@ -5,11 +5,7 @@ export const CAT_NAMES = {
   },
   funny: {
     es: ['Doctor Whiskers', 'Mostaza', 'Gato Profundo', 'Pelos', 'Don Pelusa', 'Bigotes', 'Su Majestad', 'Nacho', 'Ñoqui', 'Empanada', 'Choripán', 'Lasagna', 'Tofu', 'Capuchino', 'Sushi'],
-    en: ['Sir Whiskers', 'Lord Fluff', 'Mr. Mittens', 'Captain Pawsome', 'Catzilla', 'Meowcus Aurelius', 'Pickle', 'Nugget', 'Pancake', 'Burrito', 'Taco', 'Brisket', 'Wasabi', 'Espresso', 'Schrodinger'],
-  },
-  epic: {
-    es: ['Loki', 'Thor', 'Zeus', 'Atenea', 'Orión', 'Apolo', 'Artemisa', 'Hades', 'Hera', 'Aquiles', 'Helios', 'Selene', 'Rhea', 'Nyx', 'Astra', 'Vega', 'Nova', 'Atlas'],
-    en: ['Loki', 'Thor', 'Zeus', 'Athena', 'Orion', 'Apollo', 'Artemis', 'Hades', 'Hera', 'Achilles', 'Helios', 'Selene', 'Rhea', 'Nyx', 'Astra', 'Vega', 'Nova', 'Atlas'],
+    en: ['Sir Whiskers', 'Lord Fluff', 'Mr. Mittens', 'Captain Pawsome', 'Catzilla', 'Pickle', 'Nugget', 'Pancake', 'Burrito', 'Taco', 'Brisket', 'Wasabi', 'Espresso', 'Biscuit', 'Marshmallow'],
   },
   food: {
     es: ['Manteca', 'Caramelo', 'Chocolate', 'Vainilla', 'Canela', 'Galleta', 'Café', 'Mostaza', 'Brownie', 'Donut', 'Bizcocho', 'Anís', 'Almendra'],
@@ -18,6 +14,6 @@ export const CAT_NAMES = {
 };
 
 export const STYLES = {
-  es: { cute: 'Tiernos', funny: 'Divertidos', epic: 'Épicos / mitológicos', food: 'Comida y bebidas' },
-  en: { cute: 'Cute', funny: 'Funny', epic: 'Epic / mythological', food: 'Food & drinks' },
+  es: { cute: 'Tiernos', funny: 'Divertidos', food: 'Comida y bebidas' },
+  en: { cute: 'Cute', funny: 'Funny', food: 'Food & drinks' },
 };
