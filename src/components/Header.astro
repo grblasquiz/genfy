@@ -1,5 +1,7 @@
 ---
 import { t, type Lang, altPath } from '../lib/i18n';
+import CmdK from './CmdK.astro';
+
 const { lang = 'es' } = Astro.props as { lang?: Lang };
 const tt = t[lang];
 const homeHref = lang === 'es' ? '/' : '/en';
@@ -15,15 +17,40 @@ const altHref = altPath(Astro.url.pathname, lang);
       </svg>
       <span class="brand-name">Genfy</span>
     </a>
-    <nav class="nav" aria-label="Principal">
-      <a href={allHref}>{tt.nav.all}</a>
-      <a href={lang === 'es' ? '/sobre-genfy' : '/en/about'}>{tt.nav.about}</a>
-      <a href={altHref} class="lang-switch" rel="alternate" hreflang={lang === 'es' ? 'en' : 'es'}>
-        {tt.langSwitch}
-      </a>
-    </nav>
+
+    <div class="header-right">
+      <CmdK lang={lang} />
+      <nav class="nav" aria-label="Principal">
+        <a href={allHref}>{tt.nav.all}</a>
+        <a href={lang === 'es' ? '/sobre-genfy' : '/en/about'}>{tt.nav.about}</a>
+        <a href={altHref} class="lang-switch" rel="alternate" hreflang={lang === 'es' ? 'en' : 'es'}>{tt.langSwitch}</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <a href={allHref}>{tt.nav.all}</a>
+    <a href={lang === 'es' ? '/sobre-genfy' : '/en/about'}>{tt.nav.about}</a>
+    <a href={lang === 'es' ? '/contacto' : '/en/contact'}>{tt.nav.contact}</a>
+    <a href={altHref} class="lang-switch" rel="alternate" hreflang={lang === 'es' ? 'en' : 'es'}>{tt.langSwitch}</a>
   </div>
 </header>
+
+<script is:inline>
+  (function() {
+    const btn = document.getElementById('hamburger');
+    const menu = document.getElementById('mobile-menu');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', () => {
+      const open = menu.hidden;
+      menu.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  })();
+</script>
 
 <style>
   .site-header {
@@ -44,6 +71,7 @@ const altHref = altPath(Astro.url.pathname, lang);
     justify-content: space-between;
     padding: 0.875rem 1.5rem;
     height: 60px;
+    gap: 1rem;
   }
   .brand {
     display: inline-flex;
@@ -54,19 +82,21 @@ const altHref = altPath(Astro.url.pathname, lang);
     font-size: 1rem;
     letter-spacing: -0.02em;
     text-decoration: none;
-  }
-  .brand:hover { text-decoration: none; }
-  .brand-mark {
-    width: 24px; height: 24px;
-    color: var(--text);
     flex-shrink: 0;
   }
+  .brand:hover { text-decoration: none; }
+  .brand-mark { width: 24px; height: 24px; color: var(--text); flex-shrink: 0; }
   .brand-name { font-feature-settings: "ss01"; }
+
+  .header-right { display: flex; align-items: center; gap: 0.625rem; }
+
   .nav {
-    display: flex;
+    display: none;
     gap: 0.25rem;
     align-items: center;
   }
+  @media (min-width: 768px) { .nav { display: flex; } }
+
   .nav a {
     color: var(--text-soft);
     font-size: 0.875rem;
@@ -74,7 +104,7 @@ const altHref = altPath(Astro.url.pathname, lang);
     text-decoration: none;
     padding: 0.5rem 0.75rem;
     border-radius: var(--radius-sm);
-    transition: color var(--t-base) var(--ease), background var(--t-base) var(--ease);
+    transition: color 180ms var(--ease), background 180ms var(--ease);
   }
   .nav a:hover { color: var(--text); background: var(--bg-inset); }
   .lang-switch {
@@ -82,4 +112,37 @@ const altHref = altPath(Astro.url.pathname, lang);
     margin-left: 0.5rem;
   }
   .lang-switch:hover { border-color: var(--border-strong); }
+
+  .hamburger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-soft);
+    background: var(--bg);
+  }
+  .hamburger:hover { border-color: var(--border-strong); color: var(--text); }
+  @media (min-width: 768px) { .hamburger { display: none; } }
+
+  .mobile-menu[hidden] { display: none !important; }
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem 1.5rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .mobile-menu a {
+    padding: 0.875rem 0.5rem;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .mobile-menu a:last-child { border-bottom: 0; }
+  @media (min-width: 768px) { .mobile-menu { display: none !important; } }
 </style>

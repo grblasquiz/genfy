@@ -18,7 +18,7 @@ const allLabel = lang === 'es' ? 'Generadores' : 'Generators';
 ---
 <nav class="crumbs" aria-label="Breadcrumb">
   <a href={homeHref}>{homeLabel}</a>
-  <span aria-hidden="true">›</span>
+  <svg class="crumb-sep" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
   <a href={allHref}>{allLabel}</a>
 </nav>
 
@@ -34,7 +34,7 @@ const allLabel = lang === 'es' ? 'Generadores' : 'Generators';
 
 <AdSlot variant="inline" slot="in-content-1" label={lang === 'en' ? 'Sponsored' : 'Publicidad'} />
 
-<section class="gen-content">
+<section class="gen-content drop-cap">
   <slot name="content" />
 </section>
 
@@ -60,6 +60,7 @@ const allLabel = lang === 'es' ? 'Generadores' : 'Generators';
     transition: color var(--t-base) var(--ease);
   }
   .crumbs a:hover { color: var(--text); }
+  .crumb-sep { color: var(--text-muted); flex-shrink: 0; }
   .gen-hero { margin-bottom: 2rem; }
   .gen-hero .tag { margin-bottom: 1rem; }
   .gen-hero h1 {

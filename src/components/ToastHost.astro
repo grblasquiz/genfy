@@ -1,0 +1,20 @@
+---
+---
+<div class="toast-host" id="genfy-toast-host" aria-live="polite"></div>
+<script is:inline>
+  window.genfyToast = function(message, opts) {
+    const host = document.getElementById('genfy-toast-host');
+    if (!host) return;
+    const t = document.createElement('div');
+    t.className = 'toast';
+    const icon = (opts && opts.icon) || `<svg class="toast-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    t.innerHTML = icon + '<span>' + message + '</span>';
+    host.appendChild(t);
+    setTimeout(() => {
+      t.style.transition = 'opacity 200ms, transform 200ms';
+      t.style.opacity = '0';
+      t.style.transform = 'translateY(8px)';
+      setTimeout(() => t.remove(), 220);
+    }, (opts && opts.duration) || 1800);
+  };
+</script>

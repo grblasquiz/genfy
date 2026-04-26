@@ -1,0 +1,227 @@
+---
+import { GENERATORS } from '../lib/generators';
+import type { Lang } from '../lib/i18n';
+
+export interface Props { lang?: Lang }
+const { lang = 'es' } = Astro.props;
+
+const items = GENERATORS.map(g => ({
+  title: g.title[lang],
+  desc: g.description[lang],
+  href: lang === 'es' ? `/${g.slug.es}` : `/en/${g.slug.en}`,
+  emoji: g.emoji,
+  category: g.category,
+}));
+
+const placeholder = lang === 'es' ? 'Buscar generador… (Cmd+K)' : 'Search generators… (Cmd+K)';
+const empty = lang === 'es' ? 'Sin resultados' : 'No results';
+const hint = lang === 'es' ? 'Cmd K' : 'Cmd K';
+---
+<button class="cmdk-trigger" id="cmdk-trigger" aria-label="Buscar">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+  <span class="cmdk-trigger-label">{lang === 'es' ? 'Buscar' : 'Search'}</span>
+  <span class="cmdk-trigger-kbd">{hint}</span>
+</button>
+
+<div class="cmdk" id="cmdk" hidden>
+  <div class="cmdk-backdrop" data-close></div>
+  <div class="cmdk-panel" role="dialog" aria-label={placeholder}>
+    <div class="cmdk-input-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="cmdk-input" placeholder={placeholder} autocomplete="off" spellcheck="false" />
+      <kbd class="cmdk-esc">esc</kbd>
+    </div>
+    <div class="cmdk-results" id="cmdk-results" role="listbox"></div>
+    <div class="cmdk-footer">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navegar</span>
+      <span><kbd>↵</kbd> abrir</span>
+      <span><kbd>esc</kbd> cerrar</span>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ items, empty }}>
+  (function() {
+    const trigger = document.getElementById('cmdk-trigger');
+    const overlay = document.getElementById('cmdk');
+    const input = document.getElementById('cmdk-input');
+    const results = document.getElementById('cmdk-results');
+    if (!trigger || !overlay || !input || !results) return;
+
+    let active = 0;
+    let filtered = items;
+
+    function open() {
+      overlay.hidden = false;
+      requestAnimationFrame(() => input.focus());
+      render('');
+    }
+    function close() {
+      overlay.hidden = true;
+      input.value = '';
+      active = 0;
+    }
+    function render(q) {
+      const query = q.trim().toLowerCase();
+      filtered = !query ? items.slice(0, 20) : items.filter(it =>
+        it.title.toLowerCase().includes(query) ||
+        it.desc.toLowerCase().includes(query) ||
+        it.category.toLowerCase().includes(query)
+      ).slice(0, 30);
+      if (active >= filtered.length) active = 0;
+      if (!filtered.length) {
+        results.innerHTML = '<div class="cmdk-empty">' + empty + '</div>';
+        return;
+      }
+      results.innerHTML = filtered.map((it, i) =>
+        '<a class="cmdk-item' + (i === active ? ' cmdk-active' : '') + '" data-i="' + i + '" href="' + it.href + '">' +
+        '<span class="cmdk-emoji">' + it.emoji + '</span>' +
+        '<span class="cmdk-text"><span class="cmdk-title">' + it.title + '</span>' +
+        '<span class="cmdk-desc">' + it.desc + '</span></span>' +
+        '<span class="cmdk-cat">' + it.category + '</span></a>'
+      ).join('');
+      const el = results.querySelector('.cmdk-active');
+      if (el) el.scrollIntoView({ block: 'nearest' });
+    }
+
+    trigger.addEventListener('click', open);
+    overlay.addEventListener('click', e => { if (e.target.dataset.close !== undefined) close(); });
+    input.addEventListener('input', e => render(e.target.value));
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); active = Math.min(active + 1, filtered.length - 1); render(input.value); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); active = Math.max(active - 1, 0); render(input.value); }
+      else if (e.key === 'Enter') { e.preventDefault(); if (filtered[active]) window.location.href = filtered[active].href; }
+    });
+    document.addEventListener('keydown', e => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); overlay.hidden ? open() : close(); }
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        if (overlay.hidden) { e.preventDefault(); open(); }
+      }
+    });
+  })();
+</script>
+
+<style>
+  .cmdk-trigger {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.4375rem 0.75rem;
+    background: var(--bg-inset);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-subtle);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 180ms var(--ease), color 180ms var(--ease);
+  }
+  .cmdk-trigger:hover { border-color: var(--border-strong); color: var(--text); }
+  .cmdk-trigger-label { display: none; }
+  @media (min-width: 768px) { .cmdk-trigger-label { display: inline; } }
+  .cmdk-trigger-kbd {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    padding: 0.0625rem 0.375rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-subtle);
+  }
+
+  .cmdk[hidden] { display: none !important; }
+  .cmdk {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: start center;
+    padding-top: 12vh;
+  }
+  .cmdk-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(9, 9, 11, 0.6);
+    backdrop-filter: blur(6px);
+    animation: fade-blur-in 200ms var(--ease);
+  }
+  .cmdk-panel {
+    position: relative;
+    width: min(640px, 92vw);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    animation: pop-in 180ms var(--ease);
+  }
+  .cmdk-input-wrap {
+    display: flex; align-items: center; gap: 0.625rem;
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-subtle);
+  }
+  .cmdk-input-wrap input {
+    flex: 1; border: 0; padding: 0; font-size: 1rem;
+    background: transparent; color: var(--text);
+    box-shadow: none !important;
+  }
+  .cmdk-input-wrap input:focus { outline: none; box-shadow: none; }
+  .cmdk-esc {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 0.125rem 0.375rem;
+    background: var(--bg-inset);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-muted);
+  }
+  .cmdk-results { max-height: 60vh; overflow-y: auto; padding: 0.375rem; }
+  .cmdk-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.875rem;
+    align-items: center;
+    padding: 0.625rem 0.75rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text);
+  }
+  .cmdk-item:hover, .cmdk-item.cmdk-active {
+    background: var(--bg-inset);
+    text-decoration: none;
+  }
+  .cmdk-emoji { font-size: 1.125rem; }
+  .cmdk-text { display: flex; flex-direction: column; gap: 0.125rem; min-width: 0; }
+  .cmdk-title { font-weight: 500; font-size: 0.9375rem; color: var(--text); }
+  .cmdk-desc { font-size: 0.8125rem; color: var(--text-subtle); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+  .cmdk-cat {
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.125rem 0.5rem;
+    background: var(--bg-inset);
+    border-radius: 999px;
+  }
+  .cmdk-empty { padding: 2rem 1rem; text-align: center; color: var(--text-muted); font-size: 0.875rem; }
+  .cmdk-footer {
+    display: flex; gap: 1rem;
+    padding: 0.625rem 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .cmdk-footer kbd {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    padding: 0.0625rem 0.375rem;
+    background: var(--bg-inset);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-right: 0.25rem;
+  }
+  @media (max-width: 600px) {
+    .cmdk-cat { display: none; }
+    .cmdk-footer { display: none; }
+  }
+</style>

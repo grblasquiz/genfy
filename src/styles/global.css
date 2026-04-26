@@ -109,11 +109,15 @@ html {
 body {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.65;
   color: var(--text);
   background: var(--bg);
   font-feature-settings: "ss01", "cv11";
+}
+.mono, code, pre, input.mono, textarea.mono {
+  font-feature-settings: "tnum", "calt";
+  font-variant-numeric: tabular-nums;
 }
 img, svg, video { max-width: 100%; height: auto; display: block; }
 button { font: inherit; cursor: pointer; border: 0; background: transparent; color: inherit; }
@@ -129,10 +133,10 @@ h1, h2, h3, h4, h5 {
   line-height: 1.15;
 }
 h1 {
-  font-size: clamp(2.25rem, 5.5vw, 4rem);
+  font-size: clamp(2rem, 6vw, 4.5rem);
   font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1.05;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
 }
 h2 {
   font-size: clamp(1.5rem, 3vw, 2.25rem);
@@ -193,18 +197,23 @@ code {
   white-space: nowrap;
 }
 .btn:hover { text-decoration: none; }
-.btn:focus-visible { outline: none; box-shadow: var(--ring); }
+.btn:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--bg), 0 0 0 5px var(--accent); }
 .btn:active { transform: translateY(0.5px); }
 
 .btn-primary {
   background: var(--primary);
   color: var(--primary-fg);
   border-color: var(--primary);
+  position: relative;
 }
 .btn-primary:hover {
   background: var(--primary-hover);
   border-color: var(--primary-hover);
   color: var(--primary-fg);
+  box-shadow: 0 6px 20px -6px rgba(9, 9, 11, 0.35), 0 2px 6px -2px rgba(9, 9, 11, 0.2);
+}
+@media (prefers-color-scheme: dark) {
+  .btn-primary:hover { box-shadow: 0 6px 20px -6px rgba(52, 211, 153, 0.4), 0 0 0 1px rgba(52, 211, 153, 0.2); }
 }
 
 .btn-ghost {
@@ -250,7 +259,13 @@ input:hover, textarea:hover, select:hover { border-color: var(--border-strong); 
 input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: var(--ring);
+  box-shadow: 0 0 0 1px var(--bg), 0 0 0 4px var(--accent-soft);
+  border-width: 1px;
+}
+@media (prefers-color-scheme: dark) {
+  input:focus, textarea:focus, select:focus {
+    box-shadow: 0 0 0 1px var(--bg), 0 0 0 4px rgba(52, 211, 153, 0.18);
+  }
 }
 input[type="checkbox"], input[type="radio"] {
   width: auto;
@@ -377,13 +392,127 @@ label {
   color: var(--text-soft);
 }
 
-/* ─── Animación check copy ─── */
+/* ─── Animaciones ─── */
 @keyframes pop-in {
   0% { transform: scale(0.8); opacity: 0; }
   60% { transform: scale(1.06); opacity: 1; }
   100% { transform: scale(1); }
 }
-.copy-toast {
-  display: inline-block;
-  animation: pop-in 220ms var(--ease);
+@keyframes fade-blur-in {
+  from { opacity: 0; filter: blur(6px); }
+  to { opacity: 1; filter: blur(0); }
+}
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes toast-in {
+  from { transform: translateY(8px) scale(0.96); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.copy-toast { display: inline-block; animation: pop-in 220ms var(--ease); }
+
+.regenerated { animation: fade-blur-in 200ms var(--ease); }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-inset) 0%, var(--border-soft) 50%, var(--bg-inset) 100%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: var(--radius);
+}
+
+/* ─── Hero gradient backdrop ─── */
+.hero-bg {
+  position: relative;
+}
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: -2rem -50vw -2rem -50vw;
+  background:
+    radial-gradient(50% 50% at 80% 0%, color-mix(in oklab, var(--accent) 6%, transparent) 0%, transparent 60%),
+    radial-gradient(40% 60% at 20% 30%, color-mix(in oklab, var(--accent) 4%, transparent) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ─── Scroll progress bar ─── */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px;
+  background: var(--accent);
+  width: 0%;
+  z-index: 100;
+  transition: width 80ms linear;
+}
+
+/* ─── Drop cap ─── */
+.drop-cap > p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 3.4rem;
+  line-height: 0.85;
+  float: left;
+  margin: 0.4rem 0.6rem 0 0;
+  color: var(--text);
+  letter-spacing: -0.04em;
+}
+
+/* ─── Card hover refinement ─── */
+.gcard, .card, .btn {
+  transition-property: transform, border-color, box-shadow, background-color, color;
+  transition-duration: 280ms;
+  transition-timing-function: var(--ease);
+}
+
+/* ─── Toast notification global ─── */
+.toast-host {
+  position: fixed;
+  bottom: 5rem;
+  right: 1rem;
+  z-index: 90;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  pointer-events: none;
+}
+.toast {
+  background: var(--text);
+  color: var(--bg);
+  padding: 0.625rem 0.875rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  animation: toast-in 200ms var(--ease);
+  pointer-events: auto;
+  max-width: 300px;
+}
+.toast .toast-icon { color: var(--accent); flex-shrink: 0; }
+
+/* ─── AdSlot label más sutil ─── */
+.ad-slot .ad-label {
+  text-transform: none !important;
+  letter-spacing: 0.02em !important;
+  font-size: 0.6875rem !important;
+  color: var(--text-muted) !important;
+  font-weight: 400 !important;
+  font-style: italic !important;
+}
+
+/* ─── Anchor ad mobile slide-up ─── */
+.ad-anchor {
+  animation: slide-up 280ms var(--ease) 1.5s both;
+}
+
+/* ─── Sticky sidebar respeta footer ─── */
+@media (min-width: 1024px) {
+  .sidebar {
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+  }
+  .sidebar::-webkit-scrollbar { width: 0; }
 }
