@@ -1,0 +1,222 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de contraseñas seguras gratis | Genfy';
+const description = 'Crea contraseñas fuertes y aleatorias al instante. Ajusta longitud, mayúsculas, números y símbolos. 100% gratis y privado, sin registro.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: '¿Qué hace que una contraseña sea segura?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Una contraseña segura combina longitud (mínimo 12 caracteres), mayúsculas, minúsculas, números y símbolos, sin patrones predecibles ni datos personales.' },
+    },
+    {
+      '@type': 'Question',
+      name: '¿Es seguro generar contraseñas online?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Sí, siempre que el generador funcione 100% en tu navegador. Genfy usa la API criptográfica del navegador y nunca envía la contraseña a un servidor.' },
+    },
+    {
+      '@type': 'Question',
+      name: '¿Cuántos caracteres debe tener?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Para cuentas comunes, 12-16 caracteres es suficiente. Para cuentas críticas (banco, email maestro, gestor de contraseñas) recomendamos 20+.' },
+    },
+    {
+      '@type': 'Question',
+      name: '¿Puedo usar la misma contraseña en varios sitios?',
+      acceptedAnswer: { '@type': 'Answer', text: 'No. Si un sitio sufre una filtración, los atacantes prueban automáticamente la misma contraseña en otros sitios. Usá un gestor de contraseñas y una distinta por servicio.' },
+    },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Seguridad"
+    title="Generador de contraseñas seguras"
+    intro="Creá contraseñas fuertes y aleatorias en un click. Elegí longitud y qué tipos de caracteres incluir. Todo se genera en tu navegador: la contraseña nunca sale de tu dispositivo."
+  >
+    <div slot="tool" class="pwgen">
+      <div class="pwgen-output">
+        <input id="pw-out" class="mono" readonly aria-label="Contraseña generada" />
+        <button id="pw-copy" class="btn btn-ghost" type="button">Copiar</button>
+      </div>
+      <div class="pwgen-strength" id="pw-strength" aria-live="polite">—</div>
+
+      <div class="pwgen-controls">
+        <label for="pw-len">Longitud: <span id="pw-len-val">16</span></label>
+        <input id="pw-len" type="range" min="6" max="64" value="16" />
+      </div>
+
+      <div class="pwgen-toggles">
+        <label><input type="checkbox" id="pw-up" checked /> Mayúsculas (A-Z)</label>
+        <label><input type="checkbox" id="pw-low" checked /> Minúsculas (a-z)</label>
+        <label><input type="checkbox" id="pw-num" checked /> Números (0-9)</label>
+        <label><input type="checkbox" id="pw-sym" checked /> Símbolos (!@#$…)</label>
+        <label><input type="checkbox" id="pw-amb" /> Excluir ambiguos (0,O,1,l,I)</label>
+      </div>
+
+      <button id="pw-gen" class="btn btn-primary" type="button">Generar otra vez</button>
+    </div>
+
+    <div slot="content">
+      <h2>¿Cómo funciona el generador de contraseñas de Genfy?</h2>
+      <p>
+        Cuando hacés click en "Generar otra vez", el navegador usa <code>crypto.getRandomValues</code>,
+        una API estándar de criptografía disponible en todos los navegadores modernos. Esa función
+        produce números aleatorios de calidad criptográfica, mucho mejores que el clásico
+        <code>Math.random</code> que se usa para juegos. Después combinamos esos números con el
+        conjunto de caracteres que elegiste para armar la contraseña.
+      </p>
+      <p>
+        Todo el proceso ocurre en tu navegador. La contraseña nunca viaja por la red, nunca se
+        guarda en un servidor y nunca queda en logs. Si cerrás la pestaña, desaparece.
+      </p>
+
+      <h2>¿Qué hace fuerte a una contraseña?</h2>
+      <p>
+        La fortaleza de una contraseña depende de dos cosas: <strong>longitud</strong> y
+        <strong>aleatoriedad</strong>. Una contraseña de 8 caracteres tiene unas 200 mil millones
+        de combinaciones posibles si usás los 95 caracteres imprimibles del teclado. Suena mucho,
+        pero una GPU moderna puede probar varios miles de millones por segundo: cae en horas.
+        Una de 16 caracteres aleatorios, en cambio, supera las combinaciones que existen átomos
+        en el sistema solar: es inquebrable por fuerza bruta.
+      </p>
+
+      <h2>Recomendaciones según el caso de uso</h2>
+      <ul>
+        <li><strong>Cuentas críticas</strong> (banco, email principal, gestor de contraseñas): 20+ caracteres con todos los tipos.</li>
+        <li><strong>Cuentas habituales</strong> (redes sociales, foros, suscripciones): 14-16 caracteres.</li>
+        <li><strong>Cuentas descartables</strong> (registros únicos): 12 caracteres alcanzan, pero usá un email distinto si es realmente descartable.</li>
+        <li><strong>WiFi doméstico</strong>: 14-20 caracteres sin símbolos raros (más fácil de tipear en celulares y consolas).</li>
+        <li><strong>Frases para cifrar discos / cuentas familiares</strong>: considerá un "passphrase" de 4-6 palabras al azar en vez de caracteres.</li>
+      </ul>
+
+      <h2>Errores comunes al elegir contraseñas</h2>
+      <p>
+        Más allá de la longitud, hay errores que vacían cualquier contraseña aparentemente fuerte:
+      </p>
+      <ol>
+        <li><strong>Reutilizar la misma en varios sitios.</strong> Cuando un sitio filtra su base —pasa todos los meses—, los atacantes la prueban automáticamente en miles de servicios.</li>
+        <li><strong>Patrones humanos.</strong> "Maria1985!" parece compleja pero los diccionarios de ataque cubren nombres, fechas y la sustitución típica (a→@, e→3, etc.).</li>
+        <li><strong>Anotarla en un papel pegado al monitor.</strong> Mejor un gestor de contraseñas (Bitwarden, 1Password, KeePass) protegido por una única clave maestra muy larga.</li>
+        <li><strong>Compartirla por mensaje.</strong> Si tenés que pasarle una clave a alguien, usá funciones efímeras (1ty, PrivateBin) o el modo "compartir" del gestor.</li>
+      </ol>
+
+      <h2>Y si la página tiene reglas raras...</h2>
+      <p>
+        Algunos sitios todavía rechazan símbolos, exigen un máximo absurdo (12 caracteres) o piden
+        cambios mensuales. Activá <em>Excluir ambiguos</em> para evitar caracteres conflictivos y
+        bajá la longitud al máximo permitido. Si el sitio limita demasiado, considerá usar un
+        proveedor más serio para esa cuenta cuando puedas.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace que una contraseña sea segura?</summary><p>Longitud (12+ caracteres), mezcla de mayúsculas, minúsculas, números y símbolos, sin patrones predecibles ni datos personales.</p></details>
+      <details><summary>¿Es seguro generar contraseñas online?</summary><p>Sí, siempre que el generador funcione en tu navegador. Genfy usa la API criptográfica del navegador y nunca envía la contraseña a un servidor.</p></details>
+      <details><summary>¿Cuántos caracteres debe tener mi contraseña?</summary><p>Para cuentas comunes, 12-16 son suficientes. Para cuentas críticas (banco, email maestro, gestor de contraseñas) recomendamos 20+.</p></details>
+      <details><summary>¿Puedo usar la misma contraseña en varios sitios?</summary><p>No. Si un sitio sufre una filtración, los atacantes prueban la misma contraseña en otros. Usá un gestor de contraseñas y una distinta por servicio.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pwgen-output { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
+  .pwgen-output input { font-size: 1.125rem; padding: 0.875rem; }
+  .pwgen-strength {
+    font-size: 0.85rem; font-weight: 600;
+    margin-bottom: 1.25rem; min-height: 1.25rem;
+  }
+  .pwgen-controls { margin-bottom: 1rem; }
+  .pwgen-controls label { margin-bottom: 0.375rem; }
+  .pwgen-toggles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.5rem 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .pwgen-toggles label {
+    font-weight: 400; font-size: 0.95rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    margin: 0;
+  }
+  .pwgen-toggles input { width: auto; }
+  .strength-weak { color: var(--danger); }
+  .strength-ok { color: #d97706; }
+  .strength-good { color: var(--success); }
+  .strength-strong { color: var(--success); font-weight: 700; }
+</style>
+
+<script>
+  const out = document.getElementById('pw-out') as HTMLInputElement;
+  const copy = document.getElementById('pw-copy') as HTMLButtonElement;
+  const gen = document.getElementById('pw-gen') as HTMLButtonElement;
+  const len = document.getElementById('pw-len') as HTMLInputElement;
+  const lenVal = document.getElementById('pw-len-val')!;
+  const up = document.getElementById('pw-up') as HTMLInputElement;
+  const low = document.getElementById('pw-low') as HTMLInputElement;
+  const num = document.getElementById('pw-num') as HTMLInputElement;
+  const sym = document.getElementById('pw-sym') as HTMLInputElement;
+  const amb = document.getElementById('pw-amb') as HTMLInputElement;
+  const strength = document.getElementById('pw-strength')!;
+
+  const UP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const LOW = 'abcdefghijklmnopqrstuvwxyz';
+  const NUM = '0123456789';
+  const SYM = '!@#$%^&*()-_=+[]{};:,.<>/?';
+  const AMBIG = /[0O1lI]/g;
+
+  function buildPool(): string {
+    let pool = '';
+    if (up.checked) pool += UP;
+    if (low.checked) pool += LOW;
+    if (num.checked) pool += NUM;
+    if (sym.checked) pool += SYM;
+    if (amb.checked) pool = pool.replace(AMBIG, '');
+    return pool;
+  }
+
+  function generate() {
+    const length = parseInt(len.value, 10);
+    const pool = buildPool();
+    if (!pool) {
+      out.value = '';
+      strength.textContent = 'Activá al menos una opción';
+      strength.className = 'pwgen-strength strength-weak';
+      return;
+    }
+    const arr = new Uint32Array(length);
+    crypto.getRandomValues(arr);
+    let pw = '';
+    for (let i = 0; i < length; i++) pw += pool[arr[i] % pool.length];
+    out.value = pw;
+    setStrength(length, pool.length);
+  }
+
+  function setStrength(length: number, poolSize: number) {
+    const bits = Math.log2(poolSize) * length;
+    let label: string, cls: string;
+    if (bits < 40) { label = 'Débil'; cls = 'strength-weak'; }
+    else if (bits < 60) { label = 'Aceptable'; cls = 'strength-ok'; }
+    else if (bits < 80) { label = 'Fuerte'; cls = 'strength-good'; }
+    else { label = 'Excelente'; cls = 'strength-strong'; }
+    strength.textContent = `${label} (${Math.round(bits)} bits de entropía)`;
+    strength.className = `pwgen-strength ${cls}`;
+  }
+
+  len.addEventListener('input', () => { lenVal.textContent = len.value; generate(); });
+  [up, low, num, sym, amb].forEach(el => el.addEventListener('change', generate));
+  gen.addEventListener('click', generate);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const orig = copy.textContent;
+    copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = orig; }, 1200);
+  });
+  generate();
+</script>

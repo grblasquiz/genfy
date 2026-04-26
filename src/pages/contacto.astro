@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+const title = 'Contacto — Genfy';
+const description = 'Escribinos para sugerencias, errores o propuestas de nuevos generadores.';
+---
+<Layout title={title} description={description} lang="es">
+  <article>
+    <h1>Contacto</h1>
+    <p>
+      ¿Encontraste un error, querés sugerir un nuevo generador o tenés una consulta general?
+      Escribinos. Leemos todos los mensajes y respondemos los que requieren respuesta.
+    </p>
+    <p>
+      <strong>Email:</strong> <a href="mailto:hola@genfy.net">hola@genfy.net</a>
+    </p>
+    <h2>¿Qué contar en tu mensaje?</h2>
+    <ul>
+      <li>Si reportás un bug: qué hacías, qué esperabas y qué pasó. Si podés, qué navegador y dispositivo.</li>
+      <li>Si pedís un generador nuevo: contanos para qué lo usarías, así entendemos el caso de uso real.</li>
+      <li>Si es publicidad/colaboración: detalles de tu propuesta y la marca.</li>
+    </ul>
+    <p class="muted">
+      No respondemos pedidos de SEO automáticos, link-building masivo ni intercambios de enlaces.
+    </p>
+  </article>
+</Layout>

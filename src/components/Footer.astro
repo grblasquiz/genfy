@@ -1,0 +1,43 @@
+---
+import { t, type Lang } from '../lib/i18n';
+const { lang = 'es' } = Astro.props as { lang?: Lang };
+const tt = t[lang];
+const year = new Date().getFullYear();
+const links = lang === 'es'
+  ? [
+      { href: '/sobre-genfy', label: tt.nav.about },
+      { href: '/contacto', label: tt.nav.contact },
+      { href: '/privacidad', label: tt.nav.privacy },
+      { href: '/terminos', label: tt.nav.terms },
+    ]
+  : [
+      { href: '/en/about', label: tt.nav.about },
+      { href: '/en/contact', label: tt.nav.contact },
+      { href: '/en/privacy', label: tt.nav.privacy },
+      { href: '/en/terms', label: tt.nav.terms },
+    ];
+---
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p class="tagline">{tt.footerTagline}</p>
+    <nav class="footer-nav">
+      {links.map(l => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <p class="copy">© {year} Genfy. {tt.footerRights}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 4rem;
+    background: var(--bg-soft);
+    border-top: 1px solid var(--border);
+    padding: 2rem 0 5rem;
+  }
+  .footer-inner { text-align: center; }
+  .tagline { color: var(--text-soft); margin-bottom: 1rem; }
+  .footer-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1rem; }
+  .footer-nav a { color: var(--text-soft); font-size: 0.9rem; text-decoration: none; }
+  .footer-nav a:hover { color: var(--primary); }
+  .copy { color: var(--text-subtle); font-size: 0.8125rem; margin: 0; }
+</style>

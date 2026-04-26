@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de códigos QR gratis | Genfy';
+const description = 'Generá códigos QR gratis para enlaces, texto, WiFi o contacto. Descargá en PNG o SVG, en alta resolución, sin marca de agua y sin registro.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Los códigos QR caducan?', acceptedAnswer: { '@type': 'Answer', text: 'Los QR estáticos generados acá no caducan nunca: la información viaja codificada en la imagen. Los que sí caducan son los QR "dinámicos" de servicios pagos que redirigen a través de un servidor.' } },
+    { '@type': 'Question', name: '¿Hay un límite de caracteres?', acceptedAnswer: { '@type': 'Answer', text: 'El estándar QR permite hasta 4296 caracteres alfanuméricos, pero recomendamos quedarse bajo 300: cuanto más texto, más densa la imagen y más difícil de escanear.' } },
+    { '@type': 'Question', name: '¿Funciona offline?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, todo se genera en tu navegador. La página puede usarse sin conexión una vez cargada.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Herramientas" title="Generador de códigos QR"
+    intro="Convertí enlaces, texto o cualquier contenido en un código QR descargable. Sin marcas de agua, sin caducidad, en PNG de alta resolución.">
+
+    <div slot="tool" class="qr">
+      <label for="qr-text">Contenido del QR</label>
+      <textarea id="qr-text" rows="3" placeholder="https://genfy.net">https://genfy.net</textarea>
+
+      <div class="qr-options">
+        <div>
+          <label for="qr-size">Tamaño (px)</label>
+          <input id="qr-size" type="number" min="128" max="2048" step="32" value="512" />
+        </div>
+        <div>
+          <label for="qr-ec">Corrección de errores</label>
+          <select id="qr-ec">
+            <option value="L">Bajo (7%)</option>
+            <option value="M" selected>Medio (15%)</option>
+            <option value="Q">Alto (25%)</option>
+            <option value="H">Máximo (30%)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="qr-actions">
+        <button id="qr-gen" class="btn btn-primary" type="button">Generar QR</button>
+        <button id="qr-dl" class="btn btn-ghost" type="button">Descargar PNG</button>
+      </div>
+
+      <div id="qr-canvas-wrap" class="qr-canvas-wrap">
+        <canvas id="qr-canvas"></canvas>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>¿Qué es un código QR?</h2>
+      <p>
+        Un código QR (Quick Response) es una imagen 2D que codifica texto: una URL, un número
+        de teléfono, datos de WiFi o cualquier cadena de hasta unos miles de caracteres.
+        Inventado en 1994 en Japón para tracking automotriz, explotó globalmente con la
+        pandemia: menús de bares, pagos, ingresos a eventos, todo pasó por un QR.
+      </p>
+
+      <h2>Tipos de QR y cuándo usar cada uno</h2>
+      <ul>
+        <li><strong>QR estático</strong> (lo que generás acá): la información está dentro de la imagen. No caduca, no requiere internet del lado del creador, no se puede modificar después de imprimir.</li>
+        <li><strong>QR dinámico</strong>: redirige a un servidor que decide a dónde mandar al usuario. Caduca cuando vence la suscripción al servicio. Útil si necesitás cambiar el destino sin reimprimir, o si querés tracking de escaneos. No es lo que ofrecemos: para eso buscá un servicio dedicado.</li>
+      </ul>
+
+      <h2>Tips para que tu QR sea escaneable</h2>
+      <ol>
+        <li><strong>Tamaño físico mínimo: 2x2 cm.</strong> Más chico, los celulares no lo enfocan bien.</li>
+        <li><strong>Contraste fuerte.</strong> Negro sobre blanco es ideal. Si invertís colores (claro sobre oscuro), muchas apps fallan.</li>
+        <li><strong>Quiet zone (margen blanco).</strong> Dejá un margen blanco de al menos 4 módulos alrededor. Sin margen, los lectores no saben dónde empieza el código.</li>
+        <li><strong>No estirar ni deformar.</strong> El QR debe ser cuadrado perfecto.</li>
+        <li><strong>Probalo antes de imprimir.</strong> Escaneá con varios celulares (iPhone, Android, distintas apps) antes de mandar a imprenta.</li>
+      </ol>
+
+      <h2>Niveles de corrección de errores</h2>
+      <p>
+        Los códigos QR incluyen redundancia para seguir funcionando aunque parte de la imagen
+        esté tapada o dañada. Hay 4 niveles:
+      </p>
+      <ul>
+        <li><strong>L (7%)</strong>: para QR digitales que no se manchan ni rompen.</li>
+        <li><strong>M (15%)</strong>: por defecto, equilibra densidad y robustez.</li>
+        <li><strong>Q (25%)</strong>: para QR impresos en lugares con riesgo (mesas, exteriores).</li>
+        <li><strong>H (30%)</strong>: cuando querés meter un logo en el centro o el QR va a estar muy expuesto.</li>
+      </ul>
+
+      <h2>Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Marketing</strong>: tarjetas, flyers, packaging que llevan a una landing.</li>
+        <li><strong>Restaurantes</strong>: menús digitales en cada mesa.</li>
+        <li><strong>Eventos</strong>: tickets, registro de asistentes.</li>
+        <li><strong>WiFi</strong>: invitados se conectan escaneando, sin pedir clave (formato <code>WIFI:T:WPA;S:redName;P:pass;;</code>).</li>
+        <li><strong>Tarjetas de contacto</strong>: vCard en formato MECARD.</li>
+        <li><strong>Pagos</strong>: muchas apps (Mercado Pago, MODO, Bizum) generan sus propios QR.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Los códigos QR caducan?</summary><p>Los QR estáticos generados acá no caducan nunca. Los que caducan son los "dinámicos" de servicios pagos que redirigen vía servidor.</p></details>
+      <details><summary>¿Hay un límite de caracteres?</summary><p>El estándar permite hasta 4296 alfanuméricos, pero recomendamos quedarse bajo 300 para que el QR sea fácil de escanear.</p></details>
+      <details><summary>¿Funciona offline?</summary><p>Sí, todo se genera en tu navegador. Una vez cargada, la página funciona sin conexión.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .qr-options { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .qr-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .qr-canvas-wrap {
+    margin-top: 1rem; padding: 1rem; background: #fff;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 280px;
+  }
+  #qr-canvas { max-width: 100%; height: auto; }
+  @media (max-width: 600px) { .qr-options { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  import QRCode from 'qrcode';
+  const text = document.getElementById('qr-text') as HTMLTextAreaElement;
+  const size = document.getElementById('qr-size') as HTMLInputElement;
+  const ec = document.getElementById('qr-ec') as HTMLSelectElement;
+  const gen = document.getElementById('qr-gen') as HTMLButtonElement;
+  const dl = document.getElementById('qr-dl') as HTMLButtonElement;
+  const canvas = document.getElementById('qr-canvas') as HTMLCanvasElement;
+
+  async function render() {
+    const t = text.value.trim() || ' ';
+    const s = Math.max(128, Math.min(2048, parseInt(size.value, 10) || 512));
+    try {
+      await QRCode.toCanvas(canvas, t, {
+        width: s,
+        margin: 2,
+        errorCorrectionLevel: ec.value as any,
+        color: { dark: '#000000', light: '#ffffff' },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  gen.addEventListener('click', render);
+  text.addEventListener('input', () => { /* no-op, click to update */ });
+  dl.addEventListener('click', () => {
+    const url = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = url; a.download = 'qr.png'; a.click();
+  });
+  render();
+</script>

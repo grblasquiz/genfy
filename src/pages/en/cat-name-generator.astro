@@ -1,0 +1,105 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+import { CAT_NAMES, STYLES } from '../../lib/cat-names';
+
+const title = 'Cat Name Generator | Genfy';
+const description = 'Find the perfect name for your cat: cute, funny, epic or food-themed. 200+ ideas in English and Spanish — free instant generator.';
+const stylesEN = STYLES.en;
+---
+<Layout title={title} description={description} lang="en" withSidebar={true}>
+  <GeneratorShell lang="en" tag="Pets" title="Cat Name Generator"
+    intro="Cute, funny, epic or foodie: find the name that fits your cat best. Click the button and get 12 fresh ideas in seconds.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-style">Style</label>
+      <select id="cn-style">
+        {Object.entries(stylesEN).map(([k, v]) => <option value={k}>{v}</option>)}
+        <option value="all">Mix of all</option>
+      </select>
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 12 names</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a name for your cat</h2>
+      <p>
+        You'll use your cat's name thousands of times: at meal time, when she sneaks into a
+        drawer at 3 a.m., at the vet. A few practical tips:
+      </p>
+      <ul>
+        <li><strong>Short, ideally 1-2 syllables.</strong> Cats respond better to short, high-pitched sounds. "Mochi" works; "Maximilian Augustus" doesn't.</li>
+        <li><strong>End in a vowel.</strong> Open vowels (a, i, o) are easier for them to hear.</li>
+        <li><strong>Avoid names that sound like commands.</strong> If you have a dog and use "Stay", don't name the cat "Bay".</li>
+        <li><strong>Think how it'll sound at the vet.</strong> Some funny names age badly when said out loud at the clinic.</li>
+        <li><strong>Try it for a week before deciding.</strong> Cats don't respond to their name like dogs do, but you will use it constantly — if it doesn't feel natural after 7 days, change it.</li>
+      </ul>
+
+      <h2>Current trends in cat names</h2>
+      <p>
+        Vet clinics in the US, UK, Spain and Latin America publish rankings every year. The
+        constants are striking: food names (Mochi, Cookie, Mustard) grew 40% in the last 5
+        years; mythological ones (Loki, Thor, Athena) stayed in the top 10 since the Marvel
+        era; and "human" names (Olivia, Charlie, Luna) remain favorites in households with
+        kids.
+      </p>
+
+      <h2>Per category: which cat fits which style</h2>
+      <ul>
+        <li><strong>Cute</strong> (Mochi, Cookie, Daisy): perfect for kittens, soft mixes or cuddly indoor cats.</li>
+        <li><strong>Funny</strong> (Sir Whiskers, Catzilla, Lord Fluff): great for cats with strong personalities or quirky looks.</li>
+        <li><strong>Epic / mythological</strong> (Loki, Athena, Atlas): excellent for athletic, dominant or large-breed cats (Maine Coon, Bengal).</li>
+        <li><strong>Food & drinks</strong> (Mocha, Cookie, Wasabi): warm-colored cats, orange tabbies, milky-coffee patches.</li>
+      </ul>
+
+      <h2>Common naming mistakes</h2>
+      <ol>
+        <li>Waiting for the cat to "tell you their name". It doesn't work — pick one, pair it with food, and the cat learns.</li>
+        <li>Changing names too often. Cats can learn, but confusing them doesn't help.</li>
+        <li>Names too similar to other pets or family members. If your kid is "Matt", don't call the cat "Mat".</li>
+        <li>Inside-joke names that won't be funny in 6 months.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I pick the perfect cat name?</summary><p>Short (1-2 syllables), ending in a vowel, not similar to dog commands, and one that feels natural to say after a week.</p></details>
+      <details><summary>Do cats learn their name?</summary><p>Yes, especially if you pair it with food and positive attention in the first weeks. Slower than dogs, but they recognize it.</p></details>
+      <details><summary>Can I rename an adopted adult cat?</summary><p>Yes. Pair the new name with food and petting for 2-3 weeks and they adjust without issue.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.625rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; text-align: center; cursor: pointer; transition: border-color 0.1s; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script define:vars={{ DATA: CAT_NAMES }}>
+  const styleEl = document.getElementById('cn-style');
+  const out = document.getElementById('cn-out');
+  const gen = document.getElementById('cn-gen');
+
+  function pick(arr) { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = styleEl.value;
+    let pool = [];
+    if (s === 'all') pool = [...DATA.cute.en, ...DATA.funny.en, ...DATA.epic.en, ...DATA.food.en];
+    else pool = DATA[s].en;
+    const set = new Set();
+    let attempts = 0;
+    while (set.size < Math.min(12, pool.length) && attempts < 200) { attempts++; set.add(pick(pool)); }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombres de empresa gratis | Genfy';
+const description = 'Generá ideas pegadizas para el nombre de tu empresa, marca o startup en segundos. Combiná palabras clave, estilo y obtené +20 ideas instantáneas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo elijo un buen nombre para mi empresa?', acceptedAnswer: { '@type': 'Answer', text: 'Buscá uno corto (2-3 sílabas), fácil de pronunciar, sin connotaciones negativas en otros idiomas, con dominio .com disponible y que sugiera el rubro o un beneficio.' } },
+    { '@type': 'Question', name: '¿Tengo que registrar el nombre antes de usarlo?', acceptedAnswer: { '@type': 'Answer', text: 'Antes de imprimir tarjetas o lanzar la marca, verificá que no esté registrada en el INPI (Argentina), USPTO (EE.UU.) o el organismo correspondiente, y que el dominio .com esté libre.' } },
+    { '@type': 'Question', name: '¿Cuántas ideas debería generar?', acceptedAnswer: { '@type': 'Answer', text: 'Recomendamos generar al menos 30-50 ideas, anotar las 5-10 favoritas, dejarlas reposar 24 horas y volver a leerlas en voz alta.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Negocios" title="Generador de nombres de empresa"
+    intro="Combiná tus palabras clave con estilos pegadizos y obtené ideas de nombres en segundos. Ideal para startups, marcas, productos digitales o ecommerce.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabras clave (separadas por coma)</label>
+      <input id="bn-kw" type="text" placeholder="café, viaje, salud..." value="luz, viaje" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="modern">Moderno (Stripify, Lumora)</option>
+        <option value="latin">Latín / clásico (Aurum, Solis)</option>
+        <option value="real">Palabras reales combinadas</option>
+        <option value="prefix">Prefijo + palabra (Neo, Cloud, Get)</option>
+        <option value="suffix">Palabra + sufijo (-ly, -io, -ify)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de una empresa</h2>
+      <p>
+        El nombre de una marca es el primer activo que construís y el más caro de cambiar después.
+        No tiene que ser perfecto el primer día — Apple, Amazon o Nike no significaban nada en su
+        rubro al lanzarse — pero sí tiene que pasar cinco filtros básicos:
+      </p>
+      <ol>
+        <li><strong>Es pronunciable.</strong> Si una persona no puede repetir el nombre después de escucharlo una vez, lo perdés en el boca a boca.</li>
+        <li><strong>No tiene faltas obvias.</strong> Buscalo en Google: si los primeros resultados son de otra empresa importante, el SEO va a costar más de lo necesario.</li>
+        <li><strong>El dominio .com está libre o es asequible.</strong> El .com sigue siendo el rey. Si no, considerá .net, .co o un dominio nacional fuerte (.com.ar, .es, .mx).</li>
+        <li><strong>No significa algo raro en otro idioma.</strong> Si pensás expandirte, googleá tu candidato + "meaning" en inglés, francés, portugués y un par de idiomas asiáticos.</li>
+        <li><strong>Te gusta decirlo en voz alta.</strong> Vas a repetirlo miles de veces: en pitches, llamadas, presentaciones. Si te incomoda al tercer día, descartalo.</li>
+      </ol>
+
+      <h2>Estilos de nombres y cuándo usar cada uno</h2>
+      <ul>
+        <li><strong>Moderno / inventado</strong> (Spotify, Zalando, Klarna): bueno para tech y consumo masivo. Es 100% propio, fácil de registrar, pero requiere más marketing para que la gente entienda qué hacés.</li>
+        <li><strong>Latín o clásico</strong> (Veritas, Lumen, Aurum): aporta sensación de seriedad, ideal para legal, finanzas, salud premium o lujo.</li>
+        <li><strong>Palabras reales combinadas</strong> (Facebook, Snowflake, Mailchimp): le da al usuario una pista del producto y suele ser memorable.</li>
+        <li><strong>Prefijo + palabra</strong> (Neobank, GetCarter, CloudKitchen): comunica rápido, pero puede sonar genérico si no se cuida.</li>
+        <li><strong>Palabra + sufijo</strong> (Spotify, Shopify, Loomly): suena a software/SaaS al instante. Ojo con la saturación: hay miles de marcas con -ify e -ly.</li>
+      </ul>
+
+      <h2>Errores que arruinan un nombre potencialmente bueno</h2>
+      <p>
+        Vimos lanzamientos hundirse no por mal producto, sino por mal nombre. Los más típicos:
+        un nombre demasiado largo (4+ sílabas), un homófono accidental ("Send & Win" suena como
+        "send and lose"), nombres que se confunden con un competidor establecido, o usar la
+        palabra "soluciones" en el nombre (es la marca genérica más saturada del mundo
+        hispanohablante).
+      </p>
+
+      <h2>Después de generar: el flujo de validación</h2>
+      <p>
+        Cuando tengas tus 5-10 favoritos, validá cada uno con esta checklist rápida:
+      </p>
+      <ol>
+        <li>Búsqueda en Google: ¿hay otra marca? ¿qué SERP devuelve?</li>
+        <li>Búsqueda en INPI / USPTO según donde operes.</li>
+        <li>Disponibilidad de dominio en Namecheap, GoDaddy o Cloudflare Registrar.</li>
+        <li>Disponibilidad del handle en Instagram, LinkedIn y X.</li>
+        <li>Pronunciación en voz alta a 3-5 personas: ¿lo entienden a la primera?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo elijo un buen nombre para mi empresa?</summary><p>Buscá uno corto, fácil de pronunciar, sin connotaciones raras en otros idiomas, con dominio .com disponible y que sugiera el rubro o un beneficio.</p></details>
+      <details><summary>¿Tengo que registrar el nombre antes de usarlo?</summary><p>Antes de imprimir tarjetas o lanzar la marca, verificá que no esté registrada en el INPI o USPTO y que el dominio .com esté libre.</p></details>
+      <details><summary>¿Cuántas ideas debería generar?</summary><p>Generá al menos 30-50, anotá las 5-10 favoritas, dejá reposar 24 horas y volvé a leerlas en voz alta.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const PREFIX = ['Neo', 'Get', 'Cloud', 'Hyper', 'Up', 'Go', 'Sky', 'Lumi', 'Solo', 'Meta', 'Co', 'Open', 'My', 'Smart', 'Quick', 'Easy'];
+  const SUFFIX = ['ly', 'io', 'ify', 'fy', 'hub', 'lab', 'kit', 'ix', 'ora', 'eo', 'ai', 'wave', 'box', 'spot', 'core', 'core'];
+  const LATIN = ['Aurum', 'Lumen', 'Veritas', 'Solis', 'Vita', 'Nova', 'Astra', 'Lux', 'Terra', 'Magna', 'Prima', 'Domus', 'Anima', 'Fortis'];
+  const MOD = ['Lumo', 'Zera', 'Klio', 'Vexa', 'Brio', 'Tono', 'Quira', 'Nido', 'Plux', 'Reki', 'Tovi', 'Yumi', 'Noxa', 'Tilo', 'Rema', 'Vola'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T {
+    const i = new Uint32Array(1); crypto.getRandomValues(i);
+    return arr[i[0] % arr.length];
+  }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : pick(MOD);
+      let name = '';
+      if (s === 'modern') name = pick(MOD) + (Math.random() > 0.5 ? cap(w) : '');
+      else if (s === 'latin') name = pick(LATIN) + (Math.random() > 0.5 ? ' ' + cap(w) : '');
+      else if (s === 'real' && words.length >= 2) name = cap(words[0]) + cap(words[1]);
+      else if (s === 'real') name = cap(w) + pick(MOD);
+      else if (s === 'prefix') name = pick(PREFIX) + cap(w);
+      else if (s === 'suffix') name = cap(w) + pick(SUFFIX);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

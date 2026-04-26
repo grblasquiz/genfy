@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Business Name Generator | Genfy';
+const description = 'Generate catchy ideas for your business, brand or startup name in seconds. Mix keywords, pick a style and get 20+ instant ideas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do I pick a good business name?', acceptedAnswer: { '@type': 'Answer', text: 'Look for short (2-3 syllables), easy to pronounce, with no negative connotations in other languages, an available .com domain, and that hints at the industry or a benefit.' } },
+    { '@type': 'Question', name: 'Do I need to trademark the name before using it?', acceptedAnswer: { '@type': 'Answer', text: 'Before printing cards or launching, check it is not registered with the USPTO or your country trademark office, and that the .com is available.' } },
+    { '@type': 'Question', name: 'How many ideas should I generate?', acceptedAnswer: { '@type': 'Answer', text: 'Generate at least 30-50 ideas, write down your 5-10 favorites, sleep on it 24 hours, and read them out loud the next day.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Business Name Generator"
+    intro="Combine your keywords with catchy styles and get name ideas in seconds. Great for startups, brands, digital products or e-commerce stores.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Keywords (comma separated)</label>
+      <input id="bn-kw" type="text" placeholder="coffee, travel, health..." value="cloud, smart" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="modern">Modern (Stripify, Lumora)</option>
+        <option value="latin">Latin / classic (Aurum, Solis)</option>
+        <option value="real">Combined real words</option>
+        <option value="prefix">Prefix + word (Neo, Cloud, Get)</option>
+        <option value="suffix">Word + suffix (-ly, -io, -ify)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a business name</h2>
+      <p>
+        Your brand name is the first asset you build and the most expensive one to change later.
+        It doesn't have to be perfect on day one — Apple, Amazon and Nike meant nothing in their
+        space at launch — but it should pass five basic filters:
+      </p>
+      <ol>
+        <li><strong>It's pronounceable.</strong> If a person can't repeat it after hearing it once, you lose word-of-mouth.</li>
+        <li><strong>No obvious clashes.</strong> Google it: if the top results are another big company, your SEO will cost more than it should.</li>
+        <li><strong>The .com is available or affordable.</strong> The .com is still king. Otherwise consider .net, .co or a strong country domain (.io, .ai for tech).</li>
+        <li><strong>Doesn't mean something weird in another language.</strong> If you plan to expand, Google your candidate + "meaning" in Spanish, French, Portuguese and a couple of Asian languages.</li>
+        <li><strong>You enjoy saying it out loud.</strong> You'll repeat it thousands of times in pitches, calls, presentations. If it bothers you on day three, drop it.</li>
+      </ol>
+
+      <h2>Naming styles and when to use each</h2>
+      <ul>
+        <li><strong>Modern / invented</strong> (Spotify, Zalando, Klarna): great for tech and consumer. Fully owned, easy to register, but needs more marketing to explain what you do.</li>
+        <li><strong>Latin or classic</strong> (Veritas, Lumen, Aurum): conveys seriousness, ideal for legal, finance, premium health or luxury.</li>
+        <li><strong>Combined real words</strong> (Facebook, Snowflake, Mailchimp): hints at the product and tends to be memorable.</li>
+        <li><strong>Prefix + word</strong> (Neobank, GetCarter, CloudKitchen): communicates fast, but can sound generic if not handled well.</li>
+        <li><strong>Word + suffix</strong> (Spotify, Shopify, Loomly): instant SaaS feel. Watch for saturation: thousands of brands use -ify and -ly.</li>
+      </ul>
+
+      <h2>Mistakes that ruin a potentially good name</h2>
+      <p>
+        We've seen launches sink not because of bad product, but bad name. The most common ones:
+        a name too long (4+ syllables), an accidental homophone ("Send & Win" sounds like "send
+        and lose"), names that get confused with an established competitor, or using "solutions"
+        in the name (the most saturated generic brand keyword in the world).
+      </p>
+
+      <h2>After generating: the validation flow</h2>
+      <p>Once you have your 5-10 favorites, validate each with this quick checklist:</p>
+      <ol>
+        <li>Google search: is there another brand? what does the SERP show?</li>
+        <li>USPTO / national trademark office check.</li>
+        <li>Domain availability on Namecheap, GoDaddy or Cloudflare Registrar.</li>
+        <li>Handle availability on Instagram, LinkedIn and X.</li>
+        <li>Read it out loud to 3-5 people: do they get it on the first try?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I pick a good business name?</summary><p>Short, pronounceable, no weird connotations in other languages, .com available, and hinting at industry or benefit.</p></details>
+      <details><summary>Do I need to trademark before using?</summary><p>Before launching, check the USPTO/your country office and that the .com is available.</p></details>
+      <details><summary>How many ideas should I generate?</summary><p>30-50, pick 5-10 favorites, wait 24h, and read them out loud the next day.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const PREFIX = ['Neo', 'Get', 'Cloud', 'Hyper', 'Up', 'Go', 'Sky', 'Lumi', 'Solo', 'Meta', 'Co', 'Open', 'My', 'Smart', 'Quick', 'Easy'];
+  const SUFFIX = ['ly', 'io', 'ify', 'fy', 'hub', 'lab', 'kit', 'ix', 'ora', 'eo', 'ai', 'wave', 'box', 'spot', 'core'];
+  const LATIN = ['Aurum', 'Lumen', 'Veritas', 'Solis', 'Vita', 'Nova', 'Astra', 'Lux', 'Terra', 'Magna', 'Prima', 'Domus', 'Anima', 'Fortis'];
+  const MOD = ['Lumo', 'Zera', 'Klio', 'Vexa', 'Brio', 'Tono', 'Quira', 'Nido', 'Plux', 'Reki', 'Tovi', 'Yumi', 'Noxa', 'Tilo', 'Rema', 'Vola'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : pick(MOD);
+      let name = '';
+      if (s === 'modern') name = pick(MOD) + (Math.random() > 0.5 ? cap(w) : '');
+      else if (s === 'latin') name = pick(LATIN) + (Math.random() > 0.5 ? ' ' + cap(w) : '');
+      else if (s === 'real' && words.length >= 2) name = cap(words[0]) + cap(words[1]);
+      else if (s === 'real') name = cap(w) + pick(MOD);
+      else if (s === 'prefix') name = pick(PREFIX) + cap(w);
+      else if (s === 'suffix') name = cap(w) + pick(SUFFIX);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

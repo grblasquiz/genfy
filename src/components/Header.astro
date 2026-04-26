@@ -1,0 +1,61 @@
+---
+import { t, type Lang, altPath } from '../lib/i18n';
+const { lang = 'es' } = Astro.props as { lang?: Lang };
+const tt = t[lang];
+const homeHref = lang === 'es' ? '/' : '/en';
+const allHref = lang === 'es' ? '/generadores' : '/en/generators';
+const altHref = altPath(Astro.url.pathname, lang);
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a href={homeHref} class="brand">
+      <span class="brand-mark">G</span>
+      <span class="brand-name">Genfy</span>
+    </a>
+    <nav class="nav">
+      <a href={allHref}>{tt.nav.all}</a>
+      <a href={lang === 'es' ? '/sobre-genfy' : '/en/about'}>{tt.nav.about}</a>
+      <a href={altHref} class="lang-switch" rel="alternate" hreflang={lang === 'es' ? 'en' : 'es'}>
+        {tt.langSwitch}
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 30;
+    backdrop-filter: saturate(180%) blur(8px);
+  }
+  .header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+  }
+  .brand {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: var(--text); font-weight: 800; font-size: 1.125rem;
+    text-decoration: none;
+  }
+  .brand-mark {
+    display: inline-grid; place-items: center;
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff; border-radius: 8px;
+    font-weight: 800;
+  }
+  .nav { display: flex; gap: 1rem; align-items: center; }
+  .nav a {
+    color: var(--text-soft);
+    font-size: 0.95rem; font-weight: 500;
+    text-decoration: none;
+  }
+  .nav a:hover { color: var(--primary); }
+  .lang-switch {
+    border: 1px solid var(--border);
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
+    font-size: 0.8125rem !important;
+  }
+</style>

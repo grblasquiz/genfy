@@ -1,0 +1,142 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free QR Code Generator | Genfy';
+const description = 'Free QR code generator for links, text, WiFi or contact info. Download high-resolution PNG, no watermark, no signup, no expiration.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Do QR codes expire?', acceptedAnswer: { '@type': 'Answer', text: 'Static QR codes generated here never expire — the data is encoded in the image. The ones that expire are "dynamic" QR from paid services that redirect through a server.' } },
+    { '@type': 'Question', name: 'Is there a character limit?', acceptedAnswer: { '@type': 'Answer', text: 'The QR standard allows up to 4296 alphanumeric characters, but we recommend under 300: more text means denser image and harder scanning.' } },
+    { '@type': 'Question', name: 'Does it work offline?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — everything is generated in your browser. Once loaded, the page works without internet.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Tools" title="QR Code Generator"
+    intro="Convert links, text or any content into a downloadable QR code. No watermark, no expiration, high-resolution PNG.">
+
+    <div slot="tool" class="qr">
+      <label for="qr-text">QR content</label>
+      <textarea id="qr-text" rows="3" placeholder="https://genfy.net">https://genfy.net</textarea>
+
+      <div class="qr-options">
+        <div>
+          <label for="qr-size">Size (px)</label>
+          <input id="qr-size" type="number" min="128" max="2048" step="32" value="512" />
+        </div>
+        <div>
+          <label for="qr-ec">Error correction</label>
+          <select id="qr-ec">
+            <option value="L">Low (7%)</option>
+            <option value="M" selected>Medium (15%)</option>
+            <option value="Q">High (25%)</option>
+            <option value="H">Max (30%)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="qr-actions">
+        <button id="qr-gen" class="btn btn-primary" type="button">Generate QR</button>
+        <button id="qr-dl" class="btn btn-ghost" type="button">Download PNG</button>
+      </div>
+
+      <div id="qr-canvas-wrap" class="qr-canvas-wrap">
+        <canvas id="qr-canvas"></canvas>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>What is a QR code?</h2>
+      <p>
+        A QR (Quick Response) code is a 2D image that encodes text: a URL, phone number, WiFi
+        credentials or any string up to a few thousand characters. Invented in 1994 in Japan
+        for automotive tracking, it exploded globally during the pandemic: bar menus, payments,
+        event check-ins — everything ran through a QR.
+      </p>
+
+      <h2>Types of QR and when to use each</h2>
+      <ul>
+        <li><strong>Static QR</strong> (what you generate here): data lives inside the image. Never expires, no internet needed on the creator's end, can't be modified after printing.</li>
+        <li><strong>Dynamic QR</strong>: redirects via a server that decides where to send the user. Expires when the subscription ends. Useful when you need to change the destination without reprinting, or want scan analytics. Not what we offer — for that, look at a dedicated service.</li>
+      </ul>
+
+      <h2>Tips for a scannable QR</h2>
+      <ol>
+        <li><strong>Minimum physical size: ~0.8 inches (2 cm).</strong> Smaller and phones won't focus.</li>
+        <li><strong>Strong contrast.</strong> Black on white is ideal. If you invert (light on dark), many apps fail.</li>
+        <li><strong>Quiet zone (white margin).</strong> Leave at least 4 modules of white margin. Without it, scanners miss the boundary.</li>
+        <li><strong>Don't stretch.</strong> The QR must be a perfect square.</li>
+        <li><strong>Test before printing.</strong> Scan with multiple phones (iPhone, Android, different apps) before sending to print.</li>
+      </ol>
+
+      <h2>Error correction levels</h2>
+      <p>
+        QR codes include redundancy so they keep working even if part of the image is covered
+        or damaged. Four levels:
+      </p>
+      <ul>
+        <li><strong>L (7%)</strong>: for digital QR that won't get smudged or torn.</li>
+        <li><strong>M (15%)</strong>: default — balances density and robustness.</li>
+        <li><strong>Q (25%)</strong>: for QR printed in risky places (tables, outdoor signs).</li>
+        <li><strong>H (30%)</strong>: when you want a logo in the center or the QR will be heavily exposed.</li>
+      </ul>
+
+      <h2>Common use cases</h2>
+      <ul>
+        <li><strong>Marketing</strong>: cards, flyers, packaging that lead to a landing page.</li>
+        <li><strong>Restaurants</strong>: digital menus on every table.</li>
+        <li><strong>Events</strong>: tickets, attendee check-in.</li>
+        <li><strong>WiFi</strong>: guests connect by scanning, no password sharing (format <code>WIFI:T:WPA;S:redName;P:pass;;</code>).</li>
+        <li><strong>Contact cards</strong>: vCard in MECARD format.</li>
+        <li><strong>Payments</strong>: most apps (Venmo, PayPal, Bizum) generate their own QR.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Do QR codes expire?</summary><p>Static QR generated here never expire. Dynamic QR from paid services do, since they redirect via a server.</p></details>
+      <details><summary>Is there a character limit?</summary><p>Up to 4296 alphanumeric, but we recommend under 300 for easy scanning.</p></details>
+      <details><summary>Does it work offline?</summary><p>Yes. Everything runs in your browser. Once loaded, no internet needed.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .qr-options { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .qr-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .qr-canvas-wrap { margin-top: 1rem; padding: 1rem; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; min-height: 280px; }
+  #qr-canvas { max-width: 100%; height: auto; }
+  @media (max-width: 600px) { .qr-options { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  import QRCode from 'qrcode';
+  const text = document.getElementById('qr-text') as HTMLTextAreaElement;
+  const size = document.getElementById('qr-size') as HTMLInputElement;
+  const ec = document.getElementById('qr-ec') as HTMLSelectElement;
+  const gen = document.getElementById('qr-gen') as HTMLButtonElement;
+  const dl = document.getElementById('qr-dl') as HTMLButtonElement;
+  const canvas = document.getElementById('qr-canvas') as HTMLCanvasElement;
+
+  async function render() {
+    const t = text.value.trim() || ' ';
+    const s = Math.max(128, Math.min(2048, parseInt(size.value, 10) || 512));
+    try {
+      await QRCode.toCanvas(canvas, t, {
+        width: s,
+        margin: 2,
+        errorCorrectionLevel: ec.value as any,
+        color: { dark: '#000000', light: '#ffffff' },
+      });
+    } catch (err) { console.error(err); }
+  }
+  gen.addEventListener('click', render);
+  dl.addEventListener('click', () => {
+    const url = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = url; a.download = 'qr.png'; a.click();
+  });
+  render();
+</script>

@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { GENERATORS, urlFor } from '../lib/generators';
+import { t } from '../lib/i18n';
+const lang = 'es' as const;
+const tt = t[lang];
+
+const title = 'Genfy — Generadores online gratis | Contraseñas, nombres, QR y más';
+const description = 'Cientos de generadores online gratis: contraseñas seguras, nombres de empresa, QR, lorem ipsum, nombres para mascotas. Sin registro y sin instalar nada.';
+---
+<Layout title={title} description={description} lang={lang}>
+  <section class="hero">
+    <h1>Genfy: generadores online gratis para todo</h1>
+    <p class="lead">
+      Herramientas web rápidas para resolver tareas chicas: crear contraseñas seguras, encontrar
+      el nombre perfecto para tu marca o tu gato, generar lorem ipsum, códigos QR y mucho más.
+      Todo gratis, sin registro y sin instalar nada.
+    </p>
+    <div class="cta-row">
+      <a href="#generadores" class="btn btn-primary">Ver generadores</a>
+      <a href="/sobre-genfy" class="btn btn-ghost">Sobre Genfy</a>
+    </div>
+  </section>
+
+  <section id="generadores">
+    <h2>Generadores destacados</h2>
+    <div class="grid-cards">
+      {GENERATORS.map(g => (
+        <a class="gcard" href={urlFor(g, lang)}>
+          <span class="gcard-emoji">{g.emoji}</span>
+          <span class="gcard-title">{g.title.es}</span>
+          <span class="gcard-desc">{g.description.es}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2>¿Por qué Genfy?</h2>
+    <p>
+      Genfy reúne en un solo lugar las herramientas que la gente busca todos los días en
+      internet: un generador rápido, un código QR, un nombre para una mascota, ideas para
+      bautizar una marca. En vez de saltar entre 15 sitios distintos —cada uno con su propia
+      capa de pop-ups, paywalls y registros— acá tenés todo en una interfaz limpia y
+      consistente.
+    </p>
+    <ul>
+      <li><strong>Gratis y sin registro:</strong> ninguna herramienta pide email ni cuenta.</li>
+      <li><strong>Privado:</strong> todo se ejecuta en tu navegador. Tus datos no salen de tu dispositivo.</li>
+      <li><strong>Rápido:</strong> sitios optimizados, sin scripts pesados ni anuncios intrusivos.</li>
+      <li><strong>Bilingüe:</strong> versión completa en español e inglés.</li>
+    </ul>
+  </section>
+</Layout>
+
+<style>
+  .hero { padding: 2rem 0 1rem; }
+  .hero .lead { font-size: 1.125rem; color: var(--text-soft); max-width: 60ch; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem; }
+
+  .gcard {
+    display: flex; flex-direction: column; gap: 0.375rem;
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s;
+  }
+  .gcard:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    border-color: var(--primary);
+    text-decoration: none;
+  }
+  .gcard-emoji { font-size: 1.75rem; }
+  .gcard-title { font-weight: 700; font-size: 1.0625rem; }
+  .gcard-desc { color: var(--text-soft); font-size: 0.9rem; line-height: 1.5; }
+</style>

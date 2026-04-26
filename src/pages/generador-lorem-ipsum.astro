@@ -1,0 +1,172 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de Lorem Ipsum gratis | Genfy';
+const description = 'Generá texto Lorem Ipsum al instante: párrafos, palabras, oraciones o listas. Perfecto para diseño, maquetación, mockups y prototipos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es Lorem Ipsum?', acceptedAnswer: { '@type': 'Answer', text: 'Es un texto de relleno seudoaleatorio basado en una obra de Cicerón del siglo I a.C. Se usa desde el siglo XV en imprenta para mostrar diseño sin distraer con el contenido real.' } },
+    { '@type': 'Question', name: '¿Por qué se usa para diseño?', acceptedAnswer: { '@type': 'Answer', text: 'Porque tiene una distribución de letras y largo de palabras parecida al inglés y al español, lo que evita falsos efectos visuales que tendría un texto repetitivo.' } },
+    { '@type': 'Question', name: '¿Puedo usarlo en producción?', acceptedAnswer: { '@type': 'Answer', text: 'Es solo placeholder: nunca dejes Lorem Ipsum en una página publicada. Google penaliza páginas con contenido sin sentido y los usuarios desconfían.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Contenido" title="Generador de Lorem Ipsum"
+    intro="Texto de relleno clásico para tus mockups, wireframes y diseños. Generá la cantidad exacta que necesites: párrafos, oraciones, palabras o listas.">
+
+    <div slot="tool" class="li">
+      <div class="li-row">
+        <div>
+          <label for="li-amount">Cantidad</label>
+          <input id="li-amount" type="number" min="1" max="100" value="3" />
+        </div>
+        <div>
+          <label for="li-unit">Unidad</label>
+          <select id="li-unit">
+            <option value="paragraphs">Párrafos</option>
+            <option value="sentences">Oraciones</option>
+            <option value="words">Palabras</option>
+            <option value="list">Lista</option>
+          </select>
+        </div>
+        <label class="li-check"><input type="checkbox" id="li-start" checked /> Empezar con "Lorem ipsum…"</label>
+      </div>
+
+      <button id="li-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="li-copy" class="btn btn-ghost" type="button">Copiar</button>
+
+      <textarea id="li-out" rows="14" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>¿De dónde sale el Lorem Ipsum?</h2>
+      <p>
+        Aunque parece latín sin sentido, es latín alterado de un libro real: <em>De finibus
+        bonorum et malorum</em> de Cicerón, escrito alrededor del año 45 a.C. Un impresor del
+        siglo XV mezcló las palabras para crear un texto que se viera "natural" pero no
+        distrajera al lector con un contenido coherente. La frase clásica "Lorem ipsum dolor
+        sit amet" es en realidad un fragmento desordenado del original.
+      </p>
+
+      <h2>¿Por qué seguir usándolo en 2026?</h2>
+      <p>
+        Cuando un diseñador presenta un mockup con texto real ("Hola María, gracias por tu
+        compra"), los stakeholders dejan de mirar el diseño y empiezan a debatir el copy. Lorem
+        Ipsum despersonaliza el contenido: el cliente ve forma, jerarquía, ritmo visual, sin
+        engancharse en si esa coma debería ser un punto. Por eso sigue vivo en herramientas
+        como Figma, Sketch o webflow, y por eso tiene sentido un generador rápido.
+      </p>
+
+      <h2>Cuándo NO usar Lorem Ipsum</h2>
+      <ul>
+        <li><strong>Páginas que vas a publicar.</strong> Google detecta texto seudoaleatorio y baja la calidad percibida del sitio. Reemplazá todo el placeholder antes de hacer go-live.</li>
+        <li><strong>Demos para clientes finales no técnicos.</strong> Algunos se asustan si ven "texto raro" — un Pangram en idioma real funciona mejor.</li>
+        <li><strong>Pruebas de longitud.</strong> Si tu contenido real va a tener palabras muy largas (alemán técnico, nombres propios) o cortas (chino), Lorem Ipsum miente sobre la sensación final. Generá con texto del idioma real.</li>
+      </ul>
+
+      <h2>Variantes y usos del generador</h2>
+      <ul>
+        <li><strong>Párrafos</strong> — para artículos, posts de blog, secciones de "About".</li>
+        <li><strong>Oraciones</strong> — útil para subtítulos, descripciones de producto, captions.</li>
+        <li><strong>Palabras</strong> — para títulos, navegación, etiquetas, botones.</li>
+        <li><strong>Lista</strong> — bullets cortos para features, FAQs, beneficios, etc.</li>
+      </ul>
+
+      <h2>Alternativas modernas al Lorem Ipsum</h2>
+      <p>
+        Si tu equipo prefiere algo distinto, hay variantes con humor que están de moda:
+        <em>Bacon Ipsum</em> (palabras de cocina), <em>Cupcake Ipsum</em>, <em>Hipster Ipsum</em>
+        o <em>Pirate Ipsum</em>. Funcionan bien para presentaciones internas, pero para diseño
+        serio el Lorem clásico sigue siendo el más neutro: cualquier sustituto distrae al lector
+        más de lo que ayuda.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es Lorem Ipsum?</summary><p>Texto de relleno seudoaleatorio basado en una obra de Cicerón. Se usa desde el siglo XV para mostrar diseño sin distraer con contenido real.</p></details>
+      <details><summary>¿Por qué se usa para diseño?</summary><p>Porque su distribución de letras y largo de palabras se parece al de los idiomas reales, evitando falsos efectos visuales.</p></details>
+      <details><summary>¿Puedo usarlo en producción?</summary><p>No. Es solo placeholder. Google penaliza páginas con texto sin sentido y los usuarios desconfían.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .li-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+  .li-check { display: flex; align-items: center; gap: 0.5rem; margin: 0; }
+  .li-check input { width: auto; }
+  @media (max-width: 600px) { .li-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const WORDS = "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure in reprehenderit voluptate velit esse cillum eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit anim id est laborum at vero eos accusamus iusto odio dignissimos ducimus blanditiis praesentium voluptatum deleniti atque corrupti quos quas molestias excepturi occaecati cupiditate similique mollitia animi laborum dolorum fuga harum quidem rerum facilis expedita distinctio nam libero tempore cum soluta nobis eligendi optio cumque nihil impedit quo minus quod maxime placeat facere possimus assumenda repellendus temporibus autem".split(/\s+/);
+
+  const amountEl = document.getElementById('li-amount') as HTMLInputElement;
+  const unitEl = document.getElementById('li-unit') as HTMLSelectElement;
+  const startEl = document.getElementById('li-start') as HTMLInputElement;
+  const out = document.getElementById('li-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('li-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('li-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function rint(min: number, max: number) { return min + Math.floor(Math.random() * (max - min + 1)); }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function sentence(): string {
+    const len = rint(8, 18);
+    const words: string[] = [];
+    for (let i = 0; i < len; i++) words.push(pick(WORDS));
+    return cap(words.join(' ')) + '.';
+  }
+  function paragraph(): string {
+    const n = rint(3, 6);
+    const arr: string[] = [];
+    for (let i = 0; i < n; i++) arr.push(sentence());
+    return arr.join(' ');
+  }
+
+  function generate() {
+    const n = Math.max(1, Math.min(100, parseInt(amountEl.value || '1', 10)));
+    const unit = unitEl.value;
+    let text = '';
+    if (unit === 'paragraphs') {
+      const arr: string[] = [];
+      for (let i = 0; i < n; i++) arr.push(paragraph());
+      text = arr.join('\n\n');
+    } else if (unit === 'sentences') {
+      const arr: string[] = [];
+      for (let i = 0; i < n; i++) arr.push(sentence());
+      text = arr.join(' ');
+    } else if (unit === 'words') {
+      const arr: string[] = [];
+      for (let i = 0; i < n; i++) arr.push(pick(WORDS));
+      text = cap(arr.join(' '));
+    } else if (unit === 'list') {
+      const arr: string[] = [];
+      for (let i = 0; i < n; i++) {
+        const len = rint(3, 8);
+        const ws: string[] = [];
+        for (let j = 0; j < len; j++) ws.push(pick(WORDS));
+        arr.push('• ' + cap(ws.join(' ')));
+      }
+      text = arr.join('\n');
+    }
+    if (startEl.checked && (unit === 'paragraphs' || unit === 'sentences')) {
+      text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ' + text;
+    }
+    out.value = text;
+  }
+
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent;
+    copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1020"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="80" y="80" width="120" height="120" rx="28" fill="url(#brand)"/>
+  <text x="140" y="170" text-anchor="middle" font-family="-apple-system, Inter, sans-serif" font-weight="800" font-size="80" fill="#fff">G</text>
+  <text x="80" y="350" font-family="-apple-system, Inter, sans-serif" font-weight="800" font-size="84" fill="#fff">Genfy</text>
+  <text x="80" y="430" font-family="-apple-system, Inter, sans-serif" font-weight="500" font-size="38" fill="#cbd5e1">Free online generators</text>
+  <text x="80" y="490" font-family="-apple-system, Inter, sans-serif" font-weight="400" font-size="30" fill="#94a3b8">passwords · names · QR codes · lorem ipsum · and more</text>
+</svg>

@@ -1,0 +1,76 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { GENERATORS, urlFor } from '../../lib/generators';
+const lang = 'en' as const;
+
+const title = 'Genfy — Free online generators | Passwords, names, QR and more';
+const description = 'Hundreds of free online generators: secure passwords, business names, QR codes, lorem ipsum, pet names. No signup, nothing to install.';
+---
+<Layout title={title} description={description} lang={lang}>
+  <section class="hero">
+    <h1>Genfy: free online generators for everything</h1>
+    <p class="lead">
+      Fast web tools to solve small tasks: create secure passwords, find the perfect name for
+      your brand or your cat, generate lorem ipsum, QR codes and much more.
+      All free, no signup, nothing to install.
+    </p>
+    <div class="cta-row">
+      <a href="#generators" class="btn btn-primary">Browse generators</a>
+      <a href="/en/about" class="btn btn-ghost">About Genfy</a>
+    </div>
+  </section>
+
+  <section id="generators">
+    <h2>Featured generators</h2>
+    <div class="grid-cards">
+      {GENERATORS.map(g => (
+        <a class="gcard" href={urlFor(g, lang)}>
+          <span class="gcard-emoji">{g.emoji}</span>
+          <span class="gcard-title">{g.title.en}</span>
+          <span class="gcard-desc">{g.description.en}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2>Why Genfy?</h2>
+    <p>
+      Genfy gathers in one place the small tools people search for every day on the internet:
+      a quick generator, a QR code, a pet name, ideas to baptize a new brand. Instead of
+      jumping between 15 different sites — each with its own layer of pop-ups, paywalls and
+      sign-ups — you get everything in a clean, consistent interface.
+    </p>
+    <ul>
+      <li><strong>Free and no signup:</strong> no tool asks for email or account.</li>
+      <li><strong>Private:</strong> everything runs in your browser. Your data never leaves your device.</li>
+      <li><strong>Fast:</strong> optimized pages, no heavy scripts or intrusive ads.</li>
+      <li><strong>Bilingual:</strong> full Spanish and English versions.</li>
+    </ul>
+  </section>
+</Layout>
+
+<style>
+  .hero { padding: 2rem 0 1rem; }
+  .hero .lead { font-size: 1.125rem; color: var(--text-soft); max-width: 60ch; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem; }
+  .gcard {
+    display: flex; flex-direction: column; gap: 0.375rem;
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s;
+  }
+  .gcard:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    border-color: var(--primary);
+    text-decoration: none;
+  }
+  .gcard-emoji { font-size: 1.75rem; }
+  .gcard-title { font-weight: 700; font-size: 1.0625rem; }
+  .gcard-desc { color: var(--text-soft); font-size: 0.9rem; line-height: 1.5; }
+</style>
