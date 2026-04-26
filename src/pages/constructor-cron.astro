@@ -1,0 +1,183 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Constructor de expresión cron | Genfy';
+const description = 'Generá expresiones cron visualmente. Elegí minutos, horas, días, mes y día de semana sin memorizar la sintaxis. Vista previa en lenguaje natural.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es una expresión cron?', acceptedAnswer: { '@type': 'Answer', text: 'Es un string de 5 campos (minuto, hora, día del mes, mes, día de la semana) que define cuándo se ejecuta una tarea programada en sistemas Unix. Por ejemplo, "0 9 * * 1" significa todos los lunes a las 9 AM.' } },
+    { '@type': 'Question', name: '¿Es el formato estándar Unix?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, este constructor genera expresiones del formato estándar de 5 campos compatible con cron de Linux, macOS, Vixie Cron y casi todos los schedulers modernos.' } },
+    { '@type': 'Question', name: '¿Soporta extensiones tipo Quartz?', acceptedAnswer: { '@type': 'Answer', text: 'No. Quartz Scheduler agrega un sexto campo (segundos) y caracteres especiales como L y W. Para esos casos usá un constructor específico de Quartz.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="DevOps" title="Constructor de expresión cron"
+    intro="Armá tu cron paso a paso sin memorizar la sintaxis. Vista previa en lenguaje natural y soporte para todos los patrones comunes.">
+
+    <div slot="tool">
+      <div class="cron-grid">
+        <div>
+          <label for="cr-min">Minutos (0-59)</label>
+          <input id="cr-min" type="text" value="0" />
+        </div>
+        <div>
+          <label for="cr-hour">Horas (0-23)</label>
+          <input id="cr-hour" type="text" value="9" />
+        </div>
+        <div>
+          <label for="cr-dom">Día del mes (1-31)</label>
+          <input id="cr-dom" type="text" value="*" />
+        </div>
+        <div>
+          <label for="cr-mon">Mes (1-12)</label>
+          <input id="cr-mon" type="text" value="*" />
+        </div>
+        <div>
+          <label for="cr-dow">Día semana (0-6, 0=Dom)</label>
+          <input id="cr-dow" type="text" value="1-5" />
+        </div>
+      </div>
+      <div class="cron-presets">
+        <button data-cron="0 * * * *" class="btn btn-ghost btn-sm" type="button">Cada hora</button>
+        <button data-cron="*/15 * * * *" class="btn btn-ghost btn-sm" type="button">Cada 15 min</button>
+        <button data-cron="0 9 * * 1-5" class="btn btn-ghost btn-sm" type="button">Lun-Vie 9 AM</button>
+        <button data-cron="0 0 * * 0" class="btn btn-ghost btn-sm" type="button">Domingo medianoche</button>
+        <button data-cron="0 0 1 * *" class="btn btn-ghost btn-sm" type="button">Día 1 de cada mes</button>
+      </div>
+      <button id="cr-copy" class="btn btn-primary" type="button" style="margin-top:1rem;">Copiar expresión</button>
+      <label for="cr-out" style="margin-top:1rem;">Expresión cron</label>
+      <input id="cr-out" type="text" readonly style="font-family: var(--font-mono); font-size: 1rem;" />
+      <div id="cr-desc" class="cr-desc"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Anatomía de una expresión cron</h2>
+      <p>
+        Cron es un demonio de Unix que ejecuta comandos en horarios programados. Existe desde 1975 y prácticamente no cambió en su sintaxis básica. Una expresión cron tiene 5 campos separados por espacios:
+      </p>
+      <pre><code>┌──── minuto (0-59)
+│ ┌── hora (0-23)
+│ │ ┌── día del mes (1-31)
+│ │ │ ┌── mes (1-12)
+│ │ │ │ ┌── día de la semana (0-6, 0=Domingo)
+│ │ │ │ │
+* * * * *</code></pre>
+
+      <h2>Caracteres especiales</h2>
+      <ul>
+        <li><strong>*</strong> — cualquier valor. <code>* * * * *</code> es cada minuto.</li>
+        <li><strong>,</strong> — lista de valores. <code>0 9,12,18 * * *</code> a las 9, 12 y 18.</li>
+        <li><strong>-</strong> — rango. <code>0 9-17 * * *</code> cada hora de 9 a 17.</li>
+        <li><strong>/</strong> — paso. <code>*/5 * * * *</code> cada 5 minutos.</li>
+      </ul>
+
+      <h2>Ejemplos prácticos</h2>
+      <ul>
+        <li><code>0 0 * * *</code> — todos los días a medianoche.</li>
+        <li><code>*/15 * * * *</code> — cada 15 minutos.</li>
+        <li><code>0 9 * * 1-5</code> — de lunes a viernes a las 9 AM.</li>
+        <li><code>0 0 1 * *</code> — el primer día de cada mes a medianoche.</li>
+        <li><code>0 0 * * 0</code> — todos los domingos a medianoche.</li>
+        <li><code>30 14 * * 6</code> — todos los sábados a las 14:30.</li>
+      </ul>
+
+      <h2>Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Backups.</strong> Diarios a la madrugada cuando hay menos carga.</li>
+        <li><strong>Reportes automáticos.</strong> Generar y enviar un dashboard cada lunes a las 8 AM.</li>
+        <li><strong>Limpieza de archivos temporales.</strong> Borrar /tmp cada hora.</li>
+        <li><strong>Jobs de procesamiento.</strong> Ejecutar análisis de datos cada noche.</li>
+        <li><strong>Health checks.</strong> Pingear endpoints cada minuto.</li>
+        <li><strong>Sincronización con APIs.</strong> Pull de datos cada 15 minutos.</li>
+      </ul>
+
+      <h2>Trampas comunes</h2>
+      <ul>
+        <li><strong>Día del mes Y día de semana.</strong> <code>0 0 1 * 1</code> NO es "primer día del mes Y lunes". Es "primer día del mes O lunes". El operador es OR cuando ambos están especificados.</li>
+        <li><strong>Zona horaria.</strong> Cron usa la zona horaria del servidor. Si tu server está en UTC y querés ejecutar a las 9 AM Buenos Aires (UTC-3), poné <code>0 12 * * *</code>.</li>
+        <li><strong>Usuarios de cron.</strong> En Linux, cada usuario tiene su crontab. <code>crontab -e</code> edita el del usuario actual; <code>sudo crontab -e</code> edita el de root.</li>
+        <li><strong>PATH y entorno.</strong> Los jobs de cron corren en un entorno mínimo. Si tu script depende de variables de entorno, definilas explícitamente al inicio.</li>
+      </ul>
+
+      <h2>Alternativas modernas a cron</h2>
+      <p>
+        Cron sigue vivo pero hay alternativas más sofisticadas. <strong>systemd timers</strong> en Linux ofrecen logging integrado, dependencias, ejecución a la próxima oportunidad si el sistema estaba apagado. <strong>GitHub Actions</strong> y <strong>GitLab CI</strong> permiten schedules con sintaxis cron pero corriendo en infraestructura cloud. <strong>AWS EventBridge</strong> y <strong>Google Cloud Scheduler</strong> son las opciones gestionadas.
+      </p>
+
+      <h2>Validación antes de poner en producción</h2>
+      <p>
+        Pegar mal una expresión cron puede traer consecuencias. Si pretendías "una vez por día a la 1 AM" pero terminaste con <code>1 * * * *</code> (a los 01 minutos de cada hora), te ejecutó 24 veces en lugar de 1. Antes de subir a producción, verificá la expresión con un explicador en lenguaje natural y asegurate de que la próxima ejecución es la que esperabas.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es una expresión cron?</summary><p>String de 5 campos que define cuándo ejecutar una tarea programada en sistemas Unix.</p></details>
+      <details><summary>¿Es el formato estándar Unix?</summary><p>Sí, 5 campos compatible con cron de Linux, macOS y la mayoría de schedulers.</p></details>
+      <details><summary>¿Soporta extensiones tipo Quartz?</summary><p>No. Quartz agrega un sexto campo de segundos y caracteres como L y W.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cron-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+  .cron-presets { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .btn-sm { padding: 0.4rem 0.75rem; font-size: 0.85rem; }
+  .cr-desc { margin-top: 0.75rem; padding: 0.75rem 1rem; background: var(--bg-inset); border-radius: var(--radius); color: var(--text-soft); font-size: 0.9rem; min-height: 1.5rem; }
+  @media (max-width: 800px) { .cron-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+
+<script>
+  const minEl = document.getElementById('cr-min') as HTMLInputElement;
+  const hourEl = document.getElementById('cr-hour') as HTMLInputElement;
+  const domEl = document.getElementById('cr-dom') as HTMLInputElement;
+  const monEl = document.getElementById('cr-mon') as HTMLInputElement;
+  const dowEl = document.getElementById('cr-dow') as HTMLInputElement;
+  const out = document.getElementById('cr-out') as HTMLInputElement;
+  const desc = document.getElementById('cr-desc') as HTMLDivElement;
+  const copyBtn = document.getElementById('cr-copy') as HTMLButtonElement;
+  const DAYS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+
+  function describe(m: string, h: string, dm: string, mo: string, dw: string): string {
+    const parts: string[] = [];
+    if (m === '*') parts.push('cada minuto');
+    else if (/^\*\/\d+$/.test(m)) parts.push(`cada ${m.slice(2)} minuto(s)`);
+    else if (m === '0') {} else parts.push(`al minuto ${m}`);
+    if (h === '*') {} else if (/^\*\/\d+$/.test(h)) parts.push(`cada ${h.slice(2)} hora(s)`);
+    else parts.push(`a las ${h}:${m === '0' ? '00' : (m === '*' ? 'XX' : m.padStart(2,'0'))}`);
+    if (dm !== '*') parts.push(`día ${dm} del mes`);
+    if (mo !== '*') parts.push(`mes ${mo}`);
+    if (dw !== '*') {
+      if (dw === '1-5') parts.push('de lunes a viernes');
+      else if (dw === '0' || dw === '7') parts.push('los domingos');
+      else if (/^\d$/.test(dw)) parts.push(`los ${DAYS[parseInt(dw,10)].toLowerCase()}`);
+      else parts.push(`días de semana: ${dw}`);
+    }
+    return parts.length ? parts.join(', ') : 'cada minuto';
+  }
+
+  function build() {
+    const expr = `${minEl.value || '*'} ${hourEl.value || '*'} ${domEl.value || '*'} ${monEl.value || '*'} ${dowEl.value || '*'}`;
+    out.value = expr;
+    desc.textContent = describe(minEl.value || '*', hourEl.value || '*', domEl.value || '*', monEl.value || '*', dowEl.value || '*');
+  }
+
+  [minEl, hourEl, domEl, monEl, dowEl].forEach(el => el.addEventListener('input', build));
+  document.querySelectorAll('[data-cron]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const parts = (btn.getAttribute('data-cron') || '').split(' ');
+      [minEl, hourEl, domEl, monEl, dowEl].forEach((el, i) => el.value = parts[i] || '*');
+      build();
+    });
+  });
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  build();
+</script>

@@ -1,0 +1,148 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Press Release Template | Genfy';
+const description = 'Generate a professional press release with AIDA structure: headline, lead, body, executive quote and boilerplate. Ready to send to journalists.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a press release?', acceptedAnswer: { '@type': 'Answer', text: 'A short, formal document a company sends to media to announce a relevant update: launch, funding, partnership, award or major change.' } },
+    { '@type': 'Question', name: 'How long should it be?', acceptedAnswer: { '@type': 'Answer', text: 'Ideally between 300 and 500 words. One A4 page maximum. If the journalist needs more, they ask.' } },
+    { '@type': 'Question', name: 'Why AIDA?', acceptedAnswer: { '@type': 'Answer', text: 'AIDA (Attention-Interest-Desire-Action) still works because it respects how journalists read: strong headline, key facts in priority order, clear CTA.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Press Release Template"
+    intro="Fill in the news details and get a complete press release with headline, lead, body, executive quote and boilerplate. Ready for your media list.">
+
+    <div slot="tool" class="pr">
+      <label>Company</label>
+      <input id="pr-co" type="text" value="Acme Corp" />
+
+      <label style="margin-top:1rem">Type of news</label>
+      <select id="pr-type">
+        <option value="launch">Product launch</option>
+        <option value="funding">Funding round</option>
+        <option value="partnership">Strategic partnership</option>
+        <option value="award">Award or recognition</option>
+        <option value="expansion">New market expansion</option>
+      </select>
+
+      <label style="margin-top:1rem">Headline in one sentence</label>
+      <input id="pr-title" type="text" value="Acme Corp launches new courses platform for career switchers" />
+
+      <label style="margin-top:1rem">Key fact (number, date, milestone)</label>
+      <input id="pr-key" type="text" value="50,000 students in its first year" />
+
+      <label style="margin-top:1rem">Spokesperson (with title)</label>
+      <input id="pr-spokesperson" type="text" value="Jane Doe, CEO of Acme Corp" />
+
+      <button id="pr-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate release</button>
+
+      <pre id="pr-out" class="pr-out"></pre>
+    </div>
+
+    <div slot="content">
+      <h2>How a press release is structured</h2>
+      <p>
+        Press releases follow tight rules. A journalist receiving 80 emails a day won't forgive
+        ambiguity. The classic structure has been intact for decades: headline, lead, inverted
+        pyramid body, executive quote, boilerplate, contact. What changed is that today you also
+        need to think about SEO and how the release reads pasted into Slack or WhatsApp.
+      </p>
+
+      <h2>Applying AIDA</h2>
+      <ol>
+        <li><strong>Attention (headline):</strong> 8-12 words, direct, stating what happened. "Acme Corp raises $5M to scale its course platform."</li>
+        <li><strong>Interest (lead):</strong> first paragraph answers who, what, when, where, why. Three sentences max.</li>
+        <li><strong>Desire (body):</strong> two or three paragraphs with context, numbers, why it matters. Direct quote from CEO or partner.</li>
+        <li><strong>Action (close):</strong> 3-4 line corporate boilerplate + press contact.</li>
+      </ol>
+
+      <h2>Non-negotiable rules</h2>
+      <ul>
+        <li><strong>One news item per release.</strong> Three things to say means three releases.</li>
+        <li><strong>Inverted pyramid.</strong> Most important on top. The journalist should be able to cut the last paragraph and the story still makes sense.</li>
+        <li><strong>Real executive quote, not marketing.</strong> "We're excited to announce..." never gets published. "We went from 5,000 to 50,000 customers in 12 months because we found the product the market had been asking for" does.</li>
+        <li><strong>Consistent boilerplate.</strong> Three to four lines: founding date, founders, scope.</li>
+        <li><strong>Press kit attached.</strong> Logo, hi-res photos, short bios, fact sheet.</li>
+      </ul>
+
+      <h2>Mistakes that send your release to spam</h2>
+      <ol>
+        <li>Superlative headlines: "the best", "world's first", "revolutionary". Journalists filter them automatically.</li>
+        <li>Internal jargon. If the first paragraph has 4 acronyms, nobody understands.</li>
+        <li>No numbers. A story without numbers is an opinion.</li>
+        <li>Mass blasting a generic media list. 10 relevant journalists with a personalized email beat 200 with a blast.</li>
+        <li>No high-res photo. No image, no good story.</li>
+      </ol>
+
+      <h2>When NOT to send a release</h2>
+      <p>
+        Not everything happening at your company is news. Don't send releases for: hiring a
+        mid-level manager, adding a minor integration, a cosmetic rebrand, or anniversaries with no
+        new data point. Simple rule: if your own sales team wouldn't find it useful for customer
+        conversations, neither will a journalist.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a press release?</summary><p>A short document a company sends to media to announce a relevant update.</p></details>
+      <details><summary>How long?</summary><p>300 to 500 words, one A4 page max.</p></details>
+      <details><summary>Why AIDA?</summary><p>It respects how journalists read: strong headline, lead with who/what/when, body with data, actionable close.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pr-out { margin-top: 1.25rem; padding: 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.8125rem; line-height: 1.6; }
+</style>
+
+<script>
+  const co = document.getElementById('pr-co') as HTMLInputElement;
+  const type = document.getElementById('pr-type') as HTMLSelectElement;
+  const titulo = document.getElementById('pr-title') as HTMLInputElement;
+  const key = document.getElementById('pr-key') as HTMLInputElement;
+  const sp = document.getElementById('pr-spokesperson') as HTMLInputElement;
+  const out = document.getElementById('pr-out')!;
+  const gen = document.getElementById('pr-gen') as HTMLButtonElement;
+
+  function generate() {
+    const today = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+    const t = `FOR IMMEDIATE RELEASE
+${today}
+
+${titulo.value.toUpperCase()}
+
+${key.value} backs the announcement. The company plans to consolidate its position and open new fronts over the next 12 months.
+
+[City, ${today}] — ${co.value} announced today ${titulo.value.toLowerCase()}. The news comes amid strong category growth and reflects the company's strategy to invest where it sees concrete market demand.
+
+The announcement includes ${key.value}, placing ${co.value} among the leading players in its category. The company expects to sustain growth across the next quarters, supported by its current customer base and new strategic partnerships.
+
+"${getQuote(type.value, key.value)}," said ${sp.value}.
+
+About ${co.value}
+${co.value} is a company founded with the mission of transforming its category through simple, accessible products built around customer outcomes. It serves thousands of users and operates across multiple markets.
+
+Press contact
+press@acme.example  |  +1 555-000-0000
+
+###`;
+    out.textContent = t;
+  }
+
+  function getQuote(type: string, key: string): string {
+    if (type === 'launch') return `We've been working toward this launch for months. ${key} shows the problem we solve is real, and this step gets us closer to the standard we want to set`;
+    if (type === 'funding') return `This round gives us the runway to execute the next 24-month plan without compromise. ${key} confirms the traction and we'll lean on that to scale`;
+    if (type === 'partnership') return `The partnership lets us reach an audience we couldn't reach alone short-term. ${key} was already in our numbers; together we can multiply it`;
+    if (type === 'award') return `The recognition belongs to the team, not management. ${key} is the natural outcome of putting the customer first whenever we had to pick`;
+    return `${key} confirms the bet was right. The market needs what we're building, and we're ready to serve more customers`;
+  }
+
+  gen.addEventListener('click', generate);
+  generate();
+</script>

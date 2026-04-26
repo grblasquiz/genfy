@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Contador de caracteres gratis | Genfy';
+const description = 'Contá caracteres con y sin espacios en tiempo real. Indicadores para Twitter, SMS, meta description, title tag y más.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuenta los emojis como un carácter?', acceptedAnswer: { '@type': 'Answer', text: 'Algunos emojis son un código Unicode (1 carácter), otros son combinaciones de varios (2 a 4 caracteres en JavaScript). El contador muestra los caracteres reales según el browser, lo que coincide con cómo los plataformas como Twitter cuentan.' } },
+    { '@type': 'Question', name: '¿Cuál es el límite de Twitter/X?', acceptedAnswer: { '@type': 'Answer', text: '280 caracteres para cuentas estándar. Twitter Premium permite tweets más largos. Los URLs cuentan como 23 caracteres independientemente del largo real.' } },
+    { '@type': 'Question', name: '¿Y la meta description de Google?', acceptedAnswer: { '@type': 'Answer', text: 'Entre 150 y 160 caracteres es la zona segura. Google trunca con elipsis lo que pase de eso en la mayoría de pantallas. Más corto que 50 también es un problema porque Google la reescribe.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto" title="Contador de caracteres"
+    intro="Pegá texto y obtené el conteo en tiempo real, con indicadores para Twitter, SMS, meta tags y otros formatos comunes.">
+
+    <div slot="tool">
+      <label for="cc-in">Texto</label>
+      <textarea id="cc-in" rows="6" style="font-family: var(--font-sans); font-size: 1rem;"></textarea>
+      <div class="cc-main">
+        <div class="cc-big" id="cc-total">0</div>
+        <div class="cc-lbl">caracteres</div>
+      </div>
+      <div class="cc-grid">
+        <div class="cc-stat"><div class="cc-num" id="cc-no-sp">0</div><div class="cc-sub">Sin espacios</div></div>
+        <div class="cc-stat"><div class="cc-num" id="cc-words">0</div><div class="cc-sub">Palabras</div></div>
+        <div class="cc-stat"><div class="cc-num" id="cc-lines">0</div><div class="cc-sub">Líneas</div></div>
+      </div>
+      <h3 style="margin-top:1.5rem;">Límites comunes</h3>
+      <div id="cc-limits" class="cc-limits"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cuándo importa contar caracteres</h2>
+      <p>
+        El conteo de caracteres es crítico cuando trabajás con formatos que tienen tope estricto. Una meta description que pasa los 160 caracteres se trunca con "..." en los resultados de Google, y la frase clave que tenías al final desaparece. Un tweet que pasa los 280 no se publica. Un SMS de más de 160 caracteres se factura como dos mensajes. En todos esos casos, ver el contador en vivo mientras escribís te ahorra reescribir.
+      </p>
+
+      <h2>Límites más comunes en 2026</h2>
+      <ul>
+        <li><strong>Title tag (SEO):</strong> 60 caracteres. Más largo y Google lo trunca.</li>
+        <li><strong>Meta description:</strong> 150-160 caracteres.</li>
+        <li><strong>Twitter/X:</strong> 280 caracteres. Las URLs siempre cuentan como 23.</li>
+        <li><strong>SMS:</strong> 160 caracteres por mensaje (GSM 7-bit). Con caracteres no estándar (ñ, tildes), baja a 70 (UCS-2).</li>
+        <li><strong>Email subject:</strong> 50-60 caracteres recomendado para no truncar en mobile.</li>
+        <li><strong>Open Graph title:</strong> 55-60 caracteres.</li>
+        <li><strong>Instagram caption:</strong> 2200 caracteres total, pero solo los primeros 125 son visibles antes del "ver más".</li>
+        <li><strong>LinkedIn headline:</strong> 220 caracteres.</li>
+        <li><strong>Google Ads headline:</strong> 30 caracteres por línea, hasta 3 líneas.</li>
+        <li><strong>YouTube title:</strong> 100 caracteres, pero solo 70 son visibles en mobile.</li>
+      </ul>
+
+      <h2>Caracteres especiales y encoding</h2>
+      <p>
+        Una "ñ" o una "á" cuentan como un carácter visual pero, según el sistema, pueden ocupar más bytes. En SMS GSM 7-bit, las tildes ya no caben en la tabla básica y obligan al modo UCS-2 (16 bits por carácter), reduciendo el límite del mensaje de 160 a 70. Por eso muchos SMS comerciales evitan tildes: con 100 destinatarios, mandar uno con tilde cuesta el doble que sin.
+      </p>
+
+      <h2>Emojis: el caso especial</h2>
+      <p>
+        Los emojis son Unicode pero a veces son secuencias de varios code points. Un emoji simple (😀) es 1 code point pero 2 caracteres en JavaScript (porque está fuera del BMP). Un emoji compuesto (👨‍👩‍👧‍👦, familia) son 4 emojis individuales unidos con zero-width joiners: 11 caracteres en JavaScript. Twitter los muestra como uno pero cuenta el peso real. Por eso un tweet "lleno de emojis" puede agotarse antes de los 280 caracteres visualmente.
+      </p>
+
+      <h2>Espacios y saltos de línea</h2>
+      <p>
+        Los espacios cuentan como caracteres en casi todos los contextos (Twitter, meta tags, SMS). Los saltos de línea también. La excepción son ciertas pruebas de mecanografía y algunos límites legales que cuentan solo "letras útiles". El contador muestra ambos números (con y sin espacios) para cubrir cualquier caso.
+      </p>
+
+      <h2>Tips para optimizar texto al límite</h2>
+      <ul>
+        <li><strong>Usá contracciones cuando aporten.</strong> "no" en vez de "nope", "y" en vez de "and" en español.</li>
+        <li><strong>Eliminá adverbios.</strong> "muy importante" → "crítico". "realmente bueno" → "excelente".</li>
+        <li><strong>Cortá conectores.</strong> "Por lo tanto" → "Entonces". "En consecuencia" → "Así".</li>
+        <li><strong>Reemplazá frases por sustantivos.</strong> "Las personas que compran" → "Compradores".</li>
+        <li><strong>Usá símbolos cuando se entienden.</strong> "&amp;" en vez de " y ".</li>
+      </ul>
+
+      <h2>Privacidad</h2>
+      <p>
+        Como toda la cuenta es local, podés pegar borradores de comunicaciones internas, mensajes a clientes, drafts de emails sensibles. Nada sale del browser. Útil cuando estás midiendo un tweet polémico que no querés que rastree nadie hasta el momento de publicar.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuenta los emojis como un carácter?</summary><p>Depende. Algunos son 1 character, otros son secuencias de 2-11 según composición.</p></details>
+      <details><summary>¿Cuál es el límite de Twitter/X?</summary><p>280 caracteres. URLs cuentan como 23 sin importar el largo real.</p></details>
+      <details><summary>¿Y la meta description de Google?</summary><p>Entre 150 y 160 caracteres es la zona segura.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cc-main { text-align: center; margin: 1.5rem 0 1rem; }
+  .cc-big { font-family: var(--font-mono); font-size: 3rem; font-weight: 700; color: var(--text); }
+  .cc-lbl { color: var(--text-subtle); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .cc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+  .cc-stat { background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.75rem; text-align: center; }
+  .cc-num { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 600; }
+  .cc-sub { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.2rem; }
+  .cc-limits { display: grid; gap: 0.5rem; }
+  .cc-limit { display: grid; grid-template-columns: 1fr auto auto; gap: 0.75rem; align-items: center; padding: 0.5rem 0.75rem; background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.85rem; }
+  .cc-bar { width: 80px; height: 6px; background: var(--border); border-radius: 999px; overflow: hidden; }
+  .cc-bar-fill { height: 100%; background: var(--success); transition: width 200ms ease; }
+  .cc-bar-fill.warn { background: var(--warning); }
+  .cc-bar-fill.over { background: var(--danger); }
+  .cc-count { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-soft); }
+</style>
+
+<script>
+  const LIMITS: { name: string; max: number }[] = [
+    { name: 'Title tag (SEO)', max: 60 },
+    { name: 'Meta description', max: 160 },
+    { name: 'Twitter / X', max: 280 },
+    { name: 'SMS estándar', max: 160 },
+    { name: 'Email subject', max: 60 },
+    { name: 'LinkedIn headline', max: 220 },
+    { name: 'Instagram caption', max: 2200 },
+  ];
+
+  const inEl = document.getElementById('cc-in') as HTMLTextAreaElement;
+  const totalEl = document.getElementById('cc-total')!;
+  const nsEl = document.getElementById('cc-no-sp')!;
+  const wordsEl = document.getElementById('cc-words')!;
+  const linesEl = document.getElementById('cc-lines')!;
+  const limitsEl = document.getElementById('cc-limits')!;
+
+  function buildLimits(len: number) {
+    limitsEl.innerHTML = LIMITS.map(L => {
+      const pct = Math.min((len / L.max) * 100, 100);
+      const cls = len > L.max ? 'over' : pct > 90 ? 'warn' : '';
+      return `<div class="cc-limit"><span>${L.name}</span><div class="cc-bar"><div class="cc-bar-fill ${cls}" style="width:${pct}%"></div></div><span class="cc-count">${len}/${L.max}</span></div>`;
+    }).join('');
+  }
+
+  function run() {
+    const t = inEl.value;
+    const len = t.length;
+    totalEl.textContent = len.toLocaleString('es');
+    nsEl.textContent = t.replace(/\s/g, '').length.toLocaleString('es');
+    wordsEl.textContent = (t.trim() ? t.trim().split(/\s+/).length : 0).toLocaleString('es');
+    linesEl.textContent = (t ? t.split('\n').length : 0).toLocaleString('es');
+    buildLimits(len);
+  }
+  inEl.addEventListener('input', run);
+  run();
+</script>

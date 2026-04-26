@@ -1,0 +1,168 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Lorem Ipsum variante griega | Genfy';
+const description = 'Generador de texto de relleno con variante de letras griegas. Útil para diseñadores que quieren un placeholder visualmente distinto del Lorem Ipsum clásico.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve la variante griega?', acceptedAnswer: { '@type': 'Answer', text: 'Para mockups donde querés que el placeholder se distinga visualmente del contenido latino real, evitando confusiones cuando hay texto definitivo y dummy mezclados.' } },
+    { '@type': 'Question', name: '¿Es texto griego real?', acceptedAnswer: { '@type': 'Answer', text: 'No. Es texto seudoaleatorio construido con caracteres del alfabeto griego para mantener la sensación de Lorem Ipsum pero con apariencia distinta.' } },
+    { '@type': 'Question', name: '¿Sirve para tipografías que no soportan griego?', acceptedAnswer: { '@type': 'Answer', text: 'No. Si tu fuente no incluye glifos griegos, vas a ver cuadrados o caracteres faltantes. Probá la fuente antes de usar este generador para producción de mockups.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Contenido" title="Lorem Ipsum variante griega"
+    intro="Texto de relleno con caracteres del alfabeto griego. Distinto visualmente del Lorem clásico, ideal cuando placeholder y copy real conviven en un mockup.">
+
+    <div slot="tool">
+      <div class="lg-row">
+        <div>
+          <label for="lg-amount">Cantidad</label>
+          <input id="lg-amount" type="number" min="1" max="50" value="3" />
+        </div>
+        <div>
+          <label for="lg-unit">Unidad</label>
+          <select id="lg-unit">
+            <option value="paragraphs">Párrafos</option>
+            <option value="sentences">Oraciones</option>
+            <option value="words">Palabras</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="lg-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="lg-copy" class="btn btn-ghost" type="button">Copiar</button>
+
+      <textarea id="lg-out" rows="14" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es la variante griega del Lorem Ipsum</h2>
+      <p>
+        El Lorem Ipsum clásico usa letras latinas y, aunque carece de sentido, visualmente
+        puede confundirse con un texto real en español o inglés. La variante griega reemplaza
+        los caracteres por glifos del alfabeto griego (alfa, beta, gamma, delta, etcétera),
+        produciendo un placeholder que el ojo identifica de inmediato como dummy. Esto
+        es útil cuando un mockup tiene contenido definitivo y de relleno mezclados.
+      </p>
+
+      <h2>Cuándo elegir la variante griega</h2>
+      <ul>
+        <li><strong>Mockups con contenido mixto.</strong> Cuando ya tenés copy aprobado en algunas secciones y otras todavía no, el griego marca claramente las que faltan.</li>
+        <li><strong>Reviews internos.</strong> En presentaciones donde necesitás que stakeholders no comenten el placeholder porque "no se entiende lo que dice", el griego ayuda a evitar la trampa.</li>
+        <li><strong>Pruebas tipográficas con fuentes multi-script.</strong> Si tu producto va a soportar griego (turismo en Grecia, software en mercados balcánicos), validar que la fuente renderiza bien los glifos es importante.</li>
+        <li><strong>Clases de diseño.</strong> Para mostrar a estudiantes que el "look" del Lorem Ipsum no depende del idioma sino de la distribución de caracteres.</li>
+      </ul>
+
+      <h2>Limitaciones</h2>
+      <p>
+        Si tu fuente principal no incluye glifos griegos, vas a ver cuadrados blancos
+        (tofu en jerga tipográfica) o sustituciones automáticas a otra fuente. Antes de
+        usar este placeholder, verificá que tu fuente lo soporte: Inter, Roboto, Source Sans,
+        Helvetica Neue, Arial y la mayoría de las webfonts modernas sí incluyen griego básico.
+        Fuentes display o serifas históricas a veces no.
+      </p>
+
+      <h2>Diferencias con el Lorem clásico</h2>
+      <p>
+        Los caracteres griegos tienen distintas anchuras promedio que los latinos. Una omega
+        (ω) es más ancha que una <em>m</em>; una iota (ι) más angosta que una <em>i</em>. Si
+        usás esta variante para validar largos exactos de texto en una columna, los resultados
+        van a diferir un poco de lo que verías con texto real en español. Para layout
+        general no es problema; para wireframes de pixel-perfecting, sí.
+      </p>
+
+      <h2>Cómo funciona el generador</h2>
+      <p>
+        Componemos palabras seudoaleatorias con un alfabeto de letras griegas minúsculas. Las
+        oraciones llevan mayúscula inicial (usamos versales griegas como Α, Β, Γ) y punto
+        final. Los párrafos combinan entre 3 y 6 oraciones de longitud variable, igual que el
+        Lorem Ipsum tradicional.
+      </p>
+
+      <h2>Cuándo NO usarlo</h2>
+      <p>
+        En páginas que vas a publicar. Google y los motores indexarán el contenido y van a
+        considerar la página de baja calidad. Es un placeholder de diseño, no contenido SEO.
+        Reemplazalo siempre antes de hacer go-live.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve la variante griega?</summary><p>Para que el placeholder se distinga visualmente del copy real cuando ambos conviven en un mockup.</p></details>
+      <details><summary>¿Es texto griego real?</summary><p>No. Es seudoaleatorio con caracteres griegos para mantener la sensación de Lorem Ipsum.</p></details>
+      <details><summary>¿Sirve para fuentes sin soporte griego?</summary><p>No. Verificá que tu fuente incluya glifos griegos antes de usarlo.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .lg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .lg-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const LETTERS = 'αβγδεζηθικλμνξοπρστυφχψω'.split('');
+  const UPPER = 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ'.split('');
+
+  const amount = document.getElementById('lg-amount') as HTMLInputElement;
+  const unit = document.getElementById('lg-unit') as HTMLSelectElement;
+  const out = document.getElementById('lg-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('lg-gen') as HTMLButtonElement;
+  const copy = document.getElementById('lg-copy') as HTMLButtonElement;
+
+  function rint(min: number, max: number) { return min + Math.floor(Math.random() * (max - min + 1)); }
+  function word(): string {
+    const len = rint(3, 9);
+    let w = '';
+    for (let i = 0; i < len; i++) w += LETTERS[Math.floor(Math.random() * LETTERS.length)];
+    return w;
+  }
+  function sentence(): string {
+    const n = rint(8, 16);
+    const words: string[] = [];
+    for (let i = 0; i < n; i++) words.push(word());
+    const first = UPPER[Math.floor(Math.random() * UPPER.length)] + words[0].slice(1);
+    return first + ' ' + words.slice(1).join(' ') + '.';
+  }
+  function paragraph(): string {
+    const n = rint(3, 6);
+    const arr: string[] = [];
+    for (let i = 0; i < n; i++) arr.push(sentence());
+    return arr.join(' ');
+  }
+
+  function generate() {
+    const n = Math.max(1, Math.min(50, parseInt(amount.value || '1', 10)));
+    let text = '';
+    if (unit.value === 'paragraphs') {
+      const arr: string[] = [];
+      for (let i = 0; i < n; i++) arr.push(paragraph());
+      text = arr.join('\n\n');
+    } else if (unit.value === 'sentences') {
+      const arr: string[] = [];
+      for (let i = 0; i < n; i++) arr.push(sentence());
+      text = arr.join(' ');
+    } else {
+      const arr: string[] = [];
+      for (let i = 0; i < n; i++) arr.push(word());
+      text = arr.join(' ');
+    }
+    out.value = text;
+  }
+
+  gen.addEventListener('click', generate);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copy.textContent; copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

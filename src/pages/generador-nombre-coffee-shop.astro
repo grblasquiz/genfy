@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de coffee shop gratis | Genfy';
+const description = 'Generá nombres para tu coffee shop o cafetería de especialidad. Combiná tueste, origen o concepto y obtené 20 ideas para fachada, dominio y redes.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuál es la diferencia entre café y coffee shop?', acceptedAnswer: { '@type': 'Answer', text: 'Coffee shop suele referirse a un local de tercera ola con foco en granos de origen, métodos filtrados y tueste propio o de terceros confiables. Café es un término más amplio que incluye desde bares de barrio hasta cadenas.' } },
+    { '@type': 'Question', name: '¿Conviene incluir "Coffee" en el nombre?', acceptedAnswer: { '@type': 'Answer', text: 'Ayuda al SEO local porque la gente busca "coffee + barrio". Si tu nombre principal es muy abstracto, agregar "Coffee" como subtítulo en Google Business funciona muy bien.' } },
+    { '@type': 'Question', name: '¿Cómo verifico que esté libre?', acceptedAnswer: { '@type': 'Answer', text: 'Google Maps en 5 km, Instagram, TikTok y registro de marcas local antes de invertir en cartelería.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Gastronomía" title="Generador de nombre de coffee shop"
+    intro="Combiná oficio, origen o método y obtené 20 ideas para tu coffee shop de especialidad. Listas para validar dominio, handle y Google Business.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabras clave (origen, método, concepto)</label>
+      <input id="bn-kw" type="text" placeholder="origen, filtro, lento..." value="origen, mesa" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="craft">Especialidad (Origen, Tueste)</option>
+        <option value="numeric">Numérico (Lote 22, Filtro 7)</option>
+        <option value="object">Objeto + Coffee</option>
+        <option value="modern">Moderno minimalista</option>
+        <option value="local">Local + Coffee Co</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de un coffee shop</h2>
+      <p>
+        Un coffee shop de especialidad vive de Instagram, Google Maps y reseñas. El nombre tiene
+        que sobrevivir tres usos diferentes: la fachada, el sello en bolsas de granos para
+        venta, y el bio de Instagram donde compite con miles de cuentas similares.
+      </p>
+      <ol>
+        <li><strong>Comunica oficio sin ser pretensioso.</strong> "Origen", "Tueste", "Filtro" funcionan; "Barista Maestro" suena forzado.</li>
+        <li><strong>Diferenciación numérica.</strong> "Lote 22", "Filtro 7" agregan especificidad y son únicos.</li>
+        <li><strong>Compatible con bolsas de café.</strong> Tiene que verse bien impreso en kraft a tres colores.</li>
+        <li><strong>Handle de IG corto.</strong> Si tu nombre es de tres palabras, el handle se pierde.</li>
+        <li><strong>Buscable como coffee.</strong> "X Coffee" o "X Coffee Co" rankea bien sin esfuerzo.</li>
+      </ol>
+
+      <h2>Estilos de nombres en tercera ola</h2>
+      <ul>
+        <li><strong>Especialidad:</strong> "Origen", "Tueste", "Cosecha", "Filtro". Conecta con barismo serio.</li>
+        <li><strong>Numérico:</strong> "Lote 22", "Mesa 7", "Origen 04". Memorable y único.</li>
+        <li><strong>Objeto + Coffee:</strong> "Mesa Coffee", "Cuchara Coffee". Funcional, fácil de tatuar en una taza.</li>
+        <li><strong>Moderno minimalista:</strong> "Pausa", "Lento", "Brote". Mood-driven.</li>
+        <li><strong>Local + Coffee Co:</strong> "Palermo Coffee Co", "Recoleta Coffee Co". SEO local fuerte.</li>
+      </ul>
+
+      <h2>Errores que evitar</h2>
+      <p>
+        Los términos "Bean", "Beans", "Roasters" y "Brew" están saturados en cualquier ciudad
+        grande. Tampoco caigas en la trampa de los juegos de palabras con "java" o "espresso":
+        envejecen mal y limitan tu marca si querés sumar otros productos. Y evitá nombres que
+        funcionan en mayúsculas pero no en minúsculas en un handle: probá @tunombre antes de
+        decidir.
+      </p>
+
+      <h2>Validación rápida</h2>
+      <ol>
+        <li>Google Maps en 5 km y en tu ciudad entera.</li>
+        <li>Instagram y TikTok con el handle exacto.</li>
+        <li>.com y .com.ar / .es en Namecheap.</li>
+        <li>Registro de marcas local.</li>
+        <li>Imprimir en una etiqueta de bolsa de café de prueba.</li>
+        <li>Pasarlo por 5 baristas amigos: ¿les suena legítimo?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuál es la diferencia entre café y coffee shop?</summary><p>Coffee shop sugiere tercera ola, granos de origen y métodos filtrados; café es término más amplio.</p></details>
+      <details><summary>¿Conviene incluir "Coffee" en el nombre?</summary><p>Ayuda mucho al SEO local. Si el nombre es abstracto, agregalo como subtítulo en Google Business.</p></details>
+      <details><summary>¿Cómo verifico que esté libre?</summary><p>Google Maps, Instagram, TikTok y registro de marcas local.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const CRAFT = ['Origen', 'Tueste', 'Filtro', 'Cosecha', 'Lote', 'Cata', 'Brote', 'Cuna', 'Raíz', 'Tamiz'];
+  const OBJ = ['Mesa', 'Cuchara', 'Tetera', 'Banco', 'Estante', 'Frasco', 'Servilleta'];
+  const MODERN = ['Pausa', 'Lento', 'Brote', 'Despierto', 'Manso', 'Vapor', 'Bruma', 'Cero', 'Rocío'];
+  const LOCAL = ['Palermo', 'Recoleta', 'Brera', 'Mission', 'Soho', 'Noma', 'Centro', 'Boedo', 'Chacarita'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function num() { const i = new Uint32Array(1); crypto.getRandomValues(i); return (i[0] % 99) + 1; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Coffee';
+      let name = '';
+      if (s === 'craft') name = pick(CRAFT) + ' Coffee';
+      else if (s === 'numeric') name = pick(CRAFT) + ' ' + num();
+      else if (s === 'object') name = pick(OBJ) + ' Coffee';
+      else if (s === 'modern') name = pick(MODERN) + ' Coffee';
+      else if (s === 'local') name = pick(LOCAL) + ' Coffee Co';
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

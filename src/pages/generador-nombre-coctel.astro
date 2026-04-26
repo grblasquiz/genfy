@@ -1,0 +1,146 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de cóctel gratis | Genfy';
+const description = 'Generá nombres únicos para cócteles de la carta de tu bar, evento o casamiento. Combiná sabor y sensación y obtené 20 ideas memorables.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno al nombre de un cóctel?', acceptedAnswer: { '@type': 'Answer', text: 'Que sugiera el sabor o la sensación final, sea fácil de pronunciar a tu mozo y se vea bien escrito en la carta.' } },
+    { '@type': 'Question', name: '¿Conviene usar nombres muy elaborados?', acceptedAnswer: { '@type': 'Answer', text: 'No. Los nombres demasiado elaborados o que requieren historia para entenderse cansan a los clientes. Mejor algo simple, sensorial y memorable.' } },
+    { '@type': 'Question', name: '¿Puedo usar nombres mitológicos?', acceptedAnswer: { '@type': 'Answer', text: 'Mejor evitar referencias a deidades y panteones porque están saturadas y limitan la atmósfera. Apostá por sensaciones, lugares o sabores.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Bartending" title="Generador de nombre de cóctel"
+    intro="Combiná sabor, sensación o ingrediente y obtené 20 nombres memorables para los tragos de tu carta. Pensados para verse bien sobre cuero o cartulina.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Sabor o ingrediente principal</label>
+      <input id="bn-kw" type="text" placeholder="cítrico, ahumado, pera..." value="cítrico, miel" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="sensory">Sensorial (Chispa Cítrica)</option>
+        <option value="poetic">Poético (Atardecer Costero)</option>
+        <option value="object">Objeto + sensación (Velvet Pear)</option>
+        <option value="duo">Dos sabores (Smoke & Honey)</option>
+        <option value="single">Una palabra (Vapor, Brote)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo nombrar un cóctel</h2>
+      <p>
+        Un buen nombre de cóctel hace que el cliente lo pida sin preguntar qué tiene adentro.
+        El nombre tiene que abrir un mundo sensorial en menos de un segundo: suave, ahumado,
+        cítrico, fresco. Si tu nombre necesita explicación o suena a fórmula química, perdiste.
+      </p>
+      <ol>
+        <li><strong>Sensorial primero.</strong> Sabores, texturas, temperaturas. "Chispa Cítrica" comunica más que un nombre abstracto.</li>
+        <li><strong>Conectado al ingrediente.</strong> Si el trago lleva miel, mencionala; si lleva ahumado, también.</li>
+        <li><strong>Pronunciable a los gritos.</strong> El mozo lo va a repetir 20 veces por noche.</li>
+        <li><strong>Visualmente atractivo en la carta.</strong> Se ve bien sobre cuero, papel kraft o cartulina.</li>
+        <li><strong>Sin clichés mitológicos.</strong> Evitá referencias a panteones; suenan saturadas.</li>
+      </ol>
+
+      <h2>Estilos de nombres clásicos</h2>
+      <ul>
+        <li><strong>Sensorial:</strong> "Chispa Cítrica", "Niebla Ahumada", "Velo de Pera". Disparan una expectativa concreta.</li>
+        <li><strong>Poético:</strong> "Atardecer Costero", "Niebla Después de la Lluvia". Para cartas literarias o eventos.</li>
+        <li><strong>Objeto + sensación:</strong> "Velvet Pear", "Cobre Cítrico". Premium, fácil de ilustrar.</li>
+        <li><strong>Dos sabores:</strong> "Smoke & Honey", "Lima & Romero". Honesto, le dice al cliente qué espera.</li>
+        <li><strong>Una palabra:</strong> "Vapor", "Brote", "Carbón". Mood-driven, premium.</li>
+      </ul>
+
+      <h2>Lo que evitar</h2>
+      <p>
+        Evitá referencias a deidades griegas, romanas, nórdicas o de cualquier panteón:
+        además de saturadas, sugieren una atmósfera que limita tu carta. Evitá juegos de
+        palabras con marcas comerciales o con celebridades vivas: pueden traer problemas
+        legales. Evitá también los nombres demasiado largos: "El Susurro de la Brisa de
+        Verano" no se pide en una barra concurrida.
+      </p>
+      <p>
+        Recordá comunicar tu carta de manera responsable: la promoción de bebidas alcohólicas
+        debe respetar la legislación local sobre publicidad de alcohol.
+      </p>
+
+      <h2>Cómo testear tus nombres</h2>
+      <ol>
+        <li>Decílos en voz alta como si fueras mozo en una noche llena.</li>
+        <li>Pediles a 5 amigos que adivinen los ingredientes.</li>
+        <li>Mostralos junto a la receta y la presentación final.</li>
+        <li>Probá la versión final en la carta una semana antes de imprimir definitivamente.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno al nombre de un cóctel?</summary><p>Sugiere sabor o sensación, es fácil de pronunciar y se ve bien en la carta.</p></details>
+      <details><summary>¿Conviene nombres elaborados?</summary><p>No. Mejor simple, sensorial y memorable.</p></details>
+      <details><summary>¿Nombres mitológicos?</summary><p>Mejor evitar deidades y panteones; están saturadas y limitan la atmósfera.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const SENS = ['Chispa', 'Niebla', 'Velo', 'Brisa', 'Hilo', 'Pliegue', 'Pulso', 'Brote', 'Vapor'];
+  const FLAVOR = ['Cítrico', 'Ahumado', 'Cobre', 'Miel', 'Pera', 'Lima', 'Romero', 'Pimienta', 'Vainilla', 'Cardamomo'];
+  const POETIC = ['Atardecer Costero', 'Niebla de Verano', 'Después de la Lluvia', 'Última Tarde', 'Sombra Dorada', 'Ámbar Tardío'];
+  const OBJ = ['Velvet', 'Cobre', 'Lino', 'Hueso', 'Cuerda', 'Vidrio'];
+  const DUO_A = ['Smoke', 'Honey', 'Lima', 'Romero', 'Cardamomo', 'Pimienta', 'Pera', 'Cobre'];
+  const DUO_B = ['Honey', 'Smoke', 'Romero', 'Lima', 'Pera', 'Carbón', 'Brisa', 'Vapor'];
+  const SINGLE = ['Vapor', 'Brote', 'Carbón', 'Cobre', 'Velo', 'Hilo', 'Pulso', 'Niebla', 'Cardo'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'sensory') name = pick(SENS) + ' ' + pick(FLAVOR);
+      else if (s === 'poetic') name = pick(POETIC);
+      else if (s === 'object') name = pick(OBJ) + ' ' + pick(FLAVOR);
+      else if (s === 'duo') {
+        let a = pick(DUO_A), b = pick(DUO_B);
+        while (a === b) b = pick(DUO_B);
+        name = a + ' & ' + b;
+      }
+      else if (s === 'single') name = pick(SINGLE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

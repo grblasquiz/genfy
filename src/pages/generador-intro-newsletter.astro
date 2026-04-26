@@ -1,0 +1,190 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de intro de newsletter gratis | Genfy';
+const description = 'Generá la intro de tu newsletter para enganchar en las primeras 2 líneas. Lo único que ven antes de decidir leer o archivar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué importa tanto la intro de un newsletter?', acceptedAnswer: { '@type': 'Answer', text: 'Las primeras 2-3 líneas aparecen como preview en bandejas como Gmail. Decide si abren o archivan, antes de ver el contenido principal.' } },
+    { '@type': 'Question', name: '¿Conviene empezar con un saludo?', acceptedAnswer: { '@type': 'Answer', text: 'Mejor evitar saludos largos. Una intro fuerte va directo al punto: una observación, una pregunta o una historia corta. "Hola amigos" pierde el preview.' } },
+    { '@type': 'Question', name: '¿Qué largo ideal tiene una intro?', acceptedAnswer: { '@type': 'Answer', text: 'Sweet spot: 2-3 frases (40-80 palabras). Suficiente para enganchar, sin retrasar el contenido principal.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Email" title="Generador de intro de newsletter"
+    intro="Cargá tema y tono. Genfy te devuelve 4 intros que enganchan en las primeras líneas, antes del preview de Gmail.">
+
+    <div slot="tool" class="nl">
+      <label for="nl-topic">Tema del email</label>
+      <input id="nl-topic" type="text" placeholder="3 errores comunes al invertir..." value="3 errores comunes al invertir" />
+
+      <label for="nl-audience" style="margin-top:1rem">A quién escribís</label>
+      <input id="nl-audience" type="text" placeholder="Freelancers que quieren ahorrar..." value="Freelancers que quieren empezar a invertir" />
+
+      <label for="nl-tone" style="margin-top:1rem">Tono</label>
+      <select id="nl-tone">
+        <option value="story">Historia personal</option>
+        <option value="question">Pregunta + observacion</option>
+        <option value="data">Dato sorprendente</option>
+        <option value="opinion">Opinion directa</option>
+      </select>
+
+      <button id="nl-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 4 intros</button>
+
+      <div id="nl-out" class="nl-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué la intro de un newsletter es lo que más mueve la métrica de open rate</h2>
+      <p>
+        Bandejas como Gmail muestran las primeras 2-3 líneas del email como preview, junto con el subject line y el sender name. Un suscriptor decide en menos de 2 segundos si abre o archiva. La intro tiene que confirmar la promesa del subject y dar un pull adicional.
+      </p>
+      <p>
+        El error común: empezar con "Hola amigos" o "Espero que estés bien". Esas frases queman los caracteres del preview sin aportar valor. Lo que ve el suscriptor es: "Subject interesante. Preview: 'hola, espero que estés bien' — archivar."
+      </p>
+
+      <h2>Las 4 estructuras de intro que rinden</h2>
+      <ol>
+        <li><strong>Historia personal corta:</strong> "Hace 3 años perdí $2.000 en la primera inversión que hice. Esto fue lo que aprendí."</li>
+        <li><strong>Pregunta + contexto:</strong> "¿Te pasa que sabés que tenés que invertir pero no sabés por dónde empezar? A mí me pasó por años."</li>
+        <li><strong>Dato sorprendente:</strong> "El 70% de los freelancers no tiene ahorros para 3 meses. Y la razón no es lo que parece."</li>
+        <li><strong>Opinión directa:</strong> "Decir que invertir es complicado es una excusa que la industria financiera te vendió."</li>
+      </ol>
+
+      <h2>Lo que NO funciona en intros de newsletter</h2>
+      <ul>
+        <li><strong>Saludos largos:</strong> "Hola, espero que esta semana hayas tenido un buen comienzo y..."</li>
+        <li><strong>Auto-referencia:</strong> "En esta edición de mi newsletter te voy a contar..."</li>
+        <li><strong>Recap del email anterior:</strong> "La semana pasada hablamos de X, hoy continuamos con..."</li>
+        <li><strong>Excusas o disclaimers:</strong> "Perdón por no escribir en 3 semanas, estuve viajando..."</li>
+        <li><strong>Promesas vagas:</strong> "Hoy te traigo algo interesante sobre..."</li>
+      </ul>
+
+      <h2>Cómo conectar la intro con el subject line</h2>
+      <p>
+        El subject genera la curiosidad, la intro la confirma y la profundiza. Si el subject es "El error que casi me arruina con mi primera inversión", la intro tiene que arrancar en ese momento exacto, no a 3 párrafos del incidente. Patrones que funcionan:
+      </p>
+      <ul>
+        <li><strong>Subject pregunta + intro respuesta:</strong> Subject "¿Por qué casi nadie tiene plan financiero?" + Intro "La razón no es la pereza. Es esto."</li>
+        <li><strong>Subject afirmación + intro evidencia:</strong> Subject "Invertir el 10% del sueldo no alcanza" + Intro "Hice los números con 50 freelancers. Esto es lo que descubrí."</li>
+        <li><strong>Subject misterio + intro reveal:</strong> Subject "Lo que aprendí perdiendo $2.000" + Intro "En 2021 hice la peor inversión de mi vida. Te cuento qué pasó."</li>
+      </ul>
+
+      <h2>Personalización vs autenticidad</h2>
+      <p>
+        Plataformas como ConvertKit, Mailchimp o Klaviyo permiten personalizar con merge tags como "Hola Martín". El efecto de personalización funciona si lo hacés bien: usar el nombre solo es ruido genérico hoy. Mejor:
+      </p>
+      <ul>
+        <li>Personalizar por segmento: "Para freelancers que cobran en USD" rinde más que "Hola María".</li>
+        <li>Mencionar la fuente: "Te suscribiste para recibir tips sobre X" recuerda contexto.</li>
+        <li>Tono consistente: si tu newsletter es directo, la intro también. Si es narrativo, la intro arranca con escena.</li>
+      </ul>
+
+      <h2>El "preview text" como segunda oportunidad</h2>
+      <p>
+        Algunos clientes de email permiten configurar un "preview text" separado del body. Es un texto que aparece al lado del subject pero no en el body. Aprovecharlo:
+      </p>
+      <ul>
+        <li>Complementar el subject: si subject es "5 errores al invertir", preview puede ser "El #3 me pasó a mí".</li>
+        <li>Crear curiosidad adicional: "El error que cuesta $5.000 al año".</li>
+        <li>Si no lo configurás, los clients muestran las primeras palabras del body, así que tu intro debe servir doble función.</li>
+      </ul>
+
+      <h2>Cómo testear intros</h2>
+      <p>
+        ConvertKit, Mailchimp, Klaviyo y Substack permiten A/B test de subject. Para intros es más complicado, pero podés:
+      </p>
+      <ol>
+        <li>Mantener subject constante y rotar intros entre ediciones.</li>
+        <li>Medir click-through rate (CTR) — la mejor proxy de "¿la intro funcionó?".</li>
+        <li>Usar herramientas como Litmus para preview del email en distintos clientes.</li>
+        <li>Después de 5-10 envíos, identificar el patrón con mejor CTR y replicarlo.</li>
+      </ol>
+
+      <h2>Errores típicos que matan apertura</h2>
+      <ul>
+        <li><strong>Imagen como primer elemento:</strong> Gmail no la carga por default y queda hueco.</li>
+        <li><strong>Demasiado HTML al inicio:</strong> los clients muestran código antes del texto.</li>
+        <li><strong>Footer arriba:</strong> "Si no querés recibir más emails..." al inicio mata el open rate.</li>
+        <li><strong>Tipografía rara:</strong> emojis, fuentes especiales o caracteres ASCII raros activan filtros de spam.</li>
+        <li><strong>Sin contexto temporal:</strong> "Te escribo hoy porque..." es genérico. Mejor "Tres horas escribiendo este email y...".</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuánto debe durar la intro?</summary><p>2-3 frases, 40-80 palabras. Lo suficiente para enganchar sin retrasar.</p></details>
+      <details><summary>¿Conviene saludar?</summary><p>Mejor evitar saludos largos. Si saludás, que sea muy breve y específico.</p></details>
+      <details><summary>¿Personalizar con nombre?</summary><p>Funciona si va con segmento o contexto. Solo el nombre se vuelve ruido.</p></details>
+      <details><summary>¿Cómo medir si funciona?</summary><p>Mirá el click-through rate del email. Si la intro engancha, hay clicks al CTA.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .nl-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .nl-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; }
+  .nl-card:hover { border-color: var(--accent); }
+  .nl-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+  select { width: 100%; padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-size: 0.9375rem; font-family: inherit; }
+</style>
+
+<script>
+  const topic = document.getElementById('nl-topic') as HTMLInputElement;
+  const audience = document.getElementById('nl-audience') as HTMLInputElement;
+  const tone = document.getElementById('nl-tone') as HTMLSelectElement;
+  const gen = document.getElementById('nl-gen') as HTMLButtonElement;
+  const out = document.getElementById('nl-out')!;
+
+  function generate() {
+    const T = topic.value.trim() || 'el tema';
+    const A = audience.value.trim() || 'vos';
+    const To = tone.value;
+
+    let intros: string[] = [];
+    if (To === 'story') {
+      intros = [
+        `Hace 3 anos cometi un error con ${T.toLowerCase()} que me costo mas de lo que admiti en publico.\n\nHoy te cuento que aprendi y como evitarlo.`,
+        `Esta semana hable con un suscriptor que esta en tu misma situacion.\n\nLo que me dijo me hizo replantear todo lo que sabia sobre ${T.toLowerCase()}.`,
+        `Empece a tomar notas sobre ${T.toLowerCase()} hace 2 anos.\n\nLo que descubri al revisar las notas hoy te lo cuento abajo.`,
+        `${T}.\n\nLa primera vez que lo enfrente, no sabia por donde empezar. Asi que escribi este email para vos.`,
+      ];
+    } else if (To === 'question') {
+      intros = [
+        `Te paso esto: sabes que necesitas trabajar en ${T.toLowerCase()} pero algo te frena.\n\nNo sos vos. Te explico abajo.`,
+        `Cuantos ${A.toLowerCase()} crees que han resuelto ${T.toLowerCase()}?\n\nMenos de los que pensas. Y eso es una oportunidad.`,
+        `Hay una pregunta que me hacen siempre sobre ${T.toLowerCase()}.\n\nLa respuesta corta no es la que esperas.`,
+        `Que tendria que pasar para que ${T.toLowerCase()} dejara de ser un problema?\n\nMenos de lo que crees. Te muestro.`,
+      ];
+    } else if (To === 'data') {
+      intros = [
+        `El 70% de ${A.toLowerCase()} comete el mismo error con ${T.toLowerCase()}.\n\nLa razon no es la que pensas.`,
+        `Hice una encuesta entre 100 ${A.toLowerCase()} sobre ${T.toLowerCase()}.\n\nLos resultados me sorprendieron. Aca van.`,
+        `Hay un dato sobre ${T.toLowerCase()} que casi nadie cuenta.\n\nY explica por que la mayoria falla.`,
+        `Si te dijera que ${T.toLowerCase()} se resuelve con un cambio chico, me creerias?\n\nDespues de probar 10 metodos, te muestro el que funciona.`,
+      ];
+    } else {
+      intros = [
+        `Decir que ${T.toLowerCase()} es complicado es una excusa.\n\nLa industria te vendio esa idea. Hoy te muestro la verdad.`,
+        `Lo que la mayoria piensa sobre ${T.toLowerCase()} esta mal.\n\nNo por ignorancia, sino porque les conviene a otros.`,
+        `${T} no es lo que crees.\n\nDespues de 5 anos viendolo de cerca, te cuento la version sin filtro.`,
+        `Tengo una opinion incomoda sobre ${T.toLowerCase()}.\n\nPero antes que dejes de leer, escuchame con datos.`,
+      ];
+    }
+
+    out.innerHTML = '';
+    intros.forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'nl-card';
+      el.title = 'Click para copiar';
+      el.innerHTML = b.replace(/\n/g, '<br>') + `<div class="nl-meta">Intro ${i+1} · ${b.length} caracteres</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copiada'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

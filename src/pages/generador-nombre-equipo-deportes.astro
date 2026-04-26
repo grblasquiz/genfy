@@ -1,0 +1,136 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de equipo deportivo gratis | Genfy';
+const description = 'Generá nombres únicos para tu equipo de fútbol, vóley, básquet o cualquier deporte. Combiná ciudad, animal o concepto y obtené 20 ideas memorables.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno al nombre de un equipo?', acceptedAnswer: { '@type': 'Answer', text: 'Que sea memorable, fácil de gritar desde la tribuna, único en tu liga local y que se vea bien en una camiseta o un escudo.' } },
+    { '@type': 'Question', name: '¿Conviene usar animales?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, los animales depredadores o resistentes (lobos, halcones, toros) son clásicos por una razón: comunican fuerza y son fáciles de ilustrar.' } },
+    { '@type': 'Question', name: '¿Cómo lo registro?', acceptedAnswer: { '@type': 'Answer', text: 'Si compitís a nivel oficial, registrá el nombre en la federación local; si lanzás merch, en el INPI o USPTO.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Deportes" title="Generador de nombre de equipo deportivo"
+    intro="Combiná ciudad, animal o concepto y obtené 20 nombres memorables para tu equipo de fútbol, vóley, básquet o cualquier deporte. Listas para escudo y camiseta.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabras clave (ciudad, color, concepto)</label>
+      <input id="bn-kw" type="text" placeholder="palermo, azul, fuego..." value="palermo" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="animal">Ciudad + animal (Palermo Lobos)</option>
+        <option value="historic">Histórico (Spartans, Vikings)</option>
+        <option value="action">Acción (Fuego, Tormenta, Trueno)</option>
+        <option value="color">Color + animal (Azul Halcones)</option>
+        <option value="local">Local + United / FC</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de un equipo</h2>
+      <p>
+        Un buen nombre de equipo cumple tres trabajos: se grita bien desde la tribuna, se ve
+        bien en un escudo y en una camiseta, y diferencia al equipo de los demás de la liga.
+        Lo que separa "Tigres FC" de uno de los miles de "Tigres" del mundo es el calificativo
+        local, el color o un detalle de identidad concreto.
+      </p>
+      <ol>
+        <li><strong>Memorable a 50 metros.</strong> Lo que se grita desde la tribuna en boca abierta.</li>
+        <li><strong>Ilustrativo.</strong> Tiene que poder transformarse en un escudo simple.</li>
+        <li><strong>Único en tu liga.</strong> No te confundas con el otro equipo del barrio.</li>
+        <li><strong>Histórico y no espiritual.</strong> "Spartans" o "Vikings" funcionan; "Olympians" o "Titans" están saturados y mezclan deidades.</li>
+        <li><strong>Pronunciable en TV.</strong> Si se relata en partidos transmitidos, tiene que entrar bien.</li>
+      </ol>
+
+      <h2>Estilos clásicos</h2>
+      <ul>
+        <li><strong>Ciudad + animal:</strong> "Palermo Lobos", "Boedo Halcones". El más usado por algo: funciona.</li>
+        <li><strong>Histórico:</strong> "Spartans", "Vikings", "Trojans". Comunica resistencia.</li>
+        <li><strong>Acción:</strong> "Fuego", "Tormenta", "Trueno". Disparan emoción.</li>
+        <li><strong>Color + animal:</strong> "Azul Halcones", "Rojo Lobos". Cromática + identidad.</li>
+        <li><strong>Local + United / FC:</strong> "Palermo United", "Boedo FC". Estilo europeo, premium.</li>
+      </ul>
+
+      <h2>Lo que evitar</h2>
+      <p>
+        Evitá referencias a deidades griegas, romanas o nórdicas: los "Olympians", "Titans" o
+        "Thunder Gods" están saturados y mezclan religión con deporte. Mejor términos
+        históricos (Spartans, Trojans, Vikings) o naturales (lobos, halcones, tigres). Evitá
+        también nombres jocosos que envejezcan mal.
+      </p>
+
+      <h2>Validación</h2>
+      <ol>
+        <li>Verificalo en la liga local: ¿hay otro?</li>
+        <li>Probá un escudo simple: ¿funciona en blanco y negro?</li>
+        <li>Decí el grito de la hinchada: "¡vamos los X!"</li>
+        <li>Imprimilo en una remera y pedí opinión.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno al nombre?</summary><p>Memorable, fácil de gritar, único en la liga y bonito en escudo.</p></details>
+      <details><summary>¿Animales sí?</summary><p>Sí, depredadores o resistentes son clásicos. Lobos, halcones, toros funcionan.</p></details>
+      <details><summary>¿Cómo lo registro?</summary><p>Federación local para competir, INPI o USPTO para merch.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ANIMAL = ['Lobos', 'Halcones', 'Tigres', 'Toros', 'Águilas', 'Pumas', 'Bisontes', 'Búfalos', 'Cuervos', 'Zorros', 'Jabalíes', 'Linces'];
+  const HIST = ['Spartans', 'Vikings', 'Trojans', 'Centuriones', 'Gladiadores', 'Caballeros', 'Guerreros', 'Legión', 'Cruzados'];
+  const ACTION = ['Fuego', 'Tormenta', 'Trueno', 'Rayo', 'Furia', 'Tempestad', 'Viento', 'Avalancha', 'Marea', 'Erupción'];
+  const COLOR = ['Azul', 'Rojo', 'Verde', 'Negro', 'Blanco', 'Amarillo', 'Granate', 'Celeste', 'Ámbar'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const w = kw.value.trim() || 'Palermo';
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'animal') name = cap(w) + ' ' + pick(ANIMAL);
+      else if (s === 'historic') name = cap(w) + ' ' + pick(HIST);
+      else if (s === 'action') name = cap(w) + ' ' + pick(ACTION);
+      else if (s === 'color') name = pick(COLOR) + ' ' + pick(ANIMAL);
+      else if (s === 'local') name = cap(w) + ' ' + pick(['United', 'FC', 'Athletic', 'CF', 'AC']);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

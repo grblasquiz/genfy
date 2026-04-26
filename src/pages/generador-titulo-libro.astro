@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de título de libro gratis | Genfy';
+const description = 'Generá títulos memorables para tu próxima novela, ensayo o no-ficción. Combiná tono, género y formato para obtener 20 ideas en segundos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo elijo un buen título de libro?', acceptedAnswer: { '@type': 'Answer', text: 'Buscá un título corto, que comunique género, sea fácil de buscar en Amazon y se vea bien en una tapa pequeña en miniatura.' } },
+    { '@type': 'Question', name: '¿El título debe llevar subtítulo?', acceptedAnswer: { '@type': 'Answer', text: 'En no-ficción casi siempre, para SEO. En novela y ensayo es opcional. El subtítulo aclara el ángulo cuando el título es metafórico.' } },
+    { '@type': 'Question', name: '¿Puedo cambiar el título tras publicar?', acceptedAnswer: { '@type': 'Answer', text: 'Es muy difícil. ISBN, librerías y reseñas se quedan con el original. Mejor invertir tiempo antes del lanzamiento.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de título de libro"
+    intro="Encontrá el título perfecto para tu novela, ensayo o libro de no-ficción. Combiná tono, género y formato para conseguir 20 ideas en segundos.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Tema central</label>
+      <input id="bn-kw" type="text" placeholder="memoria, viaje, mar..." value="silencio" />
+
+      <label for="bn-style" style="margin-top:1rem">Género</label>
+      <select id="bn-style">
+        <option value="literary">Literaria (Lo que dejamos)</option>
+        <option value="thriller">Thriller (La última carta)</option>
+        <option value="nonfiction">No-ficción (Cómo decidir mejor)</option>
+        <option value="romance">Romance (Verano contigo)</option>
+        <option value="single">Una palabra (Silencio)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 títulos</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el título de tu libro</h2>
+      <p>
+        Un título de libro tiene que pasar tres tests muy concretos: leerse bien en una tapa
+        miniaturizada de Kindle, ser distinto en Amazon (donde competís contra millones de
+        títulos), y dar una pista del género en menos de cuatro segundos. La regla práctica más
+        útil que da cualquier editor: si la persona que mira la tapa en una librería tiene que
+        leer la contratapa para entender de qué va el libro, el título falló.
+      </p>
+      <ol>
+        <li><strong>Probalo en miniatura.</strong> Reducí la tapa a 100x150px en pantalla. ¿El título se sigue leyendo?</li>
+        <li><strong>Buscalo en Amazon.</strong> Si hay 50 libros con el mismo título de los últimos cinco años, vas a quedar enterrado.</li>
+        <li><strong>Que comunique género.</strong> El lector escanea estanterías y carruseles. Tu tapa tiene que decirle "thriller" o "ensayo de productividad" antes de leer la contratapa.</li>
+        <li><strong>Pensá el subtítulo.</strong> En no-ficción es casi obligatorio: ahí va el SEO ("Cómo decidir mejor: la guía práctica para…").</li>
+        <li><strong>Que la prensa lo pueda repetir.</strong> En entrevistas y reseñas, un título raro o muy largo se cita mal y pierde tracción.</li>
+      </ol>
+
+      <h2>Estilos por género</h2>
+      <ul>
+        <li><strong>Literaria</strong>: frases poéticas o conceptuales (Lo que dejamos, Antes del verano). Apelan a memoria emocional.</li>
+        <li><strong>Thriller</strong>: artículo + sustantivo amenazante (La última carta, El testigo silencioso).</li>
+        <li><strong>No-ficción</strong>: título corto + subtítulo descriptivo (Cómo decidir mejor: el método de los expertos en…). El subtítulo carga el SEO.</li>
+        <li><strong>Romance</strong>: frases cálidas, evocadoras (Verano contigo, Cartas que no envié).</li>
+        <li><strong>Una palabra</strong>: alto riesgo, alto reward (Silencio, Vela, Hueso). Tiene que cargar peso.</li>
+      </ul>
+
+      <h2>Errores frecuentes</h2>
+      <p>
+        El más común: títulos de novela que parecen autoayuda y viceversa. Si tu novela se llama
+        "Cómo encontrar tu camino", los lectores van a esperar otro libro. Otro error: depender
+        de juegos de palabras locales que no traducen bien para mercados internacionales. Y un
+        tercero: usar palabras gastadas ("Renacer", "Despertar", "Esencia") que aparecen en cada
+        novedad mensual de Planeta o Penguin.
+      </p>
+
+      <h2>Después de generar</h2>
+      <ol>
+        <li>Búsqueda en Amazon, Goodreads y Casa del Libro.</li>
+        <li>Verificá el título reducido a tapa miniatura.</li>
+        <li>Escribí dos versiones de subtítulo si vas a no-ficción.</li>
+        <li>Mostrá la dupla a tres lectores beta: ¿adivinan el género?</li>
+        <li>Si la novela es serie, verificá que el título soporte una saga.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo elijo un buen título de libro?</summary><p>Corto, comunica género, fácil de buscar en Amazon, se ve bien en miniatura.</p></details>
+      <details><summary>¿Necesito subtítulo?</summary><p>En no-ficción casi siempre. En novela es opcional.</p></details>
+      <details><summary>¿Puedo cambiarlo tras publicar?</summary><p>Muy difícil: ISBN y reseñas se quedan con el original.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const LIT = ['Lo que dejamos', 'Antes del verano', 'Cartas que no envié', 'El cuarto del fondo', 'La hora lenta', 'Cosas pequeñas'];
+  const THRILLER = ['La última carta', 'El testigo silencioso', 'Sin rastro', 'La casa cerrada', 'El intruso', 'Ruido nocturno'];
+  const NF = ['Cómo decidir mejor', 'El método simple', 'Pensar despacio', 'Hablar con claridad', 'Trabajar menos'];
+  const ROMANCE = ['Verano contigo', 'Cartas a medianoche', 'La playa de marzo', 'Días contados', 'Después de ti'];
+  const NOUN = ['Silencio', 'Vela', 'Hueso', 'Niebla', 'Sombra', 'Refugio', 'Cicatriz', 'Eco'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'literary') name = pick(LIT);
+      else if (s === 'thriller') name = pick(THRILLER);
+      else if (s === 'nonfiction') name = pick(NF);
+      else if (s === 'romance') name = pick(ROMANCE);
+      else if (s === 'single') name = words.length ? cap(pick(words)) : pick(NOUN);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

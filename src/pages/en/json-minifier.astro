@@ -1,0 +1,125 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free JSON Minifier | Genfy';
+const description = 'Compress JSON to a single line with no spaces. Cuts size by up to 30% for APIs, configs and storage. 100% in-browser.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why minify JSON?', acceptedAnswer: { '@type': 'Answer', text: 'To shrink size when sending over the network, storing in a database, or saving to localStorage. It strips spaces, line breaks and indentation while keeping the data intact.' } },
+    { '@type': 'Question', name: 'How much smaller does it get?', acceptedAnswer: { '@type': 'Answer', text: 'It depends on the original indentation. JSON indented with 4 spaces typically shrinks 20-35% when minified. Long strings barely change; nested objects shrink the most.' } },
+    { '@type': 'Question', name: 'Does it lose information?', acceptedAnswer: { '@type': 'Answer', text: 'No. Only whitespace outside strings is removed: spaces, tabs and line breaks. The data is identical.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Data" title="JSON Minifier"
+    intro="Paste formatted JSON and get the compact one-line version back. Great for APIs, production configs and saving network bytes.">
+
+    <div slot="tool">
+      <label for="jm-in">JSON</label>
+      <textarea id="jm-in" rows="8" style="font-family: var(--font-mono); font-size: 0.9rem;">&lcub;
+  "name": "Genfy",
+  "version": 1,
+  "tags": ["dev", "tools"],
+  "active": true
+&rcub;</textarea>
+      <button id="jm-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Minify</button>
+      <button id="jm-copy" class="btn btn-ghost" type="button">Copy</button>
+      <div id="jm-stats" class="jm-stats"></div>
+      <label for="jm-out" style="margin-top:1rem;">Result</label>
+      <textarea id="jm-out" rows="6" readonly style="font-family: var(--font-mono); font-size: 0.9rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>When to minify JSON</h2>
+      <p>
+        Minifying makes sense whenever bytes cost: network traffic, database storage, JSON columns in MySQL or Postgres, WebSocket payloads, queue messages on SQS or Kafka. Every whitespace byte you drop is one less byte your system processes, stores or transmits. At scale (millions of requests a day) it shows up on your cloud bill.
+      </p>
+
+      <h2>When NOT to minify</h2>
+      <ul>
+        <li><strong>Config files versioned in git.</strong> A minified package.json produces unreadable diffs and merge conflicts become a nightmare.</li>
+        <li><strong>Logs.</strong> Even with pretty-printers around, reading minified logs by eye in a terminal is rough.</li>
+        <li><strong>Data a human will edit.</strong> If someone's expected to hand-edit the file, leave it formatted.</li>
+        <li><strong>When gzip/brotli is already on.</strong> The server compresses on the fly, narrowing the gap between minified and formatted. Still worth minifying first to ease parsers.</li>
+      </ul>
+
+      <h2>How minification works</h2>
+      <p>
+        The process is trivial: parse the JSON with <code>JSON.parse</code> and re-serialize with <code>JSON.stringify(obj)</code> without the third indentation argument. The result is canonical JSON with no whitespace outside strings. Strings are preserved as-is: if a string contains a space, it stays. Only structural whitespace is stripped.
+      </p>
+
+      <h2>Further compression</h2>
+      <p>
+        Minifying is step one. To go smaller:
+      </p>
+      <ul>
+        <li><strong>Gzip or Brotli over HTTP.</strong> Your web server (nginx, Cloudflare, Vercel) does this by default. Reduces JSON another 60-80%.</li>
+        <li><strong>Binary formats.</strong> If you control client and server, MessagePack, CBOR or Protocol Buffers are substantially smaller.</li>
+        <li><strong>Renaming keys.</strong> If an API returns millions of objects keyed <code>"longDescriptiveKey"</code>, shortening to <code>"k"</code> saves a lot. Costs readability and requires a mapping back on the client.</li>
+      </ul>
+
+      <h2>Typical before/after sizes</h2>
+      <p>
+        A typical e-commerce object with 20 fields and 2-space indentation runs about 800 bytes. Minified drops to 600. Minified and gzipped lands at 250-300. If you're returning lists of a thousand objects per request, that 50% adds up in latency and bandwidth cost.
+      </p>
+
+      <h2>Validation included</h2>
+      <p>
+        This minifier parses with <code>JSON.parse</code>, so syntax errors are flagged. If your input has comments or trailing commas (which strict JSON rejects), it fails. For non-standard input run a linter first.
+      </p>
+
+      <h2>Privacy and sensitive data</h2>
+      <p>
+        Because the minifier runs in your browser, you can paste configs with tokens, real user data, or anything sensitive without risk. Nothing leaves your device. If unsure, open DevTools and watch the Network panel: you'll see no outbound requests while minifying.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Why minify JSON?</summary><p>To shrink size for network, database or localStorage.</p></details>
+      <details><summary>How much smaller does it get?</summary><p>Typically 20-35% depending on original indentation.</p></details>
+      <details><summary>Does it lose information?</summary><p>No. Only whitespace outside strings is removed.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .jm-stats { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-soft); margin-top: 0.5rem; min-height: 1.25rem; }
+</style>
+
+<script>
+  const inEl = document.getElementById('jm-in') as HTMLTextAreaElement;
+  const out = document.getElementById('jm-out') as HTMLTextAreaElement;
+  const stats = document.getElementById('jm-stats') as HTMLDivElement;
+  const genBtn = document.getElementById('jm-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('jm-copy') as HTMLButtonElement;
+
+  function run() {
+    const txt = inEl.value;
+    if (!txt.trim()) { out.value = ''; stats.textContent = ''; return; }
+    try {
+      const parsed = JSON.parse(txt);
+      const min = JSON.stringify(parsed);
+      out.value = min;
+      const before = new Blob([txt]).size;
+      const after = new Blob([min]).size;
+      const pct = before > 0 ? Math.round(((before - after) / before) * 100) : 0;
+      stats.textContent = `${before} → ${after} bytes (${pct}% smaller)`;
+    } catch (e: any) {
+      out.value = '';
+      stats.textContent = 'Error: ' + (e.message || 'Invalid JSON');
+    }
+  }
+  inEl.addEventListener('input', run);
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

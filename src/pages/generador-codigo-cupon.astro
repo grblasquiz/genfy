@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de código de cupón | Genfy';
+const description = 'Generá cupones únicos en formato amigable para tu campaña: con guiones, palabras pegadizas y prefijo personalizable. Listos para Shopify, WooCommerce o landing.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuál es la diferencia entre código de descuento y cupón?', acceptedAnswer: { '@type': 'Answer', text: 'En la práctica son sinónimos. Algunos equipos usan "cupón" cuando es más visual y tiene formato de palabra (ej: TIENDA-FRESCO) y "código" cuando es alfanumérico aleatorio.' } },
+    { '@type': 'Question', name: '¿Cuál es el formato más memorable?', acceptedAnswer: { '@type': 'Answer', text: 'Dos palabras separadas por guion (ej: VERANO-FRESCO) o palabra + número (ej: AHORRA20). Combinaciones de palabras reales se recuerdan 3 a 5 veces más que códigos aleatorios.' } },
+    { '@type': 'Question', name: '¿Cómo evitar que se filtren a sitios de cupones?', acceptedAnswer: { '@type': 'Answer', text: 'Usá códigos únicos por usuario, vencimientos cortos, y monitoreá fuentes de tráfico que no tengan sentido. Si ves picos desde sitios de cupones, rotá el código.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Empresa / Business" title="Generador de código de cupón"
+    intro="Generá cupones memorables con formato amigable: dos palabras + guion, palabra + número, o tu prefijo + sufijo aleatorio.">
+
+    <div slot="tool" class="cc">
+      <label>Estilo del cupón</label>
+      <select id="cc-style">
+        <option value="word-word">PALABRA-PALABRA (ej: VERANO-FRESCO)</option>
+        <option value="word-num">PALABRA + número (ej: AHORRA20)</option>
+        <option value="prefix-rand">Prefijo + aleatorio (ej: VIP-X3K9P)</option>
+      </select>
+
+      <label style="margin-top:1rem">Prefijo o tema (opcional)</label>
+      <input id="cc-prefix" type="text" value="VERANO" />
+
+      <label style="margin-top:1rem">Cantidad</label>
+      <select id="cc-qty">
+        <option value="10">10</option>
+        <option value="25" selected>25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+
+      <button id="cc-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar cupones</button>
+
+      <pre id="cc-out" class="cc-out"></pre>
+    </div>
+
+    <div slot="content">
+      <h2>El cupón es un activo de marca, no solo un código</h2>
+      <p>
+        Un cupón bien armado hace dos cosas a la vez: aplica un descuento y recuerda al cliente la
+        marca cada vez que lo escribe. Por eso "VERANO-FRESCO" gana contra "X9KQ4P2L" — el primero
+        cuenta una historia, el segundo no. Las marcas que entienden esto convierten el cupón en
+        un mini-mensaje de campaña.
+      </p>
+
+      <h2>Tres formatos que rinden</h2>
+      <ul>
+        <li><strong>Palabra + palabra:</strong> "VERANO-FRESCO", "BLACK-FRIDAY", "FIN-DE-AÑO". Memorables, fáciles de comunicar en radio o podcast.</li>
+        <li><strong>Palabra + número:</strong> "AHORRA20", "DESCUENTO15", "NEW10". El número comunica el beneficio directamente.</li>
+        <li><strong>VIP / cliente único:</strong> "VIP-X3K9P", "MARIA-A2BC". Da sensación de exclusividad personal.</li>
+      </ul>
+
+      <h2>Cómo decidir el descuento (y no perder plata)</h2>
+      <ol>
+        <li>Empezá por el margen, no por el porcentaje. Si tu margen bruto es 35%, un 30% off te deja con 5% — apenas para gastos operativos.</li>
+        <li>Pensá en el ticket promedio. Un descuento del 10% sobre USD 200 (USD 20) emociona menos que USD 25 fijos.</li>
+        <li>Considerá el envío. A veces "envío gratis" convierte mejor que "20% off" con el mismo costo total.</li>
+        <li>Definí mínimos. "10% off en compras desde USD 100" sube el ticket promedio 25-40%.</li>
+        <li>Limitá el tiempo. Sin urgencia no hay conversión.</li>
+      </ol>
+
+      <h2>Reglas que evitan dolores de cabeza</h2>
+      <ul>
+        <li><strong>Stack:</strong> definí si se puede combinar con otras promociones o no.</li>
+        <li><strong>Productos excluidos:</strong> nuevos lanzamientos, marcas premium, productos con bajo margen.</li>
+        <li><strong>Mínimo de compra:</strong> evita que cazadores compren un solo ítem barato y maten margen.</li>
+        <li><strong>Vencimiento claro:</strong> 7 a 14 días para campañas, 24-48hs para flash sales.</li>
+        <li><strong>Usos por usuario:</strong> 1 uso por persona evita abuso.</li>
+      </ul>
+
+      <h2>Cómo evitar que el cupón se filtre a sitios de cupones</h2>
+      <p>
+        El gran enemigo silencioso del programa: sitios de agregadores que publican tu código y
+        absorben margen sin traer clientes nuevos. Tres tácticas para evitarlo:
+      </p>
+      <ol>
+        <li>Códigos únicos por usuario en lugar de uno general.</li>
+        <li>Monitoreá fuentes de tráfico. Si ves picos desde dominios extraños, rotá el código.</li>
+        <li>Mandá los códigos por canales privados (email autenticado, programa de fidelidad).</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cupón vs código de descuento?</summary><p>En la práctica son lo mismo. "Cupón" suele ser más visual y memorable; "código" más alfanumérico.</p></details>
+      <details><summary>¿Mejor formato?</summary><p>Palabra + palabra o palabra + número. Se recuerdan más que aleatorios.</p></details>
+      <details><summary>¿Cómo evitar filtración?</summary><p>Códigos únicos por usuario, monitoreo de tráfico y canales privados.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cc-out { margin-top: 1.25rem; padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.9375rem; line-height: 1.7; max-height: 400px; overflow-y: auto; }
+</style>
+
+<script>
+  const style = document.getElementById('cc-style') as HTMLSelectElement;
+  const prefix = document.getElementById('cc-prefix') as HTMLInputElement;
+  const qty = document.getElementById('cc-qty') as HTMLSelectElement;
+  const out = document.getElementById('cc-out')!;
+  const gen = document.getElementById('cc-gen') as HTMLButtonElement;
+
+  const W1 = ['VERANO', 'INVIERNO', 'PRIMAVERA', 'OTOÑO', 'LANZA', 'NUEVO', 'PRO', 'CLUB', 'AHORRA', 'DESCUBRI', 'EXTRA', 'VIP', 'CASH', 'OFERTA'];
+  const W2 = ['FRESCO', 'CLASICO', 'EXPRESS', 'PLUS', 'BOOST', 'LUMEN', 'BLOOM', 'PIVOT', 'CREST', 'FORGE', 'SHIFT', 'SPARK', 'BEACON', 'FLOW'];
+  const SAFE = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+
+  function pickFrom<T>(arr: T[]): T {
+    const i = new Uint32Array(1); crypto.getRandomValues(i);
+    return arr[i[0] % arr.length];
+  }
+  function rand(n: number): string {
+    let s = '';
+    const buf = new Uint32Array(n);
+    crypto.getRandomValues(buf);
+    for (let i = 0; i < n; i++) s += SAFE[buf[i] % SAFE.length];
+    return s;
+  }
+
+  function generate() {
+    const px = (prefix.value || '').toUpperCase().trim();
+    const Q = parseInt(qty.value);
+    const set = new Set<string>();
+    while (set.size < Q) {
+      let code = '';
+      if (style.value === 'word-word') {
+        const a = px || pickFrom(W1);
+        code = a + '-' + pickFrom(W2);
+      } else if (style.value === 'word-num') {
+        const a = px || pickFrom(W1);
+        const n = 5 + Math.floor(Math.random() * 50);
+        code = a + n;
+      } else {
+        code = (px || 'VIP') + '-' + rand(5);
+      }
+      set.add(code);
+    }
+    out.textContent = [...set].join('\n');
+  }
+
+  gen.addEventListener('click', generate);
+  generate();
+</script>

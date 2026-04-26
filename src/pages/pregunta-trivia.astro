@@ -1,0 +1,180 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de pregunta de trivia | Genfy';
+const description = 'Preguntas de trivia con respuesta para fiestas, aulas y noches de juego. Categorías: ciencia, historia moderna, cine, música, geografía, deportes.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Las respuestas están verificadas?', acceptedAnswer: { '@type': 'Answer', text: 'Curamos preguntas de fuentes públicas verificables. Para uso académico, verificá la respuesta antes de publicarla.' } },
+    { '@type': 'Question', name: '¿Hay categorías?', acceptedAnswer: { '@type': 'Answer', text: 'Sí: ciencia, historia moderna, cine, música, geografía, deportes y entretenimiento.' } },
+    { '@type': 'Question', name: '¿Sirven para escuelas?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Cubren conocimiento general apto para secundaria y arriba. No son cuestionarios de alta dificultad.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión / Fun" title="Generador de pregunta de trivia"
+    intro="Una pregunta a la vez, con respuesta oculta. Probá tu conocimiento o desafiá al grupo.">
+
+    <div slot="tool" class="tv">
+      <div class="tv-card">
+        <span id="tv-cat-pill" class="tv-pill">—</span>
+        <p id="tv-q" class="tv-q">Tocá generar para empezar.</p>
+        <details class="tv-answer"><summary>Mostrar respuesta</summary><p id="tv-a">—</p></details>
+      </div>
+      <div class="tv-controls">
+        <label for="tv-cat">Categoría</label>
+        <select id="tv-cat">
+          <option value="all">Todas</option>
+          <option value="ciencia">Ciencia</option>
+          <option value="historia">Historia moderna</option>
+          <option value="cine">Cine</option>
+          <option value="musica">Música</option>
+          <option value="geografia">Geografía</option>
+          <option value="deportes">Deportes</option>
+        </select>
+      </div>
+      <button id="tv-gen" class="btn btn-primary" type="button">Otra pregunta</button>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo armar una noche de trivia</h2>
+      <p>
+        Una buena trivia tiene tres ingredientes: variedad de categorías, dificultad
+        balanceada y ritmo rápido. Si todo es muy fácil, la gente se aburre. Si todo es muy
+        difícil, se frustran. La fórmula clásica del 50/30/20: 50% de preguntas accesibles,
+        30% medias, 20% desafiantes. Mezclá categorías para que distintos jugadores brillen
+        en distintos momentos.
+      </p>
+
+      <h2>Formatos de juego</h2>
+      <ol>
+        <li><strong>Pub trivia:</strong> equipos de 4-6 personas, 5 rondas de 10 preguntas con categoría temática cada una. Una hora total.</li>
+        <li><strong>Speed trivia:</strong> individual, 30 segundos por pregunta, 20 preguntas. Premio para el ganador.</li>
+        <li><strong>Familiar:</strong> equipos por generación o sala vs. cocina. Bajá la dificultad y sumá categorías de cultura popular.</li>
+        <li><strong>Aula:</strong> mezclá con el contenido de la materia. Útil para repasos antes de un examen.</li>
+      </ol>
+
+      <h2>Categorías y por qué importan</h2>
+      <ul>
+        <li><strong>Ciencia:</strong> física, química, biología básica. Datos curiosos sobre cómo funciona el mundo.</li>
+        <li><strong>Historia moderna:</strong> siglo XIX al XXI. Más accesible que la historia antigua y más interesante para grupos generales.</li>
+        <li><strong>Cine:</strong> películas reconocibles, premios Óscar, taquillas. Categoría favorita de la mayoría.</li>
+        <li><strong>Música:</strong> hits, géneros, artistas. Equilibrio entre clásicos y actuales.</li>
+        <li><strong>Geografía:</strong> capitales, ríos, montañas. La trivia más universal.</li>
+        <li><strong>Deportes:</strong> Copa del Mundo, Juegos Olímpicos, atletas reconocidos.</li>
+      </ul>
+
+      <h2>Cómo formular una buena pregunta</h2>
+      <p>
+        Una pregunta excelente tiene una sola respuesta correcta sin ambigüedad. Evitá
+        formulaciones que dependan de interpretación ("¿quién fue el mejor presidente?")
+        salvo que sea opinión declarada como tal. Las preguntas de fechas exactas frustran;
+        mejor preguntar por décadas o eventos asociados. Las preguntas con números (cuántos
+        países, cuántos kilómetros) son las que más debate generan.
+      </p>
+
+      <h2>Trivia y aprendizaje</h2>
+      <p>
+        La psicología del aprendizaje muestra que recordar (recall) consolida mejor que
+        leer. Una sesión de trivia bien diseñada es práctica de recall en formato divertido.
+        Por eso muchos profesores la usan al inicio de la clase como repaso. La regla:
+        nunca avergonzar a quien se equivoca, celebrar al que se anima a contestar aunque
+        falle. La trivia debe sentirse como juego, no como examen.
+      </p>
+
+      <h2>Cuidado con datos no verificados</h2>
+      <p>
+        En internet hay millones de "datos curiosos" mal copiados. Antes de usar una
+        pregunta en un contexto serio (clase, podcast, video), confirmá con dos fuentes
+        independientes. Errores históricos comunes: confundir fechas de tratados, atribuir
+        inventos a la persona equivocada, citar récords desactualizados. Genfy filtra esto,
+        pero la regla aplica para cualquier trivia que armes.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Puedo repetir?</summary><p>Sí, generá tantas como quieras. La rotación evita repetir muy seguido.</p></details>
+      <details><summary>¿Hay nivel de dificultad?</summary><p>Mezcla equilibrada. Próximamente filtros por dificultad.</p></details>
+      <details><summary>¿Sirve para podcast?</summary><p>Sí. Cita la fuente al usar las preguntas en formato grabado.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tv-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; }
+  .tv-pill { display: inline-block; padding: 0.25rem 0.75rem; background: var(--bg-inset); border: 1px solid var(--border-strong); border-radius: var(--radius); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .tv-q { font-size: 1.125rem; line-height: 1.6; margin: 0 0 1rem; }
+  .tv-answer { padding: 0.75rem; background: var(--bg-inset); border-radius: var(--radius); }
+  .tv-answer summary { cursor: pointer; font-weight: 600; }
+  .tv-answer p { margin: 0.75rem 0 0; color: var(--text-soft); }
+  .tv-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const Q: { cat: string; q: string; a: string }[] = [
+    { cat: "ciencia", q: "¿Qué planeta del sistema solar tiene el día más corto?", a: "Júpiter (aproximadamente 9 horas y 56 minutos)." },
+    { cat: "ciencia", q: "¿Cuál es el elemento químico con símbolo Au?", a: "Oro." },
+    { cat: "ciencia", q: "¿En qué órgano humano se produce la insulina?", a: "El páncreas." },
+    { cat: "ciencia", q: "¿Cuántos huesos tiene un adulto humano aproximadamente?", a: "206." },
+    { cat: "ciencia", q: "¿Quién propuso la teoría de la relatividad?", a: "Albert Einstein." },
+    { cat: "ciencia", q: "¿Cuál es el animal terrestre más rápido?", a: "El guepardo." },
+    { cat: "ciencia", q: "¿Cuál es el océano más grande del mundo?", a: "El Pacífico." },
+    { cat: "ciencia", q: "¿Qué gas representa la mayor parte de la atmósfera terrestre?", a: "Nitrógeno (aproximadamente 78%)." },
+    { cat: "historia", q: "¿En qué año cayó el Muro de Berlín?", a: "1989." },
+    { cat: "historia", q: "¿Qué presidente argentino impulsó la Ley Sáenz Peña?", a: "Roque Sáenz Peña." },
+    { cat: "historia", q: "¿En qué año terminó la Segunda Guerra Mundial?", a: "1945." },
+    { cat: "historia", q: "¿Quién fue la primera mujer en ganar un Premio Nobel?", a: "Marie Curie (Física, 1903)." },
+    { cat: "historia", q: "¿En qué año llegó el hombre a la Luna?", a: "1969." },
+    { cat: "historia", q: "¿Quién pintó la Mona Lisa?", a: "Leonardo da Vinci." },
+    { cat: "historia", q: "¿En qué año se firmó la Declaración de Independencia de EE. UU.?", a: "1776." },
+    { cat: "cine", q: "¿Qué película ganó el Óscar a Mejor Película en 1994?", a: "Forrest Gump." },
+    { cat: "cine", q: "¿Quién dirigió Titanic (1997)?", a: "James Cameron." },
+    { cat: "cine", q: "¿Qué actor interpretó al Joker en El Caballero de la Noche (2008)?", a: "Heath Ledger." },
+    { cat: "cine", q: "¿Cuál es la película más taquillera de Pixar hasta 2023?", a: "Increíbles 2." },
+    { cat: "cine", q: "¿Qué saga incluye 'La Comunidad del Anillo'?", a: "El Señor de los Anillos." },
+    { cat: "cine", q: "¿Quién escribió y dirigió Pulp Fiction?", a: "Quentin Tarantino." },
+    { cat: "musica", q: "¿Qué banda lanzó el álbum Abbey Road?", a: "The Beatles." },
+    { cat: "musica", q: "¿Cómo se llama el cantante principal de Queen?", a: "Freddie Mercury." },
+    { cat: "musica", q: "¿Qué cantante grabó 'Like a Prayer'?", a: "Madonna." },
+    { cat: "musica", q: "¿De qué país es la banda Coldplay?", a: "Reino Unido." },
+    { cat: "musica", q: "¿Quién compuso la 'Marcha Turca'?", a: "Wolfgang Amadeus Mozart." },
+    { cat: "musica", q: "¿Cuál es el instrumento de cuerda más grande de la orquesta?", a: "El contrabajo." },
+    { cat: "geografia", q: "¿Cuál es la capital de Australia?", a: "Canberra." },
+    { cat: "geografia", q: "¿Cuál es el río más largo del mundo?", a: "El Nilo (algunos consideran al Amazonas)." },
+    { cat: "geografia", q: "¿Cuántos países componen Sudamérica?", a: "12." },
+    { cat: "geografia", q: "¿En qué continente está Egipto?", a: "África." },
+    { cat: "geografia", q: "¿Cuál es el desierto más grande del mundo?", a: "El Antártico (luego el Sahara)." },
+    { cat: "geografia", q: "¿Qué país tiene forma de bota?", a: "Italia." },
+    { cat: "geografia", q: "¿Cuál es la montaña más alta del mundo?", a: "El Everest (8.848 m)." },
+    { cat: "deportes", q: "¿Cada cuántos años se celebra la Copa del Mundo de la FIFA?", a: "Cada 4 años." },
+    { cat: "deportes", q: "¿Qué país ganó el Mundial 2022?", a: "Argentina." },
+    { cat: "deportes", q: "¿En qué deporte destaca Serena Williams?", a: "Tenis." },
+    { cat: "deportes", q: "¿Cuántos jugadores tiene un equipo de baloncesto en la cancha?", a: "5." },
+    { cat: "deportes", q: "¿En qué país se inventó el rugby?", a: "Inglaterra." },
+    { cat: "deportes", q: "¿Cuántos anillos tiene la bandera olímpica?", a: "5." }
+  ];
+
+  const pill = document.getElementById('tv-cat-pill') as HTMLElement;
+  const qEl = document.getElementById('tv-q') as HTMLElement;
+  const aEl = document.getElementById('tv-a') as HTMLElement;
+  const cat = document.getElementById('tv-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('tv-gen') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? Q : Q.filter(x => x.cat === filter);
+    const item = pick(pool);
+    pill.textContent = item.cat;
+    qEl.textContent = item.q;
+    aEl.textContent = item.a;
+  }
+  genBtn.addEventListener('click', generate);
+  generate();
+</script>
+</content>
+</invoke>

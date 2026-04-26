@@ -1,0 +1,167 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Charades Word Generator | Genfy';
+const description = 'Words and phrases for charades: movies, characters, actions, objects. Filters by category and difficulty.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Are there categories?', acceptedAnswer: { '@type': 'Answer', text: 'Yes: movies, actions, objects, professions and idioms.' } },
+    { '@type': 'Question', name: 'Kid-friendly?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, all words pass family filter.' } },
+    { '@type': 'Question', name: 'How many players?', acceptedAnswer: { '@type': 'Answer', text: 'Minimum 4. Works best with 6 to 12.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Diversión / Fun" title="Charades word generator"
+    intro="Words and phrases to mime. Filter by category, show only to the actor.">
+
+    <div slot="tool" class="cw">
+      <div class="cw-card">
+        <span id="cw-cat-pill" class="cw-pill">—</span>
+        <p id="cw-text" class="cw-text">Tap generate to start.</p>
+      </div>
+      <div class="cw-controls">
+        <label for="cw-cat">Category</label>
+        <select id="cw-cat">
+          <option value="all">All</option>
+          <option value="movie">Movies</option>
+          <option value="action">Actions</option>
+          <option value="object">Objects</option>
+          <option value="profession">Professions</option>
+          <option value="idiom">Idioms</option>
+        </select>
+      </div>
+      <button id="cw-gen" class="btn btn-primary" type="button">Another word</button>
+      <button id="cw-hide" class="btn btn-ghost" type="button">Hide</button>
+    </div>
+
+    <div slot="content">
+      <h2>Charades basic rules</h2>
+      <p>
+        Charades is the universal classic: one person acts a word or phrase silently while
+        the rest guess. Pictionary's difference is the medium: body instead of paper.
+        Works from 4 players up to large groups. Rules are simple and challenges are
+        limited only by creativity.
+      </p>
+
+      <h2>Universal classic signs</h2>
+      <ol>
+        <li><strong>Category:</strong> indicate type before starting. Hands as camera = movie; open book = book; touch ear = song.</li>
+        <li><strong>Word count:</strong> show fingers. 3 fingers = 3 words.</li>
+        <li><strong>Syllables:</strong> fingers on arm indicating position and count.</li>
+        <li><strong>"Sounds like…":</strong> touch your ear, then act out a similar-sounding word.</li>
+        <li><strong>"Small/Big":</strong> hands close = short; hands open = long.</li>
+      </ol>
+
+      <h2>Most-played categories</h2>
+      <ul>
+        <li><strong>Movies:</strong> the favorite. Clear cues and lets you do iconic scenes.</li>
+        <li><strong>Actions:</strong> verbs. Almost everything mimes directly.</li>
+        <li><strong>Professions:</strong> few key gestures (stethoscope = doctor, hammer = carpenter).</li>
+        <li><strong>Objects:</strong> simulate the use (combing hair, brushing teeth, opening umbrella).</li>
+        <li><strong>Idioms and phrases:</strong> hardest, require word-by-word acting.</li>
+      </ul>
+
+      <h2>Acting strategies</h2>
+      <p>
+        Start with the category. Then word count. If it's a famous movie, an iconic scene
+        beats acting the title word by word. If it's an object, mime its typical use. If
+        it's a profession, focus on tools. If it's an action, exaggerate the move. If
+        it's an idiom, decompose word by word using accessible synonyms.
+      </p>
+
+      <h2>Optional rules that improve the game</h2>
+      <p>
+        90-second timer per word. Two lives: 90 seconds with no guess loses a point. Teams
+        of 3-4: team A's actor performs for their team, team B watches but can't shout
+        guesses. "Cheat" mode: actor can make one sound every 30 seconds. Works great
+        with kids.
+      </p>
+
+      <h2>When charades isn't the best option</h2>
+      <p>
+        In groups where someone has limited mobility, adapt rules (everything actable
+        seated, avoid words requiring much movement). With wide age ranges, movies may
+        not be known by all: stick to "objects" or "actions" which are universal. In
+        office groups, avoid controversial or overly personal topics.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many words?</summary><p>80+ across filters.</p></details>
+      <details><summary>Suitable for age 6?</summary><p>Yes, with action and object categories.</p></details>
+      <details><summary>Works on Zoom?</summary><p>Yes, everyone watches the actor's camera.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cw-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; text-align: center; }
+  .cw-pill { display: inline-block; padding: 0.25rem 0.75rem; background: var(--bg-inset); border: 1px solid var(--border-strong); border-radius: var(--radius); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .cw-text { font-size: 1.75rem; font-weight: 700; line-height: 1.3; margin: 0; }
+  .cw-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const W: { cat: string; t: string }[] = [
+    { cat: "movie", t: "Toy Story" }, { cat: "movie", t: "The Lion King" },
+    { cat: "movie", t: "Finding Nemo" }, { cat: "movie", t: "Frozen" },
+    { cat: "movie", t: "Coco" }, { cat: "movie", t: "Encanto" },
+    { cat: "movie", t: "Forrest Gump" }, { cat: "movie", t: "Back to the Future" },
+    { cat: "movie", t: "Titanic" }, { cat: "movie", t: "The Godfather" },
+    { cat: "movie", t: "Jurassic Park" }, { cat: "movie", t: "Indiana Jones" },
+    { cat: "movie", t: "Star Wars" }, { cat: "movie", t: "Harry Potter" },
+    { cat: "movie", t: "The Incredibles" },
+    { cat: "action", t: "swimming" }, { cat: "action", t: "driving" }, { cat: "action", t: "cooking" },
+    { cat: "action", t: "washing dishes" }, { cat: "action", t: "playing guitar" },
+    { cat: "action", t: "painting a picture" }, { cat: "action", t: "jumping rope" },
+    { cat: "action", t: "sneezing" }, { cat: "action", t: "yawning" },
+    { cat: "action", t: "taking photos" }, { cat: "action", t: "riding a bike" },
+    { cat: "action", t: "tying shoelaces" }, { cat: "action", t: "brushing teeth" },
+    { cat: "action", t: "reading a book" }, { cat: "action", t: "drinking coffee" },
+    { cat: "object", t: "umbrella" }, { cat: "object", t: "phone" }, { cat: "object", t: "computer" },
+    { cat: "object", t: "guitar" }, { cat: "object", t: "washing machine" },
+    { cat: "object", t: "microwave" }, { cat: "object", t: "scissors" }, { cat: "object", t: "flashlight" },
+    { cat: "object", t: "glasses" }, { cat: "object", t: "camera" },
+    { cat: "object", t: "fan" }, { cat: "object", t: "hair dryer" },
+    { cat: "profession", t: "doctor" }, { cat: "profession", t: "firefighter" },
+    { cat: "profession", t: "teacher" }, { cat: "profession", t: "chef" },
+    { cat: "profession", t: "vet" }, { cat: "profession", t: "carpenter" },
+    { cat: "profession", t: "photographer" }, { cat: "profession", t: "soccer player" },
+    { cat: "profession", t: "tennis player" }, { cat: "profession", t: "actor" },
+    { cat: "profession", t: "airline pilot" }, { cat: "profession", t: "barber" },
+    { cat: "idiom", t: "better late than never" }, { cat: "idiom", t: "don't look a gift horse in the mouth" },
+    { cat: "idiom", t: "the early bird gets the worm" }, { cat: "idiom", t: "a bird in the hand is worth two in the bush" },
+    { cat: "idiom", t: "barking up the wrong tree" }, { cat: "idiom", t: "spill the beans" },
+    { cat: "idiom", t: "a piece of cake" }, { cat: "idiom", t: "break a leg" }
+  ];
+
+  const pill = document.getElementById('cw-cat-pill') as HTMLElement;
+  const text = document.getElementById('cw-text') as HTMLElement;
+  const cat = document.getElementById('cw-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('cw-gen') as HTMLButtonElement;
+  const hideBtn = document.getElementById('cw-hide') as HTMLButtonElement;
+  let last = '';
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? W : W.filter(x => x.cat === filter);
+    const item = pick(pool);
+    pill.textContent = item.cat;
+    text.textContent = item.t;
+    last = item.t;
+  }
+  hideBtn.addEventListener('click', () => {
+    if (text.textContent === '••••••') text.textContent = last;
+    else text.textContent = '••••••';
+  });
+  genBtn.addEventListener('click', generate);
+  generate();
+</script>
+</content>
+</invoke>

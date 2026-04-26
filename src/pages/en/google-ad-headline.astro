@@ -1,0 +1,171 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Google Ad Headline Generator | Genfy';
+const description = 'Generate Google Ads headlines optimized for Quality Score and CTR. 30 characters per headline with keyword, benefit and differentiator.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many characters does a Google Ads headline allow?', acceptedAnswer: { '@type': 'Answer', text: 'Each headline allows up to 30 characters. Responsive ads accept up to 15 headlines, of which Google shows 3 at a time.' } },
+    { '@type': 'Question', name: 'What is Quality Score and how does the headline affect it?', acceptedAnswer: { '@type': 'Answer', text: 'Quality Score (1-10) measures ad relevance, expected CTR and landing experience. Headlines with the exact keyword and high CTR raise QS and lower CPC.' } },
+    { '@type': 'Question', name: 'Should I include the keyword in the headline?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, ideally in the first headline. Google rewards exact match with the user search by bolding it and improving relevance.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Google Ad Headline Generator"
+    intro="Drop in keyword, benefit and differentiator. Genfy returns 8 headlines for your responsive Google Ads search ad.">
+
+    <div slot="tool" class="ga">
+      <label for="ga-keyword">Main keyword</label>
+      <input id="ga-keyword" type="text" placeholder="Online English course..." value="Online English Course" />
+
+      <label for="ga-benefit" style="margin-top:1rem">Main benefit</label>
+      <input id="ga-benefit" type="text" placeholder="Learn in 6 months..." value="Learn in 6 Months" />
+
+      <label for="ga-diff" style="margin-top:1rem">Differentiator (price, guarantee, authority)</label>
+      <input id="ga-diff" type="text" placeholder="Native teachers..." value="Native Teachers" />
+
+      <label for="ga-cta" style="margin-top:1rem">Short CTA</label>
+      <input id="ga-cta" type="text" placeholder="Try Free" value="Try Free" />
+
+      <button id="ga-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 8 headlines</button>
+
+      <div id="ga-out" class="ga-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How Google decides which headline to show</h2>
+      <p>
+        In responsive search ads (RSA, the current format), you load up to 15 headlines and Google picks 3 to display based on context: user search, history, device, time, etc. The system rotates combinations to find the best CTR. That means you don't write an ad: you write a matrix, and Google combines it.
+      </p>
+      <p>
+        That's why varied headlines pay off: one with exact keyword, another with benefit, another with price or guarantee, another with CTA, another with social proof. If all say the same, Google has nothing to optimize.
+      </p>
+
+      <h2>The 15-headline structure</h2>
+      <p>A good distribution of the 15 RSA headlines covers these categories:</p>
+      <ol>
+        <li><strong>3 with exact keyword:</strong> "Online English Course", "English Course Online", "English Online".</li>
+        <li><strong>3 with benefit:</strong> "Learn in 6 Months", "Speak Fluently Fast", "Results in 90 Days".</li>
+        <li><strong>2 with price or promo:</strong> "From $19/mo", "Try Free for 7 Days".</li>
+        <li><strong>2 with authority or proof:</strong> "5,000+ Students", "Certified Native Teachers".</li>
+        <li><strong>2 with differentiator:</strong> "No Long Contracts", "Cancel Anytime".</li>
+        <li><strong>3 with CTA:</strong> "Start Today", "Book a Trial", "Get More Info".</li>
+      </ol>
+
+      <h2>The 30-character limit and how to use it</h2>
+      <p>
+        30 characters is very little. No room for unnecessary articles, long phrases or empty adjectives. Every word pays its place. Compare:
+      </p>
+      <ul>
+        <li>"The Best Online English Course" — 30 chars, fits but "the best" adds nothing.</li>
+        <li>"Online English Course ★★★★★" — 26 chars. Stars are visual, no claim.</li>
+        <li>"English Course Online | 6 Months" — 32 chars, doesn't fit. Trim to "English Online | 6 Months".</li>
+      </ul>
+
+      <h2>Quality Score: what it is and why it matters more than bid</h2>
+      <p>
+        Quality Score (QS) is a 1-10 score Google assigns to your keywords based on expected CTR, ad relevance and landing experience. High QS lowers your CPC and improves position without paying more. Low QS spikes costs.
+      </p>
+      <p>The headline impacts QS in two ways:</p>
+      <ul>
+        <li><strong>Ad relevance:</strong> the keyword appearing in at least one headline improves match.</li>
+        <li><strong>Expected CTR:</strong> headlines with clear benefit and keyword have better historical CTR.</li>
+      </ul>
+
+      <h2>Why Google rewards exact keyword in the headline</h2>
+      <p>
+        When a user searches "online english course" and your headline reads exactly "Online English Course", Google bolds that phrase in the ad. The bold lifts CTR by 10-15%. Plus, Google reads the match as high relevance and improves position.
+      </p>
+      <p>
+        This doesn't mean repeating the keyword in all 15 headlines. It means 2-3 headlines must have it exact or very close, so when a specific search matches, Google has material to rotate.
+      </p>
+
+      <h2>Ad Strength: the indicator to watch</h2>
+      <p>
+        Google shows an "Ad Strength" score (Excellent, Good, Average, Poor) based on headline count, diversity and keyword use. Reaching "Excellent" doesn't guarantee performance, but "Poor" guarantees problems: Google shows the ad less.
+      </p>
+      <p>To reach Excellent you generally need:</p>
+      <ul>
+        <li>11+ headlines (ideally all 15).</li>
+        <li>4+ descriptions.</li>
+        <li>Adgroup keywords in headlines.</li>
+        <li>Headlines with different angles (not paraphrasing).</li>
+      </ul>
+
+      <h2>Dynamic Keyword Insertion: when yes and when no</h2>
+      <p>
+        DKI auto-inserts the user's keyword in the headline. Useful if your adgroup has related keywords (e.g. variants of "english course"). Risky if your keywords are long (won't fit 30 chars) or are misspelled queries.
+      </p>
+
+      <h2>Common mistakes that kill CTR and raise CPC</h2>
+      <ul>
+        <li><strong>Generic headlines:</strong> "The Best for You" tells the algorithm nothing.</li>
+        <li><strong>Repeating the same headline paraphrased:</strong> Google needs diversity to optimize.</li>
+        <li><strong>Skipping the keyword:</strong> drops relevance and QS.</li>
+        <li><strong>All caps:</strong> Google penalizes them, "MAKE MONEY NOW" is rejected.</li>
+        <li><strong>No CTA:</strong> at least 2-3 headlines must have a soft CTA.</li>
+        <li><strong>Unverifiable claims:</strong> "Guaranteed" without backing can trigger manual review.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many characters per headline?</summary><p>30. No tolerance, Google won't accept more.</p></details>
+      <details><summary>How many headlines to load?</summary><p>15 (the max). Diversity gives Google material to optimize.</p></details>
+      <details><summary>The keyword in how many?</summary><p>2-3 with exact or close keyword, the rest with different angles.</p></details>
+      <details><summary>Caps?</summary><p>Title Case yes. All caps no, Google rejects them.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ga-out { margin-top: 1.25rem; display: grid; gap: 0.5rem; }
+  .ga-card { padding: 0.75rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .ga-card:hover { border-color: var(--accent); }
+  .ga-text { flex: 1; }
+  .ga-meta { font-size: 0.75rem; color: var(--text-subtle); font-family: var(--font-mono); }
+</style>
+
+<script>
+  const kw = document.getElementById('ga-keyword') as HTMLInputElement;
+  const ben = document.getElementById('ga-benefit') as HTMLInputElement;
+  const diff = document.getElementById('ga-diff') as HTMLInputElement;
+  const cta = document.getElementById('ga-cta') as HTMLInputElement;
+  const gen = document.getElementById('ga-gen') as HTMLButtonElement;
+  const out = document.getElementById('ga-out')!;
+
+  function generate() {
+    const K = kw.value.trim() || 'Your Product';
+    const B = ben.value.trim() || 'Best Solution';
+    const D = diff.value.trim() || 'Premium Quality';
+    const C = cta.value.trim() || 'Try Now';
+
+    const list = [
+      K,
+      `${K} | ${B}`.slice(0, 30),
+      `${K} - ${C}`.slice(0, 30),
+      B,
+      `${B} with ${D}`.slice(0, 30),
+      `${C} Today`,
+      `${D} | ${C}`.slice(0, 30),
+      `${K} Available Now`.slice(0, 30),
+    ];
+
+    out.innerHTML = '';
+    list.forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'ga-card';
+      el.title = 'Click to copy';
+      const len = b.length;
+      const warn = len > 30 ? ' ⚠' : '';
+      el.innerHTML = `<span class="ga-text">${b}</span><span class="ga-meta">${len}/30${warn}</span>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '<span class="ga-text">✓ Copied</span>'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

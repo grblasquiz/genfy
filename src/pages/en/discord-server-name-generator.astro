@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Discord Server Name Generator | Genfy';
+const description = 'Generate unique names for your Discord server. Mix theme, tone or community and get 20 memorable ideas ready for landing and description.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good Discord server name?', acceptedAnswer: { '@type': 'Answer', text: 'Clear about the theme, easy to search on Disboard or Top.gg, memorable, and compatible with the icon you\'ll use.' } },
+    { '@type': 'Question', name: 'Should I use emojis in the name?', acceptedAnswer: { '@type': 'Answer', text: 'Discord allows it, but they can break in search results. Use them as secondary decoration, not as the main name.' } },
+    { '@type': 'Question', name: 'How do I promote it?', acceptedAnswer: { '@type': 'Answer', text: 'Disboard, Top.gg, relevant subreddits, X, and linked from your landing or Linktree.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Community" title="Discord Server Name Generator"
+    intro="Mix theme, tone or community and get 20 ideas for your Discord server. Built to look great on Disboard, Top.gg and as a shareable link.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Theme (gaming, art, study...)</label>
+      <input id="bn-kw" type="text" placeholder="gaming, art, anime..." value="gaming" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="hub">Hub / Lounge (Gaming Hub)</option>
+        <option value="cozy">Cozy (The Cozy Corner)</option>
+        <option value="cyber">Cyber (NeonNet, GlitchHub)</option>
+        <option value="club">Club (Gamers Club)</option>
+        <option value="single">One word</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to name a Discord server</h2>
+      <p>
+        A server name does two jobs: it shows up in Disboard and Top.gg search, and appears as
+        the header when a new user opens the server for the first time. It has to communicate
+        theme and tone in under a second.
+      </p>
+      <ol>
+        <li><strong>Clear theme.</strong> "Gaming Hub" works; "The Place" says nothing.</li>
+        <li><strong>Coherent tone.</strong> A cozy server vs a hardcore one need different vibes.</li>
+        <li><strong>Search-compatible.</strong> If your name depends on emojis, you'll lose match in search.</li>
+        <li><strong>Memorable.</strong> So members recommend the server.</li>
+        <li><strong>Vanity URL available.</strong> If you plan to scale, getting discord.gg/your-name is valuable.</li>
+      </ol>
+
+      <h2>Classic styles</h2>
+      <ul>
+        <li><strong>Hub / Lounge:</strong> "Gaming Hub", "Art Lounge", "Study Hub". Direct and filterable.</li>
+        <li><strong>Cozy:</strong> "The Cozy Corner", "Cozy Cafe", "Velvet Lounge". For chill communities.</li>
+        <li><strong>Cyber:</strong> "NeonNet", "GlitchHub", "PixelLounge". Gamer/tech aesthetic.</li>
+        <li><strong>Club:</strong> "Gamers Club", "Anime Club", "Devs Club". Traditional, clear.</li>
+        <li><strong>One word:</strong> "Atrium", "Nexus", "Refuge", "Static". Mood-driven.</li>
+      </ul>
+
+      <h2>What to avoid</h2>
+      <p>
+        Avoid names already used by big servers: Disboard search fills with false positives.
+        Don't depend exclusively on emojis: the name must read well without them. Avoid
+        generics like "The Server" or "Cool People": communicate nothing and don't rank. And
+        be careful with inflammatory tags: Discord may limit reach.
+      </p>
+
+      <h2>How to grow it</h2>
+      <ol>
+        <li>List the server on Disboard and Top.gg with relevant tags.</li>
+        <li>Ask for review on subreddits like r/discordservers.</li>
+        <li>Use vanity URL once you hit the boost level.</li>
+        <li>Promote from your X and Linktree.</li>
+        <li>Activate partner servers once you cross the threshold.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good name?</summary><p>Clear theme, searchable, memorable, icon-compatible.</p></details>
+      <details><summary>Emojis?</summary><p>Allowed, but can break search. Use as secondary decoration.</p></details>
+      <details><summary>How to promote?</summary><p>Disboard, Top.gg, Reddit, X and Linktree.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const HUB = ['Hub', 'Lounge', 'Spot', 'Plaza', 'Center', 'Den', 'Arcade', 'Library', 'Studio'];
+  const COZY = ['The Cozy Corner', 'Cozy Cafe', 'Velvet Lounge', 'Soft Spot', 'The Hideout', 'Quiet Quarters', 'Warm Den', 'Comfy Couch'];
+  const CYBER_PRE = ['Neon', 'Glitch', 'Pixel', 'Static', 'Binary', 'Echo', 'Chrome', 'Synth', 'Vector'];
+  const CYBER_SUF = ['Net', 'Hub', 'Lounge', 'Spot', 'Grid', 'Wave', 'Loop'];
+  const CLUB_PRE = ['Gamers', 'Anime', 'Devs', 'Artists', 'Writers', 'Musicians', 'Readers', 'Movies'];
+  const SINGLE = ['Atrium', 'Nexus', 'Refuge', 'Static', 'Bloom', 'Echo', 'Drift', 'Loop', 'Spark', 'Anchor'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const w = kw.value.trim() || 'Gaming';
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'hub') name = cap(w) + ' ' + pick(HUB);
+      else if (s === 'cozy') name = pick(COZY);
+      else if (s === 'cyber') name = pick(CYBER_PRE) + pick(CYBER_SUF);
+      else if (s === 'club') name = pick(CLUB_PRE) + ' Club';
+      else if (s === 'single') name = pick(SINGLE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

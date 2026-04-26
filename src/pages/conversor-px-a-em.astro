@@ -1,0 +1,121 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Conversor de px a em | Genfy';
+const description = 'Convertí píxeles a em respecto al font-size del padre. Ideal para spacings dentro de un componente con su propia escala tipográfica.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Diferencia entre em y rem?', acceptedAnswer: { '@type': 'Answer', text: 'em es relativo al font-size del elemento (o el padre cuando se usa para padding o margin). rem es siempre relativo al root.' } },
+    { '@type': 'Question', name: '¿Cuándo usar em?', acceptedAnswer: { '@type': 'Answer', text: 'Para spacings que tienen que escalar con el font-size del componente: padding de un botón, margin de un párrafo, padding interno de cards.' } },
+    { '@type': 'Question', name: '¿em puede componerse?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, y es lo que hace que em sea complicado. Si anidás elementos con em, los tamaños se multiplican y pueden volverse impredecibles.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Conversor de px a em"
+    intro="Ingresá el valor en píxeles y el font-size del padre. Devolvemos el equivalente en em.">
+
+    <div slot="tool" class="cv">
+      <div class="cv-grid">
+        <div>
+          <label for="cv-px">Valor en píxeles</label>
+          <input id="cv-px" type="number" value="24" />
+        </div>
+        <div>
+          <label for="cv-base">Font-size del padre (px)</label>
+          <input id="cv-base" type="number" value="16" />
+        </div>
+      </div>
+
+      <div class="cv-result" id="cv-result"></div>
+
+      <div class="cv-actions">
+        <button id="cv-cp" class="btn btn-ghost" type="button">Copiar valor</button>
+      </div>
+
+      <h3>Tabla rápida</h3>
+      <table class="cv-table"><thead><tr><th>px</th><th>em</th></tr></thead><tbody id="cv-table"></tbody></table>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es em</h2>
+      <p>em es una unidad relativa al font-size de un elemento. Cuando aplicás <code>padding: 1em</code>, el padding es igual al tamaño de fuente del elemento (o del padre, en algunos contextos). En contraste con rem, que siempre es relativo al root, em depende del contexto donde lo usés.</p>
+
+      <h2>Fórmula</h2>
+      <pre><code>em = px / font-size del padre</code></pre>
+      <p>Si el padre tiene font-size: 16px, entonces 24px = 1.5em. Si el padre tiene font-size: 20px, entonces 24px = 1.2em.</p>
+
+      <h2>Cuándo conviene em</h2>
+      <p>El uso clásico de em es para componentes que tienen su propia escala tipográfica. Un botón, por ejemplo: si definís el padding en em, cuando hagas el botón más grande aumentando font-size, el padding crece proporcionalmente. Si lo definís en rem o px, el padding queda fijo y la proporción se rompe.</p>
+      <pre><code>.btn &lcub;
+  font-size: 1rem;
+  padding: 0.75em 1.5em; /* escala con font-size */
+&rcub;
+.btn--lg &lcub;
+  font-size: 1.25rem; /* el padding crece automáticamente */
+&rcub;</code></pre>
+
+      <h2>El problema de la composición</h2>
+      <p>em compone: un em dentro de otro multiplica. Si tenés <code>section &lcub; font-size: 1.2em &rcub;</code> y dentro <code>p &lcub; font-size: 1.2em &rcub;</code>, el párrafo termina con 1.44em del root. Anidá tres niveles y los tamaños se vuelven impredecibles.</p>
+      <p>Por eso muchos sistemas modernos prefieren rem para tipografía y reservan em para spacing dentro de componentes específicos donde el comportamiento de "escala con el contexto" es exactamente lo que querés.</p>
+
+      <h2>em para media queries</h2>
+      <p>Las media queries con em (en vez de px) responden mejor al zoom de texto del usuario. Si alguien aumenta el font-size del browser, los breakpoints en em se disparan más temprano, manteniendo el layout responsive incluso para usuarios con zoom. Es un detalle de accesibilidad fino, pero notable.</p>
+
+      <h2>Casos de uso prácticos</h2>
+      <ul>
+        <li><strong>Botones</strong>: padding en em para que escale con el size variant.</li>
+        <li><strong>Inputs</strong>: misma lógica.</li>
+        <li><strong>Cards</strong>: padding interno proporcional al contenido.</li>
+        <li><strong>Listas anidadas</strong>: indentación que respeta el tamaño del item padre.</li>
+        <li><strong>Iconos inline</strong>: <code>width: 1em</code> hace que el ícono coincida con el tamaño de la línea de texto.</li>
+      </ul>
+
+      <h2>Cuándo NO usar em</h2>
+      <p>Para tipografía global (h1, body, etc.): rem es más predecible. Para spacings de página (gaps de grid, margins de section): rem también. em brilla en componentes auto-contenidos, no en macro-layout.</p>
+
+      <h2>Resumen</h2>
+      <p>Usá rem como default. Usá em cuando querés que algo escale con el contexto (typeface) del elemento contenedor. Y siempre verificá computed values en DevTools cuando algo no encaja.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿em vs rem?</summary><p>em es relativo al elemento (o padre). rem siempre al root.</p></details>
+      <details><summary>¿Cuándo usar em?</summary><p>Para spacings que escalan con el font-size del componente.</p></details>
+      <details><summary>¿em compone?</summary><p>Sí, anidar em multiplica los valores. Cuidado en estructuras profundas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .cv-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .cv-result { padding: 1.5rem; background: var(--bg-inset); border-radius: var(--radius); font-family: var(--font-mono); font-size: 1.25rem; text-align: center; margin-bottom: 1rem; }
+  .cv-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.875rem; }
+  .cv-table th, .cv-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); text-align: left; }
+  @media (max-width: 600px) { .cv-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const px = document.getElementById('cv-px') as HTMLInputElement;
+  const base = document.getElementById('cv-base') as HTMLInputElement;
+  const result = document.getElementById('cv-result') as HTMLElement;
+  const table = document.getElementById('cv-table') as HTMLElement;
+  const cp = document.getElementById('cv-cp') as HTMLButtonElement;
+
+  function render() {
+    const v = +px.value, b = +base.value || 16;
+    result.textContent = `${v}px = ${v / b}em`;
+    const presets = [12, 14, 16, 18, 20, 24, 32, 48];
+    table.innerHTML = presets.map(p => `<tr><td>${p}px</td><td>${(p / b)}em</td></tr>`).join('');
+  }
+  [px, base].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    const v = +px.value, b = +base.value || 16;
+    await navigator.clipboard.writeText(`${v / b}em`);
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar valor', 1500);
+  });
+  render();
+</script>

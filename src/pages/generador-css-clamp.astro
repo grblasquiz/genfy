@@ -1,0 +1,128 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de CSS clamp() | Genfy';
+const description = 'Generá la función clamp() de CSS para tipografía y tamaños responsive. Ingresá min/max y viewport, copiá el código.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace clamp()?', acceptedAnswer: { '@type': 'Answer', text: 'clamp(min, ideal, max) limita un valor entre un mínimo y un máximo, escalando entre los dos según el viewport. Ideal para fluid typography.' } },
+    { '@type': 'Question', name: '¿clamp tiene buen soporte?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, soporte total en todos los navegadores modernos desde 2020. No hace falta fallback.' } },
+    { '@type': 'Question', name: '¿Cuándo conviene usar clamp en vez de media queries?', acceptedAnswer: { '@type': 'Answer', text: 'Cuando querés que un tamaño escale gradualmente con el viewport, no en saltos discretos. Para tipografía es casi siempre mejor que media queries.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Generador de CSS clamp()"
+    intro="Definí mínimo, máximo y rango de viewport. El generador calcula la función clamp() exacta y la previsualiza al instante.">
+
+    <div slot="tool" class="cl">
+      <div class="cl-grid">
+        <div>
+          <label for="cl-minSize">Tamaño mínimo (px)</label>
+          <input id="cl-minSize" type="number" value="16" />
+        </div>
+        <div>
+          <label for="cl-maxSize">Tamaño máximo (px)</label>
+          <input id="cl-maxSize" type="number" value="32" />
+        </div>
+        <div>
+          <label for="cl-minVw">Viewport mínimo (px)</label>
+          <input id="cl-minVw" type="number" value="320" />
+        </div>
+        <div>
+          <label for="cl-maxVw">Viewport máximo (px)</label>
+          <input id="cl-maxVw" type="number" value="1200" />
+        </div>
+      </div>
+
+      <div class="cl-actions">
+        <button id="cl-cp" class="btn btn-primary" type="button">Copiar CSS</button>
+      </div>
+
+      <pre><code id="cl-out"></code></pre>
+
+      <div class="cl-preview"><span id="cl-demo">Texto de prueba con clamp()</span></div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es clamp()</h2>
+      <p>clamp() es una función matemática de CSS que toma tres valores: mínimo, ideal y máximo. Devuelve el valor ideal, pero limitado por los extremos. Es la herramienta más práctica para tipografía fluida y para cualquier valor que tiene que escalar suavemente con el ancho del viewport.</p>
+
+      <h2>Sintaxis</h2>
+      <pre><code>font-size: clamp(MIN, IDEAL, MAX);</code></pre>
+      <p>Ejemplo concreto: <code>clamp(16px, 4vw, 32px)</code>. El navegador toma 4vw como valor preferido, pero nunca baja de 16 ni sube de 32. En un viewport de 400px, 4vw es 16px (igual al mínimo). En 800px, 4vw es 32px (igual al máximo). Entre los dos, escala lineal.</p>
+
+      <h2>Por qué es mejor que media queries</h2>
+      <ul>
+        <li><strong>Una sola línea</strong> en vez de tres o cuatro media queries.</li>
+        <li><strong>Escala continua</strong>: no hay saltos visibles cuando el usuario achica/agranda la ventana.</li>
+        <li><strong>Más predecible</strong>: definís dos extremos y el resto se calcula.</li>
+        <li><strong>Menos código</strong>, menos puntos de quiebre que mantener.</li>
+      </ul>
+
+      <h2>Cómo se calcula la fórmula</h2>
+      <p>Para que el escalado sea exactamente entre dos viewports, el valor ideal se expresa en unidades vw más un offset en rem:</p>
+      <pre><code>slope = (maxSize - minSize) / (maxVw - minVw)
+yAxisIntersection = -minVw * slope + minSize
+preferred = yAxisIntersection rem + slope * 100 vw</code></pre>
+      <p>Este generador calcula esa fórmula exacta para que entre tu viewport mínimo y máximo el tamaño escale linealmente. Fuera de ese rango, el clamp queda fijo.</p>
+
+      <h2>Casos de uso</h2>
+      <ul>
+        <li><strong>Tipografía responsive</strong>: títulos que crecen suavemente desde mobile a desktop.</li>
+        <li><strong>Spacing</strong>: padding, margin, gap que escalan con el viewport.</li>
+        <li><strong>Anchos</strong>: containers con max-width fluido.</li>
+        <li><strong>Iconos</strong>: tamaños proporcionales sin perder mínimo de legibilidad.</li>
+      </ul>
+
+      <h2>Buenas prácticas</h2>
+      <p>Definí siempre un mínimo legible. Para body text, no bajes de 14-16px. Para títulos, definí un máximo razonable: en monitores ultra-wide, un h1 que escala sin tope termina ridículo. Probá tu clamp redimensionando la ventana de 320px a 1920px y verificá que se vea bien en todos los tamaños intermedios.</p>
+
+      <h2>Soporte de navegadores</h2>
+      <p>Soporte completo desde 2020 en Chrome, Firefox, Safari y Edge. No necesitás fallback. Si tu audiencia incluye navegadores muy viejos, podés agregar un fallback con font-size estática antes de la línea con clamp.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace clamp()?</summary><p>Limita un valor entre un mínimo y un máximo, con escalado fluido entre los dos.</p></details>
+      <details><summary>¿clamp tiene buen soporte?</summary><p>Sí, soporte total en navegadores modernos desde 2020. No hace falta fallback.</p></details>
+      <details><summary>¿Cuándo usar clamp en vez de media queries?</summary><p>Cuando querés escalado gradual, no saltos discretos. Para tipografía casi siempre conviene clamp.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .cl-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+  .cl-preview { padding: 2rem; background: var(--bg-inset); border-radius: var(--radius); margin-top: 1rem; text-align: center; }
+  @media (max-width: 600px) { .cl-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const minSize = document.getElementById('cl-minSize') as HTMLInputElement;
+  const maxSize = document.getElementById('cl-maxSize') as HTMLInputElement;
+  const minVw = document.getElementById('cl-minVw') as HTMLInputElement;
+  const maxVw = document.getElementById('cl-maxVw') as HTMLInputElement;
+  const out = document.getElementById('cl-out') as HTMLElement;
+  const demo = document.getElementById('cl-demo') as HTMLElement;
+  const cp = document.getElementById('cl-cp') as HTMLButtonElement;
+
+  function render() {
+    const a = +minSize.value, b = +maxSize.value, c = +minVw.value, d = +maxVw.value;
+    const slope = (b - a) / (d - c);
+    const intersection = (-c * slope + a) / 16;
+    const preferred = `${intersection.toFixed(4)}rem + ${(slope * 100).toFixed(4)}vw`;
+    const css = `font-size: clamp(${a / 16}rem, ${preferred}, ${b / 16}rem);`;
+    out.textContent = css;
+    demo.style.fontSize = `clamp(${a / 16}rem, ${preferred}, ${b / 16}rem)`;
+  }
+  [minSize, maxSize, minVw, maxVw].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar CSS', 1500);
+  });
+  render();
+</script>

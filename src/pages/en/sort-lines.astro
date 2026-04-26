@@ -1,0 +1,174 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Sort Lines Alphabetically | Genfy';
+const description = 'Sort lists and lines of text alphabetically, numerically, by length or randomly. Ascending or descending, with or without case sensitivity.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Is sorting case-sensitive?', acceptedAnswer: { '@type': 'Answer', text: 'By default no, since that is what people expect when sorting lists. Toggle case-sensitivity if you need it.' } },
+    { '@type': 'Question', name: 'How does it sort numbers?', acceptedAnswer: { '@type': 'Answer', text: 'In numeric mode, each line is parsed as a number (10 comes after 2). Alphabetic mode sorts as strings (10 comes before 2).' } },
+    { '@type': 'Question', name: 'Does it handle accented characters?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. We use Intl.Collator with English locale by default for natural dictionary ordering.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text" title="Sort Lines"
+    intro="Sort lists alphabetically, numerically, by length or randomly. Ascending or descending, with optional cleanup.">
+
+    <div slot="tool" class="so">
+      <label for="so-in">Lines</label>
+      <textarea id="so-in" rows="8" placeholder="One item per line…"></textarea>
+
+      <div class="so-row">
+        <div>
+          <label for="so-mode">Sort by</label>
+          <select id="so-mode">
+            <option value="alpha">Alphabetic</option>
+            <option value="numeric">Numeric</option>
+            <option value="length">Length</option>
+            <option value="random">Random</option>
+          </select>
+        </div>
+        <div>
+          <label for="so-dir">Order</label>
+          <select id="so-dir">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="so-opts">
+        <label><input type="checkbox" id="so-case" /> Case sensitive</label>
+        <label><input type="checkbox" id="so-trim" checked /> Trim whitespace</label>
+        <label><input type="checkbox" id="so-empty" checked /> Remove empty lines</label>
+      </div>
+
+      <button id="so-go" class="btn btn-primary" type="button">Sort</button>
+      <button id="so-copy" class="btn btn-ghost" type="button">Copy</button>
+
+      <label for="so-out" style="margin-top:1rem;">Result</label>
+      <textarea id="so-out" rows="8" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why sort in the browser</h2>
+      <p>
+        Excel and Google Sheets sort, sure. But opening a sheet, pasting a column, sorting,
+        and copying back is slow if all you have is a short list. A web tool sorts instantly.
+        For SEO, marketing, programming or admin work, it's one of the most-used utilities.
+      </p>
+
+      <h2>Sort modes</h2>
+      <ul>
+        <li><strong>Alphabetic</strong> — uses <code>Intl.Collator</code> for natural dictionary order.</li>
+        <li><strong>Numeric</strong> — parses each line as a number. <code>10</code> comes after <code>2</code>, not before (which is what string sort does).</li>
+        <li><strong>Length</strong> — useful for copy review: shortest or longest lines first.</li>
+        <li><strong>Random</strong> — shuffle items. Handy for raffles, A/B testing, or assigning presentation order.</li>
+      </ul>
+
+      <h2>Use cases</h2>
+      <ul>
+        <li>Sort a list of keywords before pasting into Google Ads or Search Console.</li>
+        <li>Alphabetize filenames before uploading to a server.</li>
+        <li>Order CMS tags to spot duplicates.</li>
+        <li>Reorder imports in a code file (a linter is better, but in a pinch this works).</li>
+        <li>Shuffle raffle entries or class presentation order.</li>
+      </ul>
+
+      <h2>The classic numeric-sort gotcha</h2>
+      <p>
+        In JavaScript, <code>[2, 10, 3].sort()</code> returns <code>[10, 2, 3]</code>. Why:
+        <code>sort()</code> with no argument compares as strings, and "10" sorts before "2"
+        because "1" &lt; "2". That's why numeric mode runs <code>parseFloat</code> and
+        compares numerically. If your list mixes numbers and text, non-numeric values land at
+        the end.
+      </p>
+
+      <h2>Case and accents</h2>
+      <p>
+        By default, sorting is case-insensitive and uses natural English ordering. If you turn
+        on "case sensitive", UPPERCASE sorts before lowercase (because their Unicode code
+        points are lower). That's almost never what you want for human-facing lists, but it's
+        right for some technical cases.
+      </p>
+
+      <h2>Optional cleanup</h2>
+      <p>
+        Before sorting you can:
+      </p>
+      <ul>
+        <li><strong>Trim whitespace</strong> — prevents <code>" Apple"</code> from sorting separately from <code>"Apple"</code>.</li>
+        <li><strong>Remove empty lines</strong> — useful when you paste a list with stray newlines.</li>
+      </ul>
+      <p>
+        For explicit deduplication there's a dedicated tool on this site.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Is sorting case-sensitive?</summary><p>Default is no — toggle if needed.</p></details>
+      <details><summary>How does it sort numbers?</summary><p>Numeric mode parses each line as a number and sorts by value.</p></details>
+      <details><summary>Does it handle accented characters?</summary><p>Yes — Intl.Collator handles them in dictionary order.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .so-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .so-opts { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; color: var(--text-soft); }
+  .so-opts label { display: inline-flex; gap: 0.4rem; align-items: center; margin: 0; }
+  .so-opts input { width: auto; }
+  @media (max-width: 600px) { .so-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const inEl = document.getElementById('so-in') as HTMLTextAreaElement;
+  const out = document.getElementById('so-out') as HTMLTextAreaElement;
+  const mode = document.getElementById('so-mode') as HTMLSelectElement;
+  const dir = document.getElementById('so-dir') as HTMLSelectElement;
+  const cs = document.getElementById('so-case') as HTMLInputElement;
+  const tr = document.getElementById('so-trim') as HTMLInputElement;
+  const em = document.getElementById('so-empty') as HTMLInputElement;
+  const go = document.getElementById('so-go') as HTMLButtonElement;
+  const copy = document.getElementById('so-copy') as HTMLButtonElement;
+
+  function run() {
+    let lines = inEl.value.split(/\r?\n/);
+    if (tr.checked) lines = lines.map(l => l.trim());
+    if (em.checked) lines = lines.filter(l => l.length > 0);
+
+    const collator = new Intl.Collator('en', { sensitivity: cs.checked ? 'case' : 'base', numeric: false });
+
+    if (mode.value === 'alpha') lines.sort((a, b) => collator.compare(a, b));
+    else if (mode.value === 'numeric') lines.sort((a, b) => {
+      const na = parseFloat(a), nb = parseFloat(b);
+      const aN = isNaN(na), bN = isNaN(nb);
+      if (aN && bN) return collator.compare(a, b);
+      if (aN) return 1; if (bN) return -1;
+      return na - nb;
+    });
+    else if (mode.value === 'length') lines.sort((a, b) => a.length - b.length);
+    else if (mode.value === 'random') {
+      for (let i = lines.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [lines[i], lines[j]] = [lines[j], lines[i]];
+      }
+    }
+    if (dir.value === 'desc' && mode.value !== 'random') lines.reverse();
+    out.value = lines.join('\n');
+  }
+
+  go.addEventListener('click', run);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copy.textContent; copy.textContent = 'Copied!';
+    setTimeout(() => { copy.textContent = t; }, 1200);
+  });
+</script>
+</content>
+</invoke>

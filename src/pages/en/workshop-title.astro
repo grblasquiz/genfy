@@ -1,0 +1,147 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Workshop Title Generator | Genfy';
+const description = 'Generate titles for hands-on workshops. 10 formulas with tangible outcome, duration and deliverable. For in-company, conferences and training.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Workshop vs webinar?', acceptedAnswer: { '@type': 'Answer', text: 'A workshop is hands-on — attendees produce a deliverable during the session. A webinar is expository, with Q&A at the end. Workshops run 2-4 hours; webinars 45-60 minutes.' } },
+    { '@type': 'Question', name: 'What should the title promise?', acceptedAnswer: { '@type': 'Answer', text: 'A concrete deliverable the attendee walks out with. "Walk out with your first automated email flow" works; "Learn email marketing" doesn’t.' } },
+    { '@type': 'Question', name: 'Ideal attendee count?', acceptedAnswer: { '@type': 'Answer', text: 'For everyone to produce, 8-15 people. Past 25 it stops being a workshop and becomes a talk with exercises.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Workshop Title Generator"
+    intro="Generate 10 titles for your next workshop. Each communicates the deliverable, duration and tangible outcome — not just the topic.">
+
+    <div slot="tool" class="ws">
+      <label>Workshop topic</label>
+      <input id="ws-topic" type="text" value="email automation" />
+
+      <label style="margin-top:1rem">Concrete deliverable they walk out with</label>
+      <input id="ws-deliverable" type="text" value="your first welcome flow built live" />
+
+      <label style="margin-top:1rem">Audience</label>
+      <input id="ws-aud" type="text" value="founders and marketers" />
+
+      <label style="margin-top:1rem">Duration</label>
+      <input id="ws-time" type="text" value="3 hours" />
+
+      <button id="ws-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 10 titles</button>
+
+      <div id="ws-out" class="ws-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why a well-designed workshop beats 5 webinars</h2>
+      <p>
+        Workshops are the highest-ROI format for building authority and generating qualified
+        leads. The gap with webinars is brutal: in a webinar people listen and forget; in a
+        workshop they produce something concrete to take home. That gap shows up in NPS, sales
+        conversion and real word-of-mouth.
+      </p>
+
+      <h2>The title must communicate the deliverable</h2>
+      <ol>
+        <li><strong>Concrete deliverable:</strong> "Walk out with your first automated email flow".</li>
+        <li><strong>Explicit duration:</strong> "3 hours" or "Intensive 1-day workshop".</li>
+        <li><strong>Practice promise:</strong> "Hands-on", "built live", "complete your plan".</li>
+        <li><strong>Specific audience:</strong> "For B2B marketers with no tech team".</li>
+        <li><strong>Measurable outcome:</strong> time saved, money or a ready-to-use item.</li>
+      </ol>
+
+      <h2>5 formulas that work</h2>
+      <ul>
+        <li><strong>Walk out with X:</strong> "Walk out with your first automated email in 3 hours".</li>
+        <li><strong>Build live:</strong> "Build your acquisition funnel, step by step, live".</li>
+        <li><strong>From zero to X:</strong> "From zero to your first launched email campaign".</li>
+        <li><strong>Intensive:</strong> "Intensive workshop: landing page copywriting in 1 day".</li>
+        <li><strong>90-day plan:</strong> "Design your B2B acquisition plan in 4 hours".</li>
+      </ul>
+
+      <h2>How to structure a workshop that works</h2>
+      <ol>
+        <li><strong>Opening (15 min):</strong> context, objective and the deliverable.</li>
+        <li><strong>Block 1 — explanation (30 min):</strong> framework with 1-2 examples.</li>
+        <li><strong>Block 1 — practice (45 min):</strong> attendees apply it to their case.</li>
+        <li><strong>Block 2 — explanation + practice:</strong> same format.</li>
+        <li><strong>Closing (30 min):</strong> rapid review of each deliverable + Q&A + next steps.</li>
+      </ol>
+
+      <h2>Mistakes that sink a workshop</h2>
+      <ul>
+        <li>Too much theory. If 70% is slides, it's a webinar in disguise.</li>
+        <li>Too many people. 25+ = impossible to actually produce.</li>
+        <li>No deliverable review. If nobody checks output, satisfaction drops.</li>
+        <li>No prep. Ask attendees to arrive with their data or setup ready.</li>
+        <li>No follow-up. Send templates, slides and recap 24-48h after.</li>
+      </ul>
+
+      <h2>How to monetize a workshop</h2>
+      <ul>
+        <li><strong>Free lead gen:</strong> with an upsell to a commercial proposal at the end.</li>
+        <li><strong>Low paid ($50-150):</strong> filters audience and lifts show-up rate.</li>
+        <li><strong>Premium paid ($500-2000):</strong> with certificate, materials and community access.</li>
+        <li><strong>In-company:</strong> hired by a company for their team — high ticket.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Workshop vs webinar?</summary><p>Workshop is hands-on, 2-4h, produces a deliverable. Webinar is expository, 1h.</p></details>
+      <details><summary>What to promise?</summary><p>A concrete deliverable. "Walk out with X ready".</p></details>
+      <details><summary>How many attendees?</summary><p>8-15 ideal. Past 25 it stops being a workshop.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ws-out { display: grid; gap: 0.5rem; margin-top: 1.25rem; }
+  .ws-item { padding: 0.875rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .ws-item:hover { border-color: var(--primary); }
+  .ws-tag { font-size: 0.75rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; display: block; }
+</style>
+
+<script>
+  const topic = document.getElementById('ws-topic') as HTMLInputElement;
+  const deliverable = document.getElementById('ws-deliverable') as HTMLInputElement;
+  const aud = document.getElementById('ws-aud') as HTMLInputElement;
+  const time = document.getElementById('ws-time') as HTMLInputElement;
+  const out = document.getElementById('ws-out')!;
+  const gen = document.getElementById('ws-gen') as HTMLButtonElement;
+
+  function generate() {
+    const tp = topic.value;
+    const d = deliverable.value;
+    const a = aud.value;
+    const t = time.value;
+
+    const lines = [
+      { tag: 'Walk out with X', text: `Walk out with ${d} — hands-on ${t} workshop.` },
+      { tag: 'Build live', text: `${tp} workshop: build ${d} step by step, live.` },
+      { tag: 'From zero to X', text: `From zero to ${d}: intensive workshop for ${a}.` },
+      { tag: 'Intensive', text: `Intensive ${tp} workshop: ${d} in ${t}.` },
+      { tag: '90-day plan', text: `Design your ${tp} plan for the next 90 days — ${t} workshop.` },
+      { tag: 'Hands-on', text: `${tp} hands-on: ${d}, no fluff.` },
+      { tag: 'For skeptics', text: `If nothing's worked so far: ${tp} workshop focused on ${d}.` },
+      { tag: 'For beginners', text: `${tp} workshop for ${a} with no technical background.` },
+      { tag: 'Advanced', text: `Advanced ${tp}: ${d}, no filler.` },
+      { tag: 'Bootcamp', text: `${t} ${tp} bootcamp: leave with ${d} validated.` },
+    ];
+
+    out.innerHTML = '';
+    lines.forEach(l => {
+      const el = document.createElement('div');
+      el.className = 'ws-item';
+      el.innerHTML = `<span class="ws-tag">${l.tag}</span><div>${l.text}</div>`;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(l.text); el.style.borderColor = 'var(--primary)'; setTimeout(() => el.style.borderColor = '', 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

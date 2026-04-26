@@ -1,0 +1,136 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Speaking Time Calculator | Genfy';
+const description = 'Calculate how long a speech, presentation or video script will take to deliver. Adjustable WPM. Built for talks, podcasts, video and stage events.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Which speaking speed does it use?', acceptedAnswer: { '@type': 'Answer', text: 'Default 130 wpm — natural conversational pace. Adjustable: 100 for slow/formal, 160 for upbeat delivery.' } },
+    { '@type': 'Question', name: 'Is it good for presentations and talks?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Check whether your script fits the assigned time before walking on stage.' } },
+    { '@type': 'Question', name: 'How does it handle pauses?', acceptedAnswer: { '@type': 'Answer', text: 'It does not count them automatically. Add 10-20% on top if your speech has dramatic pauses or audience interaction.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text" title="Speaking Time Calculator"
+    intro="Paste your script and find out how long it takes when read aloud. Essential for talks, podcasts, video voice-over and any event with a hard time limit.">
+
+    <div slot="tool">
+      <label for="st-in">Text</label>
+      <textarea id="st-in" rows="8" placeholder="Paste your script..." style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div class="st-row" style="margin-top:0.75rem;">
+        <div>
+          <label for="st-wpm">Words per minute</label>
+          <select id="st-wpm">
+            <option value="100">Slow / formal (100)</option>
+            <option value="130" selected>Natural conversational (130)</option>
+            <option value="160">Fast / upbeat (160)</option>
+          </select>
+        </div>
+      </div>
+      <div id="st-out" class="st-out" aria-live="polite"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why speaking speed changes everything</h2>
+      <p>
+        The most common mistake when estimating speaking time is using silent reading speed (~238 wpm).
+        Spoken aloud, that pace can't be sustained: natural conversational average is 130 words per minute,
+        and formal speakers (readings, ceremonies, narration) drop to 100. Above 160 wpm the audience
+        starts to lose you; below 90, they zone out.
+      </p>
+
+      <h2>Reference speeds</h2>
+      <ul>
+        <li><strong>100 wpm</strong> — ceremonial speech, solemn narration, literary audiobooks.</li>
+        <li><strong>130 wpm</strong> — natural conversation, business presentations, news podcasts.</li>
+        <li><strong>150-160 wpm</strong> — dynamic talks, comedy podcasts, YouTubers.</li>
+        <li><strong>180+ wpm</strong> — ad voice-overs, radio commercials, fast comedians; hard to follow as a normal talk.</li>
+      </ul>
+
+      <h2>Why calculate before going on stage</h2>
+      <p>
+        If you're given 10 minutes for a talk, you can't wing the length: you either rush through trying to
+        fit, or you finish short and it shows. The professional way is to write the script, calculate the
+        time, trim until it fits exactly, then rehearse. Great TED talks have this level of planning: 18
+        minutes flat, not one more.
+      </p>
+
+      <h2>Pauses, transitions and reactions</h2>
+      <p>
+        A real talk isn't continuous reading. There are dramatic pauses, beats for the audience to process,
+        intentional silences, slide transitions, laughs (if you expect any), applause at formal events. All
+        of that adds up. Rule of thumb: add 10-20% to the calculated time to absorb what isn't speech. If
+        your talk has heavy audience interaction, you can hit 30%.
+      </p>
+
+      <h2>Typical use cases</h2>
+      <ul>
+        <li><strong>Presentations</strong> — calculate time per slide so you don't overrun.</li>
+        <li><strong>Podcasts</strong> — align the script with the target episode length.</li>
+        <li><strong>YouTube videos</strong> — voice-over must match the editing.</li>
+        <li><strong>TED talks</strong> — strict 18, 12 or 5-minute formats.</li>
+        <li><strong>Weddings and events</strong> — short speeches that don't drag.</li>
+      </ul>
+
+      <h2>Trimming the script to fit</h2>
+      <p>
+        If your estimate is 12 minutes and you have 10, don't improvise cuts on stage: edit. Removing 15-20%
+        from a text without losing essence is a learnable skill: start with unnecessary adverbs, redundant
+        examples, long anecdotes, filler connectors ("so", "I mean") and transition phrases that add
+        nothing. The 80/20 rule applies: the weakest 20% can go and the audience won't notice.
+      </p>
+
+      <h2>Common planning mistakes</h2>
+      <ul>
+        <li><strong>Using silent reading speed</strong> — you'll be 30-40% short on stage.</li>
+        <li><strong>Not rehearsing aloud</strong> — reading "to yourself" doesn't catch tongue-twister phrases.</li>
+        <li><strong>Ignoring pauses</strong> — pauses carry 90% of emotional impact; budget for them.</li>
+        <li><strong>Slide overload</strong> — every slide consumes transition time.</li>
+      </ul>
+
+      <h2>Quick rule for emergencies</h2>
+      <p>
+        If you can't calculate: 100 words = 45 seconds of natural speech. So a single-spaced A4 page
+        (~300-330 words) is around 2:15. Memorize that equivalence and you can estimate well in your head
+        without tools.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Which speaking speed does it use?</summary><p>130 wpm by default, adjustable to slow (100) or fast (160).</p></details>
+      <details><summary>Is it good for presentations and talks?</summary><p>Yes. Check fit before stage time.</p></details>
+      <details><summary>How does it handle pauses?</summary><p>It doesn't. Add 10-20% if your delivery has long pauses or interaction.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .st-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; }
+  .st-out { margin-top: 1rem; padding: 1rem; background: var(--bg-soft, #f5f5f7); border-radius: var(--radius-md, 8px); font-family: var(--font-mono); font-size: 0.95rem; min-height: 4rem; }
+</style>
+
+<script>
+  const inEl = document.getElementById('st-in') as HTMLTextAreaElement;
+  const wpmEl = document.getElementById('st-wpm') as HTMLSelectElement;
+  const out = document.getElementById('st-out') as HTMLDivElement;
+  function compute() {
+    const text = inEl.value.trim();
+    const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+    const wpm = parseInt(wpmEl.value, 10);
+    const minutes = words / wpm;
+    const m = Math.floor(minutes);
+    const s = Math.round((minutes - m) * 60);
+    const tlabel = m === 0 ? `${s} s` : `${m} min ${s} s`;
+    const con15 = Math.round((minutes * 1.15) * 60);
+    const m2 = Math.floor(con15 / 60);
+    const s2 = con15 % 60;
+    out.innerHTML = `<strong>Words:</strong> ${words}<br><strong>Speaking time:</strong> ${tlabel} (at ${wpm} wpm)<br><strong>With 15% extra for pauses:</strong> ${m2} min ${s2} s`;
+  }
+  inEl.addEventListener('input', compute);
+  wpmEl.addEventListener('change', compute);
+  compute();
+</script>

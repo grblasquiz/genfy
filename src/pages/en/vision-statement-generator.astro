@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Vision Statement Generator | Genfy';
+const description = 'Draft your company vision statement in seconds. Mix industry, time horizon and impact and get 5 deck-ready versions instantly.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a vision statement?', acceptedAnswer: { '@type': 'Answer', text: 'A short sentence describing the future your company wants to build. It does not talk about what you do today, but about the state of the world you want to see in 5 to 10 years.' } },
+    { '@type': 'Question', name: 'Vision vs mission — what is the difference?', acceptedAnswer: { '@type': 'Answer', text: 'The vision is the destination — the future you aim at. The mission is the vehicle — what you do every day to get closer to that vision.' } },
+    { '@type': 'Question', name: 'How long should a vision statement be?', acceptedAnswer: { '@type': 'Answer', text: 'Ideally 8 to 20 words. If you can’t repeat it from memory, it is too long.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Vision Statement Generator"
+    intro="Mix industry, time horizon and impact and get 5 deck-ready vision statements you can paste into your pitch, website or onboarding.">
+
+    <div slot="tool" class="vs">
+      <label for="vs-ind">Industry or category</label>
+      <input id="vs-ind" type="text" placeholder="e.g. financial education, B2B logistics" value="financial education" />
+
+      <label for="vs-imp" style="margin-top:1rem">Impact you want to create</label>
+      <input id="vs-imp" type="text" placeholder="e.g. anyone can invest well" value="anyone can invest well" />
+
+      <label for="vs-hor" style="margin-top:1rem">Horizon</label>
+      <select id="vs-hor">
+        <option value="5">5 years</option>
+        <option value="10" selected>10 years</option>
+        <option value="20">A generation</option>
+      </select>
+
+      <button id="vs-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 5 versions</button>
+
+      <div id="vs-out" class="vs-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>What a vision statement is for</h2>
+      <p>
+        A vision is your company's lighthouse. It does not describe what you sell or how you sell it
+        — it describes the world you want to help build. A good vision does three things: aligns
+        the team when hard decisions come up, attracts candidates who share that future, and
+        differentiates your brand from competitors who only talk about features.
+      </p>
+      <p>
+        If your vision works equally well for you and your closest competitor, it is generic.
+        Rewrite it until it is specific to the change only you can drive.
+      </p>
+
+      <h2>Classic structure: future + impact + audience</h2>
+      <p>The formula that lands best in pitches and onboardings is: future-facing verb + concrete
+        impact + audience or territory. Three real examples:</p>
+      <ul>
+        <li><strong>Tesla:</strong> "Accelerate the world's transition to sustainable energy."</li>
+        <li><strong>Airbnb:</strong> "A world where anyone can belong anywhere."</li>
+        <li><strong>LinkedIn:</strong> "Create economic opportunity for every member of the global workforce."</li>
+      </ul>
+      <p>None mention the product. Tesla does not say "electric cars", Airbnb does not say
+        "short-term rentals", LinkedIn does not say "professional network". Products change, vision
+        does not.</p>
+
+      <h2>Mistakes that hollow out a vision</h2>
+      <ol>
+        <li><strong>Generic:</strong> "Be the leader in our market." Everyone says it.</li>
+        <li><strong>Too operational:</strong> "Sell 10,000 units in 2027." That is an OKR, not a vision.</li>
+        <li><strong>Buzzword soup:</strong> "Disrupt, synergize, empower." Cross those out — what remains?</li>
+        <li><strong>Absurdly unreachable:</strong> "End global poverty." If nobody on the team thinks it is possible, it does not inspire.</li>
+        <li><strong>Changes every quarter:</strong> a vision lives 5-10 years.</li>
+      </ol>
+
+      <h2>How to validate your vision</h2>
+      <ol>
+        <li>Read it out loud. Does it move you a bit? If not, it is cold.</li>
+        <li>Send it to 3 teammates and ask them to repeat it 30 minutes later. If they can't, it is too long.</li>
+        <li>Show it to a competitor. Could they sign it? If yes, it is not yours enough.</li>
+        <li>Picture a tough decision next quarter — does the vision help you decide? If not, it is decoration.</li>
+      </ol>
+
+      <h2>When to revise the vision</h2>
+      <p>
+        Don't change it for fashion. Change it when it has been fulfilled (rare) or when you
+        discover that your company has grown into territory you didn't picture at the start.
+        Microsoft moved from "a computer on every desk" to "empower every person and organization"
+        when the first milestone was essentially achieved. That is the right cadence: decades, not
+        quarters.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a vision statement?</summary><p>A short sentence describing the future your company is working toward. It lives 5-10 years and guides big decisions.</p></details>
+      <details><summary>Vision or mission first?</summary><p>Vision defines the destination, mission defines the daily vehicle. Write the vision first, then derive the mission.</p></details>
+      <details><summary>How many words?</summary><p>Between 8 and 20. If you can't say it from memory by day three, it is too long.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .vs-out { display: grid; gap: 0.75rem; margin-top: 1.25rem; }
+  .vs-item { padding: 1rem 1.125rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .vs-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ind = document.getElementById('vs-ind') as HTMLInputElement;
+  const imp = document.getElementById('vs-imp') as HTMLInputElement;
+  const hor = document.getElementById('vs-hor') as HTMLSelectElement;
+  const gen = document.getElementById('vs-gen') as HTMLButtonElement;
+  const out = document.getElementById('vs-out')!;
+
+  function generate() {
+    const i = ind.value.trim() || 'our industry';
+    const m = imp.value.trim() || 'improve the way people live';
+    const h = hor.value;
+    const horizon = h === '5' ? 'within 5 years' : h === '10' ? 'within a decade' : 'for the next generation';
+
+    const versions = [
+      `Build the future of ${i} ${horizon}: ${m}.`,
+      `A world where ${m}, without ${i} getting in the way.`,
+      `Lead the transformation of ${i} so that ${m}.`,
+      `${horizon[0].toUpperCase() + horizon.slice(1)}, ${m} will be the norm — not the privilege — across ${i}.`,
+      `Make ${m} possible for every person who touches ${i}.`,
+    ];
+
+    out.innerHTML = '';
+    versions.forEach(v => {
+      const el = document.createElement('div');
+      el.className = 'vs-item';
+      el.textContent = v;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(v); el.style.borderColor = 'var(--primary)'; setTimeout(() => el.style.borderColor = '', 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

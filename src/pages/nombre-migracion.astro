@@ -1,0 +1,189 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de migración | Genfy';
+const description = 'Generá nombres consistentes para migraciones de base de datos: timestamp + verbo + recurso. Compatible con Rails, Laravel, Knex y Flyway.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo nombrar una migración?', acceptedAnswer: { '@type': 'Answer', text: 'Timestamp + verbo + objeto: 20240115_create_users_table, 20240120_add_email_to_users.' } },
+    { '@type': 'Question', name: '¿Por qué timestamp?', acceptedAnswer: { '@type': 'Answer', text: 'El timestamp asegura el orden cronológico de ejecución y evita conflictos cuando varias personas crean migraciones en paralelo.' } },
+    { '@type': 'Question', name: '¿Snake o camelCase?', acceptedAnswer: { '@type': 'Answer', text: 'Snake_case es la convención dominante para nombres de archivo de migraciones: claro y compatible con todos los frameworks.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech / Dev"
+    title="Generador de nombre de migración"
+    intro="Generá nombres consistentes para migraciones: timestamp + verbo + recurso, listos para Rails, Laravel, Knex o Flyway."
+  >
+    <div slot="tool" class="mig-tool">
+      <div class="mig-grid">
+        <div>
+          <label for="mig-action">Acción</label>
+          <select id="mig-action">
+            <option value="create">create</option>
+            <option value="add_column">add column</option>
+            <option value="remove_column">remove column</option>
+            <option value="rename_table">rename table</option>
+            <option value="add_index">add index</option>
+            <option value="drop">drop</option>
+            <option value="change">change</option>
+          </select>
+        </div>
+        <div>
+          <label for="mig-table">Tabla</label>
+          <input id="mig-table" type="text" value="users" />
+        </div>
+        <div>
+          <label for="mig-extra">Detalle (columna, índice...)</label>
+          <input id="mig-extra" type="text" placeholder="email" />
+        </div>
+      </div>
+      <div class="mig-actions">
+        <button id="mig-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="mig-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+      <textarea id="mig-out" class="mono" rows="6" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué importa el nombre</h2>
+      <p>
+        En equipos chicos, el nombre de una migración se ve dos veces: cuando la creás y cuando
+        debuggeás un error en producción. En equipos grandes, se ve cien veces más: en code
+        review, en deploys, en rollbacks. Un nombre claro ahorra minutos cada vez.
+      </p>
+
+      <h2>El patrón estándar</h2>
+      <p>
+        <code>YYYYMMDDHHMMSS_verbo_objeto.sql</code> (o <code>.rb</code>, <code>.php</code>, etc).
+        El timestamp con segundos garantiza orden incluso cuando varias personas crean migraciones
+        el mismo día. El verbo describe la operación. El objeto es la tabla o el campo afectado.
+      </p>
+
+      <h2>Verbos comunes</h2>
+      <ul>
+        <li><strong>create</strong>: crear una nueva tabla.</li>
+        <li><strong>drop</strong>: eliminar una tabla.</li>
+        <li><strong>add</strong>: agregar columna o índice.</li>
+        <li><strong>remove</strong>: quitar columna o índice.</li>
+        <li><strong>rename</strong>: renombrar tabla o columna.</li>
+        <li><strong>change</strong>: modificar tipo o constraint.</li>
+        <li><strong>backfill</strong>: poblar datos en una nueva columna.</li>
+      </ul>
+
+      <h2>Convenciones por framework</h2>
+      <p>
+        <strong>Rails</strong> usa el formato <code>YYYYMMDDHHMMSS_create_users.rb</code> con la
+        clase <code>CreateUsers &lt; ActiveRecord::Migration[7.0]</code>. <strong>Laravel</strong>:
+        <code>2024_01_15_103000_create_users_table.php</code>. <strong>Knex</strong>:
+        <code>20240115103000_create_users.js</code>. <strong>Flyway</strong>:
+        <code>V1.2.3__create_users.sql</code> (versionado, no timestamp).
+      </p>
+
+      <h2>Migraciones reversibles</h2>
+      <p>
+        Toda migración debería tener un <code>up</code> y un <code>down</code>. El
+        <code>down</code> revierte. Esto te salva en producción cuando algo anda mal: el rollback
+        es tan simple como ejecutar el <code>down</code>. Migraciones irreversibles (drop column
+        con datos) son una decisión que hay que documentar.
+      </p>
+
+      <h2>Migraciones grandes y zero-downtime</h2>
+      <p>
+        Renombrar una columna en una tabla de millones de filas bloquea la base. El patrón
+        zero-downtime es: 1) agregá la columna nueva, 2) escribí en ambas, 3) backfill, 4) cambiá
+        las lecturas a la nueva, 5) dejá de escribir la vieja, 6) borrá la vieja. Cada paso es
+        una migración independiente, y el código convive con ambas durante un sprint.
+      </p>
+
+      <h2>Migraciones de datos vs schema</h2>
+      <p>
+        Mantené migraciones de schema (DDL: CREATE, ALTER, DROP) separadas de migraciones de datos
+        (DML: UPDATE, INSERT). Nombres como <code>backfill_users_locale</code> o
+        <code>fix_orders_currency</code> dejan claro qué hace. Las DDL deberían ser idempotentes
+        cuando es posible (<code>CREATE TABLE IF NOT EXISTS</code>).
+      </p>
+
+      <h2>Reviews y orden</h2>
+      <p>
+        En el PR, mostrale al revisor el SQL que se va a ejecutar (<code>EXPLAIN</code> si es
+        complejo), el plan de rollback y el impacto estimado. Para tablas con tráfico alto,
+        coordiná el deploy en horario de bajo uso. Las herramientas como gh-ost o pt-osc permiten
+        ALTERs sin lock en MySQL.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo nombrar?</summary><p>Timestamp + verbo + objeto: <code>20240115103000_create_users.rb</code>.</p></details>
+      <details><summary>¿Por qué timestamp?</summary><p>Asegura orden cronológico y evita conflictos en paralelo.</p></details>
+      <details><summary>¿Snake o camel?</summary><p>Snake_case es la convención dominante.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .mig-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .mig-grid { grid-template-columns: 1fr; } }
+  .mig-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const action = document.getElementById('mig-action') as HTMLSelectElement;
+  const table = document.getElementById('mig-table') as HTMLInputElement;
+  const extra = document.getElementById('mig-extra') as HTMLInputElement;
+  const out = document.getElementById('mig-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('mig-gen') as HTMLButtonElement;
+  const copy = document.getElementById('mig-copy') as HTMLButtonElement;
+
+  function pad(n: number) { return String(n).padStart(2, '0'); }
+  function ts() {
+    const d = new Date();
+    return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+  }
+  function snake(s: string) { return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, ''); }
+
+  function build() {
+    const t = snake(table.value || 'items');
+    const e = snake(extra.value);
+    let slug = '';
+    switch (action.value) {
+      case 'create': slug = `create_${t}_table`; break;
+      case 'add_column': slug = e ? `add_${e}_to_${t}` : `add_column_to_${t}`; break;
+      case 'remove_column': slug = e ? `remove_${e}_from_${t}` : `remove_column_from_${t}`; break;
+      case 'rename_table': slug = e ? `rename_${t}_to_${e}` : `rename_${t}`; break;
+      case 'add_index': slug = e ? `add_index_on_${e}_to_${t}` : `add_index_to_${t}`; break;
+      case 'drop': slug = `drop_${t}_table`; break;
+      case 'change': slug = e ? `change_${e}_in_${t}` : `change_${t}`; break;
+    }
+    const stamp = ts();
+    const lines = [
+      `Rails:   ${stamp}_${slug}.rb`,
+      `Laravel: ${stamp.slice(0,4)}_${stamp.slice(4,6)}_${stamp.slice(6,8)}_${stamp.slice(8)}_${slug}.php`,
+      `Knex:    ${stamp}_${slug}.js`,
+      `Flyway:  V${stamp}__${slug}.sql`,
+      `Plain:   ${stamp}_${slug}.sql`,
+    ];
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', build);
+  [action, table, extra].forEach(el => el.addEventListener('input', build));
+  action.addEventListener('change', build);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copiado';
+    setTimeout(() => { icon.textContent = 'Copiar'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

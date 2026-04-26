@@ -1,0 +1,168 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Git Branch Name Generator | Genfy';
+const description = 'Generate consistent git branch names: feature/, fix/, hotfix/, release/. kebab-case slug and ticket reference.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Which prefixes?', acceptedAnswer: { '@type': 'Answer', text: 'feature/, fix/, hotfix/, release/, chore/. The most common convention in GitFlow and trunk-based development.' } },
+    { '@type': 'Question', name: 'snake or kebab?', acceptedAnswer: { '@type': 'Answer', text: 'kebab-case (words joined by dashes) is the standard for branch names: feature/add-user-login.' } },
+    { '@type': 'Question', name: 'Include the ticket?', acceptedAnswer: { '@type': 'Answer', text: 'Yes: feature/PROJ-123-add-login. Traces the change to the ticket and many integrations leverage it.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Tech / Dev"
+    title="Git Branch Name Generator"
+    intro="Generate consistent kebab-case branch names with prefix, ticket and short description."
+  >
+    <div slot="tool" class="br-tool">
+      <div class="br-grid">
+        <div>
+          <label for="br-type">Type</label>
+          <select id="br-type">
+            <option value="feature">feature</option>
+            <option value="fix">fix</option>
+            <option value="hotfix">hotfix</option>
+            <option value="release">release</option>
+            <option value="chore">chore</option>
+            <option value="docs">docs</option>
+          </select>
+        </div>
+        <div>
+          <label for="br-ticket">Ticket (optional)</label>
+          <input id="br-ticket" type="text" placeholder="PROJ-123" />
+        </div>
+        <div>
+          <label for="br-desc">Short description</label>
+          <input id="br-desc" type="text" placeholder="add login flow" />
+        </div>
+      </div>
+      <div class="br-actions">
+        <button id="br-gen" class="btn btn-primary" type="button">Generate</button>
+        <button id="br-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+      </div>
+      <textarea id="br-out" class="mono" rows="6" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why it matters</h2>
+      <p>
+        A poorly named branch costs minutes on every PR review, makes auditing harder and breaks
+        automation (CI regexes, management bots). A good convention means you can read the name
+        and know the type of change, the ticket it points to and the area touched.
+      </p>
+
+      <h2>The standard pattern</h2>
+      <p>
+        <code>&lt;type&gt;/&lt;ticket&gt;-&lt;short-description&gt;</code>. Example:
+        <code>feature/PROJ-123-add-user-login</code>. The <code>/</code> separates the prefix;
+        some hosts (GitHub, GitLab) render it as a visual subfolder. Inside the slug, kebab-case
+        avoids issues with shells and URLs.
+      </p>
+
+      <h2>Common prefixes</h2>
+      <ul>
+        <li><strong>feature/</strong>: new functionality.</li>
+        <li><strong>fix/</strong>: non-urgent bug fix.</li>
+        <li><strong>hotfix/</strong>: fix going straight to production.</li>
+        <li><strong>release/</strong>: release preparation branch.</li>
+        <li><strong>chore/</strong>: maintenance, dependencies.</li>
+        <li><strong>docs/</strong>: documentation only.</li>
+        <li><strong>experiment/</strong> or <strong>spike/</strong>: tests that may not reach main.</li>
+      </ul>
+
+      <h2>GitFlow vs trunk-based</h2>
+      <p>
+        GitFlow has long-lived branches (<code>develop</code>, <code>main</code>,
+        <code>release/*</code>). Trunk-based has <code>main</code> and short-lived branches that
+        merge in hours or days. Naming convention is the same; trunk-based just pushes branches
+        to live shorter.
+      </p>
+
+      <h2>Forbidden characters</h2>
+      <p>
+        Git doesn't allow spaces, double colons (<code>::</code>), question marks, asterisks,
+        brackets or tildes in branch names. Stick to <code>[a-z0-9-_/.]</code>. Extra slashes are
+        accepted but confuse humans. Avoid names longer than 50 characters.
+      </p>
+
+      <h2>Uppercase ticket</h2>
+      <p>
+        Ticket IDs usually go in uppercase (<code>PROJ-123</code>). The rest of the slug in
+        lowercase. Visually distinct: <code>feature/PROJ-123-add-login</code>. If your system
+        is case-insensitive (Windows defaults), all-lowercase also works.
+      </p>
+
+      <h2>Branch policies</h2>
+      <p>
+        In GitHub or GitLab you can enforce the convention with branch protection and actions
+        validating the name before accepting pushes. A regex like
+        <code>^(feature|fix|hotfix|chore)\/[A-Z]&lcub;2,&rcub;-\d+-[a-z0-9-]+$</code> blocks
+        non-conforming pushes.
+      </p>
+
+      <h2>Delete merged branches</h2>
+      <p>
+        Configure auto-delete after merge in GitHub Settings. <code>git fetch --prune</code>
+        removes references to deleted remote branches. Without this, the repo ends up with
+        hundreds of zombie branches and autocomplete falls apart.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Which prefixes?</summary><p>feature/, fix/, hotfix/, release/, chore/.</p></details>
+      <details><summary>snake or kebab?</summary><p>kebab-case: <code>feature/add-user-login</code>.</p></details>
+      <details><summary>Include ticket?</summary><p>Yes: <code>feature/PROJ-123-add-login</code>. Free traceability.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .br-grid { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .br-grid { grid-template-columns: 1fr; } }
+  .br-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const type = document.getElementById('br-type') as HTMLSelectElement;
+  const ticket = document.getElementById('br-ticket') as HTMLInputElement;
+  const desc = document.getElementById('br-desc') as HTMLInputElement;
+  const out = document.getElementById('br-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('br-gen') as HTMLButtonElement;
+  const copy = document.getElementById('br-copy') as HTMLButtonElement;
+
+  function kebab(s: string) { return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50); }
+
+  function build() {
+    const t = ticket.value.trim().toUpperCase();
+    const d = kebab(desc.value || 'short-description');
+    const slug = t ? `${t}-${d}` : d;
+    const variants = [
+      `${type.value}/${slug}`,
+      t ? `${type.value}/${t.toLowerCase()}/${d}` : `${type.value}/${d}`,
+      `${type.value}-${slug}`,
+    ];
+    out.value = variants.join('\n');
+  }
+  gen.addEventListener('click', build);
+  [type, ticket, desc].forEach(el => el.addEventListener('input', build));
+  type.addEventListener('change', build);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value.split('\n')[0]);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copied';
+    setTimeout(() => { icon.textContent = 'Copy'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

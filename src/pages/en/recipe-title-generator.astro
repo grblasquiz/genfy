@@ -1,0 +1,140 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Recipe Title Generator | Genfy';
+const description = 'Generate catchy recipe titles for blog, cookbook or socials. Mix main ingredient and technique and get 20 SEO-friendly titles.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good recipe title?', acceptedAnswer: { '@type': 'Answer', text: 'It mentions the main dish, the key technique and a desirable attribute (quick, juicy, creamy, gluten-free). Boosts SEO and click-through on Pinterest and Instagram.' } },
+    { '@type': 'Question', name: 'How many words should it have?', acceptedAnswer: { '@type': 'Answer', text: 'Between 5 and 9. Enough to describe and differentiate, without exceeding Google\'s display limit.' } },
+    { '@type': 'Question', name: 'Should I include cook time?', acceptedAnswer: { '@type': 'Answer', text: '"In 15 minutes" or "Quick" significantly boost CTR when the dish allows it.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Cooking" title="Recipe Title Generator"
+    intro="Mix ingredient, technique and attribute and get 20 catchy recipe titles for blog, cookbook or socials. SEO and CTR optimized.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Main dish or ingredient</label>
+      <input id="bn-kw" type="text" placeholder="chicken, broccoli, gnocchi..." value="chicken" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="quick">Quick / express</option>
+        <option value="cozy">Warm / homey</option>
+        <option value="healthy">Healthy / light</option>
+        <option value="restaurant">Restaurant style</option>
+        <option value="weeknight">Weeknight dinner</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 titles</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to write a recipe title that ranks</h2>
+      <p>
+        A good recipe title does three things: says what it is, communicates a clear benefit
+        (quick, easy, healthy, better than takeout) and adds a sensory descriptor (juicy,
+        creamy, crispy). Search engines reward descriptive titles; on Pinterest, titles with
+        concrete benefits double CTR.
+      </p>
+      <ol>
+        <li><strong>Dish + technique + benefit.</strong> "Crispy oven chicken in 30 minutes" works; "Delicious chicken" doesn't.</li>
+        <li><strong>Sensory adjectives.</strong> Juicy, creamy, crispy, fluffy. Trigger appetite.</li>
+        <li><strong>Time or difficulty.</strong> "In 15 minutes", "One pot", "No oven".</li>
+        <li><strong>Restriction if applicable.</strong> "Gluten-free", "Vegan", "Low sodium".</li>
+        <li><strong>No clickbait.</strong> If you say "the best recipe for", your content has to deliver.</li>
+      </ol>
+
+      <h2>Title styles by platform</h2>
+      <ul>
+        <li><strong>SEO blog:</strong> "Lemon Oven Chicken with Crispy Potatoes". Long and descriptive.</li>
+        <li><strong>Pinterest:</strong> "The Secret to the Juiciest Chicken (in 30 min)". Promise + time.</li>
+        <li><strong>Instagram / TikTok:</strong> "5-Ingredient Creamy Chicken". Short and specific.</li>
+        <li><strong>Cookbook:</strong> "Lemon Chicken with Thyme". Plain, no clickbait.</li>
+        <li><strong>Newsletter:</strong> "Sunday Dinner: Roast Chicken with Potatoes". Contextual.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        Most common: too generic. "Oven chicken" has millions of results. Differentiate by
+        technique, secondary ingredient or time. Another mistake is overpromising: "the best
+        chicken in the world" gets penalized with high bounce rates. Avoid empty adjectives
+        like "delicious", "amazing" or "unbelievable": they add no information.
+      </p>
+
+      <h2>SEO optimization</h2>
+      <ol>
+        <li>Research the keyword on Google Trends and Pinterest.</li>
+        <li>Look at how the top 5 ranking recipes title theirs.</li>
+        <li>Differentiate by angle: time, technique, restriction, plating.</li>
+        <li>Test variants on socials before posting on the blog.</li>
+        <li>Track 30-day CTR and iterate.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good recipe title?</summary><p>Dish + technique + benefit. Sensory adjectives and cook time when applicable.</p></details>
+      <details><summary>How many words?</summary><p>Between 5 and 9. Enough to describe without exceeding Google's display limit.</p></details>
+      <details><summary>Include cook time?</summary><p>"In 15 minutes" or "Quick" significantly boost CTR.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 500; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const QUICK = ['in 15 minutes', 'in 20 minutes', 'express', 'quick', 'one pot', 'no oven', 'microwave', 'in 30 minutes'];
+  const TECH = ['oven-baked', 'pan-seared', 'grilled', 'stir-fried', 'slow-cooked', 'steamed', 'sauteed', 'sous-vide', 'roast'];
+  const ADJ = ['juicy', 'creamy', 'crispy', 'tender', 'golden', 'savory', 'sticky', 'caramelized', 'glazed'];
+  const COZY_PRE = ['Grandma\'s recipe', 'Homemade', 'Simple', 'Cozy', 'Just like home', 'Traditional'];
+  const HEALTH = ['healthy', 'low-fat', 'gluten-free', 'light', 'high-protein', 'vegan', 'fit'];
+  const REST = ['restaurant style', 'bistro style', 'gourmet', 'Italian style', 'French style', 'steakhouse style'];
+  const WK = ['dinner', 'Sunday', 'weeknight', 'lunch', 'easy', 'effortless'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const w = (kw.value.trim() || 'chicken').toLowerCase();
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'quick') name = cap(pick(ADJ)) + ' ' + pick(TECH) + ' ' + w + ' ' + pick(QUICK);
+      else if (s === 'cozy') name = pick(COZY_PRE) + ': ' + pick(TECH) + ' ' + w;
+      else if (s === 'healthy') name = cap(pick(HEALTH)) + ' ' + pick(TECH) + ' ' + w;
+      else if (s === 'restaurant') name = cap(pick(ADJ)) + ' ' + w + ' ' + pick(REST);
+      else if (s === 'weeknight') name = cap(pick(WK)) + ' ' + pick(TECH) + ' ' + w;
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

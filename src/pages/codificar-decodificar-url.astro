@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Codificar y decodificar URL — Gratis | Genfy';
+const description = 'Codificá o decodificá URLs y parámetros con percent-encoding (RFC 3986). Útil para query strings, APIs y links que se rompen.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es percent-encoding?', acceptedAnswer: { '@type': 'Answer', text: 'Es el sistema definido en el RFC 3986 que reemplaza caracteres no seguros en URLs por su representación hexadecimal precedida por %. Por ejemplo, un espacio se codifica como %20.' } },
+    { '@type': 'Question', name: '¿Cuándo se rompe una URL?', acceptedAnswer: { '@type': 'Answer', text: 'Cuando contiene caracteres reservados sin codificar: espacios, &, ?, =, # dentro de un parámetro, o caracteres no ASCII como tildes y la ñ. El servidor o el browser pueden cortar la URL en el primer carácter problemático.' } },
+    { '@type': 'Question', name: '¿encodeURI o encodeURIComponent?', acceptedAnswer: { '@type': 'Answer', text: 'encodeURI codifica una URL completa preservando la estructura (no toca / ? & =). encodeURIComponent codifica un valor que va dentro de un parámetro (codifica todo). Para query strings, casi siempre querés encodeURIComponent.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Web" title="Codificador / decodificador URL"
+    intro="Convertí caracteres especiales en sus equivalentes percent-encoded para usar en URLs, query strings o APIs.">
+
+    <div slot="tool">
+      <div class="ue-modes">
+        <label class="chk"><input type="radio" name="ue-mode" value="encode" checked /> Codificar</label>
+        <label class="chk"><input type="radio" name="ue-mode" value="decode" /> Decodificar</label>
+      </div>
+      <div class="ue-modes">
+        <label class="chk"><input type="radio" name="ue-fn" value="component" checked /> encodeURIComponent</label>
+        <label class="chk"><input type="radio" name="ue-fn" value="uri" /> encodeURI</label>
+      </div>
+      <label for="ue-in">Entrada</label>
+      <textarea id="ue-in" rows="5" style="font-family: var(--font-mono);">https://genfy.net/buscar?q=hola mundo&lang=es</textarea>
+      <button id="ue-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Convertir</button>
+      <button id="ue-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <label for="ue-out" style="margin-top:1rem;">Salida</label>
+      <textarea id="ue-out" rows="5" readonly style="font-family: var(--font-mono);"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es percent-encoding y por qué existe</h2>
+      <p>
+        Las URLs nacieron en 1994 con un alfabeto restringido: solo letras ASCII, dígitos, y unos pocos caracteres especiales con significado estructural (<code>/</code>, <code>?</code>, <code>&amp;</code>, <code>=</code>, <code>#</code>). Cualquier otra cosa (un espacio, una tilde, un emoji) tiene que ser representada de otra forma para que el navegador y el servidor la transmitan sin ambigüedad. Ese mecanismo se llama percent-encoding o URL encoding, y está definido en el RFC 3986.
+      </p>
+
+      <h2>La regla básica</h2>
+      <p>
+        Cada byte que no es seguro en una URL se reemplaza por <code>%</code> seguido de los dos dígitos hexadecimales que representan ese byte. Un espacio (byte 0x20) se vuelve <code>%20</code>. Una <code>ñ</code> en UTF-8 son dos bytes (0xC3 0xB1) y se codifica como <code>%C3%B1</code>. La codificación opera sobre bytes, no sobre caracteres, lo que hace que el resultado dependa del encoding (UTF-8 es el estándar de facto desde hace 20 años).
+      </p>
+
+      <h2>encodeURI vs encodeURIComponent</h2>
+      <ul>
+        <li><strong>encodeURI:</strong> respeta la estructura de la URL. No codifica <code>/ ? &amp; = # :</code>. Sirve cuando recibís una URL completa con caracteres especiales en el path y querés que siga siendo navegable.</li>
+        <li><strong>encodeURIComponent:</strong> codifica agresivamente. Codifica <code>/ ? &amp; = # :</code> también. Sirve para valores que van dentro de un parámetro (después de un <code>=</code>) y no deben confundirse con la estructura.</li>
+      </ul>
+
+      <h2>Casos típicos</h2>
+      <ul>
+        <li><strong>Construir URLs dinámicamente.</strong> Si juntás <code>?q=</code> + búsqueda del usuario, esa búsqueda tiene que pasar por encodeURIComponent. Si el usuario buscó "café &amp; tortas", sin codificar el browser interpreta el <code>&amp;</code> como inicio de un nuevo parámetro.</li>
+        <li><strong>Enviar a APIs REST.</strong> Lo mismo: cualquier valor que viaje en un query string debe codificarse.</li>
+        <li><strong>Decodificar lo que recibís.</strong> Cuando leés <code>req.query</code> en un backend, los frameworks suelen decodificar automáticamente, pero si trabajás con la URL cruda, hay que decodificar a mano.</li>
+        <li><strong>UTM y tracking.</strong> Si una campaña tiene tildes en el medium o el campaign, se codifican; si no, los analíticos las pierden.</li>
+      </ul>
+
+      <h2>Caracteres reservados</h2>
+      <p>
+        El RFC 3986 define dos grupos. Los <em>reservados</em> tienen significado estructural: <code>: / ? # [ ] @ ! $ &amp; ' ( ) * + , ; =</code>. Los <em>no reservados</em> son siempre seguros: letras, dígitos, <code>- _ . ~</code>. Todo lo demás se debe codificar. encodeURIComponent codifica todos los reservados; encodeURI deja intactos los que tienen significado estructural en URLs.
+      </p>
+
+      <h2>Errores comunes</h2>
+      <ul>
+        <li><strong>Codificar dos veces.</strong> <code>%20</code> se vuelve <code>%2520</code>. Si el servidor decodifica una sola vez, queda <code>%20</code> literal.</li>
+        <li><strong>Olvidarse del + en query strings.</strong> Algunos sistemas codifican espacio como <code>+</code> (legado de application/x-www-form-urlencoded). Asegurate de saber con cuál estás trabajando.</li>
+        <li><strong>Codificar dominios.</strong> Los hostnames con caracteres no ASCII usan IDN (punycode), no percent-encoding. <code>café.com</code> se vuelve <code>xn--caf-dma.com</code>, no <code>caf%C3%A9.com</code>.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es percent-encoding?</summary><p>Sistema del RFC 3986 que reemplaza caracteres no seguros por % seguido de dos dígitos hexadecimales. Un espacio se codifica como %20.</p></details>
+      <details><summary>¿Cuándo se rompe una URL?</summary><p>Cuando tiene caracteres reservados sin codificar (espacios, &amp;, ?, =, #) o caracteres no ASCII en lugares donde no se permite.</p></details>
+      <details><summary>¿encodeURI o encodeURIComponent?</summary><p>encodeURI para URLs completas. encodeURIComponent para valores dentro de parámetros. Para query strings casi siempre encodeURIComponent.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ue-modes { display: flex; gap: 1.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+  .chk { display: flex; align-items: center; gap: 0.5rem; margin: 0; }
+  .chk input { width: auto; }
+</style>
+
+<script>
+  const inEl = document.getElementById('ue-in') as HTMLTextAreaElement;
+  const out = document.getElementById('ue-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('ue-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('ue-copy') as HTMLButtonElement;
+
+  function run() {
+    const mode = (document.querySelector('input[name="ue-mode"]:checked') as HTMLInputElement).value;
+    const fn = (document.querySelector('input[name="ue-fn"]:checked') as HTMLInputElement).value;
+    try {
+      if (mode === 'encode') {
+        out.value = fn === 'component' ? encodeURIComponent(inEl.value) : encodeURI(inEl.value);
+      } else {
+        out.value = fn === 'component' ? decodeURIComponent(inEl.value) : decodeURI(inEl.value);
+      }
+    } catch (e) {
+      out.value = 'Error: secuencia inválida';
+    }
+  }
+  inEl.addEventListener('input', run);
+  document.querySelectorAll('input[name="ue-mode"], input[name="ue-fn"]').forEach(el => el.addEventListener('change', run));
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

@@ -1,0 +1,163 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Find and Replace Text Online | Genfy';
+const description = 'Find and replace text in bulk with or without regex. Case-sensitive option, match counter and live preview. Runs entirely in your browser.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Does it handle long text?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, up to several megabytes. Since it runs in your browser, the real limit is your tab memory.' } },
+    { '@type': 'Question', name: 'Does it support regular expressions?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Toggle regex mode and type your pattern without slashes. Case-sensitivity is set with the checkbox.' } },
+    { '@type': 'Question', name: 'Is my data sent to a server?', acceptedAnswer: { '@type': 'Answer', text: 'No. All processing happens locally in your browser. Safe to use with sensitive text.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text" title="Find and Replace Text"
+    intro="Bulk text replacement with or without regex. Case-sensitive or insensitive, whole-word matching, match counter. All processing runs locally.">
+
+    <div slot="tool" class="fr">
+      <label for="fr-src">Original text</label>
+      <textarea id="fr-src" rows="6" placeholder="Paste your text…"></textarea>
+
+      <div class="fr-row">
+        <div>
+          <label for="fr-find">Find</label>
+          <input id="fr-find" type="text" placeholder="Text or pattern" />
+        </div>
+        <div>
+          <label for="fr-rep">Replace with</label>
+          <input id="fr-rep" type="text" placeholder="Replacement (empty = delete)" />
+        </div>
+      </div>
+
+      <div class="fr-opts">
+        <label><input type="checkbox" id="fr-case" /> Case sensitive</label>
+        <label><input type="checkbox" id="fr-word" /> Whole words only</label>
+        <label><input type="checkbox" id="fr-regex" /> Use regex</label>
+      </div>
+
+      <button id="fr-go" class="btn btn-primary" type="button">Replace</button>
+      <button id="fr-copy" class="btn btn-ghost" type="button">Copy</button>
+      <span id="fr-count" class="fr-count" aria-live="polite"></span>
+
+      <label for="fr-out" style="margin-top:1rem;">Result</label>
+      <textarea id="fr-out" rows="6" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What's a browser-based find and replace good for?</h2>
+      <p>
+        Code editors like VS Code or Sublime ship with find &amp; replace built in, but when
+        you're working in a tool that doesn't have it — Google Docs, a Notion field, a Slack
+        message, a CSV pasted into a sheet — having a fast browser-based find and replace
+        saves a lot of clicks. Paste, tweak the pattern, copy the result.
+      </p>
+
+      <h2>Literal mode vs regex</h2>
+      <p>
+        Literal mode finds the exact string you type. Regex mode opens up advanced patterns:
+        <code>\d+</code> for digits, <code>\b</code> for word boundaries, capture groups
+        <code>(\w+)</code>, and back-references in the replacement (<code>$1</code>,
+        <code>$2</code>). If you've never used regex, start with literal — 90% of cases never
+        need more.
+      </p>
+
+      <h2>Real-world uses</h2>
+      <ul>
+        <li><strong>Data cleanup.</strong> Strip tabs, double spaces, smart quotes or invisible characters before pasting into a spreadsheet.</li>
+        <li><strong>Bulk renaming.</strong> Rename a variable or product across a long doc without scrolling line by line.</li>
+        <li><strong>Quick anonymization.</strong> Swap real names for placeholders before sharing a log with a vendor.</li>
+        <li><strong>Copy migrations.</strong> If you renamed a product, run the replacement across all your copy before pushing it to your CMS.</li>
+        <li><strong>Normalization.</strong> Unify date formats, thousands separators, or inconsistent abbreviations.</li>
+      </ul>
+
+      <h2>Be careful with regex</h2>
+      <p>
+        A bad pattern can wipe more than you intended. Minimum rules: test on a short snippet
+        before applying to the full text, escape special characters when you want them literal
+        (<code>.</code>, <code>*</code>, <code>+</code>, <code>?</code>, <code>(</code>,
+        <code>)</code>, <code>[</code>, <code>]</code>, <code>\</code>), and check the match
+        counter before copying — if it says 0 when you expected 50, the pattern is wrong.
+      </p>
+
+      <h2>Privacy</h2>
+      <p>
+        The whole operation runs in your browser with local JavaScript. We don't upload, store
+        or log your text. Safe to use with contracts, customer data or anything sensitive — as
+        long as you're on a trusted machine.
+      </p>
+
+      <h2>Useful editor shortcuts</h2>
+      <ul>
+        <li><strong>Cmd/Ctrl + A</strong> in the textarea to select all.</li>
+        <li><strong>Cmd/Ctrl + Z</strong> to undo the last manual edit.</li>
+        <li><strong>Cmd/Ctrl + C</strong> to copy the selection from the result field.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Does it handle long text?</summary><p>Yes — up to several megabytes, all in your browser.</p></details>
+      <details><summary>Does it support regular expressions?</summary><p>Yes. Toggle regex mode and type the pattern without slashes.</p></details>
+      <details><summary>Is my data sent to a server?</summary><p>No. All processing is local. Safe with sensitive text.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .fr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .fr-opts { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; color: var(--text-soft); }
+  .fr-opts label { display: inline-flex; gap: 0.4rem; align-items: center; margin: 0; }
+  .fr-opts input { width: auto; }
+  .fr-count { margin-left: 1rem; color: var(--text-muted); font-size: 0.875rem; }
+  @media (max-width: 600px) { .fr-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const src = document.getElementById('fr-src') as HTMLTextAreaElement;
+  const find = document.getElementById('fr-find') as HTMLInputElement;
+  const rep = document.getElementById('fr-rep') as HTMLInputElement;
+  const out = document.getElementById('fr-out') as HTMLTextAreaElement;
+  const cs = document.getElementById('fr-case') as HTMLInputElement;
+  const ww = document.getElementById('fr-word') as HTMLInputElement;
+  const re = document.getElementById('fr-regex') as HTMLInputElement;
+  const count = document.getElementById('fr-count') as HTMLSpanElement;
+  const go = document.getElementById('fr-go') as HTMLButtonElement;
+  const copy = document.getElementById('fr-copy') as HTMLButtonElement;
+
+  function escapeRegex(s: string) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+  function run() {
+    const text = src.value;
+    const f = find.value;
+    if (!f) { out.value = text; count.textContent = ''; return; }
+    let pattern: string;
+    let flags = 'g' + (cs.checked ? '' : 'i');
+    if (re.checked) pattern = f;
+    else {
+      pattern = escapeRegex(f);
+      if (ww.checked) pattern = '\\b' + pattern + '\\b';
+    }
+    try {
+      const r = new RegExp(pattern, flags);
+      const matches = text.match(r);
+      out.value = text.replace(r, rep.value);
+      count.textContent = matches ? `${matches.length} matches` : 'No matches';
+    } catch (e: any) {
+      count.textContent = 'Invalid regex';
+      out.value = text;
+    }
+  }
+
+  go.addEventListener('click', run);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copy.textContent; copy.textContent = 'Copied!';
+    setTimeout(() => { copy.textContent = t; }, 1200);
+  });
+</script>
+</content>
+</invoke>

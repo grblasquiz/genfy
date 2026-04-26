@@ -1,0 +1,154 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Amazon Listing Title Generator | Genfy';
+const description = 'Generate Amazon product titles optimized for the A9 algorithm. Brand + keyword + attributes + size structure within the 200-character cap.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What\'s the character limit for an Amazon title?', acceptedAnswer: { '@type': 'Answer', text: 'It depends on category: most allow 200 characters, but Amazon recommends staying within 80-150 to avoid mobile truncation and improve ranking.' } },
+    { '@type': 'Question', name: 'How does Amazon\'s A9 algorithm work?', acceptedAnswer: { '@type': 'Answer', text: 'A9 prioritizes relevance (keyword match in title) and performance (CTR, conversion, sales velocity). A well-optimized title moves both.' } },
+    { '@type': 'Question', name: 'Brand at the start of an Amazon title?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Amazon recommends brand first, then product type, then key attributes (color, size, model, count).' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Amazon Listing Title Generator"
+    intro="Drop in brand, product and attributes. Genfy returns 4 titles optimized for A9, all within the limit for most categories.">
+
+    <div slot="tool" class="am">
+      <label for="am-brand">Brand</label>
+      <input id="am-brand" type="text" placeholder="Acme Co..." value="Sunset Skincare" />
+
+      <label for="am-product" style="margin-top:1rem">Product + main keyword</label>
+      <input id="am-product" type="text" placeholder="Facial moisturizer..." value="Hydrating Facial Moisturizer with Hyaluronic Acid" />
+
+      <label for="am-attr" style="margin-top:1rem">Attributes (color, size, ingredients)</label>
+      <input id="am-attr" type="text" placeholder="1.7oz, paraben-free..." value="1.7oz, paraben-free, vegan" />
+
+      <label for="am-use" style="margin-top:1rem">Benefit or use case</label>
+      <input id="am-use" type="text" placeholder="For dry skin..." value="For dry and mature skin" />
+
+      <button id="am-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 4 titles</button>
+
+      <div id="am-out" class="am-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How Amazon's A9 algorithm decides what to show first</h2>
+      <p>
+        Amazon A9 is a dual algorithm: it weighs relevance (how well the title matches the search) and performance (listing CTR, conversion rate, sales velocity, reviews). A well-built title moves both levers: it shows up for the right search, and when it shows up, people click and buy. A bad title buries you on page 8 even if the product is excellent.
+      </p>
+      <p>
+        Key detail: A9 uses the exact title to index, but also reads bullets, description and backend keywords. Title is the strongest signal, not the only one.
+      </p>
+
+      <h2>Amazon's recommended structure</h2>
+      <ol>
+        <li><strong>Brand:</strong> "Sunset Skincare" — first, always.</li>
+        <li><strong>Product type + main keyword:</strong> "Hydrating Facial Moisturizer with Hyaluronic Acid".</li>
+        <li><strong>Differentiating attributes:</strong> "vegan, paraben-free".</li>
+        <li><strong>Size / count / model:</strong> "1.7oz".</li>
+        <li><strong>Use case or audience:</strong> "for dry and mature skin".</li>
+      </ol>
+
+      <h2>The 200-character cap and why Amazon punishes you for using all of it</h2>
+      <p>
+        Most categories allow up to 200 characters, but Amazon published guidelines in 2018 suggesting titles over 200 may lead to listing suppression. Even under 200, mobile truncates around 80 characters. What appears after that is for indexing, not for click. Sweet spot: 80-150 characters with the primary keyword in the first 60.
+      </p>
+
+      <h2>Capitalization: Title Case is not optional</h2>
+      <p>
+        Amazon recommends capitalizing the first letter of each word (except prepositions and short articles). "Hydrating Facial Moisturizer With Hyaluronic Acid" — not all caps (Amazon penalizes), not all lowercase (looks unprofessional).
+      </p>
+
+      <h2>Things you can't put in an Amazon title</h2>
+      <ul>
+        <li><strong>Promotional info:</strong> "Sale", "free shipping", "best seller".</li>
+        <li><strong>Special symbols:</strong> ®, ™, ©, ! — Amazon strips them.</li>
+        <li><strong>Reviews or ratings:</strong> "5 stars", "award-winning".</li>
+        <li><strong>Competitor names:</strong> policy-violation risk.</li>
+        <li><strong>All-caps text:</strong> except recognized acronyms (USB, LED, USA).</li>
+      </ul>
+
+      <h2>Backend keywords vs title</h2>
+      <p>
+        Amazon gives you 250 characters of "search terms" in the backend. These are keywords the algorithm reads but the customer doesn't see. Rule: don't repeat in the backend what's already in the title or bullets. Use backend keywords for variants in other languages, synonyms, common typos, generic terms.
+      </p>
+
+      <h2>How to research real Amazon keywords</h2>
+      <p>
+        Three methods that work:
+      </p>
+      <ul>
+        <li><strong>Amazon autocomplete:</strong> clean session, type your product, watch the suggestions.</li>
+        <li><strong>Helium 10, Jungle Scout or Keepa:</strong> paid tools with volume and difficulty data.</li>
+        <li><strong>Top-ranker analysis:</strong> open the first 5 listings of your category and find common keywords.</li>
+      </ul>
+
+      <h2>How to measure if your title works</h2>
+      <p>
+        Amazon Brand Analytics (free with Brand Registry) shows which keywords convert for your product. If your title doesn't include the top-3 conversion keywords, you've lost. Key metric: "Search Term Click Share" — what percent of clicks for that keyword went to your listing.
+      </p>
+
+      <h2>Common mistakes that kill sales</h2>
+      <ul>
+        <li><strong>Starting with an empty adjective:</strong> "Beautiful cream..." — wastes premium characters.</li>
+        <li><strong>Skipping size/count:</strong> "1.7oz" or "pack of 2" moves conversion a lot.</li>
+        <li><strong>Unstructured keyword dump:</strong> "Cream face hydrate dry mature acid vegan paraben-free 1.7oz" — A9 understands but the customer doesn't click.</li>
+        <li><strong>Skipping use case:</strong> "for dry skin" or "for ages 40+" pulls high-intent long-tail searches.</li>
+        <li><strong>Changing the title weekly:</strong> A9 punishes instability. Change once, wait 14 days, measure.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many characters?</summary><p>Sweet spot 80-150. Technical max 200 by category, but more is counterproductive.</p></details>
+      <details><summary>Brand at the start?</summary><p>Yes. Amazon explicitly recommends it and A9 prefers it.</p></details>
+      <details><summary>Can I add "free shipping"?</summary><p>No. Amazon prohibits promotional info in the title and may suppress the listing.</p></details>
+      <details><summary>How long until it re-ranks?</summary><p>A9 adjusts in 24-72 hours but historical performance weighs. Drastic changes can drop ranking temporarily.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .am-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .am-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; }
+  .am-card:hover { border-color: var(--accent); }
+  .am-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const brand = document.getElementById('am-brand') as HTMLInputElement;
+  const product = document.getElementById('am-product') as HTMLInputElement;
+  const attr = document.getElementById('am-attr') as HTMLInputElement;
+  const use = document.getElementById('am-use') as HTMLInputElement;
+  const gen = document.getElementById('am-gen') as HTMLButtonElement;
+  const out = document.getElementById('am-out')!;
+
+  function generate() {
+    const Br = brand.value.trim() || 'Brand';
+    const P = product.value.trim() || 'Product';
+    const A = attr.value.trim() || 'premium features';
+    const U = use.value.trim() || 'daily use';
+
+    const v1 = `${Br} ${P} - ${A} - ${U}`;
+    const v2 = `${Br} ${P}, ${A}, Ideal for ${U}`;
+    const v3 = `${Br} | ${P} | ${A} | ${U}`;
+    const v4 = `${Br} ${P} ${A} (${U})`;
+
+    out.innerHTML = '';
+    [v1, v2, v3, v4].forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'am-card';
+      el.title = 'Click to copy';
+      const len = b.length;
+      el.innerHTML = b + `<div class="am-meta">v${i+1} · ${len}/200 characters</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

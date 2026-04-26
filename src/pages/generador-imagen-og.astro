@@ -1,0 +1,146 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de imagen Open Graph (texto) | Genfy';
+const description = 'Generá una imagen Open Graph 1200x630 con título, subtítulo y marca. Ideal para previsualizaciones en redes sociales. PNG descargable.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué 1200x630?', acceptedAnswer: { '@type': 'Answer', text: 'Es el tamaño recomendado por Facebook y aceptado por LinkedIn, Twitter, WhatsApp y Slack. Cualquier otro relación de aspecto se puede recortar mal.' } },
+    { '@type': 'Question', name: '¿Cuánto puede pesar?', acceptedAnswer: { '@type': 'Answer', text: 'Idealmente debajo de 1 MB. Las plataformas pueden ignorar imágenes muy pesadas o tardar mucho en cargarlas.' } },
+    { '@type': 'Question', name: '¿Cómo la asocio al sitio?', acceptedAnswer: { '@type': 'Answer', text: 'Subila al sitio y referenciala en una meta tag og:image dentro del head del HTML.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Generador de imagen Open Graph"
+    intro="Creá una imagen 1200x630 lista para Open Graph y Twitter Card. Editá título, subtítulo, fondo y descargá un PNG.">
+
+    <div slot="tool" class="og">
+      <div class="og-grid">
+        <div>
+          <label for="og-title">Título</label>
+          <input id="og-title" type="text" value="Tu título principal" />
+        </div>
+        <div>
+          <label for="og-sub">Subtítulo</label>
+          <input id="og-sub" type="text" value="Una bajada corta y clara" />
+        </div>
+        <div>
+          <label for="og-brand">Marca</label>
+          <input id="og-brand" type="text" value="genfy.net" />
+        </div>
+        <div>
+          <label for="og-bg">Fondo</label>
+          <input id="og-bg" type="color" value="#0f172a" />
+        </div>
+        <div>
+          <label for="og-fg">Texto</label>
+          <input id="og-fg" type="color" value="#ffffff" />
+        </div>
+      </div>
+
+      <div class="og-actions">
+        <button id="og-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="og-dl" class="btn btn-ghost" type="button">Descargar PNG</button>
+      </div>
+
+      <div class="og-canvas-wrap">
+        <canvas id="og-canvas" width="1200" height="630"></canvas>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es una imagen Open Graph</h2>
+      <p>La imagen Open Graph (también llamada og:image o "social card") es la imagen que aparece cuando alguien comparte el link de tu página en Twitter, LinkedIn, WhatsApp, Slack, Discord o Telegram. Es la primera impresión visual fuera de tu sitio. Sin ella, tus links se ven feos: texto pelado o un thumbnail aleatorio recortado mal.</p>
+
+      <h2>Por qué importa</h2>
+      <p>Los links con previsualización visual reciben significativamente más clicks que los links sin imagen. Es la diferencia entre que alguien te de una segunda oportunidad o pase de largo en el feed. Para landings, blog posts, productos o lanzamientos, la OG image es una pieza de marketing imprescindible.</p>
+
+      <h2>Tamaño y formato correcto</h2>
+      <ul>
+        <li><strong>1200x630 píxeles</strong>: estándar oficial de Facebook, válido para casi todo.</li>
+        <li><strong>Formato PNG o JPG</strong>: PNG si tenés tipografía y bordes nítidos; JPG si es foto.</li>
+        <li><strong>Peso bajo 1 MB</strong>: idealmente bajo 300 KB. Plataformas lentas a veces no esperan.</li>
+        <li><strong>Texto centrado</strong>: muchas plataformas recortan los bordes, sobre todo en mobile.</li>
+      </ul>
+
+      <h2>Reglas tipográficas</h2>
+      <p>El texto tiene que verse a tamaño thumbnail (cuando alguien ve la card chica en el feed de su celular). Eso implica: tipografía con peso bold, mínimo 60-80 px en el archivo de 1200x630, alto contraste con el fondo. Si tu título no se lee a 200x100 px, no funciona como OG. Mantené máximo dos líneas y resistí la tentación de meter mucho texto.</p>
+
+      <h2>Ideas que funcionan bien</h2>
+      <ul>
+        <li><strong>Título grande sobre fondo sólido</strong>: simple, alto contraste, escalable. La mayoría de los blogs técnicos hacen esto.</li>
+        <li><strong>Título + subtítulo + marca abajo</strong>: estructura más rica, sigue siendo legible.</li>
+        <li><strong>Generación automática por página</strong>: muchos sitios generan OG dinámicamente con el título de cada artículo. Vercel y Cloudflare ofrecen workers para esto.</li>
+        <li><strong>Plantilla con foto de fondo</strong>: si la foto es buena y el texto tiene contraste suficiente.</li>
+      </ul>
+
+      <h2>Validación y cache</h2>
+      <p>Después de subir la imagen, validá con el Sharing Debugger de Facebook y el Card Validator de Twitter. Estos validadores fuerzan un re-fetch y limpian el cache, importante porque cambios en og:image suelen tardar en propagarse. Si actualizás la imagen pero seguís viendo la vieja, es cache: usá los validadores para forzar la actualización.</p>
+
+      <h2>Consejos finales</h2>
+      <p>Mantené coherencia visual con tu marca. Si usás colores corporativos en tu sitio, usalos también en las OG. La consistencia ayuda a que la audiencia reconozca tu contenido en feeds saturados. Y testeá: una buena OG puede mejorar el CTR de tus links en redes hasta un 40%.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Por qué 1200x630?</summary><p>Es el tamaño recomendado por Facebook y aceptado por todas las plataformas grandes. Otros aspect ratios pueden recortarse mal.</p></details>
+      <details><summary>¿Cuánto puede pesar?</summary><p>Idealmente bajo 1 MB. Más allá, algunas plataformas la ignoran o tardan mucho en cargar.</p></details>
+      <details><summary>¿Cómo la asocio al sitio?</summary><p>Subila al sitio y agregá meta property="og:image" content="URL" en el head.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .og-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .og-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .og-canvas-wrap { padding: 1rem; background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--radius); }
+  #og-canvas { width: 100%; height: auto; display: block; }
+  @media (max-width: 600px) { .og-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const title = document.getElementById('og-title') as HTMLInputElement;
+  const sub = document.getElementById('og-sub') as HTMLInputElement;
+  const brand = document.getElementById('og-brand') as HTMLInputElement;
+  const bg = document.getElementById('og-bg') as HTMLInputElement;
+  const fg = document.getElementById('og-fg') as HTMLInputElement;
+  const canvas = document.getElementById('og-canvas') as HTMLCanvasElement;
+  const gen = document.getElementById('og-gen') as HTMLButtonElement;
+  const dl = document.getElementById('og-dl') as HTMLButtonElement;
+
+  function wrap(ctx: CanvasRenderingContext2D, text: string, x: number, y: number, maxW: number, lh: number) {
+    const words = text.split(' '); let line = '';
+    for (const w of words) {
+      const test = line + w + ' ';
+      if (ctx.measureText(test).width > maxW && line) { ctx.fillText(line, x, y); line = w + ' '; y += lh; }
+      else line = test;
+    }
+    ctx.fillText(line, x, y);
+  }
+
+  function render() {
+    const ctx = canvas.getContext('2d')!;
+    ctx.fillStyle = bg.value;
+    ctx.fillRect(0, 0, 1200, 630);
+    ctx.fillStyle = fg.value;
+    ctx.font = '700 80px Inter, system-ui, sans-serif';
+    ctx.textBaseline = 'top';
+    wrap(ctx, title.value || ' ', 80, 140, 1040, 96);
+    ctx.font = '400 36px Inter, system-ui, sans-serif';
+    ctx.globalAlpha = 0.8;
+    wrap(ctx, sub.value || ' ', 80, 380, 1040, 48);
+    ctx.globalAlpha = 1;
+    ctx.font = '600 28px Inter, system-ui, sans-serif';
+    ctx.fillText(brand.value || ' ', 80, 540);
+  }
+  gen.addEventListener('click', render);
+  [title, sub, brand, bg, fg].forEach(el => el.addEventListener('input', render));
+  dl.addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png'); a.download = 'og.png'; a.click();
+  });
+  render();
+</script>

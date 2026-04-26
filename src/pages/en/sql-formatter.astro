@@ -1,0 +1,145 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free SQL Formatter | Genfy';
+const description = 'Indent and format SQL queries instantly. Supports SELECT, INSERT, UPDATE, DELETE, JOIN, WHERE and subqueries. 100% in your browser.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Which dialects does it support?', acceptedAnswer: { '@type': 'Answer', text: 'The formatter is dialect-agnostic. It works with MySQL, PostgreSQL, SQLite, SQL Server, Oracle. It recognizes standard keywords and uppercases them.' } },
+    { '@type': 'Question', name: 'Does my SQL get uploaded?', acceptedAnswer: { '@type': 'Answer', text: 'No. Formatting is 100% in the browser. You can paste queries with real data without exposure risk.' } },
+    { '@type': 'Question', name: 'Why does formatting SQL matter?', acceptedAnswer: { '@type': 'Answer', text: 'A 200-character query on one line is unreadable. Formatted with breaks at SELECT, FROM, WHERE, JOIN saves minutes per code review and debugging session.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Data" title="SQL Formatter"
+    intro="Paste a SQL query and get a clean indented version with uppercased keywords. Great for code review, docs and debugging.">
+
+    <div slot="tool">
+      <label for="sf-in">SQL</label>
+      <textarea id="sf-in" rows="6" style="font-family: var(--font-mono); font-size: 0.9rem;">select u.id, u.name, count(o.id) as total from users u left join orders o on o.user_id = u.id where u.created_at >= '2025-01-01' and u.active = true group by u.id, u.name order by total desc limit 10;</textarea>
+      <button id="sf-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Format</button>
+      <button id="sf-copy" class="btn btn-ghost" type="button">Copy</button>
+      <label for="sf-out" style="margin-top:1rem;">Result</label>
+      <textarea id="sf-out" rows="14" readonly style="font-family: var(--font-mono); font-size: 0.9rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why formatting SQL matters</h2>
+      <p>
+        A SQL query on one line with no formatting is the closest thing to reading assembly in a business setting. When that query fails in production at 3 AM and you need to debug, you lose minutes just mentally parsing it. Well-indented SQL: each clause on its line, joins aligned, conditions stacked. The difference between finding the bug in 30 seconds or in 5 minutes.
+      </p>
+
+      <h2>Most-used formatting conventions</h2>
+      <ul>
+        <li><strong>Uppercase keywords.</strong> SELECT, FROM, WHERE, JOIN. Visual contrast against lowercase table and column names.</li>
+        <li><strong>Each clause on a new line.</strong> SELECT, FROM, WHERE, GROUP BY, ORDER BY, LIMIT always break.</li>
+        <li><strong>JOINs on their own line.</strong> Easy to read each join when isolated.</li>
+        <li><strong>Leading or trailing commas.</strong> Two schools; the formatter respects your team style if configured.</li>
+        <li><strong>Indent subqueries.</strong> Subqueries indent further than the main query.</li>
+      </ul>
+
+      <h2>When NOT to format</h2>
+      <ul>
+        <li><strong>Trivial queries.</strong> <code>SELECT * FROM users WHERE id = 1</code> doesn't need line breaks.</li>
+        <li><strong>Bulk migrations.</strong> A script with hundreds of INSERTs becomes huge and unreadable when formatted line-by-line.</li>
+        <li><strong>ORM-generated SQL.</strong> SQL emitted by Sequelize or Hibernate is optimized for machines; manual formatting adds nothing.</li>
+      </ul>
+
+      <h2>Stripe / Linear / Vercel SQL style</h2>
+      <p>
+        Modern companies tend toward this style: uppercase keywords, one column per line in SELECT, consistent 2-space indent, JOINs after FROM. A SELECT returning 8 columns looks like:
+      </p>
+      <pre><code>SELECT
+  u.id,
+  u.name,
+  u.email,
+  COUNT(o.id) AS total_orders
+FROM users u
+LEFT JOIN orders o ON o.user_id = u.id
+WHERE u.active = true
+GROUP BY u.id, u.name, u.email
+ORDER BY total_orders DESC
+LIMIT 10;</code></pre>
+
+      <h2>Formatter limitations</h2>
+      <p>
+        This is a basic formatter that handles most everyday queries: SELECT, INSERT, UPDATE, DELETE with joins, where, group by, order by, having, limit. It doesn't fully interpret complex CTEs (WITH RECURSIVE), window functions with peculiar syntax, or strongly-deviating dialects (T-SQL, PL/SQL). For those edge cases, consider dialect-specific formatters.
+      </p>
+
+      <h2>Readable SQL and internal hygiene</h2>
+      <p>
+        In larger companies a pattern emerges: critical queries live in a versioned folder in git. The data team edits, reviews, commits them. Unformatted queries make reviews painful and bugs slip through. Pinning a uniform format and enforcing it in pre-commit hooks is one of those small changes that compounds.
+      </p>
+
+      <h2>Productivity tips</h2>
+      <ul>
+        <li>If you use DataGrip, IntelliJ or DBeaver, they ship formatters that respect your preferences. Configure once and stop fighting format.</li>
+        <li>In JavaScript/TypeScript, consider tagged template literals like <code>sql\`SELECT ...\`</code>. Editor extensions such as vscode-sql-template-literal give you autocomplete and formatting.</li>
+        <li>For long queries living in migrations, comment each major block with <code>-- purpose of this JOIN</code>. Future-you will thank you.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Which dialects does it support?</summary><p>It's agnostic — works with MySQL, PostgreSQL, SQLite, SQL Server, Oracle.</p></details>
+      <details><summary>Does my SQL get uploaded?</summary><p>No. 100% local in your browser.</p></details>
+      <details><summary>Why does formatting SQL matter?</summary><p>It improves readability in code reviews, docs and debugging.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const inEl = document.getElementById('sf-in') as HTMLTextAreaElement;
+  const out = document.getElementById('sf-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('sf-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('sf-copy') as HTMLButtonElement;
+
+  const KEYWORDS = ['SELECT','FROM','WHERE','GROUP BY','ORDER BY','HAVING','LIMIT','OFFSET','JOIN','LEFT JOIN','RIGHT JOIN','INNER JOIN','OUTER JOIN','FULL JOIN','CROSS JOIN','ON','AND','OR','NOT','IN','LIKE','BETWEEN','IS','NULL','AS','UNION','UNION ALL','INTERSECT','EXCEPT','INSERT INTO','VALUES','UPDATE','SET','DELETE FROM','CREATE TABLE','ALTER TABLE','DROP TABLE','CASE','WHEN','THEN','ELSE','END','WITH','DISTINCT','COUNT','SUM','AVG','MIN','MAX'];
+
+  const NEWLINE_BEFORE = ['FROM','WHERE','GROUP BY','ORDER BY','HAVING','LIMIT','OFFSET','LEFT JOIN','RIGHT JOIN','INNER JOIN','OUTER JOIN','FULL JOIN','CROSS JOIN','JOIN','UNION','UNION ALL','INTERSECT','EXCEPT','VALUES','SET'];
+
+  function format(sql: string): string {
+    let s = sql.replace(/\s+/g, ' ').trim();
+    if (s.endsWith(';')) s = s.slice(0, -1);
+    let upper = s;
+    const sorted = [...KEYWORDS].sort((a,b) => b.length - a.length);
+    for (const kw of sorted) {
+      const re = new RegExp('\\b' + kw.replace(/ /g, '\\s+') + '\\b', 'gi');
+      upper = upper.replace(re, kw);
+    }
+    let result = upper;
+    for (const kw of NEWLINE_BEFORE) {
+      const re = new RegExp('\\s+' + kw.replace(/ /g, '\\s+') + '\\b', 'g');
+      result = result.replace(re, '\n' + kw);
+    }
+    result = result.replace(/\bSELECT\b/g, 'SELECT');
+    result = result.replace(/\bAND\b/g, '\n  AND');
+    result = result.replace(/\bOR\b/g, '\n  OR');
+    result = result.replace(/^SELECT\s+/, 'SELECT\n  ');
+    result = result.replace(/,\s*/g, ',\n  ');
+    result = result.replace(/\n  ([A-Z][A-Z ]+)\b/g, (m, kw) => {
+      if (NEWLINE_BEFORE.includes(kw.trim())) return '\n' + kw.trim();
+      return m;
+    });
+    return result.split('\n').map(l => l.trimEnd()).join('\n') + ';';
+  }
+
+  function run() {
+    const txt = inEl.value.trim();
+    if (!txt) { out.value = ''; return; }
+    try { out.value = format(txt); }
+    catch { out.value = txt; }
+  }
+  inEl.addEventListener('input', run);
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

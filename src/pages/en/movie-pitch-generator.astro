@@ -1,0 +1,142 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Movie Pitch Generator | Genfy';
+const description = 'Generate one-line pitches (loglines) for your next movie. Combine protagonist, conflict and twist to get 10 ideas ready to pitch.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a movie pitch?', acceptedAnswer: { '@type': 'Answer', text: 'A one or two-sentence presentation of your film, also called a logline. Includes protagonist, conflict and stakes in a hooky format.' } },
+    { '@type': 'Question', name: 'How long should a pitch be?', acceptedAnswer: { '@type': 'Answer', text: 'Written, one or two sentences. Spoken, 30 to 60 seconds.' } },
+    { '@type': 'Question', name: 'Does it help with financing?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Producers and agents read hundreds of loglines a week. If yours doesn’t hook in 15 seconds, they never reach the script.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Movie Pitch Generator"
+    intro="Generate one-line loglines for your movie. Combine protagonist, conflict and twist to get 10 pitches ready for production companies and festivals.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Theme or setting</label>
+      <input id="bn-kw" type="text" placeholder="memory, road, debt..." value="debt" />
+
+      <label for="bn-style" style="margin-top:1rem">Genre</label>
+      <select id="bn-style">
+        <option value="thriller">Thriller</option>
+        <option value="drama">Drama</option>
+        <option value="action">Action</option>
+        <option value="indie">Indie</option>
+        <option value="scifi">Sci-fi</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 10 pitches</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to write a movie pitch that hooks</h2>
+      <p>
+        A great logline has four components: identifiable protagonist, concrete want, clear
+        antagonist, and stakes (what's lost on failure). Miss any and the pitch feels incomplete.
+        The classic formula: "When X (protagonist in one word) discovers Y (inciting incident),
+        they must Z (action) before W (consequence)". It works because it packages want,
+        obstacle and clock into a single sentence.
+      </p>
+      <ol>
+        <li><strong>Lead with one-word protagonist.</strong> "An architect", "a baker", "a single mother". Producer pictures it instantly.</li>
+        <li><strong>Add the inciting incident.</strong> The event that breaks the routine.</li>
+        <li><strong>Define the action.</strong> What the protagonist must do.</li>
+        <li><strong>Close with stakes.</strong> What's lost on failure. No stakes, no tension.</li>
+        <li><strong>Imply a twist.</strong> One unexpected word signaling this isn't generic.</li>
+      </ol>
+
+      <h2>Common pitch mistakes</h2>
+      <p>
+        Most common: abstract pitches that read like emotional synopses. "A story about
+        forgiveness" isn't a pitch — it's a theme. Another: too many proper nouns or details a
+        producer can't retain. And a third: no clear stakes, where the protagonist has nothing
+        to lose. No urgency, no movie.
+      </p>
+
+      <h2>Typical logline structure</h2>
+      <ul>
+        <li><strong>Setup</strong>: protagonist + initial situation.</li>
+        <li><strong>Inciting incident</strong>: what breaks the routine.</li>
+        <li><strong>Action</strong>: what the protagonist must do.</li>
+        <li><strong>Stakes</strong>: what's lost on failure.</li>
+      </ul>
+
+      <h2>After generating</h2>
+      <ol>
+        <li>Pick the pitch that best combines clarity and twist.</li>
+        <li>Verify the four components (protagonist, inciting incident, action, stakes).</li>
+        <li>Read it aloud to three people: do they want more?</li>
+        <li>Refine until it fits in one breath.</li>
+        <li>Save three versions for different contexts: festival, production company, platform.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a movie pitch?</summary><p>One or two sentences with protagonist, conflict and stakes — a logline.</p></details>
+      <details><summary>How long?</summary><p>Written: 1-2 sentences. Spoken: 30-60 seconds.</p></details>
+      <details><summary>Useful for financing?</summary><p>Yes. Hooks in 15 seconds or you lose the read.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+  .bn-item { padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.55; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const PROT_T = ['a star defense attorney', 'a retired collector', 'a crime reporter', 'a security guard', 'a federal judge', 'a surgeon without a license'];
+  const PROT_D = ['a mother returning to her hometown', 'a writer with writer’s block', 'a sister estranged from her family', 'a couple on the brink of divorce'];
+  const PROT_A = ['a former soldier turned driver', 'a professional runner', 'a cargo pilot', 'a rescue diver'];
+  const PROT_I = ['a small-town librarian', 'a retired baker', 'a freelance translator', 'a daughter back after ten years'];
+  const PROT_SF = ['an engineer at the new colony', 'an orbital maintenance tech', 'a doctor at the last surface lab'];
+  const TRIG_T = ['discovers the victim was the only witness to a fraud that implicates her', 'receives a threat with details only three people knew', 'finds a body in a room she had locked herself'];
+  const TRIG_D = ['finds a box of letters addressed to someone she does not know', 'discovers her mother had been paying rent in another city for twenty years'];
+  const TRIG_A = ['agrees to deliver a package he should have refused', 'is the only one who escapes an ambush he did not see coming'];
+  const TRIG_I = ['inherits a house she did not know existed', 'receives a letter addressed to someone with his name'];
+  const TRIG_SF = ['receives a message coming from the colony’s own future', 'discovers the lab AI has been lying for six months'];
+  const STAKE = ['before it is too late', 'while everyone around her pretends not to know', 'without her family finding out', 'before the case gets closed forever'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = style.value;
+    let PROT: string[], TRIG: string[];
+    if (s === 'thriller') { PROT = PROT_T; TRIG = TRIG_T; }
+    else if (s === 'action') { PROT = PROT_A; TRIG = TRIG_A; }
+    else if (s === 'indie') { PROT = PROT_I; TRIG = TRIG_I; }
+    else if (s === 'scifi') { PROT = PROT_SF; TRIG = TRIG_SF; }
+    else { PROT = PROT_D; TRIG = TRIG_D; }
+    out.innerHTML = '';
+    const seen = new Set<string>();
+    let attempts = 0;
+    while (seen.size < 10 && attempts < 60) {
+      attempts++;
+      const text = `When ${pick(PROT)} ${pick(TRIG)}, they must face the truth ${pick(STAKE)}.`;
+      if (seen.has(text)) continue;
+      seen.add(text);
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = text;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.textContent; el.textContent = '✓ copied'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    }
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

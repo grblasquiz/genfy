@@ -1,0 +1,137 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de DJ gratis | Genfy';
+const description = 'Generá nombres artísticos para DJ y productores en segundos. Combiná tus iniciales, prefijos y sufijos para conseguir 20 ideas de alias listas para club.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo elijo un buen nombre de DJ?', acceptedAnswer: { '@type': 'Answer', text: 'Buscá un alias corto, fácil de leer en una flyer iluminada, único en Beatport y SoundCloud, y que se vea bien escrito en mayúsculas.' } },
+    { '@type': 'Question', name: '¿Conviene usar mi nombre real?', acceptedAnswer: { '@type': 'Answer', text: 'Si tu nombre es corto y memorable, sí. Si es muy común o difícil de pronunciar fuera de tu país, conviene buscar un alias inventado.' } },
+    { '@type': 'Question', name: '¿Necesito registrar el alias?', acceptedAnswer: { '@type': 'Answer', text: 'Si estás distribuyendo música y cobrando regalías, conviene registrar la marca y reservar el handle social. Verificá Beatport, Spotify y SoundCloud antes.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de nombre de DJ"
+    intro="Encontrá tu alias de DJ en segundos. Combiná un prefijo, una palabra base y un formato para conseguir 20 ideas listas para tus primeros sets.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Iniciales o palabra base</label>
+      <input id="bn-kw" type="text" placeholder="MR, Niko, Vega..." value="Vega" />
+
+      <label for="bn-style" style="margin-top:1rem">Formato</label>
+      <select id="bn-style">
+        <option value="dj">DJ + nombre (DJ Vega)</option>
+        <option value="caps">Solo mayúsculas (VEGA)</option>
+        <option value="amp">X &amp; Y (Vega &amp; Cruz)</option>
+        <option value="single">Una palabra inventada</option>
+        <option value="combo">Palabra + número (Vega 808)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 alias</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir tu alias de DJ</h2>
+      <p>
+        El nombre de un DJ trabaja en pantallas: en un flyer iluminado, en una pantalla LED de
+        festival, en la lista de reproducción de Beatport. Tiene que verse bien escrito grande, en
+        mayúsculas, leído desde quince metros. La regla operativa: si tu alias no se distingue de
+        un metro de distancia, no funciona en una visual de show.
+      </p>
+      <ol>
+        <li><strong>Que se vea grande.</strong> Probalo escrito en bold mayúsculas. ¿Tiene impacto visual? ¿Las letras quedan equilibradas?</li>
+        <li><strong>Pronunciable en varios idiomas.</strong> Si querés tocar fuera de tu país, evitá nombres con caracteres especiales o sonidos exclusivos del español.</li>
+        <li><strong>Buscable en Beatport y SoundCloud.</strong> Las plataformas son tu carta de presentación. Si tu alias choca con otro productor, perdés ventas.</li>
+        <li><strong>Te representa el género que producís.</strong> Un nombre techno duro no encaja con un proyecto de house melódico. Adaptá la sonoridad del nombre al sonido.</li>
+        <li><strong>Que aguante el back-to-back.</strong> ¿Cómo queda escrito al lado de otro DJ? "Vega B2B Cruz" tiene que verse limpio.</li>
+      </ol>
+
+      <h2>Estilos de nombre de DJ</h2>
+      <ul>
+        <li><strong>DJ + nombre</strong>: el formato clásico (DJ Snake, DJ Tiësto). Comunica el oficio al instante, ideal para club nights.</li>
+        <li><strong>Mayúsculas únicas</strong>: una sola palabra en bold caps (BICEP, KAYTRA). Dominante en techno y house actual.</li>
+        <li><strong>Dúo X &amp; Y</strong>: dos apellidos cortos unidos por &amp; (Solomun, Tale Of Us). Funciona para back-to-backs.</li>
+        <li><strong>Palabra inventada</strong>: alias completamente único (Skrillex, Boys Noize). Más fácil de registrar, requiere más prensa.</li>
+        <li><strong>Palabra + número</strong>: referencia a equipos o BPM (808 State, M83). Geek-friendly, ideal para electrónica.</li>
+      </ul>
+
+      <h2>Errores a evitar</h2>
+      <p>
+        Los más típicos: alias con guiones bajos o números mezclados que rompen la búsqueda en
+        Beatport, nombres que dependen de tipografías especiales para verse bien, o copiar el
+        formato exacto de un DJ consagrado y quedar como tributo. Otro frecuente: nombres con
+        connotaciones distintas en otro idioma cuando empezás a tocar fuera de tu país. Hacé el
+        chequeo antes del primer release.
+      </p>
+
+      <h2>Después de generar: validación</h2>
+      <ol>
+        <li>Búsqueda exacta en Beatport, Spotify, Apple Music y SoundCloud.</li>
+        <li>Verificá handle en Instagram, TikTok y SoundCloud.</li>
+        <li>Probá cómo se ve escrito en un flyer (bold caps, 60px).</li>
+        <li>Pronunciá el alias en tres idiomas distintos. ¿Funciona en todos?</li>
+        <li>Si vas a distribuir música, verificá que esté libre en CD Baby o DistroKid.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo elijo un buen nombre de DJ?</summary><p>Corto, fuerte en mayúsculas, único en Beatport, pronunciable en varios idiomas, alineado al género que producís.</p></details>
+      <details><summary>¿Conviene usar mi nombre real?</summary><p>Si es corto y memorable, sí. Si es común o difícil para extranjeros, mejor un alias.</p></details>
+      <details><summary>¿Necesito registrar el alias?</summary><p>Si distribuís música y cobrás regalías, sí. Verificá Beatport y registrá la marca.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const WORD = ['Vega', 'Cruz', 'Niko', 'Kira', 'Drex', 'Velo', 'Faro', 'Tron', 'Nox', 'Riva', 'Vael', 'Mira', 'Klar', 'Solv', 'Bren'];
+  const NUM = ['808', '909', '101', '707', '404', '202', '707'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : pick(WORD);
+      let name = '';
+      if (s === 'dj') name = 'DJ ' + cap(w);
+      else if (s === 'caps') name = (w + pick(WORD)).toUpperCase();
+      else if (s === 'amp') name = cap(w) + ' & ' + pick(WORD);
+      else if (s === 'single') name = pick(WORD);
+      else if (s === 'combo') name = cap(w) + ' ' + pick(NUM);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

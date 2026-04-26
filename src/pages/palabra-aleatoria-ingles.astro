@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Palabra aleatoria en inglés | Genfy';
+const description = 'Generá una palabra aleatoria en inglés con su traducción. Ideal para ampliar vocabulario, juegos de palabras, brainstorming y práctica de idioma.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve una palabra aleatoria en inglés?', acceptedAnswer: { '@type': 'Answer', text: 'Para ejercitar vocabulario, romper bloqueos creativos, entrenar pronunciación, jugar juegos de mesa o como prompt para escribir.' } },
+    { '@type': 'Question', name: '¿Las palabras tienen traducción al español?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, cada palabra viene con una traducción corta para que puedas estudiar el significado al instante.' } },
+    { '@type': 'Question', name: '¿Puedo usarlo offline?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. La lista vive en el navegador, no se conecta a ningún servidor y funciona aun sin internet una vez cargada la página.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Idiomas" title="Palabra aleatoria en inglés"
+    intro="Sacá una palabra al azar del inglés con su traducción al español. Útil para vocabulario diario, juegos, prompts de escritura y práctica de pronunciación.">
+
+    <div slot="tool" class="rw">
+      <div class="rw-row">
+        <div>
+          <label for="rw-cat">Categoría</label>
+          <select id="rw-cat">
+            <option value="all">Todas</option>
+            <option value="common">Frecuentes</option>
+            <option value="advanced">Avanzadas</option>
+          </select>
+        </div>
+        <div>
+          <label for="rw-amount">Cantidad</label>
+          <input id="rw-amount" type="number" min="1" max="20" value="1" />
+        </div>
+      </div>
+      <button id="rw-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="rw-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="rw-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué una palabra aleatoria al día cambia tu inglés</h2>
+      <p>
+        El vocabulario es la limitación más concreta cuando aprendés un idioma. Sabés gramática, podés
+        seguir una serie con subtítulos, pero a la hora de hablar te falta esa palabra puntual. La técnica
+        de "una palabra al día" funciona porque despeja el camino: en lugar de estudiar cien términos que
+        nunca vas a usar, te enfocás en uno y lo metés en una oración real ese mismo día.
+      </p>
+
+      <h2>Cómo aprovechar esta herramienta</h2>
+      <ul>
+        <li><strong>Ritual matutino</strong> — sacá una palabra al despertarte y proponete usarla en una conversación, mensaje o post antes de dormir.</li>
+        <li><strong>Brainstorming creativo</strong> — escritores, diseñadores y publicistas usan palabras al azar para destrabar bloqueos: la palabra forzada empuja conexiones nuevas.</li>
+        <li><strong>Juegos en grupo</strong> — Pictionary improvisado, charadas o el clásico "armá una historia con esta palabra" para clases de inglés.</li>
+        <li><strong>Vocabulary journal</strong> — anotá la palabra, la traducción y una oración propia. En tres meses tenés 90 entradas reales.</li>
+      </ul>
+
+      <h2>Diferencia entre palabras frecuentes y avanzadas</h2>
+      <p>
+        Las palabras "frecuentes" son las que aparecen en los primeros 3.000 términos más usados del inglés:
+        verbos básicos, conectores, adjetivos comunes. Si recién empezás, quedate ahí: el rendimiento por
+        palabra estudiada es mucho mayor. Las "avanzadas" son términos que ves en literatura, prensa
+        especializada o conversaciones técnicas. Sirven para nivel intermedio-alto que ya domina el núcleo.
+      </p>
+
+      <h2>Estudiar bien una palabra nueva</h2>
+      <p>
+        No alcanza con leerla. Tres pasos rápidos: primero, decila en voz alta tres veces para grabar el
+        sonido. Segundo, escribí dos oraciones propias usándola en contextos distintos. Tercero, buscá un
+        sinónimo y un antónimo: eso fija el significado por contraste. Si querés cerrarlo, mandá un mensaje
+        a alguien usando la palabra; el uso real es lo que la mueve a memoria de largo plazo.
+      </p>
+
+      <h2>Errores típicos al estudiar vocabulario</h2>
+      <ul>
+        <li><strong>Listas largas sin contexto</strong> — memorizar 50 palabras en bloque tiene un olvido del 80% en una semana.</li>
+        <li><strong>Saltar la pronunciación</strong> — leer no es lo mismo que reconocer la palabra cuando alguien la dice rápido.</li>
+        <li><strong>No usarla</strong> — si nunca la sacaste de tu cuaderno, no la sabés de verdad.</li>
+        <li><strong>Traducción literal</strong> — muchas palabras inglesas no tienen un equivalente exacto; aprendelas por contexto, no por etiqueta.</li>
+      </ul>
+
+      <h2>Combinaciones útiles</h2>
+      <p>
+        Esta herramienta se complementa bien con un generador de adjetivos o sustantivos cuando estás
+        armando ejercicios de redacción para alumnos, o con un buscador de rimas si trabajás letras de
+        canciones. Para clase, una rutina simple: tres palabras al azar y los alumnos arman un párrafo
+        coherente que las contenga todas. Funciona desde primaria hasta nivel C1.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve una palabra aleatoria en inglés?</summary><p>Para ampliar vocabulario, romper bloqueos creativos, entrenar pronunciación o jugar juegos de palabras en clase.</p></details>
+      <details><summary>¿Las palabras tienen traducción al español?</summary><p>Sí, cada palabra incluye una traducción corta para fijar el significado al instante.</p></details>
+      <details><summary>¿Puedo usarlo offline?</summary><p>Sí. Todo corre en el navegador, sin servidor, y funciona aun sin conexión una vez cargada la página.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const COMMON: [string, string][] = [
+    ['house','casa'],['water','agua'],['friend','amigo/a'],['book','libro'],['light','luz'],
+    ['street','calle'],['morning','mañana'],['night','noche'],['food','comida'],['music','música'],
+    ['work','trabajo'],['family','familia'],['child','niño/a'],['city','ciudad'],['country','país'],
+    ['river','río'],['mountain','montaña'],['table','mesa'],['chair','silla'],['window','ventana'],
+    ['door','puerta'],['paper','papel'],['picture','imagen'],['letter','carta'],['number','número'],
+    ['time','tiempo'],['year','año'],['month','mes'],['week','semana'],['hour','hora'],
+    ['minute','minuto'],['idea','idea'],['question','pregunta'],['answer','respuesta'],['voice','voz'],
+    ['hand','mano'],['head','cabeza'],['heart','corazón'],['mind','mente'],['plan','plan'],
+    ['change','cambio'],['help','ayuda'],['hope','esperanza'],['truth','verdad'],['power','poder']
+  ];
+  const ADVANCED: [string, string][] = [
+    ['serendipity','casualidad afortunada'],['ephemeral','efímero'],['quintessential','por excelencia'],
+    ['ubiquitous','omnipresente'],['mellifluous','melodioso'],['perseverance','perseverancia'],
+    ['eloquent','elocuente'],['resilience','resiliencia'],['ambiguous','ambiguo'],['intricate','intrincado'],
+    ['nuance','matiz'],['paradigm','paradigma'],['scrutiny','escrutinio'],['threshold','umbral'],
+    ['vivid','vívido'],['plausible','plausible'],['endeavor','empresa, intento'],['steadfast','firme'],
+    ['humility','humildad'],['integrity','integridad'],['benevolent','benévolo'],['candid','franco'],
+    ['diligent','diligente'],['genuine','genuino'],['profound','profundo'],['sincere','sincero'],
+    ['tenacious','tenaz'],['vigilant','atento'],['compelling','convincente'],['enduring','duradero']
+  ];
+
+  const catEl = document.getElementById('rw-cat') as HTMLSelectElement;
+  const amEl = document.getElementById('rw-amount') as HTMLInputElement;
+  const out = document.getElementById('rw-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('rw-gen') as HTMLButtonElement;
+  const cp = document.getElementById('rw-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function build() {
+    const c = catEl.value;
+    let pool: [string,string][] = [];
+    if (c === 'common') pool = COMMON;
+    else if (c === 'advanced') pool = ADVANCED;
+    else pool = [...COMMON, ...ADVANCED];
+    const n = Math.max(1, Math.min(20, parseInt(amEl.value || '1', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) { const p = pick(pool); lines.push(`${p[0]} — ${p[1]}`); }
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', build);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+  build();
+</script>

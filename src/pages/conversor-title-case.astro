@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Conversor a Title Case | Genfy';
+const description = 'Convertí texto a Title Case (mayúscula inicial en cada palabra principal). Ideal para títulos, headings y publicaciones en inglés.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es Title Case?', acceptedAnswer: { '@type': 'Answer', text: 'Es la convención inglesa donde se ponen mayúsculas en la primera letra de las palabras principales de un título, dejando minúsculas en artículos y preposiciones cortas.' } },
+    { '@type': 'Question', name: '¿Sirve para textos en español?', acceptedAnswer: { '@type': 'Answer', text: 'En español los títulos típicamente se escriben con mayúscula solo en la primera palabra (sentence case). Usá Title Case para contenidos en inglés o estilo editorial específico.' } },
+    { '@type': 'Question', name: '¿Funciona offline?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. La conversión ocurre en el navegador, sin enviar datos a ningún servidor.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto" title="Conversor a Title Case"
+    intro="Convertí cualquier texto a Title Case (mayúscula en palabras principales) con un click. Ideal para titulares en inglés, headings de SEO y publicaciones bilingües.">
+
+    <div slot="tool">
+      <label for="tc-in">Texto</label>
+      <textarea id="tc-in" rows="6" placeholder="Pegá tu texto acá..." style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div style="margin-top:0.75rem;">
+        <button id="tc-go" class="btn btn-primary" type="button">Convertir</button>
+        <button id="tc-copy" class="btn btn-ghost" type="button">Copiar resultado</button>
+      </div>
+      <label for="tc-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="tc-out" rows="6" readonly style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>¿Qué es Title Case?</h2>
+      <p>
+        Title Case es la convención inglesa que pone en mayúscula la primera letra de cada palabra
+        importante de un título: "The Quick Brown Fox Jumps Over the Lazy Dog". Las palabras "menores"
+        (artículos, conjunciones cortas, preposiciones cortas) se mantienen en minúscula salvo que abran
+        el título. Es la regla más usada en headlines, titulares de prensa, libros y headings de la web en
+        inglés.
+      </p>
+
+      <h2>Cuándo usar Title Case</h2>
+      <ul>
+        <li><strong>Contenido en inglés</strong> — blogs, papers, libros, prensa, headings de páginas web.</li>
+        <li><strong>Títulos de canciones, películas, libros</strong> — convención global, casi obligatoria.</li>
+        <li><strong>Headings y subheadings</strong> en sitios web orientados al mercado anglo.</li>
+        <li><strong>Eventos y campañas</strong> de naming bilingüe que exporten al exterior.</li>
+        <li><strong>Email subjects</strong> en cuentas formales en inglés.</li>
+      </ul>
+
+      <h2>Cuándo evitar Title Case</h2>
+      <p>
+        En español, lo correcto en la mayoría de los casos es <em>sentence case</em>: "El zorro marrón
+        salta sobre el perro perezoso", con mayúscula solo en la primera palabra y nombres propios. Aplicar
+        Title Case en español queda raro y poco profesional, salvo en marcas, nombres propios compuestos o
+        decisiones editoriales explícitas. Si tu publicación es académica en español, seguí las normas APA o
+        del manual editorial correspondiente.
+      </p>
+
+      <h2>Las palabras que NO se capitalizan</h2>
+      <p>
+        Las reglas tradicionales de AP, Chicago y New York Times coinciden en mantener minúsculas a:
+        artículos (a, an, the), conjunciones coordinantes cortas (and, but, or, nor, for, yet, so) y
+        preposiciones de hasta tres o cuatro letras (in, on, at, of, to, up, by, for). Pero <em>siempre</em>
+        capitalizan la primera y la última palabra del título, sin importar qué sean.
+      </p>
+
+      <h2>Variantes y matices</h2>
+      <ul>
+        <li><strong>Chicago Manual of Style</strong> — preposiciones siempre minúsculas, sin importar el largo.</li>
+        <li><strong>AP Stylebook</strong> — capitaliza preposiciones de cuatro o más letras.</li>
+        <li><strong>APA 7</strong> — capitaliza la mayoría de palabras de cuatro o más letras.</li>
+        <li><strong>Estilo editorial propio</strong> — muchas marcas definen sus propias reglas.</li>
+      </ul>
+
+      <h2>Errores típicos</h2>
+      <p>
+        El error más común es capitalizar absolutamente todas las palabras (incluyendo "the", "of", "in"),
+        lo que se conoce como "all caps style" y se ve amateur. El segundo error más común es no capitalizar
+        la primera o la última palabra. La tercera trampa son los verbos cortos como "is", "be", "go": son
+        verbos, así que SIEMPRE van en mayúscula, aunque tengan dos letras.
+      </p>
+
+      <h2>Cómo lo procesa el conversor</h2>
+      <p>
+        Tomamos tu texto, lo separamos en palabras y aplicamos las reglas estándar AP/Chicago combinadas:
+        primera y última palabra siempre en mayúscula, palabras "menores" cortas en minúscula, todo lo
+        demás capitalizado. Si necesitás un estilo distinto, podés ajustar manualmente el resultado luego
+        de copiarlo.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es Title Case?</summary><p>Convención inglesa: mayúscula en palabras principales del título, minúscula en artículos y preposiciones cortas.</p></details>
+      <details><summary>¿Sirve para textos en español?</summary><p>Solo si tu estilo editorial lo pide. En general, en español se usa sentence case.</p></details>
+      <details><summary>¿Funciona offline?</summary><p>Sí. Todo se procesa en tu navegador sin enviar datos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const SMALL = new Set(['a','an','the','and','but','or','nor','for','yet','so','at','by','in','of','on','to','up','as','is','if','it']);
+  const inEl = document.getElementById('tc-in') as HTMLTextAreaElement;
+  const outEl = document.getElementById('tc-out') as HTMLTextAreaElement;
+  const go = document.getElementById('tc-go') as HTMLButtonElement;
+  const cp = document.getElementById('tc-copy') as HTMLButtonElement;
+
+  function titleCase(str: string) {
+    return str.split(/(\s+)/).map((tok, i, arr) => {
+      if (/^\s+$/.test(tok)) return tok;
+      const lower = tok.toLowerCase();
+      const isFirst = i === 0;
+      const isLast = i === arr.length - 1 || arr.slice(i+1).every(t => /^\s+$/.test(t));
+      const word = lower.replace(/[A-z]+/g, m => m);
+      if (!isFirst && !isLast && SMALL.has(lower.replace(/[^a-z]/g, ''))) return lower;
+      return tok.charAt(0).toUpperCase() + tok.slice(1).toLowerCase();
+    }).join('');
+  }
+
+  go.addEventListener('click', () => { outEl.value = titleCase(inEl.value); });
+  cp.addEventListener('click', async () => { if (!outEl.value) return; await navigator.clipboard.writeText(outEl.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

@@ -1,0 +1,162 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Markdown a HTML — Conversor gratis | Genfy';
+const description = 'Convertí Markdown a HTML al instante en el navegador: títulos, listas, links, código, énfasis y más. Sin enviar tu texto a ningún servidor.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es Markdown?', acceptedAnswer: { '@type': 'Answer', text: 'Es un lenguaje de marcado ligero creado por John Gruber en 2004. Usa caracteres simples (#, *, -, []) para indicar formato, y se convierte en HTML válido. Es el estándar de facto en GitHub, Notion, Slack y muchos blogs.' } },
+    { '@type': 'Question', name: '¿Mi texto se sube a algún servidor?', acceptedAnswer: { '@type': 'Answer', text: 'No. Toda la conversión se hace en tu navegador con JavaScript. El contenido nunca sale de tu dispositivo. Podés cerrar la conexión a internet y seguirá funcionando.' } },
+    { '@type': 'Question', name: '¿Soporta GitHub Flavored Markdown?', acceptedAnswer: { '@type': 'Answer', text: 'Soporta los elementos más comunes: títulos, listas, énfasis, código, links e imágenes. Para tablas, listas de tareas y otros extras de GFM, usá un parser completo como marked.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Conversor" title="Markdown a HTML"
+    intro="Pegá tu Markdown y obtené HTML limpio al instante. Conversión 100% en el navegador, sin enviar nada a ningún servidor.">
+
+    <div slot="tool">
+      <label for="md-in">Markdown</label>
+      <textarea id="md-in" rows="10" style="font-family: var(--font-mono); font-size: 0.9rem;"># Hola mundo
+
+Esto es **Markdown** convertido a *HTML*.
+
+- Item 1
+- Item 2
+
+[Genfy](https://genfy.net)
+
+`código inline`</textarea>
+      <button id="md-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Convertir</button>
+      <button id="md-copy" class="btn btn-ghost" type="button">Copiar HTML</button>
+      <label for="md-out" style="margin-top:1rem;">HTML</label>
+      <textarea id="md-out" rows="10" readonly style="font-family: var(--font-mono); font-size: 0.9rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es Markdown y por qué se volvió universal</h2>
+      <p>
+        Markdown lo creó John Gruber en 2004 con una idea simple: que un texto plano pueda ser leído tal cual y, al mismo tiempo, convertirse a HTML estructurado. Veinte años después es el formato dominante en READMEs de GitHub, en Notion, en Slack, en Discord, en la mayoría de generadores de sitios estáticos. Si escribís contenido técnico, ya conocés sus reglas.
+      </p>
+
+      <h2>Sintaxis básica que cubre este conversor</h2>
+      <ul>
+        <li><strong>Títulos:</strong> <code># H1</code>, <code>## H2</code>, hasta <code>###### H6</code>.</li>
+        <li><strong>Énfasis:</strong> <code>**negrita**</code>, <code>*cursiva*</code>, <code>~~tachado~~</code>.</li>
+        <li><strong>Listas:</strong> <code>- item</code> o <code>1. item</code> para ordenadas.</li>
+        <li><strong>Links:</strong> <code>[texto](url)</code>.</li>
+        <li><strong>Imágenes:</strong> <code>![alt](url)</code>.</li>
+        <li><strong>Código:</strong> <code>`inline`</code> o triple backtick para bloques.</li>
+        <li><strong>Citas:</strong> <code>&gt; cita</code>.</li>
+        <li><strong>Líneas horizontales:</strong> tres guiones (---).</li>
+      </ul>
+
+      <h2>Por qué convertir en el navegador</h2>
+      <p>
+        La mayoría de conversores online suben tu texto a un servidor. Para un README público no importa, pero si estás procesando un draft confidencial, notas internas o un documento legal, no querés que tu contenido pase por máquinas que no controlás. Este conversor corre 100% en JavaScript local: tu texto nunca sale del navegador.
+      </p>
+
+      <h2>Cuándo usar Markdown y cuándo no</h2>
+      <p>
+        Markdown brilla cuando el contenido es lineal: blog posts, documentación, mensajes en chat, READMEs, issues. Se queda corto cuando necesitás layouts complejos (multi columnas, posicionamiento absoluto, animaciones) o atributos específicos de HTML (data-attributes, aria-labels). Para esos casos, escribir HTML directo o usar MDX (Markdown + JSX) es mejor.
+      </p>
+
+      <h2>Variantes que existen</h2>
+      <ul>
+        <li><strong>CommonMark:</strong> el intento de estandarizar el Markdown original. Define ambigüedades del spec de Gruber.</li>
+        <li><strong>GitHub Flavored Markdown (GFM):</strong> agrega tablas, listas de tareas, autolinks, mención de usuarios.</li>
+        <li><strong>MDX:</strong> permite incluir componentes JSX dentro de Markdown. Lo usan Docusaurus, Astro, Next.</li>
+        <li><strong>Obsidian / Notion:</strong> sus propios dialectos con backlinks, embeds y bases de datos.</li>
+      </ul>
+
+      <h2>Tips de productividad</h2>
+      <ul>
+        <li>Aprendé los 5 atajos más comunes (#, **, -, [], `) y vas a escribir más rápido en cualquier herramienta moderna.</li>
+        <li>Usá un editor con preview en vivo (Typora, Obsidian, VS Code con la extensión Markdown Preview Enhanced).</li>
+        <li>Para tablas, usá un generador específico — escribirlas a mano en Markdown es tedioso.</li>
+        <li>Si vas a publicar el HTML en un sitio, sanitizá la salida si el contenido viene de usuarios externos.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es Markdown?</summary><p>Lenguaje de marcado ligero creado en 2004. Usa caracteres simples para indicar formato y se convierte a HTML.</p></details>
+      <details><summary>¿Mi texto se sube a algún servidor?</summary><p>No. Toda la conversión es local en tu navegador. El contenido nunca sale de tu dispositivo.</p></details>
+      <details><summary>¿Soporta GitHub Flavored Markdown?</summary><p>Soporta los elementos comunes: títulos, listas, énfasis, código, links, imágenes. Para tablas y task lists usá un parser completo.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const inEl = document.getElementById('md-in') as HTMLTextAreaElement;
+  const out = document.getElementById('md-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('md-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('md-copy') as HTMLButtonElement;
+
+  function escapeHtml(s: string) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function md2html(md: string): string {
+    const lines = md.split('\n');
+    const html: string[] = [];
+    let inCode = false, inUL = false, inOL = false, codeLang = '';
+    const codeBuf: string[] = [];
+
+    function closeLists() {
+      if (inUL) { html.push('</ul>'); inUL = false; }
+      if (inOL) { html.push('</ol>'); inOL = false; }
+    }
+
+    function inline(s: string): string {
+      s = escapeHtml(s);
+      s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+      s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+      s = s.replace(/~~([^~]+)~~/g, '<del>$1</del>');
+      s = s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img alt="$1" src="$2" />');
+      s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+      return s;
+    }
+
+    for (let i = 0; i < lines.length; i++) {
+      const ln = lines[i];
+      const fence = ln.match(/^```(\w*)/);
+      if (fence) {
+        if (!inCode) { closeLists(); inCode = true; codeLang = fence[1] || ''; codeBuf.length = 0; }
+        else { html.push('<pre><code' + (codeLang ? ' class="language-' + codeLang + '"' : '') + '>' + escapeHtml(codeBuf.join('\n')) + '</code></pre>'); inCode = false; }
+        continue;
+      }
+      if (inCode) { codeBuf.push(ln); continue; }
+
+      const h = ln.match(/^(#{1,6})\s+(.*)$/);
+      if (h) { closeLists(); html.push('<h' + h[1].length + '>' + inline(h[2]) + '</h' + h[1].length + '>'); continue; }
+      if (/^---+$/.test(ln)) { closeLists(); html.push('<hr />'); continue; }
+      const q = ln.match(/^>\s?(.*)$/);
+      if (q) { closeLists(); html.push('<blockquote><p>' + inline(q[1]) + '</p></blockquote>'); continue; }
+      const ul = ln.match(/^[-*]\s+(.*)$/);
+      if (ul) { if (inOL) { html.push('</ol>'); inOL = false; } if (!inUL) { html.push('<ul>'); inUL = true; } html.push('<li>' + inline(ul[1]) + '</li>'); continue; }
+      const ol = ln.match(/^\d+\.\s+(.*)$/);
+      if (ol) { if (inUL) { html.push('</ul>'); inUL = false; } if (!inOL) { html.push('<ol>'); inOL = true; } html.push('<li>' + inline(ol[1]) + '</li>'); continue; }
+      if (ln.trim() === '') { closeLists(); continue; }
+      closeLists();
+      html.push('<p>' + inline(ln) + '</p>');
+    }
+    closeLists();
+    if (inCode) html.push('<pre><code>' + escapeHtml(codeBuf.join('\n')) + '</code></pre>');
+    return html.join('\n');
+  }
+
+  function run() { out.value = md2html(inEl.value || ''); }
+  inEl.addEventListener('input', run);
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

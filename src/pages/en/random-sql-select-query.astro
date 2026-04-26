@@ -1,0 +1,282 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random SQL SELECT Query Generator | Genfy';
+const description = 'Generate random SELECT queries with joins, where, group by and order by. Useful for SQL practice and documentation samples.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is this generator for?', acceptedAnswer: { '@type': 'Answer', text: 'For practicing SQL, building documentation samples or having a base query you tweak manually.' } },
+    { '@type': 'Question', name: 'Which dialect?', acceptedAnswer: { '@type': 'Answer', text: 'The queries use ANSI standard SQL, compatible with PostgreSQL, MySQL, SQLite and SQL Server with minimal adjustments.' } },
+    { '@type': 'Question', name: 'Why use explicit JOIN?', acceptedAnswer: { '@type': 'Answer', text: 'Explicit JOINs are more readable, separate filter conditions from join conditions and prevent accidental cartesian products.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Tech / Dev"
+    title="Random SQL SELECT Query"
+    intro="Generate SELECT queries with JOIN, WHERE, GROUP BY and ORDER BY for practice or documentation."
+  >
+    <div slot="tool" class="sql-tool">
+      <div class="sql-grid">
+        <div>
+          <label for="sql-complexity">Complexity</label>
+          <select id="sql-complexity">
+            <option value="simple">Simple</option>
+            <option value="join">With JOIN</option>
+            <option value="agg">Aggregated (GROUP BY)</option>
+            <option value="window">Window function</option>
+            <option value="cte">With CTE</option>
+          </select>
+        </div>
+        <div>
+          <label for="sql-domain">Domain</label>
+          <select id="sql-domain">
+            <option value="ecommerce">E-commerce</option>
+            <option value="hr">HR</option>
+            <option value="blog">Blog</option>
+          </select>
+        </div>
+      </div>
+      <div class="sql-actions">
+        <button id="sql-gen" class="btn btn-primary" type="button">Generate</button>
+        <button id="sql-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+      </div>
+      <textarea id="sql-out" class="mono" rows="12" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>SELECT structure</h2>
+      <p>
+        The logical evaluation order is: FROM &rarr; JOIN &rarr; WHERE &rarr; GROUP BY &rarr;
+        HAVING &rarr; SELECT &rarr; ORDER BY &rarr; LIMIT. Counterintuitive: although you write
+        SELECT first, it runs near the end. That's why you can't use a SELECT alias inside the
+        WHERE of the same query.
+      </p>
+
+      <h2>Explicit vs implicit JOINs</h2>
+      <p>
+        It used to be common to write <code>FROM a, b WHERE a.id = b.a_id</code>. Today the
+        correct form is <code>FROM a JOIN b ON a.id = b.a_id</code>. Explicit syntax separates
+        join conditions from filters, prevents accidental cartesian products and makes the join
+        type clear (INNER, LEFT, RIGHT, FULL).
+      </p>
+
+      <h2>WHERE vs HAVING</h2>
+      <p>
+        WHERE filters rows before aggregation; HAVING filters groups after. If you don't use
+        GROUP BY, use WHERE. <code>HAVING COUNT(*) &gt; 10</code> makes sense; <code>HAVING age
+        &gt; 18</code> without GROUP BY is likely a bug.
+      </p>
+
+      <h2>Subqueries vs JOINs vs CTEs</h2>
+      <p>
+        For data you'll use multiple times, a CTE (<code>WITH x AS (SELECT ...)</code>) is more
+        readable than repeating a subquery. Modern planners typically optimize them like inline
+        subqueries. For simple cases, a JOIN is usually faster and clearer than a subquery.
+      </p>
+
+      <h2>Window functions</h2>
+      <p>
+        ROW_NUMBER, RANK, DENSE_RANK, LAG, LEAD and aggregations with OVER allow per-partition
+        calculations without collapsing rows. For "top 3 products per category", use
+        <code>ROW_NUMBER() OVER (PARTITION BY category ORDER BY sales DESC)</code> and filter
+        where row_number &le; 3 (in a CTE).
+      </p>
+
+      <h2>Performance: indexes and EXPLAIN</h2>
+      <p>
+        Before optimizing, run <code>EXPLAIN ANALYZE</code> (Postgres) or <code>EXPLAIN</code>
+        (MySQL). Look for sequential scans on large tables, sorts without index and nested loops
+        with many iterations. Rule of thumb: index columns used in JOIN and WHERE; on queries
+        with ORDER BY + LIMIT, an index on the order column helps.
+      </p>
+
+      <h2>SELECT * is an anti-pattern</h2>
+      <p>
+        It pulls all columns, transfers bytes you don't use, prevents covering indexes and breaks
+        if someone adds a sensitive column. List the columns you need explicitly. Genfy generates
+        explicit SELECT in every example.
+      </p>
+
+      <h2>SQL injection</h2>
+      <p>
+        Never concatenate user input into the query. Use parameters (<code>$1, $2</code> in
+        Postgres, <code>?</code> in MySQL) or an ORM that handles them. The queries here are
+        examples for understanding; in production use prepared statements.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is it for?</summary><p>Practice SQL, build documentation samples or get base queries.</p></details>
+      <details><summary>Which dialect?</summary><p>ANSI standard SQL, compatible with most relational databases.</p></details>
+      <details><summary>Why explicit JOIN?</summary><p>More readable, separates joins from filters, prevents cartesian products.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .sql-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .sql-grid { grid-template-columns: 1fr; } }
+  .sql-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const cx = document.getElementById('sql-complexity') as HTMLSelectElement;
+  const dom = document.getElementById('sql-domain') as HTMLSelectElement;
+  const out = document.getElementById('sql-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('sql-gen') as HTMLButtonElement;
+  const copy = document.getElementById('sql-copy') as HTMLButtonElement;
+
+  type Q = { simple: string; join: string; agg: string; window: string; cte: string };
+  const queries: Record<string, Q> = {
+    ecommerce: {
+      simple: `SELECT id, sku, name, price, stock
+FROM products
+WHERE stock > 0
+  AND price BETWEEN 10 AND 500
+ORDER BY price DESC
+LIMIT 50;`,
+      join: `SELECT o.id, o.created_at, c.name AS customer, p.name AS product, oi.quantity, oi.price
+FROM orders o
+INNER JOIN customers c ON c.id = o.customer_id
+INNER JOIN order_items oi ON oi.order_id = o.id
+INNER JOIN products p ON p.id = oi.product_id
+WHERE o.status = 'paid'
+  AND o.created_at >= CURRENT_DATE - INTERVAL '30 days'
+ORDER BY o.created_at DESC;`,
+      agg: `SELECT c.id, c.name, COUNT(o.id) AS orders_count, SUM(o.total) AS total_spent
+FROM customers c
+LEFT JOIN orders o ON o.customer_id = c.id AND o.status = 'paid'
+GROUP BY c.id, c.name
+HAVING COUNT(o.id) > 0
+ORDER BY total_spent DESC
+LIMIT 20;`,
+      window: `SELECT category, name, sales,
+       ROW_NUMBER() OVER (PARTITION BY category ORDER BY sales DESC) AS rn,
+       SUM(sales) OVER (PARTITION BY category) AS category_total
+FROM (
+  SELECT p.category, p.name, SUM(oi.quantity * oi.price) AS sales
+  FROM products p
+  JOIN order_items oi ON oi.product_id = p.id
+  GROUP BY p.category, p.name
+) t
+ORDER BY category, rn;`,
+      cte: `WITH monthly_sales AS (
+  SELECT DATE_TRUNC('month', o.created_at) AS month,
+         SUM(o.total) AS revenue
+  FROM orders o
+  WHERE o.status = 'paid'
+  GROUP BY 1
+),
+ranked AS (
+  SELECT month, revenue,
+         LAG(revenue) OVER (ORDER BY month) AS prev_revenue
+  FROM monthly_sales
+)
+SELECT month, revenue, prev_revenue,
+       ROUND(100.0 * (revenue - prev_revenue) / prev_revenue, 2) AS growth_pct
+FROM ranked
+ORDER BY month;`,
+    },
+    hr: {
+      simple: `SELECT id, full_name, department, salary
+FROM employees
+WHERE active = true
+ORDER BY salary DESC
+LIMIT 25;`,
+      join: `SELECT e.id, e.full_name, d.name AS department, p.title AS position
+FROM employees e
+INNER JOIN departments d ON d.id = e.department_id
+INNER JOIN positions p ON p.id = e.position_id
+WHERE e.active = true
+ORDER BY d.name, e.full_name;`,
+      agg: `SELECT d.name AS department, COUNT(*) AS headcount, AVG(e.salary) AS avg_salary
+FROM employees e
+INNER JOIN departments d ON d.id = e.department_id
+WHERE e.active = true
+GROUP BY d.name
+ORDER BY headcount DESC;`,
+      window: `SELECT full_name, department_id, salary,
+       RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS dept_rank,
+       AVG(salary) OVER (PARTITION BY department_id) AS dept_avg
+FROM employees
+WHERE active = true
+ORDER BY department_id, dept_rank;`,
+      cte: `WITH dept_avg AS (
+  SELECT department_id, AVG(salary) AS avg_salary
+  FROM employees
+  WHERE active = true
+  GROUP BY department_id
+)
+SELECT e.full_name, e.salary, d.avg_salary,
+       ROUND(e.salary - d.avg_salary, 2) AS diff_from_avg
+FROM employees e
+JOIN dept_avg d ON d.department_id = e.department_id
+WHERE e.active = true
+ORDER BY diff_from_avg DESC;`,
+    },
+    blog: {
+      simple: `SELECT id, slug, title, published_at
+FROM posts
+WHERE published = true
+ORDER BY published_at DESC
+LIMIT 10;`,
+      join: `SELECT p.id, p.title, u.name AS author, COUNT(c.id) AS comments_count
+FROM posts p
+INNER JOIN users u ON u.id = p.author_id
+LEFT JOIN comments c ON c.post_id = p.id
+WHERE p.published = true
+GROUP BY p.id, p.title, u.name
+ORDER BY p.published_at DESC
+LIMIT 20;`,
+      agg: `SELECT u.id, u.name, COUNT(p.id) AS posts_count, MAX(p.published_at) AS last_post
+FROM users u
+LEFT JOIN posts p ON p.author_id = u.id AND p.published = true
+GROUP BY u.id, u.name
+HAVING COUNT(p.id) > 5
+ORDER BY posts_count DESC;`,
+      window: `SELECT title, published_at,
+       LAG(title) OVER (ORDER BY published_at) AS previous_post,
+       LEAD(title) OVER (ORDER BY published_at) AS next_post
+FROM posts
+WHERE published = true
+ORDER BY published_at DESC
+LIMIT 50;`,
+      cte: `WITH tag_stats AS (
+  SELECT t.name, COUNT(pt.post_id) AS post_count
+  FROM tags t
+  JOIN post_tags pt ON pt.tag_id = t.id
+  GROUP BY t.name
+)
+SELECT name, post_count
+FROM tag_stats
+WHERE post_count >= 3
+ORDER BY post_count DESC
+LIMIT 25;`,
+    },
+  };
+
+  function build() {
+    const q = queries[dom.value][cx.value as keyof Q];
+    out.value = q;
+  }
+  gen.addEventListener('click', build);
+  [cx, dom].forEach(el => el.addEventListener('change', build));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copied';
+    setTimeout(() => { icon.textContent = 'Copy'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

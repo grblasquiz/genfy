@@ -1,0 +1,170 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de variables CSS | Genfy';
+const description = 'Generá un :root con tus custom properties: colores, espaciados, tipografía, radios. Listo para tu design system.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Variables CSS o Sass?', acceptedAnswer: { '@type': 'Answer', text: 'Las variables CSS funcionan en runtime y respetan el cascade. Las de Sass se compilan a valores estáticos. Para temas, dark mode y JS dinámico, CSS variables.' } },
+    { '@type': 'Question', name: '¿Cómo cambio un valor con JS?', acceptedAnswer: { '@type': 'Answer', text: 'document.documentElement.style.setProperty("--color", "#fff"). Funciona en runtime sin recompilar nada.' } },
+    { '@type': 'Question', name: '¿Las puedo usar dentro de @media?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Podés redefinir variables dentro de un @media para cambiar todo el sistema según el viewport o el modo de color.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Generador de variables CSS"
+    intro="Definí colores, espaciados, tipografía y radios. Generá un bloque :root listo para pegar en tu hoja de estilos.">
+
+    <div slot="tool" class="cv">
+      <div class="cv-grid">
+        <div>
+          <label for="cv-prim">Color primario</label>
+          <input id="cv-prim" type="color" value="#0f172a" />
+        </div>
+        <div>
+          <label for="cv-acc">Color de acento</label>
+          <input id="cv-acc" type="color" value="#059669" />
+        </div>
+        <div>
+          <label for="cv-bg">Fondo</label>
+          <input id="cv-bg" type="color" value="#ffffff" />
+        </div>
+        <div>
+          <label for="cv-text">Texto</label>
+          <input id="cv-text" type="color" value="#09090b" />
+        </div>
+        <div>
+          <label for="cv-radius">Radio base (px)</label>
+          <input id="cv-radius" type="number" value="8" />
+        </div>
+        <div>
+          <label for="cv-space">Spacing base (rem)</label>
+          <input id="cv-space" type="number" step="0.25" value="1" />
+        </div>
+      </div>
+
+      <div class="cv-actions">
+        <button id="cv-cp" class="btn btn-primary" type="button">Copiar CSS</button>
+      </div>
+
+      <pre><code id="cv-out"></code></pre>
+    </div>
+
+    <div slot="content">
+      <h2>Qué son las variables CSS</h2>
+      <p>Las variables CSS (también llamadas custom properties) son valores reutilizables que se definen una vez y se referencian en cualquier parte del CSS. La sintaxis es <code>--mi-variable: valor</code> para definir y <code>var(--mi-variable)</code> para usar. A diferencia de las variables de Sass, las CSS viven en runtime: podés cambiarlas con JS o con media queries y todo el sistema se actualiza.</p>
+
+      <h2>Por qué importan</h2>
+      <ul>
+        <li><strong>Single source of truth</strong>: cambiás un valor y se actualiza en todos lados.</li>
+        <li><strong>Theming dinámico</strong>: dark mode, alto contraste, temas personalizados.</li>
+        <li><strong>Componentes reutilizables</strong>: los componentes consumen variables, no valores fijos.</li>
+        <li><strong>Cascade nativo</strong>: las variables respetan herencia, lo que permite scoped overrides.</li>
+      </ul>
+
+      <h2>Estructura recomendada</h2>
+      <p>El patrón estándar es definir todas las variables globales en :root:</p>
+      <pre><code>:root &lcub;
+  --color-primary: #0f172a;
+  --color-accent: #059669;
+  --bg: #ffffff;
+  --text: #09090b;
+  --radius: 8px;
+  --space: 1rem;
+&rcub;</code></pre>
+      <p>Después usás <code>var(--color-primary)</code> donde haga falta.</p>
+
+      <h2>Categorías típicas</h2>
+      <ul>
+        <li><strong>Color</strong>: primario, acento, fondo, texto, bordes, estados (success, error, warning).</li>
+        <li><strong>Tipografía</strong>: font-family, tamaños, pesos, line-heights.</li>
+        <li><strong>Spacing</strong>: una escala (4, 8, 16, 24, 32, 48, 64).</li>
+        <li><strong>Radios</strong>: sm, md, lg, xl o uno único base.</li>
+        <li><strong>Sombras</strong>: shadow-xs, sm, md, lg.</li>
+        <li><strong>Transiciones</strong>: tiempos y easings consistentes.</li>
+      </ul>
+
+      <h2>Dark mode con una media query</h2>
+      <p>El uso más poderoso de variables es para dark mode. Definís el set claro en :root y el oscuro dentro de @media (prefers-color-scheme: dark). Los componentes no saben de modos: consumen --bg y --text, y CSS hace el resto.</p>
+      <pre><code>:root &lcub;
+  --bg: white;
+  --text: black;
+&rcub;
+@media (prefers-color-scheme: dark) &lcub;
+  :root &lcub;
+    --bg: black;
+    --text: white;
+  &rcub;
+&rcub;</code></pre>
+
+      <h2>Manipulación con JavaScript</h2>
+      <p>Para cambiar una variable desde JS:</p>
+      <pre><code>document.documentElement.style.setProperty('--color', '#fff');</code></pre>
+      <p>Esto te permite implementar selectores de tema, sliders que afectan el design system en vivo, modos de accesibilidad y cualquier cambio dinámico sin recompilar nada.</p>
+
+      <h2>Buenas prácticas</h2>
+      <p>Nombres semánticos por sobre nombres descriptivos: <code>--color-primary</code> es mejor que <code>--blue</code>. Si mañana el primario cambia a verde, no tenés que renombrar todo. Mantené una escala consistente para spacings y tipografía: 4, 8, 16, 24 funciona mejor que valores arbitrarios. Y agrupá las variables por categoría con comentarios claros.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿CSS variables o Sass?</summary><p>CSS para runtime, theming y JS dinámico. Sass para compilación estática.</p></details>
+      <details><summary>¿Cómo las cambio con JS?</summary><p>document.documentElement.style.setProperty(). Funciona sin recompilar.</p></details>
+      <details><summary>¿Funcionan en @media?</summary><p>Sí. Podés redefinirlas en media queries para cambiar el sistema según viewport o tema.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .cv-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+  @media (max-width: 600px) { .cv-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const prim = document.getElementById('cv-prim') as HTMLInputElement;
+  const acc = document.getElementById('cv-acc') as HTMLInputElement;
+  const bg = document.getElementById('cv-bg') as HTMLInputElement;
+  const text = document.getElementById('cv-text') as HTMLInputElement;
+  const radius = document.getElementById('cv-radius') as HTMLInputElement;
+  const space = document.getElementById('cv-space') as HTMLInputElement;
+  const out = document.getElementById('cv-out') as HTMLElement;
+  const cp = document.getElementById('cv-cp') as HTMLButtonElement;
+
+  function render() {
+    const r = +radius.value;
+    const s = +space.value;
+    out.textContent = `:root {
+  /* Colors */
+  --color-primary: ${prim.value};
+  --color-accent: ${acc.value};
+  --bg: ${bg.value};
+  --text: ${text.value};
+
+  /* Radius */
+  --radius-sm: ${r / 2}px;
+  --radius: ${r}px;
+  --radius-lg: ${r * 1.5}px;
+
+  /* Spacing */
+  --space-1: ${s * 0.25}rem;
+  --space-2: ${s * 0.5}rem;
+  --space-3: ${s}rem;
+  --space-4: ${s * 1.5}rem;
+  --space-5: ${s * 2}rem;
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, monospace;
+}`;
+  }
+  [prim, acc, bg, text, radius, space].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar CSS', 1500);
+  });
+  render();
+</script>

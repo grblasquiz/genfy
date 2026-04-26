@@ -1,0 +1,139 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Sugeridor de sinónimos | Genfy';
+const description = 'Encontrá sinónimos en español para mejorar tu redacción. Ingresá una palabra y obtené alternativas listas para copiar y pegar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuántos sinónimos devuelve por palabra?', acceptedAnswer: { '@type': 'Answer', text: 'Entre 3 y 8 según la palabra. Mostramos los más usados primero, evitando regionalismos cerrados.' } },
+    { '@type': 'Question', name: '¿Funciona offline?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. La base de sinónimos vive en el navegador y no consulta servidores externos.' } },
+    { '@type': 'Question', name: '¿Tiene en cuenta el contexto?', acceptedAnswer: { '@type': 'Answer', text: 'No siempre: una palabra puede tener varios sentidos. Revisá manualmente que el sinónimo encaje con tu oración antes de usarlo.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Idiomas" title="Sugeridor de sinónimos"
+    intro="Ingresá una palabra y obtené sinónimos listos para usar. Pensado para escritura, copy, redacción académica y mejorar la variedad de tus textos.">
+
+    <div slot="tool">
+      <label for="syn-q">Palabra</label>
+      <input id="syn-q" type="text" placeholder="ej: rápido, hermoso, hablar..." />
+      <div style="margin-top:0.75rem;">
+        <button id="syn-go" class="btn btn-primary" type="button">Buscar sinónimos</button>
+        <button id="syn-copy" class="btn btn-ghost" type="button">Copiar</button>
+      </div>
+      <textarea id="syn-out" rows="8" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué importan los sinónimos</h2>
+      <p>
+        Repetir la misma palabra cinco veces en un párrafo distrae al lector y empobrece la prosa. Los
+        sinónimos son una de las herramientas más simples para subir la calidad de cualquier texto. No
+        hablamos solo de "buena escritura": en SEO, en copywriting, en correos profesionales y hasta en
+        chats, variar el vocabulario muestra precisión y oficio.
+      </p>
+
+      <h2>El error de los sinónimos automáticos</h2>
+      <p>
+        Mucha gente toma cualquier sinónimo de la lista y lo planta en su oración. Mal: dos palabras pueden
+        ser sinónimas en un sentido y completamente distintas en otro. "Banco" puede ser asiento o
+        institución financiera. "Tomar" puede ser agarrar o beber. Antes de reemplazar, leé la oración con
+        el candidato adentro y preguntate si conserva el matiz original.
+      </p>
+
+      <h2>Cuándo conviene usar sinónimos</h2>
+      <ul>
+        <li><strong>Repetición forzada</strong> — cuando notás que la misma palabra aparece tres o más veces en pocas líneas.</li>
+        <li><strong>Tono</strong> — algunos sinónimos son más formales o más coloquiales; usalos para ajustar el registro.</li>
+        <li><strong>Precisión</strong> — un sinónimo puede ser más exacto que la palabra que pusiste primero.</li>
+        <li><strong>SEO</strong> — variar términos relacionados ayuda a cubrir intenciones de búsqueda parecidas sin canibalizar.</li>
+        <li><strong>Estudio</strong> — buscar sinónimos amplía vocabulario receptivo y productivo.</li>
+      </ul>
+
+      <h2>Cuándo NO usar sinónimos</h2>
+      <ul>
+        <li><strong>Términos técnicos</strong> — si "polímero" es la palabra correcta, no la cambies por "material".</li>
+        <li><strong>Marca o producto</strong> — los nombres no se "sinonimizan".</li>
+        <li><strong>Cuando la repetición es deliberada</strong> — en retórica, repetir es énfasis.</li>
+        <li><strong>Para inflar un texto</strong> — sumar palabras "elegantes" no mejora; lo que mejora es decir lo correcto.</li>
+      </ul>
+
+      <h2>Diferencia entre sinónimo perfecto y aproximado</h2>
+      <p>
+        En la práctica, casi no existen sinónimos perfectos. La mayoría son <em>aproximados</em>: comparten
+        el núcleo del significado pero difieren en matices, connotación, frecuencia o registro. "Casa" y
+        "hogar" son cercanos pero no intercambiables: "vendí mi casa" no es lo mismo que "vendí mi hogar".
+        Ese tipo de detalles es lo que distingue una buena revisión de un reemplazo automático.
+      </p>
+
+      <h2>Una rutina de revisión</h2>
+      <p>
+        Cuando termines un borrador, hacé tres pasadas. Primera: buscá repeticiones obvias y reemplazá. Segunda:
+        marcá los verbos genéricos ("hacer", "tener", "ser", "decir") y buscales un verbo específico.
+        Tercera: leé en voz alta. Cualquier palabra que tropieces es candidata a un sinónimo más fluido.
+        En 15 minutos cualquier texto sube uno o dos niveles de calidad percibida.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántos sinónimos devuelve por palabra?</summary><p>Entre 3 y 8 según la palabra. Mostramos los más usados primero.</p></details>
+      <details><summary>¿Funciona offline?</summary><p>Sí. La base vive en el navegador, sin servidor.</p></details>
+      <details><summary>¿Tiene en cuenta el contexto?</summary><p>No siempre. Revisá que el sinónimo encaje con el sentido de tu oración antes de usarlo.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const DICT: Record<string,string[]> = {
+    'rápido': ['veloz','ágil','presto','ligero','raudo'],
+    'lento': ['pausado','calmo','tardo','despacioso'],
+    'hermoso': ['bello','bonito','precioso','espléndido','agraciado'],
+    'feo': ['horrible','desagradable','tosco','desproporcionado'],
+    'grande': ['amplio','vasto','extenso','enorme','considerable'],
+    'pequeño': ['chico','reducido','diminuto','menudo','escaso'],
+    'bueno': ['correcto','adecuado','noble','virtuoso','positivo'],
+    'malo': ['perjudicial','nocivo','indeseable','adverso','deficiente'],
+    'feliz': ['alegre','contento','dichoso','satisfecho','jubiloso'],
+    'triste': ['apenado','melancólico','afligido','desconsolado','abatido'],
+    'hablar': ['conversar','dialogar','charlar','expresar','pronunciar'],
+    'caminar': ['andar','recorrer','transitar','marchar'],
+    'mirar': ['observar','contemplar','ver','examinar','distinguir'],
+    'pensar': ['reflexionar','meditar','considerar','analizar','razonar'],
+    'difícil': ['complicado','arduo','complejo','laborioso','espinoso'],
+    'fácil': ['sencillo','simple','accesible','liviano','llevadero'],
+    'amigo': ['compañero','camarada','allegado','colega','confidente'],
+    'casa': ['hogar','vivienda','morada','residencia','domicilio'],
+    'trabajo': ['labor','tarea','empleo','ocupación','faena'],
+    'idea': ['concepto','noción','pensamiento','plan','propuesta'],
+    'problema': ['dificultad','contratiempo','inconveniente','obstáculo','asunto'],
+    'importante': ['relevante','esencial','clave','sustancial','destacado'],
+    'comer': ['ingerir','alimentarse','consumir','degustar'],
+    'decir': ['expresar','manifestar','afirmar','declarar','enunciar'],
+    'ayudar': ['asistir','auxiliar','apoyar','colaborar','socorrer'],
+    'conseguir': ['obtener','lograr','alcanzar','adquirir','procurar'],
+    'empezar': ['comenzar','iniciar','arrancar','abrir','principiar'],
+    'terminar': ['finalizar','concluir','acabar','cerrar','culminar'],
+    'cambiar': ['modificar','alterar','transformar','variar','sustituir'],
+    'crear': ['producir','generar','elaborar','componer','fundar']
+  };
+
+  const q = document.getElementById('syn-q') as HTMLInputElement;
+  const out = document.getElementById('syn-out') as HTMLTextAreaElement;
+  const go = document.getElementById('syn-go') as HTMLButtonElement;
+  const cp = document.getElementById('syn-copy') as HTMLButtonElement;
+
+  function search() {
+    const w = q.value.trim().toLowerCase();
+    if (!w) { out.value = ''; return; }
+    const list = DICT[w];
+    if (!list) { out.value = `Sin coincidencias para "${w}". Probá una palabra base (ej: rápido, decir, idea).`; return; }
+    out.value = `${w} → ${list.join(', ')}`;
+  }
+  go.addEventListener('click', search);
+  q.addEventListener('keydown', (e) => { if (e.key === 'Enter') search(); });
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

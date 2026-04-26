@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Story Setting Generator | Genfy';
+const description = 'Generate settings and atmospheres for your stories. Combine place, era and mood to get 10 ready-to-use settings for your next novel or screenplay.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a setting work?', acceptedAnswer: { '@type': 'Answer', text: 'A setting works when it shapes the protagonist’s choices. Description alone is not enough — it has to create constraints, opportunities or emotional pressure.' } },
+    { '@type': 'Question', name: 'How much detail should I give?', acceptedAnswer: { '@type': 'Answer', text: 'Three to five concrete sensory details per scene. Too much description stalls the plot.' } },
+    { '@type': 'Question', name: 'Does it work for different genres?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Same technique: concrete place + era + atmosphere + a unique detail only that world has.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Story Setting Generator"
+    intro="Find the perfect setting for your story. Combine place, era and atmosphere to get 10 ready-to-use settings.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Theme or keyword</label>
+      <input id="bn-kw" type="text" placeholder="cold, loneliness, rain..." value="rain" />
+
+      <label for="bn-style" style="margin-top:1rem">Tone</label>
+      <select id="bn-style">
+        <option value="contemporary">Contemporary realist</option>
+        <option value="historical">Historical</option>
+        <option value="rural">Rural</option>
+        <option value="urban">Urban / nocturnal</option>
+        <option value="enclosed">Enclosed / isolated</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 10 settings</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to build a setting that adds to the story</h2>
+      <p>
+        A setting isn't decor — it's pressure. If your protagonist could make the same decisions
+        in a cafe as in a war zone, the setting is wrong. Great literary environments shape what
+        the character can or can't do. Practical rule: if you can swap the location and the story
+        still works, you've left an opportunity on the table.
+      </p>
+      <ol>
+        <li><strong>Constrain the character.</strong> A good setting imposes limits (cold, distance, isolation, foreign language).</li>
+        <li><strong>Three sensory details per scene.</strong> Smell, sound, texture. Not all at once.</li>
+        <li><strong>One "anomaly" of the place.</strong> Something only there: the factory siren at 6 PM, the night-train rumble.</li>
+        <li><strong>It changes with the story.</strong> The same place can feel different in act one and act three.</li>
+        <li><strong>It has prior history.</strong> Interesting places already lived something before the protagonist arrived.</li>
+      </ol>
+
+      <h2>Setting types and how to use them</h2>
+      <ul>
+        <li><strong>Closed towns</strong>: ideal for drama and mystery. Everyone knows everyone, secrets weigh more.</li>
+        <li><strong>Big cities</strong>: anonymity, neighborhood contrast, fast pace. Perfect for urban thrillers.</li>
+        <li><strong>Isolated spaces</strong> (cabin, island, closed hotel): max psychological pressure, great for tension.</li>
+        <li><strong>Historical settings</strong>: extra research but instant aesthetics.</li>
+        <li><strong>Transitional places</strong> (station, airport, hospital): great for brief encounters and inner monologue.</li>
+      </ul>
+
+      <h2>Common setting mistakes</h2>
+      <p>
+        Most common: generic settings that could be any city or any countryside. If your reader
+        finishes the novel and couldn't sketch the neighborhood, the setting is wasted. Another:
+        too much geography upfront. Description should enter through action, not inventory. And a
+        third: ignoring weather. Rain, heat, wind — free allies for atmosphere.
+      </p>
+
+      <h2>After generating</h2>
+      <ol>
+        <li>Pick the one that pressures your protagonist hardest.</li>
+        <li>Note three sensory details only present there.</li>
+        <li>Plan a prior event for the place (an old fire, a farewell, a crime).</li>
+        <li>Decide how the setting shifts between chapter one and chapter last.</li>
+        <li>Test a scene: do you feel the place, or is it decor?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a setting work?</summary><p>It shapes the protagonist's choices.</p></details>
+      <details><summary>How much detail?</summary><p>Three to five sensory details per scene.</p></details>
+      <details><summary>Works for different genres?</summary><p>Yes — same technique: place + era + mood + unique anomaly.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+  .bn-item { padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.55; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const CONTEMP = ['A half-empty office building in a fading financial district', 'An inherited apartment in a neighborhood that changed entirely in ten years', 'A corner cafe that still opens at 6 AM though nobody comes anymore', 'A housing complex with a shared courtyard nobody sweeps'];
+  const HIST = ['A clandestine printing press in the 1970s', 'A fading thermal-spring hotel in the 1930s', 'A rural train station in the late postwar years', 'A 1890 ranch with roads cut off by rain'];
+  const RURAL = ['A town of a thousand people surrounded by soybean fields', 'A roadside inn on an unpaved rural road', 'A country chapel with a fifteen-grave cemetery', 'A mountain inn with a single available room'];
+  const URBAN = ['A downtown street at 3 AM, blinds down and neon glow', 'An empty subway between the last station and the depot', 'An apartment in a 1925 building with a faulty elevator', 'A rooftop facing the port and the chimney smoke'];
+  const ENCLOSED = ['A mountain cabin with no signal, three days of storm overhead', 'An abandoned lighthouse you reach only after a two-hour walk', 'An off-season closed hotel with three guests', 'A raft on a lake in midwinter'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const mood = kw.value.trim();
+    const s = style.value;
+    let SET: string[];
+    if (s === 'historical') SET = HIST;
+    else if (s === 'rural') SET = RURAL;
+    else if (s === 'urban') SET = URBAN;
+    else if (s === 'enclosed') SET = ENCLOSED;
+    else SET = CONTEMP;
+    out.innerHTML = '';
+    const seen = new Set<string>();
+    let attempts = 0;
+    while (seen.size < 10 && attempts < 60) {
+      attempts++;
+      const moodSuffix = mood ? `. Atmosphere: ${mood}.` : '.';
+      const text = pick(SET) + moodSuffix;
+      if (seen.has(text)) continue;
+      seen.add(text);
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = text;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.textContent; el.textContent = '✓ copied'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    }
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,126 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de villano gratis | Genfy';
+const description = 'Generá nombres originales para villanos, antagonistas y jefes finales. Combiná tono oscuro, títulos y atributos con clase.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace memorable a un villano?', acceptedAnswer: { '@type': 'Answer', text: 'Un buen villano combina motivación creíble, presencia visual y un nombre que insinúe su poder o herida. El nombre debe ser corto, contundente y fácil de gritar en una escena de acción.' } },
+    { '@type': 'Question', name: '¿Cómo evito clichés?', acceptedAnswer: { '@type': 'Answer', text: 'Evitá apellidos en alemán pseudo-nazi, prefijos como Lord/Doctor sobreusados y referencias a deidades antiguas. Buscá imágenes concretas: óxido, herrumbre, espina, cuervo, ceniza.' } },
+    { '@type': 'Question', name: '¿Sirve para juegos de rol?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, los nombres funcionan para campañas de D&D, videojuegos indie, novelas y cómics. Anotá tres por sesión y elegí el que mejor encaje con tu antagonista.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Creatividad" title="Generador de nombre de villano"
+    intro="Combiná título, atributo oscuro y rasgo distintivo para construir antagonistas memorables. Para novelas, cómics, RPG y videojuegos.">
+
+    <div slot="tool" class="vl">
+      <label for="vl-style">Estilo</label>
+      <select id="vl-style">
+        <option value="title">Con título (Lord, Barón, Doctor)</option>
+        <option value="compound">Compuesto inglés (Ironscar)</option>
+        <option value="esp">Castellano (El Verdugo de...)</option>
+        <option value="single">Apodo único</option>
+      </select>
+
+      <label for="vl-tone" style="margin-top:1rem">Tono</label>
+      <select id="vl-tone">
+        <option value="cold">Frío / metódico</option>
+        <option value="rotten">Decadente / corrupto</option>
+        <option value="savage">Salvaje / brutal</option>
+        <option value="cunning">Astuto / manipulador</option>
+      </select>
+
+      <button id="vl-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+      <div id="vl-out" class="vl-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Lo que separa un villano memorable de uno olvidable</h2>
+      <p>Un antagonista débil tiene nombre genérico, motivación poco clara y una sola escena buena. Un antagonista memorable cumple tres condiciones: su nombre evoca una imagen concreta, sus acciones tienen lógica interna, y el lector entiende por qué cree que tiene razón. El nombre es la primera grieta donde el lector se asoma a esa lógica retorcida.</p>
+      <h2>Fórmulas que funcionan</h2>
+      <ol>
+        <li><strong>Título + apellido oscuro.</strong> Lord Cuervo, Barón Óxido, Doctora Espina. Suena medieval o gótico y sirve para fantasía y horror.</li>
+        <li><strong>Compuesto inglés.</strong> Ironscar, Bonecrown, Rotwolf, Coldfang. Funciona muy bien para videojuegos y cómics.</li>
+        <li><strong>Apelativo castellano.</strong> El Verdugo del Sur, La Dama del Yermo, El Coleccionista. Da sabor latino sin caer en lo evidente.</li>
+        <li><strong>Apodo único.</strong> Cizaña, Salobre, Ceniza, Plomo. Una palabra que el resto del mundo pronuncia con miedo.</li>
+      </ol>
+      <h2>Errores que matan a un villano antes de que abra la boca</h2>
+      <p>Un nombre mal elegido puede arruinar tres capítulos. Los errores más caros: copiar nombres de villanos famosos cambiando una letra, usar deidades antiguas como abreviatura de "malvado" (es flojo y culturalmente cuestionable), elegir un nombre tan largo que el héroe nunca puede gritarlo en una escena de acción, y nombres que se confunden con el del protagonista al hojear la página.</p>
+      <h2>Cómo elegir según el género</h2>
+      <ul>
+        <li><strong>Fantasía épica:</strong> mejor títulos largos y ritmo solemne (Barón de Hierro Negro).</li>
+        <li><strong>Thriller urbano:</strong> apodo corto, casi de barrio (El Cuervo, Salobre).</li>
+        <li><strong>Ciencia ficción:</strong> compuestos tecno (Voidkeeper, Nullbinder).</li>
+        <li><strong>Horror cósmico:</strong> palabras que parezcan más viejas que el idioma (Mordrak, Helkan).</li>
+      </ul>
+      <h2>Validación final</h2>
+      <p>Antes de cerrar, leé el nombre en voz alta tres veces. Si el héroe puede gritarlo cuando está herido, si encaja en la portada del libro, si nadie te dice "¿no es de tal historieta?" y si vos mismo todavía lo encontrás amenazante después de releerlo cinco veces, lo tenés.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace memorable a un villano?</summary><p>Motivación creíble, presencia visual y un nombre corto y fácil de gritar.</p></details>
+      <details><summary>¿Cómo evito clichés?</summary><p>Evitá deidades antiguas y apellidos pseudo-alemanes. Buscá imágenes concretas: óxido, espina, cuervo.</p></details>
+      <details><summary>¿Sirve para juegos de rol?</summary><p>Sí, funciona para D&D, videojuegos indie, novelas y cómics.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .vl-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .vl-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
+  .vl-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const TITLE_ES = ['Lord', 'Barón', 'Baronesa', 'Doctor', 'Doctora', 'Maestro', 'Maestra', 'Conde', 'Condesa', 'Verdugo', 'Inquisidor', 'Capitán'];
+  const TITLE_EN = ['Lord', 'Baron', 'Baroness', 'Doctor', 'Master', 'Count', 'Marshal', 'Warden'];
+  const ATTR_COLD = ['Hierro', 'Acero', 'Niebla', 'Óxido', 'Plomo', 'Cobre', 'Granito', 'Grava'];
+  const ATTR_ROT = ['Carroña', 'Ceniza', 'Polvo', 'Cizaña', 'Salobre', 'Moho', 'Salitre', 'Herrumbre'];
+  const ATTR_SAV = ['Garra', 'Colmillo', 'Espina', 'Filo', 'Hueso', 'Brasa', 'Pira', 'Carbón'];
+  const ATTR_CUN = ['Sombra', 'Vidrio', 'Tinta', 'Cuerda', 'Hilo', 'Velo', 'Espejo', 'Tela'];
+  const ENG_DARK = ['Iron', 'Bone', 'Rot', 'Cold', 'Ash', 'Rust', 'Cinder', 'Black', 'Grim', 'Void', 'Null', 'Dread'];
+  const ENG_NOUN = ['scar', 'crown', 'wolf', 'fang', 'fist', 'maw', 'shroud', 'thorn', 'gate', 'mark', 'reign', 'lash'];
+  const PLACES = ['del Sur', 'del Yermo', 'de las Brasas', 'de Hierro', 'de la Pira', 'del Hueco', 'de la Niebla', 'del Salitre'];
+  const SINGLE = ['Cizaña', 'Salobre', 'Ceniza', 'Plomo', 'Mordrak', 'Helkan', 'Vorkun', 'Trasgo', 'Vinagre', 'Espuela'];
+
+  const style = document.getElementById('vl-style') as HTMLSelectElement;
+  const tone = document.getElementById('vl-tone') as HTMLSelectElement;
+  const gen = document.getElementById('vl-gen') as HTMLButtonElement;
+  const out = document.getElementById('vl-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function pool(t: string) {
+    if (t === 'cold') return ATTR_COLD;
+    if (t === 'rotten') return ATTR_ROT;
+    if (t === 'savage') return ATTR_SAV;
+    return ATTR_CUN;
+  }
+
+  function generate() {
+    const s = style.value, t = tone.value;
+    const set = new Set<string>(); let tries = 0;
+    while (set.size < 20 && tries < 200) {
+      tries++;
+      let name = '';
+      if (s === 'title') name = pick(TITLE_ES) + ' ' + pick(pool(t));
+      else if (s === 'compound') name = pick(ENG_DARK) + pick(ENG_NOUN);
+      else if (s === 'esp') name = 'El ' + pick(pool(t)) + ' ' + pick(PLACES);
+      else name = pick(SINGLE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'vl-item'; el.textContent = n; el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

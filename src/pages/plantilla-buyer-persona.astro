@@ -1,0 +1,154 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Plantilla de buyer persona | Genfy';
+const description = 'Generá una buyer persona completa con datos demográficos, jobs-to-be-done, dolores, objeciones y canales. Lista para pegar en tu plan de marketing.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es una buyer persona?', acceptedAnswer: { '@type': 'Answer', text: 'Es un retrato semi-ficticio de tu cliente ideal basado en datos reales de clientes actuales y entrevistas. Sirve para alinear marketing, producto y ventas alrededor de una sola persona.' } },
+    { '@type': 'Question', name: '¿Cuántas personas necesito?', acceptedAnswer: { '@type': 'Answer', text: 'En la mayoría de los negocios, 1 a 3 buyer personas alcanza. Más de 3 suele ser un síntoma de falta de foco más que de complejidad real.' } },
+    { '@type': 'Question', name: '¿Cuál es la diferencia con jobs-to-be-done?', acceptedAnswer: { '@type': 'Answer', text: 'La buyer persona describe quién compra, jobs-to-be-done describe para qué lo contrata. Lo más sólido es combinar ambos: persona + el job que la persona quiere resolver.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Empresa / Business" title="Plantilla de buyer persona"
+    intro="Completá los campos clave y obtené una ficha de buyer persona lista para pegar en tu Notion, Figma o deck. Combina datos demográficos con el framework de jobs-to-be-done.">
+
+    <div slot="tool" class="bp">
+      <div class="bp-grid">
+        <div><label>Nombre ficticio</label><input id="bp-name" type="text" value="Lucía, fundadora SaaS" /></div>
+        <div><label>Rol / cargo</label><input id="bp-role" type="text" value="CEO de startup B2B (5-20 empleados)" /></div>
+        <div><label>Edad</label><input id="bp-age" type="text" value="32-45" /></div>
+        <div><label>Industria</label><input id="bp-ind" type="text" value="SaaS / tecnología" /></div>
+      </div>
+
+      <label style="margin-top:1rem">Job-to-be-done principal (¿qué quiere lograr?)</label>
+      <input id="bp-job" type="text" value="Lanzar una landing que convierta sin esperar al equipo de diseño" />
+
+      <label style="margin-top:1rem">Dolor más fuerte hoy</label>
+      <input id="bp-pain" type="text" value="Pierde semanas haciendo briefs y revisiones con freelancers" />
+
+      <label style="margin-top:1rem">Objeción típica al comprar</label>
+      <input id="bp-obj" type="text" value="¿Cómo sé que la calidad va a estar a la altura de mi marca?" />
+
+      <button id="bp-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar plantilla</button>
+
+      <pre id="bp-out" class="bp-out"></pre>
+    </div>
+
+    <div slot="content">
+      <h2>Para qué sirve realmente una buyer persona</h2>
+      <p>
+        La buyer persona alinea a tres equipos que suelen vivir en planetas distintos: marketing,
+        producto y ventas. Marketing escribe para "alguien", producto construye para "todos los
+        usuarios", y ventas habla con quien tenga billetera. La persona obliga a ponerle nombre,
+        cara, dolor y presupuesto al cliente ideal — y filtra el ruido de feedback de gente que
+        nunca te va a comprar.
+      </p>
+
+      <h2>Cómo se construye una buena ficha (sin inventar)</h2>
+      <p>
+        Hay un mito: que una buyer persona se hace en una reunión de marketing con post-its. Eso da
+        una persona ficticia, no útil. La buena se construye combinando tres fuentes:
+      </p>
+      <ol>
+        <li><strong>5-8 entrevistas</strong> de 30 minutos con clientes actuales que representan tu mejor cohorte (alta retención, buen LTV).</li>
+        <li><strong>Datos cuantitativos</strong> del CRM y de tu producto: rol, tamaño de empresa, industria, frecuencia de uso, churn.</li>
+        <li><strong>Conversaciones de ventas</strong>: qué objeciones aparecen, qué frases repiten al cerrar, qué palabras textuales usan.</li>
+      </ol>
+
+      <h2>Estructura recomendada (la que cabe en una página)</h2>
+      <ul>
+        <li><strong>Identidad:</strong> nombre ficticio, rol, edad, industria, tamaño de empresa.</li>
+        <li><strong>Jobs-to-be-done:</strong> el principal y 2 secundarios. Frases en primera persona empezando con "Cuando... quiero... para...".</li>
+        <li><strong>Dolores:</strong> los 3 más fuertes, en sus palabras. Si no tenés citas textuales, todavía no entrevistaste suficiente.</li>
+        <li><strong>Ganancias esperadas:</strong> qué resultado define el éxito para esta persona.</li>
+        <li><strong>Objeciones:</strong> top 3 razones por las que no compraría hoy.</li>
+        <li><strong>Canales:</strong> dónde busca soluciones (LinkedIn, Reddit, podcasts, comunidades).</li>
+        <li><strong>Disparadores de compra:</strong> el evento que la lleva a buscar tu solución.</li>
+      </ul>
+
+      <h2>Ejemplo aplicado: "Lucía, fundadora SaaS"</h2>
+      <p>
+        En lugar de "fundadores de startups", construí algo concreto. Lucía tiene 38 años, fundó
+        una empresa B2B de 12 personas, factura entre USD 50k y USD 200k mensuales, hace todo el
+        marketing ella misma con dos freelancers, y su trigger es siempre el mismo: una ronda
+        nueva o un competidor que lanzó una página mejor. Con ese nivel de detalle, las landings,
+        los emails y el discurso de ventas escriben solos.
+      </p>
+
+      <h2>Errores típicos que hacen inservible una persona</h2>
+      <ol>
+        <li>Datos demográficos sin job-to-be-done. La edad sola no predice nada.</li>
+        <li>Demasiadas personas (más de 3). En general es falta de foco.</li>
+        <li>Inventar dolores que suenan bien en lugar de extraerlos de entrevistas.</li>
+        <li>No actualizar la ficha. Si tu producto cambió, la persona también.</li>
+        <li>Usar nombres reales de clientes — siempre ficticios para que el equipo no se autocensure al hablar de ellos.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es una buyer persona?</summary><p>Un retrato semi-ficticio del cliente ideal, construido con datos de clientes reales y entrevistas.</p></details>
+      <details><summary>¿Cuántas necesito?</summary><p>Entre 1 y 3. Más es síntoma de falta de foco.</p></details>
+      <details><summary>¿Persona o jobs-to-be-done?</summary><p>Los dos juntos: persona = quién compra, JTBD = para qué lo contrata.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  @media (max-width: 600px) { .bp-grid { grid-template-columns: 1fr; } }
+  .bp-out { margin-top: 1.25rem; padding: 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.875rem; line-height: 1.55; }
+</style>
+
+<script>
+  const N = document.getElementById('bp-name') as HTMLInputElement;
+  const R = document.getElementById('bp-role') as HTMLInputElement;
+  const A = document.getElementById('bp-age') as HTMLInputElement;
+  const I = document.getElementById('bp-ind') as HTMLInputElement;
+  const J = document.getElementById('bp-job') as HTMLInputElement;
+  const P = document.getElementById('bp-pain') as HTMLInputElement;
+  const O = document.getElementById('bp-obj') as HTMLInputElement;
+  const out = document.getElementById('bp-out')!;
+  const gen = document.getElementById('bp-gen') as HTMLButtonElement;
+
+  function generate() {
+    const t = `BUYER PERSONA — ${N.value}
+
+IDENTIDAD
+- Rol: ${R.value}
+- Edad: ${A.value}
+- Industria: ${I.value}
+
+JOB-TO-BE-DONE PRINCIPAL
+"Cuando ${J.value.toLowerCase()}, quiero hacerlo rápido y con calidad — para no frenar el resto de mis prioridades."
+
+DOLOR MÁS FUERTE
+- ${P.value}
+- Síntoma observable: tareas que se postergan semanas, dependencia de freelancers, retrabajo.
+
+GANANCIA ESPERADA
+- Tiempo recuperado para enfocarse en producto y ventas.
+- Resultado visible al equipo y a inversores.
+
+OBJECIÓN PRINCIPAL
+"${O.value}"
+Respuesta sugerida: mostrar 2-3 referencias del mismo segmento + garantía de revisión sin costo.
+
+CANALES DONDE BUSCA
+- LinkedIn (posts de fundadores y operadores)
+- Comunidades cerradas (Slack/Discord del rubro)
+- Newsletters especializadas
+- Búsqueda directa en Google ("plantilla...", "generador...")
+
+DISPARADOR DE COMPRA
+- Ronda nueva, lanzamiento de competidor, cambio de etapa, presión por mostrar resultados al board.`;
+    out.textContent = t;
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

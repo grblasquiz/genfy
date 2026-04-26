@@ -1,0 +1,141 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Song Title Generator | Genfy';
+const description = 'Generate song titles in seconds. Mix an emotion, an image and a format to find 20 catchy, memorable ideas for your next track.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do I pick a good song title?', acceptedAnswer: { '@type': 'Answer', text: 'Short, easy to sing, present in the chorus, summarizes the central feeling. If it works as a hashtag, even better.' } },
+    { '@type': 'Question', name: 'Does the title have to appear in the lyrics?', acceptedAnswer: { '@type': 'Answer', text: 'It is the most common convention and the one that helps memory the most, but not mandatory. Plenty of classics break it, paying a small recall cost.' } },
+    { '@type': 'Question', name: 'How long should the title be?', acceptedAnswer: { '@type': 'Answer', text: 'One to four words is ideal. The shorter, the easier it is to request on radio or search on streaming.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Song Title Generator"
+    intro="Find a catchy title for your next song. Combine a feeling, an image and a format to get 20 ideas in seconds.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Theme or central emotion</label>
+      <input id="bn-kw" type="text" placeholder="love, breakup, road..." value="breakup" />
+
+      <label for="bn-style" style="margin-top:1rem">Format</label>
+      <select id="bn-style">
+        <option value="phrase">Short phrase (Don't Come Back)</option>
+        <option value="single">Single word (Summer)</option>
+        <option value="adj">Adjective + noun (Warm Blood)</option>
+        <option value="question">Question (Do You Remember?)</option>
+        <option value="num">With a number (3 AM)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 titles</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to find the perfect title</h2>
+      <p>
+        A song title is the line a listener has to type into Spotify after hearing your track at a
+        party. If they can't remember it, they can't find it. That's the simplest test you can
+        run: can someone recall your title after a single listen? Songs with short titles that
+        repeat in the chorus get searched three times as often as ones with weird or absent
+        titles.
+      </p>
+      <ol>
+        <li><strong>Look for a chorus line.</strong> In 80% of cases, your best title is already in your lyric: the line you repeat loudest.</li>
+        <li><strong>Run the "party test".</strong> If someone hears the song drunk at 3 AM, can they recall a line to search the next day?</li>
+        <li><strong>Make it radio-friendly.</strong> If a DJ has to hesitate before reading it, you've cut your reach.</li>
+        <li><strong>Works as a hashtag.</strong> No weird characters. People will use it on TikTok.</li>
+        <li><strong>Add a concrete emotion.</strong> "Feelings" doesn't work. "Don't Come Back" does.</li>
+      </ol>
+
+      <h2>Classic title formats</h2>
+      <ul>
+        <li><strong>Short chorus phrase</strong>: most used, most reliable. "Don't Come Back", "I Saw You Coming".</li>
+        <li><strong>Single word</strong>: hard but memorable (Summer, Stay, Today). Lean emotional.</li>
+        <li><strong>Adjective + noun</strong>: powerful images in two words (Warm Blood, Broken Sky).</li>
+        <li><strong>Question</strong>: opens a dialogue with the listener (Do You Remember?, Where Are You?).</li>
+        <li><strong>With number or reference</strong>: pins the scene (3 AM, Room 7, Track 13).</li>
+      </ul>
+
+      <h2>Common title mistakes</h2>
+      <p>
+        The most common: titles that get truncated with "..." on the Spotify mobile screen. If
+        yours doesn't fit on a phone, it loses impact. Another mistake: generic titles already on
+        thousands of tracks (careful with "Stay", "Tonight", "You and Me"; you'll fight giants in
+        the algorithm). And a third: switching languages without a real musical reason, which
+        breaks search and press cycles.
+      </p>
+
+      <h2>After generating: how to choose</h2>
+      <p>With your top three:</p>
+      <ol>
+        <li>Type each one in Spotify. How many tracks share the name?</li>
+        <li>Sing it out loud over the chorus melody. Does it sit?</li>
+        <li>Show it to three friends without playing the song. Can they guess what it's about?</li>
+        <li>Make sure it works as a hashtag with no special characters.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I pick a good song title?</summary><p>Short, easy to sing, present in the chorus, summarizes the central feeling.</p></details>
+      <details><summary>Does the title have to appear in the lyrics?</summary><p>Not mandatory, but the convention helps the listener remember it.</p></details>
+      <details><summary>How long should the title be?</summary><p>One to four words. Longer gets hard to search.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ADJ = ['Warm', 'Broken', 'Deep', 'Slow', 'Easy', 'Raw', 'Tender', 'Wild', 'Cold', 'Soft', 'Eternal', 'Blind'];
+  const NOUN = ['Summer', 'Blood', 'Sky', 'Bone', 'Sail', 'Fire', 'River', 'Shadow', 'Echo', 'Clock', 'Kiss', 'Street'];
+  const PHRASE = ["Don't Come Back", 'I Saw You Coming', 'Stay', 'Until Tomorrow', 'One More Time', 'Just Once', "Don't Call Me", 'Call Me'];
+  const QUESTION = ['Do You Remember?', 'Where Are You?', 'Are You Coming Back?', 'Why Did You Leave?', 'Who Told You?'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function num() { const i = new Uint32Array(1); crypto.getRandomValues(i); return (i[0] % 12) + 1; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : pick(NOUN);
+      let name = '';
+      if (s === 'phrase') name = pick(PHRASE);
+      else if (s === 'single') name = cap(w);
+      else if (s === 'adj') name = pick(ADJ) + ' ' + cap(w);
+      else if (s === 'question') name = pick(QUESTION);
+      else if (s === 'num') name = num() + ' AM';
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

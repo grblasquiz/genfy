@@ -1,0 +1,133 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Family Group Name Generator | Genfy';
+const description = 'Generate warm names for your family WhatsApp group or shared album. Mix surname or style and get 20 peaceful, memorable ideas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good family group name?', acceptedAnswer: { '@type': 'Answer', text: 'Warm, clearly identifies the group, feels inclusive for every member, and doesn\'t need an explanation to grandparents.' } },
+    { '@type': 'Question', name: 'Should I include the surname?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, it\'s the fastest identifier. "Smith Family" or "The Smiths" are classics for a reason.' } },
+    { '@type': 'Question', name: 'What if there are multiple surnames?', acceptedAnswer: { '@type': 'Answer', text: 'Combine them, use the place of origin ("The Southern Family") or an event ("Mom\'s House").' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Family" title="Family Group Name Generator"
+    intro="Mix surname and style and get 20 warm ideas for your family WhatsApp group, shared album or event. Memorable and free of jokes that hurt.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Surname or keyword</label>
+      <input id="bn-kw" type="text" placeholder="Smith, South, House..." value="Smith" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="classic">Classic (Smith Family)</option>
+        <option value="the">The + surname (The Smiths)</option>
+        <option value="house">House + surname</option>
+        <option value="origin">Family + origin (Southern Family)</option>
+        <option value="event">Event (Mom's Reunion)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to name a family group</h2>
+      <p>
+        A family group name has three judges: the young nephew joining, the grandmother
+        opening it from a phone with large text, and the cousin-in-law who married in two
+        months ago. Your name should be warm, clear and inclusive for all three.
+      </p>
+      <ol>
+        <li><strong>Surname or family anchor.</strong> Identifies the group instantly.</li>
+        <li><strong>No jokes that hurt.</strong> What's funny among cousins can sting an uncle.</li>
+        <li><strong>Inclusive.</strong> If someone joins by marriage, they shouldn't feel excluded.</li>
+        <li><strong>Stable.</strong> Changing it every week exhausts older members.</li>
+        <li><strong>Notification-friendly.</strong> Appears every time someone writes.</li>
+      </ol>
+
+      <h2>Classic styles</h2>
+      <ul>
+        <li><strong>Classic:</strong> "Smith Family", "Garcia Family". Always works.</li>
+        <li><strong>The + surname:</strong> "The Smiths", "The Southerners". Warm.</li>
+        <li><strong>House + surname:</strong> "House Smith", "House Mendez". Home feel.</li>
+        <li><strong>Family + origin:</strong> "Southern Family", "Cordoba Family". Useful with multiple surnames.</li>
+        <li><strong>Event:</strong> "Mom's Reunion", "Annual Birthday". Theme-based groups.</li>
+      </ul>
+
+      <h2>Practical tips</h2>
+      <p>
+        If your family is large with subgroups (cousins, siblings, parents-with-kids),
+        differentiate with a qualifier: "The Smiths (everyone)" for the general one and "The
+        Smith Siblings" for the inner one. If there's family tension, avoid names that
+        implicitly exclude any member.
+      </p>
+
+      <h2>For shared albums and events</h2>
+      <ol>
+        <li>Shared Google Photos: surname + year.</li>
+        <li>iCloud Family: main surname.</li>
+        <li>Recurring reunions: event name ("Annual Smith BBQ").</li>
+        <li>Family tree: formal name with branch.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good name?</summary><p>Warm, clear, inclusive, all generations get it.</p></details>
+      <details><summary>Include surname?</summary><p>Yes, fastest identifier.</p></details>
+      <details><summary>Multiple surnames?</summary><p>Combine, use origin, or use an event.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const PLACES = ['Southern', 'Northern', 'East Coast', 'Midwest', 'Country', 'City', 'Mountain'];
+  const EVENTS = ['Monthly Reunion', 'Annual Birthday', 'Annual BBQ', 'Family Gathering', 'Sunday Lunch', 'Holidays', 'New Year'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+
+  function generate() {
+    const w = cap(kw.value.trim() || 'Smith');
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'classic') name = w + ' Family' + (Math.random() > 0.6 ? ' ❤️' : '');
+      else if (s === 'the') name = 'The ' + w + 's' + (Math.random() > 0.6 ? ' (all)' : '');
+      else if (s === 'house') name = 'House ' + w;
+      else if (s === 'origin') name = pick(PLACES) + ' Family';
+      else if (s === 'event') name = pick(EVENTS) + ' — ' + w + 's';
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

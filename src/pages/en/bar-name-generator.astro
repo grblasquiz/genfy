@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Bar Name Generator | Genfy';
+const description = 'Generate unique names for your bar, pub or cocktail lounge. Mix concept, neighborhood or style and get 20 ideas ready to validate.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What kind of name suits a bar?', acceptedAnswer: { '@type': 'Answer', text: 'Depends on the concept: a neighborhood pub benefits from warm or surname-led names, a modern cocktail bar works with one strong word, and a hotel bar should tie to something unique to the location.' } },
+    { '@type': 'Question', name: 'How do I check the name is free?', acceptedAnswer: { '@type': 'Answer', text: 'Search Google Maps within 3 miles, TripAdvisor, Yelp, Instagram and your local trademark register before printing menus or signage.' } },
+    { '@type': 'Question', name: 'Can I use a name with double meaning?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, but read it out loud to test customers. What sounds clever in your head can sound awkward when someone says "I\'ll meet you at X" in front of a colleague.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Bars" title="Bar Name Generator"
+    intro="Mix concept, neighborhood or ingredient and get 20 ideas for your pub, cocktail bar or speakeasy. Built to validate domain and Instagram handle in minutes.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Keywords (concept, neighborhood, object)</label>
+      <input id="bn-kw" type="text" placeholder="wolf, corner, vinyl..." value="wolf, corner" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="pub">Classic pub (The, House)</option>
+        <option value="cocktail">Modern cocktail bar</option>
+        <option value="speakeasy">Speakeasy / hidden</option>
+        <option value="object">Animal or object + Bar</option>
+        <option value="single">One word (Mist, Still)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a bar name</h2>
+      <p>
+        A bar name has to survive three tests: the sign at 11pm, the word-of-mouth moment when a
+        group is choosing a meet-up spot, and the cab ride when someone gives the address
+        instead of the name. If your candidate fails any of the three, scrap it.
+      </p>
+      <ol>
+        <li><strong>Pronounceable when shouted.</strong> If it's unclear over 90 dB music, you lose the "let's go to X".</li>
+        <li><strong>Memorable after two drinks.</strong> Shorter and more concrete is better.</li>
+        <li><strong>Matches the decor.</strong> "Vinyl House" clashes with a modern cocktail concept.</li>
+        <li><strong>Findable on Maps and Resy.</strong> Has to win the first search in your neighborhood.</li>
+        <li><strong>Instagram handle available.</strong> That's where the cocktail-of-the-week menu goes.</li>
+      </ol>
+
+      <h2>Styles by bar type</h2>
+      <ul>
+        <li><strong>Classic pub:</strong> "The Oak House", "The Lighthouse", "Side Street". Warm, communal.</li>
+        <li><strong>Modern cocktail bar:</strong> "Still", "Mist", "Ember". One strong word, mood-driven.</li>
+        <li><strong>Speakeasy:</strong> cryptic or hyper-specific names: "Room 13", "Apartment 4B". Builds mystery.</li>
+        <li><strong>Animal or object + Bar:</strong> "Wolf Bar", "Vinyl Bar". Memorable and easy to illustrate.</li>
+        <li><strong>One word:</strong> "Sprout", "Quiet", "Candle". Versatile, easy to print on a coaster.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        Avoid saturated category words: any "The Tavern", "The Public House" or "Tap Room" has
+        hundreds of Maps results. Avoid puns on alcohol that age badly or pin you to a single
+        category if you later want to add food. Beware over-themed names: if you decorate around
+        a single concept, refreshing the place becomes incoherent later.
+      </p>
+
+      <h2>How to validate your favorite</h2>
+      <ol>
+        <li>Google Maps within 3 miles.</li>
+        <li>Instagram, TikTok, Untappd if you serve craft beer.</li>
+        <li>.com and country domain on Namecheap.</li>
+        <li>Trademark register (USPTO, UKIPO, CIPO, EUIPO).</li>
+        <li>Drop it in a friend group chat: "meet at X tonight?"</li>
+        <li>Confirm it's clear on a noisy phone call.</li>
+      </ol>
+      <p>
+        Communicate responsibly: alcohol marketing must follow local laws on advertising and
+        operating hours.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What kind of name suits a bar?</summary><p>Pub cozy, cocktail one-word, speakeasy cryptic, or animal/object + bar.</p></details>
+      <details><summary>How do I check it's free?</summary><p>Google Maps, TripAdvisor, Yelp, Instagram and the local trademark register.</p></details>
+      <details><summary>Can I use double meaning?</summary><p>Yes, but test it out loud in front of someone's coworker before printing menus.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const PUB = ['The Oak', 'The Lighthouse', 'Side Street', 'The Patio', 'The Corner', 'The Hearth', 'The Tavern', 'The Pantry', 'The Common', 'The Hollow'];
+  const COCKTAIL = ['Still', 'Mist', 'Ember', 'Petal', 'Amber', 'Veil', 'Rock', 'Shadow', 'Glass', 'Coal'];
+  const SPEAK = ['Room 13', 'Apartment 4B', 'Suite 7', 'Door 22', 'Mailbox', 'The Key', 'The Hallway', 'The Cellar', 'Vault 9'];
+  const ANIMAL = ['Wolf', 'Raven', 'Fox', 'Owl', 'Stag', 'Tiger', 'Hawk', 'Hare'];
+  const OBJ = ['Vinyl', 'Cord', 'Key', 'Button', 'Clock', 'Bulb', 'Coal'];
+  const SINGLE = ['Sprout', 'Quiet', 'Candle', 'Echo', 'Reverse', 'Slow', 'Fog', 'Ozone', 'Steel', 'Harp'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Bar';
+      let name = '';
+      if (s === 'pub') name = pick(PUB) + (Math.random() > 0.5 ? ' ' + cap(w) : '');
+      else if (s === 'cocktail') name = pick(COCKTAIL);
+      else if (s === 'speakeasy') name = pick(SPEAK);
+      else if (s === 'object') name = (Math.random() > 0.5 ? pick(ANIMAL) : pick(OBJ)) + ' Bar';
+      else if (s === 'single') name = pick(SINGLE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

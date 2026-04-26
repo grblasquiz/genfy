@@ -1,0 +1,139 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de título de episodio de podcast gratis | Genfy';
+const description = 'Generá títulos de episodio de podcast optimizados para Spotify y Apple. Combiná tu tema con formatos pegadizos y obtené 20 ideas listas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo elegir un buen título de episodio de podcast?', acceptedAnswer: { '@type': 'Answer', text: 'Buscá un título corto, con la palabra clave al inicio, una promesa concreta y, si aplica, el nombre del invitado. Tiene que verse bien en pantalla móvil.' } },
+    { '@type': 'Question', name: '¿Conviene incluir el número de episodio?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, suma para fans del show. Pero no debe ir al inicio: si arranca con "EP 47", Spotify trunca tu palabra clave.' } },
+    { '@type': 'Question', name: '¿Cuántos caracteres debe tener?', acceptedAnswer: { '@type': 'Answer', text: 'Idealmente menos de 60 caracteres. Spotify y Apple cortan a 45-60 dependiendo del dispositivo.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de título de episodio de podcast"
+    intro="Generá títulos optimizados para Spotify, Apple Podcasts y YouTube. Combiná tema, invitado y formato para conseguir 20 ideas en segundos.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Tema del episodio</label>
+      <input id="bn-kw" type="text" placeholder="productividad, ahorro, viajar..." value="productividad" />
+
+      <label for="bn-style" style="margin-top:1rem">Formato</label>
+      <select id="bn-style">
+        <option value="howto">Cómo hacer X (Cómo dormir mejor)</option>
+        <option value="number">Listas con número (5 hábitos para...)</option>
+        <option value="guest">Con invitado (Marta sobre X)</option>
+        <option value="question">Pregunta directa</option>
+        <option value="reaction">Reacción / análisis</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 títulos</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo titular un episodio de podcast (sin perder oyentes)</h2>
+      <p>
+        El título de un episodio se ve en una lista chica al lado de cientos de otros. Tu trabajo
+        es ganar el clic en menos de tres segundos. La regla más útil: poné la palabra clave al
+        inicio. Si la persona busca "ahorro", tu episodio "Cómo ahorrar 30% sin pelearte" gana.
+        El que se llama "EP 47: Charla con Juan sobre dinero" pierde.
+      </p>
+      <ol>
+        <li><strong>Palabra clave primero.</strong> Lo que la persona busca, va al frente.</li>
+        <li><strong>Promesa concreta.</strong> "Cómo dormir mejor en 7 días" gana a "Hablamos del sueño".</li>
+        <li><strong>Menos de 60 caracteres.</strong> Spotify móvil corta a partir de ahí.</li>
+        <li><strong>Si hay invitado, el nombre suma SEO si es conocido.</strong> Si no, mejor centrar en el tema.</li>
+        <li><strong>Evitá emojis y caracteres especiales.</strong> Rompen el grid de Apple Podcasts.</li>
+      </ol>
+
+      <h2>Formatos que funcionan en podcast</h2>
+      <ul>
+        <li><strong>Cómo hacer X</strong>: el formato más buscado en Apple y Spotify (Cómo dormir mejor, Cómo ahorrar para tu primer departamento).</li>
+        <li><strong>Listas con número</strong>: 5 hábitos para X, 7 errores que..., 3 lecciones de... Reciben más clic en thumbnails de YouTube.</li>
+        <li><strong>Con invitado</strong>: Nombre + tema (Marta García sobre liderazgo). Solo si el invitado es conocido.</li>
+        <li><strong>Pregunta</strong>: ¿Por qué no podés ahorrar?, ¿Qué hace bien tu jefa? Atrae curiosidad.</li>
+        <li><strong>Reacción / análisis</strong>: lo que pasó con X. Bueno para episodios de actualidad.</li>
+      </ul>
+
+      <h2>Errores frecuentes</h2>
+      <p>
+        El más común: arrancar el título con el número de episodio o el nombre del show. La gente
+        ya sabe en qué podcast está. Otro error: títulos genéricos ("Capítulo 4: charla
+        interesante") que no le dicen nada al algoritmo. Y un tercero: usar el nombre del
+        invitado al final, cuando móvil ya truncó. Si vas a poner el nombre del invitado, ponelo
+        adelante o muy cerca del inicio.
+      </p>
+
+      <h2>Después de generar</h2>
+      <ol>
+        <li>Verificá que el título tenga menos de 60 caracteres.</li>
+        <li>Probalo en Spotify móvil: ¿se lee completo?</li>
+        <li>Comparalo con tres títulos competidores del mismo tema. ¿El tuyo gana el clic?</li>
+        <li>Sumá el número de episodio al final, no al principio.</li>
+        <li>Mantené consistencia: los oyentes recurrentes reconocen tu estilo.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo elegir un buen título?</summary><p>Palabra clave al inicio, promesa concreta, menos de 60 caracteres.</p></details>
+      <details><summary>¿Incluir número de episodio?</summary><p>Sí, pero al final. Nunca al inicio.</p></details>
+      <details><summary>¿Cuántos caracteres?</summary><p>Menos de 60. Spotify trunca en móvil.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.75rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 500; cursor: pointer; transition: border-color 0.1s; user-select: text; line-height: 1.4; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const HOWTO = ['Cómo X', 'Cómo dejar de X', 'Cómo empezar con X', 'Cómo dominar X en 30 días', 'Cómo X sin estresarte'];
+  const NUM = ['5 hábitos para X', '7 errores con X', '3 lecciones sobre X', '10 verdades de X', '4 mitos sobre X'];
+  const GUEST = ['Marta sobre X', 'Juan García: cómo X', 'Sofía explica X', 'Pablo y X: la verdad', 'Camila: lo que aprendí de X'];
+  const Q = ['¿Por qué nadie habla de X?', '¿Qué pasó con X?', '¿X funciona realmente?', '¿Cuándo dejar de X?', '¿Cómo sabés que es X?'];
+  const REACT = ['Lo que aprendí sobre X', 'X cambió mi forma de trabajar', 'Mi opinión sobre X', 'Por qué X importa hoy'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const topic = kw.value.trim() || 'productividad';
+    const s = style.value;
+    let SRC: string[];
+    if (s === 'number') SRC = NUM;
+    else if (s === 'guest') SRC = GUEST;
+    else if (s === 'question') SRC = Q;
+    else if (s === 'reaction') SRC = REACT;
+    else SRC = HOWTO;
+    out.innerHTML = '';
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const t = pick(SRC).replace(/X/g, topic);
+      set.add(t);
+    }
+    [...set].forEach(text => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = text;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.textContent; el.textContent = '✓ copiado'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

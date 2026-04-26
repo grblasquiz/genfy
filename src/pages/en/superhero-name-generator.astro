@@ -1,0 +1,124 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Superhero Name Generator | Genfy';
+const description = 'Build original superhero names by mixing attributes, objects and prefixes. Great for comics, role-playing games, fanfic, novels and screenplays.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do I build a strong superhero name?', acceptedAnswer: { '@type': 'Answer', text: 'Combine an attribute (shadow, iron, storm) with an action or object (fist, veil, shield). Aim for two strong syllables and avoid names already registered by major comics publishers.' } },
+    { '@type': 'Question', name: 'Can I use these names commercially?', acceptedAnswer: { '@type': 'Answer', text: 'The combinations are original, but before publishing verify they do not match registered trademarks at the USPTO or your local IP office, especially if the character will appear in comics, video games or merchandise.' } },
+    { '@type': 'Question', name: 'Does it work for tabletop RPGs and video games?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, the names work for D&D, tabletop sessions, MMORPGs, graphic novels and indie animation projects.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Creative" title="Superhero Name Generator"
+    intro="Mix attribute, object and style to land original superhero aliases. Useful for comics, novels, screenplays, tabletop games and fanfic.">
+
+    <div slot="tool" class="sh">
+      <label for="sh-style">Style</label>
+      <select id="sh-style">
+        <option value="compound">English compound (ShadowFist)</option>
+        <option value="title">With title (The, Captain, Doctor)</option>
+        <option value="agent">Agent suffix (-walker, -hunter)</option>
+        <option value="single">Single strong word</option>
+      </select>
+
+      <label for="sh-tone" style="margin-top:1rem">Tone</label>
+      <select id="sh-tone">
+        <option value="dark">Dark / nocturnal</option>
+        <option value="bright">Heroic / bright</option>
+        <option value="tech">Tech</option>
+        <option value="elemental">Elemental</option>
+      </select>
+
+      <button id="sh-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+      <div id="sh-out" class="sh-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why a strong alias defines the character</h2>
+      <p>A superhero's name is brand, motto and narrative promise rolled into one. When you hear "IronVeil" you already expect durability, defense and a colder emotional register. If you read "DawnSwift", the reader expects speed, youth and clean motion. That semantic load works as a shortcut: it saves you three pages of exposition.</p>
+      <h2>The four most common formulas in the genre</h2>
+      <ol>
+        <li><strong>English compound.</strong> Two words in CamelCase: ShadowFist, IronStrike, NightVeil. Sounds modern and fits in a square logo.</li>
+        <li><strong>Title prefix.</strong> "The", "Captain", "Doctor", "Master". Adds hierarchy or earned respect inside the universe.</li>
+        <li><strong>Agent suffix.</strong> Attribute + actor: Stormwalker, Frostwarden. Implies an active role.</li>
+        <li><strong>Single word.</strong> One charged noun: Tempestbreaker, Voltcage, Granite. Aims at instant impact.</li>
+      </ol>
+      <h2>Avoiding cliches and legal issues</h2>
+      <p>Three common traps. First, repeating names already taken by Marvel, DC or mainstream publishers: check Wikipedia and trademark databases before locking the alias. Second, leaning on mythological tropes: if your hero shares a name with an ancient deity, you lose originality (it has been done a thousand times). Third, choosing a name that's too long: past four syllables readers shorten it and you lose brand control.</p>
+      <h2>Tone and universe consistency</h2>
+      <ul>
+        <li><strong>Dark / nocturnal:</strong> ideal for urban vigilantes, antiheroes, noir storylines.</li>
+        <li><strong>Bright / heroic:</strong> better for inspirational leads, family comics, all-ages.</li>
+        <li><strong>Tech:</strong> armored characters, hacking, AI, advanced science.</li>
+        <li><strong>Elemental:</strong> fire, water, wind, electricity control without touching ancient pantheons.</li>
+      </ul>
+      <h2>Validation before publishing</h2>
+      <p>Once you have your top 5, run this checklist: pronounceable on first read, no trademark clash, no negative meaning in another language, looks good on a 6×9 inch cover, and clearly distinct from your main villain. If it passes the five filters, take it to the final script.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I build a strong superhero name?</summary><p>Combine an attribute (shadow, iron, storm) with an object (fist, veil, shield). Aim for two strong syllables.</p></details>
+      <details><summary>Can I use them commercially?</summary><p>Verify trademarks before releasing comics, games or merchandise.</p></details>
+      <details><summary>Does it work for RPGs?</summary><p>Yes, it works for D&D, tabletop, MMORPGs and graphic novels.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .sh-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .sh-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
+  .sh-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ATTR_DARK = ['Shadow', 'Night', 'Dusk', 'Onyx', 'Raven', 'Cinder', 'Ember', 'Ash', 'Iron', 'Steel', 'Black', 'Veil'];
+  const ATTR_BRIGHT = ['Solar', 'Dawn', 'Bright', 'Star', 'Light', 'Silver', 'Gold', 'White', 'Crystal', 'Prism', 'Beacon', 'Shine'];
+  const ATTR_TECH = ['Volt', 'Cyber', 'Nano', 'Quantum', 'Pulse', 'Circuit', 'Chrome', 'Titan', 'Vector', 'Beta', 'Synth', 'Servo'];
+  const ATTR_ELEM = ['Storm', 'Flame', 'Frost', 'Tide', 'Quake', 'Gale', 'Spark', 'Bolt', 'Stone', 'Wave', 'Drift', 'Blaze'];
+  const NOUNS = ['Fist', 'Strike', 'Veil', 'Cage', 'Edge', 'Breaker', 'Wing', 'Claw', 'Heart', 'Mark', 'Wall', 'Shield', 'Howl'];
+  const AGENTS = ['walker', 'hunter', 'warden', 'binder', 'keeper', 'reaper', 'caster', 'rider'];
+  const TITLES = ['The', 'Captain', 'Doctor', 'Master', 'Lady', 'Lord', 'Agent', 'Sergeant'];
+  const SINGLE = ['Tempestbreaker', 'Voltcage', 'Granite', 'Cobalt', 'Ironclad', 'Stormwall', 'Coldsnap', 'Flashpoint', 'Quartz', 'Cinderhowl', 'Driftshade', 'Arcwolf'];
+
+  const style = document.getElementById('sh-style') as HTMLSelectElement;
+  const tone = document.getElementById('sh-tone') as HTMLSelectElement;
+  const gen = document.getElementById('sh-gen') as HTMLButtonElement;
+  const out = document.getElementById('sh-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function attrPool(t: string) {
+    if (t === 'dark') return ATTR_DARK;
+    if (t === 'bright') return ATTR_BRIGHT;
+    if (t === 'tech') return ATTR_TECH;
+    return ATTR_ELEM;
+  }
+
+  function generate() {
+    const s = style.value, t = tone.value;
+    const set = new Set<string>(); let tries = 0;
+    while (set.size < 20 && tries < 200) {
+      tries++;
+      let name = '';
+      if (s === 'compound') name = pick(attrPool(t)) + pick(NOUNS);
+      else if (s === 'title') name = pick(TITLES) + ' ' + pick(attrPool(t));
+      else if (s === 'agent') name = pick(attrPool(t)) + pick(AGENTS);
+      else name = pick(SINGLE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'sh-item'; el.textContent = n; el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

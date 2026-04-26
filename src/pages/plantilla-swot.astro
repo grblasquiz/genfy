@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Plantilla de análisis FODA / SWOT | Genfy';
+const description = 'Generá un análisis FODA (SWOT) completo para tu empresa: fortalezas, oportunidades, debilidades y amenazas, con preguntas guía y plan de acción.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es un análisis FODA / SWOT?', acceptedAnswer: { '@type': 'Answer', text: 'Es un marco para evaluar la posición estratégica de una empresa identificando sus fortalezas, oportunidades, debilidades y amenazas. Sirve para alinear decisiones de mediano plazo.' } },
+    { '@type': 'Question', name: '¿Cuándo conviene hacer un FODA?', acceptedAnswer: { '@type': 'Answer', text: 'Antes de lanzar un producto nuevo, al cerrar el plan anual, después de una crisis, al evaluar entrar en un mercado nuevo o cuando aparece un competidor fuerte.' } },
+    { '@type': 'Question', name: '¿Cuál es el error más común?', acceptedAnswer: { '@type': 'Answer', text: 'Listar muchos ítems sin priorizar. Un FODA útil tiene 3 a 5 puntos por cuadrante, todos accionables, no una lluvia de ideas sin filtrar.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Empresa / Business" title="Plantilla de análisis FODA / SWOT"
+    intro="Completá tu industria y modelo, y obtené un FODA con preguntas guía por cuadrante y un cierre con próximos pasos. Pegalo en tu plan o llevalo al workshop.">
+
+    <div slot="tool" class="sw">
+      <label>Empresa o producto</label>
+      <input id="sw-co" type="text" value="Acme Corp — plataforma de cursos online" />
+
+      <label style="margin-top:1rem">Industria</label>
+      <input id="sw-ind" type="text" value="EdTech B2C" />
+
+      <button id="sw-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar FODA</button>
+
+      <pre id="sw-out" class="sw-out"></pre>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es y para qué sirve un FODA</h2>
+      <p>
+        El FODA (en inglés SWOT) es uno de los frameworks más viejos y a la vez más vigentes de la
+        estrategia empresarial. Lo popularizó la Harvard Business School en los años 60 y sigue
+        siendo el primer ejercicio que un consultor te va a pedir cuando llega a una empresa nueva.
+        Es simple a propósito: cuatro cuadrantes que separan lo interno (fortalezas y debilidades)
+        de lo externo (oportunidades y amenazas).
+      </p>
+
+      <h2>Los 4 cuadrantes, con preguntas guía</h2>
+      <ul>
+        <li><strong>Fortalezas (interno positivo):</strong> ¿Qué hacemos mejor que nadie? ¿Qué activos tenemos que la competencia no? ¿En qué nos elogian sin que preguntemos?</li>
+        <li><strong>Debilidades (interno negativo):</strong> ¿Qué falla cuando entra un cliente nuevo? ¿Qué procesos viven en la cabeza de una sola persona? ¿Dónde quedamos atrás contra el competidor más directo?</li>
+        <li><strong>Oportunidades (externo positivo):</strong> ¿Qué tendencia juega a favor (tecnológica, regulatoria, demográfica)? ¿Qué segmento aún no atendemos? ¿Qué partner podría multiplicar el alcance?</li>
+        <li><strong>Amenazas (externo negativo):</strong> ¿Quién podría comernos cuota mañana? ¿Qué cambio regulatorio nos afectaría? ¿Qué pasaría si baja la economía o sube el costo de adquisición?</li>
+      </ul>
+
+      <h2>El paso que casi nadie hace: la matriz cruzada</h2>
+      <p>
+        Listar items en los cuatro cuadrantes es solo la primera mitad. La parte que vuelve útil al
+        ejercicio es cruzarlos para sacar acciones concretas. Esto se llama matriz TOWS y produce
+        cuatro tipos de estrategia:
+      </p>
+      <ol>
+        <li><strong>FO (Fortalezas + Oportunidades):</strong> ¿cómo usamos lo que somos fuertes para capturar la oportunidad? Estrategias ofensivas.</li>
+        <li><strong>DO (Debilidades + Oportunidades):</strong> ¿qué debilidad tenemos que arreglar para no perder la oportunidad? Estrategias adaptativas.</li>
+        <li><strong>FA (Fortalezas + Amenazas):</strong> ¿cómo usamos las fortalezas para amortiguar la amenaza? Estrategias defensivas.</li>
+        <li><strong>DA (Debilidades + Amenazas):</strong> ¿qué evitar o de qué retirarnos? Estrategias de supervivencia.</li>
+      </ol>
+
+      <h2>Errores típicos que dejan el FODA en el cajón</h2>
+      <ul>
+        <li>Demasiados items sin priorizar. Si tenés 12 fortalezas, no tenés ninguna.</li>
+        <li>Mezclar interno y externo. Una tendencia del mercado es oportunidad, no fortaleza.</li>
+        <li>Hacerlo en soledad. La riqueza viene de juntar a marketing, ventas, producto y customer success en la misma sala.</li>
+        <li>No volver al documento. Un FODA sin revisión a 6 meses es decoración.</li>
+        <li>Usar nombres de marcas reales como ejemplos sin contexto. Mejor "Acme Corp" o "competidor X" que mezclar nombres conocidos sin datos.</li>
+      </ul>
+
+      <h2>Cómo correr el workshop en 60 minutos</h2>
+      <ol>
+        <li>Mandá la plantilla 24 horas antes y pediles que cada uno complete los cuatro cuadrantes en privado.</li>
+        <li>En la sesión, junten los items por cuadrante (15 minutos).</li>
+        <li>Voten los 3 más críticos por cuadrante (10 minutos).</li>
+        <li>Crucen FO/DO/FA/DA en TOWS y saquen 3 estrategias prioritarias (25 minutos).</li>
+        <li>Cierren con dueño y fecha de cada estrategia (10 minutos).</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es un FODA?</summary><p>Un marco de estrategia que separa lo interno (fortalezas, debilidades) de lo externo (oportunidades, amenazas) para tomar mejores decisiones.</p></details>
+      <details><summary>¿Cuándo hacerlo?</summary><p>Antes de un lanzamiento, al cerrar el plan anual, después de una crisis o al entrar en un mercado nuevo.</p></details>
+      <details><summary>¿Cuántos items por cuadrante?</summary><p>3 a 5 priorizados. Más de eso es lluvia de ideas, no análisis.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .sw-out { margin-top: 1.25rem; padding: 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.8125rem; line-height: 1.55; }
+</style>
+
+<script>
+  const C = document.getElementById('sw-co') as HTMLInputElement;
+  const I = document.getElementById('sw-ind') as HTMLInputElement;
+  const out = document.getElementById('sw-out')!;
+  const gen = document.getElementById('sw-gen') as HTMLButtonElement;
+
+  function generate() {
+    const co = C.value.trim();
+    const ind = I.value.trim();
+    const t = `ANÁLISIS FODA — ${co} (${ind})
+
+FORTALEZAS (interno positivo)
+- Equipo con experiencia específica en el problema que resolvemos.
+- Producto con feature diferencial difícil de replicar a corto plazo.
+- Comunidad o base de usuarios fieles que generan boca a boca.
+- Costos de operación bajos vs competencia tradicional.
+
+DEBILIDADES (interno negativo)
+- Marca poco conocida fuera del segmento actual.
+- Dependencia de un canal de adquisición (riesgo si cambia el algoritmo).
+- Procesos clave centralizados en pocas personas.
+- Falta de datos cuantitativos para decisiones de producto.
+
+OPORTUNIDADES (externo positivo)
+- Tendencia creciente en ${ind} hacia soluciones digitales / self-service.
+- Segmentos adyacentes que aún no están bien atendidos.
+- Posibles partnerships con plataformas con audiencia complementaria.
+- Cambios regulatorios o tecnológicos que abren la categoría.
+
+AMENAZAS (externo negativo)
+- Entrada de un competidor con financiamiento agresivo.
+- Aumento del costo de adquisición en canales pagos.
+- Cambios de algoritmo en plataformas de las que dependemos.
+- Contracción económica que afecta el ticket promedio.
+
+MATRIZ TOWS — ESTRATEGIAS PRIORITARIAS
+- FO (ofensiva): aprovechar el equipo experto para crear contenido educativo que capture la tendencia digital.
+- DO (adaptativa): invertir en marca para no depender de un solo canal antes de que suba el CAC.
+- FA (defensiva): blindar a la base fiel con un programa de fidelidad y referidos.
+- DA (supervivencia): documentar procesos críticos y reducir dependencia de personas únicas.
+
+PRÓXIMOS PASOS
+1. Priorizar 3 estrategias TOWS para los próximos 90 días.
+2. Asignar dueño y métrica a cada una.
+3. Revisar este FODA en 6 meses con datos reales del avance.`;
+    out.textContent = t;
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

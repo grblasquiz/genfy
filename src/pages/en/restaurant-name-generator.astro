@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Restaurant Name Generator | Genfy';
+const description = 'Generate unique restaurant names in seconds. Mix cuisine, neighborhood or ingredient and get 20 ideas ready to validate domain and social handles.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good restaurant name?', acceptedAnswer: { '@type': 'Answer', text: 'Easy to pronounce in the neighborhood\'s language, easy to find on Google Maps and OpenTable, hints at the cuisine or experience, and has the .com or country domain available.' } },
+    { '@type': 'Question', name: 'Should I use my last name?', acceptedAnswer: { '@type': 'Answer', text: 'Works well when the chef is the face of the place or you want to convey family tradition. For scalable or franchise concepts, an abstract name is usually better.' } },
+    { '@type': 'Question', name: 'How do I check the name is not taken?', acceptedAnswer: { '@type': 'Answer', text: 'Search Google Maps, TripAdvisor, Yelp, Instagram and your local trademark office before printing menus or painting the storefront.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Food &amp; Drink" title="Restaurant Name Generator"
+    intro="Mix cuisine type, neighborhood or signature ingredient and get 20 memorable ideas for your restaurant. Built to validate domain and Instagram handles in minutes.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Keywords (cuisine, neighborhood, ingredient)</label>
+      <input id="bn-kw" type="text" placeholder="pasta, brooklyn, oak..." value="oak, table" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="warm">Warm / family (The Table, The Hearth)</option>
+        <option value="modern">Modern (Salt, Ember, Oak)</option>
+        <option value="place">Neighborhood (Corner Bistro)</option>
+        <option value="ingredient">Ingredient + object (Maple Table)</option>
+        <option value="surname">Surname + concept (Rossi &amp; Co)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a restaurant name</h2>
+      <p>
+        A restaurant name does two jobs at once: it has to sound right in the mouths of locals and
+        it has to be findable on Google Maps, OpenTable, Resy and Instagram. Pick something too
+        abstract and discovery algorithms will charge you for years.
+      </p>
+      <ol>
+        <li><strong>Pronounceable locally.</strong> If you open outside Italy, "Strozzapreti" will hurt phone reservations.</li>
+        <li><strong>Searchable on Maps.</strong> Avoid generic names like "The Corner" if your area already has three.</li>
+        <li><strong>Hints at cuisine or experience.</strong> Doesn't need to be literal, but "Oak" works better for a steakhouse than "Nectar".</li>
+        <li><strong>.com and country domain available.</strong> Check .com, .co, .uk, .ca and Instagram handle in one pass.</li>
+        <li><strong>Looks great on a sign.</strong> Read it out loud, scribble it on a napkin. If it doesn't fit, drop it.</li>
+      </ol>
+
+      <h2>Styles that work for restaurants</h2>
+      <ul>
+        <li><strong>Warm / family:</strong> "The Table", "The Hearth", "Casa Lola". Best for bistro, trattoria, neighborhood spots.</li>
+        <li><strong>Modern minimalist:</strong> "Salt", "Ember", "Oak", "Smoke". A single strong word, perfect for chef-driven concepts.</li>
+        <li><strong>Place / neighborhood:</strong> "Corner Bistro", "Market Street". Geographic anchor that boosts local SEO.</li>
+        <li><strong>Ingredient + object:</strong> "The Maple Table", "Salt + Vinegar". Strong fit for farm-to-table concepts.</li>
+        <li><strong>Surname + concept:</strong> "Rossi &amp; Co", "Mendez Kitchen". Conveys authorship and tradition.</li>
+      </ul>
+
+      <h2>Common naming mistakes</h2>
+      <p>
+        The number one mistake is picking a name with three other locations in the same city,
+        sentencing yourself to compete for generic keywords. Number two is using accents or
+        special characters that break URLs and handles. Number three is going too long: if it
+        doesn't fit on the awning or a delivery push notification, you lose.
+      </p>
+      <p>
+        Beware of trend-locked names. "Smashburger #1" felt fresh five years ago; today it
+        smells like 2019. Aim for something that ages well a decade, not a season.
+      </p>
+
+      <h2>After generating: validation flow</h2>
+      <ol>
+        <li>Search the name on Google Maps within 5 miles.</li>
+        <li>Check Instagram, TikTok and Facebook for the exact handle.</li>
+        <li>Verify .com plus a country domain on Namecheap or Cloudflare.</li>
+        <li>Search the trademark register (USPTO US, UKIPO UK, CIPO Canada, IP Australia).</li>
+        <li>Read it out loud to 5 neighbors: do they spell it back correctly?</li>
+        <li>Search TripAdvisor, Yelp and OpenTable for collisions.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good restaurant name?</summary><p>Pronounceable locally, findable on Maps, hints at cuisine, and has domain + handle available.</p></details>
+      <details><summary>Should I use my last name?</summary><p>Yes if the chef is the face; no if you plan franchises or a scalable concept.</p></details>
+      <details><summary>How do I check it's not taken?</summary><p>Google Maps, Instagram, TripAdvisor, OpenTable and the local trademark office before printing anything.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const WARM = ['The Table', 'The Hearth', 'The Corner', 'The Pantry', 'The Kitchen', 'House of', 'Home', 'The Larder', 'The Den', 'The Counter'];
+  const MODERN = ['Salt', 'Ember', 'Oak', 'Smoke', 'Bone', 'Flour', 'Skillet', 'Pot', 'Flame', 'Birch', 'Spoon', 'Coal'];
+  const PLACE = ['Corner', 'Market', 'Avenue', 'Street', 'Block', 'Lane', 'Square', 'Pier', 'Park', 'Bridge'];
+  const INGR = ['Maple', 'Salt', 'Pepper', 'Lemon', 'Olive', 'Tomato', 'Basil', 'Onion', 'Wheat', 'Honey', 'Sage'];
+  const OBJ = ['Table', 'Plate', 'Spoon', 'Skillet', 'Fork', 'Knife', 'Bowl', 'Board'];
+  const SURN = ['Rossi', 'Mendez', 'Walker', 'Garcia', 'Colombo', 'Hart', 'Reed', 'Romero', 'Brooks', 'Nakamura'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Table';
+      let name = '';
+      if (s === 'warm') name = pick(WARM) + ' ' + cap(w);
+      else if (s === 'modern') name = Math.random() > 0.5 ? pick(MODERN) : pick(MODERN) + ' & ' + pick(MODERN);
+      else if (s === 'place') name = pick(PLACE) + ' ' + cap(w);
+      else if (s === 'ingredient') name = 'The ' + pick(INGR) + ' ' + pick(OBJ);
+      else if (s === 'surname') name = pick(SURN) + ' & Co';
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

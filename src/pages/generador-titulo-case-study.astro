@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de título de case study | Genfy';
+const description = 'Generá títulos de case study con framework CASE/STAR/SOAR: cliente, problema, solución, resultado cuantificado. 10 títulos listos para tu blog o ventas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno a un título de case study?', acceptedAnswer: { '@type': 'Answer', text: 'Que incluya el cliente, el resultado cuantificable y el tiempo en que se logró. "Cómo Acme aumentó su conversión 30% en 60 días" funciona; "Caso de éxito Acme" no.' } },
+    { '@type': 'Question', name: '¿Conviene mencionar al cliente o no?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, siempre que el cliente lo permita. Aporta credibilidad y SEO. Si no, podés mencionar el segmento ("agencia de 20 personas") con datos suficientes para reconocer el caso.' } },
+    { '@type': 'Question', name: '¿Qué framework conviene usar?', acceptedAnswer: { '@type': 'Answer', text: 'CASE (Cliente, Acción, Solución, Efecto), STAR (Situation, Task, Action, Result) o SOAR (Strengths, Opportunities, Aspirations, Results) son los más prácticos para B2B.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Empresa / Business" title="Generador de título de case study"
+    intro="Generá 10 títulos para tu próximo case study, listos para blog, deck de ventas o LinkedIn. Frameworks CASE / STAR / SOAR aplicados a casos B2B reales.">
+
+    <div slot="tool" class="cs">
+      <label>Cliente o segmento</label>
+      <input id="cs-client" type="text" value="Acme Corp" />
+
+      <label style="margin-top:1rem">Resultado cuantificable</label>
+      <input id="cs-result" type="text" value="aumentó la conversión 30%" />
+
+      <label style="margin-top:1rem">En cuánto tiempo</label>
+      <input id="cs-time" type="text" value="60 días" />
+
+      <label style="margin-top:1rem">Tema central</label>
+      <input id="cs-topic" type="text" value="optimización de landing pages" />
+
+      <button id="cs-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 10 títulos</button>
+
+      <div id="cs-out" class="cs-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué un buen case study empieza por el título</h2>
+      <p>
+        Un case study es uno de los activos comerciales más rentables que puede tener una empresa.
+        Más que cualquier whitepaper, deck o testimonio, un caso bien contado convence al
+        prospecto de que vos podés resolverle el problema. Pero todo eso depende del título: si
+        el título no engancha, el caso no se lee, y el activo no genera retorno.
+      </p>
+
+      <h2>Los frameworks que usan los buenos casos</h2>
+      <ul>
+        <li><strong>CASE — Cliente / Acción / Solución / Efecto:</strong> el más simple. Empezás presentando al cliente, el problema, qué hicieron y el resultado.</li>
+        <li><strong>STAR — Situation / Task / Action / Result:</strong> heredado de entrevistas de comportamiento, sirve muy bien para casos B2B donde hay que explicar contexto.</li>
+        <li><strong>SOAR — Strengths / Opportunities / Aspirations / Results:</strong> más estratégico, ideal para casos donde se transformó un proceso completo, no solo una métrica.</li>
+        <li><strong>BAB — Before / After / Bridge:</strong> formato narrativo, muy efectivo en marketing de contenidos.</li>
+      </ul>
+
+      <h2>El título perfecto: 4 elementos</h2>
+      <ol>
+        <li><strong>Verbo de resultado:</strong> "aumentó", "redujo", "duplicó", "achicó".</li>
+        <li><strong>Métrica cuantificable:</strong> "30%", "x2", "USD 500K", "8 horas semanales".</li>
+        <li><strong>Tiempo:</strong> "en 60 días", "en 6 meses". Sin tiempo, el resultado pierde fuerza.</li>
+        <li><strong>Contexto del cliente:</strong> nombre o segmento ("agencia de 20 personas").</li>
+      </ol>
+
+      <h2>Errores típicos al titular</h2>
+      <ul>
+        <li>"Caso de éxito: Acme Corp" — no dice nada útil.</li>
+        <li>"Acme + Genfy" — sirve para un email interno, no para el público.</li>
+        <li>Resultados sin cifra: "mejoró sus ventas". Sin número, no hay caso.</li>
+        <li>Sin tiempo: "Acme aumentó 30%" — ¿en cuánto tiempo? Importa.</li>
+        <li>Demasiada jerga interna. "Implementación end-to-end de plataforma" no llega.</li>
+      </ul>
+
+      <h2>Cómo escribir el case study después del título</h2>
+      <p>
+        Un case study completo tiene 5 secciones bien definidas. Si tu título promete X, el cuerpo
+        debe entregar X con respaldo. La estructura mínima:
+      </p>
+      <ol>
+        <li><strong>Resumen ejecutivo</strong> de 3-4 frases con el resultado principal arriba.</li>
+        <li><strong>Contexto del cliente:</strong> industria, tamaño, qué venían haciendo.</li>
+        <li><strong>El problema:</strong> con números antes de la intervención.</li>
+        <li><strong>La solución:</strong> qué hicieron, paso a paso, mencionando obstáculos reales.</li>
+        <li><strong>Resultado:</strong> métricas concretas, idealmente con un gráfico simple. Cita textual del cliente al final.</li>
+      </ol>
+
+      <h2>Cómo validar que tu caso convierte</h2>
+      <ul>
+        <li>Mostralo a 5 prospectos antes de publicarlo. Preguntales: "¿esto te hace querer agendar una demo?".</li>
+        <li>Mediálo: tiempo en página, scroll depth, click en CTA.</li>
+        <li>Subilo a sales kit. Si tu equipo de ventas no lo usa, mejorá el formato.</li>
+        <li>Repostealo cada 6 meses con datos actualizados.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno a un título?</summary><p>Cliente + resultado cuantificable + tiempo. Sin esos tres, no engancha.</p></details>
+      <details><summary>¿Mencionar al cliente?</summary><p>Sí, si lo permite. Si no, mencioná el segmento.</p></details>
+      <details><summary>¿Qué framework usar?</summary><p>CASE, STAR o SOAR. Los tres son sólidos para B2B.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cs-out { display: grid; gap: 0.5rem; margin-top: 1.25rem; }
+  .cs-item { padding: 0.875rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .cs-item:hover { border-color: var(--primary); }
+  .cs-tag { font-size: 0.75rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; display: block; }
+</style>
+
+<script>
+  const client = document.getElementById('cs-client') as HTMLInputElement;
+  const result = document.getElementById('cs-result') as HTMLInputElement;
+  const time = document.getElementById('cs-time') as HTMLInputElement;
+  const topic = document.getElementById('cs-topic') as HTMLInputElement;
+  const out = document.getElementById('cs-out')!;
+  const gen = document.getElementById('cs-gen') as HTMLButtonElement;
+
+  function generate() {
+    const c = client.value;
+    const r = result.value;
+    const t = time.value;
+    const tp = topic.value;
+
+    const lines = [
+      { tag: 'Resultado + tiempo', text: `Cómo ${c} ${r} en ${t}.` },
+      { tag: 'Pregunta + dato', text: `¿Es posible que ${r} en ${t}? El caso de ${c}.` },
+      { tag: 'STAR', text: `${c} y ${tp}: del status quo a ${r} en ${t}.` },
+      { tag: 'Antes / después', text: `${c}: antes y después de ${tp}.` },
+      { tag: 'Foco en obstáculo', text: `${c} pensaba que ${tp} estaba estancado. ${r} en ${t}.` },
+      { tag: 'Detrás de escena', text: `Cómo ${c} convirtió ${tp} en su mejor activo: ${r} en ${t}.` },
+      { tag: 'Cifra primero', text: `${r} en ${t}: el caso ${c}.` },
+      { tag: 'Para skeptics', text: `${c}: ${r} sin agrandar el equipo, en ${t}.` },
+      { tag: 'Lección clave', text: `Lo que ${c} aprendió en ${t}: cómo ${r} con ${tp}.` },
+      { tag: 'Estilo headline', text: `${c} duplicó la performance de ${tp} en ${t}.` },
+    ];
+
+    out.innerHTML = '';
+    lines.forEach(l => {
+      const el = document.createElement('div');
+      el.className = 'cs-item';
+      el.innerHTML = `<span class="cs-tag">${l.tag}</span><div>${l.text}</div>`;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(l.text); el.style.borderColor = 'var(--primary)'; setTimeout(() => el.style.borderColor = '', 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

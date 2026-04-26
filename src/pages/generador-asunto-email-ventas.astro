@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de asunto de email de ventas | Genfy';
+const description = 'Generá 12 asuntos de email de ventas optimizados para apertura. Curiosidad, beneficio, urgencia y personalización. Para SDRs, founders y equipos comerciales.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuánto debe medir un asunto?', acceptedAnswer: { '@type': 'Answer', text: 'Entre 30 y 50 caracteres. En mobile se cortan después de 35-40, así que lo importante tiene que estar al principio.' } },
+    { '@type': 'Question', name: '¿Conviene usar mayúsculas o emojis?', acceptedAnswer: { '@type': 'Answer', text: 'Mayúsculas en todo el asunto bajan la apertura y aumentan reportes de spam. Un solo emoji al inicio puede ayudar en B2C, pero en B2B suele bajar la tasa.' } },
+    { '@type': 'Question', name: '¿Cuál es la mejor longitud?', acceptedAnswer: { '@type': 'Answer', text: 'Lo más importante es la claridad, no la cantidad. Asuntos cortos de 3 a 5 palabras suelen abrir mejor que los explicativos largos.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Empresa / Business" title="Generador de asunto de email de ventas"
+    intro="Generá 12 asuntos optimizados para apertura. Mezclamos curiosidad, beneficio, urgencia y personalización para que pruebes y elijas.">
+
+    <div slot="tool" class="se">
+      <label>Empresa del prospecto</label>
+      <input id="se-comp" type="text" value="Acme Corp" />
+
+      <label style="margin-top:1rem">Tema / oferta</label>
+      <input id="se-topic" type="text" value="reducir CAC en LinkedIn Ads" />
+
+      <label style="margin-top:1rem">Resultado / dato impactante</label>
+      <input id="se-data" type="text" value="-30% en 60 días" />
+
+      <button id="se-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 12 asuntos</button>
+
+      <div id="se-out" class="se-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué hace que un asunto se abra</h2>
+      <p>
+        El asunto es la valla de entrada al email. Tenés 30-50 caracteres y dos décimas de segundo
+        para que la persona decida abrir o archivar. Los asuntos que más rinden no son los más
+        creativos: son los más claros. Si hay que pensarlo, no se abre.
+      </p>
+
+      <h2>Las 4 palancas que mueven la apertura</h2>
+      <ol>
+        <li><strong>Curiosidad:</strong> dejar una pregunta abierta o una afirmación inesperada. "Una pregunta sobre tu CAC".</li>
+        <li><strong>Beneficio concreto:</strong> mencionar el resultado que la persona quiere. "30% menos CAC en 60 días".</li>
+        <li><strong>Urgencia o tiempo:</strong> mencionar una fecha o ventana. "Antes del 31 — solo si te interesa".</li>
+        <li><strong>Personalización:</strong> nombre del destinatario o de su empresa. "Acme + idea de 2 minutos".</li>
+      </ol>
+
+      <h2>Lo que NO funciona en 2026</h2>
+      <ul>
+        <li><strong>"Re:" o "Fwd:" falsos.</strong> Bajan respuesta cuando el destinatario se da cuenta — y se da cuenta.</li>
+        <li><strong>"Última oportunidad para X."</strong> Si lo dijiste 3 emails seguidos, no era la última.</li>
+        <li><strong>"Importante: lee esto ahora."</strong> Suena a phishing.</li>
+        <li><strong>Mayúsculas todo el asunto.</strong> Tasa de spam aumenta.</li>
+        <li><strong>"Cómo X cambió mi vida."</strong> El estilo "buzzfeed" pasó de moda hace una década en B2B.</li>
+      </ul>
+
+      <h2>Cómo testear asuntos</h2>
+      <p>
+        Si mandás más de 100 emails por campaña, el A/B testing es obligatorio. Los pasos:
+      </p>
+      <ol>
+        <li>Generá 5-10 asuntos con distintos ángulos.</li>
+        <li>Dividí tu lista en grupos iguales y mandá cada asunto a un grupo.</li>
+        <li>Esperá al menos 48 horas para que las aperturas se estabilicen.</li>
+        <li>Quedate con el de mejor apertura + mejor respuesta. Apertura sola no alcanza: si la apertura es alta y respuesta baja, el asunto está sobre-prometiendo.</li>
+        <li>Iterá ese ganador con variaciones leves para encontrar el techo.</li>
+      </ol>
+
+      <h2>Mejores prácticas operativas</h2>
+      <ul>
+        <li>Lo más importante en los primeros 35 caracteres (mobile).</li>
+        <li>Evitá signos de exclamación (uno máximo).</li>
+        <li>No uses palabras gatillo de spam: "gratis", "garantizado", "100%", "$$$".</li>
+        <li>Probá minúscula sostenida — funciona muy bien en cold outbound moderno.</li>
+        <li>Coherencia entre asunto y contenido. Si el asunto promete X, el primer párrafo debe entregar X.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuánto debe medir?</summary><p>30 a 50 caracteres, lo importante en los primeros 35.</p></details>
+      <details><summary>¿Mayúsculas o emojis?</summary><p>Mayúsculas todas no. Emojis solo en B2C y con cuidado.</p></details>
+      <details><summary>¿Mejor longitud?</summary><p>Cortos de 3 a 5 palabras suelen abrir mejor que los largos explicativos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .se-out { display: grid; gap: 0.5rem; margin-top: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .se-item { padding: 0.75rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; font-size: 0.9375rem; }
+  .se-item:hover { border-color: var(--primary); }
+  .se-tag { font-size: 0.7rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; display: block; }
+</style>
+
+<script>
+  const comp = document.getElementById('se-comp') as HTMLInputElement;
+  const topic = document.getElementById('se-topic') as HTMLInputElement;
+  const data = document.getElementById('se-data') as HTMLInputElement;
+  const out = document.getElementById('se-out')!;
+  const gen = document.getElementById('se-gen') as HTMLButtonElement;
+
+  function generate() {
+    const lines = [
+      { tag: 'Curiosidad', text: `idea para ${comp.value}` },
+      { tag: 'Curiosidad', text: `${comp.value} — una pregunta` },
+      { tag: 'Beneficio', text: `${data.value} en ${topic.value}` },
+      { tag: 'Beneficio', text: `${topic.value}, sin más equipo` },
+      { tag: 'Personalización', text: `${comp.value} + 2 minutos` },
+      { tag: 'Personalización', text: `pensando en ${comp.value}` },
+      { tag: 'Curiosidad corta', text: `vale 30 segundos?` },
+      { tag: 'Urgencia suave', text: `antes que se cierre el trimestre` },
+      { tag: 'Provocador', text: `¿${topic.value} sin tocar el budget?` },
+      { tag: 'Honesto', text: `cold email, pero útil` },
+      { tag: 'Específico', text: `${topic.value} en empresas como ${comp.value}` },
+      { tag: 'Numérico', text: `3 ideas para ${topic.value}` },
+    ];
+
+    out.innerHTML = '';
+    lines.forEach(l => {
+      const el = document.createElement('div');
+      el.className = 'se-item';
+      el.innerHTML = `<span class="se-tag">${l.tag}</span><div>${l.text}</div>`;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(l.text); el.style.borderColor = 'var(--primary)'; setTimeout(() => el.style.borderColor = '', 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de pitch de película gratis | Genfy';
+const description = 'Generá pitches de una línea (loglines) para tu próxima película. Combiná protagonista, conflicto y giro para conseguir 10 ideas listas para presentar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es un pitch de película?', acceptedAnswer: { '@type': 'Answer', text: 'Es la presentación de tu película en una o dos oraciones, también llamada logline. Debe incluir protagonista, conflicto y stake en formato pegadizo.' } },
+    { '@type': 'Question', name: '¿Cuánto tiempo dura un pitch?', acceptedAnswer: { '@type': 'Answer', text: 'El pitch escrito (logline) son una o dos oraciones. El pitch hablado debería durar entre 30 y 60 segundos.' } },
+    { '@type': 'Question', name: '¿Sirve para conseguir financiamiento?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Productores y agentes leen cientos de loglines por semana. Si la tuya no engancha en 15 segundos, no llegan al guion.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de pitch de película"
+    intro="Generá loglines de una línea para tu película. Combiná protagonista, conflicto y giro para conseguir 10 pitches listos para presentar a productoras o festivales.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Tema o ambiente</label>
+      <input id="bn-kw" type="text" placeholder="memoria, viaje, deuda..." value="deuda" />
+
+      <label for="bn-style" style="margin-top:1rem">Género</label>
+      <select id="bn-style">
+        <option value="thriller">Thriller</option>
+        <option value="drama">Drama</option>
+        <option value="action">Acción</option>
+        <option value="indie">Indie</option>
+        <option value="scifi">Ciencia ficción</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 10 pitches</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo escribir un pitch de película que enganche</h2>
+      <p>
+        Un buen logline tiene cuatro componentes: protagonista identificable, deseo concreto,
+        antagonista claro y stake (qué se pierde si fracasa). Si falta alguno, el pitch se siente
+        incompleto. La fórmula clásica es "Cuando X (protagonista en una palabra) descubre Y
+        (detonante), debe Z (acción) antes de que W (consecuencia)". Funciona porque encierra
+        deseo, obstáculo y reloj en una sola oración.
+      </p>
+      <ol>
+        <li><strong>Empezá por el protagonista en una palabra.</strong> "Una arquitecta", "un panadero", "una madre soltera". Que el productor pueda visualizarlo al instante.</li>
+        <li><strong>Sumá el detonante.</strong> El evento que rompe la rutina y arranca la historia.</li>
+        <li><strong>Definí la acción.</strong> Lo que el protagonista debe hacer.</li>
+        <li><strong>Cerrá con el stake.</strong> Lo que pierde si falla. Sin stake, no hay tensión.</li>
+        <li><strong>Que tenga un giro implícito.</strong> Una palabra inesperada que indique que no es una historia genérica.</li>
+      </ol>
+
+      <h2>Errores frecuentes en pitches</h2>
+      <p>
+        El más común: pitches abstractos que parecen sinopsis emocionales. "Una historia sobre el
+        perdón" no es un pitch, es una descripción temática. Otro error: pitches con demasiados
+        nombres propios o detalles que el productor no puede retener. Y un tercero: pitches sin
+        stake claro, donde el protagonista no tiene nada que perder. Si no se siente la urgencia,
+        no hay película.
+      </p>
+
+      <h2>Estructura típica del logline</h2>
+      <ul>
+        <li><strong>Setup</strong>: protagonista + situación inicial.</li>
+        <li><strong>Detonante</strong>: lo que rompe la rutina.</li>
+        <li><strong>Acción</strong>: lo que el protagonista debe hacer.</li>
+        <li><strong>Stake</strong>: lo que se pierde si falla.</li>
+      </ul>
+
+      <h2>Después de generar</h2>
+      <ol>
+        <li>Elegí el pitch que mejor combine claridad y giro.</li>
+        <li>Verificá los cuatro componentes (protagonista, detonante, acción, stake).</li>
+        <li>Probalo en voz alta a tres personas: ¿quieren saber más?</li>
+        <li>Refiná hasta que entre en una sola respiración.</li>
+        <li>Guardá tres versiones para distintos contextos: festival, productora, plataforma.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es un pitch de película?</summary><p>Una o dos oraciones que presentan protagonista, conflicto y stake. También llamado logline.</p></details>
+      <details><summary>¿Cuánto dura?</summary><p>Escrito, una o dos oraciones. Hablado, 30 a 60 segundos.</p></details>
+      <details><summary>¿Sirve para financiamiento?</summary><p>Sí. Si no engancha en 15 segundos, no llegan al guion.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+  .bn-item { padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.55; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const PROT_T = ['una abogada estrella', 'un cobrador retirado', 'una periodista de policiales', 'un guardia de seguridad', 'una jueza federal', 'un cirujano sin licencia'];
+  const PROT_D = ['una madre que vuelve a su pueblo', 'un escritor en blanco', 'una hermana que no se hablaba con su familia', 'una pareja al borde del divorcio'];
+  const PROT_A = ['un ex-soldado convertido en chofer', 'una corredora profesional', 'un piloto de carga', 'una buzo de rescate'];
+  const PROT_I = ['una bibliotecaria de pueblo', 'un panadero retirado', 'una traductora freelance', 'una hija que volvió tras diez años'];
+  const PROT_SF = ['una ingeniera de la nueva colonia', 'un técnico de mantenimiento orbital', 'una doctora del último laboratorio en superficie'];
+  const TRIG_T = ['descubre que la víctima era el único testigo de un fraude que la involucra', 'recibe una amenaza con datos que solo tres personas conocían', 'encuentra un cuerpo en una habitación que ella misma cerró con llave'];
+  const TRIG_D = ['encuentra una caja de cartas dirigidas a alguien que no conoce', 'descubre que su madre llevaba veinte años pagando un alquiler en otra ciudad'];
+  const TRIG_A = ['acepta llevar un paquete que no debió aceptar', 'es el único que escapa de una emboscada que no buscaba'];
+  const TRIG_I = ['hereda una casa que no sabía que existía', 'recibe una carta dirigida a alguien con su nombre'];
+  const TRIG_SF = ['recibe un mensaje que llega del futuro de la propia colonia', 'descubre que la IA del laboratorio le miente desde hace seis meses'];
+  const STAKE = ['antes de que sea demasiado tarde', 'mientras todos los que la rodean fingen no saber', 'sin que la familia descubra la verdad', 'antes de que cierren la causa para siempre'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = style.value;
+    let PROT: string[], TRIG: string[];
+    if (s === 'thriller') { PROT = PROT_T; TRIG = TRIG_T; }
+    else if (s === 'action') { PROT = PROT_A; TRIG = TRIG_A; }
+    else if (s === 'indie') { PROT = PROT_I; TRIG = TRIG_I; }
+    else if (s === 'scifi') { PROT = PROT_SF; TRIG = TRIG_SF; }
+    else { PROT = PROT_D; TRIG = TRIG_D; }
+    out.innerHTML = '';
+    const seen = new Set<string>();
+    let attempts = 0;
+    while (seen.size < 10 && attempts < 60) {
+      attempts++;
+      const text = `Cuando ${pick(PROT)} ${pick(TRIG)}, debe enfrentar la verdad ${pick(STAKE)}.`;
+      if (seen.has(text)) continue;
+      seen.add(text);
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = text;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.textContent; el.textContent = '✓ copiado'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    }
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

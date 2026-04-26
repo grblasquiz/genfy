@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de título de whitepaper | Genfy';
+const description = 'Generá títulos para tu whitepaper B2B. 10 títulos con números, beneficios y promesas concretas — listos para ad, landing y email de descarga.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuál es la diferencia entre whitepaper y ebook?', acceptedAnswer: { '@type': 'Answer', text: 'El whitepaper es más técnico y enfocado a investigación, datos o framework. El ebook es más accesible y visual. Ambos sirven para captura de leads, pero el whitepaper tiene mayor autoridad.' } },
+    { '@type': 'Question', name: '¿Qué hace bueno a un título?', acceptedAnswer: { '@type': 'Answer', text: 'Un número, una promesa concreta y una audiencia específica. "El estado del SaaS B2B 2026: 7 hallazgos" funciona mejor que "Todo sobre SaaS B2B".' } },
+    { '@type': 'Question', name: '¿Mejor con número par o impar?', acceptedAnswer: { '@type': 'Answer', text: 'Los impares (5, 7, 9) suelen rendir mejor en CTR según benchmarks de B2B content marketing — sugieren rigor y curado, no listas exhaustivas.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Empresa / Business" title="Generador de título de whitepaper"
+    intro="Generá 10 títulos para tu próximo whitepaper B2B. Cada uno con número, beneficio claro y audiencia específica — listos para ads, landing y email de descarga.">
+
+    <div slot="tool" class="wp">
+      <label>Tema del whitepaper</label>
+      <input id="wp-topic" type="text" value="reducir CAC en B2B SaaS" />
+
+      <label style="margin-top:1rem">Audiencia</label>
+      <input id="wp-aud" type="text" value="founders y CMOs" />
+
+      <label style="margin-top:1rem">Año / período</label>
+      <input id="wp-year" type="text" value="2026" />
+
+      <button id="wp-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 10 títulos</button>
+
+      <div id="wp-out" class="wp-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué un whitepaper bien titulado se descarga más</h2>
+      <p>
+        Un whitepaper es un activo de captación de leads que vive en el tope del funnel. La gente
+        lo descarga si percibe autoridad y un beneficio claro. El título hace 80% del trabajo: si
+        promete poco, no lo descargan; si promete mucho y no entrega, queman tu marca.
+      </p>
+
+      <h2>Anatomía de un título de whitepaper que convierte</h2>
+      <ol>
+        <li><strong>Número:</strong> "7 hallazgos", "4 frameworks", "10 errores". Da sensación de rigor y curado.</li>
+        <li><strong>Promesa concreta:</strong> qué se lleva el lector. "Reducir CAC 30% sin sumar headcount".</li>
+        <li><strong>Audiencia específica:</strong> "para founders SaaS", "para CMOs B2B".</li>
+        <li><strong>Período:</strong> "2026", "Q4", "post-zero interest rates" — da contexto temporal y SEO.</li>
+        <li><strong>Subtítulo opcional</strong> que aclara el ángulo: "Insights de 200 empresas en 12 meses".</li>
+      </ol>
+
+      <h2>4 fórmulas probadas</h2>
+      <ul>
+        <li><strong>Estado del rubro:</strong> "El estado del SaaS B2B 2026: 7 hallazgos para founders".</li>
+        <li><strong>Playbook:</strong> "Playbook para reducir CAC: 12 tácticas con ejemplos reales".</li>
+        <li><strong>Investigación:</strong> "200 empresas, 12 meses: qué cambió en adquisición B2B".</li>
+        <li><strong>Framework:</strong> "El framework CAC Payback: cómo decidir cuánto invertir en cada canal".</li>
+      </ul>
+
+      <h2>Errores que hunden la descarga</h2>
+      <ol>
+        <li>Títulos genéricos: "Guía completa de marketing B2B". Demasiado amplio.</li>
+        <li>Sin número: la curiosidad sin estructura no convierte tan bien como con número.</li>
+        <li>Promesas grandilocuentes: "Domina el marketing B2B en 30 días" — suena a infoproducto.</li>
+        <li>Sin audiencia: si tu whitepaper es para CMOs, decilo. Si es para founders early-stage, decilo.</li>
+        <li>No coincidir con el contenido. Si prometés 7 hallazgos y solo hay 4, la marca pierde.</li>
+      </ol>
+
+      <h2>Cómo usar el whitepaper en el funnel</h2>
+      <p>
+        El whitepaper funciona en 3 lugares del funnel:
+      </p>
+      <ul>
+        <li><strong>Tope (TOFU):</strong> ad de LinkedIn o Google → landing → descarga con email.</li>
+        <li><strong>Medio (MOFU):</strong> dentro de un email nurture, después del primer contacto.</li>
+        <li><strong>Bottom (BOFU):</strong> sales rep lo manda como activo de credibilidad pre-demo.</li>
+      </ul>
+
+      <h2>Métricas para medir si tu whitepaper funcionó</h2>
+      <ul>
+        <li><strong>Conversión de la landing:</strong> visitantes / descargas. 15% es bueno en B2B.</li>
+        <li><strong>Apertura del email post-descarga:</strong> 30-40% es saludable.</li>
+        <li><strong>SQL ratio:</strong> de cada 100 descargas, ¿cuántas se vuelven oportunidades reales?</li>
+        <li><strong>Costo por SQL:</strong> gasto del whitepaper / SQLs generados.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Whitepaper o ebook?</summary><p>Whitepaper si es técnico/research. Ebook si es accesible y visual.</p></details>
+      <details><summary>¿Qué hace bueno al título?</summary><p>Número + promesa concreta + audiencia específica.</p></details>
+      <details><summary>¿Par o impar?</summary><p>Impares (5, 7, 9) rinden mejor según benchmarks B2B.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .wp-out { display: grid; gap: 0.5rem; margin-top: 1.25rem; }
+  .wp-item { padding: 0.875rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .wp-item:hover { border-color: var(--primary); }
+  .wp-tag { font-size: 0.75rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; display: block; }
+</style>
+
+<script>
+  const topic = document.getElementById('wp-topic') as HTMLInputElement;
+  const aud = document.getElementById('wp-aud') as HTMLInputElement;
+  const year = document.getElementById('wp-year') as HTMLInputElement;
+  const out = document.getElementById('wp-out')!;
+  const gen = document.getElementById('wp-gen') as HTMLButtonElement;
+
+  function generate() {
+    const tp = topic.value;
+    const a = aud.value;
+    const y = year.value;
+
+    const lines = [
+      { tag: 'Estado del rubro', text: `El estado de ${tp} ${y}: 7 hallazgos para ${a}.` },
+      { tag: 'Playbook', text: `El playbook para ${tp}: 12 tácticas probadas con ejemplos reales.` },
+      { tag: 'Investigación', text: `${tp} en ${y}: qué cambió en 200 empresas durante 12 meses.` },
+      { tag: 'Framework', text: `El framework definitivo para ${tp} (con templates listos para usar).` },
+      { tag: 'Errores', text: `9 errores que ${a} cometen al pensar en ${tp} (y cómo evitarlos).` },
+      { tag: 'Comparativa', text: `${tp}: comparativa de 8 enfoques que probamos en ${y}.` },
+      { tag: 'Caso múltiple', text: `Cómo 5 empresas resolvieron ${tp} en menos de 90 días.` },
+      { tag: 'Investigación temporal', text: `Después de la suba de tasas: cómo cambió ${tp} para ${a}.` },
+      { tag: 'Predicciones', text: `${tp} en ${y}: 7 predicciones basadas en data, no en opinión.` },
+      { tag: 'Para skeptics', text: `${tp}: lo que ${a} no quieren leer pero deberían.` },
+    ];
+
+    out.innerHTML = '';
+    lines.forEach(l => {
+      const el = document.createElement('div');
+      el.className = 'wp-item';
+      el.innerHTML = `<span class="wp-tag">${l.tag}</span><div>${l.text}</div>`;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(l.text); el.style.borderColor = 'var(--primary)'; setTimeout(() => el.style.borderColor = '', 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

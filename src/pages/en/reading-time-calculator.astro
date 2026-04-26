@@ -1,0 +1,125 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Reading Time Calculator | Genfy';
+const description = 'Calculate how long a text takes to read. Adjustable WPM, word and character counts. Perfect for blogs, newsletters and content planning.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Which reading speed does it use?', acceptedAnswer: { '@type': 'Answer', text: 'Default 238 words per minute, the average silent reading speed for an adult. You can adjust it for your audience.' } },
+    { '@type': 'Question', name: 'Is it useful for newsletters?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Showing "5 min read" before an article raises CTR and lowers bounce rate.' } },
+    { '@type': 'Question', name: 'How are words counted?', acceptedAnswer: { '@type': 'Answer', text: 'Split by whitespace and punctuation, empty lines ignored. Works for English, Spanish and most Latin-script languages.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text" title="Reading Time Calculator"
+    intro="Paste a text and get word count, character count and estimated silent reading time. Built for blogs, newsletters, social posts and content planning.">
+
+    <div slot="tool">
+      <label for="rt-in">Text</label>
+      <textarea id="rt-in" rows="8" placeholder="Paste your text here..." style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div class="rt-row" style="margin-top:0.75rem;">
+        <div>
+          <label for="rt-wpm">Words per minute</label>
+          <input id="rt-wpm" type="number" min="80" max="500" value="238" />
+        </div>
+      </div>
+      <div id="rt-out" class="rt-out" aria-live="polite"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why estimate reading time</h2>
+      <p>
+        Showing "5 min read" before an article is one of the simplest, highest-leverage UX wins. Readers
+        decide in seconds whether to read now, later or never. Without a concrete number, they apply a
+        pessimistic bias: "this'll be long" and bounce. With a clear time, the math changes: "I have five
+        minutes, let's go".
+      </p>
+
+      <h2>The standard speed and why it matters</h2>
+      <p>
+        The most common standard is 238 words per minute (Brysbaert, 2019), the average silent reading speed
+        for an adult on non-technical material. For dense academic text, drop to 150-180; for fast fiction,
+        go up to 250-280. For an international audience reading English as a second language, stay around
+        200. Calibrating well matters: underestimate and you disappoint, overestimate and you look like you
+        don't respect the reader's time.
+      </p>
+
+      <h2>Benefits of showing the time</h2>
+      <ul>
+        <li><strong>Higher CTR</strong> — listings with "X min read" get more clicks.</li>
+        <li><strong>Lower bounce</strong> — readers commit to a known horizon.</li>
+        <li><strong>Better completion rate</strong> — readers who knew the time finish more articles.</li>
+        <li><strong>Indirect SEO</strong> — Google rewards time on page and pageviews per session.</li>
+        <li><strong>Honest UX</strong> — signals respect for the reader's time.</li>
+      </ul>
+
+      <h2>How to measure well</h2>
+      <p>
+        The math is simple: word count divided by reading speed. But nuances matter. Images, code blocks,
+        tables and embedded videos don't count as words but consume time. Common convention: add 12 seconds
+        per image and 5 seconds per short code block. Round to 15 seconds for complex tables. If your post
+        is multimedia-heavy, this detail is the difference between an honest "5 min" and an optimistic one.
+      </p>
+
+      <h2>Real use cases</h2>
+      <ul>
+        <li><strong>Blogs</strong> — visible label at the top of the post.</li>
+        <li><strong>Newsletters</strong> — before the CTA, "Time: 4 min".</li>
+        <li><strong>Technical documentation</strong> — helps the reader plan.</li>
+        <li><strong>Internal manuals</strong> — predictable onboarding.</li>
+        <li><strong>Social media</strong> — if your LinkedIn post hits 8 min, it belongs on a blog, not a feed.</li>
+      </ul>
+
+      <h2>Reading time as diagnostic</h2>
+      <p>
+        If your article comes out at 12 minutes, it's probably too long. Most web readers don't push past
+        7 minutes. Use this tool as a thermometer: if it's over 8, consider splitting into parts, adding a
+        table of contents, breaking with images, or simply trimming. A well-written 5-minute piece beats a
+        12-minute one full of filler.
+      </p>
+
+      <h2>Difference vs. speaking time</h2>
+      <p>
+        Silent reading time is ~238 wpm. Spoken-word time is much slower: ~130 wpm conversational, up to
+        160 if you talk fast. If you'll read a text aloud (presentation, podcast, video), use a speaking
+        time calculator, not this one. Mixing them up is a common mistake.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Which reading speed does it use?</summary><p>Default 238 wpm, adjustable for your audience.</p></details>
+      <details><summary>Is it useful for newsletters?</summary><p>Yes. Showing reading time raises CTR and lowers bounce.</p></details>
+      <details><summary>How are words counted?</summary><p>Split by whitespace, empty lines ignored. Works for English and Spanish.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rt-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; }
+  .rt-out { margin-top: 1rem; padding: 1rem; background: var(--bg-soft, #f5f5f7); border-radius: var(--radius-md, 8px); font-family: var(--font-mono); font-size: 0.95rem; min-height: 4rem; }
+</style>
+
+<script>
+  const inEl = document.getElementById('rt-in') as HTMLTextAreaElement;
+  const wpmEl = document.getElementById('rt-wpm') as HTMLInputElement;
+  const out = document.getElementById('rt-out') as HTMLDivElement;
+
+  function compute() {
+    const text = inEl.value.trim();
+    const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+    const chars = text.length;
+    const wpm = Math.max(80, Math.min(500, parseInt(wpmEl.value || '238', 10)));
+    const minutes = words / wpm;
+    const m = Math.floor(minutes);
+    const s = Math.round((minutes - m) * 60);
+    const tlabel = m === 0 ? `${s} s` : `${m} min ${s} s`;
+    out.innerHTML = `<strong>Words:</strong> ${words}<br><strong>Characters:</strong> ${chars}<br><strong>Reading time:</strong> ${tlabel} (at ${wpm} wpm)`;
+  }
+  inEl.addEventListener('input', compute);
+  wpmEl.addEventListener('input', compute);
+  compute();
+</script>

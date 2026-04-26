@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Bakery Name Generator | Genfy';
+const description = 'Generate unique names for your bakery. Mix ingredient, technique or concept and get 20 ideas ready for storefront, domain and socials.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Should I go traditional or modern?', acceptedAnswer: { '@type': 'Answer', text: 'Depends on your audience: a neighborhood bakery benefits from warm, family names; a boutique boulangerie looks better with modern or craft names.' } },
+    { '@type': 'Question', name: 'How do I avoid confusion with other bakeries?', acceptedAnswer: { '@type': 'Answer', text: 'Search Google Maps within 3 miles, Instagram with the exact handle, and your local trademark register before printing bags or signage.' } },
+    { '@type': 'Question', name: 'Should I include "Bakery" in the name?', acceptedAnswer: { '@type': 'Answer', text: 'Not required if the storefront makes it clear, but it helps local SEO on Google Business Profile.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Food &amp; Drink" title="Bakery Name Generator"
+    intro="Mix flour, technique or neighborhood and get 20 ideas for your sourdough bakery, viennoiserie or neighborhood spot. Ready to validate domain.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Keywords (ingredient, technique, neighborhood)</label>
+      <input id="bn-kw" type="text" placeholder="wheat, sourdough, oven..." value="wheat, crumb" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="warm">Warm traditional (The, House)</option>
+        <option value="craft">Craft (Sourdough, Oven, Levain)</option>
+        <option value="french">French / boutique</option>
+        <option value="single">One word (Crumb, Crust)</option>
+        <option value="local">Local + Bakery</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a bakery name</h2>
+      <p>
+        A bakery name competes against two things: the aroma of the place itself (which sells
+        more than any campaign) and the tradition of the category. Your name has to respect the
+        craft without falling into cliche.
+      </p>
+      <ol>
+        <li><strong>Warm or craft-driven.</strong> "Crumb", "Oven", "Levain" work; "Bread Co" feels impersonal.</li>
+        <li><strong>Storefront-compatible.</strong> Serif typography works very well in neighborhood bakeries.</li>
+        <li><strong>Printable on kraft bags.</strong> One ink, high contrast.</li>
+        <li><strong>Findable on Maps.</strong> Unique within 3 miles.</li>
+        <li><strong>Short IG handle.</strong> For posting today's loaves without character battles.</li>
+      </ol>
+
+      <h2>Classic bakery naming styles</h2>
+      <ul>
+        <li><strong>Warm traditional:</strong> "The Crumb", "Mom's Oven", "Casa Lola". Family craft.</li>
+        <li><strong>Craft:</strong> "Sourdough", "Levain", "Oven 22". For artisan bread boutiques.</li>
+        <li><strong>French / boutique:</strong> French-resonant names work for viennoiseries and premium boulangeries, without falling into stereotype.</li>
+        <li><strong>One word:</strong> "Crumb", "Crust", "Ear". Memorable, easy as a handle.</li>
+        <li><strong>Local + Bakery:</strong> "Mission Bakery", "Capitol Bread". Strong local SEO.</li>
+      </ul>
+
+      <h2>What to avoid</h2>
+      <p>
+        Most common mistake: a name too long. "The Authentic Traditional Bakery" doesn't fit the
+        sign or the handle. Second: saturated terms — "Artisan Bread", "Country Loaf" or
+        "Traditional Boulangerie" compete against hundreds. Third: accented characters that
+        break URLs and handles.
+      </p>
+
+      <h2>Quick validation</h2>
+      <ol>
+        <li>Google Maps within 3 miles.</li>
+        <li>Instagram and TikTok with exact handle.</li>
+        <li>.com and country domain on Namecheap or Cloudflare.</li>
+        <li>Trademark register (USPTO, UKIPO, CIPO, EUIPO).</li>
+        <li>Print on a test bag: readable from 15 feet?</li>
+        <li>Tell 5 neighbors: do they spell it back correctly?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Traditional or modern?</summary><p>Depends on audience: family neighborhoods benefit from warm; boutiques from modern or French.</p></details>
+      <details><summary>How to avoid confusion?</summary><p>Google Maps, Instagram and local trademark register.</p></details>
+      <details><summary>Include "Bakery" in the name?</summary><p>Not required if storefront makes it clear; saves handle characters.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const WARM = ['The Crumb', 'The Oven', 'House of', 'The Ear', 'The Wheatfield', 'The Pantry', 'The Counter', 'The Hearth', 'The Patio', 'The Crust'];
+  const CRAFT = ['Sourdough', 'Levain', 'Oven 22', 'Laminate', 'Wheat', 'Crust', 'Crumb', 'Steam', 'Bake', 'Proof'];
+  const FRENCH = ['Petit Four', 'Petit Pain', 'Atelier', 'Maison', 'Boulange', 'Levain', 'Beurre', 'Demi'];
+  const SINGLE = ['Crumb', 'Crust', 'Ear', 'Laminate', 'Spike', 'Almond', 'Wheat', 'Bread', 'Yeast', 'Hearth'];
+  const LOCAL = ['Mission', 'Capitol', 'Brera', 'SoHo', 'Hudson', 'River', 'Park', 'Market', 'Pier', 'Brooklyn'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Bread';
+      let name = '';
+      if (s === 'warm') name = pick(WARM) + (Math.random() > 0.5 ? ' ' + cap(w) : '');
+      else if (s === 'craft') name = pick(CRAFT);
+      else if (s === 'french') name = pick(FRENCH) + ' ' + cap(w);
+      else if (s === 'single') name = pick(SINGLE);
+      else if (s === 'local') name = pick(LOCAL) + ' Bakery';
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

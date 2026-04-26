@@ -1,0 +1,152 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Tongue Twister Generator | Genfy';
+const description = 'Classic English tongue twisters: short, medium, hard. For diction practice, voice warm-ups or family games.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What are tongue twisters good for?', acceptedAnswer: { '@type': 'Answer', text: 'Improve diction, warm up the voice before public speaking, entertain, and help in phonetics class.' } },
+    { '@type': 'Question', name: 'For kids?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Filter by "easy" for the shortest classics.' } },
+    { '@type': 'Question', name: 'How to practice?', acceptedAnswer: { '@type': 'Answer', text: 'Start slow and articulate every syllable. Speed up only when the slow version is flawless.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Diversión / Fun" title="Tongue twister generator"
+    intro="Classic English tongue twisters. Try saying it three times fast without tripping.">
+
+    <div slot="tool" class="tt">
+      <div class="tt-card">
+        <p id="tt-text" class="tt-text">Tap generate to start.</p>
+      </div>
+      <div class="tt-controls">
+        <label for="tt-cat">Difficulty</label>
+        <select id="tt-cat">
+          <option value="all">All</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+      <button id="tt-gen" class="btn btn-primary" type="button">Another twister</button>
+      <button id="tt-copy" class="btn btn-ghost" type="button">Copy</button>
+    </div>
+
+    <div slot="content">
+      <h2>Why tongue twisters work</h2>
+      <p>
+        A tongue twister combines similar sounds in difficult positions for the muscles of
+        the mouth. <strong>Sh</strong>, <strong>th</strong>, <strong>r</strong> and clusters
+        like <strong>str</strong> are the classic troublemakers. Repeating them trains the
+        coordination between tongue, lips and vocal cords. That's why actors, broadcasters
+        and public speakers use them as warm-ups before going on stage.
+      </p>
+
+      <h2>Concrete benefits</h2>
+      <ul>
+        <li><strong>Diction:</strong> articulate consonants in any language clearly.</li>
+        <li><strong>Speed:</strong> speak faster without losing clarity.</li>
+        <li><strong>Confidence:</strong> if you can handle a twister, you can handle a presentation.</li>
+        <li><strong>Memory:</strong> learning a long one by heart trains auditory retention.</li>
+        <li><strong>Languages:</strong> a twister in another language is one of the best pronunciation tools.</li>
+      </ul>
+
+      <h2>How to practice well</h2>
+      <ol>
+        <li><strong>Slow first.</strong> Articulate each syllable like you're teaching a child.</li>
+        <li><strong>Three error-free reps.</strong> Only speed up after three perfect slow runs.</li>
+        <li><strong>Mirror.</strong> Watching your mouth helps you correct lip movement.</li>
+        <li><strong>Record yourself.</strong> Hearing your own voice exposes errors you miss live.</li>
+        <li><strong>5 minutes a day.</strong> Better daily 5 minutes than half an hour once a week.</li>
+      </ol>
+
+      <h2>English classics</h2>
+      <p>
+        "She sells seashells by the seashore" is probably the most famous English twister,
+        working <strong>sh</strong> and <strong>s</strong>. "Peter Piper picked a peck of
+        pickled peppers" hits <strong>p</strong> hard. "How much wood would a woodchuck
+        chuck" plays with <strong>w</strong> and <strong>ch</strong>. "Red lorry, yellow
+        lorry" is short but brutally hard for non-natives.
+      </p>
+
+      <h2>Twisters in the classroom</h2>
+      <p>
+        In primary school, they're effective phonetic exercises. Kids memorize them and
+        compete for fastest clean run. This builds pronunciation, public-speaking
+        confidence and auditory memory. For ESL learners: twisters are gold for breaking
+        accent habits.
+      </p>
+
+      <h2>Group variants</h2>
+      <p>
+        Stopwatch: each player has 30 seconds to say it three times without tripping.
+        Fastest clean run wins. Round: everyone says it once; whoever stumbles sits down.
+        Last standing is champion. Family: an adult and a kid go head-to-head, adjusting
+        speed. Works best when adults trip too: teaches losing with humor.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>For other languages?</summary><p>Each language has its own twisters; this set is English.</p></details>
+      <details><summary>How many?</summary><p>20+ classics across difficulty levels.</p></details>
+      <details><summary>Recommended by speech therapists?</summary><p>Yes, as articulation training.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tt-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; }
+  .tt-text { font-size: 1.125rem; line-height: 1.6; margin: 0; font-style: italic; }
+  .tt-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const TT: { cat: string; t: string }[] = [
+    { cat: "easy", t: "She sells seashells by the seashore." },
+    { cat: "easy", t: "Red lorry, yellow lorry." },
+    { cat: "easy", t: "Unique New York, unique New York." },
+    { cat: "easy", t: "Toy boat, toy boat, toy boat." },
+    { cat: "easy", t: "Fresh French fried fly fritters." },
+    { cat: "easy", t: "Six sticky skeletons." },
+    { cat: "easy", t: "I scream, you scream, we all scream for ice cream." },
+    { cat: "easy", t: "Black bug bit a big black bear." },
+    { cat: "medium", t: "Peter Piper picked a peck of pickled peppers. A peck of pickled peppers Peter Piper picked." },
+    { cat: "medium", t: "How much wood would a woodchuck chuck if a woodchuck could chuck wood?" },
+    { cat: "medium", t: "Betty Botter bought some butter, but, she said, the butter's bitter; if I put it in my batter, it will make my batter bitter." },
+    { cat: "medium", t: "Fuzzy Wuzzy was a bear; Fuzzy Wuzzy had no hair; Fuzzy Wuzzy wasn't fuzzy, was he?" },
+    { cat: "medium", t: "Can you can a can as a canner can can a can?" },
+    { cat: "medium", t: "I saw Susie sitting in a shoe shine shop." },
+    { cat: "medium", t: "A big black bug bit a big black bear, made the big black bear bleed blood." },
+    { cat: "hard", t: "The sixth sick sheik's sixth sheep's sick." },
+    { cat: "hard", t: "Pad kid poured curd pulled cod." },
+    { cat: "hard", t: "Imagine an imaginary menagerie manager imagining managing an imaginary menagerie." },
+    { cat: "hard", t: "Truly rural, truly rural, truly rural." },
+    { cat: "hard", t: "I slit the sheet, the sheet I slit, and on the slitted sheet I sit." },
+    { cat: "hard", t: "If Stu chews shoes, should Stu choose the shoes he chews?" }
+  ];
+
+  const text = document.getElementById('tt-text') as HTMLElement;
+  const cat = document.getElementById('tt-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('tt-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('tt-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? TT : TT.filter(s => s.cat === filter);
+    text.textContent = pick(pool).t;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(text.textContent || '');
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

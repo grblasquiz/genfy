@@ -1,0 +1,184 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Pricing Tier Name Generator | Genfy';
+const description = 'Generate names for your SaaS pricing tiers. 3, 4 and 5-tier combos in styles like Starter/Growth/Scale or fresh names like Pulse, Pivot, Crest.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is the best tier name?', acceptedAnswer: { '@type': 'Answer', text: 'The one that signals progression without explanation. Starter / Growth / Scale / Enterprise is the cleanest set because it reads instantly.' } },
+    { '@type': 'Question', name: 'How many tiers should I have?', acceptedAnswer: { '@type': 'Answer', text: 'Three is the most common and clean. Four works with a free + three paid or a very different enterprise. Five+ usually confuses.' } },
+    { '@type': 'Question', name: 'Are creative names a good idea?', acceptedAnswer: { '@type': 'Answer', text: 'Only if the hierarchy stays obvious. Pulse / Pivot / Forge works with Solo / Team / Scale tags. Pure creative names without clear hierarchy hurt conversion.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Pricing Tier Name Generator"
+    intro="Pick number of tiers and style, and get 8 combos ready for your pricing page. From classic (Starter / Growth / Scale) to fresh (Pulse / Pivot / Crest).">
+
+    <div slot="tool" class="pt">
+      <label>Number of tiers</label>
+      <select id="pt-qty">
+        <option value="3" selected>3 tiers</option>
+        <option value="4">4 tiers</option>
+        <option value="5">5 tiers</option>
+      </select>
+
+      <label style="margin-top:1rem">Style</label>
+      <select id="pt-style">
+        <option value="classic">Classic (Starter, Growth, Scale)</option>
+        <option value="velocity">Velocity (Lite, Pro, Boost, Enterprise)</option>
+        <option value="size">Size (Solo, Team, Business, Enterprise)</option>
+        <option value="fresh">Fresh / invented (Pulse, Pivot, Crest)</option>
+        <option value="numeric">Numeric (Plan 1, Plan 2, Plan 3)</option>
+      </select>
+
+      <button id="pt-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 8 combos</button>
+
+      <div id="pt-out" class="pt-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why pricing tier names matter more than the price</h2>
+      <p>
+        When a visitor scans a pricing page, they decide in 5 seconds which tier is theirs. If
+        names are confusing, they bounce. Good names do three things at once: signal progression,
+        suggest who each tier is for, and reinforce brand positioning.
+      </p>
+
+      <h2>The 5 styles that work</h2>
+      <ul>
+        <li><strong>Classic — Starter / Growth / Scale / Enterprise:</strong> the most universal. No explanation needed. Recommended for B2B SaaS.</li>
+        <li><strong>Velocity — Lite / Pro / Boost / Enterprise:</strong> implies power progression. Good for productivity and marketing tools.</li>
+        <li><strong>Size — Solo / Team / Business / Enterprise:</strong> very clear who each is for. Ideal for tools with user hierarchy.</li>
+        <li><strong>Fresh — Pulse / Pivot / Crest / Forge:</strong> modern, ownable, memorable. Only when hierarchy stays obvious.</li>
+        <li><strong>Numeric — Plan 1, 2, 3:</strong> simple but impersonal. Works when price is the clear driver, not the product.</li>
+      </ul>
+
+      <h2>Non-negotiables</h2>
+      <ol>
+        <li><strong>One scale.</strong> Don't mix two logics ("Solo" in one, "Pro" in another).</li>
+        <li><strong>Obvious progression.</strong> If you have to explain which is more expensive, the name failed.</li>
+        <li><strong>Enterprise always present.</strong> The top tier should signal "these are the big ones" and leave room for sales-led.</li>
+        <li><strong>Avoid odd metaphors.</strong> Generic-sounding names with no clear meaning hurt trust.</li>
+        <li><strong>Same language across tiers.</strong> Don't mix English and another language on the same page.</li>
+      </ol>
+
+      <h2>Common pricing page mistakes</h2>
+      <ul>
+        <li>Too many tiers (5+). Visitors get lost and don't pick.</li>
+        <li>"Most popular" tier without visual emphasis.</li>
+        <li>Differences expressed only in tech features, not outcomes.</li>
+        <li>Creative names with no anchor price. "Crest" at $49 with no context looks expensive.</li>
+        <li>Free tier without clarity on when to upgrade.</li>
+      </ul>
+
+      <h2>How to choose the style</h2>
+      <p>
+        The question isn't which sounds best, but which matches your positioning. If your brand is
+        serious and B2B, go classic or size. If it's modern, opinionated, looking to differentiate,
+        fresh works — with obvious hierarchy. If your product is commodity-like and price is the
+        driver, numeric is fine. What never works: forced metaphors customers must decode.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Best name set?</summary><p>The one that signals progression without explanation. Starter / Growth / Scale is the cleanest pattern.</p></details>
+      <details><summary>How many tiers?</summary><p>3 is cleanest. 4 if free + 3 paid. 5+ confuses.</p></details>
+      <details><summary>Creative names?</summary><p>Yes, only if hierarchy stays obvious.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pt-out { display: grid; gap: 0.75rem; margin-top: 1.25rem; }
+  .pt-row { padding: 0.875rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .pt-row:hover { border-color: var(--primary); }
+  .pt-tag { padding: 0.25rem 0.625rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.875rem; font-weight: 600; }
+</style>
+
+<script>
+  const qty = document.getElementById('pt-qty') as HTMLSelectElement;
+  const style = document.getElementById('pt-style') as HTMLSelectElement;
+  const out = document.getElementById('pt-out')!;
+  const gen = document.getElementById('pt-gen') as HTMLButtonElement;
+
+  const sets: Record<string, string[][]> = {
+    classic: [
+      ['Starter', 'Growth', 'Scale', 'Enterprise', 'Custom'],
+      ['Basic', 'Plus', 'Premium', 'Enterprise', 'Custom'],
+      ['Free', 'Standard', 'Advanced', 'Enterprise', 'Bespoke'],
+      ['Starter', 'Studio', 'Agency', 'Enterprise', 'Partner'],
+      ['Foundation', 'Growth', 'Pro', 'Scale', 'Enterprise'],
+      ['Launch', 'Grow', 'Scale', 'Custom', 'White-label'],
+      ['Free', 'Starter', 'Business', 'Enterprise', 'Strategic'],
+      ['Solo', 'Studio', 'Company', 'Enterprise', 'Custom'],
+    ],
+    velocity: [
+      ['Lite', 'Pro', 'Boost', 'Enterprise', 'Ultra'],
+      ['Basic', 'Pro', 'Power', 'Enterprise', 'Custom'],
+      ['Lite', 'Standard', 'Pro', 'Plus', 'Enterprise'],
+      ['Free', 'Pro', 'Pro+', 'Business', 'Enterprise'],
+      ['Starter', 'Pro', 'Boost', 'Scale', 'Enterprise'],
+      ['Light', 'Pro', 'Turbo', 'Enterprise', 'Custom'],
+      ['Lite', 'Pro', 'Premium', 'Elite', 'Enterprise'],
+      ['Free', 'Pro', 'Boost', 'Custom', 'Enterprise'],
+    ],
+    size: [
+      ['Solo', 'Team', 'Business', 'Enterprise', 'Strategic'],
+      ['Personal', 'Team', 'Company', 'Enterprise', 'Custom'],
+      ['Individual', 'Squad', 'Studio', 'Company', 'Enterprise'],
+      ['Solo', 'Duo', 'Team', 'Company', 'Enterprise'],
+      ['Free', 'Solo', 'Team', 'Business', 'Enterprise'],
+      ['Single', 'Team', 'Org', 'Multi-org', 'Enterprise'],
+      ['Personal', 'Pro', 'Team', 'Business', 'Enterprise'],
+      ['Solo', 'Team', 'Agency', 'Enterprise', 'Custom'],
+    ],
+    fresh: [
+      ['Pulse', 'Pivot', 'Crest', 'Summit', 'Beacon'],
+      ['Spark', 'Bloom', 'Flow', 'Crest', 'Beacon'],
+      ['Pulse', 'Forge', 'Crest', 'Beacon', 'Summit'],
+      ['Lift', 'Flow', 'Crest', 'Forge', 'Beacon'],
+      ['Pulse', 'Bloom', 'Forge', 'Crest', 'Summit'],
+      ['Spark', 'Pivot', 'Scale', 'Beacon', 'Custom'],
+      ['Bloom', 'Boost', 'Crest', 'Summit', 'Custom'],
+      ['Flow', 'Forge', 'Pulse', 'Crest', 'Beacon'],
+    ],
+    numeric: [
+      ['Plan 1', 'Plan 2', 'Plan 3', 'Plan 4', 'Plan 5'],
+      ['Tier I', 'Tier II', 'Tier III', 'Tier IV', 'Tier V'],
+      ['S1', 'S2', 'S3', 'S4', 'S5'],
+      ['Plan A', 'Plan B', 'Plan C', 'Plan D', 'Custom'],
+      ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Custom'],
+      ['Plan 100', 'Plan 500', 'Plan 1K', 'Plan 5K', 'Custom'],
+      ['Bronze', 'Silver', 'Gold', 'Platinum', 'Custom'],
+      ['Edition 1', 'Edition 2', 'Edition 3', 'Edition 4', 'Custom'],
+    ],
+  };
+
+  function generate() {
+    const N = parseInt(qty.value);
+    const all = sets[style.value];
+
+    out.innerHTML = '';
+    all.slice(0, 8).forEach(combo => {
+      const slice = combo.slice(0, N);
+      const row = document.createElement('div');
+      row.className = 'pt-row';
+      slice.forEach(name => {
+        const tag = document.createElement('span');
+        tag.className = 'pt-tag';
+        tag.textContent = name;
+        row.appendChild(tag);
+      });
+      const text = slice.join(' / ');
+      row.title = 'Click to copy';
+      row.addEventListener('click', () => { navigator.clipboard.writeText(text); row.style.borderColor = 'var(--primary)'; setTimeout(() => row.style.borderColor = '', 800); });
+      out.appendChild(row);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

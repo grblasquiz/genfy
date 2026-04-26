@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de título de obra de teatro gratis | Genfy';
+const description = 'Generá títulos para obras de teatro: drama, comedia, musical, infantil. Ideas pegadizas y listas para cartelera o presentación.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno a un título de obra?', acceptedAnswer: { '@type': 'Answer', text: 'Un buen título promete tono, género y conflicto en pocas palabras. Funciona si el espectador puede repetirlo y si queda bien en una marquesina.' } },
+    { '@type': 'Question', name: '¿Cuánto debe medir el título?', acceptedAnswer: { '@type': 'Answer', text: 'Lo ideal es entre 2 y 6 palabras. Más largo se vuelve difícil de recordar y de imprimir en programa, afiche o entrada.' } },
+    { '@type': 'Question', name: '¿Puedo registrarlo?', acceptedAnswer: { '@type': 'Answer', text: 'Los títulos cortos no se registran como marca con facilidad, pero sí podés inscribir el texto completo de la obra en SADAIC o ARGENTORES (Argentina) o en la Library of Congress (EE.UU.) según el caso.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Creatividad" title="Generador de título de obra de teatro"
+    intro="Combiná género, tema y estructura para conseguir títulos memorables. Funciona para drama, comedia, musical y teatro infantil.">
+
+    <div slot="tool" class="tt">
+      <label for="tt-genre">Género</label>
+      <select id="tt-genre">
+        <option value="drama">Drama</option>
+        <option value="comedy">Comedia</option>
+        <option value="musical">Musical</option>
+        <option value="kids">Infantil</option>
+      </select>
+
+      <label for="tt-tema" style="margin-top:1rem">Tema central (palabra)</label>
+      <input id="tt-tema" type="text" value="silencio" placeholder="amor, deuda, viaje..." />
+
+      <button id="tt-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 títulos</button>
+      <div id="tt-out" class="tt-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Lo que hace funcionar a un título de obra</h2>
+      <p>Un buen título cumple tres funciones: anticipar el tono, dejar pista del conflicto y quedar en la cabeza del espectador. "La casa de Bernarda Alba" anuncia drama familiar. "El método Grönholm" promete tensión, juego psicológico, oficina. "Toc Toc" insinúa comedia liviana. Si tu título no contesta al menos una de esas preguntas en cinco palabras, está siendo demasiado abstracto.</p>
+      <h2>Estructuras que funcionan en cartelera</h2>
+      <ol>
+        <li><strong>Sustantivo concreto + adjetivo:</strong> "El cuarto azul", "La carta perdida".</li>
+        <li><strong>Pregunta o frase corta:</strong> "¿Quién mató a Pablo?", "Esperando la lluvia".</li>
+        <li><strong>Nombre propio:</strong> "Marta", "Antígona". Carga simbólica si el nombre lo permite.</li>
+        <li><strong>Tres palabras + ritmo:</strong> "Vidrio, mar, hueco". Estilo más poético, ideal para teatro experimental.</li>
+        <li><strong>Frase con doble sentido:</strong> bueno para comedia y musical.</li>
+      </ol>
+      <h2>Errores que hunden un título antes del estreno</h2>
+      <ul>
+        <li><strong>Demasiado abstracto:</strong> "Existir". No vende entradas, no comunica nada.</li>
+        <li><strong>Demasiado largo:</strong> el cartelista te va a odiar y el espectador no lo va a recordar a la salida.</li>
+        <li><strong>Calcado de otra obra famosa:</strong> Google primero. Si los primeros tres resultados son otra obra, cambialo.</li>
+        <li><strong>Géneros mezclados:</strong> un título serio con guiño de comedia desorienta. Coherencia con el contenido real.</li>
+      </ul>
+      <h2>Adaptar el título a cada formato</h2>
+      <p>Para teatro independiente, los títulos cortos y poéticos funcionan mejor en redes y flyers. Para teatro comercial, conviene un título descriptivo que indique género ("La cena de los idiotas"). Para musical, sumá ritmo y referencia musical o emocional. Para teatro infantil, palabras concretas y aliteración: "El sapo Saponáceo", "La aventura de Lila y el limón".</p>
+      <h2>Validación antes de imprimir</h2>
+      <p>Una vez elegido, hacé esta prueba: pedile a tres personas que lean el título y digan qué tipo de obra creen que es. Si las tres aciertan el tono, está bien. Si dos dicen "comedia" y vos escribiste un drama, el título está mintiendo. Cambialo antes de imprimir 500 programas.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno a un título?</summary><p>Promete tono, género y conflicto en pocas palabras y funciona en marquesina.</p></details>
+      <details><summary>¿Cuánto debe medir?</summary><p>Entre 2 y 6 palabras es lo ideal.</p></details>
+      <details><summary>¿Puedo registrarlo?</summary><p>El texto completo se inscribe en ARGENTORES o equivalente, los títulos cortos no se registran fácil como marca.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tt-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .tt-item { padding: 0.75rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
+  .tt-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const D_NOUN = ['cuarto', 'silencio', 'sombra', 'umbral', 'invierno', 'puerta', 'habitación', 'eco', 'hueco', 'mapa', 'reloj', 'jardín'];
+  const D_ADJ = ['perdido', 'oscuro', 'cerrado', 'final', 'partido', 'roto', 'frío', 'mudo', 'tardío', 'lejano'];
+  const C_PHRASE = ['Toc toc, abrió alguien', 'No me llames Carlos', 'Cinco minutos antes', 'Dos viejos en el ascensor', 'La cena del miércoles'];
+  const M_NOUN = ['canción', 'verbena', 'cabaret', 'baile', 'vals', 'tango', 'sereno', 'piano'];
+  const KIDS = ['El sapo', 'La nube', 'El globo', 'Los ratones', 'El pirata', 'La sirena', 'El zorro', 'La luciérnaga'];
+  const KIDS_TAIL = ['curioso', 'que perdió la voz', 'y la luna prestada', 'en el bosque dormido', 'que querían volar', 'del tejado azul'];
+
+  const genre = document.getElementById('tt-genre') as HTMLSelectElement;
+  const tema = document.getElementById('tt-tema') as HTMLInputElement;
+  const gen = document.getElementById('tt-gen') as HTMLButtonElement;
+  const out = document.getElementById('tt-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function generate() {
+    const g = genre.value;
+    const t = (tema.value || '').trim().toLowerCase();
+    const set = new Set<string>(); let tries = 0;
+    while (set.size < 20 && tries < 200) {
+      tries++;
+      let title = '';
+      if (g === 'drama') {
+        const variants = [
+          `El ${pick(D_NOUN)} ${pick(D_ADJ)}`,
+          `${cap(t || pick(D_NOUN))} en el umbral`,
+          `La casa del ${pick(D_NOUN)}`,
+          `${cap(pick(D_NOUN))}, ${cap(pick(D_NOUN))}, ${cap(pick(D_NOUN))}`,
+          `Antes del ${pick(D_NOUN)}`,
+        ];
+        title = pick(variants);
+      } else if (g === 'comedy') {
+        const variants = [...C_PHRASE, `Mi ${pick(D_NOUN)} y yo`, `${cap(t || 'Pablo')} no estaba invitado`, `Cómo perder un ${pick(D_NOUN)} en 90 minutos`];
+        title = pick(variants);
+      } else if (g === 'musical') {
+        title = `La ${pick(M_NOUN)} de ${cap(t || pick(D_NOUN))}`;
+      } else {
+        title = `${pick(KIDS)} ${pick(KIDS_TAIL)}`;
+      }
+      set.add(title);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'tt-item'; el.textContent = n; el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

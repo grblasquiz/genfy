@@ -1,0 +1,163 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Welcome Email Opener Generator | Genfy';
+const description = 'Generate the welcome email opener subscribers see right after signing up. The metric that defines the rest of the relationship with your list.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why is the welcome email the most important?', acceptedAnswer: { '@type': 'Answer', text: 'It has the highest open rate in your list (60-90%). It sets the first impression and predicts whether the subscriber will open the next ones.' } },
+    { '@type': 'Question', name: 'What should a welcome email opener have?', acceptedAnswer: { '@type': 'Answer', text: 'Deliver on the promise they signed up for, brief intro and an immediate action. Not just "thanks for signing up" without context.' } },
+    { '@type': 'Question', name: 'When should the welcome email be sent?', acceptedAnswer: { '@type': 'Answer', text: 'Immediately. Ideally within 60 seconds of opt-in. Intent is hot: any delay reduces engagement.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Email" title="Welcome Email Opener Generator"
+    intro="Drop in your promise and lead magnet (if any). Genfy returns 4 openers for your welcome email.">
+
+    <div slot="tool" class="we">
+      <label for="we-promise">What you promised at signup</label>
+      <input id="we-promise" type="text" placeholder="Investing tips for freelancers..." value="Weekly investing tips for freelancers" />
+
+      <label for="we-magnet" style="margin-top:1rem">Lead magnet (optional)</label>
+      <input id="we-magnet" type="text" placeholder="Free starter guide..." value="Free guide: 5 steps to start investing" />
+
+      <label for="we-name" style="margin-top:1rem">Who's writing (your name)</label>
+      <input id="we-name" type="text" placeholder="Mariana..." value="Mariana" />
+
+      <label for="we-credibility" style="margin-top:1rem">Brief credibility</label>
+      <input id="we-credibility" type="text" placeholder="Finance coach for 8 years" value="Finance coach for 8 years" />
+
+      <button id="we-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 4 openers</button>
+
+      <div id="we-out" class="we-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why the welcome email is the most strategic in your entire list</h2>
+      <p>
+        The welcome email has the highest open rates in your account: 60% to 90% depending on the industry. That's 3-4x more than a regular email. Reason is simple: the person just made an active choice to give you their email. Intent is hot, attention is available, and the "marketing" mental filter hasn't kicked in yet.
+      </p>
+      <p>
+        That makes the welcome the most valuable opportunity in your email funnel. What you write here defines the relationship with all subsequent emails. If the welcome confirms the promise, presents concrete value and asks a small action, the list opens the next ones. If it's generic, it drops to 30% on the second email and 15% on the third.
+      </p>
+
+      <h2>The welcome email structure that performs</h2>
+      <ol>
+        <li><strong>Deliver the promise first:</strong> if you promised a PDF, the link to the PDF is first, not at the end.</li>
+        <li><strong>Short, specific intro:</strong> "I'm Mariana, I've spent 8 years helping freelancers save." Two sentences max.</li>
+        <li><strong>What to expect:</strong> "I'll write to you every Tuesday with concrete tips." Frequency and format.</li>
+        <li><strong>One immediate action:</strong> reply to the email, click something, read a resource.</li>
+        <li><strong>Human close:</strong> sign with a name, not a corporate brand.</li>
+      </ol>
+
+      <h2>The 4 opener structures that perform</h2>
+      <ul>
+        <li><strong>"Delivery + welcome" opener:</strong> "Here's your guide: [link]. First things first: thanks for signing up."</li>
+        <li><strong>"Human intro" opener:</strong> "Hi, I'm Mariana. I've been in finance for 8 years and this newsletter is where I write what I learned."</li>
+        <li><strong>"Honest about what's coming" opener:</strong> "I'll be straight: I'll write you every Tuesday and sometimes I'll recommend a paid product."</li>
+        <li><strong>"Immediate action" opener:</strong> "Before we go further, one thing: reply to this email with your biggest problem with [topic]. I read all of them."</li>
+      </ul>
+
+      <h2>The most common mistake: the generic welcome</h2>
+      <p>
+        The average welcome says "Thanks for signing up. In the coming weeks I'll write about X. Cheers." It's polite and technically correct. And it performs 30% worse than a welcome with personality. Why:
+      </p>
+      <ul>
+        <li>Doesn't deliver the specific promise (where's the PDF I promised?).</li>
+        <li>Doesn't introduce a person, introduces an anonymous brand.</li>
+        <li>Asks no action, so the person archives and forgets.</li>
+        <li>Doesn't differentiate your account from the 50 other newsletters they signed up for.</li>
+      </ul>
+
+      <h2>Why asking an action improves the whole funnel</h2>
+      <p>
+        Asking an action in the welcome (reply with a question, click a resource, complete a mini-quiz) has three concrete benefits:
+      </p>
+      <ol>
+        <li><strong>Improves deliverability:</strong> Gmail and Outlook read user replies as a signal the email matters. More replies = better future inbox placement.</li>
+        <li><strong>Generates data:</strong> you learn what each subscriber cares about from day 1.</li>
+        <li><strong>Sets dynamic:</strong> if they reply to the first, they're more likely to reply to the next.</li>
+      </ol>
+
+      <h2>Timing: when to send and why it matters</h2>
+      <p>
+        The welcome must arrive within 60 seconds of opt-in. Ideally within 30. Why: the person is still on the screen, still remembers why they signed up, still has the context active. If it arrives 6 hours later, context cools. If next day, it feels out of place.
+      </p>
+      <p>
+        Platforms like ConvertKit, Klaviyo, MailerLite and Mailchimp allow "immediate on opt-in" triggers. If yours doesn't, switch.
+      </p>
+
+      <h2>How to present credibility without sounding like a resume</h2>
+      <p>
+        Credibility in a welcome is built with 1-2 specific data points, not a list. Compare:
+      </p>
+      <ul>
+        <li>"I'm Mariana, MBA from X, ex-Bank Y, CFA, author of book Z, speaker at events..." — sounds like a CV.</li>
+        <li>"I'm Mariana, I've spent 8 years helping freelancers invest their first dollar." — sounds human and specific.</li>
+      </ul>
+
+      <h2>Common mistakes in welcome emails</h2>
+      <ul>
+        <li><strong>No personalized sender:</strong> "info@company.com" instead of "mariana@company.com" drops open rate 15%.</li>
+        <li><strong>Too long:</strong> 5 paragraphs of welcome without concrete action.</li>
+        <li><strong>Too many links:</strong> 8 buttons of "read this, listen to that" overwhelms.</li>
+        <li><strong>Giant corporate footer:</strong> the first email must feel personal, not corporate.</li>
+        <li><strong>Not mentioning frequency:</strong> people want to know what to expect.</li>
+        <li><strong>Self-promo in the welcome:</strong> "Buy my course" in the first email is a direct path to unsubscribe.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>When to send the welcome?</summary><p>Immediately (within 60 sec). Intent is hot.</p></details>
+      <details><summary>How many links?</summary><p>1-2 concrete actions. More overwhelms and dilutes conversion.</p></details>
+      <details><summary>Mention frequency?</summary><p>Yes. "I'll write every Tuesday" lowers future unsubscribes.</p></details>
+      <details><summary>Self-promo in welcome?</summary><p>Better not. Trust first, sales from email 4-5 onward.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .we-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .we-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; }
+  .we-card:hover { border-color: var(--accent); }
+  .we-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const promise = document.getElementById('we-promise') as HTMLInputElement;
+  const magnet = document.getElementById('we-magnet') as HTMLInputElement;
+  const name = document.getElementById('we-name') as HTMLInputElement;
+  const cred = document.getElementById('we-credibility') as HTMLInputElement;
+  const gen = document.getElementById('we-gen') as HTMLButtonElement;
+  const out = document.getElementById('we-out')!;
+
+  function generate() {
+    const Pr = promise.value.trim() || 'useful tips';
+    const M = magnet.value.trim();
+    const N = name.value.trim() || 'It\'s me';
+    const C = cred.value.trim() || 'the person behind this newsletter';
+
+    const intros = [
+      `${M ? 'Here\'s what I promised: ' + M + ' (link at the end of this email).\n\n' : ''}First things first: thanks for signing up. I'm ${N}, ${C.toLowerCase()}.\n\nIn this newsletter I'll send you ${Pr.toLowerCase()}, no fluff.`,
+      `Hi, I'm ${N}.\n\n${C}, and this is where I write what I've learned in that time.\n\n${M ? 'Starting with your first resource: ' + M + '.\n\n' : ''}I write every week. If at any point it bores you, you can leave with one click below.`,
+      `I'll be direct: I'll write to you every week, sometimes twice. ${Pr}.\n\n${M ? 'Your first promised resource: ' + M + '.\n\n' : ''}If this sounds good, keep reading. If not, thanks anyway and see you around.`,
+      `Before we go further, one thing: reply to this email with your biggest problem about ${Pr.toLowerCase().split(' ').slice(0, 3).join(' ')}.\n\nI read everything, no assistant in between.\n\nI'm ${N}, ${C.toLowerCase()}.${M ? '\n\nYour first resource: ' + M + '.' : ''}`,
+    ];
+
+    out.innerHTML = '';
+    intros.forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'we-card';
+      el.title = 'Click to copy';
+      el.innerHTML = b.replace(/\n/g, '<br>') + `<div class="we-meta">Opener ${i+1} · ${b.length} characters</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,193 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'CSV a JSON — Conversor gratis | Genfy';
+const description = 'Convertí CSV a un array de objetos JSON. Detección de headers, manejo de comillas y separadores configurables. 100% en el navegador.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Detecta el separador automáticamente?', acceptedAnswer: { '@type': 'Answer', text: 'No por default. Tenés que elegir si tu CSV usa coma, punto y coma o tab. Si elegís mal, las filas quedan en una sola columna.' } },
+    { '@type': 'Question', name: '¿Convierte tipos automáticamente?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Por default detecta números (123, 3.14), booleanos (true/false) y null. El resto queda como string. Podés desactivar la detección y dejar todo como strings.' } },
+    { '@type': 'Question', name: '¿Soporta saltos de línea dentro de celdas?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Si una celda está envuelta en comillas dobles y contiene saltos de línea, el parser los respeta como parte del valor.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Datos" title="CSV a JSON"
+    intro="Pegá un CSV y obtené un array de objetos JSON listo para tu API o app. Detección de tipos, manejo de comillas y separadores.">
+
+    <div slot="tool">
+      <div class="cj-row">
+        <div>
+          <label for="cj-sep">Separador</label>
+          <select id="cj-sep">
+            <option value=",">Coma (,)</option>
+            <option value=";">Punto y coma (;)</option>
+            <option value="\t">Tab</option>
+          </select>
+        </div>
+        <label class="chk"><input type="checkbox" id="cj-types" checked /> Detectar tipos</label>
+      </div>
+      <label for="cj-in">CSV</label>
+      <textarea id="cj-in" rows="6" style="font-family: var(--font-mono); font-size: 0.9rem;">nombre,edad,activo
+Ana,30,true
+Pedro,25,false
+"María, López",35,true</textarea>
+      <button id="cj-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Convertir</button>
+      <button id="cj-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <div id="cj-status" class="cj-status"></div>
+      <label for="cj-out" style="margin-top:1rem;">JSON</label>
+      <textarea id="cj-out" rows="10" readonly style="font-family: var(--font-mono); font-size: 0.9rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>De plano a estructurado</h2>
+      <p>
+        CSV es el formato de intercambio de datos más antiguo de la web. Excel exporta a CSV, las APIs viejas a veces solo aceptan CSV, y muchos analistas prefieren CSV porque lo abren al instante en Sheets o Excel. Pero cuando esos datos tienen que entrar a una app moderna, una API REST o un script de Node, JSON es lo natural. Este conversor hace ese puente con un parser que respeta las reglas del RFC 4180.
+      </p>
+
+      <h2>El parser respeta estas reglas</h2>
+      <ul>
+        <li>La primera fila se interpreta como headers (las claves del JSON resultante).</li>
+        <li>Los valores entre comillas dobles pueden contener el separador, comillas escapadas (<code>""</code>) y saltos de línea.</li>
+        <li>Espacios en blanco al inicio o final del valor se preservan (no se trimean).</li>
+        <li>Filas vacías se ignoran.</li>
+      </ul>
+
+      <h2>Detección automática de tipos</h2>
+      <p>
+        Por default, el conversor inspecciona cada celda y trata de inferir el tipo:
+      </p>
+      <ul>
+        <li><strong>Números:</strong> <code>42</code>, <code>3.14</code>, <code>-7</code>, notación científica (<code>1e6</code>).</li>
+        <li><strong>Booleanos:</strong> <code>true</code> y <code>false</code> en minúscula.</li>
+        <li><strong>Null:</strong> <code>null</code> exacto, también celda vacía.</li>
+        <li><strong>Strings:</strong> todo lo demás, incluyendo fechas (que quedan como strings ISO).</li>
+      </ul>
+      <p>
+        Si tu CSV tiene códigos postales que empiezan con cero (<code>05000</code>) o IDs de SKU que parecen números pero deberían ser strings, desactivá la detección de tipos. Si no, perdés ceros a la izquierda y se rompe la integridad.
+      </p>
+
+      <h2>Casos de uso</h2>
+      <ul>
+        <li><strong>Importar datos a una app.</strong> Convertís el CSV exportado del cliente a JSON y lo cargás directo a tu base de datos vía API.</li>
+        <li><strong>Migrar de Excel a un CMS.</strong> Sheets exporta CSV, tu CMS espera JSON.</li>
+        <li><strong>Procesar con JavaScript en el browser.</strong> Una vez convertido, podés filtrar, mapear y reducir con métodos de Array sin tocar parsers externos.</li>
+        <li><strong>Pegar a un endpoint REST.</strong> Muchas APIs aceptan POST con JSON; conviene tener el formato listo antes de mandarlo.</li>
+      </ul>
+
+      <h2>Errores comunes al convertir</h2>
+      <ul>
+        <li><strong>Separador equivocado.</strong> Si elegís coma pero tu CSV usa punto y coma, todas las filas quedan en una sola columna.</li>
+        <li><strong>Encoding incorrecto.</strong> Si tu CSV viene en Latin-1 (ISO-8859-1) y lo pegás como UTF-8, las tildes se rompen. Convertir el archivo a UTF-8 antes resuelve.</li>
+        <li><strong>Comillas inconsistentes.</strong> CSVs generados a mano a veces mezclan comillas simples y dobles, lo que confunde al parser.</li>
+        <li><strong>Headers duplicados.</strong> Si dos columnas se llaman igual, en JSON solo queda una (las claves de un objeto son únicas).</li>
+      </ul>
+
+      <h2>Tips de validación</h2>
+      <p>
+        Después de convertir, miralo: <code>JSON.parse</code> en consola y <code>console.table()</code> te muestra una vista tabular instantánea. Si los tipos no son los que esperás, ajustá el flag de detección. Si una columna que esperabas como número quedó como string, probablemente tiene caracteres no numéricos (espacios, símbolo de moneda) que el parser detectó.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Detecta el separador automáticamente?</summary><p>No. Tenés que elegir entre coma, punto y coma o tab. Si elegís mal, las filas quedan en una sola columna.</p></details>
+      <details><summary>¿Convierte tipos automáticamente?</summary><p>Sí, números, booleanos y null. Podés desactivarlo si necesitás que todo quede como string.</p></details>
+      <details><summary>¿Soporta saltos de línea dentro de celdas?</summary><p>Sí, si la celda está envuelta en comillas dobles.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cj-row { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: end; margin-bottom: 1rem; }
+  .chk { display: flex; align-items: center; gap: 0.5rem; margin: 0; }
+  .chk input { width: auto; }
+  .cj-status { font-family: var(--font-mono); font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.25rem; color: var(--text-soft); }
+  @media (max-width: 600px) { .cj-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const inEl = document.getElementById('cj-in') as HTMLTextAreaElement;
+  const out = document.getElementById('cj-out') as HTMLTextAreaElement;
+  const sepEl = document.getElementById('cj-sep') as HTMLSelectElement;
+  const typesEl = document.getElementById('cj-types') as HTMLInputElement;
+  const status = document.getElementById('cj-status') as HTMLDivElement;
+  const genBtn = document.getElementById('cj-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('cj-copy') as HTMLButtonElement;
+
+  function parseCSV(text: string, sep: string): string[][] {
+    const rows: string[][] = [];
+    let row: string[] = [];
+    let cur = '';
+    let i = 0, inQ = false;
+    while (i < text.length) {
+      const ch = text[i];
+      if (inQ) {
+        if (ch === '"') {
+          if (text[i+1] === '"') { cur += '"'; i += 2; continue; }
+          inQ = false; i++; continue;
+        }
+        cur += ch; i++; continue;
+      } else {
+        if (ch === '"') { inQ = true; i++; continue; }
+        if (ch === sep) { row.push(cur); cur = ''; i++; continue; }
+        if (ch === '\n' || ch === '\r') {
+          row.push(cur); cur = '';
+          if (row.length > 1 || row[0] !== '') rows.push(row);
+          row = [];
+          if (ch === '\r' && text[i+1] === '\n') i++;
+          i++; continue;
+        }
+        cur += ch; i++;
+      }
+    }
+    if (cur !== '' || row.length > 0) { row.push(cur); rows.push(row); }
+    return rows;
+  }
+
+  function coerce(v: string): any {
+    if (v === '' || v === 'null') return null;
+    if (v === 'true') return true;
+    if (v === 'false') return false;
+    if (/^-?\d+$/.test(v)) return parseInt(v, 10);
+    if (/^-?\d+\.\d+$/.test(v) || /^-?\d+(\.\d+)?[eE][+-]?\d+$/.test(v)) return parseFloat(v);
+    return v;
+  }
+
+  function run() {
+    const txt = inEl.value;
+    if (!txt.trim()) { out.value = ''; status.textContent = ''; return; }
+    try {
+      const sep = sepEl.value === '\\t' ? '\t' : sepEl.value;
+      const rows = parseCSV(txt, sep);
+      if (rows.length < 2) { status.textContent = 'Necesita al menos un header y una fila'; out.value = ''; return; }
+      const headers = rows[0];
+      const data = rows.slice(1).map(r => {
+        const o: Record<string, any> = {};
+        headers.forEach((h, i) => {
+          const raw = r[i] ?? '';
+          o[h] = typesEl.checked ? coerce(raw) : raw;
+        });
+        return o;
+      });
+      out.value = JSON.stringify(data, null, 2);
+      status.textContent = `${data.length} filas, ${headers.length} columnas`;
+    } catch (e: any) {
+      out.value = '';
+      status.textContent = 'Error: ' + (e.message || 'CSV inválido');
+    }
+  }
+  inEl.addEventListener('input', run);
+  sepEl.addEventListener('change', run);
+  typesEl.addEventListener('change', run);
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

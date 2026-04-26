@@ -1,0 +1,141 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Hair Salon Name Generator | Genfy';
+const description = 'Generate unique names for your hair salon, barbershop or studio. Mix concept, owner or style and get 20 ideas for storefront, domain and socials.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Should I use my name as the owner?', acceptedAnswer: { '@type': 'Answer', text: 'Works very well if you\'ll be working the chair and want closeness. Less ideal if you plan to expand or sell the location.' } },
+    { '@type': 'Question', name: 'How does a premium salon differ from a neighborhood one?', acceptedAnswer: { '@type': 'Answer', text: 'Premium uses minimalist or craft names (Atelier, Studio, Color Lab). Neighborhood works with warm names or surnames.' } },
+    { '@type': 'Question', name: 'How do I check availability?', acceptedAnswer: { '@type': 'Answer', text: 'Google Maps within 3 miles, Instagram with the exact handle, domain and local trademark register before printing cards.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Beauty" title="Hair Salon Name Generator"
+    intro="Mix concept, surname or style and get 20 ideas for your hair salon, barbershop or studio. Built to validate Instagram handle instantly.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Keywords (concept, surname, style)</label>
+      <input id="bn-kw" type="text" placeholder="color, hair, atelier..." value="hair, studio" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="boutique">Boutique / atelier</option>
+        <option value="surname">Surname + Studio / Salon</option>
+        <option value="modern">Modern (one word)</option>
+        <option value="craft">Craft (Color Lab, Hair Lab)</option>
+        <option value="warm">Warm neighborhood</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a salon name</h2>
+      <p>
+        In beauty, the name has to communicate three things in under a second: price level,
+        style (classic, urban, modern) and specialty if you have one (color, curls, beard). The
+        most common failure is a name that looks beautiful on the storefront but doesn't tell
+        someone whether to walk in with a $20 or $200 budget.
+      </p>
+      <ol>
+        <li><strong>Matches the ticket.</strong> "Atelier" suggests premium; "Cuts" suggests accessible.</li>
+        <li><strong>Clear specialty.</strong> If color is your strength, "Color Lab" says more than "Beauty Studio".</li>
+        <li><strong>Memorable after the cut.</strong> Your client recommends it to their brother-in-law.</li>
+        <li><strong>Findable on Maps.</strong> Unique in your area.</li>
+        <li><strong>Short IG handle.</strong> That's where transformations and before/after live.</li>
+      </ol>
+
+      <h2>Styles by salon type</h2>
+      <ul>
+        <li><strong>Boutique / atelier:</strong> "Atelier 22", "Studio Hair". Suggests premium and craft.</li>
+        <li><strong>Surname + Studio:</strong> "Mendez Hair", "Rossi Studio". Conveys authorship.</li>
+        <li><strong>Modern (one word):</strong> "Ink", "Form", "Strand", "Edge". Mood-driven.</li>
+        <li><strong>Craft:</strong> "Color Lab", "Curl Lab", "Cut Lab". Communicates specialty.</li>
+        <li><strong>Warm neighborhood:</strong> "Casa Lola", "Corner Salon". For local repeat clientele.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        Most common: too generic. "Total Beauty", "Perfect Look" or "Healthy Hair" have
+        thousands of results. Second: names that age badly — references to a specific show or
+        seasonal trend tie you to a decade. Third: special characters that break the handle.
+      </p>
+
+      <h2>Quick validation</h2>
+      <ol>
+        <li>Google Maps within 3 miles and across your city.</li>
+        <li>Instagram, TikTok, Booksy or Vagaro per market.</li>
+        <li>Domain on Namecheap or Cloudflare.</li>
+        <li>Local trademark register.</li>
+        <li>Print a test card: does it read premium or accessible per your positioning?</li>
+        <li>Tell 5 prospective clients: do they guess the price range correctly?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Use my name as owner?</summary><p>Works if you're at the chair; less ideal if you plan to expand.</p></details>
+      <details><summary>Premium or neighborhood?</summary><p>Atelier/Studio for premium; warm or surname for neighborhood.</p></details>
+      <details><summary>How to check availability?</summary><p>Google Maps, Instagram, domain and trademark register.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const BOUT = ['Atelier', 'Studio', 'Maison', 'Salon', 'House', 'Loft', 'Space', 'Workshop', 'Gallery'];
+  const SURN = ['Mendez', 'Rossi', 'Walker', 'Hart', 'Reed', 'Bianchi', 'Brooks', 'Silva', 'Castro', 'Nakamura'];
+  const MODERN = ['Ink', 'Form', 'Strand', 'Edge', 'Sprout', 'Trace', 'Pulse', 'Thread', 'Linen', 'Cobalt'];
+  const CRAFT_PRE = ['Color', 'Curl', 'Cut', 'Hair', 'Style', 'Trend', 'Tone', 'Wave'];
+  const CRAFT_SUF = ['Lab', 'Studio', 'Atelier', 'House', 'Co'];
+  const WARM = ['Casa Lola', 'Corner Salon', 'Casa Hair', 'Side Street', 'The Mirror', 'The Patio'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function num() { const i = new Uint32Array(1); crypto.getRandomValues(i); return (i[0] % 99) + 1; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Hair';
+      let name = '';
+      if (s === 'boutique') name = pick(BOUT) + ' ' + (Math.random() > 0.5 ? cap(w) : String(num()));
+      else if (s === 'surname') name = pick(SURN) + ' ' + pick(BOUT);
+      else if (s === 'modern') name = pick(MODERN);
+      else if (s === 'craft') name = pick(CRAFT_PRE) + ' ' + pick(CRAFT_SUF);
+      else if (s === 'warm') name = pick(WARM);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

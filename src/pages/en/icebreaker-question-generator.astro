@@ -1,0 +1,154 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Icebreaker Question Generator | Genfy';
+const description = 'Curated icebreaker questions for groups: remote teams, workshops, first-day onboarding, retreats. Zero cringe.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'When to use an icebreaker?', acceptedAnswer: { '@type': 'Answer', text: 'When people don\'t know each other and you need to lower the initial tension: kickoffs, workshops, retreats, first day.' } },
+    { '@type': 'Question', name: 'Are there remote-friendly ones?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Filter by "remote" for questions that work on Zoom or Slack.' } },
+    { '@type': 'Question', name: 'How many to use?', acceptedAnswer: { '@type': 'Answer', text: 'One or two at the start, no more. The icebreaker is the appetizer, not the main course.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Diversión / Fun" title="Icebreaker question generator"
+    intro="Lower the tension of the first minute. Curated for in-person and remote groups.">
+
+    <div slot="tool" class="ib">
+      <div class="ib-card">
+        <p id="ib-text" class="ib-text">Tap "Generate" to start.</p>
+      </div>
+      <div class="ib-controls">
+        <label for="ib-cat">Type</label>
+        <select id="ib-cat">
+          <option value="all">All</option>
+          <option value="team">Team / Work</option>
+          <option value="remote">Remote</option>
+          <option value="workshop">Workshop</option>
+          <option value="quick">Quick (1 min)</option>
+        </select>
+      </div>
+      <button id="ib-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="ib-copy" class="btn btn-ghost" type="button">Copy</button>
+    </div>
+
+    <div slot="content">
+      <h2>What an effective icebreaker is</h2>
+      <p>
+        An icebreaker isn't just any question. It's a question designed to lower the
+        introduction barrier, generate a small personal anecdote, and leave people feeling
+        like they already know each other a little. If your icebreaker reads like a
+        corporate survey, you've failed.
+      </p>
+
+      <h2>Three principles to make it work</h2>
+      <ol>
+        <li><strong>Low risk:</strong> nobody should feel forced to share something uncomfortable.</li>
+        <li><strong>Short answer:</strong> 30-60 seconds per person. Beyond that, you've lost the room.</li>
+        <li><strong>Contagious:</strong> one answer should spark ideas in others. Questions like "what was your worst/best/weirdest…?" work this way.</li>
+      </ol>
+
+      <h2>Icebreakers for remote teams</h2>
+      <p>
+        On Zoom, silence feels heavier. Visual-answer questions work better ("show an object
+        near you and tell its story"), as do ones answerable in chat ("emoji that describes
+        your morning") or brief ones where nobody has to stare at the camera longer than
+        needed. In remote settings, avoid long questions that require turn-taking: use the
+        participants list as visible order and force a 30-second cap.
+      </p>
+
+      <h2>Icebreakers for in-person workshops</h2>
+      <p>
+        More freedom here. Movement-based ones work great: "find someone who shares a trait
+        with you and find out which one". Generates energy and surfaces discoveries that
+        ease the rest of the workshop. Workshop rule: tie the icebreaker to the topic. If
+        you're going to talk about innovation, ask about the last thing they changed in
+        their routine. About teams? Ask about the best teammate they had and why.
+      </p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>"Tell us something funny about you":</strong> blocks introverts. Concrete questions work better.</li>
+        <li><strong>"What animal would you be?":</strong> overused. If you must, twist it: "and why your team would confirm it".</li>
+        <li><strong>Too long:</strong> a 20-minute icebreaker in a 60-minute meeting kills the rest.</li>
+        <li><strong>Non-icebreakers:</strong> "introduce yourself" isn't an icebreaker. It's a traditional intro. Don't conflate.</li>
+      </ul>
+
+      <h2>Closing template</h2>
+      <p>
+        After the icebreaker, explicitly bridge to content: "Now we know a bit about each
+        other; let's get to the workshop topic". That transition is critical; without it,
+        people stay in chat mode and refocusing is hard.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>For short meetings?</summary><p>Use the "quick" filter for under-a-minute answers.</p></details>
+      <details><summary>How many to run?</summary><p>One at the start. Two only if the group is large and needs more warm-up.</p></details>
+      <details><summary>Useful in classes?</summary><p>Yes, especially at semester start or a new module.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ib-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; }
+  .ib-text { font-size: 1.125rem; line-height: 1.6; margin: 0; }
+  .ib-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const QUESTIONS: { cat: string; t: string }[] = [
+    { cat: "team", t: "What was your first job and what did it teach you?" },
+    { cat: "team", t: "What skill would you like to build this year?" },
+    { cat: "team", t: "Best teammate or boss you've had and why?" },
+    { cat: "team", t: "What did you do last weekend?" },
+    { cat: "team", t: "If you could spend a whole month on one project, which?" },
+    { cat: "team", t: "What makes a good day for you?" },
+    { cat: "remote", t: "Show an object near you and tell its 30-second story." },
+    { cat: "remote", t: "Emoji that describes your morning. Drop it in chat." },
+    { cat: "remote", t: "Share something on the wall behind you." },
+    { cat: "remote", t: "What can you see out your window right now?" },
+    { cat: "remote", t: "Your pet or oldest plant: introduce them." },
+    { cat: "remote", t: "What app did you open first today?" },
+    { cat: "workshop", t: "What's the last thing you changed in your routine that worked?" },
+    { cat: "workshop", t: "Share a professional superpower nobody knows about." },
+    { cat: "workshop", t: "What book or course marked you this year?" },
+    { cat: "workshop", t: "What question would you like to be asked more often?" },
+    { cat: "workshop", t: "Find someone who shares a trait with you." },
+    { cat: "workshop", t: "A work belief you changed over the years." },
+    { cat: "quick", t: "Coffee or tea?" },
+    { cat: "quick", t: "Your song of the week." },
+    { cat: "quick", t: "One word that describes your mood today." },
+    { cat: "quick", t: "Day or night?" },
+    { cat: "quick", t: "Sea or mountain?" },
+    { cat: "quick", t: "The last thing you learned." },
+    { cat: "quick", t: "Most-used emoji." },
+    { cat: "quick", t: "Your current hobby in 3 words." }
+  ];
+
+  const text = document.getElementById('ib-text') as HTMLElement;
+  const cat = document.getElementById('ib-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('ib-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('ib-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? QUESTIONS : QUESTIONS.filter(s => s.cat === filter);
+    text.textContent = pick(pool).t;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(text.textContent || '');
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

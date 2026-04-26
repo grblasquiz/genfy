@@ -1,0 +1,198 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de hook para YouTube Shorts gratis | Genfy';
+const description = 'Generá hooks para YouTube Shorts que retienen y mueven el algoritmo. Audiencia más educada que TikTok, hooks distintos que rinden.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿YouTube Shorts y TikTok usan el mismo formato de hook?', acceptedAnswer: { '@type': 'Answer', text: 'Similares pero distintos. Shorts tiene audiencia que viene de YouTube largo: tolera hooks más explicativos. TikTok requiere hooks más punchy.' } },
+    { '@type': 'Question', name: '¿Cuánto deben durar los Shorts para rendir?', acceptedAnswer: { '@type': 'Answer', text: 'Sweet spot: 30-50 segundos. Menos de 15 cae el watch time relativo. Más de 55 sale del formato Shorts y compite con video largo.' } },
+    { '@type': 'Question', name: '¿Conviene reusar Shorts en otros canales?', acceptedAnswer: { '@type': 'Answer', text: 'Sí pero con cuidado. Shorts con marca de agua de TikTok rinden peor en YouTube. Mejor exportar limpio y volver a editar.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de hook para YouTube Shorts"
+    intro="Cargá tema y nicho. Genfy te devuelve 6 hooks pensados para la audiencia de YouTube Shorts, distinta a la de TikTok.">
+
+    <div slot="tool" class="ys">
+      <label for="ys-topic">Tema del Short</label>
+      <input id="ys-topic" type="text" placeholder="Setup de productividad..." value="Setup de productividad para freelancers" />
+
+      <label for="ys-niche" style="margin-top:1rem">Nicho</label>
+      <input id="ys-niche" type="text" placeholder="Productividad..." value="Productividad y trabajo remoto" />
+
+      <label for="ys-tone" style="margin-top:1rem">Tono</label>
+      <select id="ys-tone">
+        <option value="educational">Educativo / explicativo</option>
+        <option value="curiosity">Curiosidad / data sorprendente</option>
+        <option value="contrarian">Contraintuitivo / opinion</option>
+        <option value="storytime">Storytime breve</option>
+      </select>
+
+      <button id="ys-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 6 hooks</button>
+
+      <div id="ys-out" class="ys-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>YouTube Shorts vs TikTok: por qué los hooks son distintos</h2>
+      <p>
+        YouTube Shorts y TikTok parecen idénticos pero la audiencia es distinta. La gente que llega a Shorts viene del ecosistema de YouTube largo: está acostumbrada a contenido educativo, busca aprender algo concreto, y tolera hooks un poco más largos y explicativos. La de TikTok es más impaciente: si los primeros 2 segundos no la enganchan, scrollea sin pensar.
+      </p>
+      <p>
+        Eso significa que un hook que funciona en TikTok puede ser demasiado punchy para Shorts, y viceversa. La clave es entender que en Shorts podés permitirte 4-6 segundos de hook si la promesa es clara y específica.
+      </p>
+
+      <h2>Cómo funciona el algoritmo de Shorts</h2>
+      <p>
+        YouTube ranquea Shorts por una mezcla de:
+      </p>
+      <ul>
+        <li><strong>Watch time absoluto:</strong> qué porcentaje del Short ven completo.</li>
+        <li><strong>Likes y comentarios:</strong> Shorts pesa más los likes que TikTok.</li>
+        <li><strong>Subscriptions generadas:</strong> Shorts que generan suscriptores nuevos escalan más.</li>
+        <li><strong>Click al canal:</strong> si la gente va a tu canal después del Short, gran señal.</li>
+        <li><strong>Recencia:</strong> menos importante que TikTok, los Shorts pueden viralizar semanas después.</li>
+      </ul>
+
+      <h2>Las estructuras de hook que rinden en Shorts</h2>
+      <ol>
+        <li><strong>Promesa específica con número:</strong> "Estos 3 cambios duplicaron mis horas productivas."</li>
+        <li><strong>Pregunta pedagógica:</strong> "¿Sabías que tu cerebro tarda 23 minutos en concentrarse después de cada interrupción?"</li>
+        <li><strong>Contraintuitivo + razón:</strong> "Trabajar más de 6 horas seguidas baja productividad. Y esto es por qué."</li>
+        <li><strong>Comparativa:</strong> "Probé 3 setups de escritorio. Solo uno funcionó."</li>
+        <li><strong>Confesión + lección:</strong> "Trabajé 14 horas/día durante 2 años. Esto fue el error."</li>
+      </ol>
+
+      <h2>El factor que YouTube prioriza más que TikTok: subs</h2>
+      <p>
+        YouTube quiere construir audiencias estables alrededor de cada canal. Por eso Shorts que generan suscripciones nuevas escalan distinto: el algoritmo los muestra a más personas para ver si replican. Eso significa que un Short que termina con un soft CTA al canal ("Si te gustó, suscribite para más sobre productividad") puede multiplicar su alcance.
+      </p>
+
+      <h2>El loop final en Shorts</h2>
+      <p>
+        Igual que TikTok, los Shorts cuentan rewatch como visualización. Pero como la audiencia es más educativa, los loops funcionan distinto:
+      </p>
+      <ul>
+        <li><strong>Pregunta abierta al final:</strong> "¿Cuál de estos probarías primero? Comentá." — genera comments y re-watch.</li>
+        <li><strong>Recap rápido al cierre:</strong> "Resumen: paso 1, paso 2, paso 3" — refuerza el contenido y motiva volver al hook.</li>
+        <li><strong>Cliffhanger pedagógico:</strong> "Y esto es solo la mitad. La otra mitad la subo mañana" — funciona si el canal es activo.</li>
+      </ul>
+
+      <h2>Diferencias prácticas en grabación</h2>
+      <ul>
+        <li><strong>Audio:</strong> YouTube prioriza audio claro. Música muy fuerte penaliza más que en TikTok.</li>
+        <li><strong>Subtítulos:</strong> obligatorios. La mitad de Shorts se ven sin sonido.</li>
+        <li><strong>Estética:</strong> tolera más calidad visual / cámara fija. Estilo "edit raw" de TikTok rinde menos.</li>
+        <li><strong>Duración:</strong> 30-50 segundos es sweet spot, más generoso que TikTok (15-25).</li>
+        <li><strong>Marca de agua:</strong> nada de TikTok logos, YouTube los detecta y baja distribución.</li>
+      </ul>
+
+      <h2>Cómo aprovechar Shorts para crecer un canal de YouTube largo</h2>
+      <p>
+        Shorts es la herramienta más rápida de adquisición de subs en 2026. Estrategia:
+      </p>
+      <ol>
+        <li>Postear 1-2 Shorts por día (consistencia es clave).</li>
+        <li>Los Shorts deben tematizar igual que tu contenido largo.</li>
+        <li>Mencionar el contenido largo: "En el video largo de mi canal explico esto a fondo".</li>
+        <li>Cuidar la primera línea descriptiva: aparece en el feed.</li>
+        <li>Usar la "pinned comment" para linkear al video largo relacionado.</li>
+      </ol>
+
+      <h2>Errores típicos que matan Shorts</h2>
+      <ul>
+        <li><strong>Hook tipo TikTok pero genérico:</strong> "POV: estás en X" sin contexto educativo no rinde.</li>
+        <li><strong>Audio robótico (TTS):</strong> YouTube lo detecta y limita la distribución.</li>
+        <li><strong>Subtítulos automáticos malos:</strong> mejor escribirlos a mano.</li>
+        <li><strong>Sin CTA al canal:</strong> perdés la oportunidad de convertir viewer en sub.</li>
+        <li><strong>Reusar TikTok con marca de agua:</strong> -50% distribución.</li>
+        <li><strong>Frecuencia errática:</strong> 1 Short por mes no le da material al algoritmo.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuánto debe durar el hook en Shorts?</summary><p>4-6 segundos. Más generoso que TikTok porque la audiencia tolera explicación.</p></details>
+      <details><summary>¿Subtítulos automáticos?</summary><p>Mejor manuales. Los automáticos suelen tener errores y bajan retention.</p></details>
+      <details><summary>¿Puedo reusar mis TikToks?</summary><p>Sí, pero exportá limpio (sin marca de agua). YouTube los detecta y los penaliza.</p></details>
+      <details><summary>¿Cuántos Shorts por semana?</summary><p>Sweet spot: 5-7. Consistencia rinde más que volumen esporádico.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ys-out { margin-top: 1.25rem; display: grid; gap: 0.5rem; }
+  .ys-card { padding: 0.875rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .ys-card:hover { border-color: var(--accent); }
+  .ys-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.4rem; font-family: var(--font-mono); }
+  select { width: 100%; padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-size: 0.9375rem; font-family: inherit; }
+</style>
+
+<script>
+  const topic = document.getElementById('ys-topic') as HTMLInputElement;
+  const niche = document.getElementById('ys-niche') as HTMLInputElement;
+  const tone = document.getElementById('ys-tone') as HTMLSelectElement;
+  const gen = document.getElementById('ys-gen') as HTMLButtonElement;
+  const out = document.getElementById('ys-out')!;
+
+  function generate() {
+    const T = topic.value.trim() || 'el tema';
+    const N = niche.value.trim() || 'el nicho';
+    const To = tone.value;
+
+    let hooks: string[] = [];
+    if (To === 'educational') {
+      hooks = [
+        `${T} en 60 segundos. Te explico el metodo de 3 pasos.`,
+        `Si trabajas en ${N.toLowerCase()}, esto sobre ${T.toLowerCase()} te va a servir.`,
+        `${T}: lo que aprendi despues de probarlo durante 6 meses.`,
+        `Tres errores que hace todo el mundo con ${T.toLowerCase()}.`,
+        `${T} explicado simple. El concepto que te va a ahorrar tiempo.`,
+        `Como ${T.toLowerCase()} sin invertir mucho dinero.`,
+      ];
+    } else if (To === 'curiosity') {
+      hooks = [
+        `Sabias que ${T.toLowerCase()} cambio mi forma de trabajar?`,
+        `${T}: el dato que te va a sorprender.`,
+        `Por que casi nadie sabe esto sobre ${T.toLowerCase()}.`,
+        `${T}. La razon por la que la mayoria falla.`,
+        `Hay un detalle clave en ${T.toLowerCase()} y nadie lo cuenta.`,
+        `${T}: lo que descubri probando 10 metodos distintos.`,
+      ];
+    } else if (To === 'contrarian') {
+      hooks = [
+        `${T} no funciona como te dijeron. Te explico.`,
+        `Estas haciendo ${T.toLowerCase()} mal y aca esta el por que.`,
+        `Opinion impopular sobre ${T.toLowerCase()}: la mayoria lo enfoca al reves.`,
+        `${T}: por que el consejo comun esta equivocado.`,
+        `Si todos hacen ${T.toLowerCase()} de la misma forma, hay un problema.`,
+        `${T} no es lo que parece. Mira esto antes de empezar.`,
+      ];
+    } else {
+      hooks = [
+        `Probe ${T.toLowerCase()} durante 30 dias. Esto pasó.`,
+        `${T}: mi historia honesta sin filtros.`,
+        `Asi cambio mi vida cuando descubri ${T.toLowerCase()}.`,
+        `${T} antes vs despues. Mira la diferencia real.`,
+        `Compre 5 cosas para ${T.toLowerCase()}. Solo dos valieron la pena.`,
+        `${T}: el experimento de un mes que cambio todo.`,
+      ];
+    }
+
+    out.innerHTML = '';
+    hooks.forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'ys-card';
+      el.title = 'Click para copiar';
+      el.innerHTML = b + `<div class="ys-meta">Hook ${i+1} · ${b.length} caracteres</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copiado'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

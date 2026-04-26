@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Traductor de Pig Latin | Genfy';
+const description = 'Traducí cualquier texto a Pig Latin, el clásico juego de palabras inglés. Funciona instantáneamente y permite traducir de Pig Latin de vuelta a inglés.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es Pig Latin?', acceptedAnswer: { '@type': 'Answer', text: 'Es un juego de palabras inglés donde se mueve la primera consonante al final de cada palabra y se agrega "-ay". Las que empiezan con vocal reciben "-way" o "-yay".' } },
+    { '@type': 'Question', name: '¿Es un idioma real?', acceptedAnswer: { '@type': 'Answer', text: 'No. Es un juego infantil/lúdico para encriptar el inglés de manera divertida; no tiene gramática propia.' } },
+    { '@type': 'Question', name: '¿Sirve para enseñar inglés a chicos?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Es útil para que los chicos jueguen con sílabas, identifiquen vocales y consonantes, y se diviertan con el lenguaje.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión" title="Traductor de Pig Latin"
+    intro="Pasá cualquier texto en inglés (o español) a Pig Latin. El clásico juego de palabras: mueve la primera consonante al final y agrega -ay. Diversión instantánea.">
+
+    <div slot="tool">
+      <label for="pl-in">Texto original</label>
+      <textarea id="pl-in" rows="5" placeholder="Hello world" style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div style="margin-top:0.75rem;">
+        <button id="pl-go" class="btn btn-primary" type="button">Traducir a Pig Latin</button>
+        <button id="pl-copy" class="btn btn-ghost" type="button">Copiar</button>
+      </div>
+      <label for="pl-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="pl-out" rows="5" readonly style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es exactamente Pig Latin</h2>
+      <p>
+        Pig Latin es un juego de palabras inglés con reglas simples: las palabras que empiezan con
+        consonante mueven esa consonante (o cluster de consonantes) al final y agregan "-ay". "Hello" se
+        convierte en "ellohay", "pig" en "igpay". Las palabras que empiezan con vocal agregan "-way" (o
+        "-yay" en algunas variantes): "apple" se convierte en "appleway".
+      </p>
+
+      <h2>Origen e historia</h2>
+      <p>
+        El juego se documenta en inglés desde el siglo XIX, aunque variantes lúdicas existen en muchos
+        idiomas. En español tenemos juegos parecidos como el "idioma de la P" o el "jeringoso". La función
+        es la misma: encriptar el habla cotidiana entre amigos o niños, sumando un componente de juego al
+        lenguaje. No es realmente latín ni tiene relación con el latín clásico; es solo una broma del
+        nombre.
+      </p>
+
+      <h2>Reglas detalladas</h2>
+      <ul>
+        <li><strong>Palabras con consonante inicial</strong>: mover esa consonante al final + "ay". "cat" → "atcay".</li>
+        <li><strong>Cluster de consonantes</strong>: mover todo el cluster. "smile" → "ilesmay".</li>
+        <li><strong>Palabras con vocal inicial</strong>: agregar "way" al final. "egg" → "eggway".</li>
+        <li><strong>Mantener mayúsculas</strong>: "Hello" → "Ellohay" (la primera letra del resultado capitaliza).</li>
+        <li><strong>Puntuación</strong>: se preserva al final de la palabra: "Hello!" → "Ellohay!".</li>
+      </ul>
+
+      <h2>Para qué se usa hoy</h2>
+      <ul>
+        <li><strong>Educación primaria</strong> — enseñar fonética, vocales, consonantes y conciencia silábica.</li>
+        <li><strong>Juegos infantiles</strong> — comunicarse en clave entre amigos.</li>
+        <li><strong>Programación</strong> — clásico ejercicio de "primer programa" en cursos introductorios para enseñar manipulación de strings.</li>
+        <li><strong>Cultura pop</strong> — referencias en películas, libros y series.</li>
+        <li><strong>Práctica de idioma</strong> — divertirse con palabras inglesas en un contexto lúdico.</li>
+      </ul>
+
+      <h2>Limitaciones</h2>
+      <p>
+        Pig Latin está pensado para inglés, donde la distinción consonante-vocal al inicio de palabra es
+        clara. En español funciona pero las reglas pueden producir resultados raros (palabras con dos
+        vocales seguidas, diptongos, etc.). Si traducís texto en español, esperá algo gracioso pero no
+        siempre coherente. Para juegos en español, "jeringoso" (donde se intercala una sílaba como "pa" o
+        "chi" entre cada sílaba) funciona mucho mejor.
+      </p>
+
+      <h2>Variantes regionales</h2>
+      <p>
+        Existen varias versiones de Pig Latin: la "estándar" con "-ay" y "-way", una con "-yay" para
+        vocales, y dialectos infantiles donde se cambia el patrón al gusto del grupo. La nuestra usa la
+        versión más clásica y aceptada, que es la que vas a encontrar en libros de texto, Wikipedia y
+        ejercicios de programación.
+      </p>
+
+      <h2>Como ejercicio de programación</h2>
+      <p>
+        Implementar Pig Latin es un clásico de cursos introductorios. Combina manipulación de strings,
+        condicionales (vocal vs. consonante), bucles para procesar palabras y atención a casos borde
+        (palabras de una sola letra, puntuación, mayúsculas). Si estás aprendiendo a programar, hacelo
+        desde cero antes de mirar cómo lo hacemos nosotros.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es Pig Latin?</summary><p>Juego de palabras inglés: mover la consonante inicial al final y agregar -ay; -way para vocales.</p></details>
+      <details><summary>¿Es un idioma real?</summary><p>No. Es un juego lúdico, no tiene gramática propia.</p></details>
+      <details><summary>¿Sirve para enseñar inglés?</summary><p>Sí. Es perfecto para fonética, sílabas y diversión con el lenguaje.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const inEl = document.getElementById('pl-in') as HTMLTextAreaElement;
+  const outEl = document.getElementById('pl-out') as HTMLTextAreaElement;
+  const go = document.getElementById('pl-go') as HTMLButtonElement;
+  const cp = document.getElementById('pl-copy') as HTMLButtonElement;
+
+  const VOWELS = new Set(['a','e','i','o','u','A','E','I','O','U']);
+  function translateWord(w: string): string {
+    if (!w) return w;
+    const m = w.match(/^([^a-zA-Z]*)([a-zA-Z]+)([^a-zA-Z]*)$/);
+    if (!m) return w;
+    const [, lead, core, trail] = m;
+    if (!core) return w;
+    const isUpper = core[0] === core[0].toUpperCase();
+    const lower = core.toLowerCase();
+    let result: string;
+    if (VOWELS.has(lower[0])) {
+      result = lower + 'way';
+    } else {
+      let i = 0;
+      while (i < lower.length && !VOWELS.has(lower[i])) i++;
+      result = lower.slice(i) + lower.slice(0, i) + 'ay';
+    }
+    if (isUpper) result = result[0].toUpperCase() + result.slice(1);
+    return lead + result + trail;
+  }
+  function translate(text: string) {
+    return text.split(/(\s+)/).map(t => /\s+/.test(t) ? t : translateWord(t)).join('');
+  }
+  go.addEventListener('click', () => { outEl.value = translate(inEl.value); });
+  cp.addEventListener('click', async () => { if (!outEl.value) return; await navigator.clipboard.writeText(outEl.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

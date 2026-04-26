@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de restaurante gratis | Genfy';
+const description = 'Generá nombres únicos para tu restaurante en segundos. Combiná cocina, barrio o ingrediente y obtené 20 ideas listas para validar dominio y redes.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno al nombre de un restaurante?', acceptedAnswer: { '@type': 'Answer', text: 'Que sea fácil de pronunciar en el idioma del barrio, fácil de buscar en Google Maps y OpenTable, que evoque el tipo de cocina o experiencia, y que tenga el dominio .com o nacional disponible.' } },
+    { '@type': 'Question', name: '¿Conviene usar mi apellido?', acceptedAnswer: { '@type': 'Answer', text: 'Funciona muy bien si el restaurante depende del chef o si querés transmitir tradición familiar. Para conceptos escalables o con planes de franquicia conviene un nombre más abstracto.' } },
+    { '@type': 'Question', name: '¿Cómo verifico que el nombre no exista?', acceptedAnswer: { '@type': 'Answer', text: 'Buscalo en Google Maps, TripAdvisor, Instagram y el registro de marcas local antes de imprimir cartas o pintar la fachada.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Gastronomía" title="Generador de nombre de restaurante"
+    intro="Combiná tipo de cocina, barrio o ingrediente y obtené 20 ideas memorables para tu restaurante. Pensado para validar disponibilidad de dominio y handles de Instagram en minutos.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabras clave (cocina, barrio, ingrediente)</label>
+      <input id="bn-kw" type="text" placeholder="pasta, palermo, brasa..." value="pasta, mesa" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="warm">Cálido / familiar (La Mesa, El Hogar)</option>
+        <option value="modern">Moderno (Sal, Brasa, Roble)</option>
+        <option value="place">Barrio / lugar (Corner, Esquina)</option>
+        <option value="ingredient">Ingrediente + objeto (Maple Table)</option>
+        <option value="surname">Apellido + concepto (Rossi & Co)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de un restaurante</h2>
+      <p>
+        El nombre de un restaurante hace dos trabajos al mismo tiempo: tiene que sonar bien en
+        boca de los vecinos del barrio y tiene que ser encontrable en Google Maps, OpenTable e
+        Instagram. Si elegís un nombre demasiado abstracto, los algoritmos de descubrimiento te
+        van a costar más caro durante años.
+      </p>
+      <ol>
+        <li><strong>Pronunciable en el idioma local.</strong> Si abrís en una zona donde no se habla italiano, "Strozzapreti" va a complicar reservas por teléfono.</li>
+        <li><strong>Buscable en Maps.</strong> Evitá nombres genéricos como "La Esquina" si tu zona ya tiene tres lugares con ese nombre.</li>
+        <li><strong>Sugiere la cocina o la experiencia.</strong> No hace falta ser literal, pero "El Roble" funciona mejor para una parrilla que "Néctar".</li>
+        <li><strong>Dominio .com y nacional disponibles.</strong> Verificá .com, .com.ar, .es o .mx según mercado, más el handle de Instagram.</li>
+        <li><strong>Funciona en mayúscula sobre fachada.</strong> Decilo en voz alta, escribilo en una servilleta. Si no entra cómodo, descartalo.</li>
+      </ol>
+
+      <h2>Estilos que funcionan en gastronomía</h2>
+      <ul>
+        <li><strong>Cálido / familiar:</strong> "La Mesa", "El Patio", "Casa Lola". Ideal para bistró, trattoria, comida de barrio.</li>
+        <li><strong>Moderno minimalista:</strong> "Sal", "Brasa", "Roble", "Humo". Una sola palabra fuerte, ideal para conceptos de autor.</li>
+        <li><strong>Lugar / barrio:</strong> "Corner Bistro", "Esquina del Mercado". Ancla geográfica, suma SEO local.</li>
+        <li><strong>Ingrediente + objeto:</strong> "The Maple Table", "Salt + Vinegar". Funciona muy bien para conceptos farm-to-table.</li>
+        <li><strong>Apellido + concepto:</strong> "Rossi & Co", "Méndez Cocina". Comunica autoría y tradición.</li>
+      </ul>
+
+      <h2>Errores frecuentes al nombrar un restaurante</h2>
+      <p>
+        El error número uno es elegir un nombre que ya tiene tres locales en la misma ciudad,
+        condenándote a competir por keywords genéricas. El segundo es usar tildes, eñes o
+        caracteres especiales que rompen URLs y handles. El tercero es un nombre demasiado
+        largo: si no entra en la marquesina ni en una notificación de delivery, perdés.
+      </p>
+      <p>
+        También cuidado con los nombres muy de tendencia. "Smashburger #1" sonaba fresco hace
+        cinco años; hoy huele a 2019. Apuntá a algo que envejezca bien diez años, no dos.
+      </p>
+
+      <h2>Después de generar: validación práctica</h2>
+      <ol>
+        <li>Buscá el nombre en Google Maps en un radio de 5 km.</li>
+        <li>Verificá Instagram, TikTok y Facebook con el handle exacto.</li>
+        <li>Comprobá .com y el dominio nacional en Namecheap o Cloudflare.</li>
+        <li>Buscá en el registro de marcas (INPI Argentina, USPTO EE.UU., OEPM España).</li>
+        <li>Decílo en voz alta a 5 vecinos: ¿lo repiten bien al primer intento?</li>
+        <li>Probá una búsqueda en TripAdvisor y OpenTable para asegurar que no haya colisión.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno al nombre de un restaurante?</summary><p>Pronunciable en el idioma del barrio, buscable en Maps, sugiere el tipo de cocina y tiene dominio + handle disponibles.</p></details>
+      <details><summary>¿Conviene usar mi apellido?</summary><p>Sí si el chef es la cara visible o querés transmitir tradición; no si planeás franquicias o un concepto escalable.</p></details>
+      <details><summary>¿Cómo verifico que no exista?</summary><p>Google Maps, Instagram, TripAdvisor, OpenTable y registro de marcas local antes de imprimir cualquier cosa.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const WARM = ['La Mesa', 'El Patio', 'Casa', 'El Hogar', 'La Cocina', 'El Comedor', 'La Tasca', 'El Rincón', 'La Vecina', 'El Almacén'];
+  const MODERN = ['Sal', 'Brasa', 'Roble', 'Humo', 'Hueso', 'Harina', 'Sartén', 'Olla', 'Fuego', 'Leña', 'Cuchara', 'Carbón'];
+  const PLACE = ['Corner', 'Esquina', 'Barrio', 'Plaza', 'Mercado', 'Avenida', 'Calle', 'Vereda', 'Cuadra', 'Rambla'];
+  const INGR = ['Maple', 'Salt', 'Pepper', 'Limón', 'Oliva', 'Tomate', 'Albahaca', 'Cebolla', 'Trigo', 'Arroz', 'Miel'];
+  const OBJ = ['Table', 'Mesa', 'Plato', 'Cuchara', 'Sartén', 'Fork', 'Knife', 'Bowl', 'Tabla'];
+  const SURN = ['Rossi', 'Méndez', 'Pérez', 'García', 'Colombo', 'Ferrari', 'López', 'Romero', 'Bianchi', 'Nakamura'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Mesa';
+      let name = '';
+      if (s === 'warm') name = pick(WARM) + ' ' + cap(w);
+      else if (s === 'modern') name = Math.random() > 0.5 ? pick(MODERN) : pick(MODERN) + ' & ' + pick(MODERN);
+      else if (s === 'place') name = pick(PLACE) + ' ' + cap(w);
+      else if (s === 'ingredient') name = 'The ' + pick(INGR) + ' ' + pick(OBJ);
+      else if (s === 'surname') name = pick(SURN) + ' & Co';
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

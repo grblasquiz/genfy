@@ -1,0 +1,147 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Couple Name Combiner | Genfy';
+const description = 'Combine the names of a couple and get 20 mixed variants — perfect for wedding hashtags, nicknames, shared accounts or personalized gifts.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a couple name combiner for?', acceptedAnswer: { '@type': 'Answer', text: 'Wedding hashtags, cute nicknames, shared Instagram accounts, personalized gifts, or the couple\'s podcast name.' } },
+    { '@type': 'Question', name: 'How do I pick one?', acceptedAnswer: { '@type': 'Answer', text: 'Read them out loud. The one that sounds most natural and is easiest to pronounce is the best candidate.' } },
+    { '@type': 'Question', name: 'Does it work with any pair of names?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, but some combinations work better than others. The more different the first letters and vowels, the more interesting options come out.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Couple" title="Couple Name Combiner"
+    intro="Enter two names and get 20 combinations mixing syllables and letters. Great for wedding hashtags, nicknames, shared IG or personalized gifts.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-n1">Name 1</label>
+      <input id="bn-n1" type="text" placeholder="Anna" value="Anna" />
+
+      <label for="bn-n2" style="margin-top:1rem">Name 2</label>
+      <input id="bn-n2" type="text" placeholder="Bruno" value="Bruno" />
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 combinations</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to combine two names into one</h2>
+      <p>
+        Combining couple names is a classic naming technique: mix syllables, letters or
+        sections to create a unique word that represents the duo. It's the basis of
+        "Bennifer" and "Brangelina" in entertainment.
+      </p>
+      <ol>
+        <li><strong>Start with the first syllable of one and end with the last of the other.</strong> Anna + Bruno = Annuno or Brana.</li>
+        <li><strong>Take two letters from each.</strong> An + Br = Anbr (rough), or Br + An = Bran.</li>
+        <li><strong>Insert internal syllables.</strong> Bruno + Anna = Brunanna, Anna + Bruno = Abruno.</li>
+        <li><strong>Try reverse order.</strong> The first order doesn't always sound best.</li>
+        <li><strong>Read it out loud.</strong> The final form has to sound natural when said.</li>
+      </ol>
+
+      <h2>What to use it for</h2>
+      <ul>
+        <li><strong>Wedding hashtag:</strong> great when separate names run long.</li>
+        <li><strong>Shared Instagram account:</strong> @annabruno or @branna work.</li>
+        <li><strong>Affectionate nickname:</strong> between the couple or close friends.</li>
+        <li><strong>Personalized gifts:</strong> mugs, keychains, pillows.</li>
+        <li><strong>Couple's podcast or blog:</strong> simple and unique.</li>
+        <li><strong>Joint brand:</strong> if the couple builds a business together.</li>
+      </ul>
+
+      <h2>Mistakes to avoid</h2>
+      <p>
+        Avoid combinations that produce weird meanings in another language: Google the
+        combination + "meaning" before printing on gifts. Avoid unpronounceable combinations
+        (more than 3 consonants in a row). And keep it short: a 9-letter combination loses
+        its charm.
+      </p>
+
+      <h2>Classic examples</h2>
+      <p>
+        Famous combinations that worked because of simplicity: Brangelina (Brad + Angelina),
+        Bennifer (Ben + Jennifer), Kimye (Kim + Kanye), TomKat (Tom + Katie). What they share:
+        max two syllables, easy to read on first try, and a humorous wink that helped media
+        spread.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is it for?</summary><p>Hashtags, nicknames, shared accounts, personalized gifts, podcasts.</p></details>
+      <details><summary>How to pick?</summary><p>Read them out loud. Most natural and pronounceable wins.</p></details>
+      <details><summary>Any pair of names?</summary><p>Yes, but the more different the initial letters, the more interesting options.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const n1Input = document.getElementById('bn-n1') as HTMLInputElement;
+  const n2Input = document.getElementById('bn-n2') as HTMLInputElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function clean(s: string) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z]/g, ''); }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+
+  function combinations(a: string, b: string) {
+    const A = a.toLowerCase();
+    const B = b.toLowerCase();
+    const halfA = Math.ceil(A.length / 2);
+    const halfB = Math.ceil(B.length / 2);
+    const out = new Set<string>();
+    out.add(cap(A.slice(0, halfA) + B.slice(halfB)));
+    out.add(cap(B.slice(0, halfB) + A.slice(halfA)));
+    out.add(cap(A.slice(0, 2) + B));
+    out.add(cap(B.slice(0, 2) + A));
+    out.add(cap(A + B.slice(B.length - 2)));
+    out.add(cap(B + A.slice(A.length - 2)));
+    out.add(cap(A.slice(0, halfA) + B.slice(0, halfB)));
+    out.add(cap(B.slice(0, halfB) + A.slice(0, halfA)));
+    out.add(cap(A.charAt(0) + B));
+    out.add(cap(B.charAt(0) + A));
+    out.add(cap(A.slice(0, 3) + B.slice(B.length - 3)));
+    out.add(cap(B.slice(0, 3) + A.slice(A.length - 3)));
+    out.add(cap(A + B.charAt(0)));
+    out.add(cap(B + A.charAt(0)));
+    out.add(cap(A.slice(0, halfA) + B.charAt(0) + A.slice(halfA)));
+    out.add(cap(B.slice(0, halfB) + A.charAt(0) + B.slice(halfB)));
+    out.add(cap(A.charAt(0) + B.slice(1)));
+    out.add(cap(B.charAt(0) + A.slice(1)));
+    out.add(cap(A.slice(0, 2) + B.slice(2)));
+    out.add(cap(B.slice(0, 2) + A.slice(2)));
+    out.add(cap(A.slice(0, halfA + 1) + B.slice(halfB + 1)));
+    out.add(cap(B.slice(0, halfB + 1) + A.slice(halfA + 1)));
+    out.add(cap(A.slice(0, 4) + B.slice(0, 2)));
+    out.add(cap(B.slice(0, 4) + A.slice(0, 2)));
+    return [...out].filter(x => x.length >= 3 && x.length <= 12);
+  }
+
+  function generate() {
+    const n1 = clean(n1Input.value || 'Anna');
+    const n2 = clean(n2Input.value || 'Bruno');
+    const list = combinations(n1, n2).slice(0, 20);
+    out.innerHTML = '';
+    list.forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

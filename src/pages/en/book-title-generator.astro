@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Book Title Generator | Genfy';
+const description = 'Generate memorable titles for your next novel, essay or non-fiction book. Mix tone, genre and format to get 20 ideas in seconds.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do I pick a good book title?', acceptedAnswer: { '@type': 'Answer', text: 'Short, communicates genre, easy to search on Amazon, and reads well as a thumbnail cover.' } },
+    { '@type': 'Question', name: 'Should the title have a subtitle?', acceptedAnswer: { '@type': 'Answer', text: 'In non-fiction almost always, for SEO. In novels and essays it is optional. The subtitle clarifies the angle when the main title is metaphorical.' } },
+    { '@type': 'Question', name: 'Can I change the title after publishing?', acceptedAnswer: { '@type': 'Answer', text: 'Very hard. ISBN, bookstores and reviews are stuck with the original. Better to invest time before launch.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Book Title Generator"
+    intro="Find the perfect title for your novel, essay or non-fiction book. Combine tone, genre and format to get 20 ideas in seconds.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Central theme</label>
+      <input id="bn-kw" type="text" placeholder="memory, journey, sea..." value="silence" />
+
+      <label for="bn-style" style="margin-top:1rem">Genre</label>
+      <select id="bn-style">
+        <option value="literary">Literary (What We Left)</option>
+        <option value="thriller">Thriller (The Last Letter)</option>
+        <option value="nonfiction">Non-fiction (How to Decide Better)</option>
+        <option value="romance">Romance (Summer With You)</option>
+        <option value="single">Single word (Silence)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 titles</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick your book title</h2>
+      <p>
+        A book title has to pass three concrete tests: it has to read well on a Kindle thumbnail,
+        stand out on Amazon (where you compete against millions), and signal the genre in under
+        four seconds. The most useful rule editors repeat: if a person glancing at the cover in a
+        store has to flip to the back to figure out what the book is about, the title failed.
+      </p>
+      <ol>
+        <li><strong>Test it small.</strong> Shrink the cover to 100x150 px. Does the title still read?</li>
+        <li><strong>Search Amazon.</strong> If there are 50 books with the same title from the past five years, you'll be buried.</li>
+        <li><strong>Communicate genre.</strong> The reader scans shelves and carousels. Your cover should say "thriller" or "productivity essay" before the back-cover blurb.</li>
+        <li><strong>Plan the subtitle.</strong> In non-fiction it's almost mandatory: that's where SEO lives ("How to Decide Better: The Practical Guide to...").</li>
+        <li><strong>Press can repeat it.</strong> In interviews and reviews, weird or overlong titles get misquoted and lose traction.</li>
+      </ol>
+
+      <h2>Styles by genre</h2>
+      <ul>
+        <li><strong>Literary</strong>: poetic or conceptual phrases (What We Left, Before Summer). Emotional memory.</li>
+        <li><strong>Thriller</strong>: article + threatening noun (The Last Letter, The Silent Witness).</li>
+        <li><strong>Non-fiction</strong>: short title + descriptive subtitle (How to Decide Better: The Method Top Experts Use). Subtitle carries SEO.</li>
+        <li><strong>Romance</strong>: warm, evocative phrases (Summer With You, Letters I Never Sent).</li>
+        <li><strong>Single word</strong>: high risk, high reward (Silence, Sail, Bone). Has to carry weight.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        Most common: novels that look like self-help and vice versa. If your novel is called "How
+        to Find Your Way", readers expect a different book. Another: leaning on local wordplay
+        that doesn't translate. And a third: worn-out words ("Awakening", "Reborn", "Essence")
+        that show up on every monthly Penguin or HarperCollins list.
+      </p>
+
+      <h2>After generating</h2>
+      <ol>
+        <li>Search Amazon, Goodreads and Barnes &amp; Noble.</li>
+        <li>Test the title on a thumbnail cover.</li>
+        <li>Draft two subtitle versions if it's non-fiction.</li>
+        <li>Show the title + subtitle to three beta readers: do they guess the genre?</li>
+        <li>If the novel could turn into a series, check the title supports a saga.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I pick a good book title?</summary><p>Short, communicates genre, searchable on Amazon, reads well in thumbnail.</p></details>
+      <details><summary>Do I need a subtitle?</summary><p>Almost always in non-fiction. Optional in novels.</p></details>
+      <details><summary>Can I change it after publishing?</summary><p>Very hard: ISBN and reviews stick to the original.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const LIT = ['What We Left', 'Before Summer', 'Letters I Never Sent', 'The Back Room', 'The Slow Hour', 'Small Things'];
+  const THRILLER = ['The Last Letter', 'The Silent Witness', 'No Trace', 'The Locked House', 'The Intruder', 'Night Noise'];
+  const NF = ['How to Decide Better', 'The Simple Method', 'Think Slow', 'Speak Clearly', 'Work Less'];
+  const ROMANCE = ['Summer With You', 'Letters at Midnight', 'The March Beach', 'Counted Days', 'After You'];
+  const NOUN = ['Silence', 'Sail', 'Bone', 'Fog', 'Shadow', 'Shelter', 'Scar', 'Echo'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'literary') name = pick(LIT);
+      else if (s === 'thriller') name = pick(THRILLER);
+      else if (s === 'nonfiction') name = pick(NF);
+      else if (s === 'romance') name = pick(ROMANCE);
+      else if (s === 'single') name = words.length ? cap(pick(words)) : pick(NOUN);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

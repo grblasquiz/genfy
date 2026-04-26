@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Loyalty Program Name Generator | Genfy';
+const description = 'Generate names for loyalty programs: tiers, points, premium club. Modern, branded, ready for retail, banking and SaaS.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a loyalty program name good?', acceptedAnswer: { '@type': 'Answer', text: 'Three things: it suggests belonging or status, it extends to multiple tiers (Silver, Gold, Plus), and it pairs with the parent brand without cannibalizing it.' } },
+    { '@type': 'Question', name: 'How many tiers should it have?', acceptedAnswer: { '@type': 'Answer', text: 'Three tiers work in most cases: entry, recurring, premium. More than five confuses customers and complicates ops.' } },
+    { '@type': 'Question', name: 'Should I charge a membership fee?', acceptedAnswer: { '@type': 'Answer', text: 'Only if the benefit clearly justifies the price. Amazon Prime charges and works because free shipping covers the cost. If you can\'t justify the fee, start with free loyalty and add a premium paid tier later.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Loyalty Program Name Generator"
+    intro="Mix base word, format (Club, Plus, Inner) and brand name. Works for retail, banking, e-commerce and SaaS.">
+
+    <div slot="tool" class="lp">
+      <label for="lp-brand">Brand or sector</label>
+      <input id="lp-brand" type="text" value="Norte" placeholder="Norte, Nuva, Acme..." />
+
+      <label for="lp-style" style="margin-top:1rem">Style</label>
+      <select id="lp-style">
+        <option value="club">Club / Inner</option>
+        <option value="plus">Plus / Pro / Prime</option>
+        <option value="word">Modern word (Pulse, Crest)</option>
+        <option value="tier">Ready 3-tier set</option>
+      </select>
+
+      <button id="lp-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 ideas</button>
+      <div id="lp-out" class="lp-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why the program name matters more than it seems</h2>
+      <p>A well-named loyalty program can add three points of retention purely from the belonging effect. "Sephora Beauty Insider" sounds like a closed circle you want to be in. "Sephora Points Program" sounds like a spreadsheet. The difference is psychological and shows up in sign-up conversion and use frequency.</p>
+      <h2>Structures that work</h2>
+      <ol>
+        <li><strong>Brand + Club:</strong> "Norte Club", "Acme Inner Circle". Communicates belonging.</li>
+        <li><strong>Brand + Plus / Prime:</strong> "Norte Plus", "Acme Prime". Suggests upgrade over the base product.</li>
+        <li><strong>Modern word + brand:</strong> "Pulse Norte", "Crest Acme". Sounds premium, useful if you want the program to stand apart from the operational brand.</li>
+        <li><strong>Three named tiers:</strong> Bronze / Silver / Gold still works, but today you win with words like Spark / Bloom / Beacon.</li>
+      </ol>
+      <h2>Common mistakes when designing the program</h2>
+      <ul>
+        <li><strong>Too many tiers:</strong> 5 or 6 confuse customers and double comms work.</li>
+        <li><strong>Fuzzy benefit:</strong> "points to redeem later" doesn't motivate. Better: concrete discount, free shipping, access to a limited drop.</li>
+        <li><strong>Hidden mechanics:</strong> if it takes 20 lines to explain how points accumulate, you lose activation.</li>
+        <li><strong>Mythology-named tiers:</strong> naming tiers with ancient deities feels classic but is hyper-saturated and culturally clashes with many customers. Use modern words: Spark, Bloom, Crest, Beacon.</li>
+      </ul>
+      <h2>How to pick the format by business type</h2>
+      <p>For physical retail, prefer a familiar name the cashier can say 200 times per shift: "Norte Club". For e-commerce, you can go more distinctive: "Pulse Norte". For banking, status sells: "Black", "Select", "Inner". For SaaS, integrate the program with the plan: "Norte Pro" sounds like a paid version, "Norte Inner" sounds like a poweruser community.</p>
+      <h2>Validation before launch</h2>
+      <p>Before spending on branding, run this test with 50 existing customers: email them three candidate names and ask which would make them feel most part of something. If two underperform and one wins clearly, you have your name. If all three score similarly, simplify: the differentiator is probably in the benefits, not the name.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes the name good?</summary><p>Suggests belonging, scales across tiers, pairs with the parent brand.</p></details>
+      <details><summary>How many tiers?</summary><p>Three tiers work for most cases.</p></details>
+      <details><summary>Should I charge a fee?</summary><p>Only if the benefit clearly justifies the price.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .lp-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .lp-item { padding: 0.75rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
+  .lp-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const CLUB = ['Club', 'Inner', 'Inner Circle', 'Society', 'Community'];
+  const PLUS = ['Plus', 'Pro', 'Prime', 'Select', 'Black', 'Elite'];
+  const WORDS = ['Pulse', 'Crest', 'Bloom', 'Beacon', 'Spark', 'Forge', 'Drift', 'Tide', 'Frame', 'Loop'];
+  const TIERS = ['Spark / Bloom / Beacon', 'Bronze / Silver / Gold', 'Pulse / Crest / Summit', 'Forge / Tide / Crown', 'Bloom / Crest / Apex'];
+
+  const brand = document.getElementById('lp-brand') as HTMLInputElement;
+  const style = document.getElementById('lp-style') as HTMLSelectElement;
+  const gen = document.getElementById('lp-gen') as HTMLButtonElement;
+  const out = document.getElementById('lp-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function generate() {
+    const b = (brand.value || 'Brand').trim();
+    const s = style.value;
+    const set = new Set<string>(); let tries = 0;
+    while (set.size < 20 && tries < 200) {
+      tries++;
+      let name = '';
+      if (s === 'club') name = `${cap(b)} ${pick(CLUB)}`;
+      else if (s === 'plus') name = `${cap(b)} ${pick(PLUS)}`;
+      else if (s === 'word') name = `${pick(WORDS)} ${cap(b)}`;
+      else name = pick(TIERS);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'lp-item'; el.textContent = n; el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

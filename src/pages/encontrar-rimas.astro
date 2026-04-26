@@ -1,0 +1,153 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Encontrar rimas en español | Genfy';
+const description = 'Buscador de rimas en español: consonantes y asonantes. Ideal para canciones, poemas, freestyle, slogans y publicidad.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué tipo de rimas devuelve?', acceptedAnswer: { '@type': 'Answer', text: 'Consonantes (coincidencia total desde la última vocal acentuada) y asonantes (solo vocales coinciden).' } },
+    { '@type': 'Question', name: '¿Sirve para canciones?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Es uno de los usos principales: encontrar finales de verso para letras de canciones y rap.' } },
+    { '@type': 'Question', name: '¿Las rimas son útiles para slogans?', acceptedAnswer: { '@type': 'Answer', text: 'Mucho. La rima es un disparador mnemotécnico potente; los slogans rimados se recuerdan mejor.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Idiomas" title="Encontrar rimas"
+    intro="Buscá rimas en español al instante. Consonantes y asonantes a partir de la última vocal acentuada de tu palabra. Para canciones, poemas, freestyle y publicidad.">
+
+    <div slot="tool">
+      <label for="rh-q">Palabra</label>
+      <input id="rh-q" type="text" placeholder="ej: corazón, viento, mañana..." />
+      <div class="rh-row" style="margin-top:0.75rem;">
+        <label class="rh-check"><input type="radio" name="rh-type" value="con" checked /> Consonante</label>
+        <label class="rh-check"><input type="radio" name="rh-type" value="aso" /> Asonante</label>
+      </div>
+      <div style="margin-top:0.75rem;">
+        <button id="rh-go" class="btn btn-primary" type="button">Buscar rimas</button>
+        <button id="rh-copy" class="btn btn-ghost" type="button">Copiar</button>
+      </div>
+      <textarea id="rh-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Consonante vs. asonante</h2>
+      <p>
+        En español hay dos tipos de rima. La <strong>consonante</strong> coincide en todos los sonidos (vocales
+        y consonantes) desde la última vocal acentuada. "Cantar" rima en consonante con "amar", "soñar",
+        "jugar". La <strong>asonante</strong> coincide solo en las vocales: "cantar" rima en asonante con
+        "blanca", "alma", "rama". La consonante es más estricta y vistosa; la asonante es más flexible y
+        natural en poemas largos.
+      </p>
+
+      <h2>Cuándo usar cada una</h2>
+      <ul>
+        <li><strong>Canciones pop y rap</strong> — la rima consonante domina porque "suena", marca el final del verso.</li>
+        <li><strong>Poesía clásica española</strong> — los romances son asonantes: dan musicalidad sin restringir tanto el vocabulario.</li>
+        <li><strong>Slogans</strong> — consonantes cortas, fáciles de recordar.</li>
+        <li><strong>Freestyle</strong> — mezcla; los improvisadores pasan de consonante a asonante para no perder fluidez.</li>
+        <li><strong>Letras infantiles</strong> — consonante simple, divertida.</li>
+      </ul>
+
+      <h2>El problema del cliché</h2>
+      <p>
+        En español, ciertas terminaciones aparecen tan a menudo que sus rimas se han vuelto clichés:
+        "corazón / razón / pasión". Funciona, pero el lector lo huele a kilómetros. Para evitarlo: buscá la
+        rima menos previsible. El generador te muestra varias; las primeras son siempre las obvias, las del
+        medio son las interesantes. Los grandes letristas conocen este truco.
+      </p>
+
+      <h2>Técnicas para no quedar atrapado en la rima</h2>
+      <p>
+        El error de principiante es construir el verso al revés desde la rima: "necesito que termine en -ir,
+        entonces digo X". El verso queda forzado. La técnica profesional es escribir la idea libre y
+        después ajustar: si tu última palabra no rima, cambiá el orden de la frase o buscá un sinónimo. La
+        rima debe servir al sentido, no al revés.
+      </p>
+
+      <h2>Acentuación importa</h2>
+      <p>
+        En español, la rima respeta la acentuación. "Café" (aguda) no rima en consonante con "cafetería"
+        (esdrújula) aunque las letras se parezcan. Si tu palabra termina en sílaba aguda, las rimas también
+        deben ser agudas; si es llana, llanas; si es esdrújula, esdrújulas. El generador filtra
+        automáticamente por terminación.
+      </p>
+
+      <h2>Aplicaciones publicitarias</h2>
+      <p>
+        Los slogans rimados se recuerdan mejor: estudios de memoria publicitaria muestran retención hasta
+        un 30% más alta cuando hay rima clara. Eso explica por qué tantos eslóganes históricos riman. Para
+        un emprendedor o agencia chica, una rima simple y memorable puede valer más que una identidad
+        visual compleja.
+      </p>
+
+      <h2>Más allá de la lista</h2>
+      <p>
+        El generador es un punto de partida, no un dictado. Si la palabra ideal no aparece, probá variantes:
+        sinónimos, plurales, conjugaciones distintas. Muchas veces la rima la encontrás en una variante
+        gramatical que el sistema no exploró. La creatividad final siempre es tuya.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué tipo de rimas devuelve?</summary><p>Consonantes y asonantes, según la opción que elijas.</p></details>
+      <details><summary>¿Sirve para canciones?</summary><p>Sí, es uno de los usos principales para letras de canciones, rap y poesía.</p></details>
+      <details><summary>¿Las rimas son útiles para slogans?</summary><p>Mucho. La rima es un anclaje mnemotécnico potente.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rh-row { display: flex; gap: 1rem; }
+  .rh-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.95rem; }
+  .rh-check input { width: auto; }
+</style>
+
+<script>
+  const POOL = ("amor calor sabor temor menor honor sudor color motor doctor pintor cantor tambor pavor terror razón corazón canción nación estación pasión emoción acción visión versión gestión decisión ladrón salón balcón mañana ventana hermana liana sábana banana pestaña montaña cabaña diana enseña reseña sueña cabaña viento hambriento aliento tormento momento cemento cliente fuente puente diente serpiente caliente jugar amar soñar volar cantar mirar callar hablar pintar plantar tocar buscar lograr brillar arena pena cadena nena escena sirena vena llena pena pelea idea oblea correa azalea tarea fea boda toda moda coda oda soda doda solar lunar lugar bazar collar pulgar pesar cesar dejar grada nada pesada honrada pesada labrada cuidada andana torpe golpe norte corte porte bote brote remoto noto grito frito mito infinito audito círculo música pública lúgubre pájaro páramo bárbaro").split(/\s+/);
+
+  const q = document.getElementById('rh-q') as HTMLInputElement;
+  const out = document.getElementById('rh-out') as HTMLTextAreaElement;
+  const go = document.getElementById('rh-go') as HTMLButtonElement;
+  const cp = document.getElementById('rh-copy') as HTMLButtonElement;
+
+  function strip(s: string) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+  function findStressVowelIndex(w: string): number {
+    const accented = w.match(/[áéíóúÁÉÍÓÚ]/);
+    if (accented && accented.index !== undefined) return accented.index;
+    const last = w[w.length - 1];
+    if ('aeiouAEIOUns'.includes(last)) {
+      for (let i = w.length - 2; i >= 0; i--) if ('aeiouáéíóú'.includes(w[i].toLowerCase())) return i;
+    } else {
+      for (let i = w.length - 1; i >= 0; i--) if ('aeiouáéíóú'.includes(w[i].toLowerCase())) return i;
+    }
+    return 0;
+  }
+  function ending(w: string): { full: string, vowels: string } {
+    const idx = findStressVowelIndex(w);
+    const tail = strip(w.slice(idx));
+    const v = tail.replace(/[^aeiou]/g, '');
+    return { full: tail, vowels: v };
+  }
+
+  function search() {
+    const w = q.value.trim().toLowerCase();
+    if (!w) { out.value = ''; return; }
+    const type = (document.querySelector('input[name="rh-type"]:checked') as HTMLInputElement).value;
+    const target = ending(w);
+    const matches: string[] = [];
+    for (const cand of POOL) {
+      if (cand.toLowerCase() === w) continue;
+      const e = ending(cand);
+      if (type === 'con' && e.full === target.full) matches.push(cand);
+      else if (type === 'aso' && e.vowels === target.vowels) matches.push(cand);
+      if (matches.length >= 30) break;
+    }
+    out.value = matches.length ? matches.join(', ') : `Sin rimas en el pool para "${w}". Probá una palabra más común.`;
+  }
+  go.addEventListener('click', search);
+  q.addEventListener('keydown', (e) => { if (e.key === 'Enter') search(); });
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

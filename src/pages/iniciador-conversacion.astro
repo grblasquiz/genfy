@@ -1,0 +1,155 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de iniciador de conversación | Genfy';
+const description = 'Iniciadores de conversación curados para citas, networking, primer día de trabajo y reuniones. Salí del clima y arrancá con algo memorable.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué situaciones sirve?', acceptedAnswer: { '@type': 'Answer', text: 'Citas, networking profesional, primer día en un equipo, cenas con desconocidos, reuniones formales y casuales.' } },
+    { '@type': 'Question', name: '¿Es lo mismo que un rompehielos?', acceptedAnswer: { '@type': 'Answer', text: 'Parecido. El rompehielos suele ser de juego para grupos. El iniciador apunta a una conversación 1 a 1 que pueda profundizarse.' } },
+    { '@type': 'Question', name: '¿Cómo elijo el mejor para mi contexto?', acceptedAnswer: { '@type': 'Answer', text: 'Probá tres y quedate con el que mejor se ajuste al tono. Para entrevistas: profesionales. Para cita: personales no íntimas.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión / Fun" title="Generador de iniciador de conversación"
+    intro="Pasá del clima a algo que valga la pena. Iniciadores curados para distintos contextos.">
+
+    <div slot="tool" class="cs">
+      <div class="cs-card">
+        <p id="cs-text" class="cs-text">Tocá "Generar" para empezar.</p>
+      </div>
+      <div class="cs-controls">
+        <label for="cs-cat">Contexto</label>
+        <select id="cs-cat">
+          <option value="all">Todos</option>
+          <option value="cita">Cita</option>
+          <option value="networking">Networking</option>
+          <option value="amigos">Amigos / Cena</option>
+          <option value="trabajo">Trabajo / Equipo</option>
+        </select>
+      </div>
+      <button id="cs-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="cs-copy" class="btn btn-ghost" type="button">Copiar</button>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los iniciadores de conversación importan</h2>
+      <p>
+        El primer minuto define el tono. Si arrancás con "¿qué hacés de tu vida?" o "¿de
+        dónde sos?", la otra persona entra en piloto automático y te da la respuesta que ya
+        usó 200 veces. Si arrancás con algo distinto, el cerebro se activa y la conversación
+        toma una dirección imprevisible. No es magia: es psicología de la apertura.
+      </p>
+
+      <h2>Tipos de iniciadores y cuándo usarlos</h2>
+      <ol>
+        <li><strong>Específico al contexto:</strong> "¿Qué te trajo a este evento?" en una conferencia. Demuestra que prestaste atención.</li>
+        <li><strong>De curiosidad genuina:</strong> "¿Qué te entusiasma esta semana?" Personal pero no íntimo. Funciona en casi todos lados.</li>
+        <li><strong>De experiencia compartida:</strong> "¿Cuál fue la última cosa que aprendiste y te sorprendió?" Genera vulnerabilidad sin forzar.</li>
+        <li><strong>De preferencia:</strong> "Café, té o mate?" Parece banal, pero abre la puerta a hablar de costumbres y rutina.</li>
+        <li><strong>De proyección:</strong> "¿En qué estás trabajando que te tiene despierto?" Útil con emprendedores y creativos.</li>
+      </ol>
+
+      <h2>Iniciadores para evitar</h2>
+      <ul>
+        <li><strong>"¿Qué hacés?":</strong> bypassea esto cuando puedas. La gente está harta de identificarse por su trabajo.</li>
+        <li><strong>El clima:</strong> sirve solo si el clima es realmente extremo. Si no, es ruido.</li>
+        <li><strong>Política o religión:</strong> en contextos donde no hay confianza previa, son zonas de riesgo.</li>
+        <li><strong>Comentarios sobre apariencia:</strong> incluso elogios. Hace que la otra persona se sienta evaluada antes de saludada.</li>
+      </ul>
+
+      <h2>El truco del "follow-up"</h2>
+      <p>
+        Un buen iniciador es la mitad del trabajo. La otra mitad es la pregunta de seguimiento.
+        Si la persona dice "estoy aprendiendo a cocinar tailandés", no respondas "ah, qué
+        bueno" y volvé a hablar de vos. Preguntá: "¿qué plato te salió mejor?", "¿qué
+        ingrediente te costó conseguir?", "¿quién te enseñó?". El follow-up muestra que
+        escuchaste, y casi siempre es donde nace la conexión real.
+      </p>
+
+      <h2>Práctica: tres encuentros, tres iniciadores</h2>
+      <p>
+        Esta semana usá uno distinto en cada encuentro: con un compañero nuevo, con tu pareja
+        durante la cena, con alguien en una fila. Notá cuál genera más conversación. Vas a
+        descubrir patrones: a algunas personas les funciona lo abstracto, a otras lo
+        concreto. Calibrá según la persona, no según vos.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Sirve para entrevistas laborales?</summary><p>Sí, los del filtro "trabajo" funcionan bien para arrancar reuniones formales.</p></details>
+      <details><summary>¿Y para citas?</summary><p>El filtro "cita" tiene preguntas pensadas para conexión sin presión.</p></details>
+      <details><summary>¿Puedo guardarlos?</summary><p>Copiá el que te guste y armá tu propia lista en notas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cs-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; }
+  .cs-text { font-size: 1.125rem; line-height: 1.6; margin: 0; }
+  .cs-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const STARTERS: { cat: string; t: string }[] = [
+    { cat: "cita", t: "¿Cuál fue la última cosa que aprendiste solo porque te dio curiosidad?" },
+    { cat: "cita", t: "Si tuvieras un día libre sin compromisos, ¿qué harías primero?" },
+    { cat: "cita", t: "¿Qué tipo de música escuchabas a los 16 que ya no escuchás?" },
+    { cat: "cita", t: "¿Qué libro te marcó este último año?" },
+    { cat: "cita", t: "¿En qué tiendas a gastar más sin pensar?" },
+    { cat: "cita", t: "¿Cuál fue tu trabajo más raro?" },
+    { cat: "cita", t: "Si no fuera por trabajo, ¿de qué te gustaría que la gente te conociera?" },
+    { cat: "cita", t: "¿Qué cosa hacés mejor cuando estás de buen humor?" },
+    { cat: "cita", t: "¿Cuál es tu plan ideal de domingo?" },
+    { cat: "networking", t: "¿Qué te trajo hoy a este evento?" },
+    { cat: "networking", t: "¿En qué estás trabajando que te tiene atento últimamente?" },
+    { cat: "networking", t: "¿Cuál fue el cambio más grande de tu trabajo este año?" },
+    { cat: "networking", t: "¿Qué tendencia de tu industria te parece exagerada?" },
+    { cat: "networking", t: "¿A quién admirás profesionalmente y por qué?" },
+    { cat: "networking", t: "¿Qué herramienta nueva incorporaste y vale la pena?" },
+    { cat: "networking", t: "¿En qué momento de tu carrera estás?" },
+    { cat: "networking", t: "¿Cómo decidiste dedicarte a lo que hacés?" },
+    { cat: "amigos", t: "¿Qué cosa te puso de buen humor esta semana?" },
+    { cat: "amigos", t: "¿Cuál fue lo último que viste y recomendás?" },
+    { cat: "amigos", t: "¿Qué plato cocinás cuando querés impresionar?" },
+    { cat: "amigos", t: "¿Qué es lo que más extrañás de hace 10 años?" },
+    { cat: "amigos", t: "¿Cuál fue el viaje que mejor recordás?" },
+    { cat: "amigos", t: "¿Qué hobbie nuevo te gustaría empezar?" },
+    { cat: "amigos", t: "¿En qué cosa gastás plata sin culpa?" },
+    { cat: "amigos", t: "¿Cuál es la última anécdota graciosa que viviste?" },
+    { cat: "trabajo", t: "¿Qué parte de tu trabajo te energiza más?" },
+    { cat: "trabajo", t: "¿Cuál es la mejor decisión profesional que tomaste este año?" },
+    { cat: "trabajo", t: "¿Qué está aprendiendo tu equipo últimamente?" },
+    { cat: "trabajo", t: "¿Qué hacés cuando tenés un día imposible?" },
+    { cat: "trabajo", t: "¿Cuál fue el feedback más útil que recibiste?" },
+    { cat: "trabajo", t: "¿Qué proyecto tuyo te dio más que aprender?" },
+    { cat: "trabajo", t: "¿Cómo organizás tu semana?" },
+    { cat: "trabajo", t: "¿Qué herramienta de productividad te cambió la rutina?" }
+  ];
+
+  const text = document.getElementById('cs-text') as HTMLElement;
+  const cat = document.getElementById('cs-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('cs-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('cs-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? STARTERS : STARTERS.filter(s => s.cat === filter);
+    text.textContent = pick(pool).t;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(text.textContent || '');
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

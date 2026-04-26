@@ -1,0 +1,165 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Would-You-Rather Generator | Genfy';
+const description = 'Clean, fun would-you-rather dilemmas for groups. Great for parties, road trips, dinners and classrooms. Over 100 curated scenarios.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Is it suitable for all ages?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. All dilemmas are clean: nothing risque or violent. Great for family, classrooms and the office.' } },
+    { '@type': 'Question', name: 'How do I play?', acceptedAnswer: { '@type': 'Answer', text: 'Each player reads a question, picks one option and justifies it. The group can debate without needing to agree.' } },
+    { '@type': 'Question', name: 'How many questions?', acceptedAnswer: { '@type': 'Answer', text: 'Over 100 curated scenarios, enough for several rounds with no repeats.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Diversión / Fun" title="Would-You-Rather generator"
+    intro="Fun dilemmas to break the ice, liven up a dinner or fill a long drive. Hit the button to draw the next scenario.">
+
+    <div slot="tool" class="wr">
+      <div class="wr-card">
+        <p class="wr-q">Would you rather…</p>
+        <div class="wr-options">
+          <div id="wr-a" class="wr-opt">—</div>
+          <div class="wr-or">or</div>
+          <div id="wr-b" class="wr-opt">—</div>
+        </div>
+      </div>
+      <button id="wr-gen" class="btn btn-primary" type="button">Another question</button>
+      <button id="wr-copy" class="btn btn-ghost" type="button">Copy</button>
+    </div>
+
+    <div slot="content">
+      <h2>Why "would you rather" works</h2>
+      <p>
+        It's one of the simplest yet most revealing games. You force someone to pick between
+        two bad options or two good ones, and the justification they give exposes how they
+        reason, what they prioritize and sometimes even their fears. Needs nothing, works
+        from 2 people up to 30, and gets any gathering started.
+      </p>
+
+      <h2>Where to use it</h2>
+      <ul>
+        <li><strong>Dinners and after-work:</strong> between coffee and dessert, one round keeps the conversation alive.</li>
+        <li><strong>Road trips:</strong> ideal for long stretches. No screen, no battery, everyone joins.</li>
+        <li><strong>Dates:</strong> first, second or tenth. Lighter questions outperform the standard interview.</li>
+        <li><strong>Classrooms:</strong> 5 minutes of "would you rather" at the start of class breaks the ice.</li>
+        <li><strong>Team onboarding:</strong> meet new teammates without it feeling like a survey.</li>
+      </ul>
+
+      <h2>Three flavors of dilemmas you'll meet</h2>
+      <ol>
+        <li><strong>The absurd:</strong> have hand-feet or feet-hands. The fun is in the mental image.</li>
+        <li><strong>The real trade-off:</strong> earn more but work more, or earn the same and work less. Real arguments start here.</li>
+        <li><strong>The impossible:</strong> speak every language or play every instrument. Forces you to define what you value.</li>
+      </ol>
+
+      <h2>Rules that make it better</h2>
+      <p>
+        The point isn't the answer, it's the justification. Add this rule: each player picks
+        and explains in under 30 seconds. Then the group votes on whose justification was
+        best. The most-voted player at the end wins nothing, but the dynamic boosts
+        engagement.
+      </p>
+
+      <h2>When to skip certain dilemmas</h2>
+      <p>
+        Questions touching sensitive topics (death, trauma, politics) can drag the energy
+        down in groups without deep trust. Our generator filters those out. If you add your
+        own dilemmas, keep the same filter: nothing that could make a stranger uncomfortable.
+      </p>
+
+      <h2>Game variants</h2>
+      <p>
+        Couples variant: both pick silently, then compare. Stakes variant: loser does the
+        dishes. Group variant: everyone votes simultaneously by raising a hand for A or B;
+        majority wins, minority justifies. The last variant generates the most conversation
+        because it forces the group to understand why they don't all think alike.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Kid-safe?</summary><p>Yes, all content targets mixed groups.</p></details>
+      <details><summary>How many players?</summary><p>From 2 up to 30. Past that, split into tables.</p></details>
+      <details><summary>Can I copy the question?</summary><p>Yes, the button copies the dilemma with both options.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .wr-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; }
+  .wr-q { font-size: 0.875rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 1rem; }
+  .wr-options { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
+  .wr-opt { padding: 1rem; background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--radius); font-size: 1rem; line-height: 1.5; min-height: 60px; }
+  .wr-or { font-weight: 600; color: var(--text-subtle); }
+  @media (max-width: 600px) { .wr-options { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const PAIRS: [string, string][] = [
+    ["Have hands instead of feet", "Have feet instead of hands"],
+    ["Speak every language in the world", "Play every instrument"],
+    ["Live 100 more years with current health", "Live 50 more years in perfect health"],
+    ["Always have ideal home temperature", "Have a car that never breaks down"],
+    ["Never use social media again", "Never watch streaming again"],
+    ["Work 4 days a week for less pay", "Work 6 days for double pay"],
+    ["Live by the beach", "Live in the mountains"],
+    ["Have perfect memory", "Forget what you want at will"],
+    ["Fly at 30 mph", "Run at 120 mph"],
+    ["Be invisible 5 hours a day", "Read minds 5 minutes a day"],
+    ["Eat pizza every day", "Never eat pizza again"],
+    ["Know when you'll die", "Know how you'll die"],
+    ["Travel to the past, no return", "Travel to the future, no return"],
+    ["Be world-class at one obscure sport", "Be very good at five popular sports"],
+    ["World fame for one year", "Local fame for life"],
+    ["Have your music play whenever you enter a room", "Have applause whenever you enter"],
+    ["Be at the beach in cold weather", "Be in the snow in hot weather"],
+    ["Never wear shoes again", "Never wear long sleeves again"],
+    ["Know the answer to any question", "Know what animals think"],
+    ["Always speak quietly", "Have to sing everything you say"],
+    ["Live without coffee", "Live without dessert"],
+    ["Have an assistant who cooks", "Have an assistant who cleans"],
+    ["Never feel cold again", "Never feel hot again"],
+    ["Be amazing at your career", "Have the perfect personal life"],
+    ["Learn a new language in a week", "Learn an instrument in a week"],
+    ["Unlimited vacation but lower pay", "Higher pay but only 2 weeks a year"],
+    ["Live in a huge city", "Live in a small town"],
+    ["Eat only sweet for life", "Eat only savory for life"],
+    ["Never watch your favorite show again", "Watch only your favorite show forever"],
+    ["Have to rhyme everything you say", "Have to sing everything you say"],
+    ["Dance perfectly", "Cook perfectly"],
+    ["People always say what they think", "People are always polite"],
+    ["Never lose your phone", "Always have 100% battery"],
+    ["Sleep 12 hours a day", "Never need sleep again"],
+    ["Know when people lie to you", "Never lie again yourself"],
+    ["Get paid for your hobby", "Have your job become your hobby"],
+    ["Meet your idol", "Have your idol meet you"],
+    ["Have a pet that talks", "Understand all animals"],
+    ["Never age physically", "Never age mentally"],
+    ["Live the same day for 100 years", "Live 100 different days"],
+    ["A job you love at low pay", "A job you hate at very high pay"]
+  ];
+
+  const a = document.getElementById('wr-a') as HTMLElement;
+  const b = document.getElementById('wr-b') as HTMLElement;
+  const genBtn = document.getElementById('wr-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('wr-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const [x, y] = pick(PAIRS);
+    a.textContent = x; b.textContent = y;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    const s = `Would you rather...\nA) ${a.textContent}\nB) ${b.textContent}`;
+    await navigator.clipboard.writeText(s);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

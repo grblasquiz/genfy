@@ -1,0 +1,130 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random Verb Generator | Genfy';
+const description = 'Pull random English verbs with type filters: action, mental or state. Useful for writing prompts, grammar drills, naming and improv.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'When is a random verb useful?', acceptedAnswer: { '@type': 'Answer', text: 'For starting sentences in creative writing, conjugation drills, improv prompts and grammar practice in class.' } },
+    { '@type': 'Question', name: 'Can I pick verb types?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — filter by action verbs (run, build), mental verbs (think, imagine) or state verbs (be, exist).' } },
+    { '@type': 'Question', name: 'Does it include irregular verbs?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. The list mixes common regular and irregular verbs so practice reflects real-world usage.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Languages" title="Random Verb Generator"
+    intro="Pull a random English verb. Useful for grammar, creative writing, word games, story prompts or conjugation drills.">
+
+    <div slot="tool">
+      <div class="rw-row">
+        <div>
+          <label for="vb-type">Type</label>
+          <select id="vb-type">
+            <option value="all">All</option>
+            <option value="act">Action</option>
+            <option value="men">Mental</option>
+            <option value="sta">State</option>
+          </select>
+        </div>
+        <div>
+          <label for="vb-amount">Amount</label>
+          <input id="vb-amount" type="number" min="1" max="30" value="5" />
+        </div>
+      </div>
+      <button id="vb-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="vb-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="vb-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>The verb: the engine of the sentence</h2>
+      <p>
+        Every sentence has a verb, explicit or implied. It's the word that moves, the one that changes the
+        state of the described world. That's why, in writing, the first edit that lifts a piece is usually
+        replacing generic verbs ("do", "have", "be") with specific ones ("build", "own", "consist"). A
+        random verb generator forces you out of the five-or-six-verb autopilot most writers fall into.
+      </p>
+
+      <h2>Real applications</h2>
+      <ul>
+        <li><strong>Conjugation</strong> — pull a verb and conjugate it in present, past, perfect. Daily reps, no textbook.</li>
+        <li><strong>Writing prompts</strong> — "write 200 words where the protagonist _conspires_". The forced verb sets the tone of the whole scene.</li>
+        <li><strong>Improv theater</strong> — the director throws a verb and actors build the scene around it.</li>
+        <li><strong>Game design</strong> — "verb-driven design" is how designers describe action-centered design; random verbs unblock ideation.</li>
+        <li><strong>Classroom</strong> — perfect for tense drills, gerunds, infinitives, modals.</li>
+      </ul>
+
+      <h2>Action, mental, state</h2>
+      <p>
+        Action verbs describe physical or external behavior: run, build, climb. Mental verbs cover internal
+        operations: think, doubt, imagine, remember. State verbs describe being or condition: be, seem,
+        exist, belong. Filtering by type sharpens the exercise. If you want a vivid scene, pull action; if
+        you want introspection, pull mental; if you want description, pull state.
+      </p>
+
+      <h2>Strong vs. weak verbs</h2>
+      <p>
+        A writing tip that works in any language: prefer "strong" verbs. "Walked" is fine, "wandered" is
+        better when the nuance matters. "Said" is neutral, "whispered" or "snapped" add information. The
+        rule isn't to delete common verbs (sometimes they're right) but to ask whether a more precise one
+        exists. The generator gives you a candidate to test against your draft.
+      </p>
+
+      <h2>Exercises you can do today</h2>
+      <ul>
+        <li>Pull three verbs and write a three-sentence story, one verb per sentence, in order.</li>
+        <li>Conjugate one verb in five different tenses.</li>
+        <li>Find a sharper synonym for each verb on the list.</li>
+        <li>Write a three-line poem ending in one of the verbs as a gerund.</li>
+        <li>Assign each verb the least expected subject: "fear cooks", "rain writes".</li>
+      </ul>
+
+      <h2>When not to force the verb</h2>
+      <p>
+        If the random verb doesn't fit your idea, don't bend the sentence around it: discard and pull
+        another. The tool is a way to test paths, not a hard constraint. Five minutes of generation can
+        deliver the exact verb you needed for a headline, a scene or a name you've been chewing on for
+        days.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>When is a random verb useful?</summary><p>Creative writing, grammar drills, verb+noun naming and classroom games.</p></details>
+      <details><summary>Can I pick verb types?</summary><p>Yes: action, mental or state — depending on the kind of sentence you're after.</p></details>
+      <details><summary>Does it include irregular verbs?</summary><p>Yes. Mixed list of common regulars and irregulars to reflect real usage.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const ACT = "run jump climb build paint write read cook drive ride swim throw catch carry lift push pull open close start stop walk dance sing draw sweep clean paint fix repair plant water sew tie unwrap pack travel".split(' ');
+  const MEN = "think doubt imagine remember forget plan hope fear wonder learn study consider judge decide guess assume suspect compare contrast analyze recall picture intend resolve dream invent realize question infer perceive notice".split(' ');
+  const STA = "be seem appear exist belong remain stay last endure resemble include contain consist depend matter cost weigh measure own possess deserve resemble surround surround require lack equal differ".split(' ');
+
+  const tEl = document.getElementById('vb-type') as HTMLSelectElement;
+  const amEl = document.getElementById('vb-amount') as HTMLInputElement;
+  const out = document.getElementById('vb-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('vb-gen') as HTMLButtonElement;
+  const cp = document.getElementById('vb-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function build() {
+    const t = tEl.value;
+    const pool = t === 'act' ? ACT : t === 'men' ? MEN : t === 'sta' ? STA : [...ACT, ...MEN, ...STA];
+    const n = Math.max(1, Math.min(30, parseInt(amEl.value || '1', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) lines.push(pick(pool));
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', build);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+  build();
+</script>

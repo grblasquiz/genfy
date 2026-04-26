@@ -1,0 +1,187 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Constructor de URL REST API | Genfy';
+const description = 'Construí endpoints REST con base URL, recurso, path params y query params. Útil para diseñar y documentar APIs.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es un endpoint REST?', acceptedAnswer: { '@type': 'Answer', text: 'Un endpoint REST es una URL que identifica un recurso o colección y responde a verbos HTTP como GET, POST, PUT, PATCH y DELETE.' } },
+    { '@type': 'Question', name: '¿Path o query param?', acceptedAnswer: { '@type': 'Answer', text: 'Los path params identifican un recurso específico (/users/42). Los query params filtran o paginan colecciones (?page=2&limit=20).' } },
+    { '@type': 'Question', name: '¿Plural o singular?', acceptedAnswer: { '@type': 'Answer', text: 'Convención: nombres de colecciones en plural (/users, /orders). Es la práctica más común y consistente.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech / Dev"
+    title="Constructor de URL REST API"
+    intro="Armá una URL de endpoint REST a partir de base, recurso, ID y query params. Generá ejemplos consistentes para documentar tu API."
+  >
+    <div slot="tool" class="api-tool">
+      <div class="api-grid">
+        <div>
+          <label for="api-base">Base URL</label>
+          <input id="api-base" type="text" value="https://api.example.com/v1" />
+        </div>
+        <div>
+          <label for="api-resource">Recurso</label>
+          <input id="api-resource" type="text" value="users" />
+        </div>
+        <div>
+          <label for="api-id">ID (opcional)</label>
+          <input id="api-id" type="text" placeholder="42" />
+        </div>
+        <div>
+          <label for="api-sub">Sub-recurso (opcional)</label>
+          <input id="api-sub" type="text" placeholder="orders" />
+        </div>
+      </div>
+
+      <div class="api-grid">
+        <div>
+          <label for="api-query">Query params (key=value separados por &)</label>
+          <input id="api-query" type="text" placeholder="page=1&limit=20&sort=-created_at" />
+        </div>
+        <div>
+          <label for="api-method">Método</label>
+          <select id="api-method">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="PATCH">PATCH</option>
+            <option value="DELETE">DELETE</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="api-actions">
+        <button id="api-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="api-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+
+      <textarea id="api-out" class="mono" rows="6" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Anatomía de una URL REST</h2>
+      <p>
+        Un endpoint REST se compone de protocolo, host, prefijo de versión, recurso, ID opcional
+        y query string. Por ejemplo: <code>https://api.example.com/v1/users/42/orders?status=open</code>.
+        Cada parte tiene una responsabilidad clara y mantenerlas separadas hace que tu API sea
+        predecible y fácil de documentar.
+      </p>
+
+      <h2>Versionado</h2>
+      <p>
+        El prefijo <code>/v1</code> permite romper compatibilidad sin romper a los clientes
+        existentes. Cuando publiques <code>/v2</code>, los consumidores migran a su ritmo. La
+        alternativa es versionar por header
+        (<code>Accept: application/vnd.api+json;version=2</code>), más limpia pero menos visible.
+        Para APIs públicas, el versionado por path suele ganar en claridad.
+      </p>
+
+      <h2>Recursos en plural y verbos HTTP</h2>
+      <p>
+        La regla más extendida: nombres de colecciones siempre en plural. <code>/users</code>,
+        <code>/orders</code>, <code>/invoices</code>. El verbo HTTP decide la acción: GET para
+        leer, POST para crear, PUT para reemplazar, PATCH para actualizar parcialmente, DELETE
+        para borrar. Evitá verbos en la URL: <code>/users/create</code> rompe la convención.
+      </p>
+
+      <h2>Path params vs query params</h2>
+      <ul>
+        <li><strong>Path params</strong> identifican un recurso específico: <code>/users/42</code>, <code>/orders/abc-123</code>.</li>
+        <li><strong>Query params</strong> filtran, ordenan, paginan: <code>?status=active&amp;page=2</code>.</li>
+        <li><strong>Body</strong> lleva datos para crear/actualizar (POST, PUT, PATCH).</li>
+      </ul>
+
+      <h2>Anidamiento de recursos</h2>
+      <p>
+        Cuando hay relaciones jerárquicas claras: <code>/users/42/orders</code> lista las órdenes
+        del usuario 42. Mantené el anidamiento a un nivel; <code>/users/42/orders/7/items/3</code>
+        se vuelve inmanejable. Si la relación es ambigua, usá query params: <code>/orders?user_id=42</code>.
+      </p>
+
+      <h2>Paginación, filtros y ordenamiento</h2>
+      <p>
+        Tres patrones populares de paginación: offset/limit (<code>?offset=40&amp;limit=20</code>),
+        page/size (<code>?page=3&amp;size=20</code>) y cursor
+        (<code>?cursor=abc&amp;limit=20</code>). Cursor escala mejor con datasets grandes. Para
+        ordenar, usá un parámetro <code>sort</code> con prefijo <code>-</code> para descendente:
+        <code>?sort=-created_at,name</code>.
+      </p>
+
+      <h2>Códigos de estado</h2>
+      <p>
+        Devolvé 2xx para éxito (200 OK, 201 Created, 204 No Content), 4xx para errores del cliente
+        (400, 401, 403, 404, 409, 422) y 5xx para errores del servidor. No reutilices 200 con un
+        body <code>&lcub;"error": ...&rcub;</code>; usá el código correcto.
+      </p>
+
+      <h2>Documentar con OpenAPI</h2>
+      <p>
+        Una vez fijada la convención, documentá con OpenAPI (Swagger). Escribís un YAML con cada
+        endpoint, sus params, respuestas y ejemplos, y herramientas como Swagger UI o Redoc lo
+        renderizan. Postman e Insomnia importan OpenAPI y arman colecciones automáticamente.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es un endpoint REST?</summary><p>Una URL que identifica un recurso y responde a verbos HTTP. Ejemplo: <code>GET /users/42</code>.</p></details>
+      <details><summary>¿Path o query param?</summary><p>Path para identificar (<code>/users/42</code>); query para filtrar o paginar (<code>?page=2</code>).</p></details>
+      <details><summary>¿Plural o singular?</summary><p>Plural: <code>/users</code>, <code>/orders</code>. Es la convención más extendida.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .api-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .api-grid { grid-template-columns: 1fr; } }
+  .api-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const base = document.getElementById('api-base') as HTMLInputElement;
+  const res = document.getElementById('api-resource') as HTMLInputElement;
+  const id = document.getElementById('api-id') as HTMLInputElement;
+  const sub = document.getElementById('api-sub') as HTMLInputElement;
+  const q = document.getElementById('api-query') as HTMLInputElement;
+  const method = document.getElementById('api-method') as HTMLSelectElement;
+  const out = document.getElementById('api-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('api-gen') as HTMLButtonElement;
+  const copy = document.getElementById('api-copy') as HTMLButtonElement;
+
+  function build() {
+    let url = base.value.trim().replace(/\/$/, '');
+    if (res.value.trim()) url += '/' + res.value.trim();
+    if (id.value.trim()) url += '/' + id.value.trim();
+    if (sub.value.trim()) url += '/' + sub.value.trim();
+    if (q.value.trim()) url += '?' + q.value.trim();
+    const body = (method.value === 'POST' || method.value === 'PUT' || method.value === 'PATCH') ? ` \\\n  -H "Content-Type: application/json" \\\n  -d '{"key":"value"}'` : '';
+    const lines = [
+      `${method.value} ${url}`,
+      '',
+      `curl -X ${method.value} "${url}" \\`,
+      `  -H "Accept: application/json"${body}`,
+    ];
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', build);
+  [base, res, id, sub, q, method].forEach(el => el.addEventListener('input', build));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copiado';
+    setTimeout(() => { icon.textContent = 'Copiar'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

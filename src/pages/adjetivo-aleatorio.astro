@@ -1,0 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Adjetivo aleatorio | Generador en español | Genfy';
+const description = 'Generador de adjetivos al azar en español. Filtrá por positivos, negativos o neutros. Útil para escritura, naming, prompts y ejercicios de redacción.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuándo conviene usar un adjetivo aleatorio?', acceptedAnswer: { '@type': 'Answer', text: 'Para describir personajes en escritura creativa, generar nombres de marcas o productos, redactar reseñas y entrenar vocabulario descriptivo.' } },
+    { '@type': 'Question', name: '¿Puedo filtrar por tono?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Elegí entre positivos, negativos o neutros según necesites elogio, crítica o descripción objetiva.' } },
+    { '@type': 'Question', name: '¿Sirve para titulares y headlines?', acceptedAnswer: { '@type': 'Answer', text: 'Mucho. Un buen adjetivo eleva un titular promedio. Combinalo con un sustantivo para probar variantes rápidas.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Idiomas" title="Adjetivo aleatorio"
+    intro="Sacá adjetivos al azar en español. Filtrá por tono positivo, negativo o neutro. Pensado para escritura creativa, naming, prompts y ejercicios de redacción.">
+
+    <div slot="tool">
+      <div class="rw-row">
+        <div>
+          <label for="adj-tone">Tono</label>
+          <select id="adj-tone">
+            <option value="all">Todos</option>
+            <option value="pos">Positivos</option>
+            <option value="neg">Negativos</option>
+            <option value="neu">Neutros</option>
+          </select>
+        </div>
+        <div>
+          <label for="adj-amount">Cantidad</label>
+          <input id="adj-amount" type="number" min="1" max="30" value="5" />
+        </div>
+      </div>
+      <button id="adj-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="adj-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="adj-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>El adjetivo: la palabra que define el tono</h2>
+      <p>
+        Un texto sin adjetivos es plano: cuenta lo que pasa pero no cómo se siente. Un texto con adjetivos
+        mediocres ("muy bueno", "bastante interesante") suena a redacción escolar. La diferencia entre un
+        copy memorable y un copy olvidable suele estar en uno o dos adjetivos bien elegidos. Por eso vale la
+        pena tener un banco de adjetivos al alcance de la mano.
+      </p>
+
+      <h2>Cuándo usar el generador</h2>
+      <ul>
+        <li><strong>Personajes de ficción</strong> — sacá tres adjetivos al azar y armá un personaje a partir de ellos. Sale más original que partir del cliché.</li>
+        <li><strong>Branding y naming</strong> — combiná un adjetivo con un sustantivo para nombres de marca: "Casa Honesta", "Estudio Lúcido", "Café Cierto".</li>
+        <li><strong>Reseñas y testimonios</strong> — variá los adjetivos para no repetir "increíble" en cada review.</li>
+        <li><strong>Headlines</strong> — un adjetivo fuerte sube el CTR de un titular sin tocar el sustantivo.</li>
+        <li><strong>Aula</strong> — ejercicios de concordancia, género y número.</li>
+      </ul>
+
+      <h2>Tonos: positivos, negativos, neutros</h2>
+      <p>
+        Los <strong>positivos</strong> sirven para elogio, marketing, branding aspiracional y descripciones
+        favorables. Los <strong>negativos</strong> son tu reserva para crítica, contraste, escritura de
+        personajes antagonistas y reseñas honestas. Los <strong>neutros</strong> son los más útiles para
+        descripción objetiva: técnica, periodismo, ensayo. Saber moverte entre los tres registros es lo que
+        diferencia a un escritor con oficio.
+      </p>
+
+      <h2>Errores frecuentes con adjetivos</h2>
+      <ul>
+        <li><strong>Acumularlos</strong> — "una hermosa, brillante, inolvidable mañana" debilita el efecto. Uno bien elegido pega más que tres mediocres.</li>
+        <li><strong>Genéricos</strong> — "bueno", "lindo", "interesante" no transmiten nada. Reemplazalos por adjetivos específicos.</li>
+        <li><strong>Inflación</strong> — si todo es "épico", "increíble" y "revolucionario", nada lo es. Reservá los superlativos.</li>
+        <li><strong>Concordancia</strong> — recordá género y número, sobre todo cuando el sustantivo está lejos.</li>
+      </ul>
+
+      <h2>Combinaciones que funcionan</h2>
+      <p>
+        Un truco profesional: en lugar de pedirle al generador un solo adjetivo, sacá cinco y elegí el menos
+        obvio que aún tenga sentido con tu sustantivo. Esa segunda fila de la lista suele ser donde están las
+        mejores opciones, las que no te hubieran venido espontáneamente. La primera idea siempre es la más
+        cercana al cliché.
+      </p>
+
+      <h2>Adjetivo + sustantivo: el match perfecto</h2>
+      <p>
+        Para naming o titulares, generá un adjetivo y un sustantivo en paralelo, anotá las combinaciones que
+        te suenen y descartá el 80%. Lo que queda es oro. Esta técnica se usa en agencias para nombrar
+        productos, líneas editoriales y campañas. Funciona porque rompe la inercia de pensar "lo mismo de
+        siempre" y te obliga a evaluar combinaciones que no propondrías solo.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuándo conviene usar un adjetivo aleatorio?</summary><p>Para describir personajes, generar nombres, reseñas, vocabulario descriptivo y titulares más vívidos.</p></details>
+      <details><summary>¿Puedo filtrar por tono?</summary><p>Sí: positivos, negativos o neutros, según el efecto que busques.</p></details>
+      <details><summary>¿Sirve para titulares y headlines?</summary><p>Sí, un buen adjetivo eleva un titular. Generá varios y testeá cuál convierte mejor.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const POS = "amable astuto brillante valiente generoso honesto luminoso paciente sereno radiante sincero tierno cálido cariñoso íntegro alegre fuerte sensato bondadoso atento risueño humilde ingenioso prudente cordial respetuoso confiable empático constante curioso".split(' ');
+  const NEG = "áspero arrogante torpe celoso mezquino caprichoso descortés mentiroso indiferente quejoso terco rudo descuidado impaciente egoísta agresivo desordenado distraído frío hostil aburrido cobarde ingrato testarudo vanidoso negligente pesado retorcido ruin envidioso".split(' ');
+  const NEU = "alto bajo grande pequeño ancho estrecho corto largo lento rápido nuevo viejo joven antiguo redondo cuadrado profundo plano oscuro claro cálido frío seco húmedo blando duro liviano pesado denso espeso firme suave".split(' ');
+
+  const toneEl = document.getElementById('adj-tone') as HTMLSelectElement;
+  const amEl = document.getElementById('adj-amount') as HTMLInputElement;
+  const out = document.getElementById('adj-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('adj-gen') as HTMLButtonElement;
+  const cp = document.getElementById('adj-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function build() {
+    const t = toneEl.value;
+    const pool = t === 'pos' ? POS : t === 'neg' ? NEG : t === 'neu' ? NEU : [...POS, ...NEG, ...NEU];
+    const n = Math.max(1, Math.min(30, parseInt(amEl.value || '1', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) lines.push(pick(pool));
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', build);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+  build();
+</script>

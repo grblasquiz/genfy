@@ -1,0 +1,152 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Pinterest Pin Description Generator | Genfy';
+const description = 'Generate SEO-optimized Pinterest pin descriptions. Up to 500 characters with natural keywords, context and CTA that boost reach.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many characters does a pin description allow?', acceptedAnswer: { '@type': 'Answer', text: 'Pinterest allows up to 500 characters. The sweet spot is between 150 and 300: enough for keywords and context without saturating.' } },
+    { '@type': 'Question', name: 'Do hashtags work on Pinterest?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, in moderation. 2 to 4 relevant hashtags help the algorithm classify the pin. More than 5 reads as spam.' } },
+    { '@type': 'Question', name: 'What keywords should I use?', acceptedAnswer: { '@type': 'Answer', text: 'Keywords people actually search on Pinterest, not Google. Pinterest is a visual search engine: use descriptive content, style and use-case terms.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Pinterest Pin Description Generator"
+    intro="Drop in topic, keywords and CTA. Genfy returns SEO-friendly pin descriptions, all within the 500-character limit.">
+
+    <div slot="tool" class="pp">
+      <label for="pp-topic">Pin topic</label>
+      <input id="pp-topic" type="text" placeholder="Minimalist decor ideas..." value="Small living room decor ideas" />
+
+      <label for="pp-keywords" style="margin-top:1rem">Keywords (comma-separated)</label>
+      <input id="pp-keywords" type="text" placeholder="decor, home, minimalist..." value="living room decor, small spaces, minimalism" />
+
+      <label for="pp-benefit" style="margin-top:1rem">Benefit or hook</label>
+      <input id="pp-benefit" type="text" placeholder="Without overspending..." value="No renovations and low budget" />
+
+      <label for="pp-cta" style="margin-top:1rem">CTA</label>
+      <input id="pp-cta" type="text" placeholder="See the full guide" value="Save this pin for inspiration" />
+
+      <button id="pp-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 4 descriptions</button>
+
+      <div id="pp-out" class="pp-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Pinterest is not Instagram: the description matters more than the image</h2>
+      <p>
+        On Instagram the image leads and the caption is secondary. On Pinterest it's the reverse: Pinterest works like a visual search engine, and the algorithm decides who sees your pin by reading the title, description and on-image text. An optimized description can triple the reach of an identical pin with a generic caption.
+      </p>
+      <p>
+        Each pin allows up to 500 characters in the description, but the first 50 to 75 are what shows in the feed before the "...more" cutoff. That's where the hook lives.
+      </p>
+
+      <h2>The structure Pinterest rewards</h2>
+      <ol>
+        <li><strong>Opening line with primary keyword:</strong> "Small living room decor ideas without renovations."</li>
+        <li><strong>Context and benefit:</strong> 2-3 sentences that expand on the topic with natural secondary keywords.</li>
+        <li><strong>Soft CTA:</strong> "Save this pin", "See the full guide", "Try these ideas at home".</li>
+        <li><strong>Relevant hashtags:</strong> 2 to 4, at the end, space-separated.</li>
+      </ol>
+
+      <h2>The 500-character cap and why nobody should use all of it</h2>
+      <p>
+        You have 500 characters but the sweet spot is 150 to 300. Beyond that the reader checks out and the algorithm doesn't reward repetition. Three well-built sentences with natural keywords beat a paragraph stuffed with forced terms.
+      </p>
+
+      <h2>How to find real Pinterest keywords</h2>
+      <p>
+        Pinterest has its own search bar with autocomplete, and that's pure gold. Type your topic into the search bar and watch the suggestions: those are the actual searches. The "More ideas" block under each pin also shows related terms people are searching right now.
+      </p>
+      <ul>
+        <li>Search your topic on Pinterest from a clean session (incognito mode).</li>
+        <li>Note the 5-10 autocomplete suggestions.</li>
+        <li>Look at the colored "guided search tiles" at the top: each one is a keyword Pinterest considers relevant.</li>
+        <li>Review top-ranking pins in the niche and their descriptions.</li>
+      </ul>
+
+      <h2>Hashtags on Pinterest: the rule of 4</h2>
+      <p>
+        Pinterest had weird years with hashtags: sometimes rewarding, sometimes penalizing them. Current policy is clearly "use sparingly". 2 to 4 niche-specific hashtags work. 10 generic hashtags (#love #beautiful #inspiration) signal spam.
+      </p>
+
+      <h2>The CTA that works on Pinterest</h2>
+      <p>
+        Pinterest is not the place for aggressive CTAs. People are in discovery mode, not immediate-purchase mode. What works:
+      </p>
+      <ul>
+        <li>"Save this pin for later" — high save rate, which is the metric Pinterest rewards.</li>
+        <li>"See the full guide" — pushes click to the site.</li>
+        <li>"Try this recipe this week" — actionable and time-bound.</li>
+        <li>"Get inspired for your next project" — soft, ideal for visual niches.</li>
+      </ul>
+
+      <h2>Mistakes that kill reach</h2>
+      <ul>
+        <li><strong>Keyword stuffing:</strong> "decor decor living decor small decor". Pinterest detects and penalizes.</li>
+        <li><strong>Generic descriptions:</strong> "Check out this beautiful idea" — tells the algorithm nothing.</li>
+        <li><strong>Copy-paste the same description across all pins:</strong> Pinterest values diversity.</li>
+        <li><strong>Skipping the pin title:</strong> the title is as important as the description and many leave it blank.</li>
+        <li><strong>Broken links or generic destinations:</strong> Pinterest measures bounce rate and downgrades pins with bad destinations.</li>
+      </ul>
+
+      <h2>Idle pin vs fresh pin: when Pinterest decides to show it</h2>
+      <p>
+        A new pin enters a 24-48 hour test phase where Pinterest shows it to a small audience to measure engagement. If the first 50-100 impressions generate saves, clicks or close-ups, the pin scales. Otherwise it gets buried. The description is one of the factors that most moves that first test.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many characters?</summary><p>Sweet spot: 150-300. Max is 500 but more becomes counterproductive.</p></details>
+      <details><summary>Hashtags?</summary><p>2 to 4 relevant and niche-specific. More than 5 reads as spam.</p></details>
+      <details><summary>How do I find keywords?</summary><p>Use Pinterest autocomplete in incognito mode and the guided search tiles.</p></details>
+      <details><summary>How often should I post?</summary><p>Pinterest rewards consistency. 5-15 pins per week is healthy, better than 50 one day and nothing for a month.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pp-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .pp-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; white-space: pre-wrap; }
+  .pp-card:hover { border-color: var(--accent); }
+  .pp-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const topic = document.getElementById('pp-topic') as HTMLInputElement;
+  const kw = document.getElementById('pp-keywords') as HTMLInputElement;
+  const ben = document.getElementById('pp-benefit') as HTMLInputElement;
+  const cta = document.getElementById('pp-cta') as HTMLInputElement;
+  const gen = document.getElementById('pp-gen') as HTMLButtonElement;
+  const out = document.getElementById('pp-out')!;
+
+  function generate() {
+    const T = topic.value.trim() || 'Creative ideas';
+    const K = kw.value.trim().split(',').map(s => s.trim()).filter(Boolean);
+    const B = ben.value.trim() || 'Quick results';
+    const C = cta.value.trim() || 'Save this pin';
+    const tags = K.slice(0, 3).map(k => '#' + k.replace(/\s+/g, '')).join(' ');
+
+    const v1 = `${T}. ${B}. Practical ideas with ${K[0] || 'tips'} and ${K[1] || 'advice'}. ${C}. ${tags}`;
+    const v2 = `Discover ${T.toLowerCase()}. ${B} and apply it today. Inspiration on ${K[0] || 'the topic'} for real results. ${C} ↓ ${tags}`;
+    const v3 = `${T} | Step-by-step guide. ${B}. Perfect if you want ${K[0] || 'solutions'} without complications. ${C}. ${tags}`;
+    const v4 = `Tried everything and nothing works? ${T} with a different approach. ${B}. ${C} to keep it handy. ${tags}`;
+
+    out.innerHTML = '';
+    [v1, v2, v3, v4].forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'pp-card';
+      el.title = 'Click to copy';
+      const len = b.length;
+      el.innerHTML = b + `<div class="pp-meta">v${i+1} · ${len}/500 characters</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

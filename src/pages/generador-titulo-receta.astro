@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de título de receta gratis | Genfy';
+const description = 'Generá títulos atractivos para recetas de blog, libro o redes. Combiná ingrediente principal y técnica y obtené 20 títulos optimizados para SEO.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno al título de una receta?', acceptedAnswer: { '@type': 'Answer', text: 'Que mencione el plato principal, la técnica clave y un atributo deseable (rápido, jugoso, cremoso, sin gluten). Eso ayuda al SEO y al click-through en Pinterest e Instagram.' } },
+    { '@type': 'Question', name: '¿Cuántas palabras debería tener?', acceptedAnswer: { '@type': 'Answer', text: 'Entre 5 y 9 palabras. Lo suficiente para describir el plato y diferenciarlo, sin pasar el límite de visualización en Google.' } },
+    { '@type': 'Question', name: '¿Conviene incluir tiempo de preparación?', acceptedAnswer: { '@type': 'Answer', text: '"En 15 minutos" o "Express" suben el CTR significativamente cuando el plato lo permite.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Cocina" title="Generador de título de receta"
+    intro="Combiná ingrediente, técnica y atributo y obtené 20 títulos atractivos para recetas de blog, libro o redes. Optimizados para SEO y click-through.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Plato o ingrediente principal</label>
+      <input id="bn-kw" type="text" placeholder="pollo, brócoli, ñoquis..." value="pollo" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="quick">Rápido / express</option>
+        <option value="cozy">Cálido / hogareño</option>
+        <option value="healthy">Saludable / liviano</option>
+        <option value="restaurant">Estilo restaurante</option>
+        <option value="weeknight">Receta de cena</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 títulos</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo escribir un título de receta que rankea</h2>
+      <p>
+        Un buen título de receta hace tres cosas: dice qué es, comunica un beneficio claro
+        (rápido, fácil, saludable, mejor que el restaurante) y agrega un calificativo
+        sensorial (jugoso, cremoso, crocante). En SEO, los buscadores valoran títulos
+        descriptivos; en Pinterest, los títulos con beneficios concretos duplican el CTR.
+      </p>
+      <ol>
+        <li><strong>Plato + técnica + beneficio.</strong> "Pollo al horno crocante en 30 minutos" funciona; "Pollo delicioso" no.</li>
+        <li><strong>Adjetivos sensoriales.</strong> Jugoso, cremoso, crocante, espumoso. Activan el apetito.</li>
+        <li><strong>Tiempo o dificultad.</strong> "En 15 minutos", "Una sola olla", "Sin horno".</li>
+        <li><strong>Restricción si aplica.</strong> "Sin gluten", "Vegano", "Bajo en sodio".</li>
+        <li><strong>Sin clickbait.</strong> Si decís "la mejor receta de", tu contenido tiene que cumplirlo.</li>
+      </ol>
+
+      <h2>Estilos de títulos por plataforma</h2>
+      <ul>
+        <li><strong>Blog SEO:</strong> "Pollo al limón al horno con papas crocantes". Largo y descriptivo.</li>
+        <li><strong>Pinterest:</strong> "El secreto del pollo más jugoso (en 30 min)". Promesa + tiempo.</li>
+        <li><strong>Instagram / TikTok:</strong> "Pollo cremoso 5 ingredientes". Corto y específico.</li>
+        <li><strong>Libro de cocina:</strong> "Pollo al limón con tomillo". Sobrio, sin clickbait.</li>
+        <li><strong>Newsletter:</strong> "Cena de domingo: pollo al horno con papas". Contextual.</li>
+      </ul>
+
+      <h2>Errores frecuentes</h2>
+      <p>
+        El error más común es ser demasiado genérico: "Pollo al horno" tiene millones de
+        resultados. Diferenciate con técnica, ingrediente secundario o tiempo. Otro error es
+        prometer más de lo que entregás: "el mejor pollo del mundo" se castiga con tasas de
+        rebote altas. Y evitá adjetivos vacíos como "delicioso", "espectacular" o "increíble":
+        no aportan información.
+      </p>
+
+      <h2>Optimización SEO</h2>
+      <ol>
+        <li>Investigá keyword en Google Trends y Pinterest.</li>
+        <li>Mirá cómo titulan las primeras 5 recetas que rankean.</li>
+        <li>Diferenciate por ángulo: tiempo, técnica, restricción, presentación.</li>
+        <li>Probá variantes en redes antes de publicar en el blog.</li>
+        <li>Medí CTR a 30 días y ajustá.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno a un título de receta?</summary><p>Plato + técnica + beneficio. Adjetivos sensoriales y tiempo de preparación cuando aplica.</p></details>
+      <details><summary>¿Cuántas palabras?</summary><p>Entre 5 y 9. Suficiente para describir, sin pasar el límite de Google.</p></details>
+      <details><summary>¿Incluir tiempo de preparación?</summary><p>"En 15 minutos" o "Express" suben el CTR significativamente.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 500; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const QUICK = ['en 15 minutos', 'en 20 minutos', 'express', 'rápido', 'una sola olla', 'sin horno', 'al microondas', 'en 30 minutos'];
+  const TECH = ['al horno', 'a la sartén', 'a la plancha', 'al wok', 'a fuego lento', 'al vapor', 'salteado', 'al vacío', 'asado'];
+  const ADJ = ['jugoso', 'cremoso', 'crocante', 'tierno', 'dorado', 'sabroso', 'humeante', 'caramelizado', 'glaseado'];
+  const COZY_PRE = ['Receta de la abuela', 'Casero', 'Sencillo', 'Hogareño', 'Como en casa', 'Tradicional'];
+  const HEALTH = ['saludable', 'bajo en grasa', 'sin gluten', 'liviano', 'alto en proteína', 'vegano', 'fit'];
+  const REST = ['estilo restaurante', 'estilo bistró', 'gourmet', 'al estilo italiano', 'al estilo francés', 'tipo brasería'];
+  const WK = ['de cena', 'de domingo', 'para la semana', 'para el almuerzo', 'fácil de preparar', 'sin esfuerzo'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const w = (kw.value.trim() || 'pollo').toLowerCase();
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'quick') name = cap(w) + ' ' + pick(TECH) + ' ' + pick(QUICK);
+      else if (s === 'cozy') name = pick(COZY_PRE) + ': ' + w + ' ' + pick(TECH);
+      else if (s === 'healthy') name = cap(w) + ' ' + pick(HEALTH) + ' ' + pick(TECH);
+      else if (s === 'restaurant') name = cap(w) + ' ' + pick(REST) + ', ' + pick(ADJ);
+      else if (s === 'weeknight') name = cap(w) + ' ' + pick(TECH) + ' ' + pick(WK);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

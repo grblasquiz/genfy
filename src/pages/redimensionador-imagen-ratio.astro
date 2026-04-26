@@ -1,0 +1,136 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Redimensionador de imagen por ratio | Genfy';
+const description = 'Calculá nuevas dimensiones de imagen manteniendo el aspect ratio. Ideal para resize antes de subir o exportar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué importa mantener el ratio?', acceptedAnswer: { '@type': 'Answer', text: 'Si redimensionás sin respetar el ratio, la imagen se estira o aplasta. Mantener el ratio preserva las proporciones originales del contenido.' } },
+    { '@type': 'Question', name: '¿Esta tool achica el archivo?', acceptedAnswer: { '@type': 'Answer', text: 'No, sólo calcula las dimensiones. Para achicar el archivo necesitás un compresor o editor de imágenes.' } },
+    { '@type': 'Question', name: '¿Cuál es el tamaño ideal para web?', acceptedAnswer: { '@type': 'Answer', text: 'Depende del uso. Hero: 1920px de ancho. Card thumbnail: 600-800px. Avatar: 200x200. Responsive con srcset usa varios tamaños.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Redimensionador de imagen por ratio"
+    intro="Ingresá las dimensiones originales y un nuevo ancho o alto. Calculamos las dimensiones manteniendo el ratio.">
+
+    <div slot="tool" class="rs">
+      <div class="rs-grid">
+        <div>
+          <label for="rs-ow">Ancho original (px)</label>
+          <input id="rs-ow" type="number" value="1920" />
+        </div>
+        <div>
+          <label for="rs-oh">Alto original (px)</label>
+          <input id="rs-oh" type="number" value="1080" />
+        </div>
+        <div>
+          <label for="rs-mode">Lado a fijar</label>
+          <select id="rs-mode"><option value="w">Ancho nuevo</option><option value="h">Alto nuevo</option></select>
+        </div>
+        <div>
+          <label for="rs-val">Valor nuevo (px)</label>
+          <input id="rs-val" type="number" value="800" />
+        </div>
+      </div>
+
+      <div class="rs-result" id="rs-result"></div>
+
+      <div class="rs-actions">
+        <button id="rs-cp" class="btn btn-ghost" type="button">Copiar dimensiones</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué redimensionar respetando el ratio</h2>
+      <p>El ratio es la huella visual de la imagen. Cualquier objeto, persona o composición fue capturado o creado con cierta proporción. Si la cambiás (por ejemplo, achicás el ancho pero mantenés el alto), el resultado se estira o aplasta y se ve mal. Mantener el ratio garantiza que la imagen escala sin distorsionarse.</p>
+
+      <h2>La fórmula</h2>
+      <p>Si fijás un nuevo ancho:</p>
+      <pre><code>nuevoAlto = nuevoAncho * (altoOriginal / anchoOriginal)</code></pre>
+      <p>Si fijás un nuevo alto:</p>
+      <pre><code>nuevoAncho = nuevoAlto * (anchoOriginal / altoOriginal)</code></pre>
+      <p>Es la misma operación que hace cualquier editor de imágenes cuando tenés activado "constrain proportions" o el candado de bloqueo.</p>
+
+      <h2>Tamaños recomendados para web</h2>
+      <ul>
+        <li><strong>Hero / banner</strong>: 1920×1080 (16:9) o 2560×1080 (ultrawide).</li>
+        <li><strong>Open Graph</strong>: 1200×630 fijo.</li>
+        <li><strong>Card thumbnail</strong>: 600-800 de ancho, alto según ratio (típicamente 16:9 o 4:3).</li>
+        <li><strong>Avatar</strong>: 200×200 mínimo, mejor 400×400 para retina.</li>
+        <li><strong>Logo</strong>: SVG si es vector, sino PNG transparente del tamaño máximo de uso.</li>
+      </ul>
+
+      <h2>Densidad de pantalla y retina</h2>
+      <p>Los displays modernos tienen densidad 2x o 3x. Si tu imagen va a renderizarse en un container de 400px en una retina, el archivo tiene que ser de al menos 800px de ancho (o 1200 para 3x) para verse nítido. La regla práctica: exportá al doble del tamaño de display final.</p>
+
+      <h2>srcset para responsive</h2>
+      <p>En vez de servir una sola imagen gigante, lo correcto es generar varios tamaños y dejar que el browser elija. La sintaxis es así:</p>
+      <pre><code>&lt;img src="hero-800.jpg"
+     srcset="hero-400.jpg 400w,
+             hero-800.jpg 800w,
+             hero-1600.jpg 1600w"
+     sizes="(max-width: 600px) 100vw, 800px"&gt;</code></pre>
+      <p>El browser elige el tamaño según viewport y densidad. Reduce ancho de banda y mejora performance.</p>
+
+      <h2>Compresión</h2>
+      <p>Redimensionar reduce los píxeles, pero la compresión reduce el peso del archivo. Idealmente hacés ambas cosas: redimensionar al tamaño correcto, después comprimir. Para JPG, calidad 75-85 es el sweet spot. Para PNG, herramientas como TinyPNG bajan el peso 50% sin pérdida visible. WebP y AVIF son los formatos modernos: mismo calidad con archivos 30-50% más livianos que JPG.</p>
+
+      <h2>Errores comunes</h2>
+      <ul>
+        <li><strong>Subir la imagen original</strong>: una foto de 4000×3000 mostrada en un thumbnail de 300px gasta ancho de banda inútil.</li>
+        <li><strong>Estirar para llenar</strong>: si el ratio del container y el de la imagen no coinciden, mejor usar object-fit: cover o contain.</li>
+        <li><strong>No cuidar la versión retina</strong>: imágenes que se ven nítidas en monitor común se ven borrosas en retina si no son al doble.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Por qué mantener el ratio?</summary><p>Para no distorsionar la imagen. Sin ratio, se estira o aplasta.</p></details>
+      <details><summary>¿Achica el archivo?</summary><p>No. Sólo calcula dimensiones. Para peso menor, usá un compresor.</p></details>
+      <details><summary>¿Tamaño ideal para web?</summary><p>Depende del uso. Para responsive, generá varias versiones y usá srcset.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .rs-actions { display: flex; gap: 0.5rem; }
+  .rs-result { padding: 1.5rem; background: var(--bg-inset); border-radius: var(--radius); font-family: var(--font-mono); font-size: 1.125rem; text-align: center; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rs-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const ow = document.getElementById('rs-ow') as HTMLInputElement;
+  const oh = document.getElementById('rs-oh') as HTMLInputElement;
+  const mode = document.getElementById('rs-mode') as HTMLSelectElement;
+  const val = document.getElementById('rs-val') as HTMLInputElement;
+  const result = document.getElementById('rs-result') as HTMLElement;
+  const cp = document.getElementById('rs-cp') as HTMLButtonElement;
+
+  function compute() {
+    const w0 = +ow.value, h0 = +oh.value, v = +val.value;
+    if (mode.value === 'w') {
+      const h = (v * h0) / w0;
+      return { w: v, h: +h.toFixed(2) };
+    } else {
+      const w = (v * w0) / h0;
+      return { w: +w.toFixed(2), h: v };
+    }
+  }
+
+  function render() {
+    const { w, h } = compute();
+    result.textContent = `${w} × ${h} px`;
+  }
+  [ow, oh, mode, val].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    const { w, h } = compute();
+    await navigator.clipboard.writeText(`${w}x${h}`);
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar dimensiones', 1500);
+  });
+  render();
+</script>

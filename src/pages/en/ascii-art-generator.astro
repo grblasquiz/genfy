@@ -1,0 +1,246 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free ASCII Art Generator | Genfy';
+const description = 'Turn any text into ASCII art instantly with multiple fonts. Perfect for README banners, code comments, terminal welcome screens and signatures.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is ASCII art?', acceptedAnswer: { '@type': 'Answer', text: 'A graphic design technique that uses the 95 printable characters of the ASCII standard to form images and large letters. It started in the 1960s with teletypes and is still used in terminals and READMEs.' } },
+    { '@type': 'Question', name: 'Where is it used today?', acceptedAnswer: { '@type': 'Answer', text: 'In open source project banners, CLI welcome screens, plain-text email signatures, and code comments that separate large sections.' } },
+    { '@type': 'Question', name: 'Why does it look broken in some places?', acceptedAnswer: { '@type': 'Answer', text: 'ASCII art needs a monospaced font (every character the same width). In proportional fonts like Arial, each letter shifts and the drawing breaks.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text" title="ASCII Art Generator"
+    intro="Turn any text into large letters made of characters. Choose from several fonts and copy the result into your README, terminal or comment.">
+
+    <div slot="tool" class="aa">
+      <div class="aa-row">
+        <div>
+          <label for="aa-text">Text</label>
+          <input id="aa-text" type="text" maxlength="20" value="HELLO" />
+        </div>
+        <div>
+          <label for="aa-font">Font</label>
+          <select id="aa-font">
+            <option value="block">Block</option>
+            <option value="banner">Banner</option>
+            <option value="small">Small</option>
+          </select>
+        </div>
+      </div>
+      <button id="aa-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="aa-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="aa-out" rows="12" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.9rem; white-space: pre;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What ASCII art is and why it survives</h2>
+      <p>
+        ASCII art uses keyboard characters to form drawings and large typography. It started as a pragmatic solution on 1960s teletypes when graphics weren't an option: if you wanted a prominent header, you built it from asterisks. Sixty years later it's still everywhere — in every GitHub README, in the welcome banners of projects like Docker or Kubernetes when you launch the CLI, and in plain-text email signatures of developers who prefer not to deal with HTML.
+      </p>
+
+      <h2>Real use cases in 2026</h2>
+      <ul>
+        <li><strong>Open source READMEs.</strong> A logo in ASCII at the top of the file gives the project personality and renders identically on GitHub, GitLab, Bitbucket or a local git log.</li>
+        <li><strong>CLI welcome banners.</strong> The first time someone runs your tool, seeing the project name big creates instant identity.</li>
+        <li><strong>Section dividers in code.</strong> Marking large sections with an ASCII heading helps you scan long files without opening a symbol explorer.</li>
+        <li><strong>Slack, IRC, forums.</strong> Anywhere rich-text formatting is awkward, ASCII art conveys hierarchy without images.</li>
+        <li><strong>Memorable error messages.</strong> A big ASCII banner makes a critical failure impossible to miss in logs.</li>
+      </ul>
+
+      <h2>Monospaced fonts: rule number one</h2>
+      <p>
+        ASCII art only works when every character takes the exact same horizontal space. That property is called monospaced or fixed-width. Examples: JetBrains Mono, Fira Code, Menlo, Consolas, Courier. If you copy an ASCII banner and paste it into Word with Calibri, everything falls apart because M is wider than i. Before pasting your art anywhere, confirm the destination renders with a mono font.
+      </p>
+
+      <h2>Choosing the right size</h2>
+      <p>
+        Bigger isn't better. A 12-line tall banner in a README pushes the actual content below the fold, and visitors leave before reading the description. Practical rule: the ASCII shouldn't take more than a third of a typical 1080p screen, which is roughly 6 to 8 lines. For terminal output, 4 to 6 lines is the sweet spot.
+      </p>
+
+      <h2>Encoding compatibility</h2>
+      <p>
+        Pure ASCII uses only 128 characters and renders correctly on any system built since 1963. If your banner uses extended box-drawing characters from Unicode or CP437, it will look great on modern systems but may break on legacy terminals or emails forced into strict ASCII encoding. For maximum portability, stick to the 95 basic printable characters.
+      </p>
+
+      <h2>Presentation tips</h2>
+      <ul>
+        <li>Center the banner where context allows; don't pin it to the left margin.</li>
+        <li>Leave a blank line above and below so it breathes visually.</li>
+        <li>If the ASCII is wide, wrap it in a markdown code block so the reader's word-wrap doesn't break it.</li>
+        <li>Don't mix two ASCII fonts in the same block — it looks inconsistent.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is ASCII art?</summary><p>A graphic technique using the 95 printable ASCII characters to form images and large letters. It dates back to the 1960s.</p></details>
+      <details><summary>Where is it used today?</summary><p>In READMEs, CLI banners, plain-text signatures, and section-divider comments in source code.</p></details>
+      <details><summary>Why does it look broken in some places?</summary><p>It needs a monospaced font. In proportional fonts characters have different widths and the drawing breaks.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .aa-row { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .aa-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const FONTS: Record<string, Record<string, string[]>> = {
+    block: {
+      A:[' █████ ','██   ██','███████','██   ██','██   ██'],
+      B:['██████ ','██   ██','██████ ','██   ██','██████ '],
+      C:[' ██████','██     ','██     ','██     ',' ██████'],
+      D:['██████ ','██   ██','██   ██','██   ██','██████ '],
+      E:['███████','██     ','█████  ','██     ','███████'],
+      F:['███████','██     ','█████  ','██     ','██     '],
+      G:[' ██████','██     ','██  ███','██   ██',' ██████'],
+      H:['██   ██','██   ██','███████','██   ██','██   ██'],
+      I:['██','██','██','██','██'],
+      J:['     ██','     ██','     ██','██   ██',' █████ '],
+      K:['██  ██ ','██ ██  ','████   ','██ ██  ','██  ██ '],
+      L:['██     ','██     ','██     ','██     ','███████'],
+      M:['██   ██','███ ███','███████','██ █ ██','██   ██'],
+      N:['███   █','████  █','██ ██ █','██  ███','██   ██'],
+      O:[' █████ ','██   ██','██   ██','██   ██',' █████ '],
+      P:['██████ ','██   ██','██████ ','██     ','██     '],
+      Q:[' █████ ','██   ██','██ █ ██','██  ██ ',' ███ ██'],
+      R:['██████ ','██   ██','██████ ','██  ██ ','██   ██'],
+      S:[' ██████','██     ',' █████ ','     ██','██████ '],
+      T:['███████','   ██  ','   ██  ','   ██  ','   ██  '],
+      U:['██   ██','██   ██','██   ██','██   ██',' █████ '],
+      V:['██   ██','██   ██','██   ██',' ██ ██ ','  ███  '],
+      W:['██   ██','██   ██','██ █ ██','███████','██   ██'],
+      X:['██   ██',' ██ ██ ','  ███  ',' ██ ██ ','██   ██'],
+      Y:['██   ██',' ██ ██ ','  ███  ','   █   ','   █   '],
+      Z:['███████','    ██ ','   ██  ','  ██   ','███████'],
+      ' ':['   ','   ','   ','   ','   '],
+      '0':[' █████ ','██   ██','██   ██','██   ██',' █████ '],
+      '1':['  ██  ',' ███  ','  ██  ','  ██  ','██████'],
+      '2':[' █████ ','██   ██','    ██ ','  ██   ','███████'],
+      '3':['██████ ','     ██',' █████ ','     ██','██████ '],
+      '4':['██   ██','██   ██','███████','     ██','     ██'],
+      '5':['███████','██     ','██████ ','     ██','██████ '],
+      '6':[' █████ ','██     ','██████ ','██   ██',' █████ '],
+      '7':['███████','     ██','    ██ ','   ██  ','  ██   '],
+      '8':[' █████ ','██   ██',' █████ ','██   ██',' █████ '],
+      '9':[' █████ ','██   ██',' ██████','     ██',' █████ '],
+    },
+    banner:{
+      A:['  #  ',' # # ','#####','#   #','#   #'],
+      B:['#### ','#   #','#### ','#   #','#### '],
+      C:[' ####','#    ','#    ','#    ',' ####'],
+      D:['#### ','#   #','#   #','#   #','#### '],
+      E:['#####','#    ','###  ','#    ','#####'],
+      F:['#####','#    ','###  ','#    ','#    '],
+      G:[' ####','#    ','# ###','#   #',' ### '],
+      H:['#   #','#   #','#####','#   #','#   #'],
+      I:['#####','  #  ','  #  ','  #  ','#####'],
+      J:['    #','    #','    #','#   #',' ### '],
+      K:['#   #','#  # ','##   ','#  # ','#   #'],
+      L:['#    ','#    ','#    ','#    ','#####'],
+      M:['#   #','## ##','# # #','#   #','#   #'],
+      N:['#   #','##  #','# # #','#  ##','#   #'],
+      O:[' ### ','#   #','#   #','#   #',' ### '],
+      P:['#### ','#   #','#### ','#    ','#    '],
+      Q:[' ### ','#   #','# # #','#  # ',' ## #'],
+      R:['#### ','#   #','#### ','#  # ','#   #'],
+      S:[' ####','#    ',' ### ','    #','#### '],
+      T:['#####','  #  ','  #  ','  #  ','  #  '],
+      U:['#   #','#   #','#   #','#   #',' ### '],
+      V:['#   #','#   #','#   #',' # # ','  #  '],
+      W:['#   #','#   #','# # #','## ##','#   #'],
+      X:['#   #',' # # ','  #  ',' # # ','#   #'],
+      Y:['#   #',' # # ','  #  ','  #  ','  #  '],
+      Z:['#####','   # ','  #  ',' #   ','#####'],
+      ' ':['  ','  ','  ','  ','  '],
+      '0':[' ### ','#   #','#   #','#   #',' ### '],
+      '1':['  #  ',' ##  ','  #  ','  #  ','#####'],
+      '2':[' ### ','#   #','   # ',' #   ','#####'],
+      '3':['#### ','    #',' ### ','    #','#### '],
+      '4':['#   #','#   #','#####','    #','    #'],
+      '5':['#####','#    ','#### ','    #','#### '],
+      '6':[' ### ','#    ','#### ','#   #',' ### '],
+      '7':['#####','    #','   # ','  #  ',' #   '],
+      '8':[' ### ','#   #',' ### ','#   #',' ### '],
+      '9':[' ### ','#   #',' ####','    #',' ### '],
+    },
+    small:{
+      A:[' _ ','/_\\','| |'],
+      B:['|_ ','|_)','|  '],
+      C:[' _','/ ','\\_'],
+      D:['_ ','| \\','|_/'],
+      E:['___','|_ ','|__'],
+      F:['___','|_ ','|  '],
+      G:[' _','/ ','\\_;'],
+      H:['| |','|_|','| |'],
+      I:['|','|','|'],
+      J:[' |',' |','_|'],
+      K:['| ','|/','|\\'],
+      L:['|  ','|  ','|__'],
+      M:['|\\/|','|  |','|  |'],
+      N:['|\\ |','| \\|','|  |'],
+      O:[' _ ','/ \\','\\_/'],
+      P:['_ ','|_)','|  '],
+      Q:[' _ ','/ \\','\\_X'],
+      R:['_ ','|_)','| \\'],
+      S:[' _','(_',' _)'],
+      T:['___',' | ',' | '],
+      U:['| |','| |','\\_/'],
+      V:['\\ /','\\ /',' V '],
+      W:['|  |','|/\\|','/  \\'],
+      X:['\\ /',' X ','/ \\'],
+      Y:['\\ /',' V ',' | '],
+      Z:['___',' / ','/__'],
+      ' ':['  ','  ','  '],
+      '0':[' _ ','/ \\','\\_/'],
+      '1':[' /|','  |','  |'],
+      '2':[' _ ',' _)','/__'],
+      '3':[' _ ',' _)',' _)'],
+      '4':['| |','|_|','  |'],
+      '5':[' _ ','|_ ',' _)'],
+      '6':[' _ ','|_ ','|_)'],
+      '7':['___','  /',' / '],
+      '8':[' _ ','(_)','(_)'],
+      '9':[' _ ','(_|','  |'],
+    },
+  };
+
+  const textEl = document.getElementById('aa-text') as HTMLInputElement;
+  const fontEl = document.getElementById('aa-font') as HTMLSelectElement;
+  const out = document.getElementById('aa-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('aa-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('aa-copy') as HTMLButtonElement;
+
+  function generate() {
+    const txt = (textEl.value || '').toUpperCase().slice(0, 20);
+    const font = FONTS[fontEl.value];
+    if (!font) { out.value = ''; return; }
+    const rows = (font['A'] || []).length;
+    const lines: string[] = [];
+    for (let r = 0; r < rows; r++) {
+      let line = '';
+      for (const ch of txt) {
+        const glyph = font[ch] || font[' '];
+        line += (glyph[r] || '') + '  ';
+      }
+      lines.push(line);
+    }
+    out.value = lines.join('\n');
+  }
+
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent;
+    copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>

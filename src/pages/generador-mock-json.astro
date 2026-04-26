@@ -1,0 +1,203 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de mock JSON response | Genfy';
+const description = 'Generá respuestas JSON de ejemplo para mockear APIs durante desarrollo y testing. Listas, objetos anidados, paginación.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve un mock JSON?', acceptedAnswer: { '@type': 'Answer', text: 'Para desarrollar el frontend o tests sin depender de un backend real. Permite trabajar en paralelo y simular casos de error.' } },
+    { '@type': 'Question', name: '¿Cómo servir el mock?', acceptedAnswer: { '@type': 'Answer', text: 'Con json-server, MSW (Mock Service Worker), Postman mock servers o un archivo estático servido por Vite/Webpack.' } },
+    { '@type': 'Question', name: '¿Mock o stub?', acceptedAnswer: { '@type': 'Answer', text: 'Un stub devuelve datos fijos. Un mock verifica además que se llamó como esperabas. En tests unitarios se usan stubs; los mocks suelen ser para verificar interacciones.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech / Dev"
+    title="Generador de mock JSON response"
+    intro="Generá respuestas JSON realistas para mockear APIs: listas, objetos anidados, paginación y campos típicos."
+  >
+    <div slot="tool" class="mock-tool">
+      <div class="mock-grid">
+        <div>
+          <label for="mock-type">Tipo de respuesta</label>
+          <select id="mock-type">
+            <option value="list">Lista paginada</option>
+            <option value="single">Objeto único</option>
+            <option value="error">Error 4xx</option>
+            <option value="created">201 Created</option>
+          </select>
+        </div>
+        <div>
+          <label for="mock-entity">Entidad</label>
+          <select id="mock-entity">
+            <option value="user">user</option>
+            <option value="product">product</option>
+            <option value="order">order</option>
+            <option value="post">post</option>
+          </select>
+        </div>
+        <div>
+          <label for="mock-count">Cantidad (lista)</label>
+          <input id="mock-count" type="number" min="1" max="50" value="3" />
+        </div>
+      </div>
+
+      <div class="mock-actions">
+        <button id="mock-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="mock-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+
+      <textarea id="mock-out" class="mono" rows="14" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>¿Qué es un mock JSON y por qué importa?</h2>
+      <p>
+        Un mock JSON es una respuesta simulada que imita lo que devolvería una API real. Es la
+        diferencia entre estar bloqueado esperando a que el backend implemente el endpoint o poder
+        avanzar con el frontend hoy. También sirve para tests automatizados estables: los mocks
+        no fallan por timeouts ni por la base de datos.
+      </p>
+
+      <h2>Estructura de una respuesta lista</h2>
+      <p>
+        La forma más común para colecciones es <code>&lcub;"data": [...], "meta": &lcub;...&rcub;&rcub;</code>.
+        El array <code>data</code> contiene los items; <code>meta</code> trae paginación, total y
+        timestamps. Esta separación deja espacio para crecer (links HATEOAS, errores parciales)
+        sin romper a los clientes existentes.
+      </p>
+
+      <h2>Paginación, total y links</h2>
+      <p>
+        Tres campos que siempre conviene incluir: <code>page</code>, <code>limit</code> y
+        <code>total</code>. Con eso, el cliente sabe cuántas páginas vienen y puede pintar un
+        paginador. Si tu API es cursor-based, devolvé <code>next_cursor</code> en lugar de página.
+      </p>
+
+      <h2>Errores con forma estándar</h2>
+      <p>
+        El estándar más usado es Problem Details (RFC 7807):
+        <code>&lcub;"type": "...", "title": "...", "status": 422, "detail": "...", "errors": [...]&rcub;</code>.
+        Tener una forma única para todos los errores simplifica el manejo en el cliente: una sola
+        función parsea cualquier respuesta de error.
+      </p>
+
+      <h2>Servir el mock</h2>
+      <ul>
+        <li><strong>json-server:</strong> levanta un REST completo a partir de un JSON. Útil para prototipos.</li>
+        <li><strong>MSW (Mock Service Worker):</strong> intercepta fetch en el browser. Ideal para frontend.</li>
+        <li><strong>Postman mock servers:</strong> hosted, comparte URL con el equipo.</li>
+        <li><strong>Vite/webpack dev server:</strong> archivos en <code>/public</code> con respuestas estáticas.</li>
+      </ul>
+
+      <h2>Datos realistas</h2>
+      <p>
+        Evitá <code>"foo"</code> y <code>"bar"</code>. Usá nombres, emails y direcciones plausibles
+        (Faker, Mockaroo). El frontend descubre bugs cuando los strings son largos, los números
+        negativos o los timestamps cruzan zonas horarias. Datos planos esconden esos casos.
+      </p>
+
+      <h2>Mock vs contract testing</h2>
+      <p>
+        Los mocks pueden divergir de la API real si nadie los actualiza. Para evitarlo, usá
+        contract testing (Pact, OpenAPI schema validation): el mock se valida contra el contrato y
+        el backend también. Si alguien rompe el contrato, los tests fallan.
+      </p>
+
+      <h2>Casos de error que olvidamos</h2>
+      <p>
+        El mock más común es 200 OK feliz. Pero el frontend también necesita probar 401, 403, 422
+        con errores de validación, 429 con rate limit, 500 con error genérico y 503 con
+        mantenimiento. Tener mocks para cada caso te obliga a manejarlos.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve un mock JSON?</summary><p>Para desarrollar frontend o tests sin depender del backend. Permite trabajar en paralelo y simular casos de error.</p></details>
+      <details><summary>¿Cómo servir el mock?</summary><p>Con json-server, MSW, Postman mock servers o archivos estáticos en el dev server.</p></details>
+      <details><summary>¿Mock o stub?</summary><p>Stub devuelve datos fijos; mock además verifica las interacciones esperadas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .mock-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .mock-grid { grid-template-columns: 1fr; } }
+  .mock-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const type = document.getElementById('mock-type') as HTMLSelectElement;
+  const entity = document.getElementById('mock-entity') as HTMLSelectElement;
+  const count = document.getElementById('mock-count') as HTMLInputElement;
+  const out = document.getElementById('mock-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('mock-gen') as HTMLButtonElement;
+  const copy = document.getElementById('mock-copy') as HTMLButtonElement;
+
+  const firstNames = ['Lucia', 'Mateo', 'Sofia', 'Bruno', 'Camila', 'Joaquin', 'Valentina', 'Tomas'];
+  const lastNames = ['Garcia', 'Lopez', 'Rodriguez', 'Martinez', 'Fernandez', 'Diaz', 'Sosa', 'Romero'];
+  const products = ['Notebook 14"', 'Mochila urbana', 'Auriculares BT', 'Lampara LED', 'Teclado mecanico', 'Monitor 27"'];
+
+  function rand<T>(arr: T[]): T { return arr[Math.floor(Math.random() * arr.length)]; }
+  function randInt(min: number, max: number) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+  function isoDate(daysAgo: number) { const d = new Date(); d.setDate(d.getDate() - daysAgo); return d.toISOString(); }
+  function uuid() { return crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2); }
+
+  function buildUser(i: number) {
+    const fn = rand(firstNames); const ln = rand(lastNames);
+    return { id: i, uuid: uuid(), name: `${fn} ${ln}`, email: `${fn.toLowerCase()}.${ln.toLowerCase()}@example.com`, role: rand(['admin', 'user', 'editor']), created_at: isoDate(randInt(1, 365)) };
+  }
+  function buildProduct(i: number) {
+    return { id: i, sku: `SKU-${1000 + i}`, name: rand(products), price: randInt(1000, 99999) / 100, stock: randInt(0, 200), category: rand(['electronics', 'home', 'office']) };
+  }
+  function buildOrder(i: number) {
+    return { id: i, order_number: `ORD-${10000 + i}`, status: rand(['pending', 'paid', 'shipped', 'delivered']), total: randInt(500, 50000) / 100, currency: 'USD', items_count: randInt(1, 8), created_at: isoDate(randInt(1, 60)) };
+  }
+  function buildPost(i: number) {
+    return { id: i, title: `Post number ${i}`, slug: `post-number-${i}`, excerpt: 'Short excerpt of the post content for preview.', author_id: randInt(1, 20), published_at: isoDate(randInt(1, 90)), tags: ['draft', 'tutorial', 'news'].slice(0, randInt(1, 3)) };
+  }
+
+  function buildOne(i: number) {
+    if (entity.value === 'user') return buildUser(i);
+    if (entity.value === 'product') return buildProduct(i);
+    if (entity.value === 'order') return buildOrder(i);
+    return buildPost(i);
+  }
+
+  function generate() {
+    const n = Math.min(50, Math.max(1, parseInt(count.value || '3', 10)));
+    let payload: any;
+    if (type.value === 'list') {
+      const data: any[] = [];
+      for (let i = 1; i <= n; i++) data.push(buildOne(i));
+      payload = { data, meta: { page: 1, limit: n, total: n * 3, has_more: true } };
+    } else if (type.value === 'single') {
+      payload = { data: buildOne(1) };
+    } else if (type.value === 'created') {
+      payload = { data: buildOne(1), meta: { created_at: new Date().toISOString() } };
+    } else {
+      payload = { type: 'about:blank', title: 'Validation failed', status: 422, detail: 'One or more fields are invalid.', errors: [{ field: 'email', message: 'must be a valid email' }, { field: 'name', message: 'is required' }] };
+    }
+    out.value = JSON.stringify(payload, null, 2);
+  }
+
+  gen.addEventListener('click', generate);
+  [type, entity, count].forEach(el => el.addEventListener('change', generate));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copiado';
+    setTimeout(() => { icon.textContent = 'Copiar'; }, 1400);
+  });
+  generate();
+</script>
+</content>
+</invoke>

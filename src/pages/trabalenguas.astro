@@ -1,0 +1,155 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de trabalenguas | Genfy';
+const description = 'Trabalenguas clásicos en español: cortos, medianos y largos. Para entrenar la dicción, calentar la voz o jugar en familia.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirven los trabalenguas?', acceptedAnswer: { '@type': 'Answer', text: 'Mejoran la dicción, calientan la voz antes de hablar en público, entretienen y son útiles en clases de fonética.' } },
+    { '@type': 'Question', name: '¿Hay trabalenguas para chicos?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Filtrá por "fácil" para los más cortos y conocidos.' } },
+    { '@type': 'Question', name: '¿Cómo entrenar?', acceptedAnswer: { '@type': 'Answer', text: 'Empezá lento y articulando cada sílaba. Aumentá la velocidad solo cuando ya sale sin trabarse.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión / Fun" title="Generador de trabalenguas"
+    intro="Trabalenguas clásicos del español. Probá decirlo tres veces seguidas sin trabarte.">
+
+    <div slot="tool" class="tt">
+      <div class="tt-card">
+        <p id="tt-text" class="tt-text">Tocá generar para empezar.</p>
+      </div>
+      <div class="tt-controls">
+        <label for="tt-cat">Dificultad</label>
+        <select id="tt-cat">
+          <option value="all">Todas</option>
+          <option value="facil">Fácil</option>
+          <option value="medio">Medio</option>
+          <option value="dificil">Difícil</option>
+        </select>
+      </div>
+      <button id="tt-gen" class="btn btn-primary" type="button">Otro trabalenguas</button>
+      <button id="tt-copy" class="btn btn-ghost" type="button">Copiar</button>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los trabalenguas funcionan</h2>
+      <p>
+        Un trabalenguas combina sonidos similares en posiciones difíciles para los músculos
+        de la boca. La <strong>p</strong>, la <strong>r</strong>, la <strong>tr</strong> y
+        la <strong>cl</strong> son las consonantes que más complican. Al repetirlos, el
+        cerebro entrena la coordinación entre lengua, labios y cuerdas vocales. Por eso
+        actores, locutores y oradores los usan como calentamiento antes de salir al
+        escenario.
+      </p>
+
+      <h2>Beneficios concretos</h2>
+      <ul>
+        <li><strong>Dicción:</strong> articular bien las consonantes en cualquier idioma.</li>
+        <li><strong>Velocidad:</strong> hablar más rápido sin perder claridad.</li>
+        <li><strong>Confianza:</strong> si podés con un trabalenguas, podés con una presentación.</li>
+        <li><strong>Memoria:</strong> aprender uno largo de memoria entrena la retención auditiva.</li>
+        <li><strong>Idiomas:</strong> un trabalenguas en otro idioma es de las mejores herramientas para mejorar pronunciación.</li>
+      </ul>
+
+      <h2>Cómo practicar bien</h2>
+      <ol>
+        <li><strong>Lento primero.</strong> Articulá cada sílaba como si enseñaras a un niño.</li>
+        <li><strong>Tres veces sin error.</strong> Solo cuando salgan tres lentas perfectas, acelerá.</li>
+        <li><strong>Mirate al espejo.</strong> Ver tu boca te ayuda a corregir movimiento de labios.</li>
+        <li><strong>Grabate.</strong> Escuchar tu propia voz revela errores que no notás en vivo.</li>
+        <li><strong>5 minutos por día.</strong> Mejor 5 minutos diarios que media hora una vez por semana.</li>
+      </ol>
+
+      <h2>Trabalenguas clásicos del español</h2>
+      <p>
+        "Tres tristes tigres" es probablemente el más famoso del idioma. Trabaja la
+        <strong>tr</strong> en posición inicial. "Pablito clavó un clavito" mezcla
+        <strong>p</strong>, <strong>cl</strong> y <strong>v</strong>. "Erre con erre
+        guitarra" es el rey de la <strong>r</strong> múltiple. "Ñame ñame ñame el ñandú"
+        entrena la <strong>ñ</strong>, sonido que solo existe en pocos idiomas.
+      </p>
+
+      <h2>Trabalenguas en aula</h2>
+      <p>
+        En primaria, son ejercicios fonéticos efectivos. Los chicos los aprenden de memoria
+        y compiten por decirlos rápido sin trabarse. Esto desarrolla pronunciación,
+        confianza al hablar en público y memoria auditiva. Para inglés como segunda
+        lengua: "She sells seashells by the seashore" es el equivalente, trabaja la
+        <strong>sh</strong> y la <strong>s</strong>.
+      </p>
+
+      <h2>Variantes para grupos</h2>
+      <p>
+        Cronómetro: cada jugador tiene 30 segundos para decir el trabalenguas tres veces
+        sin trabarse. Quien lo logra en menos tiempo gana. En ronda: todos lo dicen una
+        vez; el que se traba se sienta. El último de pie es el campeón. En familia: un
+        adulto y un niño compiten cabeza a cabeza, ajustando velocidad. Funciona mejor
+        cuando los adultos también se traban: enseña a perder con humor.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Sirven para inglés?</summary><p>Sí, mejoran cualquier idioma si los hacés en ese idioma.</p></details>
+      <details><summary>¿Cuántos saben los argentinos?</summary><p>La mayoría conoce 5-10 clásicos. Acá hay 30+.</p></details>
+      <details><summary>¿Lo recomiendan los logopedas?</summary><p>Sí, como herramienta de entrenamiento articulatorio.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tt-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; }
+  .tt-text { font-size: 1.125rem; line-height: 1.6; margin: 0; font-style: italic; }
+  .tt-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const TT: { cat: string; t: string }[] = [
+    { cat: "facil", t: "Tres tristes tigres tragaban trigo en un trigal." },
+    { cat: "facil", t: "Pablito clavó un clavito, ¿qué clavito clavó Pablito?" },
+    { cat: "facil", t: "Como poco coco como, poco coco compro." },
+    { cat: "facil", t: "El cielo está enladrillado, ¿quién lo desenladrillará? El desenladrillador que lo desenladrille buen desenladrillador será." },
+    { cat: "facil", t: "Erre con erre cigarro, erre con erre barril, rápido corren los carros cargados de azúcar al ferrocarril." },
+    { cat: "facil", t: "Mi mamá me mima, mi mamá me ama." },
+    { cat: "facil", t: "Si don Curro ahorra ahora, ahora ahorra don Curro." },
+    { cat: "medio", t: "El perro de San Roque no tiene rabo porque Ramón Ramírez se lo ha cortado." },
+    { cat: "medio", t: "Pancha plancha con cuatro planchas. ¿Con cuántas planchas plancha Pancha?" },
+    { cat: "medio", t: "Cuando cuentes cuentos, cuenta cuántos cuentos cuentas." },
+    { cat: "medio", t: "Yo tenía un dado de almidón y se me almidonó el dedo." },
+    { cat: "medio", t: "Compré pocas copas, pocas copas compré, como compré pocas copas, pocas copas pagué." },
+    { cat: "medio", t: "Ñame ñame ñame el ñandú, ñame ñame ñame el ñandú." },
+    { cat: "medio", t: "Treinta y tres tramos de troncos trozaron tres tristes trozadores de troncos." },
+    { cat: "dificil", t: "Otorrinolaringólogo, otorrinolaringólogo, otorrinolaringólogo." },
+    { cat: "dificil", t: "El otorrinolaringólogo de Parangaricutirimícuaro se quiere desotorrinolaringaparangaricutirimicuarizar." },
+    { cat: "dificil", t: "El que poca capa parda compra, poca capa parda paga; yo que poca capa parda compré, poca capa parda pagué." },
+    { cat: "dificil", t: "Si tu gusto gustara del gusto que mi gusto gusta, mi gusto también gustaría del gusto que tu gusto gusta." },
+    { cat: "dificil", t: "Pepe Pecas pica papas con un pico, con un pico pica papas Pepe Pecas." },
+    { cat: "dificil", t: "El arzobispo de Constantinopla se quiere desarzobispoconstantinopolitanizar." },
+    { cat: "dificil", t: "Si yo como como como, y tú comes como comes, ¿cómo comes como como? ¿Cómo como como comes?" }
+  ];
+
+  const text = document.getElementById('tt-text') as HTMLElement;
+  const cat = document.getElementById('tt-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('tt-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('tt-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? TT : TT.filter(s => s.cat === filter);
+    text.textContent = pick(pool).t;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(text.textContent || '');
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

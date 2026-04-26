@@ -1,0 +1,201 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de hook para TikTok gratis | Genfy';
+const description = 'Generá hooks para TikTok que retienen en los primeros 3 segundos. El factor que decide si el video escala o muere en el FYP.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuánto duran los primeros 3 segundos en TikTok?', acceptedAnswer: { '@type': 'Answer', text: 'Esos 3 segundos deciden si el video escala. La métrica clave es el watch-through rate inicial: si la gente abandona en el segundo 2, TikTok deja de mostrarlo.' } },
+    { '@type': 'Question', name: '¿Hook visual o textual?', acceptedAnswer: { '@type': 'Answer', text: 'Los dos. El visual (qué ven) capta atención inmediata. El textual sobreimpreso (qué leen) confirma la promesa. Hooks fuertes combinan ambos.' } },
+    { '@type': 'Question', name: '¿Conviene mostrar la cara desde el primer frame?', acceptedAnswer: { '@type': 'Answer', text: 'Sí en general. Cara humana en el primer frame sube watch time. Pero hooks de "objeto + texto" o "antes/después" pueden rendir igual de bien.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de hook para TikTok"
+    intro="Cargá tema y formato. Genfy te devuelve 6 hooks para los primeros 3 segundos del video, listos para grabar.">
+
+    <div slot="tool" class="tk">
+      <label for="tk-topic">Tema del video</label>
+      <input id="tk-topic" type="text" placeholder="Como ahorrar siendo freelancer..." value="Como ahorrar siendo freelancer" />
+
+      <label for="tk-niche" style="margin-top:1rem">Nicho</label>
+      <input id="tk-niche" type="text" placeholder="Finanzas personales..." value="Finanzas personales" />
+
+      <label for="tk-format" style="margin-top:1rem">Formato</label>
+      <select id="tk-format">
+        <option value="storytime">Storytime / experiencia personal</option>
+        <option value="howto">How-to / tutorial</option>
+        <option value="opinion">Opinion / take</option>
+        <option value="reaction">Reaccion / comparacion</option>
+      </select>
+
+      <button id="tk-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 6 hooks</button>
+
+      <div id="tk-out" class="tk-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los primeros 3 segundos son todo en TikTok</h2>
+      <p>
+        TikTok mide watch time como métrica principal del algoritmo. Si la gente abandona el video antes del segundo 3, el sistema interpreta que no es relevante y deja de mostrarlo. Eso significa que escribir un hook fuerte no es opcional: es la diferencia entre 200 vistas y 200.000.
+      </p>
+      <p>
+        El otro factor: TikTok testea cada video con una audiencia chica primero (200-1000 personas según tu cuenta). Si el watch-through rate de esa muestra es alto, escala. Si es bajo, queda enterrado. Todo se decide en las primeras horas y todo arranca con el hook.
+      </p>
+
+      <h2>Los 5 patrones de hook que más rinden</h2>
+      <ol>
+        <li><strong>Pregunta directa al pain point:</strong> "¿Sos freelancer y nunca llegás a fin de mes?"</li>
+        <li><strong>Afirmación contraintuitiva:</strong> "Ahorrar el 10% del sueldo no sirve."</li>
+        <li><strong>Confesión personal:</strong> "Esto fue lo más caro que aprendí en finanzas."</li>
+        <li><strong>Promesa específica:</strong> "Te muestro cómo pasé de $0 a invertir $500/mes."</li>
+        <li><strong>Open loop:</strong> "Hay un detalle que nadie te cuenta sobre invertir y es esto..."</li>
+      </ol>
+
+      <h2>Hook visual vs hook textual</h2>
+      <p>
+        Hook visual: lo primero que ven en el frame 0. Tu cara, un objeto, una situación inusual, un movimiento.
+      </p>
+      <p>
+        Hook textual: el texto sobreimpreso que aparece junto con tu voz. Suele ser una versión condensada del verbal.
+      </p>
+      <p>
+        Hooks que rinden combinan ambos. Tu cara con expresión específica + texto sobreimpreso "POV: te falta plata todos los meses" + voz que dice "Me pasó por años hasta que cambié esto". Tres señales en 1 segundo.
+      </p>
+
+      <h2>Lo que mata el hook (y el video entero)</h2>
+      <ul>
+        <li><strong>Empezar con "hola amigos":</strong> 30% abandona antes del segundo 2.</li>
+        <li><strong>Logo o intro de marca:</strong> -50% watch time, garantizado.</li>
+        <li><strong>Música genérica antes de hablar:</strong> 1-2 segundos de música sin información hace que la gente skipee.</li>
+        <li><strong>Texto pequeño o difícil de leer:</strong> el viewer no se esfuerza, scrollea.</li>
+        <li><strong>Hook que no se cumple:</strong> prometiste algo y el resto del video va a otro lado. La gente abandona y la próxima vez te skipea desde el frame 1.</li>
+      </ul>
+
+      <h2>El loop final: tan importante como el hook</h2>
+      <p>
+        El otro factor que TikTok prioriza es el "rewatch": cuando el video termina y se reproduce de nuevo automáticamente. Cada loop cuenta como visualización completa. Hooks que crean loop:
+      </p>
+      <ul>
+        <li><strong>Frame inicial = frame final:</strong> el video parece infinito.</li>
+        <li><strong>Cliffhanger no resuelto:</strong> "Te lo cuento en la parte 2" — la gente vuelve a empezar.</li>
+        <li><strong>Pregunta que se contesta al final:</strong> "Adiviná qué pasó" → final responde → gente vuelve al hook a confirmar.</li>
+      </ul>
+
+      <h2>Cómo testear hooks A/B</h2>
+      <p>
+        TikTok no tiene A/B testing nativo, pero podés simularlo:
+      </p>
+      <ol>
+        <li>Grabá el mismo contenido con 2-3 hooks distintos.</li>
+        <li>Postealo con días de diferencia y la misma estructura post-hook.</li>
+        <li>Compará retention rate (en Analytics > Profile > Cada video).</li>
+        <li>El que tenga mejor watch-through a los 3 segundos es el ganador.</li>
+        <li>Replicá el patrón en próximos videos.</li>
+      </ol>
+
+      <h2>El hook por nicho: lo que rinde en cada uno</h2>
+      <ul>
+        <li><strong>Finanzas:</strong> data específico ("Pasé de $0 a $500 invertidos en 6 meses").</li>
+        <li><strong>Cocina:</strong> proceso visual rápido ("Esto cambió cómo cocino arroz").</li>
+        <li><strong>Educación:</strong> open loop ("Esto que vas a aprender no te lo enseñan en la escuela").</li>
+        <li><strong>Lifestyle:</strong> POV ("POV: te mudás solo por primera vez").</li>
+        <li><strong>Comedia:</strong> setup + reveal ("Cuando tu jefe dice esto y vos hacés..." + reaction).</li>
+        <li><strong>Tech:</strong> antes/después ("Cambié esto en mi setup y...").</li>
+      </ul>
+
+      <h2>Errores típicos que matan retention</h2>
+      <ul>
+        <li><strong>Hook vago:</strong> "Hoy les voy a contar algo importante" — no comunica qué importa.</li>
+        <li><strong>Hook largo:</strong> 5+ segundos hablando antes de llegar al punto.</li>
+        <li><strong>Voz monótona:</strong> energía baja en los primeros 3 segundos garantiza skip.</li>
+        <li><strong>Sin texto sobreimpreso:</strong> mucha gente mira sin sonido, sin texto se pierden el hook.</li>
+        <li><strong>Frame inicial estático:</strong> nada visualmente interesante = scroll.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuánto debe durar el hook?</summary><p>Máximo 3 segundos. Idealmente 1-2.</p></details>
+      <details><summary>¿Conviene mostrar la cara?</summary><p>En general sí, pero no es obligatorio. Texto sobreimpreso + objeto pueden rendir igual.</p></details>
+      <details><summary>¿Hooks de palabras clave virales?</summary><p>"POV", "Storytime", "Esto cambió mi vida" — funcionan si lo que sigue cumple la promesa.</p></details>
+      <details><summary>¿Cuánto tarda el algoritmo en juzgar?</summary><p>Las primeras 1-3 horas son cruciales. Si el watch-through inicial es bajo, no escala.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tk-out { margin-top: 1.25rem; display: grid; gap: 0.5rem; }
+  .tk-card { padding: 0.875rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .tk-card:hover { border-color: var(--accent); }
+  .tk-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.4rem; font-family: var(--font-mono); }
+  select { width: 100%; padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-size: 0.9375rem; font-family: inherit; }
+</style>
+
+<script>
+  const topic = document.getElementById('tk-topic') as HTMLInputElement;
+  const niche = document.getElementById('tk-niche') as HTMLInputElement;
+  const format = document.getElementById('tk-format') as HTMLSelectElement;
+  const gen = document.getElementById('tk-gen') as HTMLButtonElement;
+  const out = document.getElementById('tk-out')!;
+
+  function generate() {
+    const T = topic.value.trim() || 'el tema';
+    const N = niche.value.trim() || 'el nicho';
+    const F = format.value;
+
+    let hooks: string[] = [];
+    if (F === 'storytime') {
+      hooks = [
+        `Hace 3 anos hice esto y cambio todo: ${T.toLowerCase()}.`,
+        `${T}: lo que ojala alguien me hubiera dicho a los 25.`,
+        `Casi me arruino por no saber esto sobre ${T.toLowerCase()}.`,
+        `${T}. Te cuento como me equivoque y que aprendi.`,
+        `POV: descubris ${T.toLowerCase()} y todo cambia.`,
+        `La verdad incomoda sobre ${T.toLowerCase()} (de alguien que vivio el error).`,
+      ];
+    } else if (F === 'howto') {
+      hooks = [
+        `Te muestro como ${T.toLowerCase()} en 60 segundos.`,
+        `${T}: el metodo de 3 pasos que uso hace anos.`,
+        `Si pudiera empezar de nuevo con ${T.toLowerCase()}, haria solo esto.`,
+        `${T} sin complicaciones. Te lo explico facil.`,
+        `Probaste todo y nada funciona? Probá ${T.toLowerCase()} con este enfoque.`,
+        `${T} en 3 minutos. Lo que de verdad funciona.`,
+      ];
+    } else if (F === 'opinion') {
+      hooks = [
+        `Opinion impopular sobre ${T.toLowerCase()}: nadie te dice esto.`,
+        `Estas haciendo ${T.toLowerCase()} mal y te explico por que.`,
+        `${T}. Cambia mi opinion en los comentarios.`,
+        `${T} no es lo que creen. Te explico.`,
+        `Por que ${T.toLowerCase()} es mas importante de lo que parece.`,
+        `Si trabajas en ${N.toLowerCase()}, esto sobre ${T.toLowerCase()} te va a doler.`,
+      ];
+    } else {
+      hooks = [
+        `Probe ${T.toLowerCase()} por 30 dias. Esto pasó.`,
+        `${T}: lo que me prometieron vs lo que pasó.`,
+        `Compre 3 cosas para ${T.toLowerCase()}. Solo una funcionó.`,
+        `Reaccione a ${T.toLowerCase()} y no podia creerlo.`,
+        `${T} antes vs despues. Mira la diferencia.`,
+        `Probaste ${T.toLowerCase()}? Te muestro mi experiencia honesta.`,
+      ];
+    }
+
+    out.innerHTML = '';
+    hooks.forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'tk-card';
+      el.title = 'Click para copiar';
+      el.innerHTML = b + `<div class="tk-meta">Hook ${i+1} · ${b.length} caracteres</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copiado'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

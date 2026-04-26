@@ -1,0 +1,147 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Coupon Code Generator | Genfy';
+const description = 'Generate memorable coupon codes for your campaign: word-word format, word + number or your prefix + random suffix. Ready for Shopify, WooCommerce or landing.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Coupon vs discount code — what is the difference?', acceptedAnswer: { '@type': 'Answer', text: 'In practice they are synonymous. Some teams use "coupon" when the format is word-based (e.g. SHOP-FRESH) and "code" when alphanumeric and random.' } },
+    { '@type': 'Question', name: 'Most memorable format?', acceptedAnswer: { '@type': 'Answer', text: 'Two words separated by a dash (SUMMER-FRESH) or a word + number (SAVE20). Real-word combinations are remembered 3 to 5 times more than random codes.' } },
+    { '@type': 'Question', name: 'How to prevent leaks to coupon aggregator sites?', acceptedAnswer: { '@type': 'Answer', text: 'Use unique-per-user codes, short expirations and monitor strange traffic sources. If you see spikes from coupon sites, rotate the code.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Coupon Code Generator"
+    intro="Generate memorable coupons with friendly formats: two words with a dash, word + number, or your prefix + random suffix.">
+
+    <div slot="tool" class="cc">
+      <label>Coupon style</label>
+      <select id="cc-style">
+        <option value="word-word">WORD-WORD (e.g. SUMMER-FRESH)</option>
+        <option value="word-num">WORD + number (e.g. SAVE20)</option>
+        <option value="prefix-rand">Prefix + random (e.g. VIP-X3K9P)</option>
+      </select>
+
+      <label style="margin-top:1rem">Prefix or theme (optional)</label>
+      <input id="cc-prefix" type="text" value="SUMMER" />
+
+      <label style="margin-top:1rem">Quantity</label>
+      <select id="cc-qty">
+        <option value="10">10</option>
+        <option value="25" selected>25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+
+      <button id="cc-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate coupons</button>
+
+      <pre id="cc-out" class="cc-out"></pre>
+    </div>
+
+    <div slot="content">
+      <h2>The coupon is a brand asset, not just a code</h2>
+      <p>
+        A well-designed coupon does two things at once: it applies a discount and reminds the
+        customer of the brand every time they type it. That's why "SUMMER-FRESH" beats "X9KQ4P2L"
+        — the first tells a story, the second doesn't. Brands that get this turn the coupon into
+        a mini campaign message.
+      </p>
+
+      <h2>Three formats that work</h2>
+      <ul>
+        <li><strong>Word + word:</strong> "SUMMER-FRESH", "BLACK-FRIDAY", "YEAR-END". Memorable, easy to communicate on radio or podcasts.</li>
+        <li><strong>Word + number:</strong> "SAVE20", "EXTRA15", "NEW10". The number signals the benefit directly.</li>
+        <li><strong>VIP / per-customer:</strong> "VIP-X3K9P", "JANE-A2BC". Conveys personal exclusivity.</li>
+      </ul>
+
+      <h2>How to choose the discount (without losing money)</h2>
+      <ol>
+        <li>Start from margin, not percent. If gross margin is 35%, a 30% off leaves you 5% — barely covers ops.</li>
+        <li>Think of average order value. 10% off $200 ($20) excites less than a flat $25.</li>
+        <li>Consider shipping. Sometimes "free shipping" converts better than "20% off" at the same total cost.</li>
+        <li>Set minimums. "10% off on orders from $100" lifts AOV 25-40%.</li>
+        <li>Cap the time. No urgency, no conversion.</li>
+      </ol>
+
+      <h2>Rules that save headaches</h2>
+      <ul>
+        <li><strong>Stacking:</strong> define if it combines with other promos.</li>
+        <li><strong>Excluded products:</strong> new launches, premium brands, low-margin SKUs.</li>
+        <li><strong>Minimum spend:</strong> prevents deal hunters from buying one cheap item and crushing margin.</li>
+        <li><strong>Clear expiry:</strong> 7-14 days for campaigns, 24-48h for flash sales.</li>
+        <li><strong>Uses per customer:</strong> 1 per person prevents abuse.</li>
+      </ul>
+
+      <h2>Avoiding leaks to coupon aggregators</h2>
+      <p>The silent enemy of any program: aggregator sites publishing your code and absorbing
+        margin without bringing new customers. Three tactics:</p>
+      <ol>
+        <li>Unique-per-user codes instead of one global code.</li>
+        <li>Monitor traffic sources. Spikes from strange domains? Rotate the code.</li>
+        <li>Distribute via private channels (authenticated email, loyalty program).</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Coupon vs discount code?</summary><p>Same thing in practice. "Coupon" is usually more visual and memorable; "code" more alphanumeric.</p></details>
+      <details><summary>Best format?</summary><p>Word-word or word + number. Remembered far more than random.</p></details>
+      <details><summary>Avoid leaks?</summary><p>Unique-per-user codes, traffic monitoring, private channels.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cc-out { margin-top: 1.25rem; padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.9375rem; line-height: 1.7; max-height: 400px; overflow-y: auto; }
+</style>
+
+<script>
+  const style = document.getElementById('cc-style') as HTMLSelectElement;
+  const prefix = document.getElementById('cc-prefix') as HTMLInputElement;
+  const qty = document.getElementById('cc-qty') as HTMLSelectElement;
+  const out = document.getElementById('cc-out')!;
+  const gen = document.getElementById('cc-gen') as HTMLButtonElement;
+
+  const W1 = ['SUMMER', 'WINTER', 'SPRING', 'FALL', 'LAUNCH', 'NEW', 'PRO', 'CLUB', 'SAVE', 'EXTRA', 'VIP', 'CASH', 'DEAL', 'FRESH'];
+  const W2 = ['FRESH', 'CLASSIC', 'EXPRESS', 'PLUS', 'BOOST', 'LUMEN', 'BLOOM', 'PIVOT', 'CREST', 'FORGE', 'SHIFT', 'SPARK', 'BEACON', 'FLOW'];
+  const SAFE = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+
+  function pickFrom<T>(arr: T[]): T {
+    const i = new Uint32Array(1); crypto.getRandomValues(i);
+    return arr[i[0] % arr.length];
+  }
+  function rand(n: number): string {
+    let s = '';
+    const buf = new Uint32Array(n);
+    crypto.getRandomValues(buf);
+    for (let i = 0; i < n; i++) s += SAFE[buf[i] % SAFE.length];
+    return s;
+  }
+
+  function generate() {
+    const px = (prefix.value || '').toUpperCase().trim();
+    const Q = parseInt(qty.value);
+    const set = new Set<string>();
+    while (set.size < Q) {
+      let code = '';
+      if (style.value === 'word-word') {
+        const a = px || pickFrom(W1);
+        code = a + '-' + pickFrom(W2);
+      } else if (style.value === 'word-num') {
+        const a = px || pickFrom(W1);
+        const n = 5 + Math.floor(Math.random() * 50);
+        code = a + n;
+      } else {
+        code = (px || 'VIP') + '-' + rand(5);
+      }
+      set.add(code);
+    }
+    out.textContent = [...set].join('\n');
+  }
+
+  gen.addEventListener('click', generate);
+  generate();
+</script>

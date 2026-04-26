@@ -1,0 +1,151 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Character Description Generator | Genfy';
+const description = 'Generate physical and personality descriptions for fiction characters. Mix age, traits and motivation to get 10 ready-to-use profiles instantly.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do I describe a character?', acceptedAnswer: { '@type': 'Answer', text: "Don't start with looks. Start with motivation and inner conflict, then add physical detail that reinforces the conflict." } },
+    { '@type': 'Question', name: 'How much physical detail?', acceptedAnswer: { '@type': 'Answer', text: 'Three concrete traits is usually enough. The reader fills in the rest. Too much detail freezes imagination.' } },
+    { '@type': 'Question', name: 'Does it work for screenplay and novel?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Format changes (more visual on screen, more internal in prose), but the motivation and conflict layer is identical.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Character Description Generator"
+    intro="Generate character descriptions in seconds. Combine age, physical traits, personality and motivation to get 10 narrative profiles ready to use.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Character role</label>
+      <input id="bn-kw" type="text" placeholder="protagonist, antagonist, mentor..." value="protagonist" />
+
+      <label for="bn-style" style="margin-top:1rem">Tone</label>
+      <select id="bn-style">
+        <option value="realist">Contemporary realist</option>
+        <option value="noir">Noir / thriller</option>
+        <option value="fantasy">Fantasy</option>
+        <option value="comedy">Comedy / light</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 10 profiles</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to describe a character (without the cliches)</h2>
+      <p>
+        The most common trap is opening with appearance. "Brown hair, green eyes, tall, slim"
+        tells a reader nothing. Strong description starts with motivation: what does the character
+        want, what do they fear, what do they avoid. Looks come later, and the chosen traits
+        reinforce the conflict — if your character wants to disappear, describe how they dress to
+        not be seen.
+      </p>
+      <ol>
+        <li><strong>Lead with the want.</strong> One sentence: "She wants to win her daughter's trust back". Everything hangs from there.</li>
+        <li><strong>Name the contradiction.</strong> Great characters want one thing but their habit pushes them somewhere else. That friction is the story.</li>
+        <li><strong>Three physical traits, max.</strong> Reader fills in the rest. Too much detail numbs imagination.</li>
+        <li><strong>One concrete tic.</strong> A gesture, a repeated word, a superstition. That's what makes a character unique.</li>
+        <li><strong>One past wound.</strong> No need to explain it on page one, but it has to exist as a hidden engine.</li>
+      </ol>
+
+      <h2>Quick character description template</h2>
+      <ul>
+        <li><strong>Name and age.</strong></li>
+        <li><strong>Central want</strong>: what they're after this story.</li>
+        <li><strong>Central fear</strong>: what they unconsciously avoid.</li>
+        <li><strong>Distinctive trait</strong>: one image the reader keeps.</li>
+        <li><strong>Voice</strong>: how they speak. Terse? Verbose? Sarcastic?</li>
+        <li><strong>Tic</strong>: repeated gesture, word or ritual.</li>
+        <li><strong>Past wound</strong>: the event that explains the avoidance.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        The most common is the "mirror character" — a protagonist who's an idealized copy of the
+        author. They lack inner friction because the author won't let them mess up. Another:
+        dumping too much information in the first scene. Description should be paced across the
+        whole story. And a third: confusing description with labeling. "She's brave" is a label.
+        A scene where she walks into a dark room without backup is description.
+      </p>
+
+      <h2>After generating: how to refine</h2>
+      <ol>
+        <li>Write the central want in one sentence.</li>
+        <li>Write the central fear in one sentence. Confirm they conflict.</li>
+        <li>Add a distinctive physical trait and one tic.</li>
+        <li>Draft a three-line dialogue: do you hear the voice?</li>
+        <li>Run the "antagonist test": would this character oppose themselves in another story?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I describe a character?</summary><p>Lead with motivation and inner conflict. Looks later, reinforcing the conflict.</p></details>
+      <details><summary>How much physical detail?</summary><p>Three concrete traits. Reader fills the rest.</p></details>
+      <details><summary>Works for screenplay and novel?</summary><p>Yes — format changes, motivation layer doesn't.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+  .bn-item { padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.55; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const AGES = [18, 22, 27, 32, 38, 45, 52, 60];
+  const REALIST_DESIRE = ["to win his daughter's trust back", 'to return to his hometown', 'to close a deal that supports his family', 'to finish the novel he abandoned years ago', 'to pay off a quiet debt'];
+  const REALIST_FEAR = ['repeating his fathers mistakes', 'losing his job again', 'his partner finding out a lie', 'the silence of the weekend', 'feeling irrelevant again'];
+  const REALIST_TRAIT = ['always carries a worn notebook', 'laughs late, after the joke', 'has a streak of premature gray hair', 'wears the same jacket year-round'];
+  const NOIR_DESIRE = ['to find the missing witness', 'to settle an old debt in blood', 'to close the case before retirement', 'to recover a stolen manuscript'];
+  const NOIR_FEAR = ['failing another client', 'being recognized in his own neighborhood', 'running out of time'];
+  const NOIR_TRAIT = ['has a faint limp on the left side', 'never finishes a cigarette', 'always sits with their back to the wall'];
+  const FANTASY_DESIRE = ['to protect the last bridge in the valley', 'to find their captive brother', 'to return a stolen relic to her tribe'];
+  const FANTASY_FEAR = ['the return of the drought', 'breaking a sworn word', 'being left alone on the mountain'];
+  const FANTASY_TRAIT = ['carries a thin scar across the palm', 'always speaks in a low voice', 'wears a ring with runes she does not understand'];
+  const COMEDY_DESIRE = ['to win the neighborhood contest', 'to be invited to the cool table', "for her boss to finally remember her name"];
+  const COMEDY_FEAR = ['looking dumb in public', 'her mother finding her Instagram', 'failing the driving test again'];
+  const COMEDY_TRAIT = ['always five minutes late because of outfit changes', 'talks to the dog in the plural', 'orders americano no sugar then adds three'];
+
+  const NAMES = ['Lucy', 'Thomas', 'Martha', 'Paul', 'Sophia', 'Bruno', 'Camille', 'Diego', 'Helen', 'Nick', 'Clara', 'Andrew'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const role = kw.value.trim() || 'protagonist';
+    const s = style.value;
+    let DESIRE: string[], FEAR: string[], TRAIT: string[];
+    if (s === 'noir') { DESIRE = NOIR_DESIRE; FEAR = NOIR_FEAR; TRAIT = NOIR_TRAIT; }
+    else if (s === 'fantasy') { DESIRE = FANTASY_DESIRE; FEAR = FANTASY_FEAR; TRAIT = FANTASY_TRAIT; }
+    else if (s === 'comedy') { DESIRE = COMEDY_DESIRE; FEAR = COMEDY_FEAR; TRAIT = COMEDY_TRAIT; }
+    else { DESIRE = REALIST_DESIRE; FEAR = REALIST_FEAR; TRAIT = REALIST_TRAIT; }
+    out.innerHTML = '';
+    const seen = new Set<string>();
+    let attempts = 0;
+    while (seen.size < 10 && attempts < 60) {
+      attempts++;
+      const name = pick(NAMES);
+      const age = pick(AGES);
+      const desc = `${name}, ${age}. ${role.charAt(0).toUpperCase() + role.slice(1)}. Wants ${pick(DESIRE)} but fears ${pick(FEAR)}. ${pick(TRAIT).charAt(0).toUpperCase() + pick(TRAIT).slice(1)}.`;
+      if (seen.has(desc)) continue;
+      seen.add(desc);
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = desc;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(desc); const orig = el.textContent; el.textContent = '✓ copied'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    }
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

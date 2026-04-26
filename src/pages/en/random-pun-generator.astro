@@ -1,0 +1,140 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random Pun Generator | Genfy';
+const description = 'Wordplay puns in English. For copywriting, social, presentations and making your friends laugh.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a pun?', acceptedAnswer: { '@type': 'Answer', text: 'A joke based on language ambiguity. The same term means two things and the humor comes from the contrast.' } },
+    { '@type': 'Question', name: 'Useful for marketing?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Puns are a classic copywriting tool.' } },
+    { '@type': 'Question', name: 'How do I make my own?', acceptedAnswer: { '@type': 'Answer', text: 'Look for words with double meanings and force the context. Practice trains the ear.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Diversión / Fun" title="Random pun generator"
+    intro="English wordplay. Useful for laughs, copy or closing a message with style.">
+
+    <div slot="tool" class="pn">
+      <div class="pn-card">
+        <p id="pn-text" class="pn-text">Tap generate to start.</p>
+      </div>
+      <button id="pn-gen" class="btn btn-primary" type="button">Another pun</button>
+      <button id="pn-copy" class="btn btn-ghost" type="button">Copy</button>
+    </div>
+
+    <div slot="content">
+      <h2>What exactly is a pun</h2>
+      <p>
+        A pun is a joke built on linguistic ambiguity. The same word (homonymy) or
+        similar-sounding words (paronymy) get used to create double meaning. The humor
+        clicks when the listener "lands" on the second meaning a moment after the first.
+        It's one of the oldest forms of humor, present from Cicero to Tina Fey.
+      </p>
+
+      <h2>Three basic types</h2>
+      <ol>
+        <li><strong>Homonymic:</strong> same word, two meanings. "Time flies like an arrow; fruit flies like a banana."</li>
+        <li><strong>Paronymic:</strong> similar words. "Why are programmers always cold? Because they leave the Windows open."</li>
+        <li><strong>Syntactic:</strong> the whole sentence reads two ways.</li>
+      </ol>
+
+      <h2>Why puns work in marketing</h2>
+      <p>
+        The brain retains surprise. A brand using a pun in its tagline drives more recall
+        than one with plain copy. But there's risk: a bad pun is worse than flat copy. The
+        golden rule: the pun must feel natural, almost obvious. If the audience has to
+        think too hard, you've lost. Brands like M&M's, Heinz, KitKat built whole
+        campaigns on simple memorable puns.
+      </p>
+
+      <h2>How to write your own</h2>
+      <ul>
+        <li><strong>Start with the ambiguous word.</strong> List words with double meaning in your industry.</li>
+        <li><strong>Force the context where the double meaning shines.</strong> Not the other way around.</li>
+        <li><strong>Test it out loud on three people.</strong> If three get it without explanation, it's ready.</li>
+        <li><strong>Don't overdo it.</strong> One pun per message, not three.</li>
+      </ul>
+
+      <h2>Puns in news headlines</h2>
+      <p>
+        Sports tabloids worldwide live on puns in their front pages. When a team called
+        "Wolves" wins, "Wolves howl" works. The British tabloids like The Sun and Mirror
+        are masters; reading old front pages is almost a course in applied linguistic
+        creativity.
+      </p>
+
+      <h2>When NOT to use a pun</h2>
+      <p>
+        In medical, serious financial or legal contexts, a pun can sound frivolous. In
+        condolence or crisis announcements, never. In multilingual audiences it's risky
+        because double meaning rarely survives translation. And in formal speeches, one
+        is elegance; three is disrespect.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>For Twitter?</summary><p>Yes. Puns are among the most-shared tweets after memes.</p></details>
+      <details><summary>Spanish version?</summary><p>Yes, at /juego-palabras.</p></details>
+      <details><summary>Can I use in advertising?</summary><p>Yes, classic copywriting tool.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pn-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; }
+  .pn-text { font-size: 1.125rem; line-height: 1.6; margin: 0; }
+</style>
+
+<script>
+  const P: string[] = [
+    "Time flies like an arrow; fruit flies like a banana.",
+    "I used to be a banker, but I lost interest.",
+    "The shovel was a ground-breaking invention.",
+    "I'm reading a book about anti-gravity. It's impossible to put down.",
+    "I tried to catch fog yesterday. Mist.",
+    "Velcro: what a rip-off.",
+    "I've started telling everyone about the benefits of dried grapes. It's all about raisin awareness.",
+    "Why don't scientists trust atoms? Because they make up everything.",
+    "I wasn't going to get a brain transplant, but then I changed my mind.",
+    "The bicycle couldn't stand by itself. It was two tired.",
+    "I'm friends with 25 letters of the alphabet. I don't know Y.",
+    "Why don't skeletons fight each other? They don't have the guts.",
+    "I told my wife she should embrace her mistakes. She gave me a hug.",
+    "Why did the math book look sad? Because it had too many problems.",
+    "Geology rocks, but geography is where it's at.",
+    "I'd tell you a chemistry joke but I know I wouldn't get a reaction.",
+    "I quit my job at the calendar factory. They gave me too many days off.",
+    "The grammar police never sleep. They're always on a comma.",
+    "I used to play piano by ear. Now I use my hands.",
+    "Why are programmers always cold? Because they leave the Windows open.",
+    "I'm on a seafood diet. I see food and I eat it.",
+    "I changed my password to 'incorrect'. So whenever I forget it, my computer says 'your password is incorrect'.",
+    "I told my computer I needed a break. Now it won't stop sending me Kit Kat ads.",
+    "Without geometry, life would be pointless.",
+    "I once got into so much debt I couldn't afford my electricity bills. They were the darkest days of my life.",
+    "I'm reading a horror story in Braille. Something bad is going to happen, I can feel it.",
+    "I bought shoes from a drug dealer. I don't know what he laced them with, but I've been tripping all day.",
+    "I asked the librarian if they had any books on paranoia. She whispered 'they're right behind you'.",
+    "Did you hear about the cheese factory that exploded? There was nothing left but de-brie."
+  ];
+
+  const text = document.getElementById('pn-text') as HTMLElement;
+  const genBtn = document.getElementById('pn-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('pn-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() { text.textContent = pick(P); }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(text.textContent || '');
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

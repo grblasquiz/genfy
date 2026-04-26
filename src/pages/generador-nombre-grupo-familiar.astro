@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de grupo familiar gratis | Genfy';
+const description = 'Generá nombres cariñosos para tu grupo familiar de WhatsApp o álbum compartido. Combiná apellido o estilo y obtené 20 ideas pacíficas y memorables.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno al nombre de un grupo familiar?', acceptedAnswer: { '@type': 'Answer', text: 'Que sea cálido, identifique claramente al grupo, se sienta inclusivo para todos los miembros y no requiera explicación a los abuelos.' } },
+    { '@type': 'Question', name: '¿Conviene incluir el apellido?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, es la forma más rápida de identificarlo. "Familia Pérez" o "Los Pérez" son clásicos por una razón.' } },
+    { '@type': 'Question', name: '¿Y si la familia tiene varios apellidos?', acceptedAnswer: { '@type': 'Answer', text: 'Combinalos ("Pérez García") o usá el nombre del lugar de origen ("Familia del Sur") o de un evento ("Casa de Mamá").' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Familia" title="Generador de nombre de grupo familiar"
+    intro="Combiná apellido y estilo y obtené 20 ideas cálidas para tu grupo familiar de WhatsApp, álbum compartido o evento. Memorable y sin chistes que ofendan.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Apellido o palabra clave</label>
+      <input id="bn-kw" type="text" placeholder="Pérez, Sur, Casa..." value="Pérez" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="classic">Clásico (Familia Pérez)</option>
+        <option value="los">Los + apellido (Los Pérez)</option>
+        <option value="house">Casa + apellido</option>
+        <option value="origin">Familia + lugar (Familia del Sur)</option>
+        <option value="event">Evento (Reunión de Mamá)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo nombrar un grupo familiar</h2>
+      <p>
+        Un nombre de grupo familiar tiene tres jueces: el sobrino joven que entra al grupo,
+        la abuela que lo abre desde un teléfono con letra grande, y la prima política que se
+        casó hace dos meses. Tu nombre debe ser cálido, claro y inclusivo para los tres.
+      </p>
+      <ol>
+        <li><strong>Apellido o ancla familiar.</strong> Identifica al grupo de inmediato.</li>
+        <li><strong>Sin chistes que ofendan.</strong> Lo que parece divertido entre primos puede herir a tíos.</li>
+        <li><strong>Inclusivo.</strong> Si entra alguien por casamiento, no debe sentirse excluido.</li>
+        <li><strong>Estable.</strong> Cambiarlo cada semana es agotador para los miembros mayores.</li>
+        <li><strong>Compatible con notificaciones.</strong> Va a aparecer cada vez que alguien escribe.</li>
+      </ol>
+
+      <h2>Estilos clásicos</h2>
+      <ul>
+        <li><strong>Clásico:</strong> "Familia Pérez", "Familia García". Funciona siempre.</li>
+        <li><strong>Los + apellido:</strong> "Los Pérez", "Los del Sur". Cálido y argentino.</li>
+        <li><strong>Casa + apellido:</strong> "Casa Pérez", "Casa Méndez". Suena a hogar.</li>
+        <li><strong>Familia + lugar de origen:</strong> "Familia del Sur", "Familia de Córdoba". Útil con varios apellidos.</li>
+        <li><strong>Evento:</strong> "Reunión de Mamá", "Cumpleaños Anual". Para grupos temáticos.</li>
+      </ul>
+
+      <h2>Consejos prácticos</h2>
+      <p>
+        Si tu familia es grande y hay subgrupos (primos, hermanos, padres con hijos),
+        diferenciá con un calificativo: "Los Pérez (todos)" para el general y "Los Pérez
+        Hermanos" para el de hermanos. Si hay tensiones familiares, evitá nombres que
+        excluyan a algún miembro implícitamente.
+      </p>
+
+      <h2>Para álbumes y eventos compartidos</h2>
+      <ol>
+        <li>Para Google Photos compartido: usá el apellido + año.</li>
+        <li>Para iCloud Family: nombre del apellido principal.</li>
+        <li>Para reuniones recurrentes: el nombre del evento ("Asado Anual Pérez").</li>
+        <li>Para árbol genealógico: nombre formal con la rama familiar.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno al nombre?</summary><p>Cálido, claro, inclusivo y comprensible para todas las generaciones.</p></details>
+      <details><summary>¿Incluir apellido?</summary><p>Sí, es la forma más rápida de identificarlo.</p></details>
+      <details><summary>¿Y si hay varios apellidos?</summary><p>Combinalos, usá el lugar de origen o un evento.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const PLACES = ['del Sur', 'del Norte', 'de Córdoba', 'de la Costa', 'del Campo', 'de la Ciudad', 'de la Sierra'];
+  const EVENTS = ['Reunión Mensual', 'Cumpleaños Anual', 'Asado Anual', 'Encuentro Familiar', 'Almuerzo Domingo', 'Navidad', 'Año Nuevo'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+
+  function generate() {
+    const w = cap(kw.value.trim() || 'Pérez');
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'classic') name = 'Familia ' + w + (Math.random() > 0.6 ? ' ❤️' : '');
+      else if (s === 'los') name = 'Los ' + w + (Math.random() > 0.6 ? ' (todos)' : '');
+      else if (s === 'house') name = 'Casa ' + w;
+      else if (s === 'origin') name = 'Familia ' + pick(PLACES);
+      else if (s === 'event') name = pick(EVENTS) + ' ' + w;
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

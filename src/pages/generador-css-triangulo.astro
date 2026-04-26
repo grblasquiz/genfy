@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de triángulo CSS | Genfy';
+const description = 'Generá triángulos CSS puros sin imágenes. Direcciones, tamaño y color configurables. Útil para tooltips y arrows.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo funciona el truco del triángulo CSS?', acceptedAnswer: { '@type': 'Answer', text: 'Aprovecha el comportamiento de los bordes en un elemento sin width ni height: cada borde forma un triángulo, y haciendo transparentes los otros tres se ve uno solo.' } },
+    { '@type': 'Question', name: '¿clip-path no es más simple?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, clip-path: polygon() es más legible y soporta cualquier forma. Pero el truco de borders es más antiguo y todavía se usa porque es liviano.' } },
+    { '@type': 'Question', name: '¿Cuándo usar triángulos CSS?', acceptedAnswer: { '@type': 'Answer', text: 'Para arrows de tooltips, indicadores de selección, decoración pequeña. Para iconos complejos, mejor SVG.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Generador de triángulo CSS"
+    intro="Configurá dirección, tamaño y color. Vista previa instantánea, CSS listo.">
+
+    <div slot="tool" class="tr">
+      <div class="tr-grid">
+        <div>
+          <label for="tr-dir">Dirección</label>
+          <select id="tr-dir">
+            <option value="up">Arriba ▲</option>
+            <option value="down">Abajo ▼</option>
+            <option value="left">Izquierda ◀</option>
+            <option value="right">Derecha ▶</option>
+          </select>
+        </div>
+        <div>
+          <label for="tr-size">Tamaño (px)</label>
+          <input id="tr-size" type="number" value="40" />
+        </div>
+        <div class="tr-full">
+          <label for="tr-color">Color</label>
+          <input id="tr-color" type="color" value="#059669" />
+        </div>
+      </div>
+
+      <div class="tr-preview"><div id="tr-shape"></div></div>
+
+      <div class="tr-actions">
+        <button id="tr-cp" class="btn btn-primary" type="button">Copiar CSS</button>
+      </div>
+
+      <pre><code id="tr-css"></code></pre>
+    </div>
+
+    <div slot="content">
+      <h2>El truco del triángulo CSS</h2>
+      <p>Es uno de los hacks más antiguos y elegantes de CSS. Aprovecha cómo el navegador renderiza los bordes de un elemento. Cuando tenés un div sin width ni height pero con bordes anchos, los bordes se cortan diagonalmente entre sí, formando triángulos. Si hacés tres de los bordes transparentes y dejás el cuarto visible, ves un solo triángulo apuntando en una dirección.</p>
+
+      <h2>Sintaxis</h2>
+      <pre><code>.triangle-up &lcub;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 30px solid #000;
+&rcub;</code></pre>
+      <p>Para apuntar arriba, hacés visible el border-bottom (porque la base del triángulo es abajo). Para apuntar abajo, hacés visible el border-top. Y así con izquierda y derecha.</p>
+
+      <h2>Cuándo conviene</h2>
+      <ul>
+        <li><strong>Tooltips</strong>: el "rabito" del tooltip que apunta al elemento.</li>
+        <li><strong>Speech bubbles</strong>: bocadillos de texto.</li>
+        <li><strong>Arrows en cards</strong>: indicar selección o expansión.</li>
+        <li><strong>Decoraciones</strong>: ornamentos pequeños sin necesitar SVG.</li>
+      </ul>
+
+      <h2>Triángulo con clip-path</h2>
+      <p>La alternativa moderna, más legible, es clip-path:</p>
+      <pre><code>.triangle &lcub;
+  width: 40px;
+  height: 30px;
+  background: #000;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+&rcub;</code></pre>
+      <p>clip-path con polygon() recibe coordenadas en porcentaje y forma cualquier polígono. Es más legible y soporta más formas. La desventaja: ligeramente más caro de renderizar para muchos elementos.</p>
+
+      <h2>Triángulos asimétricos</h2>
+      <p>Si querés un triángulo no equilátero, podés ajustar los anchos de los bordes laterales por separado. border-left: 30px solid transparent y border-right: 10px solid transparent crea un triángulo inclinado a la derecha.</p>
+
+      <h2>Triángulos con borde</h2>
+      <p>Hacer un triángulo con borde (outline) es más complicado con el truco de bordes: necesitás dos triángulos superpuestos, uno más chico encima del otro. Con clip-path, podés usar un drop-shadow filter o un SVG.</p>
+
+      <h2>Performance</h2>
+      <p>El truco con bordes es extremadamente liviano: el browser ya tiene optimizado el rendering de borders. Para tooltips que aparecen muchas veces, vale la pena. Si tu UI tiene 200 tooltips simultáneos (poco probable pero posible en dashboards), elegí siempre el truco de borders.</p>
+
+      <h2>Cuándo NO usar triángulos CSS</h2>
+      <p>Para iconos complejos, formas geométricas no triangulares, o cualquier cosa que requiera color compuesto, gradientes o trazos: SVG es la herramienta correcta. Los triángulos CSS son una solución específica para una forma muy específica.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo funciona?</summary><p>Aprovecha cómo se renderizan los bordes en un elemento sin width ni height.</p></details>
+      <details><summary>¿clip-path es mejor?</summary><p>Es más legible. El truco de borders es más liviano y antiguo.</p></details>
+      <details><summary>¿Para qué se usa?</summary><p>Tooltips, arrows, speech bubbles, decoraciones pequeñas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tr-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .tr-full { grid-column: 1 / -1; }
+  .tr-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .tr-preview { padding: 2rem; background: var(--bg-inset); border-radius: var(--radius); margin-bottom: 1rem; display: flex; justify-content: center; align-items: center; min-height: 160px; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+  @media (max-width: 600px) { .tr-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const dir = document.getElementById('tr-dir') as HTMLSelectElement;
+  const size = document.getElementById('tr-size') as HTMLInputElement;
+  const color = document.getElementById('tr-color') as HTMLInputElement;
+  const shape = document.getElementById('tr-shape') as HTMLElement;
+  const css = document.getElementById('tr-css') as HTMLElement;
+  const cp = document.getElementById('tr-cp') as HTMLButtonElement;
+
+  function render() {
+    const s = +size.value;
+    const c = color.value;
+    const half = s / 2;
+    let style = '';
+    let code = '';
+    if (dir.value === 'up') {
+      style = `width:0;height:0;border-left:${half}px solid transparent;border-right:${half}px solid transparent;border-bottom:${s}px solid ${c};`;
+      code = `.triangle {\n  width: 0;\n  height: 0;\n  border-left: ${half}px solid transparent;\n  border-right: ${half}px solid transparent;\n  border-bottom: ${s}px solid ${c};\n}`;
+    } else if (dir.value === 'down') {
+      style = `width:0;height:0;border-left:${half}px solid transparent;border-right:${half}px solid transparent;border-top:${s}px solid ${c};`;
+      code = `.triangle {\n  width: 0;\n  height: 0;\n  border-left: ${half}px solid transparent;\n  border-right: ${half}px solid transparent;\n  border-top: ${s}px solid ${c};\n}`;
+    } else if (dir.value === 'left') {
+      style = `width:0;height:0;border-top:${half}px solid transparent;border-bottom:${half}px solid transparent;border-right:${s}px solid ${c};`;
+      code = `.triangle {\n  width: 0;\n  height: 0;\n  border-top: ${half}px solid transparent;\n  border-bottom: ${half}px solid transparent;\n  border-right: ${s}px solid ${c};\n}`;
+    } else {
+      style = `width:0;height:0;border-top:${half}px solid transparent;border-bottom:${half}px solid transparent;border-left:${s}px solid ${c};`;
+      code = `.triangle {\n  width: 0;\n  height: 0;\n  border-top: ${half}px solid transparent;\n  border-bottom: ${half}px solid transparent;\n  border-left: ${s}px solid ${c};\n}`;
+    }
+    shape.setAttribute('style', style);
+    css.textContent = code;
+  }
+  [dir, size, color].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(css.textContent || '');
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar CSS', 1500);
+  });
+  render();
+</script>

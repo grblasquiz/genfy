@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de declaración de visión | Genfy';
+const description = 'Redactá la declaración de visión de tu empresa en segundos. Combiná industria, horizonte temporal e impacto y obtené 5 versiones listas para tu deck.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es una declaración de visión?', acceptedAnswer: { '@type': 'Answer', text: 'Es una frase corta que describe el futuro que tu empresa quiere construir. No habla de lo que hacés hoy, sino del estado del mundo que querés ver en 5 a 10 años.' } },
+    { '@type': 'Question', name: '¿Cuál es la diferencia entre visión y misión?', acceptedAnswer: { '@type': 'Answer', text: 'La visión es el destino — el futuro al que apuntás. La misión es el vehículo — qué hacés todos los días para acercarte a esa visión.' } },
+    { '@type': 'Question', name: '¿Cuánto debe durar una declaración de visión?', acceptedAnswer: { '@type': 'Answer', text: 'Idealmente entre 8 y 20 palabras. Si no la podés repetir de memoria, es demasiado larga.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Empresa / Business" title="Generador de declaración de visión"
+    intro="Combiná industria, horizonte temporal e impacto y obtené 5 declaraciones de visión listas para tu deck, web o onboarding.">
+
+    <div slot="tool" class="vs">
+      <label for="vs-ind">Industria o categoría</label>
+      <input id="vs-ind" type="text" placeholder="ej: educación financiera, logística B2B" value="educación financiera" />
+
+      <label for="vs-imp" style="margin-top:1rem">Impacto que querés generar</label>
+      <input id="vs-imp" type="text" placeholder="ej: que cualquier persona pueda invertir" value="que cualquier persona pueda invertir bien" />
+
+      <label for="vs-hor" style="margin-top:1rem">Horizonte</label>
+      <select id="vs-hor">
+        <option value="5">5 años</option>
+        <option value="10" selected>10 años</option>
+        <option value="20">Una generación</option>
+      </select>
+
+      <button id="vs-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 5 versiones</button>
+
+      <div id="vs-out" class="vs-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es una declaración de visión y para qué sirve</h2>
+      <p>
+        La visión es el faro de tu empresa. No describe lo que vendés ni cómo lo vendés — describe
+        el mundo que querés ayudar a construir. Una buena visión hace tres cosas: alinea al equipo
+        cuando hay que tomar decisiones difíciles, atrae a candidatos que comparten ese futuro y
+        diferencia tu marca de competidores que solo hablan de features.
+      </p>
+      <p>
+        Si tu visión sirve igual para tu empresa que para tu competidor más directo, es genérica.
+        Reescribila hasta que sea específica al cambio que vos, y solo vos, podés impulsar.
+      </p>
+
+      <h2>Estructura clásica: futuro + impacto + audiencia</h2>
+      <p>
+        La fórmula que mejor funciona en pitches y onboardings es esta: un verbo orientado al futuro
+        + el impacto concreto + la audiencia o territorio. Tres ejemplos reales reescritos:
+      </p>
+      <ul>
+        <li><strong>Tesla:</strong> "Acelerar la transición del mundo hacia la energía sostenible."</li>
+        <li><strong>Airbnb:</strong> "Un mundo en el que cualquiera pueda pertenecer a cualquier lugar."</li>
+        <li><strong>LinkedIn:</strong> "Crear oportunidades económicas para cada miembro de la fuerza laboral global."</li>
+      </ul>
+      <p>
+        Notá que ninguna menciona el producto. Tesla no dice "autos eléctricos", Airbnb no dice
+        "alquiler temporario", LinkedIn no dice "red profesional". El producto cambia, la visión no.
+      </p>
+
+      <h2>Errores que vacían una declaración de visión</h2>
+      <ol>
+        <li><strong>Genérica:</strong> "Ser líderes en nuestro mercado." Lo dice todo el mundo.</li>
+        <li><strong>Demasiado operativa:</strong> "Vender 10.000 unidades en 2027." Eso es un OKR, no una visión.</li>
+        <li><strong>Cargada de buzzwords:</strong> "Disruptir, sinergizar, empoderar." Si tachás esas palabras, ¿qué queda?</li>
+        <li><strong>Inalcanzable absurda:</strong> "Acabar con la pobreza mundial" — si nadie en el equipo cree que se puede, no inspira.</li>
+        <li><strong>Cambia cada trimestre:</strong> la visión vive 5-10 años. Si la cambiás cada planificación, no es visión.</li>
+      </ol>
+
+      <h2>Cómo validar tu declaración de visión</h2>
+      <p>Probala con este test rápido antes de imprimirla en la pared:</p>
+      <ol>
+        <li>Leéla en voz alta. ¿Te emocionás un poco? Si no, está fría.</li>
+        <li>Pasásela a 3 personas del equipo y pediles que la repitan media hora después. Si no pueden, es demasiado larga.</li>
+        <li>Mostrásela a un competidor. ¿Podría firmarla? Si sí, no es lo suficientemente tuya.</li>
+        <li>Imaginá una decisión difícil del próximo trimestre. ¿La visión te ayuda a decidir? Si no, es decoración.</li>
+      </ol>
+
+      <h2>Cuándo revisar la visión</h2>
+      <p>
+        No la cambies por moda. Cambiala cuando se cumplió (poco común) o cuando descubrís que tu
+        empresa creció hacia un territorio distinto del que imaginabas al principio. Microsoft pasó
+        de "una computadora en cada escritorio" a "empoderar a cada persona y organización" cuando
+        el primer hito básicamente se cumplió. Esa es la cadencia correcta: décadas, no trimestres.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es una declaración de visión?</summary><p>Es la frase que describe el futuro que tu empresa quiere construir, no lo que hace hoy. Vive 5-10 años y guía decisiones grandes.</p></details>
+      <details><summary>¿Visión o misión, qué va primero?</summary><p>La visión define el destino, la misión define el vehículo diario. Lo natural es escribir primero la visión y después derivar la misión.</p></details>
+      <details><summary>¿Cuántas palabras debe tener?</summary><p>Entre 8 y 20. Si no la podés decir de memoria al tercer día, es demasiado larga.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .vs-out { display: grid; gap: 0.75rem; margin-top: 1.25rem; }
+  .vs-item { padding: 1rem 1.125rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .vs-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ind = document.getElementById('vs-ind') as HTMLInputElement;
+  const imp = document.getElementById('vs-imp') as HTMLInputElement;
+  const hor = document.getElementById('vs-hor') as HTMLSelectElement;
+  const gen = document.getElementById('vs-gen') as HTMLButtonElement;
+  const out = document.getElementById('vs-out')!;
+
+  function generate() {
+    const i = ind.value.trim() || 'nuestra industria';
+    const m = imp.value.trim() || 'mejorar la vida de las personas';
+    const h = hor.value;
+    const horizon = h === '5' ? 'en 5 años' : h === '10' ? 'en una década' : 'para la próxima generación';
+
+    const versions = [
+      `Construir el futuro de ${i} ${horizon}: ${m}.`,
+      `Un mundo en el que ${m}, sin que ${i} sea una barrera.`,
+      `Liderar la transformación de ${i} para que ${m}.`,
+      `${horizon[0].toUpperCase() + horizon.slice(1)}, ${m} será la norma — no el privilegio — en ${i}.`,
+      `Hacer que ${m} sea posible para cada persona que se cruza con ${i}.`,
+    ];
+
+    out.innerHTML = '';
+    versions.forEach(v => {
+      const el = document.createElement('div');
+      el.className = 'vs-item';
+      el.textContent = v;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(v); el.style.borderColor = 'var(--primary)'; setTimeout(() => el.style.borderColor = '', 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

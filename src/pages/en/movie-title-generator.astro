@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Movie Title Generator | Genfy';
+const description = 'Generate movie titles in seconds. Combine genre, tone and format to get 20 memorable, SEO-friendly ideas for your next screenplay.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do I pick a movie title?', acceptedAnswer: { '@type': 'Answer', text: 'Short, evocative, easy to remember and unique on IMDb. It should communicate the genre in three words or less.' } },
+    { '@type': 'Question', name: 'Should the title name the protagonist?', acceptedAnswer: { '@type': 'Answer', text: 'Not required. Most films use abstract or atmospheric titles. Names only help when the character is already a known brand.' } },
+    { '@type': 'Question', name: 'Can I change the title after release?', acceptedAnswer: { '@type': 'Answer', text: 'Tough: IMDb, festivals and streaming platforms do not refresh easily. Better to spend more time picking it before the first poster.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Movie Title Generator"
+    intro="Find the perfect title for your movie. Mix genre, tone and format to get 20 ideas in seconds, ready for your next screenplay or pitch.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Theme or keyword</label>
+      <input id="bn-kw" type="text" placeholder="revenge, journey, secret..." value="silence" />
+
+      <label for="bn-style" style="margin-top:1rem">Tone</label>
+      <select id="bn-style">
+        <option value="thriller">Thriller (The Last Witness)</option>
+        <option value="drama">Drama (What We Lost)</option>
+        <option value="action">Action (Zero Hour)</option>
+        <option value="indie">Indie (Small Things)</option>
+        <option value="single">Single word (Silence)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 titles</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a movie title</h2>
+      <p>
+        A movie title does three things at once: it sells the genre, sticks in the head of anyone
+        who watched the trailer, and survives streaming-platform SEO. The difference between a
+        title that lands and one that fades is almost always in the combination of a concrete
+        image and the right genre tone. "Silence" says nothing. "The Last Witness" communicates
+        thriller in three words.
+      </p>
+      <ol>
+        <li><strong>Communicate genre in the title.</strong> Viewers scan Netflix in seconds. Your title should signal thriller, comedy or drama before the synopsis.</li>
+        <li><strong>Pick a concrete image.</strong> "Feelings" doesn't work. "Locked Room" does.</li>
+        <li><strong>Check IMDb collisions.</strong> If three films from the past decade share the title, search will bury yours.</li>
+        <li><strong>Survives a poster.</strong> Mock it up bold over a generic genre image. Does it work?</li>
+        <li><strong>Press can repeat it.</strong> Journalists will say it a hundred times. If they stumble, you lose coverage.</li>
+      </ol>
+
+      <h2>Classic styles by genre</h2>
+      <ul>
+        <li><strong>Thriller</strong>: definite article + threatening noun (The Last Witness, The Vanishing Hour). Suggests tension, not resolution.</li>
+        <li><strong>Drama</strong>: poetic or nostalgic phrases (What We Lost, Before Winter). Emotional memory.</li>
+        <li><strong>Action</strong>: short, urgent, time-coded (Zero Hour, 24 Hours, Red Line).</li>
+        <li><strong>Indie / festival</strong>: longer or conceptual (The Things We Did, A Simple Story). Curator first, mass audience second.</li>
+        <li><strong>Single word</strong>: the jackpot when it lands (Drive, Heat, Whiplash). Hard to find free, high impact.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        Most common: titles that promise a genre the film doesn't deliver. If your intimate drama
+        is called "Detonation", viewers show up expecting explosions and leave disappointed.
+        Another: titles too long that platforms truncate with "..." on grid views. And a third:
+        names tied to wordplay in the original language that translate badly to other markets.
+      </p>
+
+      <h2>After generating: how to commit</h2>
+      <ol>
+        <li>Search each title on IMDb and JustWatch. Check the past 15 years.</li>
+        <li>Run it in a one-line synopsis: "___, a film about ___". Does it fit?</li>
+        <li>Show it to three people from the target genre: do they want to watch it?</li>
+        <li>Check domain availability if you'll run a campaign site.</li>
+        <li>Poster check: does it read big and bold?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I pick a movie title?</summary><p>Short, evocative, easy to remember, unique on IMDb. Communicates genre in three words.</p></details>
+      <details><summary>Should the title name the protagonist?</summary><p>Only if the character is already a known brand.</p></details>
+      <details><summary>Can I change after release?</summary><p>Very hard: IMDb and platforms don't update. Pick well before the first poster.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const THRILLER = ['The Last Witness', 'The Vanishing Hour', 'No Trace', 'The Locked House', 'The Intruder', 'Night Noise', 'The Mistake', 'The Hidden Truth'];
+  const DRAMA = ['What We Lost', 'Before Winter', 'Unsent Letters', 'When We Were Young', 'The Last Summer', 'Mothers and Daughters'];
+  const ACTION = ['Zero Hour', 'Critical Point', 'Twenty-Four Hours', 'No Return', 'Final Mission', 'Red Line'];
+  const INDIE = ['The Things We Did', 'A Simple Story', 'Small Things', 'Same Days', 'Autumn', 'The Silence Between Us'];
+  const NOUN = ['Silence', 'Bone', 'Fog', 'Shadow', 'Shelter', 'Scar', 'Vertigo', 'Echo'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'thriller') name = pick(THRILLER);
+      else if (s === 'drama') name = pick(DRAMA);
+      else if (s === 'action') name = pick(ACTION);
+      else if (s === 'indie') name = pick(INDIE);
+      else if (s === 'single') name = words.length ? cap(pick(words)) : pick(NOUN);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

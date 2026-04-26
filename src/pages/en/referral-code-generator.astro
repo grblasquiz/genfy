@@ -1,0 +1,124 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Referral Code Generator | Genfy';
+const description = 'Generate unique, catchy referral codes that are easy to share. Built for invitation programs, e-commerce and SaaS.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good referral code?', acceptedAnswer: { '@type': 'Answer', text: 'Short (5-8 chars), easy to dictate over the phone, no ambiguous characters (0/O, 1/l/I), unique per user.' } },
+    { '@type': 'Question', name: 'Should I use the user\'s name in the code?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, codes with the user\'s name or alias convert better because they feel less like spam and are easier to remember.' } },
+    { '@type': 'Question', name: 'How do I avoid duplicate codes?', acceptedAnswer: { '@type': 'Answer', text: 'Validate against your database before assigning and use a random numeric suffix. With 6-8 alphanumeric chars, collisions are extremely rare for programs under 10 million users.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Referral Code Generator"
+    intro="Generate codes personalized with the user's name or fully random. Ready to plug into your invitation program.">
+
+    <div slot="tool" class="rc">
+      <label for="rc-name">User name or alias (optional)</label>
+      <input id="rc-name" type="text" value="LUCIA" placeholder="LUCIA, mart, ana..." />
+
+      <label for="rc-style" style="margin-top:1rem">Style</label>
+      <select id="rc-style">
+        <option value="name">Name + digits (LUCIA-742)</option>
+        <option value="namepal">Name + word (LUCIA-PULSE)</option>
+        <option value="rand">Random no-ambiguous (X7K9P2)</option>
+        <option value="word">Two words (FOREST-PINE)</option>
+      </select>
+
+      <label for="rc-len" style="margin-top:1rem">Length (random only)</label>
+      <select id="rc-len">
+        <option value="6">6 chars</option>
+        <option value="8" selected>8 chars</option>
+        <option value="10">10 chars</option>
+      </select>
+
+      <button id="rc-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 codes</button>
+      <div id="rc-out" class="rc-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why referral codes are cheap, effective marketing</h2>
+      <p>A well-designed referral program can drive 15% to 35% of new sign-ups in mature SaaS and e-commerce. The difference between a program that works and one that disappears is almost always friction: if the code is hard to copy, dictate or remember, users drop before sharing. Every ambiguous character (0 vs O, 1 vs l vs I) costs real conversions.</p>
+      <h2>Anatomy of a good referral code</h2>
+      <ol>
+        <li><strong>Short:</strong> 6 to 10 characters. Longer becomes painful to type on mobile.</li>
+        <li><strong>No ambiguous chars:</strong> avoid 0, O, 1, l, I. If your code is misread on a call, you lose sign-ups.</li>
+        <li><strong>Pronounceable or memorable:</strong> "LUCIA-742" you can say. "X7K9P2QZ" you can't.</li>
+        <li><strong>Unique per user:</strong> validate against your database before assigning.</li>
+        <li><strong>Trackable:</strong> your system must tie each code to its owner to credit the reward.</li>
+      </ol>
+      <h2>Styles by program type</h2>
+      <ul>
+        <li><strong>Consumer / marketplace:</strong> use the user's name plus a suffix (LUCIA-742, MARTI-PULSE). Drives proximity and shares better on WhatsApp / iMessage.</li>
+        <li><strong>Fintech or banking:</strong> clean random without name, for security and privacy.</li>
+        <li><strong>B2B SaaS:</strong> abbreviated client domain (ACMECO-INV, NORTE-REF). More professional.</li>
+        <li><strong>Gaming or social app:</strong> two words (FOREST-PINE, RIVER-CALM). Server-invite vibe.</li>
+      </ul>
+      <h2>Common mistakes when launching a referral program</h2>
+      <p>Three common mistakes destroy ROI: codes too long (people don't share them), fuzzy reward ("earn points" doesn't motivate), and broken attribution (you don't know how many sign-ups came via referral vs paid). Before launch, define: how much you reward the referrer, how much the referred user, the monthly cap, and how you track. Without those four, the program leaks budget without a clear metric.</p>
+      <h2>UX best practices</h2>
+      <p>Show the user's code at the top of the flow with a big copy button. Add pre-built share messages for WhatsApp, email and Instagram. Show progress (friends invited, conversions, earnings). Send a thank-you email when a referred user completes a purchase: that single email recovers referrers who were about to drop off.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a code good?</summary><p>Short, no ambiguous characters, unique and trackable.</p></details>
+      <details><summary>Should I use the user's name?</summary><p>Yes, name codes convert better.</p></details>
+      <details><summary>How do I avoid duplicates?</summary><p>Validate against your DB and add a random suffix.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rc-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .rc-item { padding: 0.75rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-mono, monospace); font-weight: 600; cursor: pointer; letter-spacing: 0.5px; }
+  .rc-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const SAFE = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  const WORDS = ['PULSE', 'CREST', 'BLOOM', 'BEACON', 'SPARK', 'FORGE', 'TIDE', 'FOREST', 'PINE', 'RIVER', 'CALM', 'SWIFT', 'GOLD', 'STEEL'];
+
+  const name = document.getElementById('rc-name') as HTMLInputElement;
+  const style = document.getElementById('rc-style') as HTMLSelectElement;
+  const len = document.getElementById('rc-len') as HTMLSelectElement;
+  const gen = document.getElementById('rc-gen') as HTMLButtonElement;
+  const out = document.getElementById('rc-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function rnd(n: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return i[0] % n; }
+  function randomCode(n: number) {
+    let s = '';
+    for (let i = 0; i < n; i++) s += SAFE[rnd(SAFE.length)];
+    return s;
+  }
+
+  function generate() {
+    const u = (name.value || 'USER').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8) || 'USER';
+    const s = style.value;
+    const n = parseInt(len.value, 10);
+    const set = new Set<string>(); let tries = 0;
+    while (set.size < 20 && tries < 200) {
+      tries++;
+      let code = '';
+      if (s === 'name') code = `${u}-${100 + rnd(900)}`;
+      else if (s === 'namepal') code = `${u}-${pick(WORDS)}`;
+      else if (s === 'rand') code = randomCode(n);
+      else code = `${pick(WORDS)}-${pick(WORDS)}`;
+      set.add(code);
+    }
+    out.innerHTML = '';
+    [...set].forEach(c => {
+      const el = document.createElement('div');
+      el.className = 'rc-item'; el.textContent = c; el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(c); el.textContent = '✓ ' + c; setTimeout(() => el.textContent = c, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

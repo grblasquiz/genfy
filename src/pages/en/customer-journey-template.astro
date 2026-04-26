@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Customer Journey Template | Genfy';
+const description = 'Generate a customer journey map with stages, actions, emotions, frictions and opportunities. Ready for your workshop or deck.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a customer journey?', acceptedAnswer: { '@type': 'Answer', text: 'The map of all interactions a customer has with your brand, from discovering the problem to becoming a loyal user or advocate.' } },
+    { '@type': 'Question', name: 'How is it different from a funnel?', acceptedAnswer: { '@type': 'Answer', text: 'A funnel tracks metrics and conversion by stage. A journey tracks the experience: what the customer thinks, feels and does at each point, and where friction appears.' } },
+    { '@type': 'Question', name: 'How many stages?', acceptedAnswer: { '@type': 'Answer', text: 'The standard is 5: discovery, consideration, purchase, use and loyalty. Split further if your onboarding is long.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Customer Journey Template"
+    intro="Fill in your product and persona, and get a 5-stage journey map with actions, emotions, frictions and improvement opportunities.">
+
+    <div slot="tool" class="cj">
+      <label>Product or service</label>
+      <input id="cj-prod" type="text" value="Personal finance app" />
+
+      <label style="margin-top:1rem">Buyer persona</label>
+      <input id="cj-pers" type="text" value="Young professional who wants to save more" />
+
+      <button id="cj-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate journey</button>
+
+      <pre id="cj-out" class="cj-out"></pre>
+    </div>
+
+    <div slot="content">
+      <h2>Why mapping the journey matters</h2>
+      <p>
+        Companies with steady growth share an obsession: they know their customer's path inch by
+        inch — not from hypothesis, but from data and interviews. The journey isn't decorative —
+        it tells you where you lose people, what emotions show up at each step, and which levers
+        actually move the metric.
+      </p>
+
+      <h2>The 5 standard stages</h2>
+      <ol>
+        <li><strong>Discovery:</strong> the customer doesn't know you yet. They're feeling the pain. They Google, ask a peer, listen to a podcast.</li>
+        <li><strong>Consideration:</strong> they know they have a problem and compare options. Reviews, videos, use cases.</li>
+        <li><strong>Purchase / decision:</strong> they pick one. Price, free trial, guarantee and checkout friction matter most here.</li>
+        <li><strong>Use / activation:</strong> they start using the product. The first "wow moment" must happen in minutes.</li>
+        <li><strong>Loyalty / advocacy:</strong> they renew, expand, refer. This is where high LTV and referrals live.</li>
+      </ol>
+
+      <h2>What to document at each stage</h2>
+      <ul>
+        <li><strong>Actions:</strong> what the customer does, concretely.</li>
+        <li><strong>Thinking:</strong> the question in their head. "Does this solve my problem?", "Is it safe?".</li>
+        <li><strong>Emotion:</strong> anxiety, curiosity, relief, frustration. Emotions move decisions.</li>
+        <li><strong>Touchpoints:</strong> which channels they hit (web, email, support, social).</li>
+        <li><strong>Friction:</strong> what could make them drop off.</li>
+        <li><strong>Opportunity:</strong> what intervention removes the friction.</li>
+      </ul>
+
+      <h2>How to gather data without a research team</h2>
+      <ol>
+        <li>Interview 5-7 recent customers: "Walk me through how you ended up with us. What did you try before? Where did you hesitate?".</li>
+        <li>Review every support ticket from the last 90 days and bucket by stage.</li>
+        <li>Look at the actual funnel (analytics + CRM): where drop-off really happens, not where you assume.</li>
+      </ol>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li>Building the journey from the internal perspective (departments) instead of the customer's.</li>
+        <li>Skipping Discovery because it's hard to measure — it's the cheapest stage to improve.</li>
+        <li>Not pinpointing the wow moment. If you don't know it, your activation is broken.</li>
+        <li>Mixing two personas in the same journey. One journey per persona.</li>
+        <li>Leaving it on a wall without turning it into a backlog. Every documented friction needs an owner and a sprint.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a customer journey?</summary><p>The complete map of customer interactions with your brand, from problem discovery to renewal or advocacy.</p></details>
+      <details><summary>Funnel or journey?</summary><p>Funnel watches metrics, journey watches experience. They complement.</p></details>
+      <details><summary>How many stages?</summary><p>5 standard: discovery, consideration, purchase, use and loyalty.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cj-out { margin-top: 1.25rem; padding: 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.8125rem; line-height: 1.55; overflow-x: auto; }
+</style>
+
+<script>
+  const P = document.getElementById('cj-prod') as HTMLInputElement;
+  const U = document.getElementById('cj-pers') as HTMLInputElement;
+  const out = document.getElementById('cj-out')!;
+  const gen = document.getElementById('cj-gen') as HTMLButtonElement;
+
+  function generate() {
+    const prod = P.value.trim();
+    const pers = U.value.trim();
+    const t = `CUSTOMER JOURNEY — ${prod} / ${pers}
+
+1. DISCOVERY
+- Action: googles the problem, hears about it on a podcast, sees an ad.
+- Thinking: "Does this thing I'm dealing with have a solution?"
+- Emotion: curiosity, mild frustration.
+- Touchpoint: SEO, social ads, word of mouth.
+- Friction: can't find content that speaks their language.
+- Opportunity: long-form articles that answer real segment questions.
+
+2. CONSIDERATION
+- Action: compares ${prod} against 2-3 alternatives. Reads reviews.
+- Thinking: "Which one fits my case? Is the price worth it?"
+- Emotion: analytical, doubt.
+- Touchpoint: website, comparison pages, reviews, demos.
+- Friction: unclear pricing or no case studies for their segment.
+- Opportunity: honest comparison page + 3 short cases from the same profile.
+
+3. PURCHASE
+- Action: creates an account, enters payment, completes initial onboarding.
+- Thinking: "Will this work for me? Can I cancel?"
+- Emotion: expectation with mild anxiety.
+- Touchpoint: checkout, welcome email.
+- Friction: long checkout, no guarantee.
+- Opportunity: 14-day free trial + welcome email with a first "wow" in 5 minutes.
+
+4. USE / ACTIVATION
+- Action: completes the first useful task (the product's "magic action").
+- Thinking: "Okay, this actually helps."
+- Emotion: relief, satisfaction.
+- Touchpoint: product, support, in-context help.
+- Friction: can't figure out how to get the first result.
+- Opportunity: activation checklist + contextual tooltips on critical steps.
+
+5. LOYALTY / ADVOCACY
+- Action: renews, upgrades, refers a peer.
+- Thinking: "I'm not going back."
+- Emotion: trust, pride of belonging.
+- Touchpoint: usage emails, referral program, community.
+- Friction: no clear incentive to recommend.
+- Opportunity: dual-sided referral program + active community.`;
+    out.textContent = t;
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

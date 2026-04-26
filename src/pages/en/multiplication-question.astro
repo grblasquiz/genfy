@@ -1,0 +1,147 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random Multiplication Question | Genfy';
+const description = 'Random multiplication-table questions. Pick a specific table or mix. For kids, parents and teachers practicing times tables.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is this generator for?', acceptedAnswer: { '@type': 'Answer', text: 'Quick, fun multiplication-table practice for kids without printed worksheets.' } },
+    { '@type': 'Question', name: 'Can I pick a single table?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Filter by a specific table (the 7s, the 8s) or mix all of them for general review.' } },
+    { '@type': 'Question', name: 'Is there a time limit?', acceptedAnswer: { '@type': 'Answer', text: 'No default timer. Everyone answers at their own pace. For speed practice, use an external timer.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Education" title="Random Multiplication Question"
+    intro="Practice multiplication tables with random questions. Pick a specific table or mix all of them. Built for kids, parents practicing with them and teachers.">
+
+    <div slot="tool">
+      <div class="rw-row">
+        <div>
+          <label for="tm-table">Table</label>
+          <select id="tm-table">
+            <option value="0">Mix (2-12)</option>
+            <option value="2">2 times table</option>
+            <option value="3">3 times table</option>
+            <option value="4">4 times table</option>
+            <option value="5">5 times table</option>
+            <option value="6">6 times table</option>
+            <option value="7">7 times table</option>
+            <option value="8">8 times table</option>
+            <option value="9">9 times table</option>
+            <option value="10">10 times table</option>
+            <option value="11">11 times table</option>
+            <option value="12">12 times table</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:0.75rem;">
+        <button id="tm-go" class="btn btn-primary" type="button">New question</button>
+        <button id="tm-show" class="btn btn-ghost" type="button">Show answer</button>
+      </div>
+      <div id="tm-out" class="tm-out" aria-live="polite"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Times tables: why they still matter</h2>
+      <p>
+        Multiplication tables are the operational floor of all later arithmetic. Without them automated,
+        division, fractions, factoring or solving equations becomes unnecessary torture. Working memory
+        gets eaten by basic calculations and no capacity is left for reasoning. So even when it feels
+        boring, automating times tables is one of the best gifts a parent or teacher can give a kid.
+      </p>
+
+      <h2>Learning order strategy</h2>
+      <p>
+        Don't tackle every table at once. The order recommended by educational psychology: first the 2s,
+        5s and 10s (easiest, build confidence). Then 3s and 4s. The 9s have a nice trick (digits sum to
+        9), teach it before 6s, 7s and 8s. Those three are the historical "hard" ones and need patience.
+        The 11s are trivial through 9; the 12s help with dozens, hours and base-12 contexts.
+      </p>
+
+      <h2>Tricks for specific tables</h2>
+      <ul>
+        <li><strong>2 times table</strong> — doubling; the first one you internalize.</li>
+        <li><strong>5 times table</strong> — always ends in 0 or 5; like counting on one hand of fingers.</li>
+        <li><strong>9 times table</strong> — multiply by 10 and subtract the number; or add 9 to the previous result.</li>
+        <li><strong>11 times table</strong> — from 11x1 to 11x9, repeat the digit: 11x4=44, 11x7=77.</li>
+        <li><strong>4 times table</strong> — double twice: 4x7 = 7x2x2 = 14x2 = 28.</li>
+        <li><strong>Commutative</strong> — 8x7 = 7x8. If you know one, you know the other.</li>
+      </ul>
+
+      <h2>Practice: minimum viable dose</h2>
+      <p>
+        The 5/3/30 rule: five minutes a day, three times a week, for 30 days. Enough for an 8-year-old to
+        automate all tables up to 10. More than long infrequent sessions, what works is short consistent
+        practice. Long-term memory is built by spaced repetition, not by marathons.
+      </p>
+
+      <h2>How to avoid frustration</h2>
+      <p>
+        If your kid stalls on the 7s, don't bash that table for the entire session. Mix: three from the
+        2s (knows), one from the 7s (hard), three from the 5s (knows), one from the 7s. That 4:1 ratio
+        keeps confidence high while exposing the hard one without emotional shutdown. Constant
+        frustration creates math aversion, and math aversion is very hard to reverse.
+      </p>
+
+      <h2>For teachers</h2>
+      <p>
+        Run 20-question sets for initial diagnostics. Note which ones miss to focus the next sessions.
+        After two weeks, repeat the diagnostic: the previously-missed ones should drop. That concrete
+        measurement motivates kids: "you used to miss 8, now you only miss 2". Making it measurable
+        beats vague "you're improving" feedback.
+      </p>
+
+      <h2>Beyond the 10 times table</h2>
+      <p>
+        Traditionally tables go to 10 (or 12 in many English-speaking countries). Reaching 12 is worth it
+        for hours, dozens and conversions. Going further is optional; most real-world problems are solved
+        by combining basic tables. The point isn't extending the range but consolidating the first 12.
+      </p>
+
+      <h2>Games to learn them</h2>
+      <ul>
+        <li><strong>Card stack</strong> — two players each flip a card; whoever says the product first keeps both.</li>
+        <li><strong>Times bingo</strong> — bingo cards with products; the teacher reads multiplications.</li>
+        <li><strong>Table of the day</strong> — one table per day, repeat 5 times throughout the day.</li>
+        <li><strong>Time chart</strong> — log how long it takes to answer and graph weekly improvement.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is this generator for?</summary><p>Practice times tables fast, without printed sheets.</p></details>
+      <details><summary>Can I pick a single table?</summary><p>Yes — specific table or full mix.</p></details>
+      <details><summary>Is there a time limit?</summary><p>No default. Use an external timer for speed practice.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+  .tm-out { margin-top: 1rem; padding: 1.5rem; background: var(--bg-soft, #f5f5f7); border-radius: var(--radius-md, 8px); font-family: var(--font-mono); font-size: 1.5rem; min-height: 5rem; text-align: center; }
+</style>
+
+<script>
+  const tEl = document.getElementById('tm-table') as HTMLSelectElement;
+  const out = document.getElementById('tm-out') as HTMLDivElement;
+  const go = document.getElementById('tm-go') as HTMLButtonElement;
+  const show = document.getElementById('tm-show') as HTMLButtonElement;
+  let answer = 0, q = '';
+
+  function rint(min: number, max: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return min + (i[0] % (max - min + 1)); }
+  function gen() {
+    const t = parseInt(tEl.value, 10);
+    let a, b;
+    if (t === 0) { a = rint(2, 12); b = rint(1, 12); }
+    else { a = t; b = rint(1, 12); }
+    answer = a * b;
+    q = `${a} × ${b} = ?`;
+    out.textContent = q;
+  }
+  go.addEventListener('click', gen);
+  show.addEventListener('click', () => { out.textContent = q.replace('?', String(answer)); });
+  gen();
+</script>

@@ -1,0 +1,159 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de descripción Google Ads gratis | Genfy';
+const description = 'Generá descripciones de Google Ads optimizadas para Quality Score. 90 caracteres con beneficio, prueba y CTA en cada una de las 4 descriptions del RSA.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuántos caracteres por descripción en Google Ads?', acceptedAnswer: { '@type': 'Answer', text: 'Cada descripción permite hasta 90 caracteres. Los anuncios responsive aceptan hasta 4 descripciones, Google muestra 2 por vez.' } },
+    { '@type': 'Question', name: '¿Conviene repetir info entre headline y descripción?', acceptedAnswer: { '@type': 'Answer', text: 'No. Headline y descripción se complementan: si headline tiene el beneficio principal, descripción aporta detalle, prueba o CTA específico.' } },
+    { '@type': 'Question', name: '¿Las descripciones impactan el CTR?', acceptedAnswer: { '@type': 'Answer', text: 'Sí pero menos que el headline. La descripción confirma la intención y ayuda a calificar el lead antes del click.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de descripción Google Ads"
+    intro="Cargá producto, beneficio y prueba. Genfy te devuelve 4 descripciones complementarias para tu RSA, dentro de los 90 caracteres permitidos.">
+
+    <div slot="tool" class="gd">
+      <label for="gd-product">Producto o servicio</label>
+      <input id="gd-product" type="text" placeholder="Curso de ingles online" value="Curso de ingles online" />
+
+      <label for="gd-benefit" style="margin-top:1rem">Beneficio detallado</label>
+      <input id="gd-benefit" type="text" placeholder="Conversaciones reales en 6 meses..." value="Conversaciones reales en 6 meses" />
+
+      <label for="gd-proof" style="margin-top:1rem">Prueba o garantía</label>
+      <input id="gd-proof" type="text" placeholder="+5.000 alumnos certificados..." value="+5.000 alumnos certificados" />
+
+      <label for="gd-cta" style="margin-top:1rem">CTA</label>
+      <input id="gd-cta" type="text" placeholder="Probalo gratis 7 dias" value="Probalo gratis 7 dias" />
+
+      <button id="gd-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 4 descripciones</button>
+
+      <div id="gd-out" class="gd-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>El rol de la descripción dentro del RSA</h2>
+      <p>
+        En un anuncio responsive de búsqueda, los headlines son la cabeza y las descripciones el cuerpo. Cargás hasta 4 descripciones de 90 caracteres cada una, y Google muestra 2 por vez. La función de la descripción es confirmar la intención del usuario y darle el último empujón antes del click. El headline atrae, la descripción cierra.
+      </p>
+      <p>
+        Esto significa que cada descripción tiene que aportar algo nuevo. Si headline dice "Curso de inglés online | 6 meses", la descripción no debería decir "Curso de inglés online en 6 meses con profesores expertos". Tiene que aportar prueba, detalle, garantía o un beneficio adicional.
+      </p>
+
+      <h2>Las 4 descripciones bien distribuidas</h2>
+      <ol>
+        <li><strong>Descripción 1 — Beneficio detallado:</strong> "Hablá inglés con confianza en 6 meses. Método validado por +5.000 alumnos."</li>
+        <li><strong>Descripción 2 — Prueba o autoridad:</strong> "Profesores nativos certificados. 4.8★ en reviews verificados de Google."</li>
+        <li><strong>Descripción 3 — Garantía o reduce-friction:</strong> "Probalo 7 días gratis. Sin tarjeta. Cancelá cuando quieras."</li>
+        <li><strong>Descripción 4 — CTA con urgencia suave:</strong> "Reservá tu prueba ahora. Disponibilidad limitada cada mes."</li>
+      </ol>
+
+      <h2>El límite de 90 caracteres y cómo aprovecharlo</h2>
+      <p>
+        90 caracteres dan más espacio que un headline pero menos del que parece. Una buena descripción es una frase corta y una más corta. Estructura: claim + soporte. "Hablá fluido en 6 meses. Método validado por +5.000 alumnos." (62 chars + 8 chars de margen).
+      </p>
+      <p>
+        Errores típicos al usar los 90 caracteres: meter dos beneficios distintos sin conexión, alargar la frase con adjetivos, usar puntuación rara para llenar.
+      </p>
+
+      <h2>Cómo Google combina headlines y descripciones</h2>
+      <p>
+        Google muestra 3 headlines + 2 descripciones por vez en un RSA. La elección no es aleatoria: el sistema testea combinaciones y prioriza las que tienen mejor CTR para el contexto. Si tus 4 descripciones son intercambiables, Google no aprende nada. Si cada una tiene un ángulo distinto (beneficio, prueba, garantía, CTA), el sistema puede combinar la descripción correcta con el headline correcto para cada búsqueda.
+      </p>
+
+      <h2>Qué Google permite y qué no en descripciones</h2>
+      <p>Google rechaza descripciones que tengan:</p>
+      <ul>
+        <li><strong>Mayúsculas excesivas:</strong> "GANÁ DINERO YA" — rechazado en review.</li>
+        <li><strong>Puntuación raras:</strong> "!!!", "???" — limitado a un signo por frase.</li>
+        <li><strong>Símbolos no estándar:</strong> ★★★★★, ✅ en exceso.</li>
+        <li><strong>Promesas absolutas no verificables:</strong> "100% garantizado", "el mejor del mundo" sin sustento.</li>
+        <li><strong>Información personal:</strong> teléfonos, emails (van en extensiones, no en texto).</li>
+      </ul>
+
+      <h2>Cómo escribir una descripción que confirma la intención</h2>
+      <p>
+        Cuando alguien busca "curso de inglés online" y tu headline dice "Curso de Inglés Online | 6 Meses", la descripción ideal no repite eso. Tiene que confirmar que es lo que el usuario busca y resolver una posible objeción. Tres patrones que rinden:
+      </p>
+      <ul>
+        <li><strong>Patrón "respuesta a la objeción":</strong> "Sin tarjeta. Sin contratos. Probá 7 días gratis."</li>
+        <li><strong>Patrón "prueba específica":</strong> "+5.000 alumnos certificados. 4.8★ en Google Reviews."</li>
+        <li><strong>Patrón "qué incluye":</strong> "Clases en vivo + plataforma + certificado. Todo desde $19/mes."</li>
+      </ul>
+
+      <h2>Errores típicos que bajan la conversión</h2>
+      <ul>
+        <li><strong>Repetir el headline en la descripción:</strong> el usuario ya lo leyó.</li>
+        <li><strong>Sin CTA:</strong> al menos una de las 4 descripciones tiene que cerrar con un CTA específico.</li>
+        <li><strong>Promesas vagas:</strong> "La mejor opción del mercado" sin sustento.</li>
+        <li><strong>Mucha keyword stuffing:</strong> "Curso inglés online curso inglés mejor curso inglés" — Google lo penaliza.</li>
+        <li><strong>Olvidar pinning estratégico:</strong> si querés que un disclaimer aparezca siempre, pinearlo en posición 1 o 2.</li>
+      </ul>
+
+      <h2>Pinning: cuándo usarlo y cuándo no</h2>
+      <p>
+        Google permite pinear headlines y descripciones en posiciones específicas. Cuándo conviene:
+      </p>
+      <ul>
+        <li><strong>Disclaimers regulatorios:</strong> en finanzas, salud, seguros — pin en posición fija.</li>
+        <li><strong>Descripción crítica para la marca:</strong> si una descripción contiene la oferta principal y querés garantizar que se muestre.</li>
+        <li><strong>Cuándo NO pinear:</strong> en la mayoría de casos. Pinear bloquea la optimización del algoritmo. Solo pin lo imprescindible.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántos caracteres por descripción?</summary><p>90. Hasta 4 descripciones por RSA.</p></details>
+      <details><summary>¿Conviene pinear?</summary><p>Solo para disclaimers regulatorios o info crítica. En general, dejá que Google optimice.</p></details>
+      <details><summary>¿Headlines y descripciones se repiten?</summary><p>No deberían. Aportan ángulos distintos al mismo mensaje.</p></details>
+      <details><summary>¿Cuántas descripciones cargar?</summary><p>4 (el máximo) con ángulos distintos: beneficio, prueba, garantía, CTA.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .gd-out { margin-top: 1.25rem; display: grid; gap: 0.5rem; }
+  .gd-card { padding: 0.75rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .gd-card:hover { border-color: var(--accent); }
+  .gd-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.4rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const product = document.getElementById('gd-product') as HTMLInputElement;
+  const benefit = document.getElementById('gd-benefit') as HTMLInputElement;
+  const proof = document.getElementById('gd-proof') as HTMLInputElement;
+  const cta = document.getElementById('gd-cta') as HTMLInputElement;
+  const gen = document.getElementById('gd-gen') as HTMLButtonElement;
+  const out = document.getElementById('gd-out')!;
+
+  function generate() {
+    const P = product.value.trim() || 'Producto';
+    const B = benefit.value.trim() || 'Resultados rapidos';
+    const Pr = proof.value.trim() || 'Validado';
+    const C = cta.value.trim() || 'Empezá';
+
+    const list = [
+      `${B}. ${Pr}.`.slice(0, 90),
+      `${Pr}. Garantía total y soporte humano. ${C}.`.slice(0, 90),
+      `Sin tarjeta. ${C}. Cancelá cuando quieras.`.slice(0, 90),
+      `${P} con ${B.toLowerCase()}. ${C} hoy.`.slice(0, 90),
+    ];
+
+    out.innerHTML = '';
+    list.forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'gd-card';
+      el.title = 'Click para copiar';
+      const len = b.length;
+      el.innerHTML = `${b}<div class="gd-meta">D${i+1} · ${len}/90 caracteres</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copiado'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,218 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Pull Request Title Generator | Genfy';
+const description = 'Generate clear, consistent pull request titles. Compatible with conventional commits and squash merges.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good PR title?', acceptedAnswer: { '@type': 'Answer', text: 'Type + optional scope + imperative verb + what changes. Example: feat(auth): add password reset flow.' } },
+    { '@type': 'Question', name: 'Why mirror Conventional Commits?', acceptedAnswer: { '@type': 'Answer', text: 'If your repo uses squash merge, the PR title becomes the final commit message. Keeping it in Conventional Commits format enables automatic changelogs.' } },
+    { '@type': 'Question', name: 'Recommended length?', acceptedAnswer: { '@type': 'Answer', text: 'Between 50 and 72 characters. Enough to describe the change without truncation in lists and notifications.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Tech / Dev"
+    title="Pull Request Title Generator"
+    intro="Generate clear, imperative PR titles with type and scope. Compatible with squash merge and automatic changelogs."
+  >
+    <div slot="tool" class="pr-tool">
+      <div class="pr-grid">
+        <div>
+          <label for="pr-type">Type</label>
+          <select id="pr-type">
+            <option value="feat">feat</option>
+            <option value="fix">fix</option>
+            <option value="docs">docs</option>
+            <option value="refactor">refactor</option>
+            <option value="perf">perf</option>
+            <option value="test">test</option>
+            <option value="chore">chore</option>
+          </select>
+        </div>
+        <div>
+          <label for="pr-scope">Scope</label>
+          <input id="pr-scope" type="text" placeholder="auth, api, ui" />
+        </div>
+        <div>
+          <label for="pr-area">Area</label>
+          <select id="pr-area">
+            <option value="backend">backend</option>
+            <option value="frontend">frontend</option>
+            <option value="ops">infra/devops</option>
+            <option value="qa">testing/qa</option>
+          </select>
+        </div>
+      </div>
+      <div class="pr-actions">
+        <button id="pr-gen" class="btn btn-primary" type="button">Generate</button>
+        <button id="pr-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+      </div>
+      <textarea id="pr-out" class="mono" rows="6" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why the PR title matters</h2>
+      <p>
+        The PR title is what reviewers see in their list, what shows up in notifications and -if
+        you use squash merge- what ends up as the commit message on main. A good title saves
+        clicks (you don't need to open the PR to know what it's about) and makes searching six
+        months later easy.
+      </p>
+
+      <h2>Recommended structure</h2>
+      <p>
+        <code>&lt;type&gt;(&lt;scope&gt;): &lt;imperative verb&gt; &lt;what changes&gt;</code>.
+        Examples: <code>feat(auth): add password reset flow</code>,
+        <code>fix(api): handle null response from upstream</code>,
+        <code>refactor(billing): extract invoice generator into service</code>.
+      </p>
+
+      <h2>Imperative verbs</h2>
+      <p>
+        "Add", "fix", "refactor", "remove", "update", "improve", "rename", "extract", "bump". The
+        gerund ("adding") and past tense ("added") are less direct. The mnemonic works for PR
+        titles too: "If applied, this PR will <strong>add password reset flow</strong>".
+      </p>
+
+      <h2>What to avoid</h2>
+      <ul>
+        <li>"Misc fixes" or "Update stuff": tell you nothing.</li>
+        <li>Titles with just the ticket number: <code>PROJ-123</code> with no description.</li>
+        <li>WIP in the title once it's ready for review.</li>
+        <li>Leading emojis if your repo uses squash merge: break parsing tools.</li>
+        <li>More than 72 characters: gets truncated in many views.</li>
+      </ul>
+
+      <h2>Squash merge and commit message</h2>
+      <p>
+        With squash merge, the PR title becomes the commit message on main. If you follow
+        Conventional Commits in titles, semantic-release can build changelogs automatically. With
+        merge commit, the original commits are preserved and the PR title is just metadata.
+      </p>
+
+      <h2>The PR body</h2>
+      <p>
+        The title says what; the body says why. Typical template: <strong>What</strong> (one-line
+        summary), <strong>Why</strong> (motivation), <strong>How</strong> (technical decisions),
+        <strong>Testing</strong> (how you verified), <strong>Screenshots</strong> (when relevant),
+        <strong>Related</strong> (links to issues, docs).
+      </p>
+
+      <h2>Tickets and references</h2>
+      <p>
+        If your system has magic words (<code>Closes #123</code>, <code>Fixes JIRA-456</code>),
+        put them in the body, not the title. GitHub and GitLab close issues automatically on
+        merge. Exception: include the ticket ID in the title if your repo policy requires it.
+      </p>
+
+      <h2>Big PRs vs small PRs</h2>
+      <p>
+        If the title doesn't fit in 72 characters, the PR is probably too large. Split it into
+        smaller PRs with specific titles. Reviews of huge PRs are shallow and slow the team.
+        Sensible target: PRs reviewable in 15 minutes or less.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Good title?</summary><p>Type + scope + imperative + what changes. Ex: <code>feat(auth): add password reset flow</code>.</p></details>
+      <details><summary>Why mirror CC?</summary><p>With squash merge the title becomes the commit; enables automatic changelogs.</p></details>
+      <details><summary>Length?</summary><p>50 to 72 characters.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pr-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .pr-grid { grid-template-columns: 1fr; } }
+  .pr-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const type = document.getElementById('pr-type') as HTMLSelectElement;
+  const scope = document.getElementById('pr-scope') as HTMLInputElement;
+  const area = document.getElementById('pr-area') as HTMLSelectElement;
+  const out = document.getElementById('pr-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('pr-gen') as HTMLButtonElement;
+  const copy = document.getElementById('pr-copy') as HTMLButtonElement;
+
+  const titles: Record<string, Record<string, string[]>> = {
+    feat: {
+      backend: ['add password reset flow', 'support pagination on list endpoint', 'expose health check endpoint', 'add bulk import for products'],
+      frontend: ['add dark mode toggle', 'allow drag and drop on file upload', 'add empty state to dashboard', 'add filter chips to search'],
+      ops: ['add staging environment to deploy pipeline', 'enable canary releases for api service', 'add backup schedule for database', 'add monitoring dashboard for queue'],
+      qa: ['add e2e tests for checkout flow', 'add visual regression tests for landing', 'add contract tests for billing', 'add load tests for auth'],
+    },
+    fix: {
+      backend: ['handle null response from upstream', 'prevent duplicate orders on retry', 'correct timezone in invoice dates', 'release database connection on error'],
+      frontend: ['restore focus after closing modal', 'avoid layout shift on image load', 'fix typo in error message', 'prevent double submit on slow network'],
+      ops: ['restart workers on memory leak', 'roll back broken migration', 'fix flaky test on ci', 'correct cache key for assets'],
+      qa: ['stabilize flaky checkout test', 'restore broken integration suite', 'unblock pipeline on long e2e', 'pin browser version to avoid drift'],
+    },
+    docs: {
+      backend: ['document new pagination params', 'add troubleshooting section to readme', 'document deploy steps for staging', 'add api versioning policy'],
+      frontend: ['document component props in storybook', 'update install instructions', 'add screenshots to feature doc', 'clarify accessibility guidelines'],
+      ops: ['document on-call rotation', 'add runbook for database failover', 'document backup restore process', 'add architecture diagram'],
+      qa: ['document test naming convention', 'add testing strategy doc', 'document how to run e2e locally', 'add coverage targets per module'],
+    },
+    refactor: {
+      backend: ['extract invoice generator into service', 'consolidate auth middleware', 'simplify cart total calculation', 'rename internal helpers for clarity'],
+      frontend: ['extract reusable form components', 'simplify state in product page', 'split monolithic context provider', 'replace class components with hooks'],
+      ops: ['consolidate terraform modules', 'split build into reusable steps', 'normalize naming for resources', 'replace shell scripts with python'],
+      qa: ['unify test data builders', 'extract page objects for e2e', 'consolidate setup hooks', 'replace fixtures with factories'],
+    },
+    perf: {
+      backend: ['cache user profile queries', 'avoid n+1 on order list', 'reduce payload size on list endpoint', 'add database index for hot query'],
+      frontend: ['lazy load heavy charts', 'memoize expensive selectors', 'reduce bundle size by code splitting', 'replace heavy lib with native'],
+      ops: ['cache npm dependencies between runs', 'parallelize build matrix', 'use spot instances for batch jobs', 'enable cdn for static assets'],
+      qa: ['parallelize e2e tests', 'reduce duplicate setup across tests', 'speed up component test runner', 'cache build artifacts in ci'],
+    },
+    test: {
+      backend: ['add unit tests for validation rules', 'cover edge cases in pagination', 'add integration tests for new endpoint', 'restore broken auth test'],
+      frontend: ['add snapshot tests for header', 'cover empty state in dashboard', 'add a11y tests for forms', 'add unit tests for form helpers'],
+      ops: ['add smoke tests after deploy', 'add canary tests for production', 'add backup restore test in staging', 'verify monitoring alerts on dry run'],
+      qa: ['add regression suite for cart', 'cover login edge cases in e2e', 'add visual baseline for landing', 'add accessibility audit job'],
+    },
+    chore: {
+      backend: ['bump dependencies to latest minor', 'remove unused config option', 'update license year', 'tidy up project structure'],
+      frontend: ['update icon set to latest', 'remove dead css', 'normalize line endings', 'sort imports alphabetically'],
+      ops: ['update node base image', 'rotate access keys', 'remove deprecated env vars', 'archive unused repository'],
+      qa: ['update test browser matrix', 'remove flaky tests blocked indefinitely', 'archive old test suites', 'sync test data between envs'],
+    },
+  };
+
+  function build() {
+    const t = type.value;
+    const sc = scope.value.trim();
+    const ar = area.value;
+    const arr = (titles[t] && titles[t][ar]) || ['describe change here'];
+    const subject = arr[Math.floor(Math.random() * arr.length)];
+    const head = sc ? `${t}(${sc}): ${subject}` : `${t}: ${subject}`;
+    const variants = [
+      head,
+      sc ? `${t}(${sc}): ${subject}` : head,
+      `${head} (${ar})`,
+    ];
+    out.value = [...new Set(variants)].join('\n');
+  }
+  gen.addEventListener('click', build);
+  [type, scope, area].forEach(el => el.addEventListener('change', build));
+  scope.addEventListener('input', build);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value.split('\n')[0]);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copied';
+    setTimeout(() => { icon.textContent = 'Copy'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

@@ -1,0 +1,158 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Text Diff Checker | Genfy';
+const description = 'Compare two texts line by line with added, removed and changed lines highlighted. Great for code review, documents and translations.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Which algorithm does it use?', acceptedAnswer: { '@type': 'Answer', text: 'A Longest Common Subsequence (LCS) variant that detects equal, added and removed lines. Same principle as git diff at line level.' } },
+    { '@type': 'Question', name: 'Line-level or character-level?', acceptedAnswer: { '@type': 'Answer', text: 'Line-level. If two lines differ by a single word, they show as one removal and one addition. For intra-line differences, read both versions side by side.' } },
+    { '@type': 'Question', name: 'Are my texts uploaded?', acceptedAnswer: { '@type': 'Answer', text: 'No. The comparison runs 100% in the browser. You can compare contracts, private code or sensitive data without risk.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text" title="Text Diff Checker"
+    intro="Paste two texts and get a line-by-line diff with added, removed and unchanged lines highlighted.">
+
+    <div slot="tool">
+      <div class="td-grid">
+        <div>
+          <label for="td-a">Text A (original)</label>
+          <textarea id="td-a" rows="10" style="font-family: var(--font-mono); font-size: 0.85rem;">Hello world
+This is version 1
+Common line
+Something to delete
+End</textarea>
+        </div>
+        <div>
+          <label for="td-b">Text B (modified)</label>
+          <textarea id="td-b" rows="10" style="font-family: var(--font-mono); font-size: 0.85rem;">Hello world
+This is version 2
+Common line
+A new added line
+End</textarea>
+        </div>
+      </div>
+      <button id="td-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Compare</button>
+      <div id="td-stats" class="td-stats"></div>
+      <label style="margin-top:1rem;">Diff</label>
+      <div id="td-diff" class="td-diff"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why comparing texts matters</h2>
+      <p>
+        Comparing two versions of a text is an everyday task across many roles: reviewing changes in a contract before signing, approving a code PR, checking a translation didn't lose content, auditing a legal document between revisions, comparing expected vs actual API responses during testing. In all those cases the human eye fails on long texts. A diff tool turns minutes of manual work into seconds.
+      </p>
+
+      <h2>How a diff works</h2>
+      <p>
+        Conceptually, a diff finds the "longest common subsequence" (LCS) between two texts. Lines present in both are marked equal. Lines only in A are marked removed. Lines only in B are marked added. The result is presented line by line, color-coded: red for deletions, green for additions, grey for equal.
+      </p>
+
+      <h2>Typical use cases</h2>
+      <ul>
+        <li><strong>Code review.</strong> Although GitHub shows diffs automatically, sometimes you need to compare two snippets outside a PR.</li>
+        <li><strong>Legal contracts.</strong> Negotiated version vs final version: pinpoint changed passages.</li>
+        <li><strong>Translations.</strong> Confirm no paragraph was lost.</li>
+        <li><strong>Configs.</strong> Compare prod vs staging configs to find a bug source.</li>
+        <li><strong>Documentation.</strong> See what changed between two manual versions.</li>
+        <li><strong>Exported data.</strong> Compare two CSV or JSON exports to detect changed records.</li>
+      </ul>
+
+      <h2>Line-level vs character-level diff</h2>
+      <p>
+        This tool diffs by line. If text A says "Hello world" and B says "Hello worlds" (one extra s), they appear as two distinct lines: one added, one removed. For fine intra-line differences (typos, single word changes), character-level diff shows contrast better but is slower and noisier for long texts. Most professional tools (git, IDE diffs) do line first and optionally character within modified lines.
+      </p>
+
+      <h2>Tips for useful comparisons</h2>
+      <ul>
+        <li><strong>Normalize whitespace first.</strong> If one text has tabs and the other spaces, every indented line shows as a change. Convert both to one standard.</li>
+        <li><strong>Watch line endings.</strong> CRLF (Windows) vs LF (Unix) makes identical lines look different. Run both through a normalizer.</li>
+        <li><strong>For JSON, format first.</strong> Comparing two minified 200-line JSONs is unreadable. Format both with 2-space indent and re-compare.</li>
+        <li><strong>For HTML, consider a specialized diff.</strong> Structural changes are more meaningful than plain-text diffs.</li>
+      </ul>
+
+      <h2>Beyond basic diff</h2>
+      <p>
+        For advanced flows, more powerful tools exist. <strong>git diff</strong> in CLI with flags like <code>--word-diff</code> or <code>--color-words</code> gives precise diffs. <strong>diff-match-patch</strong> by Google is a JS library combining line, word and character diff. <strong>Beyond Compare</strong> and <strong>Meld</strong> are desktop apps with sophisticated UI. For the 95% case, a simple web tool suffices.
+      </p>
+
+      <h2>Privacy</h2>
+      <p>
+        Because the comparison runs in your browser, you can paste private contracts, proprietary code, personal data without risk. Genfy's server never sees the content. To verify, open DevTools and watch Network while comparing: zero requests to the server.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Which algorithm does it use?</summary><p>An LCS variant — same principle as git diff at line level.</p></details>
+      <details><summary>Line-level or character-level?</summary><p>Line. Small intra-line changes show as removal plus addition.</p></details>
+      <details><summary>Are my texts uploaded?</summary><p>No. 100% local in the browser.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .td-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .td-stats { font-family: var(--font-mono); font-size: 0.85rem; margin-top: 0.75rem; min-height: 1.25rem; color: var(--text-soft); }
+  .td-diff { background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.75rem; font-family: var(--font-mono); font-size: 0.85rem; min-height: 4rem; max-height: 400px; overflow: auto; white-space: pre-wrap; }
+  .td-line { padding: 0.05rem 0.5rem; border-radius: 2px; }
+  .td-add { background: rgba(5,150,105,0.12); color: var(--success); }
+  .td-del { background: rgba(220,38,38,0.12); color: var(--danger); }
+  .td-eq { color: var(--text-subtle); }
+  @media (max-width: 700px) { .td-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const aEl = document.getElementById('td-a') as HTMLTextAreaElement;
+  const bEl = document.getElementById('td-b') as HTMLTextAreaElement;
+  const diffEl = document.getElementById('td-diff') as HTMLDivElement;
+  const stats = document.getElementById('td-stats') as HTMLDivElement;
+  const genBtn = document.getElementById('td-gen') as HTMLButtonElement;
+
+  function escapeHtml(s: string) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function diff(a: string[], b: string[]): { type: '='|'+'|'-'; line: string }[] {
+    const m = a.length, n = b.length;
+    const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = m - 1; i >= 0; i--) {
+      for (let j = n - 1; j >= 0; j--) {
+        if (a[i] === b[j]) dp[i][j] = dp[i+1][j+1] + 1;
+        else dp[i][j] = Math.max(dp[i+1][j], dp[i][j+1]);
+      }
+    }
+    const out: { type: '='|'+'|'-'; line: string }[] = [];
+    let i = 0, j = 0;
+    while (i < m && j < n) {
+      if (a[i] === b[j]) { out.push({ type: '=', line: a[i] }); i++; j++; }
+      else if (dp[i+1][j] >= dp[i][j+1]) { out.push({ type: '-', line: a[i] }); i++; }
+      else { out.push({ type: '+', line: b[j] }); j++; }
+    }
+    while (i < m) { out.push({ type: '-', line: a[i++] }); }
+    while (j < n) { out.push({ type: '+', line: b[j++] }); }
+    return out;
+  }
+
+  function run() {
+    const a = aEl.value.split('\n');
+    const b = bEl.value.split('\n');
+    const result = diff(a, b);
+    let added = 0, removed = 0, equal = 0;
+    let html = '';
+    for (const r of result) {
+      if (r.type === '+') { added++; html += '<div class="td-line td-add">+ ' + escapeHtml(r.line) + '</div>'; }
+      else if (r.type === '-') { removed++; html += '<div class="td-line td-del">- ' + escapeHtml(r.line) + '</div>'; }
+      else { equal++; html += '<div class="td-line td-eq">  ' + escapeHtml(r.line) + '</div>'; }
+    }
+    diffEl.innerHTML = html;
+    stats.textContent = `+${added} added, -${removed} removed, ${equal} unchanged`;
+  }
+  aEl.addEventListener('input', run);
+  bEl.addEventListener('input', run);
+  genBtn.addEventListener('click', run);
+  run();
+</script>

@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de CSS Flexbox | Genfy';
+const description = 'Generá layouts con Flexbox: dirección, alineación, justify, wrap y gap. Vista previa interactiva y CSS listo.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es flexbox?', acceptedAnswer: { '@type': 'Answer', text: 'Es un sistema de layout 1D que distribuye, alinea y dimensiona items en una sola dirección (fila o columna).' } },
+    { '@type': 'Question', name: '¿justify-content vs align-items?', acceptedAnswer: { '@type': 'Answer', text: 'justify-content alinea en el eje principal (la dirección de flex-direction). align-items alinea en el eje cruzado (perpendicular).' } },
+    { '@type': 'Question', name: '¿flex: 1 qué hace?', acceptedAnswer: { '@type': 'Answer', text: 'Es shorthand de flex: 1 1 0%. Hace que el item crezca y se encoja proporcionalmente, ocupando todo el espacio disponible.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Generador de CSS Flexbox"
+    intro="Configurá flex-direction, justify-content, align-items, gap y wrap. Visualizá los items en vivo y copiá el CSS.">
+
+    <div slot="tool" class="fb">
+      <div class="fb-grid">
+        <div>
+          <label for="fb-dir">flex-direction</label>
+          <select id="fb-dir"><option>row</option><option>row-reverse</option><option>column</option><option>column-reverse</option></select>
+        </div>
+        <div>
+          <label for="fb-jc">justify-content</label>
+          <select id="fb-jc"><option>flex-start</option><option>center</option><option>flex-end</option><option>space-between</option><option>space-around</option><option>space-evenly</option></select>
+        </div>
+        <div>
+          <label for="fb-ai">align-items</label>
+          <select id="fb-ai"><option>stretch</option><option>flex-start</option><option>center</option><option>flex-end</option><option>baseline</option></select>
+        </div>
+        <div>
+          <label for="fb-wrap">flex-wrap</label>
+          <select id="fb-wrap"><option>nowrap</option><option>wrap</option><option>wrap-reverse</option></select>
+        </div>
+        <div>
+          <label for="fb-gap">gap</label>
+          <input id="fb-gap" type="text" value="1rem" />
+        </div>
+        <div>
+          <label for="fb-items">items</label>
+          <input id="fb-items" type="number" min="1" max="20" value="4" />
+        </div>
+      </div>
+
+      <div class="fb-actions">
+        <button id="fb-cp" class="btn btn-primary" type="button">Copiar CSS</button>
+      </div>
+
+      <pre><code id="fb-out"></code></pre>
+
+      <div id="fb-preview" class="fb-preview"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es Flexbox</h2>
+      <p>Flexbox es un modelo de layout unidimensional que organiza items a lo largo de un eje (horizontal o vertical). Es la herramienta correcta cuando tenés un grupo de elementos que querés alinear, distribuir o redimensionar en una sola dirección: navbars, toolbars, listas, cards en fila.</p>
+
+      <h2>Ejes y propiedades</h2>
+      <ul>
+        <li><strong>flex-direction</strong>: define el eje principal. row (default) horizontal, column vertical.</li>
+        <li><strong>justify-content</strong>: alinea items en el eje principal.</li>
+        <li><strong>align-items</strong>: alinea items en el eje cruzado.</li>
+        <li><strong>flex-wrap</strong>: permite que los items pasen a la siguiente línea si no entran.</li>
+        <li><strong>gap</strong>: espacio entre items.</li>
+      </ul>
+
+      <h2>Centrar es una línea</h2>
+      <p>El meme de "centrar verticalmente en CSS" murió con flexbox. Hoy son tres líneas:</p>
+      <pre><code>display: flex;
+justify-content: center;
+align-items: center;</code></pre>
+      <p>Funciona en cualquier contenedor con altura definida (incluso 100vh). Adiós a las gymnastics con position: absolute y transform: translate.</p>
+
+      <h2>flex shorthand</h2>
+      <p>La propiedad flex en cada item controla cómo crece, se encoge y su tamaño base. Patrones útiles:</p>
+      <ul>
+        <li><strong>flex: 1</strong>: el item ocupa el espacio disponible. Útil para columnas equitativas.</li>
+        <li><strong>flex: 0 0 200px</strong>: tamaño fijo de 200px, no crece ni se encoge.</li>
+        <li><strong>flex: 1 0 200px</strong>: mínimo 200px, crece si hay espacio.</li>
+        <li><strong>flex-shrink: 0</strong>: el item nunca se achica, aunque sobre espacio.</li>
+      </ul>
+
+      <h2>Patrones comunes</h2>
+      <p><strong>Navbar con logo a la izquierda y links a la derecha</strong>: <code>justify-content: space-between</code>. <strong>Form con label arriba y input abajo</strong>: <code>flex-direction: column</code>. <strong>Card con avatar + texto</strong>: row con gap. <strong>Footer con auto-margin</strong>: <code>margin-top: auto</code> en el último item lo empuja al fondo del contenedor.</p>
+
+      <h2>Errores comunes</h2>
+      <ul>
+        <li><strong>Confundir ejes</strong>: si cambiás flex-direction a column, justify-content y align-items intercambian sentido.</li>
+        <li><strong>flex: 1 sin pensar</strong>: en algunos casos rompe overflow porque iguala todo.</li>
+        <li><strong>min-width default</strong>: por default los flex items no se achican menos que su contenido. Usá <code>min-width: 0</code> si necesitás truncar texto.</li>
+      </ul>
+
+      <h2>Cuándo no usar flexbox</h2>
+      <p>Si necesitás controlar filas y columnas a la vez (un grid de productos donde cada fila tiene 3 items y querés que las cards alineen verticalmente), Grid es mejor herramienta. Flexbox brilla en una dirección; Grid en dos.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es flexbox?</summary><p>Sistema de layout 1D que distribuye y alinea items en una dirección.</p></details>
+      <details><summary>¿justify vs align?</summary><p>justify-content en el eje principal, align-items en el cruzado.</p></details>
+      <details><summary>¿Qué hace flex: 1?</summary><p>Hace que el item crezca proporcionalmente ocupando el espacio disponible.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .fb-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .fb-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+  .fb-preview { display: flex; padding: 1rem; background: var(--bg-inset); border-radius: var(--radius); margin-top: 1rem; min-height: 200px; }
+  .fb-preview > div { background: var(--accent); color: #fff; padding: 1rem 1.5rem; border-radius: var(--radius-sm); font-weight: 600; }
+  @media (max-width: 600px) { .fb-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const dir = document.getElementById('fb-dir') as HTMLSelectElement;
+  const jc = document.getElementById('fb-jc') as HTMLSelectElement;
+  const ai = document.getElementById('fb-ai') as HTMLSelectElement;
+  const wrap = document.getElementById('fb-wrap') as HTMLSelectElement;
+  const gap = document.getElementById('fb-gap') as HTMLInputElement;
+  const items = document.getElementById('fb-items') as HTMLInputElement;
+  const out = document.getElementById('fb-out') as HTMLElement;
+  const prev = document.getElementById('fb-preview') as HTMLElement;
+  const cp = document.getElementById('fb-cp') as HTMLButtonElement;
+
+  function render() {
+    const css = `.container {\n  display: flex;\n  flex-direction: ${dir.value};\n  justify-content: ${jc.value};\n  align-items: ${ai.value};\n  flex-wrap: ${wrap.value};\n  gap: ${gap.value};\n}`;
+    out.textContent = css;
+    prev.style.flexDirection = dir.value;
+    prev.style.justifyContent = jc.value;
+    prev.style.alignItems = ai.value;
+    prev.style.flexWrap = wrap.value;
+    prev.style.gap = gap.value;
+    const n = Math.max(1, Math.min(20, +items.value || 1));
+    prev.innerHTML = '';
+    for (let i = 1; i <= n; i++) { const d = document.createElement('div'); d.textContent = String(i); prev.appendChild(d); }
+  }
+  [dir, jc, ai, wrap, gap, items].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar CSS', 1500);
+  });
+  render();
+</script>

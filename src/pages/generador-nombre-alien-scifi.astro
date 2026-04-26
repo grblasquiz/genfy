@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre alien sci-fi gratis | Genfy';
+const description = 'Generá nombres de alienígenas y razas extraterrestres para tus historias de ciencia ficción. Combiná fonemas y estilo para conseguir 20 ideas únicas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo invento un nombre alien creíble?', acceptedAnswer: { '@type': 'Answer', text: 'Usá fonemas inusuales para tu idioma (combinaciones de consonantes raras), evitá palabras existentes en idiomas humanos y mantené coherencia interna entre los nombres de la misma raza.' } },
+    { '@type': 'Question', name: '¿Cuántas sílabas debe tener?', acceptedAnswer: { '@type': 'Answer', text: 'Dos a cuatro suele ser óptimo. Más sílabas y el lector deja de pronunciarlo. Menos, y suena demasiado terrenal.' } },
+    { '@type': 'Question', name: '¿Pueden distintas razas aliens compartir reglas fonéticas?', acceptedAnswer: { '@type': 'Answer', text: 'No. Cada raza debería tener su propia fonética. Si todos usan apóstrofes y X, el universo pierde profundidad.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de nombre alien sci-fi"
+    intro="Generá nombres de alienígenas y razas extraterrestres para tu universo de ciencia ficción. Combiná fonemas y estilo para conseguir 20 nombres únicos.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Letra inicial preferida (opcional)</label>
+      <input id="bn-kw" type="text" placeholder="K, X, Z..." value="" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="hard">Duro / consonante (Krexor, Brindo)</option>
+        <option value="soft">Suave / vocálico (Ulion, Eilan)</option>
+        <option value="apostrophe">Con apóstrofe (Ka'rel, Vex'ar)</option>
+        <option value="warrior">Guerrero (Threx, Korm)</option>
+        <option value="race">Nombre de raza (Los Ulion)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo inventar un nombre alien que suene creíble</h2>
+      <p>
+        Inventar un buen nombre alien es más artesanía que casualidad. Los nombres aliens
+        memorables tienen tres características: usan fonemas que el oído del lector reconoce como
+        "ajenos", mantienen coherencia interna dentro de la misma raza y se pronuncian sin
+        accidentes mayores. Demasiado raro y nadie lo dice en voz alta. Demasiado terrenal y se
+        nota el truco.
+      </p>
+      <ol>
+        <li><strong>Elegí dos o tres consonantes "ancla".</strong> Por ejemplo: K, X, Z. Esas serán las que aparezcan repetidas en la raza.</li>
+        <li><strong>Definí una vocal dominante.</strong> Si todos los nombres llevan la misma vocal central (e o i, por ejemplo), suenan emparentados.</li>
+        <li><strong>Limitá las sílabas a 2-4.</strong> Más allá de eso, el lector saltea el nombre.</li>
+        <li><strong>Probalo en voz alta.</strong> Si no lo podés decir tres veces seguidas, descartalo.</li>
+        <li><strong>Reglas distintas por raza.</strong> Si una raza usa apóstrofes y otra termina en consonante dura, el universo gana profundidad.</li>
+      </ol>
+
+      <h2>Estilos de nombres aliens</h2>
+      <ul>
+        <li><strong>Duro / consonante</strong>: ideal para razas guerreras, cohetes y agresividad (Krexor, Brindo, Vorath).</li>
+        <li><strong>Suave / vocálico</strong>: razas pacifistas, telepáticas, ancestrales (Ulion, Eilan, Aramin).</li>
+        <li><strong>Con apóstrofe</strong>: los clásicos del space opera, marcan cesura entre clan y nombre individual (Ka'rel, Vex'ar).</li>
+        <li><strong>Guerrero corto</strong>: monosílabos pesados (Threx, Korm, Drax), perfectos para soldados o cazarrecompensas.</li>
+        <li><strong>Nombres de raza</strong>: la raza completa, no individuos. Suelen llevar plural ("Los Ulion", "Los Threxianos").</li>
+      </ul>
+
+      <h2>Errores comunes en naming alien</h2>
+      <p>
+        El más típico: usar fonéticas calcadas de Star Trek o Star Wars. Si tu raza se llama "Los
+        Klyngonianos", tenés un problema. Otro error: combinar nombres de origen mitológico
+        humano (deidades griegas, romanas o nórdicas) con sufijos extraterrestres; queda como
+        copia evidente. Tampoco mezcles fonéticas de varios idiomas terrestres reales sin
+        sistema. Y un tercero: nombres impronunciables (más de cuatro consonantes seguidas) que
+        el lector saltea sin leerlos.
+      </p>
+
+      <h2>Después de generar</h2>
+      <ol>
+        <li>Elegí cinco que suenen como una misma raza (mismas consonantes ancla).</li>
+        <li>Probalos en diálogo: ¿podés alternarlos sin trabarte?</li>
+        <li>Inventá un sistema de género o clan (sufijos para masculino/femenino, prefijos para casta).</li>
+        <li>Verificá que ningún nombre coincida con personajes existentes en sci-fi conocida.</li>
+        <li>Apuntá las reglas fonéticas para mantener coherencia en libros futuros.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo invento un nombre alien creíble?</summary><p>Fonemas inusuales para el lector, coherencia entre nombres de la misma raza, pronunciable.</p></details>
+      <details><summary>¿Cuántas sílabas?</summary><p>Dos a cuatro es lo óptimo.</p></details>
+      <details><summary>¿Razas distintas comparten reglas?</summary><p>No. Cada raza debe tener fonética propia para enriquecer el universo.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const HARD_C = ['K', 'Kr', 'Br', 'Dr', 'Tr', 'Vr', 'X', 'Z', 'Gr', 'Ql'];
+  const HARD_E = ['exor', 'indo', 'amor', 'oneth', 'avex', 'ulix', 'oneth', 'akor'];
+  const SOFT_C = ['U', 'Ei', 'Ar', 'On', 'Il', 'Ev', 'Ay', 'Or'];
+  const SOFT_E = ['lion', 'amin', 'ena', 'oran', 'esal', 'aren', 'orin'];
+  const APOS_S = ["a'", "e'", "u'", "i'"];
+  const WAR = ['Threx', 'Korm', 'Drax', 'Brun', 'Vrek', 'Krell', 'Zhar', 'Skarn'];
+  const RACE = ['Ulion', 'Threxiano', 'Korman', 'Velari', 'Brindar'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const seed = kw.value.trim();
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'hard') name = (seed || pick(HARD_C)) + pick(HARD_E);
+      else if (s === 'soft') name = (seed || pick(SOFT_C)) + pick(SOFT_E);
+      else if (s === 'apostrophe') name = (seed || pick(HARD_C)) + pick(APOS_S) + pick(HARD_E);
+      else if (s === 'warrior') name = pick(WAR);
+      else if (s === 'race') name = 'Los ' + pick(RACE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de gimnasio gratis | Genfy';
+const description = 'Generá nombres únicos para tu gimnasio, box de cross o estudio funcional. Combiná concepto, intensidad o disciplina y obtené 20 ideas listas para validar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Conviene un nombre agresivo o uno minimalista?', acceptedAnswer: { '@type': 'Answer', text: 'Depende del público: cross y powerlifting funcionan con nombres potentes y cortos; estudios premium o de fuerza para mujeres se benefician de nombres minimalistas.' } },
+    { '@type': 'Question', name: '¿Cómo me diferencio de las cadenas?', acceptedAnswer: { '@type': 'Answer', text: 'Evitá términos genéricos como "Power Gym" o "Strong Gym". Buscá un ángulo concreto: barrio, especialidad, comunidad.' } },
+    { '@type': 'Question', name: '¿Cómo verifico disponibilidad?', acceptedAnswer: { '@type': 'Answer', text: 'Google Maps, Instagram, dominio y registro de marcas local antes de invertir en cartelería o uniformes.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Fitness" title="Generador de nombre de gimnasio"
+    intro="Combiná intensidad, disciplina o concepto y obtené 20 ideas para tu gym, box o estudio funcional. Pensado para validar handle de Instagram al instante.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabras clave (intensidad, disciplina, concepto)</label>
+      <input id="bn-kw" type="text" placeholder="hierro, brazo, fuerza..." value="hierro, ancla" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="strong">Fuerte (Hierro, Acero, Roca)</option>
+        <option value="box">Box / cross</option>
+        <option value="minimal">Minimalista (Pulso, Ancla)</option>
+        <option value="local">Local + Gym / Box</option>
+        <option value="number">Número + concepto (22 Reps)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de un gimnasio</h2>
+      <p>
+        Un gimnasio compite contra cadenas con presupuesto y contra otros boxes locales. El
+        nombre tiene que dejar claro tres cosas: tipo de entrenamiento (funcional, fuerza,
+        cardio, mixto), intensidad esperada y comunidad (silenciosa, ruidosa, técnica,
+        recreativa). Si tu nombre no comunica ninguno de los tres, dependés del marketing para
+        explicar lo que un buen nombre haría gratis.
+      </p>
+      <ol>
+        <li><strong>Coherente con la disciplina.</strong> "Iron Box" sugiere fuerza; "Pulso" sugiere mente y cuerpo.</li>
+        <li><strong>Intensidad explícita.</strong> Tu cliente debe saber si va a sufrir o a relajarse.</li>
+        <li><strong>Sin nombres mitológicos.</strong> Mejor evitar referencias a deidades o panteones; usá términos neutros: ancla, fuerza, base, pilar.</li>
+        <li><strong>Buscable en Maps y ClassPass.</strong> Único en tu radio.</li>
+        <li><strong>Imprimible en remera.</strong> Tu mejor publicidad camina por la ciudad.</li>
+      </ol>
+
+      <h2>Estilos por tipo de gimnasio</h2>
+      <ul>
+        <li><strong>Fuerte:</strong> "Hierro", "Acero", "Roca", "Ancla". Comunica fuerza pura.</li>
+        <li><strong>Box / cross:</strong> "Box 22", "The Pit", "Reps". Funciona en CrossFit y funcional.</li>
+        <li><strong>Minimalista:</strong> "Pulso", "Ancla", "Base", "Pilar". Premium, mixto, ideal para estudios boutique.</li>
+        <li><strong>Local + Gym:</strong> "Palermo Box", "Recoleta Gym". SEO local.</li>
+        <li><strong>Número + concepto:</strong> "22 Reps", "10 Rounds". Memorable y específico.</li>
+      </ul>
+
+      <h2>Errores que evitar</h2>
+      <p>
+        Evitá nombres genéricos como "Power Gym", "Strong Fitness" o "Total Body Gym": cada
+        ciudad tiene cientos. Evitá referencias a deidades griegas o romanas, panteones
+        nórdicos o figuras religiosas: además de saturadas, alienan a parte del público.
+        "Olimpia", "Olympus", "Titanes" tienen miles de competidores. Mejor "Ancla Gym",
+        "Pilar Box" o "Base Strength".
+      </p>
+
+      <h2>Validación rápida</h2>
+      <ol>
+        <li>Google Maps en 5 km.</li>
+        <li>Instagram, TikTok, ClassPass o Mindbody.</li>
+        <li>Dominio en Namecheap.</li>
+        <li>Registro de marcas (INPI, USPTO).</li>
+        <li>Imprimir en remera y caminar 10 minutos: ¿qué pregunta la gente?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Agresivo o minimalista?</summary><p>Cross y powerlifting funcionan agresivos; estudios premium o femeninos, minimalistas.</p></details>
+      <details><summary>¿Cómo me diferencio de cadenas?</summary><p>Evitá genéricos. Buscá ángulo de barrio, especialidad o comunidad.</p></details>
+      <details><summary>¿Cómo verifico disponibilidad?</summary><p>Google Maps, Instagram, dominio y registro de marcas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const STRONG = ['Hierro', 'Acero', 'Roca', 'Granito', 'Ancla', 'Cuerda', 'Peso', 'Cadena', 'Plomo', 'Cemento'];
+  const BOX = ['Box', 'The Pit', 'Reps', 'Sets', 'Rounds', 'Lift House', 'Iron Box', 'Cross Box', 'Drill', 'Reps Lab'];
+  const MIN = ['Pulso', 'Ancla', 'Base', 'Pilar', 'Trazo', 'Filo', 'Brote', 'Eje', 'Linde', 'Vértice'];
+  const LOCAL = ['Palermo', 'Recoleta', 'Brera', 'Mission', 'Soho', 'Capitol', 'Centro', 'Boedo'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function num() { const i = new Uint32Array(1); crypto.getRandomValues(i); return (i[0] % 50) + 1; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Gym';
+      let name = '';
+      if (s === 'strong') name = pick(STRONG) + ' Gym';
+      else if (s === 'box') name = pick(BOX);
+      else if (s === 'minimal') name = pick(MIN) + ' Gym';
+      else if (s === 'local') name = pick(LOCAL) + ' Box';
+      else if (s === 'number') name = num() + ' ' + pick(['Reps', 'Sets', 'Rounds']);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

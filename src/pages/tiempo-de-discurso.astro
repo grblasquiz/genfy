@@ -1,0 +1,138 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Calculadora de tiempo de discurso | Genfy';
+const description = 'Calculá cuánto dura un discurso, presentación o video según el ritmo de habla. Esencial para charlas, podcasts, scripts y eventos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué velocidad de habla usa?', acceptedAnswer: { '@type': 'Answer', text: 'Por defecto 130 palabras por minuto, ritmo conversacional natural. Ajustable: 110 para tono lento/formal, 160 para charla ágil.' } },
+    { '@type': 'Question', name: '¿Sirve para presentaciones y TED talks?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Calculá si tu script entra en el tiempo asignado antes de subirte al escenario.' } },
+    { '@type': 'Question', name: '¿Cómo cuenta las pausas?', acceptedAnswer: { '@type': 'Answer', text: 'No se cuentan automáticamente. Sumá entre un 10% y un 20% al tiempo si tu discurso tiene pausas dramáticas o transiciones largas.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto" title="Calculadora de tiempo de discurso"
+    intro="Pegá tu script y averiguá cuánto dura al ser leído en voz alta. Imprescindible para presentaciones, charlas, podcasts, videos y eventos con tiempo limitado.">
+
+    <div slot="tool">
+      <label for="st-in">Texto</label>
+      <textarea id="st-in" rows="8" placeholder="Pegá tu script o discurso..." style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div class="st-row" style="margin-top:0.75rem;">
+        <div>
+          <label for="st-wpm">Palabras por minuto</label>
+          <select id="st-wpm">
+            <option value="100">Lento / formal (100)</option>
+            <option value="130" selected>Natural conversacional (130)</option>
+            <option value="160">Rápido / animado (160)</option>
+          </select>
+        </div>
+      </div>
+      <div id="st-out" class="st-out" aria-live="polite"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué la velocidad de habla cambia todo</h2>
+      <p>
+        El error más frecuente al calcular tiempo de discurso es usar la velocidad de lectura silenciosa
+        (~230 wpm). Hablado, ese ritmo no se puede sostener: el promedio natural conversacional es
+        130 palabras por minuto, y los oradores formales (lecturas, ceremonias, narraciones) bajan a 100.
+        Subir mucho de 160 wpm hace que la audiencia se pierda; bajar de 90, que se distraiga.
+      </p>
+
+      <h2>Velocidades de referencia</h2>
+      <ul>
+        <li><strong>100 wpm</strong> — discurso ceremonial, narración solemne, audiolibros literarios.</li>
+        <li><strong>130 wpm</strong> — conversación natural, presentaciones de empresa, podcasts informativos.</li>
+        <li><strong>150-160 wpm</strong> — conferencias dinámicas, podcasts de comedia, YouTubers.</li>
+        <li><strong>180+ wpm</strong> — voice-overs publicitarios, anuncios radiales, comediantes; difícil de seguir como charla normal.</li>
+      </ul>
+
+      <h2>Para qué sirve calcular antes de subir a escena</h2>
+      <p>
+        Si te dan 10 minutos para una charla, no podés improvisar largo: o caminás a tropezones intentando
+        cumplir el tiempo, o quedás corto y se nota. La forma profesional es escribir el script, calcular
+        el tiempo, ajustar palabras hasta entrar exactamente y luego ensayar varias veces. Las grandes
+        charlas TED tienen este nivel de planificación: 18 minutos exactos, ni uno más.
+      </p>
+
+      <h2>Pausas, transiciones y reacciones</h2>
+      <p>
+        Un discurso real no es lectura corrida. Hay pausas dramáticas, espacios para que la audiencia
+        procese, momentos de silencio intencional, transiciones entre slides, risas (si esperás que las
+        haya), aplausos en eventos formales. Todo eso se suma. Regla práctica: añadí entre 10% y 20% al
+        tiempo calculado para acomodar lo que no es habla. Si tu charla tiene mucha interacción con la
+        audiencia, podés llegar al 30%.
+      </p>
+
+      <h2>Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Presentaciones</strong> — calcular tiempo de cada slide para no excederse.</li>
+        <li><strong>Podcasts</strong> — alinear el script con la duración deseada del episodio.</li>
+        <li><strong>Videos de YouTube</strong> — el voice-over debe encajar con el editing.</li>
+        <li><strong>Charlas TED</strong> — formatos de 18, 12 o 5 minutos exactos.</li>
+        <li><strong>Boda y eventos</strong> — discursos breves que no aburran.</li>
+      </ul>
+
+      <h2>Ajustar el script al tiempo</h2>
+      <p>
+        Si tu cálculo da 12 minutos y tenés 10, no improvises recortes en escena: editá. Quitar el 15-20%
+        de un texto sin perder esencia es un ejercicio que se aprende: empezá por adverbios innecesarios,
+        ejemplos redundantes, anécdotas largas, conectores ("entonces", "es decir") y frases de transición
+        que no aportan. La regla del 80/20 funciona: el 20% más débil se puede cortar sin que la audiencia
+        lo note.
+      </p>
+
+      <h2>Errores típicos al planificar</h2>
+      <ul>
+        <li><strong>Usar velocidad de lectura silenciosa</strong> — vas a quedarte corto en escena por 30%-40%.</li>
+        <li><strong>No ensayar en voz alta</strong> — leerlo "para adentro" no detecta nudos de pronunciación.</li>
+        <li><strong>Ignorar pausas</strong> — las pausas son el 90% del impacto emocional; tienen que estar contadas.</li>
+        <li><strong>Cargar de slides</strong> — cada slide consume tiempo de transición.</li>
+      </ul>
+
+      <h2>Una regla rápida para emergencias</h2>
+      <p>
+        Si no podés calcular: 100 palabras = 45 segundos de habla natural. Es decir, una página A4 a doble
+        espacio (300-330 palabras) son ~2:15. Memorizá esa equivalencia y vas a estimar bien al toque sin
+        herramientas.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué velocidad de habla usa?</summary><p>130 wpm por defecto, ajustable a lento (100) o rápido (160).</p></details>
+      <details><summary>¿Sirve para presentaciones y TED talks?</summary><p>Sí. Calculá si entra en el tiempo asignado antes de subir al escenario.</p></details>
+      <details><summary>¿Cómo cuenta las pausas?</summary><p>No las cuenta. Sumá 10-20% al tiempo si tu discurso tiene pausas largas o interacción.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .st-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; }
+  .st-out { margin-top: 1rem; padding: 1rem; background: var(--bg-soft, #f5f5f7); border-radius: var(--radius-md, 8px); font-family: var(--font-mono); font-size: 0.95rem; min-height: 4rem; }
+</style>
+
+<script>
+  const inEl = document.getElementById('st-in') as HTMLTextAreaElement;
+  const wpmEl = document.getElementById('st-wpm') as HTMLSelectElement;
+  const out = document.getElementById('st-out') as HTMLDivElement;
+  function compute() {
+    const text = inEl.value.trim();
+    const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+    const wpm = parseInt(wpmEl.value, 10);
+    const minutes = words / wpm;
+    const m = Math.floor(minutes);
+    const s = Math.round((minutes - m) * 60);
+    const tlabel = m === 0 ? `${s} s` : `${m} min ${s} s`;
+    const con15 = Math.round((minutes * 1.15) * 60);
+    const m2 = Math.floor(con15 / 60);
+    const s2 = con15 % 60;
+    out.innerHTML = `<strong>Palabras:</strong> ${words}<br><strong>Tiempo de habla:</strong> ${tlabel} (a ${wpm} wpm)<br><strong>Con 15% extra de pausas:</strong> ${m2} min ${s2} s`;
+  }
+  inEl.addEventListener('input', compute);
+  wpmEl.addEventListener('change', compute);
+  compute();
+</script>

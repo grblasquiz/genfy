@@ -1,0 +1,152 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Calculadora de aspect ratio | Genfy';
+const description = 'Calculá relaciones de aspecto comunes (16:9, 4:3, 1:1) y obtené dimensiones a partir de un ancho o alto fijo.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es el aspect ratio?', acceptedAnswer: { '@type': 'Answer', text: 'Es la relación entre el ancho y el alto de una imagen o video. 16:9 significa que por cada 16 unidades de ancho hay 9 de alto.' } },
+    { '@type': 'Question', name: '¿Cuáles son los ratios más usados?', acceptedAnswer: { '@type': 'Answer', text: '16:9 para video, 4:3 para fotos legacy, 1:1 para Instagram, 9:16 para stories vertical, 21:9 ultrawide, 3:2 para cámaras DSLR.' } },
+    { '@type': 'Question', name: '¿Cómo lo aplico en CSS?', acceptedAnswer: { '@type': 'Answer', text: 'La propiedad CSS aspect-ratio te permite definirlo directamente: aspect-ratio: 16/9. Soporte total en navegadores modernos.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Calculadora de aspect ratio"
+    intro="Definí el ratio y un lado. Calculamos el otro lado y mostramos el CSS aspect-ratio listo para copiar.">
+
+    <div slot="tool" class="ar">
+      <div class="ar-grid">
+        <div>
+          <label for="ar-w">Ratio ancho</label>
+          <input id="ar-w" type="number" value="16" />
+        </div>
+        <div>
+          <label for="ar-h">Ratio alto</label>
+          <input id="ar-h" type="number" value="9" />
+        </div>
+        <div>
+          <label for="ar-known">Lado conocido</label>
+          <select id="ar-known"><option value="w">Ancho</option><option value="h">Alto</option></select>
+        </div>
+        <div>
+          <label for="ar-val">Valor (px)</label>
+          <input id="ar-val" type="number" value="1280" />
+        </div>
+      </div>
+
+      <div class="ar-result" id="ar-result"></div>
+
+      <div class="ar-actions">
+        <button id="ar-cp" class="btn btn-primary" type="button">Copiar CSS</button>
+      </div>
+
+      <pre><code id="ar-css"></code></pre>
+
+      <div class="ar-presets">
+        <button data-r="16:9" class="ar-preset">16:9</button>
+        <button data-r="4:3" class="ar-preset">4:3</button>
+        <button data-r="1:1" class="ar-preset">1:1</button>
+        <button data-r="9:16" class="ar-preset">9:16</button>
+        <button data-r="21:9" class="ar-preset">21:9</button>
+        <button data-r="3:2" class="ar-preset">3:2</button>
+        <button data-r="2:3" class="ar-preset">2:3</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es el aspect ratio</h2>
+      <p>El aspect ratio (relación de aspecto) es la proporción entre el ancho y el alto de una imagen, video o contenedor. Se expresa como dos números separados por dos puntos: 16:9, 4:3, 1:1. Es uno de los conceptos más prácticos en diseño visual, video y desarrollo web.</p>
+
+      <h2>Ratios más comunes</h2>
+      <ul>
+        <li><strong>16:9</strong>: estándar de video moderno (YouTube, TV, monitores).</li>
+        <li><strong>4:3</strong>: TV antigua, presentaciones de PowerPoint clásicas.</li>
+        <li><strong>1:1</strong>: cuadrado. Instagram feed, Spotify covers, avatars.</li>
+        <li><strong>9:16</strong>: vertical para stories, TikTok, Reels.</li>
+        <li><strong>21:9</strong>: ultrawide cinematográfico.</li>
+        <li><strong>3:2</strong>: cámaras DSLR y mirrorless.</li>
+        <li><strong>2:3</strong>: posters y portadas verticales.</li>
+      </ul>
+
+      <h2>CSS aspect-ratio</h2>
+      <p>La propiedad <code>aspect-ratio</code> de CSS permite mantener una proporción sin hacks. Antes había que usar el truco del padding-bottom: 56.25% para 16:9. Hoy es directamente:</p>
+      <pre><code>.video &lcub;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+&rcub;</code></pre>
+      <p>Soporte total en Chrome, Firefox, Safari y Edge desde 2021. Cuando definís solo uno de los lados (típicamente width: 100%), el otro lado se calcula automáticamente.</p>
+
+      <h2>Casos de uso</h2>
+      <ul>
+        <li><strong>Embeds de video</strong>: que el iframe mantenga el ratio correcto al hacer responsive.</li>
+        <li><strong>Imágenes responsive</strong>: evitar layout shift mientras carga la imagen.</li>
+        <li><strong>Cards</strong>: thumbnails de noticias, productos, posts con tamaño consistente.</li>
+        <li><strong>Galerías</strong>: grids donde todos los items tienen la misma proporción.</li>
+        <li><strong>Hero sections</strong>: control fino sobre las dimensiones del hero.</li>
+      </ul>
+
+      <h2>Layout shift y aspect-ratio</h2>
+      <p>Si insertás una imagen sin definir width y height (o sin aspect-ratio), el browser no sabe cuánto espacio reservar mientras carga. Cuando termina de cargar, el contenido se mueve, generando layout shift (CLS, Cumulative Layout Shift). aspect-ratio resuelve esto: el browser reserva el espacio correcto desde el inicio.</p>
+
+      <h2>Cuándo NO necesitás aspect-ratio</h2>
+      <p>Si la imagen tiene atributos width y height en HTML (como debería tener), el browser ya calcula el aspect ratio implícitamente. La propiedad CSS es útil para componentes donde el HTML no tiene los atributos, o para iframes y otros embeds donde no hay dimensiones fijas.</p>
+
+      <h2>Conversión rápida a porcentaje</h2>
+      <p>Para el padding-bottom hack legacy: 16:9 = 56.25%, 4:3 = 75%, 1:1 = 100%, 9:16 = 177.78%, 21:9 = 42.86%. Útil si necesitás compatibilidad con navegadores muy viejos.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es el aspect ratio?</summary><p>La proporción entre ancho y alto de una imagen, video o contenedor.</p></details>
+      <details><summary>¿Cuáles son los más usados?</summary><p>16:9 video, 1:1 cuadrado, 9:16 vertical, 4:3 legacy.</p></details>
+      <details><summary>¿Cómo en CSS?</summary><p>aspect-ratio: 16/9. Soporte total en navegadores modernos desde 2021.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ar-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .ar-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .ar-result { padding: 1.5rem; background: var(--bg-inset); border-radius: var(--radius); font-family: var(--font-mono); font-size: 1.125rem; text-align: center; margin-bottom: 1rem; }
+  .ar-presets { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+  .ar-preset { padding: 0.5rem 1rem; border: 1px solid var(--border); background: var(--bg-card); border-radius: var(--radius-sm); cursor: pointer; font-family: var(--font-mono); font-size: 0.875rem; }
+  .ar-preset:hover { border-color: var(--text); }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+  @media (max-width: 600px) { .ar-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const w = document.getElementById('ar-w') as HTMLInputElement;
+  const h = document.getElementById('ar-h') as HTMLInputElement;
+  const known = document.getElementById('ar-known') as HTMLSelectElement;
+  const val = document.getElementById('ar-val') as HTMLInputElement;
+  const result = document.getElementById('ar-result') as HTMLElement;
+  const css = document.getElementById('ar-css') as HTMLElement;
+  const cp = document.getElementById('ar-cp') as HTMLButtonElement;
+
+  function render() {
+    const rW = +w.value, rH = +h.value, v = +val.value;
+    let other: number;
+    if (known.value === 'w') other = (v * rH) / rW;
+    else other = (v * rW) / rH;
+    const wPx = known.value === 'w' ? v : other;
+    const hPx = known.value === 'h' ? v : other;
+    result.textContent = `${wPx.toFixed(2)} × ${hPx.toFixed(2)} px`;
+    css.textContent = `aspect-ratio: ${rW} / ${rH};`;
+  }
+  [w, h, known, val].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(css.textContent || '');
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar CSS', 1500);
+  });
+  document.querySelectorAll<HTMLButtonElement>('.ar-preset').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const [a, b] = btn.dataset.r!.split(':');
+      w.value = a; h.value = b; render();
+    });
+  });
+  render();
+</script>

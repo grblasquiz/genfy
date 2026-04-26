@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Analizador de calidad de titular | Genfy';
+const description = 'Analizá la calidad de un titular para blog, email o anuncio. Score de longitud, palabras de poder, estructura y claridad.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué evalúa el analizador?', acceptedAnswer: { '@type': 'Answer', text: 'Longitud, presencia de números, palabras de poder, conectores emocionales, claridad y estructura del titular.' } },
+    { '@type': 'Question', name: '¿Sirve para emails y anuncios?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Las reglas son similares para subject lines, anuncios y headlines de blog: claridad y promesa específica.' } },
+    { '@type': 'Question', name: '¿El score es objetivo?', acceptedAnswer: { '@type': 'Answer', text: 'Es una guía heurística basada en buenas prácticas de copywriting. Lo definitivo siempre es el A/B test con audiencia real.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto" title="Analizador de calidad de titular"
+    intro="Pegá un titular y obtené un score de calidad con sugerencias concretas. Pensado para blogs, newsletters, anuncios, asuntos de email y posts de redes.">
+
+    <div slot="tool">
+      <label for="ha-in">Titular</label>
+      <input id="ha-in" type="text" placeholder="ej: 7 trucos para escribir mejores titulares en 2026" />
+      <div style="margin-top:0.75rem;">
+        <button id="ha-go" class="btn btn-primary" type="button">Analizar</button>
+      </div>
+      <div id="ha-out" class="ha-out" aria-live="polite"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué el titular vale el 80% del esfuerzo</h2>
+      <p>
+        David Ogilvy decía que cinco veces más gente lee el titular que el cuerpo del texto. En un feed de
+        Twitter, LinkedIn o Google, el titular es lo único que la mayoría va a leer. Si no captura la
+        atención y promete algo claro, perdiste la batalla antes de empezar. Por eso vale la pena pasarse
+        más tiempo en el titular que en cualquier párrafo del cuerpo.
+      </p>
+
+      <h2>Qué evalúa este analizador</h2>
+      <ul>
+        <li><strong>Longitud</strong> — entre 40 y 70 caracteres tienden a tener mejor CTR.</li>
+        <li><strong>Números</strong> — los titulares con cifras concretas convierten más.</li>
+        <li><strong>Palabras de poder</strong> — verbos fuertes y adjetivos emocionales.</li>
+        <li><strong>Especificidad</strong> — promesas concretas vs. vagas.</li>
+        <li><strong>Claridad</strong> — sin frases enrevesadas ni dobles negaciones.</li>
+        <li><strong>Estructura</strong> — fórmulas conocidas (cómo, por qué, listas, preguntas).</li>
+      </ul>
+
+      <h2>Las fórmulas que funcionan</h2>
+      <p>
+        Después de décadas de testeo, ciertas estructuras dominan. <em>Cómo</em>: "Cómo escribir un titular
+        que convierta el doble". <em>Listas</em>: "7 errores que cometés al escribir titulares". <em>Por
+        qué</em>: "Por qué tu newsletter no abre nadie". <em>Pregunta</em>: "¿Estás escribiendo titulares
+        que matan tu CTR?". <em>Negativo</em>: "El error que arruina el 80% de los headlines". No son
+        recetas mágicas pero funcionan porque el lector entiende el formato al instante.
+      </p>
+
+      <h2>Palabras de poder en español</h2>
+      <p>
+        Hay palabras que aumentan el CTR de manera medible: "gratis", "rápido", "definitivo", "esencial",
+        "comprobado", "secreto", "fácil", "ahora", "nuevo", "mejor", "evitá", "cuidado", "increíble".
+        Usalas con cuidado: si exagerás (todos los titulares con "increíble"), se devalúan. Una o dos por
+        titular es suficiente.
+      </p>
+
+      <h2>El número mágico de caracteres</h2>
+      <p>
+        Para Google search, el sweet spot es 50-60 caracteres (más se trunca en SERP). Para Twitter/X,
+        funciona bien hasta 70-80. Para newsletters, los subject lines bajo 40 caracteres rinden mejor en
+        móvil. Para LinkedIn, podés ir hasta 100. Si tenés un titular de 120 caracteres con tres ideas
+        encadenadas, probablemente convenga partirlo en dos: titular y bajada.
+      </p>
+
+      <h2>Errores frecuentes</h2>
+      <ul>
+        <li><strong>Genérico</strong> — "Tips para emprendedores" vs. "5 tips que ahorraron $10K a mi cliente".</li>
+        <li><strong>Largo y enroscado</strong> — más de 80 caracteres con dos comas: cortalo.</li>
+        <li><strong>Clickbait sin sustancia</strong> — promete algo que el contenido no entrega; baja la confianza.</li>
+        <li><strong>Sin promesa</strong> — el lector debe poder decir qué gana al hacer click.</li>
+        <li><strong>Ambiguo</strong> — si no se entiende en 2 segundos, no se entiende.</li>
+      </ul>
+
+      <h2>Cómo usar el score</h2>
+      <p>
+        El score es una guía, no un veredicto. Un titular puede sacar 95/100 y no convertir, o sacar 50/100
+        y romper récords. Lo definitivo es el A/B test con audiencia real. Pero si el score te avisa "tu
+        titular tiene 110 caracteres y ningún número", es probable que el problema sea real. Usalo como
+        primera capa de filtrado, no como decisión final.
+      </p>
+
+      <h2>Generá 10 antes de elegir</h2>
+      <p>
+        El secreto de los copywriters profesionales es escribir 10-20 versiones del mismo titular antes de
+        elegir una. La primera siempre es la obvia, la décima suele ser la mejor. Pasá cada candidato por
+        el analizador, descartá los peores y testeá los dos o tres mejores. Esa disciplina es la diferencia
+        entre un blog que crece y uno que estanca.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué evalúa el analizador?</summary><p>Longitud, números, palabras de poder, conectores, claridad y estructura.</p></details>
+      <details><summary>¿Sirve para emails y anuncios?</summary><p>Sí. Las reglas son similares para subjects, ads y headlines.</p></details>
+      <details><summary>¿El score es objetivo?</summary><p>Es una guía heurística. Lo definitivo es A/B test con audiencia real.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ha-out { margin-top: 1rem; padding: 1rem; background: var(--bg-soft, #f5f5f7); border-radius: var(--radius-md, 8px); font-size: 0.95rem; min-height: 4rem; }
+  .ha-bar { height: 8px; background: #e2e2e8; border-radius: 4px; overflow: hidden; margin: 0.5rem 0; }
+  .ha-bar-fill { height: 100%; background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981); transition: width 0.3s; }
+</style>
+
+<script>
+  const POWER = "gratis rápido definitivo esencial comprobado secreto fácil ahora nuevo mejor evitá cuidado increíble probado garantizado simple potente clave urgente exclusivo".split(' ');
+  const inEl = document.getElementById('ha-in') as HTMLInputElement;
+  const out = document.getElementById('ha-out') as HTMLDivElement;
+  const go = document.getElementById('ha-go') as HTMLButtonElement;
+
+  function analyze() {
+    const t = inEl.value.trim();
+    if (!t) { out.innerHTML = ''; return; }
+    let score = 0;
+    const tips: string[] = [];
+    const len = t.length;
+    const words = t.split(/\s+/).length;
+    if (len >= 40 && len <= 70) { score += 25; tips.push('Longitud óptima.'); }
+    else if (len < 40) { score += 10; tips.push('Algo corto: probá agregar especificidad.'); }
+    else { score += 10; tips.push('Algo largo: cortá ideas o partilo.'); }
+    if (/\d+/.test(t)) { score += 20; tips.push('Tiene número, bien.'); } else tips.push('Sumá un número concreto.');
+    const lc = t.toLowerCase();
+    const powers = POWER.filter(p => lc.includes(p));
+    if (powers.length > 0) { score += 15 + Math.min(10, powers.length * 5); tips.push(`Palabras de poder: ${powers.join(', ')}.`); }
+    else tips.push('Falta una palabra de poder (probá: gratis, fácil, definitivo).');
+    if (/^(cómo|como|por qué|por que|qué|que|cuándo|cuando|dónde|donde|7|5|10|3)/i.test(t)) { score += 15; tips.push('Empieza con fórmula reconocible.'); }
+    if (words >= 6 && words <= 12) score += 15;
+    if (/[¿?]/.test(t)) tips.push('Pregunta directa: bien para curiosidad.');
+    score = Math.min(100, score);
+    let label = score >= 80 ? 'Excelente' : score >= 60 ? 'Bueno' : score >= 40 ? 'Aceptable' : 'Mejorable';
+    out.innerHTML = `<strong>Score: ${score}/100</strong> — ${label}<div class="ha-bar"><div class="ha-bar-fill" style="width: ${score}%"></div></div>${len} caracteres, ${words} palabras<ul style="margin-top:0.5rem;">${tips.map(t=>`<li>${t}</li>`).join('')}</ul>`;
+  }
+  go.addEventListener('click', analyze);
+  inEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') analyze(); });
+</script>

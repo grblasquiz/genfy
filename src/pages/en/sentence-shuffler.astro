@@ -1,0 +1,113 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Sentence Shuffler | Genfy';
+const description = 'Shuffle the sentences of any text in random order. Useful for reading comprehension drills, experimental writing and coherence tests.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why shuffle sentences?', acceptedAnswer: { '@type': 'Answer', text: 'Reading comprehension drills, coherence tests, experimental writing and seeing how well-structured your text is.' } },
+    { '@type': 'Question', name: 'How does it detect sentences?', acceptedAnswer: { '@type': 'Answer', text: 'By periods, exclamation and question marks. Works best with clean standard prose.' } },
+    { '@type': 'Question', name: 'Is it really random?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. It uses Fisher-Yates with crypto.getRandomValues, so each shuffle is uniform.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text" title="Sentence Shuffler"
+    intro="Paste a text and get its sentences in random order. Built for classroom drills, experimental writing, coherence diagnostics and reading games.">
+
+    <div slot="tool">
+      <label for="ss-in">Text</label>
+      <textarea id="ss-in" rows="8" placeholder="Paste your text..." style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div style="margin-top:0.75rem;">
+        <button id="ss-go" class="btn btn-primary" type="button">Shuffle</button>
+        <button id="ss-copy" class="btn btn-ghost" type="button">Copy</button>
+      </div>
+      <textarea id="ss-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What sentence shuffling teaches you</h2>
+      <p>
+        If you shuffle the sentences of a paragraph and the result still makes sense, that's a problem:
+        the text probably isn't moving forward, there's no logical progression. Good writing has direction.
+        If each sentence builds on the previous one, shuffling produces obvious chaos. So shuffling is a
+        diagnostic: well-structured texts visibly break when sentences are mixed.
+      </p>
+
+      <h2>Classroom applications</h2>
+      <ul>
+        <li><strong>Reading comprehension</strong> — give students a shuffled text and ask them to reorder it. Great for elementary and middle school.</li>
+        <li><strong>Connectors</strong> — the exercise forces identifying cues: "therefore", "then", "first", "finally".</li>
+        <li><strong>Textual coherence</strong> — practice recognizing thematic progression.</li>
+        <li><strong>Writing</strong> — by reordering, students learn how a well-built paragraph is constructed.</li>
+      </ul>
+
+      <h2>Experimental writing</h2>
+      <p>
+        Some authors use random shuffling as a creative technique. William S. Burroughs and Brion Gysin
+        popularized the "cut-up" in the 1960s: chop text, shuffle, find new connections. David Bowie used
+        something similar for song lyrics. It works because randomness produces adjacencies you wouldn't
+        have made on purpose, and sometimes those unexpected pairings have poetry.
+      </p>
+
+      <h2>Redundancy test</h2>
+      <p>
+        Another less-obvious use: if you shuffle a text and the shuffled version reads almost the same as
+        the original, your text may carry too much redundancy. Each sentence should add something new. If
+        sentences are interchangeable, some are surplus. A blunt but useful audit of your own writing.
+      </p>
+
+      <h2>Games and activities</h2>
+      <ul>
+        <li><strong>Reorder the story</strong> — classroom classic: in groups, students reorder a short story.</li>
+        <li><strong>Spot the intruder</strong> — add a sentence that doesn't belong and have the group find it.</li>
+        <li><strong>Mix two texts</strong> — combine two paragraphs shuffled together; students separate them.</li>
+        <li><strong>Creative cut-up</strong> — write poems from the random order.</li>
+      </ul>
+
+      <h2>How sentences are detected</h2>
+      <p>
+        The algorithm looks for periods, exclamation marks and question marks followed by space or newline.
+        It handles standard prose well but can stumble on abbreviations ("Mr.", "etc.") or dotted acronyms.
+        For very technical texts, review the output and manually merge wrong splits.
+      </p>
+
+      <h2>Shuffling as a revision tool</h2>
+      <p>
+        Try this with your own text: shuffle and read. Confused? Good sign — your original has clear
+        progression. Sounds the same? You have editing to do. Shuffle-revision is a technique few editors
+        know about but it produces concrete improvements.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Why shuffle sentences?</summary><p>Reading drills, experimental writing and coherence diagnostics.</p></details>
+      <details><summary>How does it detect sentences?</summary><p>By periods, exclamations and questions. Best on standard prose.</p></details>
+      <details><summary>Is it really random?</summary><p>Yes — Fisher-Yates with cryptographic randomness.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const inEl = document.getElementById('ss-in') as HTMLTextAreaElement;
+  const out = document.getElementById('ss-out') as HTMLTextAreaElement;
+  const go = document.getElementById('ss-go') as HTMLButtonElement;
+  const cp = document.getElementById('ss-copy') as HTMLButtonElement;
+
+  function rand(n: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return i[0] % n; }
+  function shuffle<T>(arr: T[]): T[] { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = rand(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  function splitSentences(text: string): string[] {
+    return text.split(/(?<=[.!?])\s+/).map(s => s.trim()).filter(Boolean);
+  }
+  function go_() {
+    const text = inEl.value.trim();
+    if (!text) { out.value = ''; return; }
+    const sents = splitSentences(text);
+    out.value = shuffle(sents).join(' ');
+  }
+  go.addEventListener('click', go_);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

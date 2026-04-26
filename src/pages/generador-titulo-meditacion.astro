@@ -1,0 +1,139 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de título de meditación gratis | Genfy';
+const description = 'Generá títulos para sesiones de meditación, respiración o relajación guiada. Combiná duración y enfoque y obtené 20 títulos prácticos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno al título de una meditación?', acceptedAnswer: { '@type': 'Answer', text: 'Que comunique duración, enfoque (concentración, descanso, respiración) y momento ideal (mañana, antes de dormir, en pausa de trabajo).' } },
+    { '@type': 'Question', name: '¿Conviene mencionar tradiciones?', acceptedAnswer: { '@type': 'Answer', text: 'Mejor mantenerlo en términos prácticos (calma, foco, descanso, respiración) para llegar a un público más amplio que no necesariamente busca una práctica espiritual.' } },
+    { '@type': 'Question', name: '¿Cuánto debe durar el título?', acceptedAnswer: { '@type': 'Answer', text: 'Entre 4 y 8 palabras. Suficiente para describir y diferenciarse, sin abrumar.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Bienestar" title="Generador de título de meditación"
+    intro="Combiná duración, enfoque y momento del día y obtené 20 títulos para sesiones de meditación, respiración guiada o relajación. Lenguaje práctico y claro.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Enfoque (calma, foco, descanso)</label>
+      <input id="bn-kw" type="text" placeholder="calma, foco, sueño..." value="calma" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="practical">Práctico (Sesión de calma 10 min)</option>
+        <option value="moment">Momento del día (Antes de dormir)</option>
+        <option value="breath">Respiración (Reset de respiración)</option>
+        <option value="reset">Reset / pausa</option>
+        <option value="single">Una palabra + duración</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 títulos</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo titular una sesión de meditación</h2>
+      <p>
+        Una sesión de meditación o respiración guiada compite con miles de opciones en apps
+        como Calm, Headspace o Insight Timer. Tu título debe comunicar tres cosas: cuánto
+        dura, qué te aporta concretamente (foco, descanso, calma, mejor sueño), y cuándo
+        usarla (mañana, antes de dormir, en una pausa de trabajo). Frente a un público que
+        busca una pausa práctica, el lenguaje claro y secular suele convertir mejor que el
+        lenguaje aspiracional.
+      </p>
+      <ol>
+        <li><strong>Duración explícita.</strong> "5 min", "10 min", "20 min". Es lo primero que filtra el usuario.</li>
+        <li><strong>Beneficio concreto.</strong> "Calma", "Foco", "Descanso", "Reset". Resultados medibles.</li>
+        <li><strong>Momento del día.</strong> "Antes de dormir", "Mañana", "Pausa de trabajo".</li>
+        <li><strong>Sin lenguaje espiritual.</strong> Mantenelo en términos prácticos: respiración, atención, calma.</li>
+        <li><strong>Pronunciable y descriptivo.</strong> Tu título no necesita ser poético; necesita ser útil.</li>
+      </ol>
+
+      <h2>Estilos que funcionan</h2>
+      <ul>
+        <li><strong>Práctico:</strong> "Sesión de calma — 10 min". Directo y filtrable.</li>
+        <li><strong>Momento del día:</strong> "Antes de dormir — 8 min". Contextual.</li>
+        <li><strong>Respiración:</strong> "Reset de respiración 4-7-8". Específico y técnico.</li>
+        <li><strong>Reset / pausa:</strong> "Pausa de 5 min: vuelve a foco". Muy efectivo en horario laboral.</li>
+        <li><strong>Una palabra + duración:</strong> "Calma 10", "Foco 15". Memorable y filtrable.</li>
+      </ul>
+
+      <h2>Lo que evitar</h2>
+      <p>
+        Evitá lenguaje que prometa transformaciones espirituales, despertares de conciencia o
+        viajes interiores trascendentes: alienan a parte del público y limitan tu alcance.
+        Mantenelo en lo concreto: mejorar el sueño, reducir la ansiedad antes de una
+        presentación, recuperar foco después del almuerzo. Tampoco prometas curas o
+        tratamientos de condiciones médicas: te exponés a problemas regulatorios.
+      </p>
+
+      <h2>Optimización de catálogo</h2>
+      <ol>
+        <li>Buscá los términos más buscados en tu app o en YouTube.</li>
+        <li>Cubrí cinco momentos del día con 1-2 sesiones cada uno.</li>
+        <li>Variá la duración (5, 10, 15, 20 min).</li>
+        <li>Probá A/B distintos títulos para la misma sesión y medí completion rate.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno al título?</summary><p>Comunica duración, enfoque y momento ideal del día.</p></details>
+      <details><summary>¿Mencionar tradiciones?</summary><p>Mejor mantenerlo práctico para llegar a más público.</p></details>
+      <details><summary>¿Cuánto debe durar el título?</summary><p>Entre 4 y 8 palabras.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 500; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const FOCUS = ['Calma', 'Foco', 'Descanso', 'Reset', 'Pausa', 'Quietud', 'Respiración'];
+  const MOMENT = ['Antes de dormir', 'Para la mañana', 'Pausa de trabajo', 'Antes de una reunión', 'Después del almuerzo', 'Para empezar el día', 'Para cerrar el día'];
+  const BREATH = ['4-7-8', 'caja 4x4', 'lenta 6x6', 'profunda', 'controlada', 'consciente'];
+  const RESET = ['Pausa de 5 min', 'Reset de 10 min', 'Vuelve a foco', 'Recuperá foco', 'Bajá pulso'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function dur() { const arr = [5, 8, 10, 12, 15, 20]; return pick(arr); }
+
+  function generate() {
+    const w = (kw.value.trim() || 'calma');
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'practical') name = 'Sesión de ' + pick(FOCUS).toLowerCase() + ' — ' + dur() + ' min';
+      else if (s === 'moment') name = pick(MOMENT) + ' — ' + dur() + ' min';
+      else if (s === 'breath') name = 'Respiración ' + pick(BREATH) + ' — ' + dur() + ' min';
+      else if (s === 'reset') name = pick(RESET) + ' (' + dur() + ' min)';
+      else if (s === 'single') name = pick(FOCUS) + ' ' + dur();
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

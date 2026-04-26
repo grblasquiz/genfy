@@ -1,0 +1,159 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de chiste limpio | Genfy';
+const description = 'Chistes limpios, aptos para todo público: oficina, familia, aula. Sin contenido picante, sin estereotipos, sin política. Listos para copiar y compartir.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Son aptos para chicos?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, todos los chistes están filtrados para ser apropiados en familia, aula y oficina.' } },
+    { '@type': 'Question', name: '¿Hay chistes "de oficina"?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, filtrá por categoría "trabajo".' } },
+    { '@type': 'Question', name: '¿Puedo usarlos en presentaciones?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, son ideales para arrancar una charla o iluminar un slide.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión / Fun" title="Generador de chiste limpio"
+    intro="Chistes apropiados para cualquier audiencia. Sin contenido picante ni estereotipos.">
+
+    <div slot="tool" class="ck">
+      <div class="ck-card">
+        <p id="ck-text" class="ck-text">Tocá generar para empezar.</p>
+      </div>
+      <div class="ck-controls">
+        <label for="ck-cat">Tipo</label>
+        <select id="ck-cat">
+          <option value="all">Todos</option>
+          <option value="absurdo">Absurdo</option>
+          <option value="trabajo">Trabajo / Oficina</option>
+          <option value="papas">"Papá-jokes"</option>
+          <option value="comida">Comida</option>
+        </select>
+      </div>
+      <button id="ck-gen" class="btn btn-primary" type="button">Otro chiste</button>
+      <button id="ck-copy" class="btn btn-ghost" type="button">Copiar</button>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué un chiste limpio funciona mejor</h2>
+      <p>
+        Cuando hablás frente a un grupo mixto (aula, familia extendida, oficina), el chiste
+        que arriesga es el chiste que falla. Un buen chiste limpio se basa en absurdos,
+        situaciones cotidianas y juegos de palabras. No depende de degradar a nadie. Por
+        eso la comedia infantil de calidad (Pixar, Disney, Studio Ghibli) construye humor
+        sobre observación, no sobre ofensa: porque tiene que funcionar para todos.
+      </p>
+
+      <h2>Cuatro estructuras del humor limpio</h2>
+      <ol>
+        <li><strong>Misdirection (sorpresa):</strong> el setup apunta a una expectativa, el remate va a otra. "Mi médico me dijo que tenía que evitar las cenas pesadas. Ahora ceno antes de las 8 con cuchara de plástico".</li>
+        <li><strong>Juego de palabras (pun):</strong> doble sentido del idioma. "El que tiene boca se equivoca. Por eso los peces son los más sabios".</li>
+        <li><strong>Absurdo:</strong> situación imposible llevada al límite. "Llamé al servicio técnico de mi cerebro. Me dejaron en espera dos horas escuchando mis propios pensamientos".</li>
+        <li><strong>Observación cotidiana:</strong> verdades que todos vivimos pero nadie dice. "El gimnasio es ese lugar donde gastás dinero para sentirte mal de manera saludable".</li>
+      </ol>
+
+      <h2>Cuándo usar cada tipo</h2>
+      <ul>
+        <li><strong>En familia:</strong> papá-jokes y absurdos. Funcionan en grupos grandes con edades mezcladas.</li>
+        <li><strong>En oficina:</strong> observación cotidiana sobre meetings, café o lunes. Genera empatía rápida.</li>
+        <li><strong>Con chicos:</strong> juegos de palabras simples y respuestas obvias.</li>
+        <li><strong>En presentaciones:</strong> uno bien colocado al inicio o al cerrar. Nunca como muleta repetida.</li>
+      </ul>
+
+      <h2>Errores comunes al contar chistes</h2>
+      <p>
+        El error #1 es reírse del propio chiste antes del remate. Mata la sorpresa. El #2 es
+        explicar el chiste si no causó risa: empeora todo. El #3 es contar el mismo chiste
+        a la misma persona dos veces. Si dudás, no lo cuentes. Mejor un chiste menos que
+        repetido. El humor es como el café: la dosis correcta es deliciosa, demasiado
+        amarga.
+      </p>
+
+      <h2>El humor en la cultura argentina</h2>
+      <p>
+        El humor rioplatense tiene un estilo propio: ironía, autocrítica y situaciones
+        absurdas. Comediantes como Diego Capusotto, Martín Bossi o Malena Pichot construyen
+        humor sin agredir. Es un buen modelo: el humor argentino que dura es el que se ríe
+        de situaciones, no de personas. Si seguís ese principio cuando contás un chiste, te
+        va a ir bien con cualquier audiencia.
+      </p>
+
+      <h2>Tabú: lo que evitar</h2>
+      <p>
+        Estereotipos étnicos, religiosos, de género u orientación: nunca. Política
+        partidaria: nunca en contextos profesionales mixtos. Chistes sobre tragedias
+        recientes: cero. Chistes que requieran que el oyente se sienta mal con su cuerpo
+        para entenderlos: descartados. Si tu chiste depende de que alguien sea el blanco,
+        no es chiste, es agresión disfrazada.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Hay chistes en inglés?</summary><p>Versión inglesa disponible en /en/random-clean-joke.</p></details>
+      <details><summary>¿Cuántos hay?</summary><p>Más de 50, con rotación por categoría.</p></details>
+      <details><summary>¿Puedo proponer chistes?</summary><p>Por ahora no, pero estamos preparando contribución abierta.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ck-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; }
+  .ck-text { font-size: 1.125rem; line-height: 1.6; margin: 0; }
+  .ck-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const J: { cat: string; t: string }[] = [
+    { cat: "absurdo", t: "Llamé al servicio técnico de mi cerebro. Me dejaron en espera dos horas escuchando mis propios pensamientos." },
+    { cat: "absurdo", t: "Mi GPS me dice 'recalculando' tantas veces que ya siento que estoy en una relación tóxica." },
+    { cat: "absurdo", t: "Compré un libro sobre cómo evitar la procrastinación. Llevo seis meses pensándolo." },
+    { cat: "absurdo", t: "Mi heladera tiene tantos imanes que ya tiene personalidad propia." },
+    { cat: "absurdo", t: "Cada vez que abro Netflix paso 40 minutos eligiendo y termino viendo el mismo capítulo de The Office." },
+    { cat: "absurdo", t: "Mi abuela cocina tan rico que su comida ofende al resto de la familia." },
+    { cat: "absurdo", t: "Mi planta tiene mejor vida social que yo. Le hablan todos los días." },
+    { cat: "trabajo", t: "Esta reunión podría haber sido un email. Y este email podría haber sido un emoji." },
+    { cat: "trabajo", t: "El lunes es esa lección semanal que nunca aprendemos." },
+    { cat: "trabajo", t: "El gimnasio es ese lugar donde gastás dinero para sentirte mal de manera saludable." },
+    { cat: "trabajo", t: "Tengo dos modos: 'urgente' y 'todavía-no-es-urgente'. Adivina cuál uso más." },
+    { cat: "trabajo", t: "El team-building más efectivo es cuando se cae internet en toda la oficina." },
+    { cat: "trabajo", t: "Mi calendario de Google y mi vida son dos universos paralelos que ocasionalmente coinciden." },
+    { cat: "trabajo", t: "El home-office es como el espacio: parece infinito, pero al rato extrañás la oficina." },
+    { cat: "papas", t: "—¿Qué le dijo un techo a otro techo? —Techo de menos." },
+    { cat: "papas", t: "—¿Cómo se despiden los químicos? —Ácido un placer." },
+    { cat: "papas", t: "—¿Qué hace una abeja en el gimnasio? —Zumba." },
+    { cat: "papas", t: "—¿Cuál es el animal más antiguo? —La cebra, está en blanco y negro." },
+    { cat: "papas", t: "—¿Por qué los pájaros no usan Facebook? —Porque ya tienen Twitter." },
+    { cat: "papas", t: "—¿Qué le dice un jardinero a otro? —Disfrutemos mientras podamos." },
+    { cat: "papas", t: "—¿Sabés cómo se llama el primo italiano de Bruce Lee? —Bruce Lee Ñata." },
+    { cat: "comida", t: "—Mozo, hay una mosca en mi sopa. —No se preocupe, no toma mucho." },
+    { cat: "comida", t: "Mi dieta empieza el lunes desde 1998." },
+    { cat: "comida", t: "Pedí ensalada para acompañar la pizza. La balanza no me cree." },
+    { cat: "comida", t: "El brócoli es la única verdura que parece estar siempre enojada." },
+    { cat: "comida", t: "El café no me hace efecto. Voy por el séptimo y sigo durmiéndome al volante de mi escritorio." },
+    { cat: "comida", t: "Los argentinos tenemos dos comidas: el asado y todo lo demás." }
+  ];
+
+  const text = document.getElementById('ck-text') as HTMLElement;
+  const cat = document.getElementById('ck-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('ck-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('ck-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? J : J.filter(s => s.cat === filter);
+    text.textContent = pick(pool).t;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(text.textContent || '');
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

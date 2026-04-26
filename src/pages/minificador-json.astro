@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Minificador JSON gratis | Genfy';
+const description = 'Comprimí JSON a una sola línea sin espacios. Reduce el tamaño hasta un 30% para APIs, configs y storage. 100% en el navegador.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve minificar JSON?', acceptedAnswer: { '@type': 'Answer', text: 'Para reducir el tamaño cuando lo enviás por la red, lo guardás en una base de datos o en localStorage. Quita todos los espacios, saltos de línea e indentación, conservando el contenido.' } },
+    { '@type': 'Question', name: '¿Cuánto se reduce el tamaño?', acceptedAnswer: { '@type': 'Answer', text: 'Depende de la indentación original. Un JSON con indentación de 4 espacios suele reducirse entre un 20% y un 35% al minificar. Los strings largos casi no se afectan; los objetos anidados son los que más bajan.' } },
+    { '@type': 'Question', name: '¿Pierde información?', acceptedAnswer: { '@type': 'Answer', text: 'No. Solo elimina whitespace: espacios, tabs y saltos de línea fuera de strings. Los datos quedan idénticos.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Datos" title="Minificador JSON"
+    intro="Pegá JSON con formato y obtené la versión compacta en una sola línea. Ideal para APIs, configs en producción y ahorrar bytes en la red.">
+
+    <div slot="tool">
+      <label for="jm-in">JSON</label>
+      <textarea id="jm-in" rows="8" style="font-family: var(--font-mono); font-size: 0.9rem;">&lcub;
+  "name": "Genfy",
+  "version": 1,
+  "tags": ["dev", "tools"],
+  "active": true
+&rcub;</textarea>
+      <button id="jm-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Minificar</button>
+      <button id="jm-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <div id="jm-stats" class="jm-stats"></div>
+      <label for="jm-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="jm-out" rows="6" readonly style="font-family: var(--font-mono); font-size: 0.9rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Cuándo minificar JSON</h2>
+      <p>
+        Minificar tiene sentido en cualquier momento donde los bytes cuestan: tráfico de red, storage en bases de datos, columnas JSON en MySQL o Postgres, payloads de WebSocket, mensajes en colas como SQS o Kafka. Cada espacio en blanco que quitás es un byte menos que tu sistema procesa, almacena o transmite. A escala (millones de requests por día) la diferencia se nota en facturación de cloud.
+      </p>
+
+      <h2>Cuándo NO minificar</h2>
+      <ul>
+        <li><strong>Archivos de configuración versionados en git.</strong> Si tu package.json está minificado, los diffs se vuelven ilegibles y los merge conflicts son una pesadilla.</li>
+        <li><strong>Logs.</strong> Aunque haya herramientas que pretty-printean, leer logs minificados a ojo en una terminal es frustrante.</li>
+        <li><strong>Datos que un humano va a editar.</strong> Si esperás que alguien edite el archivo manualmente, dejalo formateado.</li>
+        <li><strong>Cuando ya hay compresión gzip/brotli.</strong> El servidor te comprime al vuelo y la diferencia entre minificado y formateado se reduce mucho. Igual conviene minificar antes para aliviar parsers.</li>
+      </ul>
+
+      <h2>Cómo funciona la minificación</h2>
+      <p>
+        El proceso es trivial: parsear el JSON con <code>JSON.parse</code> y volver a serializarlo con <code>JSON.stringify(obj)</code> sin pasar el tercer argumento de indentación. El resultado es JSON canónico sin whitespace fuera de strings. Los strings se mantienen intactos: si dentro de un string hay un espacio, se queda. Solo se eliminan espacios estructurales.
+      </p>
+
+      <h2>Compresión adicional</h2>
+      <p>
+        Minificar es solo el primer paso. Si querés bajar más, considerá:
+      </p>
+      <ul>
+        <li><strong>Gzip o Brotli en HTTP.</strong> Tu servidor web (nginx, Cloudflare, Vercel) lo hace por defecto. Reduce JSON entre un 60% y un 80% adicional.</li>
+        <li><strong>Formatos binarios.</strong> Si controlás cliente y servidor, MessagePack, CBOR o Protocol Buffers son sustancialmente más chicos.</li>
+        <li><strong>Cambiar nombres de claves.</strong> Si una API devuelve millones de objetos con clave <code>"longDescriptiveKey"</code>, abreviarla a <code>"k"</code> ahorra mucho. Pero pierde legibilidad y requiere mapear de vuelta del lado del cliente.</li>
+      </ul>
+
+      <h2>Tamaños típicos antes y después</h2>
+      <p>
+        Un objeto típico de e-commerce con 20 campos, indentación de 2 espacios, ocupa unos 800 bytes. Minificado baja a 600. Minificado y comprimido con gzip cae a 250-300. Si estás devolviendo listas de mil objetos por request, esos 50% importan en latencia y costo de bandwidth.
+      </p>
+
+      <h2>Validación incluida</h2>
+      <p>
+        Este minificador parsea con <code>JSON.parse</code>, así que si tu input tiene errores de sintaxis, te avisa. Si tiene comentarios o trailing commas (que JSON estricto no acepta), también falla. Para input no estándar usá un linter previo y limpialo antes.
+      </p>
+
+      <h2>Privacidad y datos sensibles</h2>
+      <p>
+        Como el minificador corre en tu navegador, podés pegar configs con tokens, datos de usuarios reales, o cualquier información sensible sin riesgo. Nada sale de tu dispositivo. Si dudás, abrí las DevTools y mirá el panel Network: vas a ver que no hay requests salientes mientras minificás.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve minificar JSON?</summary><p>Para reducir el tamaño cuando se transmite por red, se guarda en base de datos o en localStorage.</p></details>
+      <details><summary>¿Cuánto se reduce el tamaño?</summary><p>Entre 20% y 35% típico, dependiendo de la indentación original.</p></details>
+      <details><summary>¿Pierde información?</summary><p>No. Solo elimina whitespace fuera de strings.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .jm-stats { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-soft); margin-top: 0.5rem; min-height: 1.25rem; }
+</style>
+
+<script>
+  const inEl = document.getElementById('jm-in') as HTMLTextAreaElement;
+  const out = document.getElementById('jm-out') as HTMLTextAreaElement;
+  const stats = document.getElementById('jm-stats') as HTMLDivElement;
+  const genBtn = document.getElementById('jm-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('jm-copy') as HTMLButtonElement;
+
+  function run() {
+    const txt = inEl.value;
+    if (!txt.trim()) { out.value = ''; stats.textContent = ''; return; }
+    try {
+      const parsed = JSON.parse(txt);
+      const min = JSON.stringify(parsed);
+      out.value = min;
+      const before = new Blob([txt]).size;
+      const after = new Blob([min]).size;
+      const pct = before > 0 ? Math.round(((before - after) / before) * 100) : 0;
+      stats.textContent = `${before} → ${after} bytes (${pct}% menos)`;
+    } catch (e: any) {
+      out.value = '';
+      stats.textContent = 'Error: ' + (e.message || 'JSON inválido');
+    }
+  }
+  inEl.addEventListener('input', run);
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

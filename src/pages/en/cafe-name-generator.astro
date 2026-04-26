@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Cafe Name Generator | Genfy';
+const description = 'Generate unique names for your cafe. Mix bean origin, craft or neighborhood and get 20 memorable ideas for sign, domain and socials.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do I pick a good cafe name?', acceptedAnswer: { '@type': 'Answer', text: 'Short, easy to pronounce, evokes warmth or coffee craft, findable on Google Maps and has the Instagram handle available.' } },
+    { '@type': 'Question', name: 'Do I need to trademark it?', acceptedAnswer: { '@type': 'Answer', text: 'Before investing in signage and social accounts, check availability with the USPTO, UKIPO, CIPO or EUIPO depending on your market.' } },
+    { '@type': 'Question', name: 'Should I use a foreign-language name?', acceptedAnswer: { '@type': 'Answer', text: 'If your audience is young and urban it can work, but you lose closeness with neighbors who don\'t speak it. Read it out loud to locals before deciding.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Food &amp; Drink" title="Cafe Name Generator"
+    intro="Mix beans, craft or neighborhood and get 20 ideas for your specialty or neighborhood cafe. Ready to validate domain and handle in minutes.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Keywords (bean, neighborhood, concept)</label>
+      <input id="bn-kw" type="text" placeholder="bean, slow, craft..." value="bean, table" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="cozy">Cozy (Corner, Spoon)</option>
+        <option value="craft">Specialty (Origin, Roast)</option>
+        <option value="object">Object + Coffee (Spoon Coffee)</option>
+        <option value="place">Corner + neighborhood</option>
+        <option value="single">One word (Pause, Slow)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a cafe name</h2>
+      <p>
+        A cafe is the food business with the highest customer turnover and the deepest reliance
+        on Instagram. The name has two non-negotiables: it has to fit on a small sign and it has
+        to look good on a mug. If it doesn't work in white over beige ceramic, it doesn't work.
+      </p>
+      <ol>
+        <li><strong>Short.</strong> One or two words. Three if the second is "Café" or "Coffee".</li>
+        <li><strong>Warm or craft-driven.</strong> "Roast", "Origin", "Pause", "Slow" convey ritual without pretension.</li>
+        <li><strong>Unique in your radius.</strong> Search Google Maps within 2 miles: if there's another "Corner Cafe", drop it.</li>
+        <li><strong>IG handle available.</strong> That's where your daily chalkboard goes.</li>
+        <li><strong>.com available.</strong> Even without online sales you'll want a simple site for hours and menu.</li>
+      </ol>
+
+      <h2>Classic cafe naming styles</h2>
+      <ul>
+        <li><strong>Cozy neighborhood:</strong> "The Corner", "The Spoon", "Casa Lola". Triggers belonging.</li>
+        <li><strong>Specialty coffee:</strong> "Origin", "Roast 22", "Filter". Communicates craft and bean traceability.</li>
+        <li><strong>Object + Coffee:</strong> "Spoon Coffee", "Table Coffee". Functional and memorable.</li>
+        <li><strong>One word:</strong> "Pause", "Slow", "Sprout". Easy to print on a mug, easy to search.</li>
+        <li><strong>Corner + neighborhood:</strong> "Corner Brera", "Mission Coffee". Boosts local SEO.</li>
+      </ul>
+
+      <h2>What to avoid</h2>
+      <p>
+        Avoid the saturated keywords: any combo with "Beans", "Bean", "Coffee Co" or "Roasters"
+        competes against thousands of results today. Avoid puns on "java" or "espresso": cute on
+        a napkin, ages badly. Beware of accents and special characters that break URLs and
+        Instagram handles. Think the name in ASCII from day one.
+      </p>
+
+      <h2>Quick validation</h2>
+      <ol>
+        <li>Google Maps within 2 miles of your location.</li>
+        <li>Instagram, TikTok and Google Business Profile.</li>
+        <li>Domain on Namecheap or Cloudflare.</li>
+        <li>Trademark register (USPTO, UKIPO, CIPO, EUIPO).</li>
+        <li>Read it out loud to 5 people and ask them to spell it.</li>
+        <li>Print it on a test mug: does it read at 6 feet?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I pick a good cafe name?</summary><p>Short, easy to pronounce, warm or craft, findable on Maps, IG handle available.</p></details>
+      <details><summary>Do I need to trademark it?</summary><p>Before investing in signage, check USPTO, UKIPO, CIPO or EUIPO.</p></details>
+      <details><summary>Should I use a foreign-language name?</summary><p>Works for young urban crowds, but loses closeness with locals who don't speak it.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const COZY = ['The Corner', 'The Spoon', 'Casa', 'The Patio', 'The Pause', 'The Shelf', 'The Table', 'The Bench', 'The Sidewalk', 'The Nook'];
+  const CRAFT = ['Origin', 'Roast', 'Filter', 'Bean', 'Harvest', 'Roaster', 'Grind', 'Cup', 'Sprout', 'Root'];
+  const OBJ = ['Spoon', 'Kettle', 'Cup', 'Table', 'Bench', 'Shelf', 'Jar', 'Mug'];
+  const PLACE = ['Corner', 'Square', 'Avenue', 'Street', 'Block', 'Sidewalk'];
+  const SINGLE = ['Pause', 'Slow', 'Sprout', 'Harvest', 'Awake', 'Still', 'Mist', 'Calm', 'Dew', 'Steam'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'coffee';
+      let name = '';
+      if (s === 'cozy') name = pick(COZY) + (Math.random() > 0.5 ? ' ' + cap(w) : ' Coffee');
+      else if (s === 'craft') name = pick(CRAFT) + ' ' + (Math.random() > 0.5 ? cap(w) : 'Coffee');
+      else if (s === 'object') name = pick(OBJ) + ' Coffee';
+      else if (s === 'place') name = pick(PLACE) + ' ' + cap(w);
+      else if (s === 'single') name = pick(SINGLE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

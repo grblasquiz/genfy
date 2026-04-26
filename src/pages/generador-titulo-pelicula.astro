@@ -1,0 +1,139 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de título de película gratis | Genfy';
+const description = 'Generá títulos de película en segundos. Combiná género, tono y formato para conseguir 20 ideas memorables y SEO-friendly para tu próximo guion.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo elijo el título de mi película?', acceptedAnswer: { '@type': 'Answer', text: 'Buscá un título corto, evocador, fácil de recordar y único en IMDb. Tiene que comunicar el género en tres palabras o menos.' } },
+    { '@type': 'Question', name: '¿El título tiene que mencionar al protagonista?', acceptedAnswer: { '@type': 'Answer', text: 'No es obligatorio. La mayoría de las películas usan títulos abstractos o ambientales. Solo conviene incluir nombres si el personaje ya es marca conocida.' } },
+    { '@type': 'Question', name: '¿Puedo cambiar el título tras el estreno?', acceptedAnswer: { '@type': 'Answer', text: 'Es complicado: los registros de IMDb, festivales y plataformas no se actualizan. Mejor invertir tiempo en elegir el correcto antes del primer poster.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de título de película"
+    intro="Encontrá el título perfecto para tu película. Combiná género, tono y formato para conseguir 20 ideas en segundos, listas para tu próximo guion o pitch.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Tema o palabra clave</label>
+      <input id="bn-kw" type="text" placeholder="venganza, viaje, secreto..." value="silencio" />
+
+      <label for="bn-style" style="margin-top:1rem">Tono</label>
+      <select id="bn-style">
+        <option value="thriller">Thriller (El último testigo)</option>
+        <option value="drama">Drama (Lo que perdimos)</option>
+        <option value="action">Acción (Hora cero)</option>
+        <option value="indie">Indie (Cosas pequeñas)</option>
+        <option value="single">Una palabra (Silencio)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 títulos</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el título de una película</h2>
+      <p>
+        Un título de película hace tres trabajos a la vez: vende el género, queda en la cabeza de
+        quien vio el tráiler y resiste el SEO en plataformas. La diferencia entre un título que
+        funciona y uno que se olvida casi siempre está en la combinación de imagen concreta y tono
+        de género. "Silencio" no dice nada. "El último testigo" comunica thriller en tres palabras.
+      </p>
+      <ol>
+        <li><strong>Comunicá el género en el título.</strong> El espectador escanea Netflix en segundos. Tu título tiene que decirle si es thriller, comedia o drama antes de leer la sinopsis.</li>
+        <li><strong>Buscá una imagen concreta.</strong> "Sentimientos" no funciona. "Habitación cerrada" sí.</li>
+        <li><strong>Verificá colisión en IMDb.</strong> Si hay tres películas con el mismo título de los últimos diez años, los buscadores te van a enterrar.</li>
+        <li><strong>Que aguante un poster.</strong> Probalo escrito en bold sobre una imagen genérica del género. ¿Funciona?</li>
+        <li><strong>Que la prensa lo pueda repetir.</strong> En entrevistas, los periodistas van a decirlo cien veces. Si tropieza al pronunciarlo, perdés cobertura.</li>
+      </ol>
+
+      <h2>Estilos clásicos por género</h2>
+      <ul>
+        <li><strong>Thriller</strong>: artículo definido + sustantivo amenazante (El último testigo, La hora desaparecida). Sugerencia de tensión, no de resolución.</li>
+        <li><strong>Drama</strong>: frases poéticas o nostálgicas (Lo que perdimos, Antes del invierno). Apelan a memoria emocional.</li>
+        <li><strong>Acción</strong>: títulos cortos, urgentes, con números o tiempo (Hora cero, 24 horas, Punto crítico).</li>
+        <li><strong>Indie / festival</strong>: títulos largos o conceptuales (Las cosas que hicimos, Una historia simple). Apelan al curador antes que al público masivo.</li>
+        <li><strong>Una palabra</strong>: el premio mayor cuando funciona (Drive, Heat, Whiplash). Difícil de conseguir libre, alto impacto.</li>
+      </ul>
+
+      <h2>Errores frecuentes</h2>
+      <p>
+        El más típico: títulos que prometen un género que la película no entrega. Si tu drama
+        intimista se llama "Detonación", el espectador llega esperando explosiones y se va
+        decepcionado. Otro error: títulos demasiado largos que las plataformas cortan con "..." en
+        el grid. Y un tercero: nombres que dependen del idioma original y se traducen mal a otros
+        mercados (ojo con los juegos de palabras locales).
+      </p>
+
+      <h2>Después de generar: cómo cerrar</h2>
+      <ol>
+        <li>Buscá cada título en IMDb y en JustWatch. Verificá colisiones de los últimos 15 años.</li>
+        <li>Probá el título en una sinopsis de una línea: "___, una película sobre ___". ¿Encaja?</li>
+        <li>Mostralo a tres personas con el género: ¿les genera ganas de ver?</li>
+        <li>Verificá disponibilidad de dominio si planeás un sitio de campaña.</li>
+        <li>Pasalo por el filtro del cartelista: ¿se ve bien escrito grande?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo elijo el título de mi película?</summary><p>Corto, evocador, fácil de recordar y único en IMDb. Tiene que comunicar género en tres palabras o menos.</p></details>
+      <details><summary>¿El título tiene que mencionar al protagonista?</summary><p>No, salvo que sea un personaje ya conocido como marca.</p></details>
+      <details><summary>¿Puedo cambiar el título tras estrenar?</summary><p>Es complicado: IMDb, festivales y plataformas no se actualizan. Elegí bien antes del primer poster.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const THRILLER = ['El último testigo', 'La hora desaparecida', 'Sin rastro', 'La casa cerrada', 'El intruso', 'Ruido nocturno', 'El error', 'La verdad oculta'];
+  const DRAMA = ['Lo que perdimos', 'Antes del invierno', 'Cartas sin enviar', 'Cuando éramos jóvenes', 'El último verano', 'Madres e hijas'];
+  const ACTION = ['Hora cero', 'Punto crítico', 'Veinticuatro horas', 'Sin retorno', 'Última misión', 'Línea roja'];
+  const INDIE = ['Las cosas que hicimos', 'Una historia simple', 'Pequeñas cosas', 'Días iguales', 'Otoño', 'El silencio entre nosotros'];
+  const NOUN = ['Silencio', 'Hueso', 'Niebla', 'Sombra', 'Refugio', 'Cicatriz', 'Vértigo', 'Eco'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'thriller') name = pick(THRILLER);
+      else if (s === 'drama') name = pick(DRAMA);
+      else if (s === 'action') name = pick(ACTION);
+      else if (s === 'indie') name = pick(INDIE);
+      else if (s === 'single') name = words.length ? cap(pick(words)) : pick(NOUN);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

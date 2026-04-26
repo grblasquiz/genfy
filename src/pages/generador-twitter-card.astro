@@ -1,0 +1,137 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de Twitter Card | Genfy';
+const description = 'Generá las meta tags de Twitter Card para previsualizar tu sitio en X (Twitter). Tipo summary, summary_large_image, copia con un click.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué tipo de Twitter Card uso?', acceptedAnswer: { '@type': 'Answer', text: 'Para la mayoría de los casos, summary_large_image: muestra una imagen grande, ideal para artículos y landings. summary muestra una thumbnail chica al costado del título.' } },
+    { '@type': 'Question', name: '¿Hace falta @site?', acceptedAnswer: { '@type': 'Answer', text: 'No es obligatorio, pero si tu marca tiene cuenta en X, ponela en twitter:site para que la card te atribuya.' } },
+    { '@type': 'Question', name: '¿Por qué no aparece mi card?', acceptedAnswer: { '@type': 'Answer', text: 'Las causas comunes son: imagen rota, og:image faltante, robots bloqueando al bot de Twitter o cache. Validá en cards-dev.twitter.com/validator.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Generador de Twitter Card"
+    intro="Armá las meta tags de Twitter Card para que tus links se vean lindos en X. Elegí tipo, completá los campos y copiá el código.">
+
+    <div slot="tool" class="tw">
+      <div class="tw-grid">
+        <div>
+          <label for="tw-card">Tipo</label>
+          <select id="tw-card">
+            <option value="summary_large_image" selected>summary_large_image</option>
+            <option value="summary">summary</option>
+          </select>
+        </div>
+        <div>
+          <label for="tw-title">Título</label>
+          <input id="tw-title" type="text" value="Tu título" />
+        </div>
+        <div>
+          <label for="tw-desc">Descripción</label>
+          <textarea id="tw-desc" rows="3">Una descripción de hasta 200 caracteres.</textarea>
+        </div>
+        <div>
+          <label for="tw-img">URL de la imagen</label>
+          <input id="tw-img" type="url" value="https://miempresa.com/og.png" />
+        </div>
+        <div>
+          <label for="tw-site">@site (opcional)</label>
+          <input id="tw-site" type="text" value="@miempresa" />
+        </div>
+        <div>
+          <label for="tw-creator">@creator (opcional)</label>
+          <input id="tw-creator" type="text" value="@autor" />
+        </div>
+      </div>
+
+      <div class="tw-actions">
+        <button id="tw-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="tw-cp" class="btn btn-ghost" type="button">Copiar</button>
+      </div>
+
+      <pre><code id="tw-out"></code></pre>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es una Twitter Card</h2>
+      <p>Una Twitter Card es la previsualización rica que aparece cuando alguien comparte un link en X (antes Twitter). Sin Twitter Card, tu link aparece como texto plano. Con Twitter Card, aparece con imagen, título y descripción, ocupando bastante más espacio en el feed y captando más atención.</p>
+
+      <h2>Tipos de card</h2>
+      <ul>
+        <li><strong>summary</strong>: thumbnail cuadrada chica al costado del título. Útil para sitios donde la imagen no es protagonista.</li>
+        <li><strong>summary_large_image</strong>: imagen grande horizontal arriba del título. Es la opción default para la mayoría de las landings y artículos.</li>
+        <li><strong>player</strong>: para video o audio embebidos. Requiere aprobación de Twitter.</li>
+        <li><strong>app</strong>: para promocionar apps móviles con link directo a la store.</li>
+      </ul>
+
+      <h2>Tamaños de imagen</h2>
+      <p>Para summary_large_image: 1200x628 píxeles, ratio 1.91:1, mínimo 300x157, máximo 5 MB. Formatos JPG, PNG, WebP, GIF (estática). Para summary: 144x144 mínimo, ratio 1:1.</p>
+
+      <h2>Cómo Twitter detecta tu card</h2>
+      <p>Twitter usa un bot llamado Twitterbot que visita tu URL y parsea las meta tags. Si tu robots.txt bloquea a Twitterbot, no hay card. Tampoco hay card si el servidor responde con error 4xx/5xx, si la página tarda mucho en cargar o si las meta tags están mal formateadas.</p>
+
+      <h2>Open Graph como fallback</h2>
+      <p>Twitter es inteligente: si no encuentra meta name="twitter:..." pero sí encuentra meta property="og:..." (Open Graph), usa Open Graph como fallback. Esto significa que si ya tenés OG bien armado, la Twitter Card va a funcionar incluso sin tags específicas. Las tags de Twitter solamente sobrescriben las de OG cuando querés mostrar algo distinto en X que en Facebook o LinkedIn.</p>
+
+      <h2>Validación y debug</h2>
+      <p>Twitter cambió su validator histórico, pero podés probar tu URL pegándola en un tweet de prueba y viendo cómo renderiza. Si no aparece la card: revisá que la imagen sea pública, que el HTML tenga las meta tags, que el sitio responda 200, y borrá el cache (si la cambiaste recientemente).</p>
+
+      <h2>Errores comunes</h2>
+      <ul>
+        <li><strong>Imagen relativa</strong>: usá URLs absolutas (con https://), nunca rutas relativas.</li>
+        <li><strong>Imagen detrás de auth</strong>: la imagen tiene que ser pública.</li>
+        <li><strong>Tipo equivocado</strong>: si no especificás summary_large_image, X usa summary por default.</li>
+        <li><strong>Cache</strong>: cambios en og:image pueden tardar en propagarse.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué tipo de Twitter Card uso?</summary><p>Para la mayoría, summary_large_image. Si tu sitio no se beneficia de imagen grande, usá summary.</p></details>
+      <details><summary>¿Hace falta @site?</summary><p>No es obligatorio. Si tu marca tiene cuenta en X, ponela para que se atribuya correctamente.</p></details>
+      <details><summary>¿Por qué no aparece mi card?</summary><p>Imagen rota, robots bloqueando Twitterbot, og:image faltante o cache. Probá pegar la URL en un tweet de prueba.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tw-grid { display: grid; gap: 1rem; margin-bottom: 1rem; }
+  .tw-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+</style>
+
+<script>
+  const card = document.getElementById('tw-card') as HTMLSelectElement;
+  const title = document.getElementById('tw-title') as HTMLInputElement;
+  const desc = document.getElementById('tw-desc') as HTMLTextAreaElement;
+  const img = document.getElementById('tw-img') as HTMLInputElement;
+  const site = document.getElementById('tw-site') as HTMLInputElement;
+  const creator = document.getElementById('tw-creator') as HTMLInputElement;
+  const out = document.getElementById('tw-out') as HTMLElement;
+  const gen = document.getElementById('tw-gen') as HTMLButtonElement;
+  const cp = document.getElementById('tw-cp') as HTMLButtonElement;
+
+  function esc(s: string) { return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function render() {
+    const lines: string[] = [];
+    lines.push(`<meta name="twitter:card" content="${esc(card.value)}" />`);
+    lines.push(`<meta name="twitter:title" content="${esc(title.value)}" />`);
+    lines.push(`<meta name="twitter:description" content="${esc(desc.value)}" />`);
+    lines.push(`<meta name="twitter:image" content="${esc(img.value)}" />`);
+    if (site.value) lines.push(`<meta name="twitter:site" content="${esc(site.value)}" />`);
+    if (creator.value) lines.push(`<meta name="twitter:creator" content="${esc(creator.value)}" />`);
+    out.textContent = lines.join('\n');
+  }
+  gen.addEventListener('click', render);
+  [card, title, desc, img, site, creator].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar', 1500);
+  });
+  render();
+</script>

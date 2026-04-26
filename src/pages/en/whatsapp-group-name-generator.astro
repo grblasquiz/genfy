@@ -1,0 +1,140 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free WhatsApp Group Name Generator | Genfy';
+const description = 'Generate fun WhatsApp group names. Mix group type and tone and get 20 ideas for friends, work, family or neighbors.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good group name?', acceptedAnswer: { '@type': 'Answer', text: 'Easy to identify when scanning your chat list, reflects the group\'s tone, and doesn\'t blur with similar groups.' } },
+    { '@type': 'Question', name: 'Should I change it often?', acceptedAnswer: { '@type': 'Answer', text: 'In friend groups yes, helps keep the energy. In work or family groups, better to keep it stable.' } },
+    { '@type': 'Question', name: 'How many characters does it support?', acceptedAnswer: { '@type': 'Answer', text: 'WhatsApp allows up to 25 characters. Aim for shorter so it shows fully in your chat list.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Communication" title="WhatsApp Group Name Generator"
+    intro="Mix group type and tone and get 20 ideas for your chat with friends, work, family or neighbors. Built for 25 characters and max identification.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Optional context</label>
+      <input id="bn-kw" type="text" placeholder="friends, bbq, office..." value="friends" />
+
+      <label for="bn-style" style="margin-top:1rem">Group type</label>
+      <select id="bn-style">
+        <option value="friends">Friends / fun</option>
+        <option value="work">Work</option>
+        <option value="family">Family (no fights)</option>
+        <option value="trip">Trip / event</option>
+        <option value="neighbors">Neighbors / building</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to name a WhatsApp group</h2>
+      <p>
+        Your group name appears every time a member opens WhatsApp and scans the chat list.
+        If you have five "Friends" groups, only the latest one wins; the rest become
+        invisible. A good name saves you hours of "wait, which group did we say that in?".
+      </p>
+      <ol>
+        <li><strong>Identifiable at first glance.</strong> Group type + a distinctive detail.</li>
+        <li><strong>Coherent tone.</strong> A family group doesn't need the same absurd name as the soccer chat.</li>
+        <li><strong>Short.</strong> 15-20 characters read fully in the list.</li>
+        <li><strong>No ambiguity.</strong> "Friends 2024" beats just "Friends".</li>
+        <li><strong>Notification-friendly.</strong> The name appears in every push: don't make it embarrassing.</li>
+      </ol>
+
+      <h2>Styles by group type</h2>
+      <ul>
+        <li><strong>Friends / fun:</strong> "BBQ Crew", "Meme Committee", "Productive Sundays". Humor + identity.</li>
+        <li><strong>Work:</strong> "Project X Team", "Marketing 2026". Clear and professional.</li>
+        <li><strong>Family:</strong> "Smith Family", "Mom's Birthday". Functional, no jokes that hurt.</li>
+        <li><strong>Trip / event:</strong> "Rome Trip March", "Anna &amp; Bruno Wedding". Specific and time-bound.</li>
+        <li><strong>Neighbors / building:</strong> "5th Ave 2200", "Block 4 Neighbors". Operational.</li>
+      </ul>
+
+      <h2>What to avoid</h2>
+      <p>
+        Avoid names so absurd that when the notification pops on your screen in front of a
+        colleague, you cringe. Avoid names only one or two members understand: the rest feel
+        excluded. And avoid treating the group like a newsletter: changing the name five
+        times a day is fun at first, annoying within a week.
+      </p>
+
+      <h2>Best practices</h2>
+      <ol>
+        <li>Set the name before adding the 5th person.</li>
+        <li>For work groups, keep it stable.</li>
+        <li>For friend groups, rotate every 6 months if you want.</li>
+        <li>If context changes (trip ended), archive or rename.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good name?</summary><p>Identifiable, reflects tone, doesn't blur with others.</p></details>
+      <details><summary>Change often?</summary><p>Friend groups yes; work/family stable.</p></details>
+      <details><summary>How many characters?</summary><p>Up to 25, aim for 15-20 to fit.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const FRIENDS = ['BBQ Crew', 'Meme Committee', 'Productive Sundays', 'Summit Council', 'No Plan Crew', 'Eternal Brunch', 'Cabinet Meeting', 'Board of Directors', 'Inner Circle', 'Justice League'];
+  const WORK = ['Project X Team', 'Marketing 2026', 'Q1 Coordination', 'War Room', 'Working Group', 'Mobile Squad', 'North Sales'];
+  const FAMILY = ['Smith Family', 'Mom\'s Birthday', 'Family House', 'Siblings', 'Cousins', 'Family Tribe'];
+  const TRIP = ['Rome Trip', 'Italy 2026', 'Anna & Bruno Wedding', 'Saturday Outing', 'Beach Escape', 'Long Weekend'];
+  const NEIGHBORS = ['5th Ave 2200', 'Block 4 Neighbors', 'Building 1B', 'Gated Community', 'Corridor 3rd Floor'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = style.value;
+    let pool: string[] = [];
+    if (s === 'friends') pool = FRIENDS;
+    else if (s === 'work') pool = WORK;
+    else if (s === 'family') pool = FAMILY;
+    else if (s === 'trip') pool = TRIP;
+    else if (s === 'neighbors') pool = NEIGHBORS;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const base = pick(pool);
+      const variant = Math.random();
+      let name = base;
+      if (variant < 0.3) name = base + ' 2026';
+      else if (variant < 0.5) name = base + ' (official)';
+      else if (variant < 0.65) name = '🎉 ' + base;
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

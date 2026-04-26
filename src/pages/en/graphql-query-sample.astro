@@ -1,0 +1,255 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'GraphQL Query Sample | Genfy';
+const description = 'Generate sample GraphQL queries, mutations and subscriptions with variables, fragments and aliases.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is GraphQL?', acceptedAnswer: { '@type': 'Answer', text: 'A query language for APIs where the client specifies exactly which fields it wants. A single URL handles queries, mutations and subscriptions.' } },
+    { '@type': 'Question', name: 'GraphQL or REST?', acceptedAnswer: { '@type': 'Answer', text: 'REST wins on simplicity and HTTP caching. GraphQL wins on client flexibility and reduces overfetching. Many products use both.' } },
+    { '@type': 'Question', name: 'What is a fragment?', acceptedAnswer: { '@type': 'Answer', text: 'A reusable set of fields. Defined once and included with ...FragmentName in queries and mutations.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Tech / Dev"
+    title="GraphQL Query Sample"
+    intro="Generate GraphQL queries, mutations and subscriptions with variables, fragments and aliases."
+  >
+    <div slot="tool" class="gq-tool">
+      <div class="gq-grid">
+        <div>
+          <label for="gq-type">Type</label>
+          <select id="gq-type">
+            <option value="query">query</option>
+            <option value="mutation">mutation</option>
+            <option value="subscription">subscription</option>
+          </select>
+        </div>
+        <div>
+          <label for="gq-template">Template</label>
+          <select id="gq-template">
+            <option value="userList">Paginated list</option>
+            <option value="userDetail">Detail with relations</option>
+            <option value="createUser">Create (mutation)</option>
+            <option value="updateUser">Update (mutation)</option>
+            <option value="onMessage">Subscription</option>
+          </select>
+        </div>
+      </div>
+      <div class="gq-actions">
+        <button id="gq-gen" class="btn btn-primary" type="button">Generate</button>
+        <button id="gq-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+      </div>
+      <textarea id="gq-out" class="mono" rows="14" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What is GraphQL?</h2>
+      <p>
+        GraphQL is a query language for APIs created at Facebook and open-sourced in 2015. The
+        difference vs REST is structural: instead of multiple endpoints (one per resource), there's
+        a single <code>/graphql</code> endpoint that receives queries and returns exactly the
+        requested fields. The client decides what it needs; the server exposes what's possible.
+      </p>
+
+      <h2>Anatomy of a query</h2>
+      <p>
+        A query starts with the keyword <code>query</code> (optional for simple queries), a name,
+        typed variables (<code>$id: ID!</code>) and the body: root-type fields, sub-fields and
+        arguments. The braces <code>&lcub; &rcub;</code> define which fields to fetch; without them, none
+        are.
+      </p>
+
+      <h2>Mutations: when something changes</h2>
+      <p>
+        Mutations modify state. Syntax almost identical to queries, but with the keyword
+        <code>mutation</code>. Convention: imperative names (<code>createUser</code>,
+        <code>deleteOrder</code>) and return the modified object so the client can update its
+        cache without a refetch.
+      </p>
+
+      <h2>Subscriptions: real time</h2>
+      <p>
+        Subscriptions use WebSockets. Useful for live feeds, notifications, presence. The client
+        opens a connection and receives events when the server publishes. The protocol most used
+        today is <code>graphql-ws</code>.
+      </p>
+
+      <h2>Variables</h2>
+      <p>
+        Hardcoding values breaks caching and opens injection paths. The right approach is to
+        declare variables: <code>query Get($id: ID!) &lcub; user(id: $id) &lcub; ... &rcub; &rcub;</code> and send
+        <code>variables</code> in the request JSON. The server parses them separately.
+      </p>
+
+      <h2>Fragments</h2>
+      <p>
+        If the same fields appear in several queries, define a fragment:
+        <code>fragment UserFields on User &lcub; id name email &rcub;</code> and use it with
+        <code>...UserFields</code>. Apollo and Relay leverage fragments to colocate fields next
+        to the component that uses them.
+      </p>
+
+      <h2>Aliases and directives</h2>
+      <p>
+        If you ask for the same field twice with different arguments, use an alias:
+        <code>active: users(status: ACTIVE) &lcub; id &rcub;</code>. Directives
+        <code>@include(if: $cond)</code> and <code>@skip(if: $cond)</code> conditionally include
+        or skip fields based on variables.
+      </p>
+
+      <h2>The N+1 problem</h2>
+      <p>
+        If you ask for a sub-field on a list (author of each post), a naive resolver fires one
+        query per post. With DataLoader (from Facebook) you batch all IDs in one query and return
+        an array. It's the key tool to keep GraphQL from destroying your database in production.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is GraphQL?</summary><p>A query language where the client picks exactly which fields it wants. One URL for everything.</p></details>
+      <details><summary>GraphQL or REST?</summary><p>REST wins on simplicity and HTTP caching; GraphQL on client flexibility.</p></details>
+      <details><summary>What is a fragment?</summary><p>A reusable set of fields included via <code>...Name</code>.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .gq-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .gq-grid { grid-template-columns: 1fr; } }
+  .gq-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const type = document.getElementById('gq-type') as HTMLSelectElement;
+  const tpl = document.getElementById('gq-template') as HTMLSelectElement;
+  const out = document.getElementById('gq-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('gq-gen') as HTMLButtonElement;
+  const copy = document.getElementById('gq-copy') as HTMLButtonElement;
+
+  function build() {
+    const t = tpl.value;
+    let result = '';
+    if (t === 'userList') {
+      result = `query GetUsers($page: Int = 1, $limit: Int = 20) {
+  users(page: $page, limit: $limit) {
+    pageInfo {
+      hasNextPage
+      total
+    }
+    nodes {
+      ...UserFields
+    }
+  }
+}
+
+fragment UserFields on User {
+  id
+  email
+  name
+  role
+  createdAt
+}
+
+# Variables
+# { "page": 1, "limit": 20 }`;
+    } else if (t === 'userDetail') {
+      result = `query GetUserDetail($id: ID!) {
+  user(id: $id) {
+    id
+    email
+    name
+    posts(limit: 5) {
+      id
+      title
+      publishedAt
+      comments {
+        id
+        body
+        author { id name }
+      }
+    }
+  }
+}
+
+# Variables
+# { "id": "42" }`;
+    } else if (t === 'createUser') {
+      result = `mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    user {
+      id
+      email
+      name
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
+
+# Variables
+# {
+#   "input": {
+#     "email": "user@example.com",
+#     "name": "Example",
+#     "role": "USER"
+#   }
+# }`;
+    } else if (t === 'updateUser') {
+      result = `mutation UpdateUser($id: ID!, $input: UpdateUserInput!) {
+  updateUser(id: $id, input: $input) {
+    user {
+      id
+      email
+      name
+      updatedAt
+    }
+  }
+}
+
+# Variables
+# { "id": "42", "input": { "name": "New name" } }`;
+    } else {
+      result = `subscription OnNewMessage($channelId: ID!) {
+  messageAdded(channelId: $channelId) {
+    id
+    body
+    author {
+      id
+      name
+    }
+    createdAt
+  }
+}
+
+# Variables
+# { "channelId": "general" }`;
+    }
+    if (type.value === 'mutation' && !result.startsWith('mutation')) {
+      result = result.replace(/^query/, 'mutation');
+    }
+    out.value = result;
+  }
+  gen.addEventListener('click', build);
+  [type, tpl].forEach(el => el.addEventListener('change', build));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copied';
+    setTimeout(() => { icon.textContent = 'Copy'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

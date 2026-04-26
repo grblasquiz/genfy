@@ -1,0 +1,141 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Text-Based Favicon Generator | Genfy';
+const description = 'Generate a favicon from text: pick a letter, background and font color. Download a square PNG ready to drop into any website.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What size should a favicon be?', acceptedAnswer: { '@type': 'Answer', text: 'Modern standards use 32x32 for the tab, 180x180 for iOS and 192x192 or 512x512 for Android. Export a 512 master PNG and let each platform scale it.' } },
+    { '@type': 'Question', name: 'PNG or ICO?', acceptedAnswer: { '@type': 'Answer', text: 'Every modern browser supports PNG via link rel="icon". ICO is only needed for legacy Internet Explorer.' } },
+    { '@type': 'Question', name: 'How do I add it to my site?', acceptedAnswer: { '@type': 'Answer', text: 'Upload the PNG to the site root and add a link rel="icon" type="image/png" href="/favicon.png" tag inside the HTML head.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design / Diseño" title="Text-Based Favicon Generator"
+    intro="Build a favicon with one or two letters, background color and typography. Download a square PNG ready for your site.">
+
+    <div slot="tool" class="fav">
+      <div class="fav-grid">
+        <div>
+          <label for="fav-text">Text (1–2 characters)</label>
+          <input id="fav-text" type="text" maxlength="2" value="G" />
+        </div>
+        <div>
+          <label for="fav-bg">Background</label>
+          <input id="fav-bg" type="color" value="#0f172a" />
+        </div>
+        <div>
+          <label for="fav-fg">Text color</label>
+          <input id="fav-fg" type="color" value="#ffffff" />
+        </div>
+        <div>
+          <label for="fav-radius">Border radius</label>
+          <input id="fav-radius" type="range" min="0" max="256" value="64" />
+        </div>
+      </div>
+
+      <div class="fav-actions">
+        <button id="fav-gen" class="btn btn-primary" type="button">Generate</button>
+        <button id="fav-dl" class="btn btn-ghost" type="button">Download PNG</button>
+      </div>
+
+      <div class="fav-canvas-wrap">
+        <canvas id="fav-canvas" width="512" height="512"></canvas>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Why a favicon matters</h2>
+      <p>The favicon is the small icon shown in the browser tab, bookmarks and on the home screen when someone saves your site. It is the first visual a user associates with your brand, and a site without one signals neglect. Even at a few pixels, a clear identity in that tiny square boosts recognition, trust and recall.</p>
+
+      <h2>Why a text favicon works</h2>
+      <p>Letters scale better than complex illustrations at small sizes. A favicon based on one initial, two letters or a flat symbol stays legible even at 16 pixels. Stripe, Linear, Vercel and Notion all do this: a monochromatic typographic mark on a solid background. Rule of thumb: if your logo cannot be read at 16x16, use a simplified version just for the favicon.</p>
+
+      <h2>Recommended sizes and formats</h2>
+      <ul>
+        <li><strong>16x16 and 32x32</strong>: desktop tabs.</li>
+        <li><strong>180x180</strong>: apple-touch-icon for iOS and Safari.</li>
+        <li><strong>192x192 and 512x512</strong>: Android, PWAs and web manifest.</li>
+        <li><strong>SVG</strong>: if your icon is vector, one SVG covers every size.</li>
+      </ul>
+      <p>Always start from a 512x512 master. Scaling down is safe; scaling up pixelates. This generator exports a 512 PNG you can use as that master.</p>
+
+      <h2>Installing it on your site</h2>
+      <p>Drop the file into the project root and add the tags inside the &lt;head&gt;:</p>
+      <pre><code>&lt;link rel="icon" type="image/png" href="/favicon.png" /&gt;
+&lt;link rel="apple-touch-icon" href="/apple-touch-icon.png" /&gt;</code></pre>
+      <p>Modern frameworks (Astro, Next, Nuxt) usually have a <code>public/</code> folder you can drop assets into and they get served automatically. Remember to hard refresh: browsers cache favicons very aggressively.</p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Too much detail</strong>: subtle gradients vanish at 16 px. Use flat colors.</li>
+        <li><strong>Low contrast</strong>: if background and text are too similar, the icon disappears against dark browser chrome.</li>
+        <li><strong>Thin strokes</strong>: use bold or black weights. Regular looks weak when scaled down.</li>
+        <li><strong>Forgetting dark mode</strong>: test your favicon in dark themes in Chrome and Firefox; some pairings break.</li>
+      </ul>
+
+      <h2>Design best practices</h2>
+      <p>Stay consistent with your main palette: the favicon should be a condensed version of the logo, not a separate illustration. If you have a symbol or monogram, that is the ideal pick. If not, an initial in a typeface with personality is enough. Test the result on light and dark backgrounds before shipping, and verify legibility in real tabs after deploy.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What size should a favicon be?</summary><p>32x32 for tabs, 180x180 for iOS, 192/512 for Android and PWAs. Build a 512 master and let each platform scale it.</p></details>
+      <details><summary>PNG or ICO?</summary><p>PNG covers every modern browser. ICO is only needed for legacy Internet Explorer.</p></details>
+      <details><summary>How do I install it?</summary><p>Upload it to the root and add &lt;link rel="icon" type="image/png" href="/favicon.png"&gt; in the head.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .fav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .fav-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .fav-canvas-wrap { padding: 1rem; background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--radius); display: flex; justify-content: center; }
+  #fav-canvas { width: 256px; height: 256px; image-rendering: pixelated; }
+  @media (max-width: 600px) { .fav-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const text = document.getElementById('fav-text') as HTMLInputElement;
+  const bg = document.getElementById('fav-bg') as HTMLInputElement;
+  const fg = document.getElementById('fav-fg') as HTMLInputElement;
+  const radius = document.getElementById('fav-radius') as HTMLInputElement;
+  const gen = document.getElementById('fav-gen') as HTMLButtonElement;
+  const dl = document.getElementById('fav-dl') as HTMLButtonElement;
+  const canvas = document.getElementById('fav-canvas') as HTMLCanvasElement;
+
+  function render() {
+    const ctx = canvas.getContext('2d')!;
+    const size = 512;
+    const r = parseInt(radius.value, 10);
+    ctx.clearRect(0, 0, size, size);
+    ctx.fillStyle = bg.value;
+    ctx.beginPath();
+    ctx.moveTo(r, 0);
+    ctx.arcTo(size, 0, size, size, r);
+    ctx.arcTo(size, size, 0, size, r);
+    ctx.arcTo(0, size, 0, 0, r);
+    ctx.arcTo(0, 0, size, 0, r);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = fg.value;
+    const t = (text.value || 'G').slice(0, 2);
+    const fontSize = t.length === 1 ? 320 : 220;
+    ctx.font = `700 ${fontSize}px Inter, system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(t, size / 2, size / 2 + fontSize * 0.05);
+  }
+  gen.addEventListener('click', render);
+  [text, bg, fg, radius].forEach(el => el.addEventListener('input', render));
+  dl.addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'favicon.png';
+    a.click();
+  });
+  render();
+</script>

@@ -1,0 +1,162 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Facebook Ad Copy Generator | Genfy';
+const description = 'Generate Facebook Ads copy optimized for CTR and conversion. Hook, benefit, social proof and CTA in less than 125 characters of primary text.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many characters work for a Facebook ad?', acceptedAnswer: { '@type': 'Answer', text: 'Primary text truncates around 125 characters on mobile feed. What appears after "see more" is read by less than 5% of the audience.' } },
+    { '@type': 'Question', name: 'What makes Facebook copy work?', acceptedAnswer: { '@type': 'Answer', text: 'Clear hook in the first line, concrete benefit, social proof when applicable and a specific CTA that matches the ad button.' } },
+    { '@type': 'Question', name: 'Emojis in Facebook Ads?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, with judgment. 1-2 functional emojis (✓, →, 📍) can lift CTR. More than 3 lowers professionalism and reads as spam.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Facebook Ad Copy Generator"
+    intro="Drop in product, benefit and CTA. Genfy returns 4 copy variants with hook, social proof and call to action.">
+
+    <div slot="tool" class="fb">
+      <label for="fb-product">Product or service</label>
+      <input id="fb-product" type="text" placeholder="Investing course..." value="Investing course for freelancers" />
+
+      <label for="fb-audience" style="margin-top:1rem">Audience</label>
+      <input id="fb-audience" type="text" placeholder="Freelancers..." value="Freelancers tired of not saving" />
+
+      <label for="fb-benefit" style="margin-top:1rem">Main benefit</label>
+      <input id="fb-benefit" type="text" placeholder="Save and invest from $50/month" value="Save and invest from $50 a month" />
+
+      <label for="fb-proof" style="margin-top:1rem">Proof or authority (optional)</label>
+      <input id="fb-proof" type="text" placeholder="5,000+ students..." value="5,000+ students" />
+
+      <label for="fb-cta" style="margin-top:1rem">CTA</label>
+      <input id="fb-cta" type="text" placeholder="Try free for 7 days" value="Try free for 7 days" />
+
+      <button id="fb-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 4 copies</button>
+
+      <div id="fb-out" class="fb-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why the first 125 characters decide 80% of the result</h2>
+      <p>
+        In the Facebook feed (especially mobile, which is 90% of consumption) primary text truncates around 125 characters with a "see more". What appears after is read by less than 5% of the audience. That means your hook, your main benefit and your intent must live in those first 125 characters. The rest is for the people already engaged.
+      </p>
+      <p>
+        That constraint is a blessing in disguise: it forces tight writing. When Facebook copy works, it does so because the first line did the job of capturing attention without spectacle.
+      </p>
+
+      <h2>The 4-part structure that performs</h2>
+      <ol>
+        <li><strong>Hook (line 1):</strong> the problem, a question or a counterintuitive statement. "Are you a freelancer who saves nothing?" or "Working more doesn't make you earn more."</li>
+        <li><strong>Benefit (line 2):</strong> what the person gets. "Learn to invest from $50 a month."</li>
+        <li><strong>Proof (line 3 — optional):</strong> number, brief testimonial or authority. "5,000+ students trained."</li>
+        <li><strong>CTA (line 4):</strong> what to do now. Must match the ad button. "Start free for 7 days →"</li>
+      </ol>
+
+      <h2>Hooks that work on Facebook (and ones that don't)</h2>
+      <p>
+        The Facebook feed is noisy. Your copy competes with baby photos, memes and news. Hooks that perform:
+      </p>
+      <ul>
+        <li><strong>Direct question to pain point:</strong> "Earn well but always broke at month-end?"</li>
+        <li><strong>Counterintuitive statement:</strong> "Saving 10% isn't enough."</li>
+        <li><strong>Specific number:</strong> "How I went from $0 to $500 invested per month."</li>
+        <li><strong>Segment call-out:</strong> "Freelancers in the US: this is for you."</li>
+      </ul>
+      <p>Hooks that don't work: "Hi friends!", "I invite you to learn about...", "If you want to change your life..." — all generic, all dismissed before the second scan.</p>
+
+      <h2>Primary text vs headline vs description</h2>
+      <p>
+        Facebook Ads has three text fields: primary text (above the image, ~125 visible chars), headline (below the image, ~40 visible chars) and description (under the headline, rarely visible on mobile). Rules:
+      </p>
+      <ul>
+        <li><strong>Primary text:</strong> hook + benefit + soft CTA.</li>
+        <li><strong>Headline:</strong> the most concrete and specific benefit, headline format.</li>
+        <li><strong>Description:</strong> reinforcement or detail. Don't bet anything on this.</li>
+      </ul>
+
+      <h2>How Meta Ads delivery works (algorithm)</h2>
+      <p>
+        Meta optimizes for the event you choose (purchase, lead, click). But in the learning phase (50 conversions per adset) the algorithm tests the ad with small audiences and reads two things: CTR and dwell time (how long people stop on the ad without scrolling). Strong copy lifts both. If your CTR is below 1% and dwell time is 1 second, Meta stops showing it.
+      </p>
+
+      <h2>When to add social proof and how</h2>
+      <p>
+        Social proof works, but only if it's specific and verifiable. "5,000+ students" is better than "thousands of students". "Featured in X magazine" is better than "industry leader". Three formats that perform:
+      </p>
+      <ul>
+        <li><strong>Concrete number:</strong> "1,200+ reviews, 4.8★".</li>
+        <li><strong>Press logos:</strong> "As seen in TechCrunch, Forbes and Wired".</li>
+        <li><strong>Short testimonial:</strong> "Went from $0 to $400/mo invested in 90 days" — Mariana, student.</li>
+      </ul>
+
+      <h2>Common mistakes that kill CTR</h2>
+      <ul>
+        <li><strong>Starting with "Introducing...":</strong> self-referential, no benefit.</li>
+        <li><strong>Endless bullets:</strong> the feed is not a landing page.</li>
+        <li><strong>Generic CTA:</strong> "Click here" doesn't compete with "Try free for 7 days".</li>
+        <li><strong>More than 3 emojis at the start:</strong> 🔥🚀💯 = reads as spam.</li>
+        <li><strong>Empty promises:</strong> "Change your life in 30 days" without backing draws negative feedback and Meta penalizes it.</li>
+        <li><strong>Same copy for cold and warm:</strong> cold needs more context, retargeting can go straight to CTA.</li>
+      </ul>
+
+      <h2>When to change the copy and how to test</h2>
+      <p>
+        Change copy when CTR drops more than 30% under adset average, or when you hit 2,000+ impressions without conversion. To test, run two versions in the same adset with the same image and let Meta distribute. In 48-72 hours with $20-50 USD spend you'll have a clear winner.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Ideal character count?</summary><p>Hook + benefit in less than 125 characters. The rest is optional.</p></details>
+      <details><summary>Emojis or no?</summary><p>Yes, max 1-2 functional. More reads as spam.</p></details>
+      <details><summary>When to change copy?</summary><p>When CTR drops 30% under average or you've hit 2,000 impressions without conversion.</p></details>
+      <details><summary>Should headline and primary repeat?</summary><p>No. Primary has the hook, headline has the most concrete benefit.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .fb-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .fb-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; white-space: pre-wrap; }
+  .fb-card:hover { border-color: var(--accent); }
+  .fb-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const product = document.getElementById('fb-product') as HTMLInputElement;
+  const audience = document.getElementById('fb-audience') as HTMLInputElement;
+  const benefit = document.getElementById('fb-benefit') as HTMLInputElement;
+  const proof = document.getElementById('fb-proof') as HTMLInputElement;
+  const cta = document.getElementById('fb-cta') as HTMLInputElement;
+  const gen = document.getElementById('fb-gen') as HTMLButtonElement;
+  const out = document.getElementById('fb-out')!;
+
+  function generate() {
+    const P = product.value.trim() || 'Product';
+    const Au = audience.value.trim() || 'You';
+    const Be = benefit.value.trim() || 'Real results';
+    const Pr = proof.value.trim();
+    const C = cta.value.trim() || 'Try free';
+
+    const v1 = `${Au}: ${Be}.\n${P} with step-by-step method.\n${Pr ? '✓ ' + Pr + '\n' : ''}→ ${C}`;
+    const v2 = `Sound familiar?\n${Au}.\n\nThe fix: ${Be} with ${P}.\n${Pr ? '(' + Pr + ')\n' : ''}${C}`;
+    const v3 = `${Be}.\nBuilt for ${Au.toLowerCase()}.\n${Pr ? Pr + ' already use it.' : ''}\n${C} →`;
+    const v4 = `Stop scroll.\n${Be} is not a myth.\n${P} | ${Pr || 'simple method'}.\n→ ${C}`;
+
+    out.innerHTML = '';
+    [v1, v2, v3, v4].forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'fb-card';
+      el.title = 'Click to copy';
+      const len = b.length;
+      el.innerHTML = b.replace(/\n/g, '<br>') + `<div class="fb-meta">v${i+1} · ${len} characters</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

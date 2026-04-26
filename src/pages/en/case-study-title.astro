@@ -1,0 +1,147 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Case Study Title Generator | Genfy';
+const description = 'Generate case study titles using CASE/STAR/SOAR frameworks: client, problem, solution, quantified result. 10 titles ready for blog or sales.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good case study title?', acceptedAnswer: { '@type': 'Answer', text: 'Includes the client, a quantifiable result, and the time it took. "How Acme grew conversion 30% in 60 days" works; "Acme success story" does not.' } },
+    { '@type': 'Question', name: 'Should I name the client?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, when the client allows it. It adds credibility and SEO. Otherwise mention the segment ("20-person agency") with enough specifics to recognize the case.' } },
+    { '@type': 'Question', name: 'Which framework is best?', acceptedAnswer: { '@type': 'Answer', text: 'CASE (Client, Action, Solution, Effect), STAR (Situation, Task, Action, Result) or SOAR (Strengths, Opportunities, Aspirations, Results) are the most practical for B2B.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Case Study Title Generator"
+    intro="Generate 10 titles for your next case study, ready for blog, sales deck or LinkedIn. CASE / STAR / SOAR frameworks applied to real B2B cases.">
+
+    <div slot="tool" class="cs">
+      <label>Client or segment</label>
+      <input id="cs-client" type="text" value="Acme Corp" />
+
+      <label style="margin-top:1rem">Quantifiable result</label>
+      <input id="cs-result" type="text" value="lifted conversion 30%" />
+
+      <label style="margin-top:1rem">Time taken</label>
+      <input id="cs-time" type="text" value="60 days" />
+
+      <label style="margin-top:1rem">Core topic</label>
+      <input id="cs-topic" type="text" value="landing page optimization" />
+
+      <button id="cs-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 10 titles</button>
+
+      <div id="cs-out" class="cs-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why a good case study starts at the title</h2>
+      <p>
+        Case studies are one of the highest-ROI commercial assets a company can have. More than
+        any whitepaper, deck or testimonial, a well-told case convinces a prospect you can solve
+        their problem. But that all depends on the title: if it doesn't hook, the case isn't read,
+        and the asset doesn't pay back.
+      </p>
+
+      <h2>Frameworks that strong cases use</h2>
+      <ul>
+        <li><strong>CASE — Client / Action / Solution / Effect:</strong> simplest. Client, problem, what they did, result.</li>
+        <li><strong>STAR — Situation / Task / Action / Result:</strong> from behavioral interviews, great for B2B cases that need context.</li>
+        <li><strong>SOAR — Strengths / Opportunities / Aspirations / Results:</strong> more strategic, for cases where a whole process changed, not one metric.</li>
+        <li><strong>BAB — Before / After / Bridge:</strong> narrative format, very effective in content marketing.</li>
+      </ul>
+
+      <h2>The 4 elements of a perfect title</h2>
+      <ol>
+        <li><strong>Result verb:</strong> "grew", "cut", "doubled", "shrunk".</li>
+        <li><strong>Quantifiable metric:</strong> "30%", "2x", "$500K", "8 hours per week".</li>
+        <li><strong>Time:</strong> "in 60 days", "in 6 months". Without time, the result loses force.</li>
+        <li><strong>Client context:</strong> name or segment ("a 20-person agency").</li>
+      </ol>
+
+      <h2>Common title mistakes</h2>
+      <ul>
+        <li>"Acme Corp success story" — says nothing useful.</li>
+        <li>"Acme + Genfy" — fine for an internal email, not for the public.</li>
+        <li>Results without numbers: "improved their sales". No number, no case.</li>
+        <li>No timeframe: "Acme grew 30%" — over how long? It matters.</li>
+        <li>Internal jargon. "End-to-end platform implementation" doesn't land.</li>
+      </ul>
+
+      <h2>How to write the body after the title</h2>
+      <p>A complete case study has 5 well-defined sections. If your title promises X, the body
+        delivers X with proof. Minimum structure:</p>
+      <ol>
+        <li><strong>Executive summary</strong> of 3-4 sentences with the headline result on top.</li>
+        <li><strong>Client context:</strong> industry, size, what they were doing.</li>
+        <li><strong>The problem:</strong> with numbers from before the intervention.</li>
+        <li><strong>The solution:</strong> step by step, including real obstacles.</li>
+        <li><strong>The result:</strong> concrete metrics, ideally a simple chart, plus a direct customer quote at the end.</li>
+      </ol>
+
+      <h2>How to validate the case converts</h2>
+      <ul>
+        <li>Show it to 5 prospects before publishing. Ask, "does this make you want to book a demo?".</li>
+        <li>Measure: time on page, scroll depth, CTA clicks.</li>
+        <li>Add it to the sales kit. If reps don't use it, improve the format.</li>
+        <li>Refresh it every 6 months with updated data.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good title?</summary><p>Client + quantifiable result + time. Without those three, it doesn't hook.</p></details>
+      <details><summary>Name the client?</summary><p>Yes, when allowed. Otherwise mention the segment.</p></details>
+      <details><summary>Which framework?</summary><p>CASE, STAR or SOAR. All three are solid for B2B.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cs-out { display: grid; gap: 0.5rem; margin-top: 1.25rem; }
+  .cs-item { padding: 0.875rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .cs-item:hover { border-color: var(--primary); }
+  .cs-tag { font-size: 0.75rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; display: block; }
+</style>
+
+<script>
+  const client = document.getElementById('cs-client') as HTMLInputElement;
+  const result = document.getElementById('cs-result') as HTMLInputElement;
+  const time = document.getElementById('cs-time') as HTMLInputElement;
+  const topic = document.getElementById('cs-topic') as HTMLInputElement;
+  const out = document.getElementById('cs-out')!;
+  const gen = document.getElementById('cs-gen') as HTMLButtonElement;
+
+  function generate() {
+    const c = client.value;
+    const r = result.value;
+    const t = time.value;
+    const tp = topic.value;
+
+    const lines = [
+      { tag: 'Result + time', text: `How ${c} ${r} in ${t}.` },
+      { tag: 'Question + data', text: `Can you really ${r} in ${t}? The ${c} case.` },
+      { tag: 'STAR', text: `${c} and ${tp}: from status quo to ${r} in ${t}.` },
+      { tag: 'Before / after', text: `${c}: before and after ${tp}.` },
+      { tag: 'Obstacle focus', text: `${c} thought ${tp} had plateaued. ${r} in ${t}.` },
+      { tag: 'Behind the scenes', text: `How ${c} turned ${tp} into their best asset: ${r} in ${t}.` },
+      { tag: 'Number first', text: `${r} in ${t}: the ${c} case.` },
+      { tag: 'For skeptics', text: `${c}: ${r} without growing the team, in ${t}.` },
+      { tag: 'Key lesson', text: `What ${c} learned in ${t}: how to ${r} with ${tp}.` },
+      { tag: 'Headline style', text: `${c} doubled performance in ${tp} in ${t}.` },
+    ];
+
+    out.innerHTML = '';
+    lines.forEach(l => {
+      const el = document.createElement('div');
+      el.className = 'cs-item';
+      el.innerHTML = `<span class="cs-tag">${l.tag}</span><div>${l.text}</div>`;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(l.text); el.style.borderColor = 'var(--primary)'; setTimeout(() => el.style.borderColor = '', 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

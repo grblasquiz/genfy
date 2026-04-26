@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Documentary Title Generator | Genfy';
+const description = 'Generate documentary titles for cinema, TV or streaming. Mix topic, tone and format to get 20 ready-to-pitch ideas for festivals or platforms.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good documentary title?', acceptedAnswer: { '@type': 'Answer', text: 'It promises a concrete human story. Combines an evocative noun with a character, place or question.' } },
+    { '@type': 'Question', name: 'Does it need a subtitle?', acceptedAnswer: { '@type': 'Answer', text: 'Many docs use one to clarify the angle. The title carries the image, the subtitle carries the content promise.' } },
+    { '@type': 'Question', name: 'Does it work for Netflix or festivals?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Streaming algorithms favor short titles with keywords. Festivals favor conceptual titles.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Documentary Title Generator"
+    intro="Generate documentary titles for cinema, TV or streaming. Combine topic, tone and format to get 20 ideas ready for festivals or platforms.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Documentary topic</label>
+      <input id="bn-kw" type="text" placeholder="water, debt, exile..." value="water" />
+
+      <label for="bn-style" style="margin-top:1rem">Tone</label>
+      <select id="bn-style">
+        <option value="biopic">Biographical (The Life of...)</option>
+        <option value="investigative">Investigative (No Trace)</option>
+        <option value="social">Social (The Cost of...)</option>
+        <option value="cultural">Cultural (Voices of...)</option>
+        <option value="single">One strong word</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 titles</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to title a documentary</h2>
+      <p>
+        A documentary title has a double job: promise a concrete human story and convey its
+        editorial tone. The difference between a doc that gets watched and one that scrolls past
+        is almost always how the title synthesizes the promise. "The Missing Water" beats "Water
+        Crisis Report". The first invites you in; the second sounds like a PDF.
+      </p>
+      <ol>
+        <li><strong>Promise a human story.</strong> Not an abstract theme.</li>
+        <li><strong>Concrete noun.</strong> "Water" beats "Vital Liquid".</li>
+        <li><strong>Optional subtitle.</strong> If the title is metaphorical, the subtitle clarifies the angle.</li>
+        <li><strong>Looks good big.</strong> Both Netflix thumbnail and festival poster.</li>
+        <li><strong>Unique on the platform.</strong> Search JustWatch for clashes.</li>
+      </ol>
+
+      <h2>Title styles by doc type</h2>
+      <ul>
+        <li><strong>Biographical</strong>: protagonist's name or defining phrase ("The Life of Martha", "What She Left Behind").</li>
+        <li><strong>Investigative</strong>: threatening noun or question ("No Trace", "The Silent Witness").</li>
+        <li><strong>Social</strong>: cost, debt, fight ("The Cost of Water", "The Invisible Debt").</li>
+        <li><strong>Cultural</strong>: voices, portraits ("Voices of the South", "Coastal Portraits").</li>
+        <li><strong>One strong word</strong>: festival impact ("Border", "Bone", "Hunger").</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        Most common: academic or news-style titles promising a report instead of a film. "2019
+        Economic Crisis" doesn't convince a viewer; "What We Lost That Year" does. Another:
+        titles too obvious with no mystery. And a third: leaning on worn mythological references
+        that add nothing to the material.
+      </p>
+
+      <h2>After generating</h2>
+      <ol>
+        <li>Test the title over the campaign image you have in mind.</li>
+        <li>Search JustWatch and festival catalogs for clashes.</li>
+        <li>Try it on three people who don't know the project: do they want to watch?</li>
+        <li>Decide if you need a subtitle, draft two versions.</li>
+        <li>Confirm it reads on a vertical thumbnail.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good doc title?</summary><p>Promises a concrete human story.</p></details>
+      <details><summary>Need a subtitle?</summary><p>Often: title carries image, subtitle carries content.</p></details>
+      <details><summary>Works for Netflix?</summary><p>Yes — short keyword titles win.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.75rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 500; cursor: pointer; transition: border-color 0.1s; line-height: 1.4; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const BIO = ['The Life of X', 'What X Left Behind', 'X: The Last Day', 'X and His People', 'The X Method'];
+  const INV = ['No Trace of X', 'The Silent Witness of X', 'What We Knew About X', 'Behind X', 'X: The Lost Archive'];
+  const SOC = ['The Cost of X', 'The Debt of X', 'The Fight for X', 'X Nobody Sees', 'Invisible X'];
+  const CULT = ['Voices of X', 'Portraits of X', 'Where X Begins', 'The Hands of X', 'X and Memory'];
+  const SINGLE = ['X', 'The X', 'After X', 'Before X', 'Into X'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const topic = kw.value.trim() || 'water';
+    const s = style.value;
+    let SRC: string[];
+    if (s === 'investigative') SRC = INV;
+    else if (s === 'social') SRC = SOC;
+    else if (s === 'cultural') SRC = CULT;
+    else if (s === 'single') SRC = SINGLE;
+    else SRC = BIO;
+    out.innerHTML = '';
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const t = pick(SRC).replace(/X/g, cap(topic));
+      set.add(t);
+    }
+    [...set].forEach(text => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = text;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.textContent; el.textContent = '✓ copied'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

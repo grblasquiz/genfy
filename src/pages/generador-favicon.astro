@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de favicon (texto) gratis | Genfy';
+const description = 'Generá un favicon a partir de texto: elegí letra, color de fondo y color de fuente. Descargá un PNG cuadrado listo para usar en cualquier sitio.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué tamaño tiene que tener un favicon?', acceptedAnswer: { '@type': 'Answer', text: 'Lo estándar hoy es 32x32 para la pestaña, 180x180 para iOS y 192x192 o 512x512 para Android. Lo mejor es exportar un PNG grande (512) y que el navegador lo escale.' } },
+    { '@type': 'Question', name: '¿PNG o ICO?', acceptedAnswer: { '@type': 'Answer', text: 'Cualquier navegador moderno soporta PNG vía link rel="icon". ICO sólo hace falta para Internet Explorer legacy.' } },
+    { '@type': 'Question', name: '¿Cómo lo agrego al sitio?', acceptedAnswer: { '@type': 'Answer', text: 'Subí el PNG al root del sitio y agregá un link rel="icon" type="image/png" href="/favicon.png" dentro del head.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Generador de favicon (texto)"
+    intro="Armá un favicon con una o dos letras, color de fondo y tipografía. Descargá un PNG cuadrado listo para tu sitio.">
+
+    <div slot="tool" class="fav">
+      <div class="fav-grid">
+        <div>
+          <label for="fav-text">Texto (1–2 caracteres)</label>
+          <input id="fav-text" type="text" maxlength="2" value="G" />
+        </div>
+        <div>
+          <label for="fav-bg">Fondo</label>
+          <input id="fav-bg" type="color" value="#0f172a" />
+        </div>
+        <div>
+          <label for="fav-fg">Color del texto</label>
+          <input id="fav-fg" type="color" value="#ffffff" />
+        </div>
+        <div>
+          <label for="fav-radius">Border radius</label>
+          <input id="fav-radius" type="range" min="0" max="256" value="64" />
+        </div>
+      </div>
+
+      <div class="fav-actions">
+        <button id="fav-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="fav-dl" class="btn btn-ghost" type="button">Descargar PNG</button>
+      </div>
+
+      <div class="fav-canvas-wrap">
+        <canvas id="fav-canvas" width="512" height="512"></canvas>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué importa el favicon</h2>
+      <p>El favicon es el iconito que aparece en la pestaña del navegador, en los favoritos y en la pantalla de inicio cuando alguien guarda tu sitio. Es la primera señal visual que un usuario asocia con tu marca, y un sitio sin favicon transmite descuido. Aun siendo pocos píxeles, una identidad clara en ese cuadradito mejora la recordación, la confianza y el reconocimiento.</p>
+
+      <h2>Por qué un favicon de texto funciona</h2>
+      <p>Las letras escalan mejor que las ilustraciones complejas a tamaños chicos. Un favicon basado en una inicial, dos letras o un símbolo plano es legible incluso a 16 píxeles. Stripe, Linear, Vercel y Notion usan esta lógica: una marca tipográfica monocroma sobre fondo sólido. Como regla: si tu logo no se lee a 16x16, usá una versión simplificada sólo para favicon.</p>
+
+      <h2>Tamaños y formatos recomendados</h2>
+      <ul>
+        <li><strong>16x16 y 32x32</strong>: pestañas de escritorio.</li>
+        <li><strong>180x180</strong>: apple-touch-icon para iOS y Safari.</li>
+        <li><strong>192x192 y 512x512</strong>: Android, PWAs y manifest web.</li>
+        <li><strong>SVG</strong>: si tu icono es vectorial, un SVG cubre todos los tamaños.</li>
+      </ul>
+      <p>Siempre partí de un master de 512x512. Escalar para abajo es seguro; escalar para arriba pixela. Este generador exporta un PNG de 512 que sirve como ese master.</p>
+
+      <h2>Cómo lo instalás</h2>
+      <p>Subí el archivo al root del proyecto y agregá las tags dentro del &lt;head&gt;:</p>
+      <pre><code>&lt;link rel="icon" type="image/png" href="/favicon.png" /&gt;
+&lt;link rel="apple-touch-icon" href="/apple-touch-icon.png" /&gt;</code></pre>
+      <p>Los frameworks modernos (Astro, Next, Nuxt) tienen una carpeta <code>public/</code> donde podés tirar el archivo y se sirve automáticamente. Importante: hacé hard refresh, los navegadores cachean los favicons de manera muy agresiva.</p>
+
+      <h2>Errores comunes</h2>
+      <ul>
+        <li><strong>Demasiado detalle</strong>: los gradientes finos desaparecen a 16 px. Usá colores planos.</li>
+        <li><strong>Bajo contraste</strong>: si fondo y texto son parecidos, el icono se pierde contra la barra del navegador.</li>
+        <li><strong>Trazos finos</strong>: usá pesos bold o black. Regular se ve débil al escalar.</li>
+        <li><strong>Olvidar el modo oscuro</strong>: probá tu favicon en temas oscuros de Chrome y Firefox.</li>
+      </ul>
+
+      <h2>Buenas prácticas de diseño</h2>
+      <p>Mantené coherencia con tu paleta principal: el favicon es una versión condensada del logo, no una ilustración separada. Si tenés un símbolo o monograma, es el candidato ideal. Si no, una inicial en una tipografía con carácter alcanza. Probá el resultado sobre fondos claros y oscuros antes de publicar, y verificá la legibilidad en pestañas reales después del deploy.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué tamaño tiene que tener un favicon?</summary><p>32x32 para pestañas, 180x180 para iOS, 192/512 para Android y PWAs. Hacé un master de 512 y dejá que cada plataforma lo escale.</p></details>
+      <details><summary>¿PNG o ICO?</summary><p>PNG cubre todos los navegadores modernos. ICO sólo hace falta para Internet Explorer legacy.</p></details>
+      <details><summary>¿Cómo lo instalo?</summary><p>Subilo al root y agregá &lt;link rel="icon" type="image/png" href="/favicon.png"&gt; en el head.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .fav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .fav-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .fav-canvas-wrap { padding: 1rem; background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--radius); display: flex; justify-content: center; }
+  #fav-canvas { width: 256px; height: 256px; image-rendering: pixelated; }
+  @media (max-width: 600px) { .fav-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const text = document.getElementById('fav-text') as HTMLInputElement;
+  const bg = document.getElementById('fav-bg') as HTMLInputElement;
+  const fg = document.getElementById('fav-fg') as HTMLInputElement;
+  const radius = document.getElementById('fav-radius') as HTMLInputElement;
+  const gen = document.getElementById('fav-gen') as HTMLButtonElement;
+  const dl = document.getElementById('fav-dl') as HTMLButtonElement;
+  const canvas = document.getElementById('fav-canvas') as HTMLCanvasElement;
+
+  function render() {
+    const ctx = canvas.getContext('2d')!;
+    const size = 512;
+    const r = parseInt(radius.value, 10);
+    ctx.clearRect(0, 0, size, size);
+    ctx.fillStyle = bg.value;
+    ctx.beginPath();
+    ctx.moveTo(r, 0);
+    ctx.arcTo(size, 0, size, size, r);
+    ctx.arcTo(size, size, 0, size, r);
+    ctx.arcTo(0, size, 0, 0, r);
+    ctx.arcTo(0, 0, size, 0, r);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = fg.value;
+    const t = (text.value || 'G').slice(0, 2);
+    const fontSize = t.length === 1 ? 320 : 220;
+    ctx.font = `700 ${fontSize}px Inter, system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(t, size / 2, size / 2 + fontSize * 0.05);
+  }
+  gen.addEventListener('click', render);
+  [text, bg, fg, radius].forEach(el => el.addEventListener('input', render));
+  dl.addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'favicon.png';
+    a.click();
+  });
+  render();
+</script>

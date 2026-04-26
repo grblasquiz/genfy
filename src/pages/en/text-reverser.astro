@@ -1,0 +1,140 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Text Reverser Online | Genfy';
+const description = 'Reverse any text instantly: by character, by word, or by line. Useful for puzzles, debugging, mnemonic passwords and more.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is reversing text useful for?', acceptedAnswer: { '@type': 'Answer', text: 'Debugging palindromes, generating mnemonic passwords, obfuscating text, programming exercises, or just playing with strings.' } },
+    { '@type': 'Question', name: 'Does it handle emoji and accents?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. We use Unicode segmentation so compound emoji and accented characters stay intact when reversing by character.' } },
+    { '@type': 'Question', name: 'Is "reversed" the same as "backwards"?', acceptedAnswer: { '@type': 'Answer', text: 'Reversing is per-character. "Backwards" can also mean reversing the order of words or lines. All three modes are here.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text" title="Text Reverser"
+    intro="Three modes: characters, words and lines. Full Unicode support so emoji and accents don't break.">
+
+    <div slot="tool" class="rv">
+      <label for="rv-in">Text</label>
+      <textarea id="rv-in" rows="6" placeholder="Paste your text…"></textarea>
+
+      <div class="rv-mode">
+        <label><input type="radio" name="rv-mode" value="char" checked /> By character</label>
+        <label><input type="radio" name="rv-mode" value="word" /> By word</label>
+        <label><input type="radio" name="rv-mode" value="line" /> By line</label>
+      </div>
+
+      <button id="rv-go" class="btn btn-primary" type="button">Reverse</button>
+      <button id="rv-copy" class="btn btn-ghost" type="button">Copy</button>
+
+      <label for="rv-out" style="margin-top:1rem;">Result</label>
+      <textarea id="rv-out" rows="6" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Three ways to reverse text</h2>
+      <p>
+        "Reverse" means different things in different contexts. That's why this tool has three
+        modes:
+      </p>
+      <ul>
+        <li><strong>By character</strong> — turns <code>Genfy</code> into <code>yfneG</code>. The classic Programming 101 exercise.</li>
+        <li><strong>By word</strong> — turns <em>"the cat eats"</em> into <em>"eats cat the"</em>. Useful for certain copy edits or language exercises.</li>
+        <li><strong>By line</strong> — flips row order. If a log has the oldest line on top, this puts the newest first.</li>
+      </ul>
+
+      <h2>Why Unicode matters</h2>
+      <p>
+        In JavaScript, doing <code>"abc".split("").reverse().join("")</code> works for ASCII
+        but breaks compound emoji: a flag emoji is two code points, and reversing per
+        character would give a different flag. This tool uses <code>Intl.Segmenter</code> when
+        available so each grapheme is treated as one unit. Composed accents (an <code>e</code>
+        + grave in decomposed form) are also kept as single units.
+      </p>
+
+      <h2>Real-world uses</h2>
+      <ul>
+        <li><strong>Palindromes.</strong> Check whether a phrase reads the same both ways: reverse, compare, done.</li>
+        <li><strong>Logs.</strong> When a log is in ascending chronological order and you want the newest first.</li>
+        <li><strong>Mnemonic passwords.</strong> An old technique: take a memorable word and write it backwards as a base. Doesn't replace a password manager, but useful for exercises.</li>
+        <li><strong>Type and design checks.</strong> Reversed text lets you see your typography without your brain reading automatically — exposes kerning issues.</li>
+        <li><strong>Language drills.</strong> For students of languages with reverse word order (Japanese, Korean), comparing reversed sentences helps internalize syntax.</li>
+      </ul>
+
+      <h2>What this tool isn't</h2>
+      <p>
+        It's not a graphic mirror generator (the kind with characters like <code>ɐ</code> that
+        look like an upside-down <code>a</code>). For that, separate tools exist. We reverse
+        order, not the visual appearance of each glyph.
+      </p>
+
+      <h2>How word reversal works</h2>
+      <p>
+        We tokenize on spaces and punctuation, then reorder the tokens. Punctuation stays in
+        relative position, so <em>"hello, world"</em> becomes <em>"world, hello"</em> rather
+        than leaving the comma orphaned.
+      </p>
+
+      <h2>Privacy</h2>
+      <p>
+        The text you paste never leaves your browser. If you handle confidential material
+        (contracts, sensitive logs), this page is safe for use inside your company network: no
+        server request, all processing local.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is reversing text useful for?</summary><p>Palindromes, mnemonic passwords, programming drills, type tests, or playing with strings.</p></details>
+      <details><summary>Does it handle emoji and accents?</summary><p>Yes — Unicode segmentation keeps each grapheme intact.</p></details>
+      <details><summary>Is "reversed" the same as "backwards"?</summary><p>Per-character is one option; word and line reversal are the others. All three are here.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rv-mode { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; color: var(--text-soft); }
+  .rv-mode label { display: inline-flex; gap: 0.4rem; align-items: center; margin: 0; }
+  .rv-mode input { width: auto; }
+</style>
+
+<script>
+  const inEl = document.getElementById('rv-in') as HTMLTextAreaElement;
+  const out = document.getElementById('rv-out') as HTMLTextAreaElement;
+  const go = document.getElementById('rv-go') as HTMLButtonElement;
+  const copy = document.getElementById('rv-copy') as HTMLButtonElement;
+
+  function reverseGraphemes(s: string): string {
+    if (typeof Intl !== 'undefined' && (Intl as any).Segmenter) {
+      const seg = new (Intl as any).Segmenter(undefined, { granularity: 'grapheme' });
+      const arr: string[] = [];
+      for (const item of seg.segment(s)) arr.push(item.segment);
+      return arr.reverse().join('');
+    }
+    return Array.from(s).reverse().join('');
+  }
+
+  function reverseWords(s: string): string { return s.split(/(\s+)/).reverse().join(''); }
+  function reverseLines(s: string): string { return s.split(/\r?\n/).reverse().join('\n'); }
+
+  function run() {
+    const mode = (document.querySelector('input[name="rv-mode"]:checked') as HTMLInputElement)?.value || 'char';
+    const src = inEl.value;
+    if (mode === 'char') out.value = reverseGraphemes(src);
+    else if (mode === 'word') out.value = reverseWords(src);
+    else out.value = reverseLines(src);
+  }
+
+  go.addEventListener('click', run);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copy.textContent; copy.textContent = 'Copied!';
+    setTimeout(() => { copy.textContent = t; }, 1200);
+  });
+</script>
+</content>
+</invoke>

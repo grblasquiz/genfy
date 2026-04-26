@@ -1,0 +1,196 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de mensaje de commit (conventional) | Genfy';
+const description = 'Generá mensajes de commit siguiendo Conventional Commits. Tipos: feat, fix, docs, refactor, test, chore. Ideal para release notes automáticas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es Conventional Commits?', acceptedAnswer: { '@type': 'Answer', text: 'Una convención para mensajes de commit con la forma type(scope): subject. Permite generar changelogs automáticos y semantic versioning.' } },
+    { '@type': 'Question', name: '¿Qué tipos hay?', acceptedAnswer: { '@type': 'Answer', text: 'feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert.' } },
+    { '@type': 'Question', name: '¿Cuándo usar BREAKING CHANGE?', acceptedAnswer: { '@type': 'Answer', text: 'Cuando el cambio rompe la API pública. Se marca con ! después del tipo o con un footer BREAKING CHANGE: descripción.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech / Dev"
+    title="Generador de mensaje de commit"
+    intro="Generá mensajes siguiendo Conventional Commits. Tipos, scope, subject claro y footer cuando hace falta."
+  >
+    <div slot="tool" class="cm-tool">
+      <div class="cm-grid">
+        <div>
+          <label for="cm-type">Tipo</label>
+          <select id="cm-type">
+            <option value="feat">feat</option>
+            <option value="fix">fix</option>
+            <option value="docs">docs</option>
+            <option value="refactor">refactor</option>
+            <option value="perf">perf</option>
+            <option value="test">test</option>
+            <option value="build">build</option>
+            <option value="ci">ci</option>
+            <option value="chore">chore</option>
+            <option value="style">style</option>
+            <option value="revert">revert</option>
+          </select>
+        </div>
+        <div>
+          <label for="cm-scope">Scope (opcional)</label>
+          <input id="cm-scope" type="text" placeholder="auth, api, ui" />
+        </div>
+        <div>
+          <label for="cm-breaking">Breaking change</label>
+          <select id="cm-breaking">
+            <option value="false">No</option>
+            <option value="true">Sí</option>
+          </select>
+        </div>
+      </div>
+      <div class="cm-actions">
+        <button id="cm-gen" class="btn btn-primary" type="button">Generar ejemplo</button>
+        <button id="cm-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+      <textarea id="cm-out" class="mono" rows="8" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>El estándar Conventional Commits</h2>
+      <p>
+        Conventional Commits (conventionalcommits.org) define un formato para mensajes de commit:
+        <code>&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;</code>, opcionalmente seguido por un
+        body y un footer. Es la convención más adoptada en proyectos open source y en empresas
+        grandes para automatizar versionado y changelogs.
+      </p>
+
+      <h2>La línea subject</h2>
+      <p>
+        Máximo 50-72 caracteres, en imperativo presente: "add" en lugar de "added" o "adds". Sin
+        punto final. Empieza con minúscula. La regla mnemotécnica: si tu mensaje completa la frase
+        "If applied, this commit will...", el verbo en imperativo encaja:
+        <em>"if applied, this commit will <strong>add login flow</strong>"</em>.
+      </p>
+
+      <h2>Tipos y cuándo usarlos</h2>
+      <ul>
+        <li><strong>feat:</strong> nueva funcionalidad para el usuario.</li>
+        <li><strong>fix:</strong> corrección de bug.</li>
+        <li><strong>docs:</strong> solo documentación.</li>
+        <li><strong>style:</strong> formato (espacios, punto y coma); no cambia comportamiento.</li>
+        <li><strong>refactor:</strong> cambio interno sin nueva feature ni fix.</li>
+        <li><strong>perf:</strong> mejora de performance.</li>
+        <li><strong>test:</strong> agregar o corregir tests.</li>
+        <li><strong>build:</strong> cambios al sistema de build o dependencias.</li>
+        <li><strong>ci:</strong> cambios en pipelines de CI.</li>
+        <li><strong>chore:</strong> tareas auxiliares que no caen en lo anterior.</li>
+        <li><strong>revert:</strong> revertir un commit anterior.</li>
+      </ul>
+
+      <h2>Scope: opcional pero útil</h2>
+      <p>
+        El scope identifica el área del código afectada. <code>feat(auth)</code> es más legible
+        que <code>feat</code> a secas. Convenciones comunes: nombre del módulo (<code>auth</code>,
+        <code>billing</code>), nombre del paquete en monorepos, o componente UI
+        (<code>button</code>, <code>nav</code>).
+      </p>
+
+      <h2>Breaking changes</h2>
+      <p>
+        Hay dos formas de marcar un breaking change. La corta: <code>feat(api)!: rename user
+        endpoints</code>. La explícita: agregás un footer <code>BREAKING CHANGE: la ruta
+        /users/me ahora es /me</code>. Las herramientas de versionado disparan un major bump
+        cuando detectan cualquiera de las dos.
+      </p>
+
+      <h2>Body y footer</h2>
+      <p>
+        El body explica el "por qué" cuando el subject no alcanza. Separá con una línea en blanco.
+        Los footers van al final: <code>Closes #123</code>, <code>Co-authored-by: Name
+        &lt;email&gt;</code>, <code>Refs: JIRA-456</code>. Useable por bots y automatizaciones.
+      </p>
+
+      <h2>Beneficios concretos</h2>
+      <p>
+        Con commits convencionales, herramientas como <code>standard-version</code> o
+        <code>semantic-release</code> generan automáticamente: changelog desde Markdown, tag de
+        versión, release en GitHub. Se acabó el "alguien tiene que escribir el changelog".
+      </p>
+
+      <h2>Cómo enforzar</h2>
+      <p>
+        Hooks con <code>commitlint</code> + Husky validan cada commit. PR templates recuerdan el
+        formato. En proyectos grandes, configurar la regla en CI evita que se mergeen commits que
+        rompen la convención. Squash merges pueden reescribir el mensaje al combinar.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es Conventional Commits?</summary><p>Convención <code>type(scope): subject</code> que permite generar changelog y semver automáticos.</p></details>
+      <details><summary>¿Qué tipos hay?</summary><p>feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert.</p></details>
+      <details><summary>¿Breaking change?</summary><p>Marcalo con <code>!</code> tras el tipo o con un footer <code>BREAKING CHANGE:</code>.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cm-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .cm-grid { grid-template-columns: 1fr; } }
+  .cm-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const type = document.getElementById('cm-type') as HTMLSelectElement;
+  const scope = document.getElementById('cm-scope') as HTMLInputElement;
+  const breaking = document.getElementById('cm-breaking') as HTMLSelectElement;
+  const out = document.getElementById('cm-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('cm-gen') as HTMLButtonElement;
+  const copy = document.getElementById('cm-copy') as HTMLButtonElement;
+
+  const samples: Record<string, string[]> = {
+    feat: ['add login flow with email and password', 'support pagination on list endpoint', 'allow users to upload avatar image', 'enable dark mode toggle in settings'],
+    fix: ['handle null response from external API', 'prevent crash on empty cart submission', 'correct rounding error in totals', 'restore focus after closing modal'],
+    docs: ['update install instructions for windows', 'document new pagination params', 'add troubleshooting section', 'fix broken links in readme'],
+    refactor: ['extract validation logic into helper', 'simplify cart total calculation', 'rename internal helpers for clarity', 'consolidate auth middleware'],
+    perf: ['cache database queries for user profile', 'reduce bundle size by lazy loading icons', 'avoid n+1 on order list', 'memoize expensive selectors'],
+    test: ['add unit tests for validation rules', 'cover edge cases in pagination', 'restore broken integration tests', 'add snapshot tests for header'],
+    build: ['bump dependencies to latest minor', 'update tsconfig to strict mode', 'add minification to production build', 'split vendor chunk for caching'],
+    ci: ['run tests on pull request', 'cache node modules between runs', 'add lint job to pipeline', 'publish coverage to artifact'],
+    chore: ['update license year', 'tidy up project structure', 'remove unused config option', 'set up issue templates'],
+    style: ['apply prettier formatting', 'remove trailing whitespace', 'sort imports alphabetically', 'normalize line endings'],
+    revert: ['revert "feat(auth): add login flow"', 'revert "fix(api): handle null response"', 'undo experimental flag rollout', 'roll back broken migration'],
+  };
+
+  function build() {
+    const t = type.value;
+    const sc = scope.value.trim();
+    const arr = samples[t] || ['describe change here'];
+    const subject = arr[Math.floor(Math.random() * arr.length)];
+    const bang = breaking.value === 'true' ? '!' : '';
+    const head = sc ? `${t}(${sc})${bang}: ${subject}` : `${t}${bang}: ${subject}`;
+    let result = head;
+    if (breaking.value === 'true') {
+      result += `\n\nBREAKING CHANGE: describe the breaking change in one or two sentences.`;
+    }
+    result += `\n\n# Refs: TICKET-123`;
+    out.value = result;
+  }
+  gen.addEventListener('click', build);
+  [type, scope, breaking].forEach(el => el.addEventListener('change', build));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    const txt = out.value.split('\n').filter(l => !l.startsWith('#')).join('\n').trim();
+    await navigator.clipboard.writeText(txt);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copiado';
+    setTimeout(() => { icon.textContent = 'Copiar'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

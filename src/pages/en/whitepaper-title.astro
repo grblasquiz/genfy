@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Whitepaper Title Generator | Genfy';
+const description = 'Generate B2B whitepaper titles. 10 titles with numbers, benefits and concrete promises — ready for ads, landing pages and download emails.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Whitepaper vs ebook?', acceptedAnswer: { '@type': 'Answer', text: 'A whitepaper is more technical and research-focused. An ebook is more accessible and visual. Both work for lead capture, but the whitepaper carries more authority.' } },
+    { '@type': 'Question', name: 'What makes a good title?', acceptedAnswer: { '@type': 'Answer', text: 'A number, a concrete promise and a specific audience. "The state of B2B SaaS 2026: 7 findings" beats "All about B2B SaaS".' } },
+    { '@type': 'Question', name: 'Odd or even numbers?', acceptedAnswer: { '@type': 'Answer', text: 'Odd numbers (5, 7, 9) tend to outperform on CTR per B2B content benchmarks — they suggest rigor and curation, not exhaustive lists.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Whitepaper Title Generator"
+    intro="Generate 10 titles for your next B2B whitepaper. Each with a number, a concrete benefit and a specific audience — ready for ads, landings and download emails.">
+
+    <div slot="tool" class="wp">
+      <label>Whitepaper topic</label>
+      <input id="wp-topic" type="text" value="reducing CAC in B2B SaaS" />
+
+      <label style="margin-top:1rem">Audience</label>
+      <input id="wp-aud" type="text" value="founders and CMOs" />
+
+      <label style="margin-top:1rem">Year / period</label>
+      <input id="wp-year" type="text" value="2026" />
+
+      <button id="wp-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 10 titles</button>
+
+      <div id="wp-out" class="wp-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why a well-titled whitepaper gets downloaded</h2>
+      <p>
+        A whitepaper is a top-of-funnel lead capture asset. People download it if they sense
+        authority and a clear benefit. The title does 80% of the work: promise too little and they
+        don't download; promise too much and you burn the brand on delivery.
+      </p>
+
+      <h2>Anatomy of a converting title</h2>
+      <ol>
+        <li><strong>Number:</strong> "7 findings", "4 frameworks", "10 mistakes". Signals rigor and curation.</li>
+        <li><strong>Concrete promise:</strong> what the reader walks away with. "Cut CAC 30% without growing headcount".</li>
+        <li><strong>Specific audience:</strong> "for SaaS founders", "for B2B CMOs".</li>
+        <li><strong>Period:</strong> "2026", "Q4", "post-ZIRP" — adds time context and SEO.</li>
+        <li><strong>Optional subtitle</strong> clarifying the angle: "Insights from 200 companies over 12 months".</li>
+      </ol>
+
+      <h2>4 proven formulas</h2>
+      <ul>
+        <li><strong>State of the industry:</strong> "The State of B2B SaaS 2026: 7 findings for founders".</li>
+        <li><strong>Playbook:</strong> "The CAC reduction playbook: 12 tactics with real examples".</li>
+        <li><strong>Research:</strong> "200 companies, 12 months: what changed in B2B acquisition".</li>
+        <li><strong>Framework:</strong> "The CAC Payback framework: how to decide channel investment".</li>
+      </ul>
+
+      <h2>Mistakes that sink downloads</h2>
+      <ol>
+        <li>Generic titles: "Complete guide to B2B marketing". Too broad.</li>
+        <li>No number: pure curiosity converts less than structured promises.</li>
+        <li>Grandiose claims: "Master B2B marketing in 30 days" — sounds like an infoproduct.</li>
+        <li>No audience: if it's for CMOs, say so. If for early-stage founders, say so.</li>
+        <li>Mismatch with content. Promise 7 findings, deliver 4 — brand suffers.</li>
+      </ol>
+
+      <h2>Where the whitepaper fits in the funnel</h2>
+      <ul>
+        <li><strong>Top (TOFU):</strong> LinkedIn or Google ad → landing → email-gated download.</li>
+        <li><strong>Middle (MOFU):</strong> inside a nurture email, after first contact.</li>
+        <li><strong>Bottom (BOFU):</strong> sales rep sends it as a credibility asset before the demo.</li>
+      </ul>
+
+      <h2>Metrics that tell you it worked</h2>
+      <ul>
+        <li><strong>Landing conversion:</strong> visitors / downloads. 15% is healthy in B2B.</li>
+        <li><strong>Post-download email open:</strong> 30-40% is healthy.</li>
+        <li><strong>SQL ratio:</strong> per 100 downloads, how many become real opportunities?</li>
+        <li><strong>Cost per SQL:</strong> whitepaper spend / SQLs generated.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Whitepaper or ebook?</summary><p>Whitepaper for technical/research. Ebook for accessible and visual.</p></details>
+      <details><summary>What makes a good title?</summary><p>Number + concrete promise + specific audience.</p></details>
+      <details><summary>Odd or even?</summary><p>Odd (5, 7, 9) outperforms per B2B benchmarks.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .wp-out { display: grid; gap: 0.5rem; margin-top: 1.25rem; }
+  .wp-item { padding: 0.875rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .wp-item:hover { border-color: var(--primary); }
+  .wp-tag { font-size: 0.75rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; display: block; }
+</style>
+
+<script>
+  const topic = document.getElementById('wp-topic') as HTMLInputElement;
+  const aud = document.getElementById('wp-aud') as HTMLInputElement;
+  const year = document.getElementById('wp-year') as HTMLInputElement;
+  const out = document.getElementById('wp-out')!;
+  const gen = document.getElementById('wp-gen') as HTMLButtonElement;
+
+  function generate() {
+    const tp = topic.value;
+    const a = aud.value;
+    const y = year.value;
+
+    const lines = [
+      { tag: 'State of industry', text: `The state of ${tp} in ${y}: 7 findings for ${a}.` },
+      { tag: 'Playbook', text: `The playbook for ${tp}: 12 proven tactics with real examples.` },
+      { tag: 'Research', text: `${tp} in ${y}: what changed across 200 companies in 12 months.` },
+      { tag: 'Framework', text: `The definitive framework for ${tp} (with ready-to-use templates).` },
+      { tag: 'Mistakes', text: `9 mistakes ${a} make about ${tp} (and how to avoid them).` },
+      { tag: 'Comparison', text: `${tp}: comparing 8 approaches we tested in ${y}.` },
+      { tag: 'Multi-case', text: `How 5 companies solved ${tp} in less than 90 days.` },
+      { tag: 'Time-anchored', text: `Post rate hikes: how ${tp} changed for ${a}.` },
+      { tag: 'Predictions', text: `${tp} in ${y}: 7 data-backed predictions, not opinions.` },
+      { tag: 'For skeptics', text: `${tp}: what ${a} don't want to read but should.` },
+    ];
+
+    out.innerHTML = '';
+    lines.forEach(l => {
+      const el = document.createElement('div');
+      el.className = 'wp-item';
+      el.innerHTML = `<span class="wp-tag">${l.tag}</span><div>${l.text}</div>`;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(l.text); el.style.borderColor = 'var(--primary)'; setTimeout(() => el.style.borderColor = '', 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

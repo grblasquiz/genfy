@@ -1,0 +1,150 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Threads Post Generator | Genfy';
+const description = 'Generate Threads posts optimized for the algorithm. 500 characters with conversational tone, direct hook and replies that generate engagement.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many characters does Threads allow?', acceptedAnswer: { '@type': 'Answer', text: 'Threads allows up to 500 characters per post. Sweet spot: 100-300, enough for hook and a point without saturating the feed.' } },
+    { '@type': 'Question', name: 'What tone works on Threads?', acceptedAnswer: { '@type': 'Answer', text: 'Conversational, opinionated, casual. Threads rewards replies and discussion. Overly polished or corporate posts underperform.' } },
+    { '@type': 'Question', name: 'Do replies or quote-posts weigh in the algorithm?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Replies are the strongest engagement signal on Threads. A post with 50 replies and 100 likes ranks higher than one with 0 replies and 500 likes.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Threads Post Generator"
+    intro="Drop in topic and take. Genfy returns 4 conversational posts optimized to generate replies, all within the 500-character limit.">
+
+    <div slot="tool" class="th">
+      <label for="th-topic">Topic or industry</label>
+      <input id="th-topic" type="text" placeholder="Digital marketing..." value="Digital marketing" />
+
+      <label for="th-take" style="margin-top:1rem">Your take or observation</label>
+      <input id="th-take" type="text" placeholder="Brands obsessed with feed aesthetics..." value="Brands obsessed with feed aesthetics lose sales" />
+
+      <label for="th-context" style="margin-top:1rem">Reason or short context</label>
+      <input id="th-context" type="text" placeholder="People buy from accounts that..." value="People buy from accounts that write, not the ones that design" />
+
+      <button id="th-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 4 posts</button>
+
+      <div id="th-out" class="th-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Threads is not Instagram with text</h2>
+      <p>
+        Although Threads lives inside Meta's ecosystem and links to Instagram, the feed behaves differently. Here, text, opinions and conversation rule. Overly polished posts, migrated TikTok hooks, and "like races" perform worse than on other platforms. Threads rewards voice, clear opinion and replying to others.
+      </p>
+      <p>
+        The other factor: Threads has a young algorithm actively testing signals. Right now it prioritizes recency, replies and time on post. Small accounts can go viral if the content sparks discussion.
+      </p>
+
+      <h2>The structure that performs on Threads</h2>
+      <ol>
+        <li><strong>Direct hook in the first line:</strong> opinion, question or counterintuitive claim.</li>
+        <li><strong>Reason or context:</strong> 1-2 sentences that back the hook.</li>
+        <li><strong>Open question or invitation to debate:</strong> at the end, to generate replies.</li>
+      </ol>
+
+      <h2>Why replies are the key metric</h2>
+      <p>
+        On Threads each reply is a signal that the post moved someone. The algorithm weighs replies above likes and reposts. A post with 50 replies and 100 likes will outrank one with 0 replies and 500 likes. That's why formats inviting opinion work best: hot takes, open questions, observations that prompt people to share their own.
+      </p>
+
+      <h2>Hooks that work on Threads</h2>
+      <ul>
+        <li><strong>Clear, specific opinion:</strong> "Brands obsessed with feed aesthetics lose sales."</li>
+        <li><strong>Direct question:</strong> "Why is no one talking about this?"</li>
+        <li><strong>Confession or vulnerability:</strong> "I was wrong about X for 5 years. Here's what changed."</li>
+        <li><strong>Everyday observation:</strong> "People who write 'thanks' in a Slack channel. I see you."</li>
+        <li><strong>Concrete data:</strong> "90% of brand posts on Threads have fewer than 10 likes."</li>
+      </ul>
+
+      <h2>What does NOT work on Threads</h2>
+      <ul>
+        <li><strong>TikTok-style hooks:</strong> "POV: you're at X..." reads as awkward migration.</li>
+        <li><strong>Long threads when not needed:</strong> 5-6 posts when one would do.</li>
+        <li><strong>Carousels migrated from Instagram:</strong> the format gets lost on Threads.</li>
+        <li><strong>Image-only posts without text:</strong> wastes the platform's format.</li>
+        <li><strong>Blatant self-promo:</strong> "Buy my course" gets ignored.</li>
+      </ul>
+
+      <h2>How to leverage cross-posting with Instagram</h2>
+      <p>
+        Threads lets you post and have it appear on Instagram too (and vice versa for some formats). The rule: what you write specifically for Threads looks weird on Instagram, and Instagram captions (image-optimized) look weird on Threads. Better to create native for each platform even if you share ideas.
+      </p>
+
+      <h2>Frequency and timing</h2>
+      <p>
+        Threads rewards consistency more than volume. 1-3 posts per day outperforms 10. Best engagement windows are similar to Instagram: 7-10am and 6-9pm in your audience's time zone. But the recency effect is stronger: a 6-hour-old post rarely appears in the feed.
+      </p>
+
+      <h2>How to grow from zero on Threads</h2>
+      <ol>
+        <li><strong>Post every day for 30 days.</strong> The algorithm needs data to understand what you talk about.</li>
+        <li><strong>Reply to bigger accounts with value.</strong> Your replies show up in the feed of the original poster — free exposure.</li>
+        <li><strong>Find your angle:</strong> pick 2-3 topics and post about them 80% of the time.</li>
+        <li><strong>Converse:</strong> respond to replies, that reinforces the engagement signal.</li>
+        <li><strong>Show voice, not brand:</strong> Threads favors people over corporate accounts.</li>
+      </ol>
+
+      <h2>Common mistakes that kill engagement</h2>
+      <ul>
+        <li><strong>Neutral posts without opinion:</strong> "Today was a good day" — generates no response.</li>
+        <li><strong>Generic motivational lines:</strong> "Believe in yourself" gets ignored at scale.</li>
+        <li><strong>External links in the first post:</strong> the algorithm penalizes outbound links.</li>
+        <li><strong>Sub-posting on quotes without value:</strong> "This" as caption underperforms.</li>
+        <li><strong>Self-promo in every post:</strong> Threads deindexes accounts with blatant promo.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many characters?</summary><p>Sweet spot: 100-300. Max: 500.</p></details>
+      <details><summary>What kind of post performs best?</summary><p>Specific opinions and open questions. Replies are the key metric.</p></details>
+      <details><summary>Cross-post to Instagram?</summary><p>Better to create native. Threads-first content looks weird on Instagram.</p></details>
+      <details><summary>How many posts per day?</summary><p>1-3 with consistency outperforms 10 sporadic ones.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .th-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .th-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; white-space: pre-wrap; }
+  .th-card:hover { border-color: var(--accent); }
+  .th-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const topic = document.getElementById('th-topic') as HTMLInputElement;
+  const take = document.getElementById('th-take') as HTMLInputElement;
+  const context = document.getElementById('th-context') as HTMLInputElement;
+  const gen = document.getElementById('th-gen') as HTMLButtonElement;
+  const out = document.getElementById('th-out')!;
+
+  function generate() {
+    const T = topic.value.trim() || 'the topic';
+    const Tk = take.value.trim() || 'An observation';
+    const C = context.value.trim() || 'I see it every day';
+
+    const v1 = `${Tk}.\n\n${C}.\n\nIs it just me?`;
+    const v2 = `Unpopular opinion on ${T.toLowerCase()}:\n\n${Tk}.\n\n${C}.`;
+    const v3 = `${Tk}.\n\nChange my mind.`;
+    const v4 = `Something I learned about ${T.toLowerCase()}: ${Tk.toLowerCase()}.\n\n${C}.\n\nWhat do you think?`;
+
+    out.innerHTML = '';
+    [v1, v2, v3, v4].forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'th-card';
+      el.title = 'Click to copy';
+      const len = b.length;
+      el.innerHTML = b.replace(/\n/g, '<br>') + `<div class="th-meta">v${i+1} · ${len}/500 characters</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

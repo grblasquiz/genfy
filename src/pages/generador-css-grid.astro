@@ -1,0 +1,134 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de CSS Grid | Genfy';
+const description = 'Generá layouts de CSS Grid: columnas, filas, gap y áreas. Visualización en vivo y código copiable.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Grid o Flexbox?', acceptedAnswer: { '@type': 'Answer', text: 'Grid para layouts 2D (filas y columnas a la vez). Flexbox para 1D (sólo una dirección). Conviven, no compiten.' } },
+    { '@type': 'Question', name: '¿Cuándo usar fr vs %?', acceptedAnswer: { '@type': 'Answer', text: 'fr es proporcional al espacio disponible y respeta gaps. % es relativo al contenedor pero ignora gaps. fr suele ser más predecible.' } },
+    { '@type': 'Question', name: '¿Soporta IE?', acceptedAnswer: { '@type': 'Answer', text: 'IE11 tiene una versión vieja con sintaxis distinta. La sintaxis moderna corre en todos los navegadores actuales.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Generador de CSS Grid"
+    intro="Definí columnas, filas, gap y cantidad de items. Previsualizá el grid y copiá el CSS exacto.">
+
+    <div slot="tool" class="gr">
+      <div class="gr-grid">
+        <div>
+          <label for="gr-cols">grid-template-columns</label>
+          <input id="gr-cols" type="text" value="repeat(3, 1fr)" />
+        </div>
+        <div>
+          <label for="gr-rows">grid-template-rows</label>
+          <input id="gr-rows" type="text" value="auto" />
+        </div>
+        <div>
+          <label for="gr-gap">gap</label>
+          <input id="gr-gap" type="text" value="1rem" />
+        </div>
+        <div>
+          <label for="gr-items">items</label>
+          <input id="gr-items" type="number" min="1" max="24" value="6" />
+        </div>
+      </div>
+
+      <div class="gr-actions">
+        <button id="gr-cp" class="btn btn-primary" type="button">Copiar CSS</button>
+      </div>
+
+      <pre><code id="gr-out"></code></pre>
+
+      <div id="gr-preview" class="gr-preview"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es CSS Grid</h2>
+      <p>CSS Grid es el sistema de layout más potente que tiene CSS hoy. Te permite construir grillas bidimensionales con columnas y filas explícitas, controlar el alineamiento, y reasignar elementos a posiciones específicas. Es la herramienta correcta para layouts de página, dashboards, galerías y cualquier estructura que requiera control fino sobre dos ejes.</p>
+
+      <h2>Conceptos clave</h2>
+      <ul>
+        <li><strong>grid-template-columns</strong>: define la cantidad y tamaño de columnas.</li>
+        <li><strong>grid-template-rows</strong>: define la cantidad y tamaño de filas (opcional).</li>
+        <li><strong>gap</strong>: espacio entre celdas.</li>
+        <li><strong>grid-template-areas</strong>: asigna nombres a regiones del grid.</li>
+        <li><strong>grid-column / grid-row</strong>: posiciona un item en columnas o filas específicas.</li>
+      </ul>
+
+      <h2>La unidad fr</h2>
+      <p>fr (fraction) representa una fracción del espacio disponible después de descontar gaps y tamaños fijos. <code>1fr 2fr 1fr</code> divide en proporción 1:2:1. Es la unidad ideal para grids responsive porque se adapta sin que tengas que calcular porcentajes a mano.</p>
+
+      <h2>Patrones útiles</h2>
+      <pre><code>/* 3 columnas iguales */
+grid-template-columns: repeat(3, 1fr);
+
+/* mínimo 200px, máximo 1fr, auto-rellenar */
+grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
+/* sidebar 250px + contenido fluido */
+grid-template-columns: 250px 1fr;</code></pre>
+      <p>El patrón <code>repeat(auto-fill, minmax(200px, 1fr))</code> es la fórmula mágica para galerías: el grid agrega columnas a medida que hay espacio y mantiene cada item con un mínimo razonable.</p>
+
+      <h2>Grid template areas</h2>
+      <p>Para layouts complejos (header / sidebar / main / footer), grid-template-areas es la opción más legible:</p>
+      <pre><code>grid-template-areas:
+  "header header"
+  "sidebar main"
+  "footer footer";</code></pre>
+      <p>Después asignás cada elemento con <code>grid-area: header;</code>. Cambiar el layout en mobile es modificar las áreas, no reordenar HTML.</p>
+
+      <h2>Grid vs Flexbox</h2>
+      <p>Grid es bidimensional: controlás filas y columnas a la vez. Flexbox es unidimensional: alineás items en una sola dirección. Para una grilla de productos, Grid. Para una toolbar horizontal, Flexbox. En layouts grandes los usás juntos: Grid para la macro-estructura, Flexbox dentro de cada celda.</p>
+
+      <h2>Responsive</h2>
+      <p>Grid permite media queries muy concisas. Cambiar de tres columnas a una en mobile es una línea: <code>grid-template-columns: 1fr;</code>. Combinado con <code>auto-fill</code> y <code>minmax</code>, podés tener grids que se adaptan sin escribir media queries explícitas.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Grid o Flexbox?</summary><p>Grid para 2D, Flexbox para 1D. Se complementan.</p></details>
+      <details><summary>¿fr o %?</summary><p>fr es proporcional y respeta gaps. % es relativo al contenedor pero ignora gaps.</p></details>
+      <details><summary>¿Soporta IE?</summary><p>IE11 tiene una versión vieja. Todos los navegadores modernos soportan la sintaxis actual.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .gr-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .gr-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+  .gr-preview { display: grid; padding: 1rem; background: var(--bg-inset); border-radius: var(--radius); margin-top: 1rem; }
+  .gr-preview > div { background: var(--accent); color: #fff; padding: 1.5rem; text-align: center; border-radius: var(--radius-sm); font-weight: 600; }
+  @media (max-width: 600px) { .gr-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const cols = document.getElementById('gr-cols') as HTMLInputElement;
+  const rows = document.getElementById('gr-rows') as HTMLInputElement;
+  const gap = document.getElementById('gr-gap') as HTMLInputElement;
+  const items = document.getElementById('gr-items') as HTMLInputElement;
+  const out = document.getElementById('gr-out') as HTMLElement;
+  const prev = document.getElementById('gr-preview') as HTMLElement;
+  const cp = document.getElementById('gr-cp') as HTMLButtonElement;
+
+  function render() {
+    const css = `.container {\n  display: grid;\n  grid-template-columns: ${cols.value};\n  grid-template-rows: ${rows.value};\n  gap: ${gap.value};\n}`;
+    out.textContent = css;
+    prev.style.gridTemplateColumns = cols.value;
+    prev.style.gridTemplateRows = rows.value;
+    prev.style.gap = gap.value;
+    const n = Math.max(1, Math.min(24, +items.value || 1));
+    prev.innerHTML = '';
+    for (let i = 1; i <= n; i++) { const d = document.createElement('div'); d.textContent = String(i); prev.appendChild(d); }
+  }
+  [cols, rows, gap, items].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar CSS', 1500);
+  });
+  render();
+</script>

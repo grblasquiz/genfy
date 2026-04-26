@@ -1,0 +1,170 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de palabra para charadas | Genfy';
+const description = 'Palabras y frases para mímica/charadas: películas, personajes, acciones, objetos. Filtros por categoría y dificultad.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Hay categorías?', acceptedAnswer: { '@type': 'Answer', text: 'Sí: películas, acciones, objetos, profesiones y refranes.' } },
+    { '@type': 'Question', name: '¿Apto para chicos?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, todas las palabras pasan filtro familia.' } },
+    { '@type': 'Question', name: '¿Cuántos jugadores?', acceptedAnswer: { '@type': 'Answer', text: 'Mínimo 4. Funciona mejor de 6 a 12.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión / Fun" title="Generador de palabra para charadas"
+    intro="Palabras y frases para mímica. Filtrá por categoría y mostrá solo a quien actúa.">
+
+    <div slot="tool" class="cw">
+      <div class="cw-card">
+        <span id="cw-cat-pill" class="cw-pill">—</span>
+        <p id="cw-text" class="cw-text">Tocá generar para empezar.</p>
+      </div>
+      <div class="cw-controls">
+        <label for="cw-cat">Categoría</label>
+        <select id="cw-cat">
+          <option value="all">Todas</option>
+          <option value="pelicula">Películas</option>
+          <option value="accion">Acciones</option>
+          <option value="objeto">Objetos</option>
+          <option value="profesion">Profesiones</option>
+          <option value="refran">Refranes</option>
+        </select>
+      </div>
+      <button id="cw-gen" class="btn btn-primary" type="button">Otra palabra</button>
+      <button id="cw-hide" class="btn btn-ghost" type="button">Ocultar</button>
+    </div>
+
+    <div slot="content">
+      <h2>Reglas básicas de las charadas</h2>
+      <p>
+        Charadas (también "mímica") es el clásico universal: una persona actúa una palabra
+        o frase sin hablar y el resto adivina. La diferencia con Pictionary es el medio:
+        cuerpo en vez de papel. Funciona desde 4 jugadores hasta grandes grupos. Las
+        reglas son simples y los desafíos quedan limitados solo por la creatividad.
+      </p>
+
+      <h2>Señales clásicas universales</h2>
+      <ol>
+        <li><strong>Categoría:</strong> antes de empezar, indicar tipo. Manos como cámara = película; libro abierto = libro; tocarse el oído = canción.</li>
+        <li><strong>Cantidad de palabras:</strong> mostrá los dedos. 3 dedos = 3 palabras.</li>
+        <li><strong>Sílabas:</strong> dedos en el brazo indicando posición y cantidad.</li>
+        <li><strong>"Suena como…":</strong> tocá tu oreja, después actuá una palabra que suena parecido.</li>
+        <li><strong>"Pequeño/Grande":</strong> manos cerca = corto; manos abiertas = largo.</li>
+      </ol>
+
+      <h2>Categorías más jugadas</h2>
+      <ul>
+        <li><strong>Películas:</strong> la favorita. Da pistas claras y permite escenas icónicas.</li>
+        <li><strong>Acciones:</strong> verbos. Casi todo se puede mimar directamente.</li>
+        <li><strong>Profesiones:</strong> pocos gestos clave (estetoscopio = doctor, golpe de martillo = carpintero).</li>
+        <li><strong>Objetos:</strong> simulación del uso (peinarse, cepillarse dientes, abrir paraguas).</li>
+        <li><strong>Refranes y frases:</strong> los más difíciles, requieren actuar palabra por palabra.</li>
+      </ul>
+
+      <h2>Estrategias de actuación</h2>
+      <p>
+        Empezá por la categoría. Luego, cantidad de palabras. Si es película famosa, una
+        escena icónica vale más que actuar el título palabra por palabra. Si es objeto,
+        actuá el uso típico. Si es profesión, foco en las herramientas. Si es acción,
+        exagerá el movimiento. Si es refrán, descomponé palabra por palabra usando
+        sinónimos accesibles.
+      </p>
+
+      <h2>Reglas opcionales que mejoran el juego</h2>
+      <p>
+        Cronómetro de 90 segundos por palabra. Dos vidas: si pasás 90 segundos sin
+        adivinar, perdés punto. Equipos de 3-4 personas: el actor del equipo A actúa para
+        su equipo, mientras el equipo B observa pero no puede gritar respuestas. Modalidad
+        "trampa": el actor puede emitir un sonido cada 30 segundos. Funciona muy bien con
+        chicos.
+      </p>
+
+      <h2>Cuándo charadas no es la mejor opción</h2>
+      <p>
+        En grupos donde alguien tiene movilidad reducida, ajustá las reglas (todo se puede
+        actuar sentado, evitar palabras que requieran moverse mucho). En audiencias de
+        mucha edad mixta, las películas pueden no ser conocidas por todos: usá categoría
+        "objetos" o "acciones" que son universales. En grupos de oficina, evitá temas
+        controversiales o demasiado personales.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántas palabras hay?</summary><p>80+ con filtros.</p></details>
+      <details><summary>¿Apto para 6 años?</summary><p>Sí, con categorías acción y objetos.</p></details>
+      <details><summary>¿Sirve para Zoom?</summary><p>Sí, todos miran la cámara del actor.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cw-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; text-align: center; }
+  .cw-pill { display: inline-block; padding: 0.25rem 0.75rem; background: var(--bg-inset); border: 1px solid var(--border-strong); border-radius: var(--radius); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .cw-text { font-size: 1.75rem; font-weight: 700; line-height: 1.3; margin: 0; }
+  .cw-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const W: { cat: string; t: string }[] = [
+    { cat: "pelicula", t: "Toy Story" }, { cat: "pelicula", t: "El Rey León" },
+    { cat: "pelicula", t: "Buscando a Nemo" }, { cat: "pelicula", t: "Frozen" },
+    { cat: "pelicula", t: "Coco" }, { cat: "pelicula", t: "Encanto" },
+    { cat: "pelicula", t: "Forrest Gump" }, { cat: "pelicula", t: "Volver al Futuro" },
+    { cat: "pelicula", t: "Titanic" }, { cat: "pelicula", t: "El Padrino" },
+    { cat: "pelicula", t: "Jurassic Park" }, { cat: "pelicula", t: "Indiana Jones" },
+    { cat: "pelicula", t: "Star Wars" }, { cat: "pelicula", t: "Harry Potter" },
+    { cat: "pelicula", t: "Los Increíbles" },
+    { cat: "accion", t: "nadar" }, { cat: "accion", t: "manejar" }, { cat: "accion", t: "cocinar" },
+    { cat: "accion", t: "lavar los platos" }, { cat: "accion", t: "tocar guitarra" },
+    { cat: "accion", t: "pintar un cuadro" }, { cat: "accion", t: "saltar la cuerda" },
+    { cat: "accion", t: "estornudar" }, { cat: "accion", t: "bostezar" },
+    { cat: "accion", t: "sacar fotos" }, { cat: "accion", t: "andar en bici" },
+    { cat: "accion", t: "atar cordones" }, { cat: "accion", t: "cepillarse los dientes" },
+    { cat: "accion", t: "leer un libro" }, { cat: "accion", t: "tomar mate" },
+    { cat: "objeto", t: "paraguas" }, { cat: "objeto", t: "teléfono" }, { cat: "objeto", t: "computadora" },
+    { cat: "objeto", t: "guitarra" }, { cat: "objeto", t: "lavarropas" },
+    { cat: "objeto", t: "microondas" }, { cat: "objeto", t: "tijera" }, { cat: "objeto", t: "linterna" },
+    { cat: "objeto", t: "anteojos" }, { cat: "objeto", t: "cámara fotográfica" },
+    { cat: "objeto", t: "ventilador" }, { cat: "objeto", t: "secador de pelo" },
+    { cat: "profesion", t: "doctor" }, { cat: "profesion", t: "bombero" },
+    { cat: "profesion", t: "maestro" }, { cat: "profesion", t: "cocinero" },
+    { cat: "profesion", t: "veterinario" }, { cat: "profesion", t: "carpintero" },
+    { cat: "profesion", t: "fotógrafo" }, { cat: "profesion", t: "futbolista" },
+    { cat: "profesion", t: "tenista" }, { cat: "profesion", t: "actor de cine" },
+    { cat: "profesion", t: "piloto de avión" }, { cat: "profesion", t: "peluquero" },
+    { cat: "refran", t: "más vale tarde que nunca" }, { cat: "refran", t: "a caballo regalado no se le miran los dientes" },
+    { cat: "refran", t: "el que madruga, Dios lo ayuda" }, { cat: "refran", t: "más vale pájaro en mano que cien volando" },
+    { cat: "refran", t: "no por mucho madrugar amanece más temprano" }, { cat: "refran", t: "cría cuervos y te sacarán los ojos" },
+    { cat: "refran", t: "perro que ladra no muerde" }, { cat: "refran", t: "en boca cerrada no entran moscas" }
+  ];
+
+  const pill = document.getElementById('cw-cat-pill') as HTMLElement;
+  const text = document.getElementById('cw-text') as HTMLElement;
+  const cat = document.getElementById('cw-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('cw-gen') as HTMLButtonElement;
+  const hideBtn = document.getElementById('cw-hide') as HTMLButtonElement;
+  let last = '';
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? W : W.filter(x => x.cat === filter);
+    const item = pick(pool);
+    pill.textContent = item.cat;
+    text.textContent = item.t;
+    last = item.t;
+  }
+  hideBtn.addEventListener('click', () => {
+    if (text.textContent === '••••••') text.textContent = last;
+    else text.textContent = '••••••';
+  });
+  genBtn.addEventListener('click', generate);
+  generate();
+</script>
+</content>
+</invoke>

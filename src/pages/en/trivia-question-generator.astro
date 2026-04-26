@@ -1,0 +1,179 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Trivia Question Generator | Genfy';
+const description = 'Trivia questions with answers for parties, classrooms and game nights. Categories: science, modern history, movies, music, geography, sports.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Are answers verified?', acceptedAnswer: { '@type': 'Answer', text: 'We curate from publicly verifiable sources. For academic use, double-check before publishing.' } },
+    { '@type': 'Question', name: 'Are there categories?', acceptedAnswer: { '@type': 'Answer', text: 'Yes: science, modern history, film, music, geography, sports and entertainment.' } },
+    { '@type': 'Question', name: 'Useful in schools?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Covers general knowledge for high school and up. Not super-hard quiz material.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Diversión / Fun" title="Trivia question generator"
+    intro="One question at a time, answer hidden. Test your knowledge or challenge the group.">
+
+    <div slot="tool" class="tv">
+      <div class="tv-card">
+        <span id="tv-cat-pill" class="tv-pill">—</span>
+        <p id="tv-q" class="tv-q">Tap generate to start.</p>
+        <details class="tv-answer"><summary>Show answer</summary><p id="tv-a">—</p></details>
+      </div>
+      <div class="tv-controls">
+        <label for="tv-cat">Category</label>
+        <select id="tv-cat">
+          <option value="all">All</option>
+          <option value="science">Science</option>
+          <option value="history">Modern history</option>
+          <option value="film">Film</option>
+          <option value="music">Music</option>
+          <option value="geography">Geography</option>
+          <option value="sports">Sports</option>
+        </select>
+      </div>
+      <button id="tv-gen" class="btn btn-primary" type="button">Another question</button>
+    </div>
+
+    <div slot="content">
+      <h2>How to run a trivia night</h2>
+      <p>
+        Good trivia has three ingredients: variety of categories, balanced difficulty and
+        snappy pacing. If everything is too easy, people get bored. Too hard, they get
+        frustrated. Classic 50/30/20: 50% accessible, 30% medium, 20% challenging. Mix
+        categories so different players shine at different moments.
+      </p>
+
+      <h2>Game formats</h2>
+      <ol>
+        <li><strong>Pub trivia:</strong> teams of 4-6, 5 rounds of 10 questions each with a theme. One hour total.</li>
+        <li><strong>Speed trivia:</strong> individual, 30 seconds per question, 20 questions. Prize for the winner.</li>
+        <li><strong>Family:</strong> teams by generation or living-room vs. kitchen. Lower the difficulty and add pop-culture categories.</li>
+        <li><strong>Classroom:</strong> blend with course content. Useful for review before exams.</li>
+      </ol>
+
+      <h2>Categories and why they matter</h2>
+      <ul>
+        <li><strong>Science:</strong> physics, chemistry, basic biology. Curious facts about how the world works.</li>
+        <li><strong>Modern history:</strong> 19th to 21st century. More accessible than ancient and more relevant for general groups.</li>
+        <li><strong>Film:</strong> recognizable movies, Oscars, box office. Most people's favorite.</li>
+        <li><strong>Music:</strong> hits, genres, artists. Balance classics with current.</li>
+        <li><strong>Geography:</strong> capitals, rivers, mountains. The most universal trivia.</li>
+        <li><strong>Sports:</strong> World Cup, Olympics, top athletes.</li>
+      </ul>
+
+      <h2>How to write a good question</h2>
+      <p>
+        An excellent question has one unambiguous correct answer. Avoid wording that hinges
+        on interpretation ("who was the best president?") unless you frame it as opinion.
+        Exact-date questions frustrate; ask for decades or related events instead.
+        Number-based questions (how many countries, how many kilometers) generate the most
+        debate.
+      </p>
+
+      <h2>Trivia and learning</h2>
+      <p>
+        Learning psychology shows recall consolidates better than rereading. A
+        well-designed trivia session is recall practice in fun format. That's why many
+        teachers use it at the start of class as review. Rule: never shame anyone who's
+        wrong, celebrate anyone who tries even when they miss. Trivia must feel like a game,
+        not an exam.
+      </p>
+
+      <h2>Beware unverified facts</h2>
+      <p>
+        The internet is full of mis-copied "fun facts". Before using a question for a
+        serious context (class, podcast, video), confirm with two independent sources.
+        Common errors: confusing treaty dates, attributing inventions to the wrong person,
+        outdated records. Genfy filters these, but the rule applies to any trivia you
+        build.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Can I repeat?</summary><p>Yes, generate as many as you want. Rotation reduces immediate repeats.</p></details>
+      <details><summary>Difficulty levels?</summary><p>Balanced mix. Difficulty filters coming soon.</p></details>
+      <details><summary>Useful for podcasts?</summary><p>Yes. Cite the source when using questions on recorded media.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tv-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; }
+  .tv-pill { display: inline-block; padding: 0.25rem 0.75rem; background: var(--bg-inset); border: 1px solid var(--border-strong); border-radius: var(--radius); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .tv-q { font-size: 1.125rem; line-height: 1.6; margin: 0 0 1rem; }
+  .tv-answer { padding: 0.75rem; background: var(--bg-inset); border-radius: var(--radius); }
+  .tv-answer summary { cursor: pointer; font-weight: 600; }
+  .tv-answer p { margin: 0.75rem 0 0; color: var(--text-soft); }
+  .tv-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const Q: { cat: string; q: string; a: string }[] = [
+    { cat: "science", q: "Which planet has the shortest day in our solar system?", a: "Jupiter (about 9 hours 56 minutes)." },
+    { cat: "science", q: "What chemical element has the symbol Au?", a: "Gold." },
+    { cat: "science", q: "Which human organ produces insulin?", a: "The pancreas." },
+    { cat: "science", q: "Roughly how many bones does an adult human have?", a: "206." },
+    { cat: "science", q: "Who proposed the theory of relativity?", a: "Albert Einstein." },
+    { cat: "science", q: "What's the fastest land animal?", a: "The cheetah." },
+    { cat: "science", q: "What's the largest ocean?", a: "The Pacific." },
+    { cat: "science", q: "Which gas makes up most of Earth's atmosphere?", a: "Nitrogen (about 78%)." },
+    { cat: "history", q: "In what year did the Berlin Wall fall?", a: "1989." },
+    { cat: "history", q: "When did World War II end?", a: "1945." },
+    { cat: "history", q: "Who was the first woman to win a Nobel Prize?", a: "Marie Curie (Physics, 1903)." },
+    { cat: "history", q: "In what year did humans land on the Moon?", a: "1969." },
+    { cat: "history", q: "Who painted the Mona Lisa?", a: "Leonardo da Vinci." },
+    { cat: "history", q: "When was the US Declaration of Independence signed?", a: "1776." },
+    { cat: "history", q: "Who invented the lightbulb (commercially viable version)?", a: "Thomas Edison." },
+    { cat: "film", q: "Which film won Best Picture at the 1994 Oscars?", a: "Forrest Gump." },
+    { cat: "film", q: "Who directed Titanic (1997)?", a: "James Cameron." },
+    { cat: "film", q: "Which actor played the Joker in The Dark Knight (2008)?", a: "Heath Ledger." },
+    { cat: "film", q: "Pixar's highest-grossing film through 2023?", a: "Incredibles 2." },
+    { cat: "film", q: "What saga includes 'The Fellowship of the Ring'?", a: "The Lord of the Rings." },
+    { cat: "film", q: "Who wrote and directed Pulp Fiction?", a: "Quentin Tarantino." },
+    { cat: "music", q: "What band released the album Abbey Road?", a: "The Beatles." },
+    { cat: "music", q: "Who was the lead singer of Queen?", a: "Freddie Mercury." },
+    { cat: "music", q: "Who recorded 'Like a Prayer'?", a: "Madonna." },
+    { cat: "music", q: "What country is the band Coldplay from?", a: "United Kingdom." },
+    { cat: "music", q: "Who composed the 'Turkish March'?", a: "Wolfgang Amadeus Mozart." },
+    { cat: "music", q: "What's the largest string instrument in an orchestra?", a: "The double bass." },
+    { cat: "geography", q: "What's the capital of Australia?", a: "Canberra." },
+    { cat: "geography", q: "What's the longest river in the world?", a: "The Nile (some sources favor the Amazon)." },
+    { cat: "geography", q: "How many countries make up South America?", a: "12." },
+    { cat: "geography", q: "Which continent is Egypt in?", a: "Africa." },
+    { cat: "geography", q: "What's the largest desert?", a: "Antarctica (then the Sahara)." },
+    { cat: "geography", q: "Which country is shaped like a boot?", a: "Italy." },
+    { cat: "geography", q: "What's the world's tallest mountain?", a: "Mount Everest (8,848 m)." },
+    { cat: "sports", q: "How often is the FIFA World Cup held?", a: "Every 4 years." },
+    { cat: "sports", q: "Which country won the 2022 World Cup?", a: "Argentina." },
+    { cat: "sports", q: "What sport is Serena Williams known for?", a: "Tennis." },
+    { cat: "sports", q: "How many players are on the court per basketball team?", a: "5." },
+    { cat: "sports", q: "Which country invented rugby?", a: "England." },
+    { cat: "sports", q: "How many rings are on the Olympic flag?", a: "5." }
+  ];
+
+  const pill = document.getElementById('tv-cat-pill') as HTMLElement;
+  const qEl = document.getElementById('tv-q') as HTMLElement;
+  const aEl = document.getElementById('tv-a') as HTMLElement;
+  const cat = document.getElementById('tv-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('tv-gen') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? Q : Q.filter(x => x.cat === filter);
+    const item = pick(pool);
+    pill.textContent = item.cat;
+    qEl.textContent = item.q;
+    aEl.textContent = item.a;
+  }
+  genBtn.addEventListener('click', generate);
+  generate();
+</script>
+</content>
+</invoke>

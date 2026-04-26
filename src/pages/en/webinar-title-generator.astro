@@ -1,0 +1,147 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Webinar Title Generator | Genfy';
+const description = 'Generate webinar titles that fill registrations. 10 proven formulas with number, benefit and urgency, ready for landing, ads and invite emails.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good webinar title?', acceptedAnswer: { '@type': 'Answer', text: 'A concrete benefit, a date and a credible speaker. "How to cut CAC 30% on LinkedIn Ads — Thursday 16, 4pm" beats "Growth marketing webinar".' } },
+    { '@type': 'Question', name: 'How early to promote?', acceptedAnswer: { '@type': 'Answer', text: 'Ideally 14 days with separate campaigns: initial announce, 7-day reminder, 24h reminder and "starting now" email 30 minutes before.' } },
+    { '@type': 'Question', name: 'How long?', acceptedAnswer: { '@type': 'Answer', text: '45-60 minutes: 35-40 content + 10-15 Q&A. Past that, attendance drops sharply. If you have more, split into 2 sessions.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Webinar Title Generator"
+    intro="Generate 10 titles for your next webinar. Combinations of benefit, number, date and authority. Ready for landing, ad and invite email.">
+
+    <div slot="tool" class="wb">
+      <label>Topic</label>
+      <input id="wb-topic" type="text" value="reducing CAC on LinkedIn Ads" />
+
+      <label style="margin-top:1rem">Audience</label>
+      <input id="wb-aud" type="text" value="B2B CMOs" />
+
+      <label style="margin-top:1rem">Result / promise</label>
+      <input id="wb-result" type="text" value="cut CAC 30%" />
+
+      <label style="margin-top:1rem">Speaker / authority</label>
+      <input id="wb-speaker" type="text" value="Former CMO at Acme Corp" />
+
+      <button id="wb-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 10 titles</button>
+
+      <div id="wb-out" class="wb-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why the title decides attendance</h2>
+      <p>
+        A good webinar can bring 50-200 qualified leads, but only if the title hooks. Registrations
+        are decided in 8 seconds: the visitor reads the title, evaluates if it's worth 60 minutes,
+        and decides. If your title doesn't answer "what do I take home?", you lose 50% of
+        registrations no matter how good the content is.
+      </p>
+
+      <h2>The formula</h2>
+      <ol>
+        <li><strong>Concrete benefit:</strong> "Cut your CAC 30% in 60 days".</li>
+        <li><strong>Specificity:</strong> the channel, tool or segment. "On LinkedIn Ads".</li>
+        <li><strong>Authority:</strong> who's speaking. "With the former CMO of Acme Corp".</li>
+        <li><strong>Date and time:</strong> optional in title, mandatory on landing.</li>
+        <li><strong>Limitation:</strong> "Only 100 seats" or "Live, no recording" for urgency.</li>
+      </ol>
+
+      <h2>Formulas that work</h2>
+      <ul>
+        <li><strong>How + result + time:</strong> "How to cut CAC 30% in 60 days".</li>
+        <li><strong>Question:</strong> "Why does your CAC keep climbing? And what to do".</li>
+        <li><strong>Behind the scenes:</strong> "How Acme Corp cut CAC 30% — and how to replicate it".</li>
+        <li><strong>Mistakes:</strong> "5 common LinkedIn Ads mistakes (and how to avoid them)".</li>
+        <li><strong>Roundtable:</strong> "3 CMOs share what worked this quarter".</li>
+      </ul>
+
+      <h2>Common webinar mistakes</h2>
+      <ol>
+        <li>Generic titles: "Digital marketing webinar" — won't convert.</li>
+        <li>Not mentioning the speaker. Their authority is 30% of the decision.</li>
+        <li>Odd time for your audience. Confirm time zone.</li>
+        <li>No Q&A. Interaction is what makes it different from a video.</li>
+        <li>Not recording / not sending the recording. You lose 60-70% of viewers who didn't show live.</li>
+      </ol>
+
+      <h2>How to maximize registrations</h2>
+      <ul>
+        <li>Dedicated landing page with big title, date, agenda and speaker bio.</li>
+        <li>LinkedIn Ads and email campaigns starting 14 days ahead.</li>
+        <li>Automated reminders: day -1, day 0 (6h before), 30 minutes before.</li>
+        <li>Co-host + external guest lifts conversion 25-40%.</li>
+        <li>Post-webinar, send recording + slides + a downloadable asset. Converts 2-3x more.</li>
+      </ul>
+
+      <h2>Metrics that matter</h2>
+      <ul>
+        <li><strong>Registration rate:</strong> visitors / registrations. 25-35% is healthy.</li>
+        <li><strong>Show-up rate:</strong> registered / live attendees. 30-50% typical.</li>
+        <li><strong>Engagement rate:</strong> avg watch time, questions asked.</li>
+        <li><strong>SQL conversion:</strong> per 100 attendees, how many become real opportunities?</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes it good?</summary><p>Concrete benefit + specificity + authority + date.</p></details>
+      <details><summary>How early to promote?</summary><p>14 days with staggered campaigns and reminders.</p></details>
+      <details><summary>How long?</summary><p>45-60 minutes. Past that, attendance drops.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .wb-out { display: grid; gap: 0.5rem; margin-top: 1.25rem; }
+  .wb-item { padding: 0.875rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .wb-item:hover { border-color: var(--primary); }
+  .wb-tag { font-size: 0.75rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; display: block; }
+</style>
+
+<script>
+  const topic = document.getElementById('wb-topic') as HTMLInputElement;
+  const aud = document.getElementById('wb-aud') as HTMLInputElement;
+  const result = document.getElementById('wb-result') as HTMLInputElement;
+  const speaker = document.getElementById('wb-speaker') as HTMLInputElement;
+  const out = document.getElementById('wb-out')!;
+  const gen = document.getElementById('wb-gen') as HTMLButtonElement;
+
+  function generate() {
+    const tp = topic.value;
+    const a = aud.value;
+    const r = result.value;
+    const sp = speaker.value;
+
+    const lines = [
+      { tag: 'How + result', text: `How to ${r} on ${tp}, without growing headcount.` },
+      { tag: 'Question', text: `Why does ${tp} get more expensive every quarter? And what to do.` },
+      { tag: 'Behind the scenes', text: `Behind the number: how ${sp} achieved ${r} and how to replicate it.` },
+      { tag: 'Mistakes', text: `5 common ${tp} mistakes ${a} make (and how to avoid them).` },
+      { tag: 'Roundtable', text: `3 ${a} share what worked this quarter on ${tp}.` },
+      { tag: 'Masterclass style', text: `Masterclass: ${tp} for ${a}, with ${sp}.` },
+      { tag: 'Before / after', text: `Before and after: ${r} in 60 days with a step-by-step plan.` },
+      { tag: 'Channel-specific', text: `${r} without touching your current ${tp} budget.` },
+      { tag: 'Trend', text: `${tp} ${new Date().getFullYear() + 1}: what changed and how to adapt.` },
+      { tag: 'For skeptics', text: `${r} is real: ${sp} shows the numbers behind ${tp}.` },
+    ];
+
+    out.innerHTML = '';
+    lines.forEach(l => {
+      const el = document.createElement('div');
+      el.className = 'wb-item';
+      el.innerHTML = `<span class="wb-tag">${l.tag}</span><div>${l.text}</div>`;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(l.text); el.style.borderColor = 'var(--primary)'; setTimeout(() => el.style.borderColor = '', 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,156 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de pregunta rompehielos | Genfy';
+const description = 'Preguntas rompehielos curadas para grupos: equipos remotos, talleres, primer día, retiros y dinámicas presenciales. Cero cringe.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuándo usar un rompehielos?', acceptedAnswer: { '@type': 'Answer', text: 'Cuando hay personas que no se conocen y necesitás bajar la tensión inicial: kickoffs, talleres, retiros, primer día.' } },
+    { '@type': 'Question', name: '¿Hay rompehielos para remoto?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Filtrá por "remoto" para preguntas que funcionen en Zoom o Slack.' } },
+    { '@type': 'Question', name: '¿Cuántas usar?', acceptedAnswer: { '@type': 'Answer', text: 'Una o dos al inicio, no más. El rompehielos es entrada, no comida principal.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión / Fun" title="Generador de pregunta rompehielos"
+    intro="Bajá la tensión del primer minuto. Curadas para grupos presenciales y remotos.">
+
+    <div slot="tool" class="ib">
+      <div class="ib-card">
+        <p id="ib-text" class="ib-text">Tocá "Generar" para empezar.</p>
+      </div>
+      <div class="ib-controls">
+        <label for="ib-cat">Tipo</label>
+        <select id="ib-cat">
+          <option value="all">Todos</option>
+          <option value="equipo">Equipo / Trabajo</option>
+          <option value="remoto">Remoto</option>
+          <option value="taller">Taller / Workshop</option>
+          <option value="rapido">Rápido (1 minuto)</option>
+        </select>
+      </div>
+      <button id="ib-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="ib-copy" class="btn btn-ghost" type="button">Copiar</button>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es un rompehielos efectivo</h2>
+      <p>
+        Un rompehielos no es una pregunta cualquiera. Es una pregunta diseñada para bajar
+        la barrera de presentación, generar una micro-anécdota personal y dejar a la gente
+        con sensación de que ya conoce un poquito a los demás. Si tu rompehielos parece
+        encuesta corporativa, fallaste.
+      </p>
+
+      <h2>Tres principios para que funcione</h2>
+      <ol>
+        <li><strong>Bajo riesgo:</strong> nadie debería tener que revelar algo personal incómodo.</li>
+        <li><strong>Respuesta corta:</strong> entre 30 y 60 segundos por persona. Si dura más, perdiste la sala.</li>
+        <li><strong>Contagioso:</strong> la respuesta de uno debería darle ideas a los demás. Las preguntas con "¿cuál fue la peor/mejor/más rara…?" funcionan así.</li>
+      </ol>
+
+      <h2>Rompehielos para equipos remotos</h2>
+      <p>
+        En Zoom el silencio se siente más. Funcionan mejor las preguntas con respuesta visual
+        ("mostrá un objeto cerca tuyo y contá su historia"), las que se pueden responder en
+        chat ("emoji que describa tu mañana") o las breves donde nadie tenga que mirar a la
+        cámara más de lo necesario. En remoto, evitá preguntas largas que requieran orden de
+        turnos: usá la lista de participantes como orden visible y forzá un cap de 30
+        segundos.
+      </p>
+
+      <h2>Rompehielos para talleres presenciales</h2>
+      <p>
+        Acá tenés más libertad. Funcionan los que requieren moverse: "buscá a alguien que
+        comparta una característica con vos y averiguá cuál". Genera energía y produce
+        descubrimientos que después facilitan la dinámica del taller. La regla del taller:
+        rompehielos relacionado con el tema. Si vas a hablar de innovación, preguntá por la
+        última cosa que cambiaron en su rutina. Si vas a hablar de equipos, preguntá por el
+        mejor compañero que tuvieron y por qué.
+      </p>
+
+      <h2>Errores frecuentes</h2>
+      <ul>
+        <li><strong>"Contá algo gracioso de vos":</strong> bloquea a los introvertidos. Pregunta concreta funciona mejor.</li>
+        <li><strong>"¿Qué animal serías?":</strong> está quemada. Si la usás, sumá una vuelta de tuerca: "y por qué tu equipo lo confirmaría".</li>
+        <li><strong>Demasiado largo:</strong> rompehielos de 20 minutos en una reunión de 60 mata el resto.</li>
+        <li><strong>No-rompehielos:</strong> "presentate" no es rompehielos. Es introducción tradicional. Distinguí.</li>
+      </ul>
+
+      <h2>Plantilla de cierre</h2>
+      <p>
+        Después del rompehielos, conectá explícitamente con el contenido: "Ya sabemos algo de
+        cada uno; ahora vamos al tema del taller". Esa transición es crucial; sin ella la
+        gente queda en modo charla y cuesta retomar la atención.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para reuniones cortas?</summary><p>Usá filtro "rápido" para preguntas que se contestan en menos de un minuto.</p></details>
+      <details><summary>¿Cantidad recomendada?</summary><p>Una al inicio. Dos solo si el grupo es grande y necesitás más warm-up.</p></details>
+      <details><summary>¿Sirve para clases?</summary><p>Sí, especialmente al iniciar el cuatrimestre o un módulo nuevo.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ib-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; }
+  .ib-text { font-size: 1.125rem; line-height: 1.6; margin: 0; }
+  .ib-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const QUESTIONS: { cat: string; t: string }[] = [
+    { cat: "equipo", t: "¿Cuál fue tu primer trabajo y qué te enseñó?" },
+    { cat: "equipo", t: "¿Qué habilidad te gustaría desarrollar este año?" },
+    { cat: "equipo", t: "¿Cuál fue el mejor compañero/jefe que tuviste y por qué?" },
+    { cat: "equipo", t: "¿Qué hiciste el último fin de semana?" },
+    { cat: "equipo", t: "Si pudieras dedicarle un mes entero a un solo proyecto, ¿cuál?" },
+    { cat: "equipo", t: "¿Qué hace que un día sea bueno para vos?" },
+    { cat: "remoto", t: "Mostrá un objeto cerca tuyo y contá su historia en 30 segundos." },
+    { cat: "remoto", t: "Emoji que describe tu mañana hoy. Pegalo en chat." },
+    { cat: "remoto", t: "Compartí algo que tengas en la pared atrás tuyo." },
+    { cat: "remoto", t: "¿Qué se ve por tu ventana ahora?" },
+    { cat: "remoto", t: "Tu mascota o tu planta más vieja: presentala." },
+    { cat: "remoto", t: "¿Qué app abriste primero hoy?" },
+    { cat: "taller", t: "¿Cuál fue la última cosa que cambiaste en tu rutina y funcionó?" },
+    { cat: "taller", t: "Compartí un superpoder profesional que tengas y nadie sepa." },
+    { cat: "taller", t: "¿Qué libro o curso te marcó este año?" },
+    { cat: "taller", t: "¿Qué pregunta te gustaría que te hicieran más seguido?" },
+    { cat: "taller", t: "Buscá a alguien que comparta una característica con vos." },
+    { cat: "taller", t: "Una creencia laboral que cambiaste con los años." },
+    { cat: "rapido", t: "¿Café o té?" },
+    { cat: "rapido", t: "Tu canción de la semana." },
+    { cat: "rapido", t: "Una palabra que describa tu humor hoy." },
+    { cat: "rapido", t: "¿Día o noche?" },
+    { cat: "rapido", t: "¿Mar o montaña?" },
+    { cat: "rapido", t: "Lo último que aprendiste." },
+    { cat: "rapido", t: "El emoji que más usás." },
+    { cat: "rapido", t: "Tu hobby actual en 3 palabras." }
+  ];
+
+  const text = document.getElementById('ib-text') as HTMLElement;
+  const cat = document.getElementById('ib-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('ib-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('ib-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? QUESTIONS : QUESTIONS.filter(s => s.cat === filter);
+    text.textContent = pick(pool).t;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(text.textContent || '');
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

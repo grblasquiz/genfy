@@ -1,0 +1,134 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de robots.txt | Genfy';
+const description = 'Generá un robots.txt para indicar qué partes de tu sitio pueden indexar los buscadores. Plantillas listas para copiar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué pasa si no tengo robots.txt?', acceptedAnswer: { '@type': 'Answer', text: 'No pasa nada grave: los buscadores asumen que pueden rastrear todo. robots.txt sirve para excluir cosas, no para permitirlas.' } },
+    { '@type': 'Question', name: '¿robots.txt evita que indexen mi página?', acceptedAnswer: { '@type': 'Answer', text: 'No. robots.txt sólo le pide al bot que no rastree, pero la URL puede aparecer en resultados si la enlazan desde afuera. Para evitar indexación, usá meta robots noindex.' } },
+    { '@type': 'Question', name: '¿Dónde lo subo?', acceptedAnswer: { '@type': 'Answer', text: 'Tiene que estar en la raíz del dominio: https://tusitio.com/robots.txt. Cualquier otra ubicación es ignorada.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Generador de robots.txt"
+    intro="Armá un robots.txt con un click. Elegí una plantilla, ajustá las rutas a bloquear y descargá el archivo.">
+
+    <div slot="tool" class="rb">
+      <div class="rb-grid">
+        <div>
+          <label for="rb-template">Plantilla</label>
+          <select id="rb-template">
+            <option value="open" selected>Sitio abierto (todos los bots)</option>
+            <option value="closed">Sitio cerrado (bloquear todo)</option>
+            <option value="staging">Staging (bloquear todo, no indexar)</option>
+          </select>
+        </div>
+        <div>
+          <label for="rb-disallow">Rutas a bloquear (una por línea)</label>
+          <textarea id="rb-disallow" rows="4">/admin/&#10;/api/&#10;/private/</textarea>
+        </div>
+        <div>
+          <label for="rb-sitemap">URL del sitemap</label>
+          <input id="rb-sitemap" type="url" value="https://miempresa.com/sitemap.xml" />
+        </div>
+      </div>
+
+      <div class="rb-actions">
+        <button id="rb-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="rb-cp" class="btn btn-ghost" type="button">Copiar</button>
+        <button id="rb-dl" class="btn btn-ghost" type="button">Descargar</button>
+      </div>
+
+      <pre><code id="rb-out"></code></pre>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es robots.txt</h2>
+      <p>El robots.txt es un archivo de texto plano que vive en la raíz de tu dominio y le dice a los crawlers de buscadores qué partes de tu sitio pueden o no rastrear. Es la primera puerta que tocan los bots cuando llegan a tu sitio: leen robots.txt y a partir de ahí deciden qué URLs visitan.</p>
+
+      <h2>Sintaxis básica</h2>
+      <ul>
+        <li><strong>User-agent</strong>: a qué bot le aplica la regla (Googlebot, Bingbot, * para todos).</li>
+        <li><strong>Disallow</strong>: ruta o prefijo a bloquear.</li>
+        <li><strong>Allow</strong>: excepción a un Disallow más amplio.</li>
+        <li><strong>Sitemap</strong>: URL absoluta de tu sitemap.xml.</li>
+      </ul>
+
+      <h2>Casos de uso típicos</h2>
+      <ol>
+        <li><strong>Sitio abierto</strong>: User-agent * con Disallow vacío. Todo se rastrea.</li>
+        <li><strong>Bloquear panel admin</strong>: Disallow: /admin/ para que no se indexe el panel.</li>
+        <li><strong>Bloquear staging</strong>: Disallow: / para que ningún bot rastree el sitio de pruebas.</li>
+        <li><strong>Bloquear archivos pesados</strong>: PDFs, ZIPs o exports que no querés en el índice.</li>
+      </ol>
+
+      <h2>Lo que robots.txt NO hace</h2>
+      <p>Mucha gente confunde rastreo con indexación. robots.txt sólo controla rastreo (si el bot visita la URL). Si una URL bloqueada por robots.txt es enlazada desde otro sitio, Google igual puede indexarla, mostrando un snippet vacío. Para garantizar que algo no aparezca en resultados, usá meta robots noindex en la propia página, no robots.txt.</p>
+
+      <h2>Errores comunes</h2>
+      <ul>
+        <li><strong>Bloquear todo en producción</strong>: olvidarse Disallow: / del staging y subirlo a producción es una catástrofe SEO.</li>
+        <li><strong>Bloquear CSS o JS</strong>: Google necesita estos archivos para renderizar y rankear bien. No los bloquees.</li>
+        <li><strong>Pensar que robots.txt es seguridad</strong>: cualquiera puede leer tu robots.txt. Listar /admin/ ahí es como ponerlo en un cartel.</li>
+        <li><strong>Mayúsculas vs minúsculas</strong>: las rutas son case-sensitive. /Admin/ y /admin/ son distintas.</li>
+      </ul>
+
+      <h2>Ubicación y validación</h2>
+      <p>El archivo tiene que estar en la raíz exacta del dominio: https://tusitio.com/robots.txt. No funciona en subcarpetas. Validalo en Google Search Console (Ajustes &gt; robots.txt) para ver cómo lo interpreta Googlebot. También probá tu URL real con la herramienta de inspección para confirmar que se rastrea.</p>
+
+      <h2>Checklist final</h2>
+      <p>Antes de subirlo a producción: confirmar que no estás bloqueando rutas críticas, que el sitemap apunta a la URL correcta con https, y que en staging tenés un robots.txt distinto que efectivamente bloquea todo. Mantené el archivo simple: cuanto menos reglas, menos chance de error.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué pasa si no tengo robots.txt?</summary><p>Nada grave: los buscadores asumen que pueden rastrear todo. robots.txt sirve para excluir, no para permitir.</p></details>
+      <details><summary>¿Evita que indexen mi página?</summary><p>No. Sólo le pide al bot que no rastree. Para evitar indexación, usá meta robots noindex.</p></details>
+      <details><summary>¿Dónde lo subo?</summary><p>En la raíz del dominio: tusitio.com/robots.txt. Cualquier otra ubicación es ignorada.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rb-grid { display: grid; gap: 1rem; margin-bottom: 1rem; }
+  .rb-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+</style>
+
+<script>
+  const tpl = document.getElementById('rb-template') as HTMLSelectElement;
+  const dis = document.getElementById('rb-disallow') as HTMLTextAreaElement;
+  const sm = document.getElementById('rb-sitemap') as HTMLInputElement;
+  const out = document.getElementById('rb-out') as HTMLElement;
+  const gen = document.getElementById('rb-gen') as HTMLButtonElement;
+  const cp = document.getElementById('rb-cp') as HTMLButtonElement;
+  const dl = document.getElementById('rb-dl') as HTMLButtonElement;
+
+  function render() {
+    let body = '';
+    if (tpl.value === 'closed' || tpl.value === 'staging') {
+      body = 'User-agent: *\nDisallow: /\n';
+    } else {
+      const rules = dis.value.split('\n').map(s => s.trim()).filter(Boolean).map(p => `Disallow: ${p}`).join('\n');
+      body = `User-agent: *\n${rules || 'Disallow:'}\n`;
+    }
+    if (sm.value && tpl.value !== 'staging') body += `\nSitemap: ${sm.value}\n`;
+    out.textContent = body;
+  }
+  gen.addEventListener('click', render);
+  [tpl, dis, sm].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar', 1500);
+  });
+  dl.addEventListener('click', () => {
+    const blob = new Blob([out.textContent || ''], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'robots.txt'; a.click();
+  });
+  render();
+</script>

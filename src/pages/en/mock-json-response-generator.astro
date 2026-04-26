@@ -1,0 +1,202 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Mock JSON Response Generator | Genfy';
+const description = 'Generate sample JSON responses to mock APIs during development and testing. Lists, nested objects, pagination.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why use a JSON mock?', acceptedAnswer: { '@type': 'Answer', text: 'To develop frontend or tests without depending on a real backend. Lets you work in parallel and simulate error cases.' } },
+    { '@type': 'Question', name: 'How to serve the mock?', acceptedAnswer: { '@type': 'Answer', text: 'With json-server, MSW (Mock Service Worker), Postman mock servers or a static file served by Vite/Webpack.' } },
+    { '@type': 'Question', name: 'Mock or stub?', acceptedAnswer: { '@type': 'Answer', text: 'A stub returns fixed data. A mock additionally verifies that calls happened as expected. Stubs are common in unit tests; mocks for interaction checks.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Tech / Dev"
+    title="Mock JSON Response Generator"
+    intro="Generate realistic JSON responses to mock APIs: lists, nested objects, pagination and typical fields."
+  >
+    <div slot="tool" class="mock-tool">
+      <div class="mock-grid">
+        <div>
+          <label for="mock-type">Response type</label>
+          <select id="mock-type">
+            <option value="list">Paginated list</option>
+            <option value="single">Single object</option>
+            <option value="error">4xx error</option>
+            <option value="created">201 Created</option>
+          </select>
+        </div>
+        <div>
+          <label for="mock-entity">Entity</label>
+          <select id="mock-entity">
+            <option value="user">user</option>
+            <option value="product">product</option>
+            <option value="order">order</option>
+            <option value="post">post</option>
+          </select>
+        </div>
+        <div>
+          <label for="mock-count">Count (list)</label>
+          <input id="mock-count" type="number" min="1" max="50" value="3" />
+        </div>
+      </div>
+
+      <div class="mock-actions">
+        <button id="mock-gen" class="btn btn-primary" type="button">Generate</button>
+        <button id="mock-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+      </div>
+
+      <textarea id="mock-out" class="mono" rows="14" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What is a JSON mock and why it matters</h2>
+      <p>
+        A JSON mock is a simulated response that mimics what a real API would return. The
+        difference between being blocked waiting for the backend to implement an endpoint and
+        being able to push the frontend forward today. Mocks also enable stable automated tests:
+        they don't fail because of timeouts or a flaky database.
+      </p>
+
+      <h2>List response shape</h2>
+      <p>
+        The most common shape for collections is <code>&lcub;"data": [...], "meta": &lcub;...&rcub;&rcub;</code>.
+        The <code>data</code> array holds items; <code>meta</code> carries pagination, totals and
+        timestamps. This separation leaves room to grow (HATEOAS links, partial errors) without
+        breaking existing clients.
+      </p>
+
+      <h2>Pagination, totals and links</h2>
+      <p>
+        Three fields you'll always want: <code>page</code>, <code>limit</code> and <code>total</code>.
+        With those, the client knows how many pages remain and can render a paginator. If your API
+        is cursor-based, return <code>next_cursor</code> instead of a page number.
+      </p>
+
+      <h2>Errors with a standard shape</h2>
+      <p>
+        The most adopted standard is Problem Details (RFC 7807):
+        <code>&lcub;"type": "...", "title": "...", "status": 422, "detail": "...", "errors": [...]&rcub;</code>.
+        A single error shape simplifies client handling: one parser handles every error response.
+      </p>
+
+      <h2>Serving the mock</h2>
+      <ul>
+        <li><strong>json-server:</strong> spins up a full REST API from a JSON file. Great for prototypes.</li>
+        <li><strong>MSW (Mock Service Worker):</strong> intercepts fetch in the browser. Ideal for frontend.</li>
+        <li><strong>Postman mock servers:</strong> hosted, share the URL across the team.</li>
+        <li><strong>Vite/webpack dev server:</strong> static files in <code>/public</code>.</li>
+      </ul>
+
+      <h2>Realistic data</h2>
+      <p>
+        Avoid <code>"foo"</code> and <code>"bar"</code>. Use plausible names, emails and addresses
+        (Faker, Mockaroo). The frontend uncovers bugs when strings are long, numbers are negative
+        or timestamps cross time zones. Flat data hides those edges.
+      </p>
+
+      <h2>Mock vs contract testing</h2>
+      <p>
+        Mocks can drift from the real API if no one updates them. To prevent it, use contract
+        testing (Pact, OpenAPI schema validation): the mock is validated against the contract and
+        the backend is too. If anyone breaks the contract, tests fail.
+      </p>
+
+      <h2>Error cases we forget</h2>
+      <p>
+        The most common mock is the happy 200. But the frontend also needs 401, 403, 422 with
+        validation errors, 429 with rate limit, 500 with generic error and 503 with maintenance.
+        Mocks for each case force you to handle them.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Why use a JSON mock?</summary><p>Develop frontend or tests without depending on the backend. Work in parallel and simulate error cases.</p></details>
+      <details><summary>How to serve the mock?</summary><p>json-server, MSW, Postman mock servers or static files in the dev server.</p></details>
+      <details><summary>Mock or stub?</summary><p>Stub returns fixed data; mock additionally verifies expected interactions.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .mock-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .mock-grid { grid-template-columns: 1fr; } }
+  .mock-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const type = document.getElementById('mock-type') as HTMLSelectElement;
+  const entity = document.getElementById('mock-entity') as HTMLSelectElement;
+  const count = document.getElementById('mock-count') as HTMLInputElement;
+  const out = document.getElementById('mock-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('mock-gen') as HTMLButtonElement;
+  const copy = document.getElementById('mock-copy') as HTMLButtonElement;
+
+  const firstNames = ['Olivia', 'Liam', 'Emma', 'Noah', 'Ava', 'Ethan', 'Mia', 'Lucas'];
+  const lastNames = ['Smith', 'Johnson', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore', 'Taylor'];
+  const products = ['14" Notebook', 'Urban backpack', 'BT Headphones', 'LED Desk Lamp', 'Mechanical Keyboard', '27" Monitor'];
+
+  function rand<T>(arr: T[]): T { return arr[Math.floor(Math.random() * arr.length)]; }
+  function randInt(min: number, max: number) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+  function isoDate(daysAgo: number) { const d = new Date(); d.setDate(d.getDate() - daysAgo); return d.toISOString(); }
+  function uuid() { return crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2); }
+
+  function buildUser(i: number) {
+    const fn = rand(firstNames); const ln = rand(lastNames);
+    return { id: i, uuid: uuid(), name: `${fn} ${ln}`, email: `${fn.toLowerCase()}.${ln.toLowerCase()}@example.com`, role: rand(['admin', 'user', 'editor']), created_at: isoDate(randInt(1, 365)) };
+  }
+  function buildProduct(i: number) {
+    return { id: i, sku: `SKU-${1000 + i}`, name: rand(products), price: randInt(1000, 99999) / 100, stock: randInt(0, 200), category: rand(['electronics', 'home', 'office']) };
+  }
+  function buildOrder(i: number) {
+    return { id: i, order_number: `ORD-${10000 + i}`, status: rand(['pending', 'paid', 'shipped', 'delivered']), total: randInt(500, 50000) / 100, currency: 'USD', items_count: randInt(1, 8), created_at: isoDate(randInt(1, 60)) };
+  }
+  function buildPost(i: number) {
+    return { id: i, title: `Post number ${i}`, slug: `post-number-${i}`, excerpt: 'Short excerpt of the post content for preview.', author_id: randInt(1, 20), published_at: isoDate(randInt(1, 90)), tags: ['draft', 'tutorial', 'news'].slice(0, randInt(1, 3)) };
+  }
+
+  function buildOne(i: number) {
+    if (entity.value === 'user') return buildUser(i);
+    if (entity.value === 'product') return buildProduct(i);
+    if (entity.value === 'order') return buildOrder(i);
+    return buildPost(i);
+  }
+
+  function generate() {
+    const n = Math.min(50, Math.max(1, parseInt(count.value || '3', 10)));
+    let payload: any;
+    if (type.value === 'list') {
+      const data: any[] = [];
+      for (let i = 1; i <= n; i++) data.push(buildOne(i));
+      payload = { data, meta: { page: 1, limit: n, total: n * 3, has_more: true } };
+    } else if (type.value === 'single') {
+      payload = { data: buildOne(1) };
+    } else if (type.value === 'created') {
+      payload = { data: buildOne(1), meta: { created_at: new Date().toISOString() } };
+    } else {
+      payload = { type: 'about:blank', title: 'Validation failed', status: 422, detail: 'One or more fields are invalid.', errors: [{ field: 'email', message: 'must be a valid email' }, { field: 'name', message: 'is required' }] };
+    }
+    out.value = JSON.stringify(payload, null, 2);
+  }
+
+  gen.addEventListener('click', generate);
+  [type, entity, count].forEach(el => el.addEventListener('change', generate));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copied';
+    setTimeout(() => { icon.textContent = 'Copy'; }, 1400);
+  });
+  generate();
+</script>
+</content>
+</invoke>

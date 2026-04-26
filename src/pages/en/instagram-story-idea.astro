@@ -1,0 +1,202 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Instagram Story Idea Generator | Genfy';
+const description = 'Generate Instagram Story ideas that drive replies, polls and responses. 24-hour visibility well used with stickers that move the algorithm.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What kind of stories perform best on Instagram?', acceptedAnswer: { '@type': 'Answer', text: 'Stories with interactive stickers: poll, slider, quiz, question. Each interaction is engagement signal the algorithm reads and prioritizes.' } },
+    { '@type': 'Question', name: 'How many stories per day?', acceptedAnswer: { '@type': 'Answer', text: 'Sweet spot: 3-7 stories per day. More than 10 drops view-through rate. Less than 2 wastes the format.' } },
+    { '@type': 'Question', name: 'Should I post stories every day?', acceptedAnswer: { '@type': 'Answer', text: 'Yes to maintain visibility in the "close friends" carousel. The algorithm prioritizes accounts with recent activity. Skipping 3+ days reduces reach.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Instagram Story Idea Generator"
+    intro="Drop in niche and goal of the day. Genfy returns 5 story ideas with recommended sticker and format.">
+
+    <div slot="tool" class="ig">
+      <label for="ig-niche">Niche or category</label>
+      <input id="ig-niche" type="text" placeholder="Finance coach..." value="Finance coach" />
+
+      <label for="ig-goal" style="margin-top:1rem">Goal of the day</label>
+      <select id="ig-goal">
+        <option value="engagement">Drive engagement (replies, votes)</option>
+        <option value="leads">Capture leads (link sticker)</option>
+        <option value="awareness">Awareness (introduce your world)</option>
+        <option value="sales">Push to sale</option>
+      </select>
+
+      <label for="ig-product" style="margin-top:1rem">Product or offer (optional)</label>
+      <input id="ig-product" type="text" placeholder="Investing course..." value="Investing course" />
+
+      <button id="ig-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 5 ideas</button>
+
+      <div id="ig-out" class="ig-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why stories outweigh posts on Instagram in 2026</h2>
+      <p>
+        Instagram Stories have the highest daily-use rate on the platform. People open the app, watch the first carousel of stories, and often never reach the feed. That means stories are the most direct line to your already-won audience. Common mistake: posting stories as feed leftovers or without thinking about interaction.
+      </p>
+      <p>
+        Other factor: Instagram's algorithm rewards stories that generate interactions (replies, poll votes, slider responses). Those signals lift your position in the carousel and increase view-through rate.
+      </p>
+
+      <h2>The 7 stickers that move the algorithm most</h2>
+      <ol>
+        <li><strong>Poll:</strong> binary, easy, high interaction rate. "Coffee or tea?" can generate 10x more replies than a feed post.</li>
+        <li><strong>Emoji slider:</strong> ideal for graduated reactions. "How expensive did this feel?" with a face emoji.</li>
+        <li><strong>Quiz:</strong> 3-4 options, good for educating. Medium-high interaction rate.</li>
+        <li><strong>Question sticker:</strong> opens conversations. Replies can be reposted in following stories.</li>
+        <li><strong>Link sticker:</strong> direct CTA to external site. Available for all accounts.</li>
+        <li><strong>Add Yours:</strong> viral sticker that generates response chains.</li>
+        <li><strong>Countdown:</strong> ideal for launches or events.</li>
+      </ol>
+
+      <h2>The structure of a 5-7 story set</h2>
+      <ol>
+        <li><strong>Story 1 — Visual hook:</strong> image or video that captures attention. Short text.</li>
+        <li><strong>Story 2 — Context:</strong> what you'll cover, why.</li>
+        <li><strong>Story 3-4 — Development:</strong> main content with an interactive sticker.</li>
+        <li><strong>Story 5 — Twist or surprise:</strong> concrete data, mini-conclusion.</li>
+        <li><strong>Story 6-7 — CTA:</strong> link sticker or DM invitation.</li>
+      </ol>
+
+      <h2>How to leverage "swipe up" without having swipe up</h2>
+      <p>
+        Since 2021 all accounts have access to the link sticker (previously only 10K+ accounts). But the sticker has low conversion if used alone. To make it work:
+      </p>
+      <ul>
+        <li>Mention the link in the previous story ("Next one drops the link").</li>
+        <li>Add an arrow pointing to the sticker.</li>
+        <li>Repeat the offer in 2-3 consecutive stories.</li>
+        <li>The destination must be specific, not the home page.</li>
+      </ul>
+
+      <h2>Story formats that perform by niche</h2>
+      <ul>
+        <li><strong>Coach/educator:</strong> 15-second mini-classes with text overlay.</li>
+        <li><strong>E-commerce:</strong> product + question sticker "Interested?" or link.</li>
+        <li><strong>Lifestyle/creator:</strong> authentic behind-the-scenes, daily polls.</li>
+        <li><strong>B2B/SaaS:</strong> quick operational tips, screenshots with annotation.</li>
+        <li><strong>Restaurant/local:</strong> menu of the day, offer countdowns, venue photos.</li>
+      </ul>
+
+      <h2>Optimal frequency and timing</h2>
+      <p>
+        Sweet spot: 3-7 stories per day. More than 10 drops view-through rate hard (people abandon the set). Less than 2 wastes the format.
+      </p>
+      <p>
+        Timing: Instagram rewards recency, so posting when your audience opens the app matters. For office-hours audiences: 8-10am, 12-1pm, 6-8pm. Check your "most active hours" in Insights.
+      </p>
+
+      <h2>Highlights: how to curate them so they perform</h2>
+      <p>
+        Highlights (stories archived on your profile) act as categories for your account. The rule: group by clear themes, not chronologically. Examples:
+      </p>
+      <ul>
+        <li>"Start here" (for new followers).</li>
+        <li>"Testimonials" (always-available social proof).</li>
+        <li>"Products" or "Services" (permanent catalog).</li>
+        <li>"FAQ" (questions you get all the time in DMs).</li>
+        <li>"Behind the scenes" (humanization).</li>
+      </ul>
+
+      <h2>Common mistakes that kill stories</h2>
+      <ul>
+        <li><strong>No interactive stickers:</strong> static stories give the algorithm no engagement signals.</li>
+        <li><strong>Too much text overlay:</strong> people don't read, they scroll.</li>
+        <li><strong>Heavy or ugly images:</strong> the first story decides if they keep watching or skip.</li>
+        <li><strong>Promo without context:</strong> 5 stories selling something without prior value-giving.</li>
+        <li><strong>Forgetting vertical 9:16 format:</strong> images with white borders perform 30% worse.</li>
+        <li><strong>Not reusing for Highlights:</strong> stories with value beyond the day must go to Highlight.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many stories per day?</summary><p>Sweet spot: 3-7. More than 10 drops completion rate.</p></details>
+      <details><summary>Which sticker performs best?</summary><p>Poll for volume, question for qualified conversation, slider for emotional.</p></details>
+      <details><summary>Do I need 10K for link sticker?</summary><p>No, since 2021 it's available for all accounts.</p></details>
+      <details><summary>Reuse stories in Highlights?</summary><p>Yes, those with value beyond the day (FAQ, testimonials, products).</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ig-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .ig-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; }
+  .ig-card:hover { border-color: var(--accent); }
+  .ig-title { font-weight: 600; margin-bottom: 0.4rem; }
+  .ig-body { color: var(--text-soft); line-height: 1.5; font-size: 0.9375rem; }
+  .ig-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+  select { width: 100%; padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-size: 0.9375rem; font-family: inherit; }
+</style>
+
+<script>
+  const niche = document.getElementById('ig-niche') as HTMLInputElement;
+  const goal = document.getElementById('ig-goal') as HTMLSelectElement;
+  const product = document.getElementById('ig-product') as HTMLInputElement;
+  const gen = document.getElementById('ig-gen') as HTMLButtonElement;
+  const out = document.getElementById('ig-out')!;
+
+  function generate() {
+    const N = niche.value.trim() || 'your niche';
+    const G = goal.value;
+    const P = product.value.trim();
+
+    let ideas: {title: string, body: string, sticker: string}[] = [];
+
+    if (G === 'engagement') {
+      ideas = [
+        { title: 'Daily poll', body: `"In ${N.toLowerCase()}: do you do it before or after coffee?" Short text over real photo.`, sticker: 'Binary poll' },
+        { title: 'Open question', body: '"Question" sticker with: "What questions do you have about your money?" Answers go in following stories.', sticker: 'Question sticker' },
+        { title: 'Emotional slider', body: '"How much does month-end stress you?" with stressed-face emoji on slider.', sticker: 'Slider' },
+        { title: 'Confession + question', body: 'Share something that happened to you (genuine) and ask if it happens to others. Guaranteed conversation.', sticker: 'Question sticker' },
+        { title: 'Educational quiz', body: 'Question with 3 options about your niche. Drives curiosity and completion.', sticker: 'Quiz' },
+      ];
+    } else if (G === 'leads') {
+      ideas = [
+        { title: 'Direct lead magnet', body: `"I made a free guide on ${N.toLowerCase()}. I'll send to anyone who asks via the sticker."`, sticker: 'Question sticker' },
+        { title: 'Mini-tip + link CTA', body: '15-second valuable tip, last story with link sticker to opt-in.', sticker: 'Link sticker' },
+        { title: 'Before/after + opt-in', body: 'Show transformation (data or testimonial), close with link to free resources.', sticker: 'Link sticker' },
+        { title: 'Countdown to free class', body: 'Announce free live class with countdown. Get notified at launch.', sticker: 'Countdown' },
+        { title: 'Bullet carousel + link', body: '5 common mistakes in your niche. Last story: "More in this resource" with link.', sticker: 'Link sticker' },
+      ];
+    } else if (G === 'awareness') {
+      ideas = [
+        { title: 'Behind the scenes', body: `Show how you put together your work in ${N.toLowerCase()}. Humanizes your account.`, sticker: 'Question sticker' },
+        { title: 'Mini personal story', body: `"How I got into ${N.toLowerCase()}". 3-4 stories telling your path.`, sticker: 'Text only' },
+        { title: 'Myth and reality', body: 'Start with common myth in your niche, dismantle with data.', sticker: 'Poll' },
+        { title: 'Day in the life', body: 'Document a typical workday in stories. Builds familiarity.', sticker: 'Multiple' },
+        { title: 'No-agenda recommendation', body: `Something you use and love (not necessarily yours). Builds trust.`, sticker: 'Question sticker' },
+      ];
+    } else {
+      const Pr = P || 'your product';
+      ideas = [
+        { title: 'Testimonial story', body: `Share real review/result from a ${Pr} customer. Last story with link.`, sticker: 'Link sticker' },
+        { title: 'Express demo', body: `Show ${Pr} working in 15 seconds. Focus on benefit, not feature.`, sticker: 'Link sticker' },
+        { title: 'Offer with countdown', body: 'Limited promo with countdown. Creates genuine urgency without manipulating.', sticker: 'Countdown + Link' },
+        { title: 'FAQ + CTA', body: `Answer 3 common questions about ${Pr}, last story link to checkout.`, sticker: 'Link sticker' },
+        { title: 'Simple comparison', body: 'Before/after with data or screenshots. Close with link to product.', sticker: 'Link sticker' },
+      ];
+    }
+
+    out.innerHTML = '';
+    ideas.forEach((idea, i) => {
+      const el = document.createElement('div');
+      el.className = 'ig-card';
+      el.title = 'Click to copy';
+      const text = `${idea.title}\n\n${idea.body}\n\nSticker: ${idea.sticker}`;
+      el.innerHTML = `<div class="ig-title">${idea.title}</div><div class="ig-body">${idea.body}</div><div class="ig-meta">Sticker: ${idea.sticker}</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.innerHTML; el.innerHTML = '<div class="ig-title">✓ Copied</div>'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Escapar y desescapar HTML — Gratis | Genfy';
+const description = 'Convertí caracteres especiales (&lt;, &gt;, &amp;, comillas) a entidades HTML y viceversa. Útil para mostrar código en blogs y prevenir XSS.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué significa escapar HTML?', acceptedAnswer: { '@type': 'Answer', text: 'Convertir caracteres con significado especial en HTML (<, >, &, comillas) en sus entidades equivalentes (&lt;, &gt;, &amp;, &quot;). El navegador los muestra como caracteres pero no los interpreta como código.' } },
+    { '@type': 'Question', name: '¿Para qué sirve escapar?', acceptedAnswer: { '@type': 'Answer', text: 'Para mostrar fragmentos de código HTML dentro de una página sin que se rendericen, y para prevenir ataques XSS cuando insertás contenido del usuario en el DOM.' } },
+    { '@type': 'Question', name: '¿Es lo mismo que codificar URL?', acceptedAnswer: { '@type': 'Answer', text: 'No. Escapar HTML es para contenido dentro de un documento HTML. Codificar URL es para parámetros y valores en una URL. Las reglas y caracteres son distintos.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Web" title="Escapar / desescapar HTML"
+    intro="Convertí < > & y comillas en entidades HTML para mostrar código en blogs, prevenir XSS o limpiar texto pegado.">
+
+    <div slot="tool">
+      <div class="he-modes">
+        <label class="chk"><input type="radio" name="he-mode" value="escape" checked /> Escapar</label>
+        <label class="chk"><input type="radio" name="he-mode" value="unescape" /> Desescapar</label>
+      </div>
+      <label for="he-in">Entrada</label>
+      <textarea id="he-in" rows="6" style="font-family: var(--font-mono);">&lt;script&gt;alert("xss")&lt;/script&gt;</textarea>
+      <button id="he-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Convertir</button>
+      <button id="he-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <label for="he-out" style="margin-top:1rem;">Salida</label>
+      <textarea id="he-out" rows="6" readonly style="font-family: var(--font-mono);"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es escapar HTML y por qué importa</h2>
+      <p>
+        En HTML, ciertos caracteres tienen significado estructural: <code>&lt;</code> abre una etiqueta, <code>&gt;</code> la cierra, <code>&amp;</code> inicia una entidad, las comillas delimitan atributos. Si querés mostrar un signo menor literal en la página sin que el navegador piense que estás abriendo una etiqueta, lo escapás como <code>&amp;lt;</code>. La regla aplica a cualquier contenido que vaya entre etiquetas o dentro de atributos.
+      </p>
+
+      <h2>Los 5 caracteres principales</h2>
+      <ul>
+        <li><code>&lt;</code> se escapa como <code>&amp;lt;</code></li>
+        <li><code>&gt;</code> se escapa como <code>&amp;gt;</code></li>
+        <li><code>&amp;</code> se escapa como <code>&amp;amp;</code></li>
+        <li><code>"</code> se escapa como <code>&amp;quot;</code></li>
+        <li><code>'</code> se escapa como <code>&amp;#39;</code></li>
+      </ul>
+
+      <h2>XSS: el ataque que escapar previene</h2>
+      <p>
+        Cross-Site Scripting (XSS) ocurre cuando un atacante inyecta código JavaScript en una página que otros usuarios van a ver. El vector clásico es un comentario en un blog: si el sistema renderiza <code>&lt;script&gt;robarCookies()&lt;/script&gt;</code> sin escapar, ese script corre en el navegador de cada visitante con acceso al sesión y a las cookies. Escapar todo input de usuario antes de insertarlo en el DOM elimina el vector. Los frameworks modernos (React, Vue, Astro) escapan por defecto, pero si insertás contenido con <code>innerHTML</code> o <code>dangerouslySetInnerHTML</code>, la responsabilidad vuelve a ser tuya.
+      </p>
+
+      <h2>Cuándo escapar y cuándo no</h2>
+      <ul>
+        <li><strong>Escapar siempre</strong> al insertar input de usuario en el DOM, al mostrar contenido de una API que no controlás, o al loguear datos en una página.</li>
+        <li><strong>No escapar dos veces.</strong> Si un framework ya escapa, escapar manualmente convierte <code>&amp;</code> en <code>&amp;amp;amp;</code> y el usuario ve basura.</li>
+        <li><strong>No escapar contenido confiable y deliberado.</strong> Si estás insertando HTML que vos generaste y querés que se renderice, escapar lo rompe.</li>
+      </ul>
+
+      <h2>Mostrar código en un blog</h2>
+      <p>
+        Si tu post enseña a usar la etiqueta <code>&lt;script&gt;</code>, no podés escribirla literal en el HTML del artículo: el navegador la interpretaría como una etiqueta real e intentaría ejecutar lo que viene adentro. Escapás los signos a <code>&amp;lt;script&amp;gt;</code> y el lector la ve textual. Muchos editores de blog (incluyendo WordPress y Ghost) escapan automáticamente dentro de bloques de código, pero no siempre, y a veces conviene tener el escape manual a mano.
+      </p>
+
+      <h2>Desescapar: el camino inverso</h2>
+      <p>
+        A veces recibís texto que ya viene con entidades HTML (de un feed RSS, una API JSON que entregó HTML codificado, un export de base de datos). Para mostrarlo o procesarlo como texto plano, hay que desescapar. Si vas a renderizarlo en el DOM, asegurate de no introducir XSS: desescapar y luego inyectar con <code>innerHTML</code> es exactamente lo que escapar previene.
+      </p>
+
+      <h2>HTML vs URL encoding</h2>
+      <p>
+        Son dos cosas distintas. Codificación de URL transforma caracteres no seguros en %XX (espacio se vuelve %20). Escape HTML transforma caracteres especiales en entidades (espacio se queda igual, &lt; se vuelve &amp;lt;). Si confundís los dos, terminás con strings tipo <code>%26lt%3B</code> que no significan nada en ningún contexto.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué significa escapar HTML?</summary><p>Convertir caracteres con significado especial (&lt;, &gt;, &amp;, comillas) en entidades para que el navegador los muestre sin interpretarlos como código.</p></details>
+      <details><summary>¿Para qué sirve escapar?</summary><p>Para mostrar código HTML en una página sin renderizarlo y para prevenir XSS al insertar contenido del usuario en el DOM.</p></details>
+      <details><summary>¿Es lo mismo que codificar URL?</summary><p>No. Son dos esquemas distintos con reglas y casos de uso diferentes.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .he-modes { display: flex; gap: 1.5rem; margin-bottom: 1rem; }
+  .chk { display: flex; align-items: center; gap: 0.5rem; margin: 0; }
+  .chk input { width: auto; }
+</style>
+
+<script>
+  const inEl = document.getElementById('he-in') as HTMLTextAreaElement;
+  const out = document.getElementById('he-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('he-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('he-copy') as HTMLButtonElement;
+
+  function escape(s: string) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+  function unescape(s: string) {
+    const tx = document.createElement('textarea');
+    tx.innerHTML = s;
+    return tx.value;
+  }
+
+  function run() {
+    const mode = (document.querySelector('input[name="he-mode"]:checked') as HTMLInputElement).value;
+    out.value = mode === 'escape' ? escape(inEl.value) : unescape(inEl.value);
+  }
+  inEl.addEventListener('input', run);
+  document.querySelectorAll('input[name="he-mode"]').forEach(el => el.addEventListener('change', run));
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

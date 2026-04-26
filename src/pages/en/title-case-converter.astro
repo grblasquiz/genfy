@@ -1,0 +1,118 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Title Case Converter | Genfy';
+const description = 'Convert text to Title Case instantly. Capitalize titles, headlines and headings the right way for AP, Chicago and APA style.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is Title Case?', acceptedAnswer: { '@type': 'Answer', text: 'A capitalization convention where major words start with a capital letter and minor words (articles, short prepositions) stay lowercase.' } },
+    { '@type': 'Question', name: 'Which style does the converter use?', acceptedAnswer: { '@type': 'Answer', text: 'A blended AP/Chicago rule: first and last word always capitalized, common short minor words lowercase, all major words capitalized.' } },
+    { '@type': 'Question', name: 'Does it run offline?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. The conversion happens in your browser; nothing is sent to a server.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text" title="Title Case Converter"
+    intro="Convert any text to Title Case in one click. Perfect for blog headlines, book titles, song names, headings, email subjects and academic papers.">
+
+    <div slot="tool">
+      <label for="tc-in">Text</label>
+      <textarea id="tc-in" rows="6" placeholder="Paste your text here..." style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div style="margin-top:0.75rem;">
+        <button id="tc-go" class="btn btn-primary" type="button">Convert</button>
+        <button id="tc-copy" class="btn btn-ghost" type="button">Copy result</button>
+      </div>
+      <label for="tc-out" style="margin-top:1rem;">Result</label>
+      <textarea id="tc-out" rows="6" readonly style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What is Title Case?</h2>
+      <p>
+        Title Case is the convention that capitalizes the first letter of major words in a title: "The Quick
+        Brown Fox Jumps Over the Lazy Dog". Minor words (articles, short conjunctions, short prepositions)
+        stay lowercase unless they're the first or last word. It's standard in headlines, book titles,
+        magazine articles and most English-language headings on the web.
+      </p>
+
+      <h2>When to use Title Case</h2>
+      <ul>
+        <li><strong>English content</strong> — blogs, papers, books, news, web headings.</li>
+        <li><strong>Song, film and book titles</strong> — global convention, almost mandatory.</li>
+        <li><strong>Headings and subheadings</strong> for English-market sites.</li>
+        <li><strong>Events and campaigns</strong> with international branding.</li>
+        <li><strong>Formal email subjects</strong> in English.</li>
+      </ul>
+
+      <h2>When to avoid Title Case</h2>
+      <p>
+        Many modern publications and tech blogs prefer <em>sentence case</em> for headings: only the first
+        word and proper nouns capitalized. Sentence case feels lighter, more conversational and easier to
+        scan on screens. Title Case can feel overly formal in product UIs and marketing pages. Pick one
+        style per surface and stick with it — mixing them looks sloppy.
+      </p>
+
+      <h2>Words that are NOT capitalized</h2>
+      <p>
+        Traditional AP, Chicago and NYT rules agree on keeping these lowercase: articles (a, an, the),
+        short coordinating conjunctions (and, but, or, nor, for, yet, so) and short prepositions of up to
+        three or four letters (in, on, at, of, to, up, by, for). But <em>always</em> capitalize the first
+        and last word of the title, no matter what.
+      </p>
+
+      <h2>Style variants</h2>
+      <ul>
+        <li><strong>Chicago Manual of Style</strong> — prepositions always lowercase regardless of length.</li>
+        <li><strong>AP Stylebook</strong> — capitalize prepositions of four or more letters.</li>
+        <li><strong>APA 7</strong> — capitalize most words of four or more letters.</li>
+        <li><strong>House style</strong> — many brands define their own rules; document them.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        The most frequent error is capitalizing every single word (including "the", "of", "in"), an "all
+        caps style" that looks amateur. The second is failing to capitalize the first or last word. The
+        third trap is short verbs like "is", "be", "go": these are verbs, so they ALWAYS take a capital,
+        even at two letters.
+      </p>
+
+      <h2>How the converter works</h2>
+      <p>
+        We take your text, split it into words and apply blended AP/Chicago rules: first and last word
+        always capitalized, common short minor words lowercase, everything else capitalized. If you need a
+        different style, fine-tune the result manually after copying.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is Title Case?</summary><p>Capital on major words, lowercase on articles and short prepositions.</p></details>
+      <details><summary>Which style does the converter use?</summary><p>Blended AP/Chicago: first and last word capitalized, common minor words lowercase.</p></details>
+      <details><summary>Does it run offline?</summary><p>Yes. Everything happens in your browser, nothing is sent to a server.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const SMALL = new Set(['a','an','the','and','but','or','nor','for','yet','so','at','by','in','of','on','to','up','as','is','if','it']);
+  const inEl = document.getElementById('tc-in') as HTMLTextAreaElement;
+  const outEl = document.getElementById('tc-out') as HTMLTextAreaElement;
+  const go = document.getElementById('tc-go') as HTMLButtonElement;
+  const cp = document.getElementById('tc-copy') as HTMLButtonElement;
+
+  function titleCase(str: string) {
+    return str.split(/(\s+)/).map((tok, i, arr) => {
+      if (/^\s+$/.test(tok)) return tok;
+      const lower = tok.toLowerCase();
+      const isFirst = i === 0;
+      const isLast = i === arr.length - 1 || arr.slice(i+1).every(t => /^\s+$/.test(t));
+      if (!isFirst && !isLast && SMALL.has(lower.replace(/[^a-z]/g, ''))) return lower;
+      return tok.charAt(0).toUpperCase() + tok.slice(1).toLowerCase();
+    }).join('');
+  }
+
+  go.addEventListener('click', () => { outEl.value = titleCase(inEl.value); });
+  cp.addEventListener('click', async () => { if (!outEl.value) return; await navigator.clipboard.writeText(outEl.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

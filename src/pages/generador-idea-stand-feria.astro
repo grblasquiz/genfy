@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de idea de stand de feria gratis | Genfy';
+const description = 'Generá ideas creativas para stands de feria: concepto, mecánica de atracción, premium giveaway y demo. Listo para brief de productor.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace exitoso a un stand de feria?', acceptedAnswer: { '@type': 'Answer', text: 'Tres cosas: una idea visual potente que se vea desde el pasillo, una mecánica de interacción que detenga al visitante, y un giveaway que justifique dejar el contacto. Sin las tres, el stand pasa desapercibido.' } },
+    { '@type': 'Question', name: '¿Cuánto presupuesto necesito?', acceptedAnswer: { '@type': 'Answer', text: 'Depende de la feria: en un stand de 9 m² podés hacer activaciones efectivas con 1.500 a 4.000 dólares, sumando merchandising, demo y un par de azafatas. Los stands premium con experiencias inmersivas arrancan en 15.000 dólares.' } },
+    { '@type': 'Question', name: '¿Cómo mido el ROI?', acceptedAnswer: { '@type': 'Answer', text: 'Definí KPI antes de la feria: contactos calificados, demos completadas, leads agendados. Compará con el costo total (stand + viaje + staff) y calculá costo por lead calificado.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de idea de stand de feria"
+    intro="Recibí brief de stand: concepto visual, mecánica de atracción, giveaway y demo. Útil para B2B, ferias retail, fintech y eventos sectoriales.">
+
+    <div slot="tool" class="bo">
+      <label for="bo-sector">Sector</label>
+      <select id="bo-sector">
+        <option value="tech">Tech / SaaS</option>
+        <option value="retail">Retail / consumo</option>
+        <option value="fintech">Fintech / banca</option>
+        <option value="health">Salud / wellness</option>
+      </select>
+
+      <label for="bo-budget" style="margin-top:1rem">Presupuesto</label>
+      <select id="bo-budget">
+        <option value="low">Bajo (USD 1.5k-4k)</option>
+        <option value="mid">Medio (USD 5k-15k)</option>
+        <option value="high">Alto (USD 15k+)</option>
+      </select>
+
+      <button id="bo-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar idea</button>
+      <div id="bo-out" class="bo-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo se gana o se pierde una feria</h2>
+      <p>El visitante de feria camina cinco horas, ve doscientos stands y recuerda cinco. La diferencia entre los cinco recordados y los demás casi nunca es presupuesto: es claridad de propuesta. Si tu stand pregunta "¿qué problema resolvés y cómo se ve?" desde el pasillo y la respuesta es legible en tres segundos, ganaste el lead. Si requiere acercarse y leer un cartel chico, lo perdiste.</p>
+      <h2>Anatomía de un stand efectivo</h2>
+      <ol>
+        <li><strong>Headline visible a 5 metros.</strong> Una frase, fuente grande, alto contraste. "Reducí tu costo logístico un 30%" gana a "Soluciones integrales para tu cadena".</li>
+        <li><strong>Demo activa.</strong> Pantalla con interacción real, no PDF. Si vendés software, mostrá la pantalla principal funcionando con datos de muestra.</li>
+        <li><strong>Mecánica de atracción.</strong> Algo que detenga: tirada de dados, ruleta digital, foto inmediata, café especial.</li>
+        <li><strong>Giveaway con valor real.</strong> Olvidate de la birome con logo. Mejor: una guía PDF por mail, un mes gratis, un libro corto del sector.</li>
+        <li><strong>Equipo entrenado.</strong> Tres preguntas y un cierre. No discurso largo: el visitante se va.</li>
+      </ol>
+      <h2>Mecánicas que funcionan según el sector</h2>
+      <ul>
+        <li><strong>Tech / SaaS:</strong> demo en pantalla grande con desafío del visitante ("escribí tu caso, te lo procesamos en vivo").</li>
+        <li><strong>Retail:</strong> degustación o muestra física + foto de marca.</li>
+        <li><strong>Fintech:</strong> calculadora de ahorro o ROI; el visitante ingresa sus datos y se lleva el resultado por mail.</li>
+        <li><strong>Salud:</strong> medición rápida (postura, hidratación, presión) con un especialista presente.</li>
+      </ul>
+      <h2>Errores que te dejan sin leads</h2>
+      <p>Stand cerrado por mostrador (visualmente bloqueás al visitante), folletería abundante en lugar de captura digital de leads, equipo mirando el celular, headline genérico, demo que requiere setup de cinco minutos. Si tu stand tiene tres de estos cinco errores, vas a llevarte un cuaderno con datos pero no leads calificados.</p>
+      <h2>Brief que tu productor necesita</h2>
+      <p>Para que la idea se ejecute bien, llevá al productor un brief de una página: concepto visual en una frase, mecánica de atracción descrita en tres pasos, KPI esperado de leads, presupuesto cerrado, lista de equipos con horarios de turno, plan de captura de leads (formulario digital, QR a landing, integración a CRM) y plan de seguimiento post-feria con mail automatizado.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace exitoso a un stand?</summary><p>Idea visual fuerte, mecánica de interacción y giveaway con valor real.</p></details>
+      <details><summary>¿Cuánto presupuesto necesito?</summary><p>Desde USD 1.500 para un stand de 9 m² con activación básica.</p></details>
+      <details><summary>¿Cómo mido el ROI?</summary><p>Costo total dividido leads calificados y oportunidades cerradas a 90 días.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bo-out { margin-top: 1.25rem; }
+  .bo-card { padding: 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 0.75rem; }
+  .bo-card h4 { margin: 0 0 0.5rem 0; color: var(--primary); }
+  .bo-card p { margin: 0.25rem 0; }
+</style>
+
+<script>
+  const CONCEPTS_TECH = ['Demo en vivo del producto con desafío del visitante', 'Mural de "antes/después" de clientes', 'Lab interactivo: el visitante construye un flow', 'Sala oscura con visualización de datos en LED'];
+  const CONCEPTS_RETAIL = ['Pop-up degustación con foto instantánea', 'Estante interactivo con sensores', 'Photo-booth con producto', 'Vitrina giratoria con storytelling visual'];
+  const CONCEPTS_FINTECH = ['Calculadora de ahorro personalizada en tablet', 'Pizarra digital con simulación financiera', 'Cabina de "tu dinero en 5 años"', 'Ruleta digital con tasas reales'];
+  const CONCEPTS_HEALTH = ['Medición postural rápida en vivo', 'Punto de hidratación con análisis', 'Cabina de respiración guiada 3 minutos', 'Test de bienestar con resultado por mail'];
+  const HOOKS = ['Café de especialidad atendido por barista', 'Sorteo cada 30 minutos en pantalla', 'Foto profesional con backdrop de marca', 'Demo con premio por mejor caso del día', 'Imán personalizado con tu nombre en 60 segundos'];
+  const GIVEAWAYS_LOW = ['Guía PDF por mail', 'Mes gratis del producto', 'Sticker premium', 'Mini libro del sector'];
+  const GIVEAWAYS_MID = ['Botella térmica branded', 'Notebook moleskine personalizado', 'Auriculares económicos branded', '3 meses gratis del producto'];
+  const GIVEAWAYS_HIGH = ['Power bank premium', 'Suscripción anual + experiencia', 'Mochila técnica branded', 'Libro firmado del referente sectorial'];
+
+  const sector = document.getElementById('bo-sector') as HTMLSelectElement;
+  const budget = document.getElementById('bo-budget') as HTMLSelectElement;
+  const gen = document.getElementById('bo-gen') as HTMLButtonElement;
+  const out = document.getElementById('bo-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = sector.value, b = budget.value;
+    let conc = CONCEPTS_TECH;
+    if (s === 'retail') conc = CONCEPTS_RETAIL;
+    else if (s === 'fintech') conc = CONCEPTS_FINTECH;
+    else if (s === 'health') conc = CONCEPTS_HEALTH;
+    let give = GIVEAWAYS_LOW;
+    if (b === 'mid') give = GIVEAWAYS_MID;
+    else if (b === 'high') give = GIVEAWAYS_HIGH;
+
+    const idea = {
+      concept: pick(conc),
+      hook: pick(HOOKS),
+      giveaway: pick(give),
+    };
+    out.innerHTML = `<div class="bo-card">
+      <h4>Concepto del stand</h4><p>${idea.concept}</p>
+      <h4>Mecánica de atracción</h4><p>${idea.hook}</p>
+      <h4>Giveaway recomendado</h4><p>${idea.giveaway}</p>
+    </div>`;
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

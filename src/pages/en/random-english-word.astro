@@ -1,0 +1,152 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random English Word Generator | Genfy';
+const description = 'Generate a random English word with a short definition. Great for vocabulary building, word games, writing prompts and brainstorming.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a random English word generator for?', acceptedAnswer: { '@type': 'Answer', text: 'Vocabulary practice, breaking creative blocks, pronunciation drills, board games, or as a prompt for writing.' } },
+    { '@type': 'Question', name: 'Do the words come with definitions?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — each word ships with a short definition so you can study the meaning instantly.' } },
+    { '@type': 'Question', name: 'Does it work offline?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. The list lives in your browser, no server calls, and works without internet once the page is loaded.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Languages" title="Random English Word Generator"
+    intro="Pull a random English word with a short definition. Useful for daily vocabulary, word games, writing prompts and pronunciation practice.">
+
+    <div slot="tool" class="rw">
+      <div class="rw-row">
+        <div>
+          <label for="rw-cat">Category</label>
+          <select id="rw-cat">
+            <option value="all">All</option>
+            <option value="common">Common</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </div>
+        <div>
+          <label for="rw-amount">Amount</label>
+          <input id="rw-amount" type="number" min="1" max="20" value="1" />
+        </div>
+      </div>
+      <button id="rw-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="rw-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="rw-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why one random word a day moves your English forward</h2>
+      <p>
+        Vocabulary is the most concrete bottleneck when you learn a language. You know the grammar, you can
+        follow a series with subtitles, but the moment you need to speak, that one word is missing. The
+        "one word a day" trick works because it clears the path: instead of cramming a hundred terms you'll
+        never use, you focus on one and slot it into a real sentence the same day.
+      </p>
+
+      <h2>How to make the most of this tool</h2>
+      <ul>
+        <li><strong>Morning ritual</strong> — pull a word when you wake up and commit to using it in a chat, message or post before bed.</li>
+        <li><strong>Creative brainstorming</strong> — writers, designers and copywriters use random words to break blocks: the forced word forces fresh connections.</li>
+        <li><strong>Group games</strong> — improvised Pictionary, charades, or the classic "build a story around this word" for ESL classrooms.</li>
+        <li><strong>Vocabulary journal</strong> — log the word, a definition and a personal sentence. In three months you'll have 90 real entries.</li>
+      </ul>
+
+      <h2>Common vs. advanced words</h2>
+      <p>
+        "Common" words are inside the first 3,000 most-used English terms: basic verbs, connectors, frequent
+        adjectives. If you're starting out, stay there — the return per word studied is much higher.
+        "Advanced" words are the kind you find in literature, specialized press or technical talk. They suit
+        intermediate-to-advanced speakers who already own the core.
+      </p>
+
+      <h2>Studying a new word properly</h2>
+      <p>
+        Reading it isn't enough. Three quick steps: first, say it aloud three times to lock the sound.
+        Second, write two original sentences using it in different contexts. Third, find one synonym and one
+        antonym — that pins the meaning by contrast. To seal it, message someone using the word; real use is
+        what shifts it into long-term memory.
+      </p>
+
+      <h2>Common mistakes when studying vocabulary</h2>
+      <ul>
+        <li><strong>Long lists without context</strong> — cramming 50 words in one go has an 80% forgetting rate within a week.</li>
+        <li><strong>Skipping pronunciation</strong> — reading a word is not the same as recognizing it when someone says it fast.</li>
+        <li><strong>Never using it</strong> — if it never left your notebook, you don't really know it.</li>
+        <li><strong>Literal translation</strong> — many English words have no exact equivalent; learn them by context, not by label.</li>
+      </ul>
+
+      <h2>Useful combinations</h2>
+      <p>
+        This tool pairs well with a random adjective or noun generator when you build writing exercises for
+        students, or with a rhyme finder if you write song lyrics. A simple classroom routine: three random
+        words and learners must build a coherent paragraph that contains all three. Works from elementary
+        school up to C1.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a random English word generator for?</summary><p>Vocabulary, creative blocks, pronunciation drills, or word games in class.</p></details>
+      <details><summary>Do the words come with definitions?</summary><p>Yes, each word includes a short definition so you can study the meaning at a glance.</p></details>
+      <details><summary>Does it work offline?</summary><p>Yes. Everything runs in your browser without a server, even without internet once loaded.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const COMMON: [string, string][] = [
+    ['house','a building where people live'],['water','clear liquid that we drink'],['friend','a person you like and trust'],
+    ['book','printed pages bound together'],['light','natural or artificial brightness'],['street','a public road in a town'],
+    ['morning','the early part of the day'],['night','time between sunset and sunrise'],['food','what people and animals eat'],
+    ['music','organized sounds, often pleasing'],['work','effort done to earn or build'],['family','people related by blood or care'],
+    ['child','a young human being'],['city','a large important town'],['country','a nation with its own government'],
+    ['river','a natural flow of water'],['mountain','a very high natural elevation'],['table','flat-topped piece of furniture'],
+    ['chair','a seat for one person'],['window','an opening in a wall, with glass'],['door','a movable barrier at an entrance'],
+    ['paper','thin material to write on'],['picture','a drawing, photo or image'],['letter','a written message you send'],
+    ['number','a value used for counting'],['time','the ongoing sequence of events'],['year','twelve months'],['month','one of twelve calendar parts'],
+    ['week','seven consecutive days'],['hour','sixty minutes'],['minute','sixty seconds'],['idea','a thought or suggestion'],
+    ['question','something you ask'],['answer','reply to a question'],['voice','sound produced when speaking'],
+    ['hand','part of the body at the end of the arm'],['head','top part of the body'],['heart','organ that pumps blood'],
+    ['mind','the seat of thought'],['plan','an arranged set of steps'],['change','to make different'],
+    ['help','to make something easier for someone'],['hope','a feeling of expectation'],['truth','what is real or accurate'],['power','the ability to act']
+  ];
+  const ADVANCED: [string, string][] = [
+    ['serendipity','a happy accidental discovery'],['ephemeral','lasting a very short time'],['quintessential','perfect example of a quality'],
+    ['ubiquitous','present everywhere'],['mellifluous','sweet-sounding'],['perseverance','steady effort despite difficulty'],
+    ['eloquent','fluent and persuasive'],['resilience','ability to recover quickly'],['ambiguous','open to more than one meaning'],
+    ['intricate','very complicated in detail'],['nuance','a subtle distinction'],['paradigm','a typical pattern or model'],
+    ['scrutiny','careful examination'],['threshold','a starting point or limit'],['vivid','very bright or clear'],
+    ['plausible','believable, reasonable'],['endeavor','a serious attempt'],['steadfast','firm and unwavering'],
+    ['humility','modest view of oneself'],['integrity','honesty and strong principles'],['benevolent','kind and well meaning'],
+    ['candid','honest and direct'],['diligent','careful and persistent'],['genuine','truly what it claims to be'],
+    ['profound','deep, far-reaching'],['sincere','free from pretense'],['tenacious','holding firmly'],['vigilant','watchful'],
+    ['compelling','strongly convincing'],['enduring','lasting over time']
+  ];
+
+  const catEl = document.getElementById('rw-cat') as HTMLSelectElement;
+  const amEl = document.getElementById('rw-amount') as HTMLInputElement;
+  const out = document.getElementById('rw-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('rw-gen') as HTMLButtonElement;
+  const cp = document.getElementById('rw-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function build() {
+    const c = catEl.value;
+    let pool: [string,string][] = c === 'common' ? COMMON : c === 'advanced' ? ADVANCED : [...COMMON, ...ADVANCED];
+    const n = Math.max(1, Math.min(20, parseInt(amEl.value || '1', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) { const p = pick(pool); lines.push(`${p[0]} — ${p[1]}`); }
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', build);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+  build();
+</script>

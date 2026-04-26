@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Mocktail Name Generator | Genfy';
+const description = 'Generate unique names for mocktails and zero-proof drinks. Mix flavor and sensation and get 20 ideas for bar, cafe or event menus.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How is a mocktail name different from a cocktail name?', acceptedAnswer: { '@type': 'Answer', text: 'A mocktail needs to communicate freshness and flavor without suggesting alcohol. Names tied to fruits, herbs and soft sensations work very well.' } },
+    { '@type': 'Question', name: 'Should I add "non-alcoholic" in the name?', acceptedAnswer: { '@type': 'Answer', text: 'Better in a subtitle or "Zero-proof" section. The main name should seduce on its own.' } },
+    { '@type': 'Question', name: 'Same styles as cocktails?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, with a twist: emphasize botanical, citrus, herbal and refreshing. Avoid references that suggest the warmth of alcohol.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Bartending" title="Mocktail Name Generator"
+    intro="Mix fruit, herb or sensation and get 20 fresh mocktail names for menus, events or weddings. Built to look great on a daily chalkboard.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Main flavor or ingredient</label>
+      <input id="bn-kw" type="text" placeholder="strawberry, ginger, mint..." value="mint, lime" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="botanical">Botanical (Citrus Leaf)</option>
+        <option value="fresh">Fresh (Tropical Breeze)</option>
+        <option value="duo">Two flavors (Lime &amp; Mint)</option>
+        <option value="object">Object + fruit (Copper Mango)</option>
+        <option value="single">One word (Sprout, Dew)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to name a mocktail</h2>
+      <p>
+        A mocktail competes against two things: the customer's mental image of "just juice"
+        and the alcoholic cocktail menu next to it. Your name has to make clear it's a serious,
+        sophisticated, technique-driven drink.
+      </p>
+      <ol>
+        <li><strong>Freshness first.</strong> "Sprout", "Dew", "Breeze", "Leaf". Suggests freshly made.</li>
+        <li><strong>Botanical or herbal.</strong> "Citrus Leaf", "Rosemary &amp; Lime". Communicates careful prep.</li>
+        <li><strong>Doesn't suggest alcohol.</strong> Avoid "fire", "smoke", "heat". Lean into freshness.</li>
+        <li><strong>Pronounceable.</strong> Your server will repeat it many times.</li>
+        <li><strong>Differentiated from cocktails.</strong> Doesn't blur with the next page.</li>
+      </ol>
+
+      <h2>Mocktail naming styles</h2>
+      <ul>
+        <li><strong>Botanical:</strong> "Citrus Leaf", "Green Rosemary", "Pear Sprout". Natural, herbal.</li>
+        <li><strong>Fresh:</strong> "Tropical Breeze", "Citrus Dew", "Grapefruit Air". Trigger hydration sensation.</li>
+        <li><strong>Two flavors:</strong> "Lime &amp; Mint", "Pear &amp; Rosemary". Honest about ingredients.</li>
+        <li><strong>Object + fruit:</strong> "Copper Mango", "Linen Pear". Premium, easy to illustrate.</li>
+        <li><strong>One word:</strong> "Sprout", "Dew", "Ridge", "Breeze". Memorable.</li>
+      </ul>
+
+      <h2>What to avoid</h2>
+      <p>
+        Most common mistake: calling them "virgin something". That term ties the mocktail to
+        absence, not presence. "Virgin Mojito" suggests "a mojito missing something"; "Citrus
+        Leaf" suggests its own drink. Also avoid infantilizing names ("super smoothie",
+        "fruity-licious"): adult customers want a serious drink.
+      </p>
+
+      <h2>Validation</h2>
+      <ol>
+        <li>Test names alongside your actual mocktails.</li>
+        <li>Ask 5 people to guess the ingredients.</li>
+        <li>Show them next to the cocktail section to confirm differentiation.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Difference from a cocktail?</summary><p>A mocktail must communicate freshness and technique without suggesting alcohol.</p></details>
+      <details><summary>Add "non-alcoholic" in the name?</summary><p>Better in subtitle or section. The main name should seduce alone.</p></details>
+      <details><summary>Same styles?</summary><p>Yes, with focus on botanical, citrus, herbal and refreshing.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const BOT = ['Leaf', 'Rosemary', 'Basil', 'Cardamom', 'Thyme', 'Eucalyptus', 'Hibiscus', 'Sprout'];
+  const FRUIT = ['Citrus', 'Green', 'Pear', 'Mango', 'Lime', 'Grapefruit', 'Strawberry', 'Apple'];
+  const FRESH = ['Tropical Breeze', 'Citrus Dew', 'Grapefruit Air', 'Pear Mist', 'Green Sprout', 'Citrus Ridge'];
+  const DUO_A = ['Lime', 'Pear', 'Apple', 'Strawberry', 'Grapefruit', 'Mango', 'Watermelon', 'Rosemary'];
+  const DUO_B = ['Mint', 'Rosemary', 'Basil', 'Cardamom', 'Hibiscus', 'Thyme', 'Eucalyptus'];
+  const OBJ = ['Copper', 'Thread', 'Linen', 'Velvet', 'Glass'];
+  const FR = ['Mango', 'Pear', 'Grapefruit', 'Watermelon', 'Strawberry', 'Apple', 'Passionfruit'];
+  const SINGLE = ['Sprout', 'Dew', 'Ridge', 'Breeze', 'Mist', 'Calm', 'Leaf', 'Citrus'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'botanical') name = pick(FRUIT) + ' ' + pick(BOT);
+      else if (s === 'fresh') name = pick(FRESH);
+      else if (s === 'duo') {
+        let a = pick(DUO_A), b = pick(DUO_B);
+        name = a + ' & ' + b;
+      }
+      else if (s === 'object') name = pick(OBJ) + ' ' + pick(FR);
+      else if (s === 'single') name = pick(SINGLE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

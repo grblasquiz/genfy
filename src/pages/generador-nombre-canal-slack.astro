@@ -1,0 +1,138 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de canal Slack gratis | Genfy';
+const description = 'Generá nombres consistentes para canales de Slack. Combiná tema, equipo o tipo y obtené 20 sugerencias listas para crear con convenciones claras.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno al nombre de un canal de Slack?', acceptedAnswer: { '@type': 'Answer', text: 'Que siga una convención clara (prefijos por tipo), use minúsculas y guiones, sea descriptivo del tema y se complete fácil con autocomplete.' } },
+    { '@type': 'Question', name: '¿Conviene usar prefijos?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Convenciones como #proj-, #team-, #help- o #social- agrupan canales similares y mejoran el descubrimiento.' } },
+    { '@type': 'Question', name: '¿Cómo evito proliferación?', acceptedAnswer: { '@type': 'Answer', text: 'Definí una convención al lanzar el workspace, archivá canales sin actividad por 30 días y revisá la lista cada trimestre.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Productividad" title="Generador de nombre de canal Slack"
+    intro="Combiná tipo de canal y temática y obtené 20 nombres consistentes para tu workspace de Slack. Pensados para mejorar autocomplete, búsqueda y onboarding.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Temática (proyecto, equipo, tema)</label>
+      <input id="bn-kw" type="text" placeholder="growth, design, hiring..." value="growth" />
+
+      <label for="bn-style" style="margin-top:1rem">Tipo de canal</label>
+      <select id="bn-style">
+        <option value="proj">#proj- (proyecto)</option>
+        <option value="team">#team- (equipo)</option>
+        <option value="help">#help- (soporte interno)</option>
+        <option value="social">#social- (charla casual)</option>
+        <option value="ann">#ann- (anuncios)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo nombrar canales de Slack</h2>
+      <p>
+        Una convención de canales bien diseñada mejora la productividad de un equipo en
+        formas medibles: menos tiempo buscando dónde preguntar, mejor onboarding para
+        nuevos, menos canales duplicados con el mismo propósito.
+      </p>
+      <ol>
+        <li><strong>Prefijo por tipo.</strong> #proj-, #team-, #help-, #social-, #ann-. Agrupa visualmente.</li>
+        <li><strong>Minúsculas y guiones.</strong> #proj-launch-q1, no #ProjLaunchQ1.</li>
+        <li><strong>Descriptivo y específico.</strong> #help-billing es mejor que #help-stuff.</li>
+        <li><strong>Corto pero claro.</strong> Apuntá a 15-25 caracteres.</li>
+        <li><strong>Convención escrita.</strong> Documentala en un canal #ann-channel-rules.</li>
+      </ol>
+
+      <h2>Convenciones recomendadas</h2>
+      <ul>
+        <li><strong>#proj-:</strong> proyectos con inicio y fin claros (#proj-mobile-app, #proj-launch-q1).</li>
+        <li><strong>#team-:</strong> equipos permanentes (#team-design, #team-engineering).</li>
+        <li><strong>#help-:</strong> soporte interno (#help-finance, #help-legal, #help-it).</li>
+        <li><strong>#social-:</strong> casual (#social-coffee, #social-pets, #social-music).</li>
+        <li><strong>#ann-:</strong> anuncios solo lectura para muchos (#ann-company, #ann-product).</li>
+      </ul>
+
+      <h2>Errores frecuentes</h2>
+      <p>
+        El error más común es no tener convención: el workspace se llena de canales con
+        nombres inconsistentes y nadie encuentra nada. El segundo es nombres internos
+        crípticos que requieren contexto: "#g4-q3-c2" no le dice nada a alguien nuevo. El
+        tercero es no archivar canales muertos: tu lista de canales activos se vuelve
+        ruidosa.
+      </p>
+
+      <h2>Buenas prácticas operativas</h2>
+      <ol>
+        <li>Definí la convención antes de superar los 30 canales.</li>
+        <li>Archivá canales con cero mensajes en 30 días.</li>
+        <li>Revisá la lista de canales cada trimestre.</li>
+        <li>Usá descripciones claras y un mensaje fijado con las reglas.</li>
+        <li>Limitá quién puede crear canales en workspaces grandes.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno al nombre?</summary><p>Convención clara, minúsculas, guiones, descriptivo y fácil de autocompletar.</p></details>
+      <details><summary>¿Prefijos sí?</summary><p>Sí. #proj-, #team-, #help-, #social- agrupan y mejoran descubrimiento.</p></details>
+      <details><summary>¿Cómo evito proliferación?</summary><p>Convención escrita, archivado automático, revisión trimestral.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; font-family: monospace; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const PROJ = ['launch', 'redesign', 'mobile-app', 'pricing', 'expansion', 'migration', 'rebrand', 'rollout', 'q1', 'q2', 'beta'];
+  const TEAM = ['design', 'engineering', 'product', 'sales', 'marketing', 'finance', 'people', 'ops', 'data', 'support'];
+  const HELP = ['billing', 'finance', 'legal', 'it', 'hr', 'tools', 'design', 'data', 'security', 'office'];
+  const SOCIAL = ['coffee', 'pets', 'music', 'books', 'games', 'food', 'travel', 'tv', 'photography', 'kids'];
+  const ANN = ['company', 'product', 'release', 'press', 'finance', 'people', 'office'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function slug(s: string) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, ''); }
+
+  function generate() {
+    const w = slug(kw.value.trim() || 'growth');
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'proj') name = '#proj-' + w + '-' + pick(PROJ);
+      else if (s === 'team') name = '#team-' + pick(TEAM);
+      else if (s === 'help') name = '#help-' + pick(HELP);
+      else if (s === 'social') name = '#social-' + pick(SOCIAL);
+      else if (s === 'ann') name = '#ann-' + pick(ANN);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

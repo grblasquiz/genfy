@@ -1,0 +1,147 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Esports Team Name Generator | Genfy';
+const description = 'Generate unique names for your esports team, clan or squad. Mix concept, animal or tag and get 20 ideas ready for Twitch and Discord.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good esports team name?', acceptedAnswer: { '@type': 'Answer', text: 'Memorable, unique in your main game, easy to tag with 3-4 letters, and available as a handle on Twitch, X and Discord.' } },
+    { '@type': 'Question', name: 'Should I include a short tag?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Most tournaments require a 2-4 letter tag. Plan it alongside the full name.' } },
+    { '@type': 'Question', name: 'How do I check availability?', acceptedAnswer: { '@type': 'Answer', text: 'Liquipedia, esportsearnings, Twitch, X and Discord. If you sell merch, also the trademark register.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Esports" title="Esports Team Name Generator"
+    intro="Mix animal, concept or tag and get 20 ideas for your esports team, clan or squad. Ready to validate handles on Twitch, X and Discord.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Keywords (concept, animal, attribute)</label>
+      <input id="bn-kw" type="text" placeholder="wolf, dragon, neon..." value="wolf" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="animal">Animal + concept (Wolf Pack)</option>
+        <option value="elite">Elite / aggressive (Dark, Apex)</option>
+        <option value="cyber">Cyber / tech (Pixel, Glitch)</option>
+        <option value="acronym">Acronym (TSM, FaZe style)</option>
+        <option value="region">Region + concept</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to name an esports team</h2>
+      <p>
+        An esports team name has to survive three uses: a caster saying it live during a
+        match, fans shouting it on socials, and a 3-4 letter tag shown above each player's
+        nick. If you can't derive a short tag from the name, it doesn't work.
+      </p>
+      <ol>
+        <li><strong>Tag-derivable.</strong> A 3-4 letter acronym should fall out naturally.</li>
+        <li><strong>Memorable under pressure.</strong> The caster says it during a clutch play.</li>
+        <li><strong>Unique in your game.</strong> Search Liquipedia and esportsearnings.</li>
+        <li><strong>Merch-compatible.</strong> Simple logo, 2-3 color palette.</li>
+        <li><strong>Handles available.</strong> Twitch, X, Discord, YouTube, TikTok.</li>
+      </ol>
+
+      <h2>Classic esports styles</h2>
+      <ul>
+        <li><strong>Animal + concept:</strong> "Wolf Pack", "Dragon Squad", "Falcon Esports". Most used for a reason.</li>
+        <li><strong>Elite / aggressive:</strong> "Dark", "Apex", "Vortex", "Vex". Pro level vibes.</li>
+        <li><strong>Cyber / tech:</strong> "Pixel", "Glitch", "Neon", "Static". Pure gamer identity.</li>
+        <li><strong>Acronym TSM/FaZe style:</strong> 3-4 short, memorable letters.</li>
+        <li><strong>Region + concept:</strong> "London Wolves", "NYC Tigers". Local identity.</li>
+      </ul>
+
+      <h2>What to avoid</h2>
+      <p>
+        Avoid names already taken by big orgs: "Cloud9", "Liquid", "Sentinels". Avoid names
+        too long for a tag: "The Great Eternal Warriors" yields nothing usable. Avoid special
+        characters that break handles. And avoid deity references: saturated and feel like a
+        2014 amateur clan.
+      </p>
+
+      <h2>Quick validation</h2>
+      <ol>
+        <li>Liquipedia and esportsearnings.</li>
+        <li>Twitch, X, Discord, YouTube, TikTok.</li>
+        <li>Test the tag on a mock scoreboard.</li>
+        <li>Read it as a caster: does it flow?</li>
+        <li>.gg or .com domain on Namecheap.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good name?</summary><p>Memorable, unique in game, tag-derivable, handles available.</p></details>
+      <details><summary>Short tag?</summary><p>Yes, most tournaments require it. Plan with the full name.</p></details>
+      <details><summary>How to check?</summary><p>Liquipedia, esportsearnings, Twitch, X, Discord, trademark register.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ANIMAL = ['Wolf', 'Dragon', 'Falcon', 'Hawk', 'Tiger', 'Cobra', 'Phoenix', 'Raven', 'Lynx', 'Shark'];
+  const PACK = ['Pack', 'Squad', 'Esports', 'Gaming', 'Clan', 'Crew', 'Team', 'Ops'];
+  const ELITE = ['Dark', 'Apex', 'Vortex', 'Vex', 'Onyx', 'Edge', 'Prime', 'Razor', 'Nova', 'Cipher'];
+  const CYBER = ['Pixel', 'Glitch', 'Neon', 'Static', 'Binary', 'Cache', 'Cipher', 'Kernel', 'Sync', 'Loop'];
+  const REGION = ['NYC', 'LA', 'London', 'Tokyo', 'Berlin', 'Madrid', 'São Paulo', 'Seoul', 'Sydney'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function genAcronym() {
+    const letters = 'ABCDEFGHIJKLMNPRSTVWXZ';
+    const len = 3 + Math.floor(Math.random() * 2);
+    let r = '';
+    const buf = new Uint32Array(len);
+    crypto.getRandomValues(buf);
+    for (let i = 0; i < len; i++) r += letters[buf[i] % letters.length];
+    return r;
+  }
+
+  function generate() {
+    const w = kw.value.trim() || 'Wolf';
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'animal') name = pick(ANIMAL) + ' ' + pick(PACK);
+      else if (s === 'elite') name = pick(ELITE) + ' ' + pick(PACK);
+      else if (s === 'cyber') name = pick(CYBER) + ' ' + pick(PACK);
+      else if (s === 'acronym') name = genAcronym() + ' Esports';
+      else if (s === 'region') name = pick(REGION) + ' ' + pick(ANIMAL) + 's';
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

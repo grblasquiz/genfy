@@ -1,0 +1,128 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'NATO Phonetic Spelling (Alpha Bravo) | Genfy';
+const description = 'Convert words to NATO phonetic alphabet (Alpha, Bravo, Charlie). Perfect for spelling names, codes and addresses on the phone or radio.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is the NATO phonetic alphabet?', acceptedAnswer: { '@type': 'Answer', text: 'An international standard where each letter is replaced by a fixed word (Alpha, Bravo, Charlie...) to avoid confusion when spelling on radio or phone.' } },
+    { '@type': 'Question', name: 'When is it used?', acceptedAnswer: { '@type': 'Answer', text: 'Aviation, military, police, customer support, dictating serial numbers, phone contracts and any noisy communication.' } },
+    { '@type': 'Question', name: 'Is "NATO" and "ICAO" the same alphabet?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. The same set is officially called the ICAO phonetic alphabet but is widely known as NATO phonetic.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Fun" title="NATO Phonetic Spelling"
+    intro="Convert words to the NATO phonetic alphabet (Alpha, Bravo, Charlie...). Essential when you need to spell names on the phone, dictate codes or work in radio comms.">
+
+    <div slot="tool">
+      <label for="np-in">Text</label>
+      <textarea id="np-in" rows="4" placeholder="e.g. Genfy" style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div style="margin-top:0.75rem;">
+        <button id="np-go" class="btn btn-primary" type="button">Spell out</button>
+        <button id="np-copy" class="btn btn-ghost" type="button">Copy</button>
+      </div>
+      <label for="np-out" style="margin-top:1rem;">Result</label>
+      <textarea id="np-out" rows="6" readonly style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why the NATO alphabet exists</h2>
+      <p>
+        If you've ever tried to spell an email on the phone, you know the problem: "B as in boy" isn't the
+        same as "V as in victor", and on a noisy line they sound alike. The NATO phonetic alphabet solves
+        this with words chosen to sound clearly distinct, even with poor signal or non-native speakers.
+        Each letter gets a fixed word: A is Alpha, B is Bravo, C is Charlie, and so on.
+      </p>
+
+      <h2>The full alphabet</h2>
+      <p>
+        A: Alpha. B: Bravo. C: Charlie. D: Delta. E: Echo. F: Foxtrot. G: Golf. H: Hotel. I: India.
+        J: Juliet. K: Kilo. L: Lima. M: Mike. N: November. O: Oscar. P: Papa. Q: Quebec. R: Romeo.
+        S: Sierra. T: Tango. U: Uniform. V: Victor. W: Whiskey. X: X-ray. Y: Yankee. Z: Zulu.
+      </p>
+
+      <h2>How the words were chosen</h2>
+      <p>
+        The alphabet was developed in the 1950s by ICAO (International Civil Aviation Organization) and
+        adopted by NATO. The selection wasn't arbitrary: dozens of candidates were tested in real
+        conditions (noisy radio, low quality, non-native English speakers) to make sure each word was
+        intelligible and distinct from the others. That's why "Alpha" and not "Adam", "Mike" and not
+        "Michael".
+      </p>
+
+      <h2>Real use cases</h2>
+      <ul>
+        <li><strong>Aviation</strong> — pilots and air traffic controllers use it on every transmission.</li>
+        <li><strong>Military and emergencies</strong> — police, military and fire department radios.</li>
+        <li><strong>Customer support</strong> — confirming emails, order numbers and codes on the phone.</li>
+        <li><strong>Banking and telecom</strong> — dictating account numbers, IBAN, reference codes.</li>
+        <li><strong>Logistics</strong> — confirming international tracking IDs.</li>
+        <li><strong>Hospitality</strong> — confirming guest names on reservations.</li>
+      </ul>
+
+      <h2>Tips for using it well</h2>
+      <p>
+        Say each word with clear emphasis and a brief pause between them. If the person on the other end
+        doesn't know the alphabet, mix: "G as in Golf, E as in Echo, N as in November...". For numbers,
+        say them digit by digit: "three-five-seven" instead of "three hundred fifty seven". And to
+        confirm, repeat: "Charlie India Echo Lima Oscar — confirm, correct?".
+      </p>
+
+      <h2>National variants</h2>
+      <p>
+        Other countries have their own spelling alphabets, but they aren't internationally recognized in
+        aviation or military. NATO/ICAO is the global standard. If you travel a lot or work with
+        international clients, it's the safest one to learn — works in any country, with any operator,
+        regardless of native language.
+      </p>
+
+      <h2>Memorizing it</h2>
+      <p>
+        Learning the 26 words takes about a week of 5-minute daily practice. Strategy: chunk into groups
+        of 5-7 letters (A-G, H-N, O-T, U-Z) and drill each group. Then combine them in real short words:
+        your name, your last name, a friend's. In 10 days you've automated it and you stop depending on
+        a tool.
+      </p>
+
+      <h2>Why each word</h2>
+      <p>
+        "X-ray" isn't just X: a full word was used because X alone is hard to hear. "Whiskey" beats
+        "Walter" or "William" because it starts with a sharp distinctive sound. "Zulu" wins over "Zebra"
+        because it was more recognizable to non-English speakers in the 1950s. Each choice was validated
+        with real intelligibility tests — a great example of user-centered design decades before the term
+        existed.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is the NATO phonetic alphabet?</summary><p>Each letter maps to a fixed word (Alpha, Bravo...) for unambiguous spelling.</p></details>
+      <details><summary>When is it used?</summary><p>Aviation, military, customer support, banking and any over-the-phone dictation.</p></details>
+      <details><summary>Is "NATO" and "ICAO" the same alphabet?</summary><p>Yes. The same set, called ICAO officially and NATO informally.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const NATO: Record<string,string> = {
+    A:'Alpha',B:'Bravo',C:'Charlie',D:'Delta',E:'Echo',F:'Foxtrot',G:'Golf',H:'Hotel',I:'India',
+    J:'Juliet',K:'Kilo',L:'Lima',M:'Mike',N:'November',O:'Oscar',P:'Papa',Q:'Quebec',R:'Romeo',
+    S:'Sierra',T:'Tango',U:'Uniform',V:'Victor',W:'Whiskey',X:'X-ray',Y:'Yankee',Z:'Zulu',
+    '0':'Zero','1':'One','2':'Two','3':'Three','4':'Four','5':'Five','6':'Six','7':'Seven','8':'Eight','9':'Nine'
+  };
+  const inEl = document.getElementById('np-in') as HTMLTextAreaElement;
+  const outEl = document.getElementById('np-out') as HTMLTextAreaElement;
+  const go = document.getElementById('np-go') as HTMLButtonElement;
+  const cp = document.getElementById('np-copy') as HTMLButtonElement;
+  function convert(s: string): string {
+    return s.toUpperCase().split(/(\s+)/).map(part => {
+      if (/^\s+$/.test(part)) return ' | ';
+      return part.split('').map(c => NATO[c] || c).join(' ');
+    }).join('');
+  }
+  go.addEventListener('click', () => { outEl.value = convert(inEl.value); });
+  cp.addEventListener('click', async () => { if (!outEl.value) return; await navigator.clipboard.writeText(outEl.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

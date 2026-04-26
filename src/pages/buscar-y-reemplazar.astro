@@ -1,0 +1,166 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Buscar y reemplazar texto online | Genfy';
+const description = 'Buscá y reemplazá texto en bloque con o sin expresiones regulares. Reemplazo case-sensitive, conteo de coincidencias y previsualización. Todo en el navegador.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Funciona con textos largos?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, hasta varios megabytes. Como todo corre en tu navegador, el límite real es la memoria de la pestaña.' } },
+    { '@type': 'Question', name: '¿Soporta expresiones regulares?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Activá la opción regex y escribí el patrón sin slashes. Las flags se controlan con los checkboxes de mayúsculas/minúsculas.' } },
+    { '@type': 'Question', name: '¿Mis datos se envían a un servidor?', acceptedAnswer: { '@type': 'Answer', text: 'No. Todo el procesamiento es local en tu navegador. Podés usarlo con texto sensible.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto" title="Buscar y reemplazar texto"
+    intro="Reemplazá texto masivamente con o sin regex, conservando capitalización o ignorándola. Todo el procesamiento ocurre en tu navegador.">
+
+    <div slot="tool" class="fr">
+      <label for="fr-src">Texto original</label>
+      <textarea id="fr-src" rows="6" placeholder="Pegá tu texto…"></textarea>
+
+      <div class="fr-row">
+        <div>
+          <label for="fr-find">Buscar</label>
+          <input id="fr-find" type="text" placeholder="Texto o patrón" />
+        </div>
+        <div>
+          <label for="fr-rep">Reemplazar por</label>
+          <input id="fr-rep" type="text" placeholder="Reemplazo (vacío = borrar)" />
+        </div>
+      </div>
+
+      <div class="fr-opts">
+        <label><input type="checkbox" id="fr-case" /> Sensible a mayúsculas</label>
+        <label><input type="checkbox" id="fr-word" /> Solo palabras completas</label>
+        <label><input type="checkbox" id="fr-regex" /> Usar regex</label>
+      </div>
+
+      <button id="fr-go" class="btn btn-primary" type="button">Reemplazar</button>
+      <button id="fr-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <span id="fr-count" class="fr-count" aria-live="polite"></span>
+
+      <label for="fr-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="fr-out" rows="6" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>¿Para qué sirve un buscar y reemplazar online?</h2>
+      <p>
+        Editores de código como VS Code o Sublime traen find &amp; replace incorporado, pero
+        cuando trabajás en una herramienta sin esa función — Google Docs, un campo de Notion,
+        un mensaje de Slack, un CSV pegado en una hoja — tener un buscar y reemplazar rápido
+        en el navegador ahorra mucho tiempo. Pegás, ajustás el patrón y copiás el resultado.
+      </p>
+
+      <h2>Modo literal vs regex</h2>
+      <p>
+        El modo literal busca exactamente la cadena que escribiste. El modo regex te permite
+        usar patrones avanzados: <code>\d+</code> para números, <code>\b</code> para borde de
+        palabra, grupos de captura <code>(\w+)</code> y referencias en el reemplazo
+        (<code>$1</code>, <code>$2</code>). Si nunca usaste regex, empezá con literal — el 90%
+        de los casos no necesita más.
+      </p>
+
+      <h2>Casos de uso reales</h2>
+      <ul>
+        <li><strong>Limpieza de datos.</strong> Sacar tabs, dobles espacios, comillas tipográficas o caracteres invisibles antes de pegar a una hoja.</li>
+        <li><strong>Renombrado masivo.</strong> Cambiar el nombre de una variable o producto en un documento largo sin abrirlo línea por línea.</li>
+        <li><strong>Anonimización rápida.</strong> Reemplazar nombres reales por placeholders antes de compartir un log con un proveedor.</li>
+        <li><strong>Migraciones de copy.</strong> Si renombraste un producto, podés correr el reemplazo sobre toda la base de textos antes de subir a tu CMS.</li>
+        <li><strong>Normalización.</strong> Unificar formatos de fecha, separadores de miles o abreviaturas inconsistentes.</li>
+      </ul>
+
+      <h2>Cuidado con regex</h2>
+      <p>
+        Una expresión mal escrita puede borrar más de lo que querés. Reglas mínimas: probá con
+        un fragmento corto antes de aplicar a todo el texto, escapá los caracteres especiales
+        si querés literales (<code>.</code>, <code>*</code>, <code>+</code>, <code>?</code>,
+        <code>(</code>, <code>)</code>, <code>[</code>, <code>]</code>, <code>\</code>), y
+        revisá el contador de coincidencias antes de copiar el resultado: si dice 0 cuando
+        esperabas 50, hay algo mal en el patrón.
+      </p>
+
+      <h2>Privacidad</h2>
+      <p>
+        Toda la operación corre en tu navegador con JavaScript local. No subimos tu texto a
+        ningún servidor, no lo guardamos, no lo logueamos. Por eso podés usar este generador
+        con contratos, datos de clientes o cualquier información sensible — siempre que estés
+        en una computadora confiable.
+      </p>
+
+      <h2>Atajos útiles dentro del editor</h2>
+      <ul>
+        <li><strong>Cmd/Ctrl + A</strong> en el textarea para seleccionar todo.</li>
+        <li><strong>Cmd/Ctrl + Z</strong> para deshacer la última edición manual.</li>
+        <li><strong>Cmd/Ctrl + C</strong> para copiar lo seleccionado del campo de resultado.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Funciona con textos largos?</summary><p>Sí, hasta varios megabytes — todo corre en tu navegador.</p></details>
+      <details><summary>¿Soporta expresiones regulares?</summary><p>Sí. Activá la opción regex y escribí el patrón sin slashes.</p></details>
+      <details><summary>¿Mis datos se envían a un servidor?</summary><p>No. Todo el procesamiento es local. Podés usarlo con texto sensible.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .fr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .fr-opts { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; color: var(--text-soft); }
+  .fr-opts label { display: inline-flex; gap: 0.4rem; align-items: center; margin: 0; }
+  .fr-opts input { width: auto; }
+  .fr-count { margin-left: 1rem; color: var(--text-muted); font-size: 0.875rem; }
+  @media (max-width: 600px) { .fr-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const src = document.getElementById('fr-src') as HTMLTextAreaElement;
+  const find = document.getElementById('fr-find') as HTMLInputElement;
+  const rep = document.getElementById('fr-rep') as HTMLInputElement;
+  const out = document.getElementById('fr-out') as HTMLTextAreaElement;
+  const cs = document.getElementById('fr-case') as HTMLInputElement;
+  const ww = document.getElementById('fr-word') as HTMLInputElement;
+  const re = document.getElementById('fr-regex') as HTMLInputElement;
+  const count = document.getElementById('fr-count') as HTMLSpanElement;
+  const go = document.getElementById('fr-go') as HTMLButtonElement;
+  const copy = document.getElementById('fr-copy') as HTMLButtonElement;
+
+  function escapeRegex(s: string) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+  function run() {
+    const text = src.value;
+    const f = find.value;
+    if (!f) { out.value = text; count.textContent = ''; return; }
+    let pattern: string;
+    let flags = 'g' + (cs.checked ? '' : 'i');
+    if (re.checked) {
+      pattern = f;
+    } else {
+      pattern = escapeRegex(f);
+      if (ww.checked) pattern = '\\b' + pattern + '\\b';
+    }
+    try {
+      const r = new RegExp(pattern, flags);
+      const matches = text.match(r);
+      out.value = text.replace(r, rep.value);
+      count.textContent = matches ? `${matches.length} coincidencias` : 'Sin coincidencias';
+    } catch (e: any) {
+      count.textContent = 'Regex inválida';
+      out.value = text;
+    }
+  }
+
+  go.addEventListener('click', run);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copy.textContent; copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = t; }, 1200);
+  });
+</script>
+</content>
+</invoke>

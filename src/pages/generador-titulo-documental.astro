@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de título de documental gratis | Genfy';
+const description = 'Generá títulos para documentales de cine, TV o streaming. Combiná tema, tono y formato para conseguir 20 ideas listas para festival o plataforma.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace un buen título de documental?', acceptedAnswer: { '@type': 'Answer', text: 'Un buen título de documental promete una historia humana concreta. Combina sustantivo evocador con un personaje, lugar o pregunta.' } },
+    { '@type': 'Question', name: '¿Necesita subtítulo?', acceptedAnswer: { '@type': 'Answer', text: 'Muchos documentales lo usan para precisar el ángulo. El título carga la imagen y el subtítulo carga la promesa de contenido.' } },
+    { '@type': 'Question', name: '¿Sirve para Netflix o festival?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Los algoritmos de plataforma valoran títulos cortos con keyword. Los festivales valoran títulos conceptuales.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de título de documental"
+    intro="Generá títulos de documental para cine, TV o streaming. Combiná tema, tono y formato para conseguir 20 ideas listas para presentar a festival o plataforma.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Tema del documental</label>
+      <input id="bn-kw" type="text" placeholder="agua, deuda, exilio..." value="agua" />
+
+      <label for="bn-style" style="margin-top:1rem">Tono</label>
+      <select id="bn-style">
+        <option value="biopic">Biográfico (La vida de...)</option>
+        <option value="investigative">Investigativo (Sin nombre)</option>
+        <option value="social">Social (El precio de...)</option>
+        <option value="cultural">Cultural (Voces de...)</option>
+        <option value="single">Una palabra fuerte</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 títulos</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo titular un documental</h2>
+      <p>
+        El título de un documental tiene un trabajo doble: promete una historia humana concreta y
+        comunica su tono editorial. La diferencia entre un documental que se ve y uno que pasa
+        de largo casi siempre está en cómo el título sintetiza la promesa. "El agua que falta"
+        es mejor que "Crisis hídrica argentina". El primero te invita a entrar; el segundo
+        parece un PDF.
+      </p>
+      <ol>
+        <li><strong>Promete una historia humana.</strong> No un tema abstracto.</li>
+        <li><strong>Sustantivo concreto.</strong> Mejor "El agua" que "El líquido vital".</li>
+        <li><strong>Subtítulo opcional.</strong> Si el título es metafórico, el subtítulo aclara el ángulo.</li>
+        <li><strong>Que se vea bien grande.</strong> En thumbnail de Netflix y en póster de festival.</li>
+        <li><strong>Único en plataforma.</strong> Buscá colisiones en JustWatch.</li>
+      </ol>
+
+      <h2>Estilos de título según tipo de documental</h2>
+      <ul>
+        <li><strong>Biográfico</strong>: nombre del protagonista o frase definitoria ("La vida de Marta", "Lo que dejó ella").</li>
+        <li><strong>Investigativo</strong>: sustantivo amenazante o pregunta ("Sin rastro", "El testigo silencioso").</li>
+        <li><strong>Social</strong>: el precio, la deuda, la lucha ("El precio del agua", "La deuda invisible").</li>
+        <li><strong>Cultural</strong>: voces, miradas, retratos ("Voces del sur", "Retratos del litoral").</li>
+        <li><strong>Una palabra fuerte</strong>: alto impacto en festival ("Frontera", "Hueso", "Hambre").</li>
+      </ul>
+
+      <h2>Errores frecuentes</h2>
+      <p>
+        El más común: títulos académicos o periodísticos que prometen un informe en lugar de una
+        película. "Crisis económica del 2019" no convence al espectador, pero "Lo que perdimos
+        ese año" sí. Otro error: títulos demasiado obvios que no dejan misterio. Y un tercero:
+        usar nombres mitológicos o referencias gastadas que no aportan nada al material.
+      </p>
+
+      <h2>Después de generar</h2>
+      <ol>
+        <li>Probá el título sobre la imagen de campaña que tenés en mente.</li>
+        <li>Buscá colisiones en JustWatch y en festivales.</li>
+        <li>Probá decírselo a tres personas que no conocen el proyecto: ¿quieren ver?</li>
+        <li>Decidí si necesitás subtítulo y escribí dos versiones.</li>
+        <li>Verificá que se vea bien en thumbnail vertical.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace un buen título de documental?</summary><p>Promete una historia humana concreta combinando sustantivo evocador y ángulo claro.</p></details>
+      <details><summary>¿Necesita subtítulo?</summary><p>Muchos lo usan: el título carga la imagen, el subtítulo carga la promesa de contenido.</p></details>
+      <details><summary>¿Sirve para Netflix?</summary><p>Sí. Las plataformas valoran títulos cortos con keyword.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.75rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 500; cursor: pointer; transition: border-color 0.1s; user-select: text; line-height: 1.4; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const BIO = ['La vida de X', 'Lo que dejó X', 'X: el último día', 'X y los suyos', 'El método X'];
+  const INV = ['Sin rastro de X', 'El testigo silencioso de X', 'Lo que sabíamos sobre X', 'Detrás de X', 'X: el archivo perdido'];
+  const SOC = ['El precio de X', 'La deuda de X', 'La lucha por X', 'X que nadie ve', 'X invisible'];
+  const CULT = ['Voces de X', 'Retratos de X', 'Donde nace X', 'Las manos de X', 'X y la memoria'];
+  const SINGLE = ['X', 'El X', 'La X', 'Después de X', 'Antes de X'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const topic = kw.value.trim() || 'agua';
+    const s = style.value;
+    let SRC: string[];
+    if (s === 'investigative') SRC = INV;
+    else if (s === 'social') SRC = SOC;
+    else if (s === 'cultural') SRC = CULT;
+    else if (s === 'single') SRC = SINGLE;
+    else SRC = BIO;
+    out.innerHTML = '';
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const t = pick(SRC).replace(/X/g, cap(topic));
+      set.add(t);
+    }
+    [...set].forEach(text => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = text;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.textContent; el.textContent = '✓ copiado'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

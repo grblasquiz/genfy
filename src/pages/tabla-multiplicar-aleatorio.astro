@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Pregunta de tabla de multiplicar | Genfy';
+const description = 'Generador de preguntas de tablas de multiplicar al azar. Elegí tabla específica o mezcla. Para chicos, padres y docentes.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué se usa este generador?', acceptedAnswer: { '@type': 'Answer', text: 'Para que los chicos practiquen tablas de multiplicar de forma rápida y entretenida, sin necesidad de fichas impresas.' } },
+    { '@type': 'Question', name: '¿Puedo elegir solo una tabla?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Filtrá por tabla específica (la del 7, la del 8) o mezclá todas para repaso general.' } },
+    { '@type': 'Question', name: '¿Hay tiempo límite?', acceptedAnswer: { '@type': 'Answer', text: 'No por defecto. Cada uno responde a su ritmo. Para entrenamiento de velocidad, ponete un cronómetro externo.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Educación" title="Pregunta de tabla de multiplicar"
+    intro="Practicá las tablas de multiplicar con preguntas al azar. Elegí una tabla específica o mezclá todas. Pensado para chicos, padres practicando con ellos y docentes.">
+
+    <div slot="tool">
+      <div class="rw-row">
+        <div>
+          <label for="tm-table">Tabla</label>
+          <select id="tm-table">
+            <option value="0">Mezcla (2-12)</option>
+            <option value="2">Tabla del 2</option>
+            <option value="3">Tabla del 3</option>
+            <option value="4">Tabla del 4</option>
+            <option value="5">Tabla del 5</option>
+            <option value="6">Tabla del 6</option>
+            <option value="7">Tabla del 7</option>
+            <option value="8">Tabla del 8</option>
+            <option value="9">Tabla del 9</option>
+            <option value="10">Tabla del 10</option>
+            <option value="11">Tabla del 11</option>
+            <option value="12">Tabla del 12</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:0.75rem;">
+        <button id="tm-go" class="btn btn-primary" type="button">Nueva pregunta</button>
+        <button id="tm-show" class="btn btn-ghost" type="button">Mostrar respuesta</button>
+      </div>
+      <div id="tm-out" class="tm-out" aria-live="polite"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Memorizar las tablas: por qué sigue importando</h2>
+      <p>
+        Las tablas de multiplicar son la base operativa de toda la aritmética posterior. Sin saberlas
+        automatizadas, dividir, sacar fracciones, factorear o resolver ecuaciones se vuelve una tortura
+        innecesaria. La memoria de trabajo se agota en cálculos básicos y no queda capacidad para el
+        razonamiento. Por eso, aunque parezca aburrido, automatizar tablas es uno de los mejores regalos
+        que un padre o docente le puede dar a un chico.
+      </p>
+
+      <h2>Estrategia de aprendizaje en orden</h2>
+      <p>
+        No conviene atacar todas las tablas al mismo tiempo. El orden recomendado por psicología educativa
+        es: primero las del 2, 5 y 10 (las más fáciles, dan confianza). Después la del 3 y la del 4. La
+        del 9 tiene un truco lindo (los dígitos suman 9), enseñala antes de la del 6, 7 y 8. Esas tres
+        son las "difíciles" históricas y conviene trabajarlas con paciencia. La del 11 es trivial hasta el
+        9; la del 12 ayuda en sistema duodecimal y horas.
+      </p>
+
+      <h2>Trucos para tablas concretas</h2>
+      <ul>
+        <li><strong>Tabla del 2</strong> — duplicar; la primera que entendés.</li>
+        <li><strong>Tabla del 5</strong> — termina siempre en 0 o 5; es como contar dedos de una mano.</li>
+        <li><strong>Tabla del 9</strong> — sumá 9 al resultado anterior, o multiplicá por 10 y restá el número.</li>
+        <li><strong>Tabla del 11</strong> — del 11x1 al 11x9, repetí el dígito: 11x4=44, 11x7=77.</li>
+        <li><strong>Tabla del 4</strong> — duplicá dos veces: 4x7 = 7x2x2 = 14x2 = 28.</li>
+        <li><strong>Conmutativa</strong> — 8x7 = 7x8. Si te sabés una, te sabés la otra.</li>
+      </ul>
+
+      <h2>Práctica: cantidad mínima viable</h2>
+      <p>
+        La regla del 5/3/30: cinco minutos por día, tres veces por semana, durante 30 días. Es suficiente
+        para que un chico de 8 años automatice todas las tablas hasta la del 10. Más que sesiones largas
+        infrequentes, lo que funciona es práctica corta y constante. La memoria a largo plazo se construye
+        con repetición espaciada, no con maratones.
+      </p>
+
+      <h2>Cómo evitar la frustración</h2>
+      <p>
+        Si tu hijo se traba con la tabla del 7, no insistas con esa específica durante toda la sesión.
+        Mezclá: tres del 2 (que sabe), una del 7 (la difícil), tres del 5 (que sabe), una del 7. Ese ratio
+        4:1 mantiene la confianza y va exponiendo la difícil sin generar bloqueo emocional. La frustración
+        constante crea aversión, y la aversión a la matemática es muy difícil de revertir.
+      </p>
+
+      <h2>Para docentes</h2>
+      <p>
+        Generá series de 20 preguntas para diagnóstico inicial. Anotá cuáles fallan para focalizar las
+        sesiones siguientes. Después de dos semanas, repetí el diagnóstico: las que antes fallaban deberían
+        haber bajado. Esa medición concreta motiva a los chicos: "antes te equivocabas en 8, ahora solo en
+        2". Volverlo medible es mejor que decir "estás mejorando".
+      </p>
+
+      <h2>Tablas más allá de la 10</h2>
+      <p>
+        Tradicionalmente se enseñan hasta la del 10 (o 12 en países anglosajones). Llegar a la del 12 vale
+        la pena porque facilita el cálculo con horas, docenas y conversiones. Pasar de eso es opcional;
+        la mayoría de los problemas reales se resuelven combinando las tablas básicas. Lo importante no es
+        ampliar el rango sino consolidar las primeras 12.
+      </p>
+
+      <h2>Juegos para aprenderlas</h2>
+      <ul>
+        <li><strong>Pila de cartas</strong> — dos jugadores sacan una carta cada uno, multiplican; el primero que dice el resultado se las queda.</li>
+        <li><strong>Bingo de tablas</strong> — cartones con resultados, el docente lee los productos.</li>
+        <li><strong>Tabla del día</strong> — un día por tabla, repetir 5 veces a lo largo del día.</li>
+        <li><strong>Cinta del tiempo</strong> — anotar cuánto tarda en responder y graficar la mejora semanal.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué se usa este generador?</summary><p>Para practicar tablas de multiplicar de forma rápida, sin fichas.</p></details>
+      <details><summary>¿Puedo elegir solo una tabla?</summary><p>Sí, filtrá por tabla específica o mezcla todas.</p></details>
+      <details><summary>¿Hay tiempo límite?</summary><p>No por defecto. Para velocidad, usá un cronómetro externo.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+  .tm-out { margin-top: 1rem; padding: 1.5rem; background: var(--bg-soft, #f5f5f7); border-radius: var(--radius-md, 8px); font-family: var(--font-mono); font-size: 1.5rem; min-height: 5rem; text-align: center; }
+</style>
+
+<script>
+  const tEl = document.getElementById('tm-table') as HTMLSelectElement;
+  const out = document.getElementById('tm-out') as HTMLDivElement;
+  const go = document.getElementById('tm-go') as HTMLButtonElement;
+  const show = document.getElementById('tm-show') as HTMLButtonElement;
+  let answer = 0, q = '';
+
+  function rint(min: number, max: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return min + (i[0] % (max - min + 1)); }
+  function gen() {
+    const t = parseInt(tEl.value, 10);
+    let a, b;
+    if (t === 0) { a = rint(2, 12); b = rint(1, 12); }
+    else { a = t; b = rint(1, 12); }
+    answer = a * b;
+    q = `${a} × ${b} = ?`;
+    out.textContent = q;
+  }
+  go.addEventListener('click', gen);
+  show.addEventListener('click', () => { out.textContent = q.replace('?', String(answer)); });
+  gen();
+</script>

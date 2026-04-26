@@ -1,0 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Mezclador de dos colores | Genfy';
+const description = 'Mezclá dos colores en proporciones distintas para obtener tonos intermedios. Útil para gradientes y paletas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo se mezclan colores en pantalla?', acceptedAnswer: { '@type': 'Answer', text: 'En RGB se promedian los tres canales con el peso del slider. La mezcla en RGB no siempre coincide con la mezcla perceptual; para eso existen espacios como OKLab.' } },
+    { '@type': 'Question', name: '¿Sirve para construir paletas?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Mezclar el color de marca con blanco te da los tonos claros, con negro los oscuros. Es la base de muchas escalas de design system.' } },
+    { '@type': 'Question', name: '¿Por qué algunas mezclas se ven feas?', acceptedAnswer: { '@type': 'Answer', text: 'Mezclar dos colores complementarios en RGB pasa por gris. Para mezclas más vibrantes, conviene usar HSL o LCH y rotar tonos.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Mezclador de dos colores"
+    intro="Elegí dos colores y un porcentaje. Devolvemos el color resultante con HEX y RGB.">
+
+    <div slot="tool" class="mx">
+      <div class="mx-grid">
+        <div>
+          <label for="mx-c1">Color 1</label>
+          <input id="mx-c1" type="color" value="#3b82f6" />
+        </div>
+        <div>
+          <label for="mx-c2">Color 2</label>
+          <input id="mx-c2" type="color" value="#ef4444" />
+        </div>
+        <div class="mx-full">
+          <label for="mx-pct">Mezcla (% de color 2)</label>
+          <input id="mx-pct" type="range" min="0" max="100" value="50" />
+        </div>
+      </div>
+
+      <div class="mx-result">
+        <div id="mx-swatch" class="mx-swatch"></div>
+        <div class="mx-info">
+          <div><strong>HEX:</strong> <span id="mx-hex"></span></div>
+          <div><strong>RGB:</strong> <span id="mx-rgb"></span></div>
+        </div>
+      </div>
+
+      <div class="mx-actions">
+        <button id="mx-cp" class="btn btn-primary" type="button">Copiar HEX</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo funciona la mezcla</h2>
+      <p>Mezclar colores en pantalla no es lo mismo que mezclar pinturas. En pantalla los colores se forman con luz roja, verde y azul (RGB). Cuando "mezclás" dos colores en RGB, lo que hacés es promediar los valores de los tres canales con un peso que define el porcentaje. Si el peso es 50%, cada canal queda al medio entre los dos colores.</p>
+
+      <h2>La fórmula</h2>
+      <pre><code>nuevoR = R1 * (1 - p) + R2 * p
+nuevoG = G1 * (1 - p) + G2 * p
+nuevoB = B1 * (1 - p) + B2 * p</code></pre>
+      <p>Donde p va de 0 a 1. Es interpolación lineal entre los dos colores.</p>
+
+      <h2>Mezcla en RGB vs perceptual</h2>
+      <p>Mezclar dos colores complementarios (azul y naranja, rojo y verde) en RGB casi siempre pasa por un gris a mitad de camino. Eso a veces es lo que querés (transición suave) y a veces no (pierde el carácter de ambos colores). Para mezclas más "vibrantes", existen espacios de color como HSL, LCH y OKLab. CSS nuevo soporta <code>color-mix(in oklab, c1, c2 50%)</code>, que hace mezclas perceptualmente uniformes.</p>
+
+      <h2>Casos de uso</h2>
+      <ul>
+        <li><strong>Construir escalas de color</strong>: tu primario mezclado con blanco da los tonos claros (50, 100, 200), con negro los oscuros (700, 800, 900).</li>
+        <li><strong>Gradientes</strong>: ayuda a entender qué colores se ven bien al lado uno del otro.</li>
+        <li><strong>States</strong>: hover, active suelen ser una mezcla del color base con negro o blanco.</li>
+        <li><strong>Theming</strong>: derivar colores secundarios desde uno primario.</li>
+      </ul>
+
+      <h2>Construyendo escalas con mezcla</h2>
+      <p>Una técnica simple para generar una escala de 10 tonos desde un primario: tomá el color base como tono 500. Mezclalo con blanco al 90%, 80%, 70%... 10% para los tonos 50, 100, 200... 400. Mezclalo con negro al 10%, 20%, 30%... 50% para 600, 700, 800, 900. No es perfecto, pero da una escala usable que sirve como punto de partida para ajustes manuales.</p>
+
+      <h2>Limitaciones</h2>
+      <p>La mezcla RGB no respeta la luminancia perceptual. Mezclar amarillo y azul al 50% en RGB da un gris medio, no un verde como pasaría con pinturas. Para mezclas más naturales, OKLCH es la mejor opción moderna: respeta cómo el ojo humano percibe la luminosidad.</p>
+
+      <h2>Tip de diseño</h2>
+      <p>Cuando mezclás dos colores de marca, fijate si la mezcla intermedia es usable como un tercer color de la paleta. A veces sale algo lindo de manera accidental. Otras veces el medio se ve "sucio" y conviene saltearlo en la escala.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo se mezclan en pantalla?</summary><p>Promediando los tres canales RGB con el peso del slider.</p></details>
+      <details><summary>¿Sirve para paletas?</summary><p>Sí. Mezclar el primario con blanco da claros; con negro, oscuros.</p></details>
+      <details><summary>¿Por qué algunas se ven feas?</summary><p>Las mezclas en RGB pueden pasar por gris. Para mejores resultados, usá HSL o OKLab.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .mx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .mx-full { grid-column: 1 / -1; }
+  .mx-result { display: flex; gap: 1rem; align-items: center; padding: 1rem; background: var(--bg-inset); border-radius: var(--radius); margin-bottom: 1rem; }
+  .mx-swatch { width: 100px; height: 100px; border-radius: var(--radius); border: 1px solid var(--border); }
+  .mx-info { font-family: var(--font-mono); font-size: 0.875rem; }
+  .mx-info > div { margin-bottom: 0.5rem; }
+  .mx-actions { display: flex; gap: 0.5rem; }
+  @media (max-width: 600px) { .mx-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const c1 = document.getElementById('mx-c1') as HTMLInputElement;
+  const c2 = document.getElementById('mx-c2') as HTMLInputElement;
+  const pct = document.getElementById('mx-pct') as HTMLInputElement;
+  const swatch = document.getElementById('mx-swatch') as HTMLElement;
+  const hex = document.getElementById('mx-hex') as HTMLElement;
+  const rgb = document.getElementById('mx-rgb') as HTMLElement;
+  const cp = document.getElementById('mx-cp') as HTMLButtonElement;
+
+  function hex2rgb(h: string) { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+  function rgb2hex(r: number, g: number, b: number) { return '#' + [r, g, b].map(x => Math.round(x).toString(16).padStart(2, '0')).join(''); }
+
+  function render() {
+    const [r1, g1, b1] = hex2rgb(c1.value);
+    const [r2, g2, b2] = hex2rgb(c2.value);
+    const p = +pct.value / 100;
+    const r = r1 * (1 - p) + r2 * p;
+    const g = g1 * (1 - p) + g2 * p;
+    const b = b1 * (1 - p) + b2 * p;
+    const h = rgb2hex(r, g, b);
+    swatch.style.background = h;
+    hex.textContent = h;
+    rgb.textContent = `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+  }
+  [c1, c2, pct].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(hex.textContent || '');
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar HEX', 1500);
+  });
+  render();
+</script>

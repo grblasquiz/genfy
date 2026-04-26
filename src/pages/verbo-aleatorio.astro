@@ -1,0 +1,132 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Verbo aleatorio en español | Genfy';
+const description = 'Generador de verbos al azar en español, en infinitivo o conjugados. Útil para ejercicios de redacción, escritura creativa, prompts y clases de gramática.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué se usa un verbo al azar?', acceptedAnswer: { '@type': 'Answer', text: 'Para arrancar oraciones en escritura creativa, ejercitar conjugación, generar prompts de improvisación y reforzar gramática en aula.' } },
+    { '@type': 'Question', name: '¿Puedo elegir tipo de verbo?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Filtrá por terminación -ar, -er, -ir, o por verbos de acción concreta vs. mentales/abstractos.' } },
+    { '@type': 'Question', name: '¿Incluye verbos irregulares?', acceptedAnswer: { '@type': 'Answer', text: 'La lista mezcla regulares e irregulares comunes para que la práctica sea representativa del uso real del idioma.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Idiomas" title="Verbo aleatorio"
+    intro="Sacá un verbo al azar en español. Útil para gramática, redacción, juegos de palabras, prompts de escritura creativa o ejercicios de conjugación.">
+
+    <div slot="tool">
+      <div class="rw-row">
+        <div>
+          <label for="vb-end">Terminación</label>
+          <select id="vb-end">
+            <option value="all">Todas</option>
+            <option value="ar">-ar</option>
+            <option value="er">-er</option>
+            <option value="ir">-ir</option>
+          </select>
+        </div>
+        <div>
+          <label for="vb-amount">Cantidad</label>
+          <input id="vb-amount" type="number" min="1" max="30" value="5" />
+        </div>
+      </div>
+      <button id="vb-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="vb-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="vb-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>El verbo: el motor de la oración</h2>
+      <p>
+        Cualquier oración tiene un verbo, explícito o implícito. Es la palabra que mueve, que cambia el
+        estado del mundo descrito. Por eso, en escritura, el primer ajuste para subir la calidad de un texto
+        suele ser cambiar verbos genéricos ("hacer", "tener", "ser") por verbos específicos ("construir",
+        "poseer", "consistir"). Un generador de verbos al azar te obliga a salir del repertorio de cinco o
+        seis verbos que usás por inercia.
+      </p>
+
+      <h2>Aplicaciones reales</h2>
+      <ul>
+        <li><strong>Conjugación</strong> — sacá un verbo y conjugalo en presente, pretérito, condicional. Práctica diaria, sin libro.</li>
+        <li><strong>Prompts de escritura</strong> — "escribí 200 palabras donde el personaje principal _conspira_". El verbo forzado define el tono de toda la escena.</li>
+        <li><strong>Improvisación teatral</strong> — el director da un verbo y los actores construyen la escena alrededor.</li>
+        <li><strong>Game design</strong> — "verb-driven" es como los diseñadores de juegos llaman al diseño centrado en una acción clave; sacar verbos al azar destraba ideas.</li>
+        <li><strong>Aula</strong> — perfecto para ejercicios de subjuntivo, imperativo, gerundio o tiempos compuestos.</li>
+      </ul>
+
+      <h2>Verbos -ar, -er, -ir: la trinidad</h2>
+      <p>
+        El español tiene tres conjugaciones según la terminación del infinitivo. Los verbos en -ar son los
+        más numerosos y, en general, los más regulares. Los -er e -ir comparten muchas terminaciones pero
+        tienen sus propias trampas. Si estás aprendiendo español o sos profe, filtrá por terminación para
+        practicar un patrón a la vez. Si ya manejás el idioma, dejá la opción "todas" y sumá variedad.
+      </p>
+
+      <h2>Verbos fuertes vs. verbos débiles</h2>
+      <p>
+        Un consejo de escritura que funciona en cualquier idioma: preferí verbos "fuertes". "Caminó" es
+        bueno, "deambuló" es mejor si el matiz importa. "Dijo" es neutro, "susurró" o "espetó" agregan
+        información. La regla no es eliminar los verbos comunes (a veces son los correctos), sino
+        preguntarte si hay uno más preciso. El generador te da una excusa para revisar tu texto con un verbo
+        candidato a cuestas.
+      </p>
+
+      <h2>Ejercicios concretos para hacer hoy</h2>
+      <ul>
+        <li>Sacá tres verbos y armá una historia de tres oraciones, una por verbo, en orden.</li>
+        <li>Conjugá un verbo en cinco tiempos verbales distintos.</li>
+        <li>Buscá un sinónimo más preciso para cada verbo de la lista.</li>
+        <li>Escribí un haiku (tres versos) que termine con uno de los verbos en gerundio.</li>
+        <li>Ponele a cada verbo el sujeto menos esperado: "el miedo cocina", "la lluvia escribe".</li>
+      </ul>
+
+      <h2>Cuándo no forzar el verbo</h2>
+      <p>
+        Si el verbo random no encaja con tu idea, no lo metas con calzador: descartalo y generá otro. La
+        herramienta es una excusa para probar caminos, no una restricción rígida. Cinco minutos de
+        generación pueden darte el verbo justo para un titular, una escena o un nombre que venías
+        rumiando hace días.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué se usa un verbo al azar?</summary><p>Para escritura creativa, ejercicios de gramática, naming verbo+sustantivo y juegos de aula.</p></details>
+      <details><summary>¿Puedo elegir tipo de verbo?</summary><p>Sí, filtrá por terminación -ar, -er o -ir según la conjugación que querés practicar.</p></details>
+      <details><summary>¿Incluye verbos irregulares?</summary><p>Sí. Mezcla regulares e irregulares comunes para reflejar el uso real del idioma.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const VAR = "amar caminar cantar bailar trabajar estudiar comprar viajar llamar pensar mirar buscar ayudar pintar dibujar limpiar contar pagar arreglar cocinar plantar cargar sembrar saltar abrazar abandonar cerrar ahorrar contratar descansar enseñar firmar guardar".split(' ');
+  const VER = "comer beber correr leer aprender vender perder romper crecer entender suceder responder coser proteger temer mover prometer encender remover ofrecer barrer ceder vencer poseer ejercer tejer".split(' ');
+  const VIR = "abrir vivir escribir partir subir descubrir compartir decidir construir destruir cumplir dormir morir mentir reír sentir sufrir convivir admitir definir discutir omitir resistir surgir transmitir asistir batir cubrir presumir".split(' ');
+
+  const endEl = document.getElementById('vb-end') as HTMLSelectElement;
+  const amEl = document.getElementById('vb-amount') as HTMLInputElement;
+  const out = document.getElementById('vb-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('vb-gen') as HTMLButtonElement;
+  const cp = document.getElementById('vb-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function build() {
+    const e = endEl.value;
+    const pool = e === 'ar' ? VAR : e === 'er' ? VER : e === 'ir' ? VIR : [...VAR, ...VER, ...VIR];
+    const n = Math.max(1, Math.min(30, parseInt(amEl.value || '1', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) lines.push(pick(pool));
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', build);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+  build();
+</script>

@@ -1,0 +1,160 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de apertura de respuesta Quora gratis | Genfy';
+const description = 'Generá la apertura de tu respuesta en Quora para maximizar upvotes. Las primeras 2 líneas son las únicas que la mayoría lee antes de decidir.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué importa tanto la apertura en Quora?', acceptedAnswer: { '@type': 'Answer', text: 'Quora trunca las respuestas en el feed después de 2-3 líneas. La gente decide upvote o seguir scroll basado en esas líneas, antes de leer la respuesta completa.' } },
+    { '@type': 'Question', name: '¿Quora premia respuestas largas o cortas?', acceptedAnswer: { '@type': 'Answer', text: 'Premia respuestas con engagement: muchos upvotes y tiempo de lectura. Una respuesta de 200 palabras con buen hook puede rankear más que una de 2000 mal escrita.' } },
+    { '@type': 'Question', name: '¿Conviene poner un hook controvertido?', acceptedAnswer: { '@type': 'Answer', text: 'Funciona si tenés cómo respaldarlo. Una afirmación contraintuitiva con argumento detrás genera upvotes. Sin sustento, baja credibilidad y reportes.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de apertura de respuesta Quora"
+    intro="Cargá la pregunta y tu posición. Genfy te devuelve 4 aperturas que enganchan en las primeras 2 líneas, antes del 'leer más'.">
+
+    <div slot="tool" class="qa">
+      <label for="qa-question">Pregunta de Quora</label>
+      <input id="qa-question" type="text" placeholder="Conviene aprender programacion en 2026?..." value="Conviene aprender programacion en 2026?" />
+
+      <label for="qa-position" style="margin-top:1rem">Tu posición o respuesta corta</label>
+      <input id="qa-position" type="text" placeholder="Si, pero no por las razones obvias" value="Si, pero no por las razones obvias" />
+
+      <label for="qa-credential" style="margin-top:1rem">Credencial relevante (opcional)</label>
+      <input id="qa-credential" type="text" placeholder="Programador hace 12 años..." value="Programador hace 12 anos" />
+
+      <label for="qa-twist" style="margin-top:1rem">Ángulo o twist</label>
+      <input id="qa-twist" type="text" placeholder="No vas a competir con AI..." value="El valor real ya no es escribir codigo" />
+
+      <button id="qa-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 4 aperturas</button>
+
+      <div id="qa-out" class="qa-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué la apertura es el 80% del éxito en Quora</h2>
+      <p>
+        Quora muestra las respuestas en un feed donde cada una se previsualiza con las primeras 2-3 líneas. Si esas líneas no enganchan, el usuario hace scroll. Si enganchan, hace click en "leer más" y ahí sí pueden upvotear. Una respuesta brillante con apertura mediocre rinde menos que una respuesta decente con apertura fuerte.
+      </p>
+      <p>
+        El otro factor: Quora ranquea respuestas dentro de la pregunta por upvotes, edad, y autoridad del autor. Las primeras horas son cruciales: si tu apertura no genera engagement temprano, otra respuesta te pasa y termina en posición 8.
+      </p>
+
+      <h2>Las 4 estructuras de apertura que rinden</h2>
+      <ol>
+        <li><strong>Apertura "respuesta directa + twist":</strong> "Sí, pero no por las razones obvias." — el lector quiere saber cuáles.</li>
+        <li><strong>Apertura "credencial específica":</strong> "Programé profesionalmente 12 años. Esto es lo que cambió." — autoridad antes de opinión.</li>
+        <li><strong>Apertura "afirmación contraintuitiva":</strong> "Aprender a programar en 2026 es más urgente que en 2015." — el lector necesita ver el argumento.</li>
+        <li><strong>Apertura "historia personal":</strong> "Hace 5 años renuncié a mi trabajo en banca para programar. Hoy te cuento si valió la pena." — narrativa engancha.</li>
+      </ol>
+
+      <h2>Cómo funcionan los upvotes en Quora</h2>
+      <p>
+        El upvote en Quora pesa más que el de Reddit: cada upvote viene con un score de credibilidad (basado en la actividad del votante, su autoridad en el topic). Un upvote de un usuario top en el tema cuenta más que diez de cuentas nuevas. Por eso las respuestas de calidad escalan en visibilidad incluso con pocos votos en bruto.
+      </p>
+
+      <h2>El "leer más" como filtro brutal</h2>
+      <p>
+        Quora muestra aproximadamente las primeras 240-300 caracteres antes del "leer más". Eso es 2-3 frases en español, 3-4 en inglés. En esas frases tenés que: (1) mostrar que respondés directamente la pregunta, (2) dar credibilidad o gancho, (3) prometer el valor del resto.
+      </p>
+      <p>
+        Las aperturas que fallan: rodeos retóricos ("Esa es una excelente pregunta..."), confirmaciones genéricas ("Hay muchas formas de ver esto..."), o párrafos de contexto antes de la respuesta.
+      </p>
+
+      <h2>Credenciales: cuándo sí y cómo</h2>
+      <p>
+        Quora tiene un campo de "Credentials" que aparece junto a tu nombre. Aprovechalo: poné tu rol/experiencia relevante. Pero también dentro de la respuesta, mencionar credenciales específicas refuerza autoridad. La regla: específico, verificable, mínimo. "Programé sistemas para X empresa durante 12 años" rinde más que "Soy experto en programación".
+      </p>
+
+      <h2>El formato que Quora premia en el body</h2>
+      <p>
+        Después del hook, Quora valora respuestas estructuradas: párrafos cortos, bullet points, ejemplos concretos, y un cierre que invite a comentar o seguir. Las respuestas con muros de texto rinden peor que las que tienen aire visual.
+      </p>
+      <ul>
+        <li><strong>Párrafos cortos:</strong> 2-3 frases máximo.</li>
+        <li><strong>Bullet points o listas numeradas:</strong> escaneables.</li>
+        <li><strong>Ejemplos concretos:</strong> "En el proyecto X que hice en 2022...".</li>
+        <li><strong>Imágenes propias o capturas:</strong> Quora les da boost (incluyendo en el feed preview).</li>
+        <li><strong>Cierre con pregunta:</strong> "¿Vos cuál elegirías?" genera comentarios.</li>
+      </ul>
+
+      <h2>Cómo Quora premia consistencia</h2>
+      <p>
+        Responder regularmente en una misma área de expertise hace que Quora te marque como "Top Writer" en ese topic. Tus respuestas aparecen primero en preguntas relacionadas. Pero requiere consistencia: 3-5 respuestas semanales por al menos 2-3 meses para empezar a ver el efecto.
+      </p>
+
+      <h2>Promoción en Quora: la línea fina</h2>
+      <p>
+        Quora permite linkear a tu sitio o servicio si la respuesta es genuinamente útil y el link es contextual. Pero spam descarado se reporta y borra. Reglas:
+      </p>
+      <ul>
+        <li>El 90% de la respuesta tiene que aportar valor sin el link.</li>
+        <li>El link va al final, no al inicio.</li>
+        <li>Como máximo 1 link por respuesta.</li>
+        <li>Que el link tenga relación directa con la pregunta.</li>
+      </ul>
+
+      <h2>Errores típicos que matan upvotes</h2>
+      <ul>
+        <li><strong>Apertura genérica:</strong> "Esa es una excelente pregunta..." — pierde el primer upvote.</li>
+        <li><strong>Demasiada autopromoción:</strong> mencionar tu producto/servicio en cada párrafo se reporta.</li>
+        <li><strong>Listas sin contexto:</strong> "5 razones..." sin un párrafo de apertura no engancha.</li>
+        <li><strong>Respuestas que no responden:</strong> divagar sobre el tema sin contestar la pregunta puntual.</li>
+        <li><strong>Tono académico:</strong> Quora favorece tono conversacional, no formal.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuánto se ve antes del "leer más"?</summary><p>Aprox 240-300 caracteres, equivalente a 2-3 frases en español.</p></details>
+      <details><summary>¿Conviene mencionar credenciales?</summary><p>Sí, específicas y verificables. "12 años en X" rinde más que "soy experto".</p></details>
+      <details><summary>¿Puedo linkear a mi sitio?</summary><p>Sí, al final, con relación directa a la pregunta y máximo 1 link.</p></details>
+      <details><summary>¿Cuánto tarda en escalar?</summary><p>Las primeras 24-48 horas son clave. Si no genera engagement temprano, queda enterrada.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .qa-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .qa-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; }
+  .qa-card:hover { border-color: var(--accent); }
+  .qa-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const question = document.getElementById('qa-question') as HTMLInputElement;
+  const position = document.getElementById('qa-position') as HTMLInputElement;
+  const credential = document.getElementById('qa-credential') as HTMLInputElement;
+  const twist = document.getElementById('qa-twist') as HTMLInputElement;
+  const gen = document.getElementById('qa-gen') as HTMLButtonElement;
+  const out = document.getElementById('qa-out')!;
+
+  function generate() {
+    const Q = question.value.trim() || 'la pregunta';
+    const P = position.value.trim() || 'Depende';
+    const Cr = credential.value.trim();
+    const Tw = twist.value.trim() || 'Hay un detalle clave';
+
+    const v1 = `${P}. Y el "porque" no es el que esperas.\n\n${Tw}.`;
+    const v2 = `${Cr ? Cr + '. ' : ''}Te respondo desde la experiencia: ${P.toLowerCase()}.\n\n${Tw}.`;
+    const v3 = `Respuesta corta: ${P.toLowerCase()}.\nRespuesta larga: ${Tw.toLowerCase()}.`;
+    const v4 = `${Tw}. Por eso ${P.toLowerCase()}.\n\nTe explico el razonamiento abajo.`;
+
+    out.innerHTML = '';
+    [v1, v2, v3, v4].forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'qa-card';
+      el.title = 'Click para copiar';
+      const len = b.length;
+      el.innerHTML = b.replace(/\n/g, '<br>') + `<div class="qa-meta">v${i+1} · ${len} caracteres</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copiado'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

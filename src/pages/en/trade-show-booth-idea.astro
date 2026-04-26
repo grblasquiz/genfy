@@ -1,0 +1,116 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Trade Show Booth Idea Generator | Genfy';
+const description = 'Generate creative trade show booth ideas: concept, attraction mechanic, premium giveaway and demo. Ready for the producer brief.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a trade show booth successful?', acceptedAnswer: { '@type': 'Answer', text: 'Three things: a strong visual concept readable from the aisle, an interaction mechanic that stops the visitor, and a giveaway worth handing over their contact. Without all three, the booth disappears.' } },
+    { '@type': 'Question', name: 'How much budget do I need?', acceptedAnswer: { '@type': 'Answer', text: 'Depends on the show: in a 100 sq ft booth you can run effective activations on $1,500 to $4,000 covering merch, demo and a couple of attendants. Premium immersive booths start around $15,000.' } },
+    { '@type': 'Question', name: 'How do I measure ROI?', acceptedAnswer: { '@type': 'Answer', text: 'Set KPIs before the show: qualified contacts, completed demos, scheduled meetings. Compare against total cost (booth + travel + staff) and compute cost per qualified lead.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Trade Show Booth Idea Generator"
+    intro="Get a booth brief in seconds: visual concept, attraction mechanic, giveaway and demo. Built for B2B, retail expos, fintech and sector events.">
+
+    <div slot="tool" class="bo">
+      <label for="bo-sector">Sector</label>
+      <select id="bo-sector">
+        <option value="tech">Tech / SaaS</option>
+        <option value="retail">Retail / consumer</option>
+        <option value="fintech">Fintech / banking</option>
+        <option value="health">Health / wellness</option>
+      </select>
+
+      <label for="bo-budget" style="margin-top:1rem">Budget</label>
+      <select id="bo-budget">
+        <option value="low">Low ($1.5k-$4k)</option>
+        <option value="mid">Mid ($5k-$15k)</option>
+        <option value="high">High ($15k+)</option>
+      </select>
+
+      <button id="bo-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate idea</button>
+      <div id="bo-out" class="bo-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How a trade show is won or lost</h2>
+      <p>The visitor walks five hours, sees two hundred booths and remembers five. The difference between the five remembered and the rest is rarely budget: it's clarity of pitch. If your booth answers "what problem do you solve and what does it look like?" from the aisle and the answer is legible in three seconds, you've earned the lead. If they need to step in and read a small sign, you lost it.</p>
+      <h2>Anatomy of an effective booth</h2>
+      <ol>
+        <li><strong>Headline visible at 15 feet.</strong> One sentence, big font, high contrast. "Cut your logistics cost by 30%" beats "Integrated solutions for your supply chain".</li>
+        <li><strong>Active demo.</strong> Live screen with real interaction, not a PDF. If you sell software, show the main screen working with sample data.</li>
+        <li><strong>Attraction mechanic.</strong> Something that stops people: dice toss, digital wheel, instant photo, specialty coffee.</li>
+        <li><strong>Giveaway with real value.</strong> Forget the branded pen. Better: a PDF guide via email, a free month, a short sector book.</li>
+        <li><strong>Trained team.</strong> Three questions and a close. No long pitch — visitors walk away.</li>
+      </ol>
+      <h2>Mechanics that work by sector</h2>
+      <ul>
+        <li><strong>Tech / SaaS:</strong> big-screen demo with visitor challenge ("type your case, we run it live").</li>
+        <li><strong>Retail:</strong> tasting or physical sample plus brand photo.</li>
+        <li><strong>Fintech:</strong> savings or ROI calculator; the visitor enters data and the result is emailed.</li>
+        <li><strong>Health:</strong> quick measurement (posture, hydration, blood pressure) with a specialist on site.</li>
+      </ul>
+      <h2>Mistakes that leave you without leads</h2>
+      <p>Booth blocked by a counter (you're visually blocking the visitor), heavy paper collateral instead of digital lead capture, team on their phones, generic headline, demo that needs a five-minute setup. Three out of five and you'll bring home a notebook of data but no qualified leads.</p>
+      <h2>Brief your producer needs</h2>
+      <p>For the idea to execute well, hand the producer a one-page brief: visual concept in one sentence, attraction mechanic described in three steps, expected lead KPI, locked budget, staff list with shifts, lead-capture plan (digital form, QR to landing, CRM integration) and post-show follow-up plan with automated emails.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a booth successful?</summary><p>Strong visual concept, interaction mechanic and giveaway with real value.</p></details>
+      <details><summary>How much budget?</summary><p>From $1,500 for a 100 sq ft booth with basic activation.</p></details>
+      <details><summary>How do I measure ROI?</summary><p>Total cost divided by qualified leads and opportunities closed in 90 days.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bo-out { margin-top: 1.25rem; }
+  .bo-card { padding: 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 0.75rem; }
+  .bo-card h4 { margin: 0 0 0.5rem 0; color: var(--primary); }
+  .bo-card p { margin: 0.25rem 0; }
+</style>
+
+<script>
+  const CONCEPTS_TECH = ['Live product demo with visitor challenge', 'Customer "before/after" wall', 'Interactive lab: visitor builds a flow', 'Dark room with LED data visualization'];
+  const CONCEPTS_RETAIL = ['Tasting pop-up with instant photo', 'Sensor-driven shelf with reactive lighting', 'Photo booth with product', 'Rotating display with visual storytelling'];
+  const CONCEPTS_FINTECH = ['Personalized savings calculator on tablet', 'Digital whiteboard with financial simulation', '"Your money in 5 years" booth', 'Digital wheel with real rates'];
+  const CONCEPTS_HEALTH = ['Live posture screening', 'Hydration check with analysis', 'Three-minute guided breathing booth', 'Wellness test with emailed result'];
+  const HOOKS = ['Specialty coffee served by a barista', 'Raffle every 30 minutes on screen', 'Pro photo with brand backdrop', 'Demo with prize for best case of the day', 'Custom magnet with your name in 60 seconds'];
+  const GIVEAWAYS_LOW = ['PDF guide via email', 'Free month of the product', 'Premium sticker', 'Mini sector book'];
+  const GIVEAWAYS_MID = ['Branded thermal bottle', 'Custom Moleskine notebook', 'Branded budget headphones', 'Three free months of the product'];
+  const GIVEAWAYS_HIGH = ['Premium power bank', 'Annual subscription + experience', 'Branded technical backpack', 'Signed book by sector thought leader'];
+
+  const sector = document.getElementById('bo-sector') as HTMLSelectElement;
+  const budget = document.getElementById('bo-budget') as HTMLSelectElement;
+  const gen = document.getElementById('bo-gen') as HTMLButtonElement;
+  const out = document.getElementById('bo-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = sector.value, b = budget.value;
+    let conc = CONCEPTS_TECH;
+    if (s === 'retail') conc = CONCEPTS_RETAIL;
+    else if (s === 'fintech') conc = CONCEPTS_FINTECH;
+    else if (s === 'health') conc = CONCEPTS_HEALTH;
+    let give = GIVEAWAYS_LOW;
+    if (b === 'mid') give = GIVEAWAYS_MID;
+    else if (b === 'high') give = GIVEAWAYS_HIGH;
+
+    const idea = { concept: pick(conc), hook: pick(HOOKS), giveaway: pick(give) };
+    out.innerHTML = `<div class="bo-card">
+      <h4>Booth concept</h4><p>${idea.concept}</p>
+      <h4>Attraction mechanic</h4><p>${idea.hook}</p>
+      <h4>Recommended giveaway</h4><p>${idea.giveaway}</p>
+    </div>`;
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

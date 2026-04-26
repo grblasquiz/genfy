@@ -1,0 +1,175 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Ordenar líneas alfabéticamente | Genfy';
+const description = 'Ordená listas y líneas de texto alfabéticamente, numéricamente, por longitud o aleatoriamente. Ascendente o descendente, con o sin distinción de mayúsculas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Distingue mayúsculas?', acceptedAnswer: { '@type': 'Answer', text: 'Por defecto no, porque es lo que la gente espera al ordenar listas. Hay un toggle para activarlo si lo necesitás.' } },
+    { '@type': 'Question', name: '¿Cómo ordena los números?', acceptedAnswer: { '@type': 'Answer', text: 'En modo numérico interpreta cada línea como número y ordena por valor (10 va después de 2). El modo alfabético los ordena como strings (10 va antes de 2).' } },
+    { '@type': 'Question', name: '¿Soporta caracteres acentuados?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Usamos Intl.Collator con locale "es" para que ñ, ll, tildes y dígrafos se ordenen como en un diccionario español real.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto" title="Ordenar líneas"
+    intro="Ordená listas alfabéticamente, numéricamente, por longitud o aleatorio. Ascendente o descendente, con opción de eliminar duplicados.">
+
+    <div slot="tool" class="so">
+      <label for="so-in">Líneas</label>
+      <textarea id="so-in" rows="8" placeholder="Una línea por elemento…"></textarea>
+
+      <div class="so-row">
+        <div>
+          <label for="so-mode">Criterio</label>
+          <select id="so-mode">
+            <option value="alpha">Alfabético</option>
+            <option value="numeric">Numérico</option>
+            <option value="length">Longitud</option>
+            <option value="random">Aleatorio</option>
+          </select>
+        </div>
+        <div>
+          <label for="so-dir">Orden</label>
+          <select id="so-dir">
+            <option value="asc">Ascendente</option>
+            <option value="desc">Descendente</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="so-opts">
+        <label><input type="checkbox" id="so-case" /> Distinguir mayúsculas</label>
+        <label><input type="checkbox" id="so-trim" checked /> Quitar espacios al inicio/fin</label>
+        <label><input type="checkbox" id="so-empty" checked /> Eliminar líneas vacías</label>
+      </div>
+
+      <button id="so-go" class="btn btn-primary" type="button">Ordenar</button>
+      <button id="so-copy" class="btn btn-ghost" type="button">Copiar</button>
+
+      <label for="so-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="so-out" rows="8" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué ordenar listas en el navegador</h2>
+      <p>
+        Excel y Google Sheets ordenan, sí. Pero abrir una hoja, pegar columna, ordenar y
+        copiar de vuelta es lento si solo tenés una lista corta. Una herramienta web ordena
+        instantáneo. Para SEO, marketing, programación o trabajo administrativo es uno de los
+        utilitarios más usados.
+      </p>
+
+      <h2>Modos de ordenamiento</h2>
+      <ul>
+        <li><strong>Alfabético</strong> — usa <code>Intl.Collator</code> con locale español, así <em>ñ</em> queda después de <em>n</em> como en un diccionario.</li>
+        <li><strong>Numérico</strong> — interpreta cada línea como número. <code>10</code> va después de <code>2</code>, no antes (que es lo que pasa con un sort de strings).</li>
+        <li><strong>Longitud</strong> — útil para revisar copy: ver primero las líneas más cortas o las más largas.</li>
+        <li><strong>Aleatorio</strong> — barajar elementos. Útil para sorteos, A/B testing, o asignar orden de presentación.</li>
+      </ul>
+
+      <h2>Casos de uso</h2>
+      <ul>
+        <li>Ordenar una lista de keywords antes de pegarla en Google Ads o Search Console.</li>
+        <li>Alfabetizar nombres de archivos antes de subirlos a un servidor.</li>
+        <li>Ordenar tags de un CMS para revisar duplicados.</li>
+        <li>Reordenar imports de un archivo de código (aunque para esto es mejor un linter).</li>
+        <li>Sortear participantes de un sorteo o el orden de exposición en una clase.</li>
+      </ul>
+
+      <h2>El problema clásico del sort numérico</h2>
+      <p>
+        En JavaScript, <code>[2, 10, 3].sort()</code> devuelve <code>[10, 2, 3]</code>. Por
+        qué: <code>sort()</code> sin argumentos compara como string, y "10" alfabéticamente
+        está antes de "2" porque "1" &lt; "2". Por eso el modo numérico aplica
+        <code>parseFloat</code> y compara como números. Si tu lista mezcla números y texto,
+        los no-numéricos quedan al final.
+      </p>
+
+      <h2>Mayúsculas y acentos</h2>
+      <p>
+        Por defecto el ordenamiento es <em>case-insensitive</em> y usa el orden alfabético del
+        español. Si activás "distinguir mayúsculas", las MAYÚSCULAS se ordenan antes que las
+        minúsculas (porque sus puntos de código en Unicode son menores). Eso casi nunca es lo
+        que querés para listas humanas, pero sí para casos técnicos.
+      </p>
+
+      <h2>Limpieza opcional</h2>
+      <p>
+        Antes de ordenar podés:
+      </p>
+      <ul>
+        <li><strong>Quitar espacios al inicio/fin</strong> — evita que <code>" Apple"</code> se ordene aparte de <code>"Apple"</code>.</li>
+        <li><strong>Eliminar líneas vacías</strong> — útil cuando pegás una lista con saltos de línea sobrantes.</li>
+      </ul>
+      <p>
+        Para eliminar duplicados explícitamente tenés un generador dedicado en este sitio.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Distingue mayúsculas?</summary><p>Por defecto no — hay un toggle para activarlo.</p></details>
+      <details><summary>¿Cómo ordena los números?</summary><p>El modo numérico interpreta cada línea como número y ordena por valor.</p></details>
+      <details><summary>¿Soporta caracteres acentuados?</summary><p>Sí, usa Intl.Collator con locale "es" para orden tipo diccionario.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .so-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .so-opts { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; color: var(--text-soft); }
+  .so-opts label { display: inline-flex; gap: 0.4rem; align-items: center; margin: 0; }
+  .so-opts input { width: auto; }
+  @media (max-width: 600px) { .so-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const inEl = document.getElementById('so-in') as HTMLTextAreaElement;
+  const out = document.getElementById('so-out') as HTMLTextAreaElement;
+  const mode = document.getElementById('so-mode') as HTMLSelectElement;
+  const dir = document.getElementById('so-dir') as HTMLSelectElement;
+  const cs = document.getElementById('so-case') as HTMLInputElement;
+  const tr = document.getElementById('so-trim') as HTMLInputElement;
+  const em = document.getElementById('so-empty') as HTMLInputElement;
+  const go = document.getElementById('so-go') as HTMLButtonElement;
+  const copy = document.getElementById('so-copy') as HTMLButtonElement;
+
+  function run() {
+    let lines = inEl.value.split(/\r?\n/);
+    if (tr.checked) lines = lines.map(l => l.trim());
+    if (em.checked) lines = lines.filter(l => l.length > 0);
+
+    const collator = new Intl.Collator('es', { sensitivity: cs.checked ? 'case' : 'base', numeric: false });
+
+    if (mode.value === 'alpha') lines.sort((a, b) => collator.compare(a, b));
+    else if (mode.value === 'numeric') lines.sort((a, b) => {
+      const na = parseFloat(a), nb = parseFloat(b);
+      const aN = isNaN(na), bN = isNaN(nb);
+      if (aN && bN) return collator.compare(a, b);
+      if (aN) return 1; if (bN) return -1;
+      return na - nb;
+    });
+    else if (mode.value === 'length') lines.sort((a, b) => a.length - b.length);
+    else if (mode.value === 'random') {
+      for (let i = lines.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [lines[i], lines[j]] = [lines[j], lines[i]];
+      }
+    }
+    if (dir.value === 'desc' && mode.value !== 'random') lines.reverse();
+    out.value = lines.join('\n');
+  }
+
+  go.addEventListener('click', run);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copy.textContent; copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = t; }, 1200);
+  });
+</script>
+</content>
+</invoke>

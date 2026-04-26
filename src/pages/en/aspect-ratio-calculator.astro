@@ -1,0 +1,152 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Aspect Ratio Calculator | Genfy';
+const description = 'Calculate common aspect ratios (16:9, 4:3, 1:1) and derive dimensions from a fixed width or height.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is aspect ratio?', acceptedAnswer: { '@type': 'Answer', text: 'The ratio of width to height of an image or video. 16:9 means 16 units wide for every 9 tall.' } },
+    { '@type': 'Question', name: 'Most common ratios?', acceptedAnswer: { '@type': 'Answer', text: '16:9 for video, 4:3 legacy photo, 1:1 for Instagram, 9:16 vertical stories, 21:9 ultrawide, 3:2 for DSLR cameras.' } },
+    { '@type': 'Question', name: 'How to apply in CSS?', acceptedAnswer: { '@type': 'Answer', text: 'CSS aspect-ratio: 16/9 sets it directly. Full support in modern browsers since 2021.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design / Diseño" title="Aspect Ratio Calculator"
+    intro="Set the ratio and one dimension. We compute the other and show CSS aspect-ratio ready to copy.">
+
+    <div slot="tool" class="ar">
+      <div class="ar-grid">
+        <div>
+          <label for="ar-w">Ratio width</label>
+          <input id="ar-w" type="number" value="16" />
+        </div>
+        <div>
+          <label for="ar-h">Ratio height</label>
+          <input id="ar-h" type="number" value="9" />
+        </div>
+        <div>
+          <label for="ar-known">Known side</label>
+          <select id="ar-known"><option value="w">Width</option><option value="h">Height</option></select>
+        </div>
+        <div>
+          <label for="ar-val">Value (px)</label>
+          <input id="ar-val" type="number" value="1280" />
+        </div>
+      </div>
+
+      <div class="ar-result" id="ar-result"></div>
+
+      <div class="ar-actions">
+        <button id="ar-cp" class="btn btn-primary" type="button">Copy CSS</button>
+      </div>
+
+      <pre><code id="ar-css"></code></pre>
+
+      <div class="ar-presets">
+        <button data-r="16:9" class="ar-preset">16:9</button>
+        <button data-r="4:3" class="ar-preset">4:3</button>
+        <button data-r="1:1" class="ar-preset">1:1</button>
+        <button data-r="9:16" class="ar-preset">9:16</button>
+        <button data-r="21:9" class="ar-preset">21:9</button>
+        <button data-r="3:2" class="ar-preset">3:2</button>
+        <button data-r="2:3" class="ar-preset">2:3</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>What aspect ratio is</h2>
+      <p>The aspect ratio is the proportion between width and height of an image, video or container. Expressed as two numbers separated by a colon: 16:9, 4:3, 1:1. One of the most practical concepts in visual design, video and web development.</p>
+
+      <h2>Most common ratios</h2>
+      <ul>
+        <li><strong>16:9</strong>: modern video standard (YouTube, TV, monitors).</li>
+        <li><strong>4:3</strong>: legacy TV, classic PowerPoint slides.</li>
+        <li><strong>1:1</strong>: square. Instagram feed, Spotify covers, avatars.</li>
+        <li><strong>9:16</strong>: vertical for stories, TikTok, Reels.</li>
+        <li><strong>21:9</strong>: cinematic ultrawide.</li>
+        <li><strong>3:2</strong>: DSLR and mirrorless cameras.</li>
+        <li><strong>2:3</strong>: posters and vertical covers.</li>
+      </ul>
+
+      <h2>CSS aspect-ratio</h2>
+      <p>The <code>aspect-ratio</code> CSS property maintains a proportion without hacks. We used to need padding-bottom: 56.25% for 16:9. Now it's simply:</p>
+      <pre><code>.video &lcub;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+&rcub;</code></pre>
+      <p>Full support in Chrome, Firefox, Safari and Edge since 2021. Define one side (typically width: 100%) and the other is computed automatically.</p>
+
+      <h2>Use cases</h2>
+      <ul>
+        <li><strong>Video embeds</strong>: iframes that keep the right ratio when responsive.</li>
+        <li><strong>Responsive images</strong>: avoid layout shift while loading.</li>
+        <li><strong>Cards</strong>: news, products, posts with consistent thumbnail sizes.</li>
+        <li><strong>Galleries</strong>: grids where every item has the same proportion.</li>
+        <li><strong>Hero sections</strong>: precise control over hero dimensions.</li>
+      </ul>
+
+      <h2>Layout shift and aspect-ratio</h2>
+      <p>Insert an image without width and height (or aspect-ratio), and the browser does not know how much space to reserve while loading. When it finishes, content jumps, causing layout shift (CLS — Cumulative Layout Shift). aspect-ratio fixes this: the browser reserves the right space from the start.</p>
+
+      <h2>When you do NOT need aspect-ratio</h2>
+      <p>If the image has width and height attributes in HTML (as it should), the browser already computes the ratio implicitly. The CSS property is useful for components without those attributes, or for iframes and embeds without fixed sizes.</p>
+
+      <h2>Quick percentage conversions</h2>
+      <p>For the legacy padding-bottom hack: 16:9 = 56.25%, 4:3 = 75%, 1:1 = 100%, 9:16 = 177.78%, 21:9 = 42.86%. Useful for ancient browser compatibility.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is aspect ratio?</summary><p>The proportion between width and height of an image, video or container.</p></details>
+      <details><summary>Most common?</summary><p>16:9 video, 1:1 square, 9:16 vertical, 4:3 legacy.</p></details>
+      <details><summary>How in CSS?</summary><p>aspect-ratio: 16/9. Full support in modern browsers since 2021.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ar-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .ar-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .ar-result { padding: 1.5rem; background: var(--bg-inset); border-radius: var(--radius); font-family: var(--font-mono); font-size: 1.125rem; text-align: center; margin-bottom: 1rem; }
+  .ar-presets { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+  .ar-preset { padding: 0.5rem 1rem; border: 1px solid var(--border); background: var(--bg-card); border-radius: var(--radius-sm); cursor: pointer; font-family: var(--font-mono); font-size: 0.875rem; }
+  .ar-preset:hover { border-color: var(--text); }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+  @media (max-width: 600px) { .ar-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const w = document.getElementById('ar-w') as HTMLInputElement;
+  const h = document.getElementById('ar-h') as HTMLInputElement;
+  const known = document.getElementById('ar-known') as HTMLSelectElement;
+  const val = document.getElementById('ar-val') as HTMLInputElement;
+  const result = document.getElementById('ar-result') as HTMLElement;
+  const css = document.getElementById('ar-css') as HTMLElement;
+  const cp = document.getElementById('ar-cp') as HTMLButtonElement;
+
+  function render() {
+    const rW = +w.value, rH = +h.value, v = +val.value;
+    let other: number;
+    if (known.value === 'w') other = (v * rH) / rW;
+    else other = (v * rW) / rH;
+    const wPx = known.value === 'w' ? v : other;
+    const hPx = known.value === 'h' ? v : other;
+    result.textContent = `${wPx.toFixed(2)} × ${hPx.toFixed(2)} px`;
+    css.textContent = `aspect-ratio: ${rW} / ${rH};`;
+  }
+  [w, h, known, val].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(css.textContent || '');
+    cp.textContent = 'Copied'; setTimeout(() => cp.textContent = 'Copy CSS', 1500);
+  });
+  document.querySelectorAll<HTMLButtonElement>('.ar-preset').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const [a, b] = btn.dataset.r!.split(':');
+      w.value = a; h.value = b; render();
+    });
+  });
+  render();
+</script>

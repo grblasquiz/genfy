@@ -1,0 +1,122 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Comic Book Title Generator | Genfy';
+const description = 'Generate titles for comics, graphic novels, webcomics and manga. Styles: action, sci-fi, slice of life, indie and more.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do I pick a title for my comic?', acceptedAnswer: { '@type': 'Answer', text: 'Aim for rhythm, fit on a square cover, and clear genre signal in fewer than five words. Read it aloud and test on social before locking it.' } },
+    { '@type': 'Question', name: 'Does it work for webcomics and manga?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, generated titles work for webcomic, manga, graphic novel, mini-comic and zine. For vertical webtoon prefer a short title that reads well at thumbnail size.' } },
+    { '@type': 'Question', name: 'Do I need to trademark the title?', acceptedAnswer: { '@type': 'Answer', text: 'Before publishing commercially, check it isn\'t taken in comic databases (Comichron, ComicVine) and register the full work with the USPTO, Library of Congress or your local IP office.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Creative" title="Comic Book Title Generator"
+    intro="Mix genre, keyword and style to land titles that pop on covers and platforms. Works for webcomic, manga, graphic novel and indie.">
+
+    <div slot="tool" class="ct">
+      <label for="ct-genre">Genre</label>
+      <select id="ct-genre">
+        <option value="action">Action / adventure</option>
+        <option value="scifi">Sci-fi</option>
+        <option value="slice">Slice of life</option>
+        <option value="indie">Indie / experimental</option>
+      </select>
+
+      <label for="ct-kw" style="margin-top:1rem">Keyword</label>
+      <input id="ct-kw" type="text" value="city" placeholder="rain, iron, coffee..." />
+
+      <button id="ct-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 titles</button>
+      <div id="ct-out" class="ct-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why a comic title is pure marketing</h2>
+      <p>In a bookstore the reader has three seconds to decide whether to pull the issue off the shelf. On a webcomic platform the thumbnail is 200 pixels wide. The title carries half the cover weight along with the artwork. If it can't be read from a meter away and doesn't hint at genre, you've lost the reader before page 1.</p>
+      <h2>Structures that work on covers</h2>
+      <ol>
+        <li><strong>One strong word:</strong> "Saga", "Berserk", "Frontier". Memorable, easy to render large.</li>
+        <li><strong>Noun + number:</strong> "District 9", "Year 5". Suggests serial scope or wider universe.</li>
+        <li><strong>Short verb phrase:</strong> "Going Home", "Hunt the Night".</li>
+        <li><strong>Proper name + tag:</strong> "Inez and the Wolves", "The Last of Marcus".</li>
+        <li><strong>Manga style:</strong> single concept word + volume number ("Hashira", "Akari").</li>
+      </ol>
+      <h2>Common mistakes when titling a comic</h2>
+      <ul>
+        <li><strong>Generic English:</strong> literal translations like "The Last One" when there are thirty comics like that. Search Comichron before locking the title.</li>
+        <li><strong>Too long:</strong> on a 6×9 inch cover, three big words weigh more than seven small ones.</li>
+        <li><strong>Genre cliche:</strong> "Chronicles of [thing]" is overused. So is "Vol. 1: The Awakening".</li>
+        <li><strong>Confused with character:</strong> if your lead is named Bruno and the comic is called "Bruno", you own all searches. Great. But if Bruno is too common, consider a surname or epithet.</li>
+      </ul>
+      <h2>Adjusting by platform</h2>
+      <p>For Webtoon or Tapas, short titles (1-3 words) win at vertical thumbnail size. For Kindle Comics or Amazon, descriptive titles perform better in search. For traditional bookstore, you want a distinctive title plus a cover blurb that nails genre ("A graphic novel of science fiction"). For physical self-publishing, the title should survive a single-color print (does it read in black and white at 30 cm?).</p>
+      <h2>Validation before sending to print</h2>
+      <p>Before locking the title, run three tests. One: search it in Google and on comic platforms. Two: ask five potential readers to say what kind of comic they think it is. Three: print it at full cover size and look at it from three meters. If it passes all three filters, send it to print.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I pick a title?</summary><p>Rhythm, cover fit and clear genre signal in under 5 words.</p></details>
+      <details><summary>Does it work for webcomic and manga?</summary><p>Yes, it works for webcomic, manga, graphic novel and indie.</p></details>
+      <details><summary>Do I need to trademark it?</summary><p>Check comic databases and register the full work with the relevant IP office.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ct-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .ct-item { padding: 0.75rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
+  .ct-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ACTION = ['Frontier', 'Anvil', 'Steel', 'Fangs', 'Cut', 'Iron', 'Hunter', 'Battle'];
+  const SCIFI = ['District', 'Sector', 'Year', 'Core', 'Orbit', 'Edge', 'Beacon', 'Capsule'];
+  const SLICE = ['Coffee', 'Sunday', 'Yard', 'Sidewalk', 'Notebook', 'Neighbor', 'Balcony', 'Corner'];
+  const INDIE = ['Fish', 'Hollow', 'Ink', 'Memory', 'Glass', 'Moth', 'Antenna', 'Cloud'];
+  const VERBS = ['Going', 'Crossing', 'Hunting', 'Breaking', 'Waiting', 'Searching', 'Letting', 'Lighting'];
+  const KW_TAIL = ['Home', 'the Night', 'the Silence', 'the Frontier', 'the Last Train', 'at Dawn'];
+
+  const genre = document.getElementById('ct-genre') as HTMLSelectElement;
+  const kw = document.getElementById('ct-kw') as HTMLInputElement;
+  const gen = document.getElementById('ct-gen') as HTMLButtonElement;
+  const out = document.getElementById('ct-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function rnd(n: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return i[0] % n; }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function generate() {
+    const g = genre.value;
+    const k = (kw.value || '').trim().toLowerCase();
+    const set = new Set<string>(); let tries = 0;
+    let pool = ACTION;
+    if (g === 'scifi') pool = SCIFI;
+    else if (g === 'slice') pool = SLICE;
+    else if (g === 'indie') pool = INDIE;
+
+    while (set.size < 20 && tries < 200) {
+      tries++;
+      const variants = [
+        pick(pool),
+        `${pick(pool)} ${1 + rnd(9)}`,
+        `${pick(VERBS)} ${pick(KW_TAIL)}`,
+        `${cap(k || pick(pool))} and ${pick(pool).toLowerCase()}`,
+        `The Last ${pick(pool).toLowerCase()}`,
+      ];
+      set.add(pick(variants));
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'ct-item'; el.textContent = n; el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

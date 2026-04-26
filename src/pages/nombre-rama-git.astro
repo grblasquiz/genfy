@@ -1,0 +1,171 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de rama git | Genfy';
+const description = 'Generá nombres de ramas git consistentes: feature/, fix/, hotfix/, release/. Slug en kebab-case y referencia al ticket.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué prefijos uso?', acceptedAnswer: { '@type': 'Answer', text: 'feature/, fix/, hotfix/, release/, chore/. Es la convención más extendida en GitFlow y trunk-based development.' } },
+    { '@type': 'Question', name: '¿Snake o kebab?', acceptedAnswer: { '@type': 'Answer', text: 'kebab-case (palabras separadas por guiones) es estándar en nombres de ramas: feature/add-user-login.' } },
+    { '@type': 'Question', name: '¿Conviene incluir el ticket?', acceptedAnswer: { '@type': 'Answer', text: 'Sí: feature/PROJ-123-add-login. Permite trazar el cambio al ticket y muchas integraciones lo aprovechan.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech / Dev"
+    title="Generador de nombre de rama git"
+    intro="Generá nombres de ramas consistentes en kebab-case con prefijo, ticket y descripción corta."
+  >
+    <div slot="tool" class="br-tool">
+      <div class="br-grid">
+        <div>
+          <label for="br-type">Tipo</label>
+          <select id="br-type">
+            <option value="feature">feature</option>
+            <option value="fix">fix</option>
+            <option value="hotfix">hotfix</option>
+            <option value="release">release</option>
+            <option value="chore">chore</option>
+            <option value="docs">docs</option>
+          </select>
+        </div>
+        <div>
+          <label for="br-ticket">Ticket (opcional)</label>
+          <input id="br-ticket" type="text" placeholder="PROJ-123" />
+        </div>
+        <div>
+          <label for="br-desc">Descripción corta</label>
+          <input id="br-desc" type="text" placeholder="add login flow" />
+        </div>
+      </div>
+      <div class="br-actions">
+        <button id="br-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="br-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+      <textarea id="br-out" class="mono" rows="6" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué importa</h2>
+      <p>
+        Una rama mal nombrada cuesta minutos en cada PR review, dificulta auditar el repo y
+        complica la automatización (regex en CI/CD, bots de gestión). Una buena convención hace
+        que con leer el nombre se sepa qué tipo de cambio es, a qué ticket apunta y qué área
+        toca.
+      </p>
+
+      <h2>El patrón estándar</h2>
+      <p>
+        <code>&lt;tipo&gt;/&lt;ticket&gt;-&lt;descripcion-corta&gt;</code>. Ejemplo:
+        <code>feature/PROJ-123-add-user-login</code>. La barra <code>/</code> separa el prefijo;
+        algunos hosts (GitHub, GitLab) la renderizan como subcarpeta visual. El kebab-case dentro
+        del slug evita problemas con shells y URLs.
+      </p>
+
+      <h2>Prefijos comunes</h2>
+      <ul>
+        <li><strong>feature/</strong>: nueva funcionalidad.</li>
+        <li><strong>fix/</strong>: corrección de bug no urgente.</li>
+        <li><strong>hotfix/</strong>: corrección que va directo a producción.</li>
+        <li><strong>release/</strong>: rama de preparación de release.</li>
+        <li><strong>chore/</strong>: tareas de mantenimiento, dependencias.</li>
+        <li><strong>docs/</strong>: solo documentación.</li>
+        <li><strong>experiment/</strong> o <strong>spike/</strong>: pruebas que pueden no llegar a main.</li>
+      </ul>
+
+      <h2>GitFlow vs trunk-based</h2>
+      <p>
+        En GitFlow hay ramas long-lived (<code>develop</code>, <code>main</code>,
+        <code>release/*</code>). En trunk-based, hay <code>main</code> y ramas short-lived que se
+        mergean en horas o días. La convención de nombre es la misma; trunk-based simplemente
+        empuja a que las ramas vivan menos tiempo.
+      </p>
+
+      <h2>Caracteres prohibidos</h2>
+      <p>
+        Git no permite espacios, dos puntos seguidos (<code>::</code>), interrogación,
+        asteriscos, corchetes o tildes en nombres de rama. Mantenete con
+        <code>[a-z0-9-_/.]</code>. Slashes adicionales se aceptan pero confunden al humano. Evitá
+        nombres de más de 50 caracteres.
+      </p>
+
+      <h2>Mayúsculas en el ticket</h2>
+      <p>
+        Los IDs de ticket suelen ir en mayúsculas (<code>PROJ-123</code>). El resto del slug en
+        minúsculas. Esto da un nombre visualmente distinguible:
+        <code>feature/PROJ-123-add-login</code>. Si tu sistema no diferencia mayúsculas (Windows
+        con default settings), todo en minúsculas también funciona.
+      </p>
+
+      <h2>Branch policies</h2>
+      <p>
+        En GitHub o GitLab podés enforzar la convención con branch protection y acciones que
+        validen el nombre antes de aceptar pushes. Una regex como
+        <code>^(feature|fix|hotfix|chore)\/[A-Z]&lcub;2,&rcub;-\d+-[a-z0-9-]+$</code> bloquea pushes que
+        no sigan el patrón.
+      </p>
+
+      <h2>Borrar ramas mergeadas</h2>
+      <p>
+        Configurá auto-delete tras merge en GitHub Settings. <code>git fetch --prune</code>
+        elimina referencias a ramas remotas borradas. Sin esto, el repo termina con cientos de
+        ramas zombi y los autocompletes fallan.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué prefijos?</summary><p>feature/, fix/, hotfix/, release/, chore/.</p></details>
+      <details><summary>¿Snake o kebab?</summary><p>Kebab-case: <code>feature/add-user-login</code>.</p></details>
+      <details><summary>¿Incluir ticket?</summary><p>Sí: <code>feature/PROJ-123-add-login</code>. Trazabilidad gratis.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .br-grid { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .br-grid { grid-template-columns: 1fr; } }
+  .br-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const type = document.getElementById('br-type') as HTMLSelectElement;
+  const ticket = document.getElementById('br-ticket') as HTMLInputElement;
+  const desc = document.getElementById('br-desc') as HTMLInputElement;
+  const out = document.getElementById('br-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('br-gen') as HTMLButtonElement;
+  const copy = document.getElementById('br-copy') as HTMLButtonElement;
+
+  function kebab(s: string) { return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50); }
+
+  function build() {
+    const t = ticket.value.trim().toUpperCase();
+    const d = kebab(desc.value || 'short-description');
+    const slug = t ? `${t}-${d}` : d;
+    const variants = [
+      `${type.value}/${slug}`,
+      t ? `${type.value}/${t.toLowerCase()}/${d}` : `${type.value}/${d}`,
+      `${type.value}-${slug}`,
+    ];
+    out.value = variants.join('\n');
+  }
+  gen.addEventListener('click', build);
+  [type, ticket, desc].forEach(el => el.addEventListener('input', build));
+  type.addEventListener('change', build);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value.split('\n')[0]);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copiado';
+    setTimeout(() => { icon.textContent = 'Copiar'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

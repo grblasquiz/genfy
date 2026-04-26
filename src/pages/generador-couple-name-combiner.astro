@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Combinador de nombre de pareja gratis | Genfy';
+const description = 'Combiná los nombres de una pareja y obtené 20 variantes mezcladas, ideales para hashtag, apodo, cuenta compartida o regalo personalizado.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve combinar nombres de pareja?', acceptedAnswer: { '@type': 'Answer', text: 'Funciona para hashtags de casamiento, apodos cariñosos, cuentas de Instagram compartidas, regalos personalizados o el nombre del podcast de pareja.' } },
+    { '@type': 'Question', name: '¿Cómo decido cuál usar?', acceptedAnswer: { '@type': 'Answer', text: 'Probá decirlas en voz alta. La que suene más natural y sea fácil de pronunciar para cualquier amigo es la mejor candidata.' } },
+    { '@type': 'Question', name: '¿Funciona con cualquier par de nombres?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, pero algunas combinaciones suenan mejor que otras. Cuanto más distintas las primeras letras y vocales, más opciones interesantes salen.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Pareja" title="Combinador de nombre de pareja"
+    intro="Ingresá dos nombres y obtené 20 combinaciones mezclando sílabas y letras. Útil para hashtag de casamiento, apodos, IG compartido o regalos personalizados.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-n1">Nombre 1</label>
+      <input id="bn-n1" type="text" placeholder="Ana" value="Ana" />
+
+      <label for="bn-n2" style="margin-top:1rem">Nombre 2</label>
+      <input id="bn-n2" type="text" placeholder="Bruno" value="Bruno" />
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 combinaciones</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo combinar dos nombres en uno</h2>
+      <p>
+        Combinar nombres de pareja es una técnica de naming clásica: mezclás sílabas, letras o
+        secciones para crear una palabra única que represente al dúo. Es la base de los
+        "Bennifer" o "Brangelina" del mundo del entretenimiento.
+      </p>
+      <ol>
+        <li><strong>Empezar con la primera sílaba de uno y terminar con la última del otro.</strong> Ana + Bruno = Anuno o Brana.</li>
+        <li><strong>Tomar dos letras de cada nombre.</strong> An + Br = Anbr (raro), o Br + An = Bran.</li>
+        <li><strong>Insertar sílabas internas.</strong> Bruno + Ana = Brunana, Ana + Bruno = Abruno.</li>
+        <li><strong>Probar el orden inverso.</strong> No siempre el primer orden suena mejor.</li>
+        <li><strong>Pronunciá en voz alta.</strong> La forma final tiene que sonar natural cuando alguien lo dice.</li>
+      </ol>
+
+      <h2>Para qué usarla</h2>
+      <ul>
+        <li><strong>Hashtag de casamiento:</strong> ideal cuando los nombres separados son largos.</li>
+        <li><strong>Cuenta de Instagram compartida:</strong> @anabruno o @branana funcionan.</li>
+        <li><strong>Apodo cariñoso:</strong> entre la pareja o entre amigos cercanos.</li>
+        <li><strong>Regalos personalizados:</strong> tazas, llaveros, almohadones.</li>
+        <li><strong>Podcast o blog de pareja:</strong> nombre simple y único.</li>
+        <li><strong>Marca conjunta:</strong> si la pareja emprende junta.</li>
+      </ul>
+
+      <h2>Errores que evitar</h2>
+      <p>
+        Evitá combinaciones que produzcan palabras con significado raro en otro idioma:
+        googleá la combinación + "meaning" antes de imprimirla en regalos. Evitá combinaciones
+        impronunciables (más de 3 consonantes seguidas). Y mantenelo corto: una combinación
+        de 9 letras pierde gracia.
+      </p>
+
+      <h2>Ejemplos clásicos</h2>
+      <p>
+        Algunas combinaciones famosas que funcionaron por su simpleza: Brangelina (Brad +
+        Angelina), Bennifer (Ben + Jennifer), Kimye (Kim + Kanye), TomKat (Tom + Katie). Lo
+        que tienen en común: dos sílabas como máximo, combinaciones que se leen al primer
+        intento, y un guiño humorístico que ayudó a su difusión mediática.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve combinar nombres?</summary><p>Hashtags, apodos, cuentas compartidas, regalos personalizados, podcasts.</p></details>
+      <details><summary>¿Cómo decido cuál usar?</summary><p>Decílas en voz alta. La más natural y pronunciable es la mejor.</p></details>
+      <details><summary>¿Funciona con cualquier nombre?</summary><p>Sí, pero cuanto más distintas las letras iniciales, más opciones salen.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const n1Input = document.getElementById('bn-n1') as HTMLInputElement;
+  const n2Input = document.getElementById('bn-n2') as HTMLInputElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function clean(s: string) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z]/g, ''); }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+
+  function combinations(a: string, b: string) {
+    const A = a.toLowerCase();
+    const B = b.toLowerCase();
+    const halfA = Math.ceil(A.length / 2);
+    const halfB = Math.ceil(B.length / 2);
+    const out = new Set<string>();
+    out.add(cap(A.slice(0, halfA) + B.slice(halfB)));
+    out.add(cap(B.slice(0, halfB) + A.slice(halfA)));
+    out.add(cap(A.slice(0, 2) + B));
+    out.add(cap(B.slice(0, 2) + A));
+    out.add(cap(A + B.slice(B.length - 2)));
+    out.add(cap(B + A.slice(A.length - 2)));
+    out.add(cap(A.slice(0, halfA) + B.slice(0, halfB)));
+    out.add(cap(B.slice(0, halfB) + A.slice(0, halfA)));
+    out.add(cap(A.charAt(0) + B));
+    out.add(cap(B.charAt(0) + A));
+    out.add(cap(A.slice(0, 3) + B.slice(B.length - 3)));
+    out.add(cap(B.slice(0, 3) + A.slice(A.length - 3)));
+    out.add(cap(A + B.charAt(0)));
+    out.add(cap(B + A.charAt(0)));
+    out.add(cap(A.slice(0, halfA) + B.charAt(0) + A.slice(halfA)));
+    out.add(cap(B.slice(0, halfB) + A.charAt(0) + B.slice(halfB)));
+    out.add(cap(A.charAt(0) + B.slice(1)));
+    out.add(cap(B.charAt(0) + A.slice(1)));
+    out.add(cap(A.slice(0, 2) + B.slice(2)));
+    out.add(cap(B.slice(0, 2) + A.slice(2)));
+    out.add(cap(A.slice(0, halfA + 1) + B.slice(halfB + 1)));
+    out.add(cap(B.slice(0, halfB + 1) + A.slice(halfA + 1)));
+    out.add(cap(A.slice(0, 4) + B.slice(0, 2)));
+    out.add(cap(B.slice(0, 4) + A.slice(0, 2)));
+    return [...out].filter(x => x.length >= 3 && x.length <= 12);
+  }
+
+  function generate() {
+    const n1 = clean(n1Input.value || 'Ana');
+    const n2 = clean(n2Input.value || 'Bruno');
+    const list = combinations(n1, n2).slice(0, 20);
+    out.innerHTML = '';
+    list.forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

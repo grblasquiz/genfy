@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free TV Series Pitch Generator | Genfy';
+const description = 'Generate one-line pitches for your next TV or streaming series. Combine world, conflict and season engine to get 10 ready-to-pitch ideas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How is a TV pitch different from a film pitch?', acceptedAnswer: { '@type': 'Answer', text: 'A TV pitch must show an engine that can run multiple seasons — not a one-off event. The key question: what happens every week?' } },
+    { '@type': 'Question', name: 'How long should a TV pitch be?', acceptedAnswer: { '@type': 'Answer', text: 'One or two-sentence logline plus a five-word tagline. Extended description (show bible) comes later.' } },
+    { '@type': 'Question', name: 'Useful for Netflix or Prime?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Platforms get thousands of pitches a year. A clear premise with a season engine passes the first filter.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="TV Series Pitch Generator"
+    intro="Generate one-line pitches for your series. Combine world, conflict and season engine to get 10 ideas ready for platforms or production companies.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Theme or setting</label>
+      <input id="bn-kw" type="text" placeholder="city, border, office..." value="border" />
+
+      <label for="bn-style" style="margin-top:1rem">Tone</label>
+      <select id="bn-style">
+        <option value="prestige">Prestige drama</option>
+        <option value="crime">Crime / thriller</option>
+        <option value="comedy">Comedy</option>
+        <option value="scifi">Sci-fi</option>
+        <option value="anthology">Anthology</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 10 pitches</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to write a TV pitch that passes the first filter</h2>
+      <p>
+        A TV pitch has to answer two questions at once: what happens in the pilot, and what
+        happens every week. The difference with a film is the engine. If your premise resolves
+        in the first episode, it isn't a series.
+      </p>
+      <ol>
+        <li><strong>Define the world.</strong> Border, hospital, agency, city. Producer must visualize it.</li>
+        <li><strong>Add the kickoff event.</strong> An arrival, a death, a discovery.</li>
+        <li><strong>Identify the season engine.</strong> Why does each episode bring something new?</li>
+        <li><strong>Build a choral arc.</strong> Great shows move several characters at once.</li>
+        <li><strong>Close with a twist.</strong> Something that distinguishes your pitch from the other 100 they're reading.</li>
+      </ol>
+
+      <h2>Series engine types</h2>
+      <ul>
+        <li><strong>Case-of-the-week</strong>: weekly resolution (procedurals, sitcoms).</li>
+        <li><strong>Horizontal arc</strong>: one story across the season (prestige drama).</li>
+        <li><strong>Hybrid</strong>: weekly case + horizontal arc (most modern shows).</li>
+        <li><strong>Anthology</strong>: each season with new characters and plot.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        Most common: pitches that read like a two-hour film. If the premise resolves in the
+        pilot, there's no show. Another: too many leads (more than five) that dilute focus. And a
+        third: pitches without a "world promise". The audience commits when the world clearly
+        has more to give beyond the kickoff event.
+      </p>
+
+      <h2>After generating</h2>
+      <ol>
+        <li>Verify the pitch answers "what happens every week?".</li>
+        <li>Define the three leads in one sentence each.</li>
+        <li>Sketch season-one arcs in five lines.</li>
+        <li>List three season-finale twists.</li>
+        <li>Test the pitch on a heavy TV viewer: do they want the pilot?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Different from a film pitch?</summary><p>Needs sustainable engine for multiple seasons.</p></details>
+      <details><summary>How long?</summary><p>1-2 sentence logline plus tagline.</p></details>
+      <details><summary>Works for streamers?</summary><p>Yes — clear engine passes the first filter.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+  .bn-item { padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.55; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const SETUP_P = ['In a fading coastal town,', 'In a ranch inherited by three sisters,', 'In an off-season shuttered thermal hotel,', 'In an office building where three companies share a floor,'];
+  const SETUP_C = ['In a small rural prosecutor’s office,', 'In a federal agency with three new inspectors,', 'In a precinct on the edge of the country,'];
+  const SETUP_CO = ['In a brand-new digital newsroom,', 'In a three-unit building with impossible neighbors,', 'In a bakery inherited by two opposite siblings,'];
+  const SETUP_SF = ['In a mining colony on Mars (now called K-2),', 'In the last surface laboratory,', 'On an orbital station where gravity is failing,'];
+  const SETUP_AN = ['Each season tells a new story in the same neighborhood,', 'Each season follows a different family in the same building,'];
+  const ENGINE_P = ['a forty-year family secret unravels episode by episode.', 'each week a figure from the past returns and rearranges relationships.', 'the inheritance brings a new decision per chapter.'];
+  const ENGINE_C = ['each episode resolves a case while advancing a larger conspiracy.', 'each week a new file connects to a past crime.'];
+  const ENGINE_CO = ['each episode explores a clash between leads while a yearly arc advances.', 'each week brings a fresh workplace tangle with a twist that lands a laugh.'];
+  const ENGINE_SF = ['each episode explores a technical problem while something larger unfolds at the base.', 'each week a system fails and reveals part of the central mystery.'];
+  const ENGINE_AN = ['with an inciting event and a complete arc across eight episodes.'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = style.value;
+    let SET: string[], ENG: string[];
+    if (s === 'crime') { SET = SETUP_C; ENG = ENGINE_C; }
+    else if (s === 'comedy') { SET = SETUP_CO; ENG = ENGINE_CO; }
+    else if (s === 'scifi') { SET = SETUP_SF; ENG = ENGINE_SF; }
+    else if (s === 'anthology') { SET = SETUP_AN; ENG = ENGINE_AN; }
+    else { SET = SETUP_P; ENG = ENGINE_P; }
+    out.innerHTML = '';
+    const seen = new Set<string>();
+    let attempts = 0;
+    while (seen.size < 10 && attempts < 60) {
+      attempts++;
+      const text = `${pick(SET)} ${pick(ENG)}`;
+      if (seen.has(text)) continue;
+      seen.add(text);
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = text;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.textContent; el.textContent = '✓ copied'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    }
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

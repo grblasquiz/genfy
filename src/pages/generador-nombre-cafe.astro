@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de café gratis | Genfy';
+const description = 'Generá nombres únicos para tu cafetería. Combiná tipo de café, barrio o concepto y obtené 20 ideas memorables para fachada, dominio y redes.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo elijo un buen nombre para mi café?', acceptedAnswer: { '@type': 'Answer', text: 'Que sea corto, fácil de pronunciar, evoque calidez o oficio cafetero, sea encontrable en Google Maps y tenga el handle de Instagram disponible.' } },
+    { '@type': 'Question', name: '¿Tengo que registrar la marca?', acceptedAnswer: { '@type': 'Answer', text: 'Antes de invertir en cartelería y cuentas en redes, verificá disponibilidad en INPI, USPTO o EUIPO según el mercado.' } },
+    { '@type': 'Question', name: '¿Conviene un nombre en inglés?', acceptedAnswer: { '@type': 'Answer', text: 'Si tu público es joven y urbano funciona, pero perdés cercanía con clientes que no lo manejan. Probá decirlo en voz alta a vecinos antes de decidir.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Gastronomía" title="Generador de nombre de café"
+    intro="Combiná granos, oficio o barrio y obtené 20 ideas para tu cafetería de especialidad o de barrio. Listas para validar dominio y handle en minutos.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabras clave (grano, barrio, concepto)</label>
+      <input id="bn-kw" type="text" placeholder="grano, oficio, lento..." value="grano, mesa" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="cozy">Acogedor (Rincón, Cuchara)</option>
+        <option value="craft">Especialidad (Origen, Tueste)</option>
+        <option value="object">Objeto + café (Cuchara Café)</option>
+        <option value="place">Esquina + barrio</option>
+        <option value="single">Una palabra (Pausa, Lento)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de un café</h2>
+      <p>
+        El café es el negocio gastronómico con más rotación de público y mayor dependencia de
+        Instagram. El nombre tiene que cumplir dos requisitos no negociables: entrar en una
+        marquesina chica y verse bien sobre una taza. Si no funciona en blanco sobre cerámica
+        beige, no funciona.
+      </p>
+      <ol>
+        <li><strong>Corto.</strong> Una o dos palabras. Tres si la segunda es "Café" o "Coffee".</li>
+        <li><strong>Cálido o de oficio.</strong> "Tueste", "Origen", "Pausa", "Lento" comunican el rito sin sonar pretensioso.</li>
+        <li><strong>Único en tu radio.</strong> Buscá en Google Maps en 3 km: si hay otro "El Rincón Café" cerca, descartalo.</li>
+        <li><strong>Handle de IG libre.</strong> Es donde vas a publicar la pizarra del día.</li>
+        <li><strong>.com o .com.ar disponible.</strong> Aunque no vendas online, vas a querer un sitio simple con horarios y carta.</li>
+      </ol>
+
+      <h2>Estilos clásicos para cafeterías</h2>
+      <ul>
+        <li><strong>Acogedor de barrio:</strong> "El Rincón", "La Cuchara", "Casa Lola". Dispara la sensación de pertenencia.</li>
+        <li><strong>Café de especialidad:</strong> "Origen", "Tueste 22", "Filtro". Comunica oficio y trazabilidad del grano.</li>
+        <li><strong>Objeto + café:</strong> "Cuchara Café", "Mesa Café". Funcional y memorable.</li>
+        <li><strong>Una sola palabra:</strong> "Pausa", "Lento", "Brote". Fácil de tatuar en la taza, fácil de buscar.</li>
+        <li><strong>Esquina + barrio:</strong> "Esquina Palermo", "Corner Brera". Suma SEO local.</li>
+      </ul>
+
+      <h2>Lo que evitar</h2>
+      <p>
+        Evitá los nombres que ya saturaron las búsquedas: cualquier combinación con "Beans",
+        "Bean", "Coffee Co" o "Roasters" hoy compite contra miles de resultados. Evitá también
+        los nombres jocosos tipo juego de palabras con "java" o "espresso": funcionan en una
+        servilleta pero envejecen mal.
+      </p>
+      <p>
+        Y tené cuidado con tildes, eñes y caracteres especiales. "Café" con tilde rompe el
+        handle de Instagram (te queda "cafelapausa" sin tilde igual). Mejor pensar el nombre en
+        ASCII desde el día uno.
+      </p>
+
+      <h2>Validación rápida</h2>
+      <ol>
+        <li>Google Maps en 3 km de tu local.</li>
+        <li>Instagram, TikTok y Google Business Profile.</li>
+        <li>Dominio en Namecheap o Cloudflare.</li>
+        <li>Registro de marcas (INPI, USPTO, EUIPO).</li>
+        <li>Decir en voz alta a 5 personas y pedir que lo escriban.</li>
+        <li>Imprimir en una taza de prueba: ¿se lee bien a 2 metros?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo elijo un buen nombre para mi café?</summary><p>Corto, fácil de pronunciar, evoca calidez u oficio, encontrable en Maps y con handle de Instagram disponible.</p></details>
+      <details><summary>¿Tengo que registrar la marca?</summary><p>Antes de invertir en cartelería, verificá disponibilidad en INPI, USPTO o EUIPO según el mercado.</p></details>
+      <details><summary>¿Conviene un nombre en inglés?</summary><p>Si tu público es joven y urbano funciona, pero perdés cercanía con vecinos que no lo manejan.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const COZY = ['El Rincón', 'La Cuchara', 'Casa', 'El Patio', 'La Pausa', 'El Estante', 'La Mesa', 'El Banco', 'La Vereda', 'El Bolso'];
+  const CRAFT = ['Origen', 'Tueste', 'Filtro', 'Grano', 'Cosecha', 'Tostador', 'Molienda', 'Cata', 'Brote', 'Raíz'];
+  const OBJ = ['Cuchara', 'Tetera', 'Taza', 'Mesa', 'Banco', 'Estante', 'Frasco', 'Servilleta'];
+  const PLACE = ['Esquina', 'Corner', 'Plaza', 'Avenida', 'Calle', 'Cuadra', 'Vereda'];
+  const SINGLE = ['Pausa', 'Lento', 'Brote', 'Cosecha', 'Despierto', 'Quieto', 'Bruma', 'Manso', 'Rocío', 'Vapor'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'café';
+      let name = '';
+      if (s === 'cozy') name = pick(COZY) + (Math.random() > 0.5 ? ' ' + cap(w) : ' Café');
+      else if (s === 'craft') name = pick(CRAFT) + ' ' + (Math.random() > 0.5 ? cap(w) : 'Café');
+      else if (s === 'object') name = pick(OBJ) + ' Café';
+      else if (s === 'place') name = pick(PLACE) + ' ' + cap(w);
+      else if (s === 'single') name = pick(SINGLE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

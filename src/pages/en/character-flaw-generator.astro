@@ -1,0 +1,124 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Character Flaw Generator | Genfy';
+const description = 'Generate believable flaws and weaknesses for your fiction characters. Find the inner fault that makes your protagonist human.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why does my character need flaws?', acceptedAnswer: { '@type': 'Answer', text: "Flaws make a character human. Without weakness there's no arc. Perfect heroes are boring because they can't change." } },
+    { '@type': 'Question', name: 'How many flaws should they have?', acceptedAnswer: { '@type': 'Answer', text: "One or two central flaws is plenty. More than that and the character drifts into caricature." } },
+    { '@type': 'Question', name: 'Can a flaw be a virtue taken too far?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, and it’s one of the most reliable techniques. Excess loyalty, brutal honesty, perfectionism — virtues that turn into obstacles.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Character Flaw Generator"
+    intro="Find the flaw that makes your character human. Generate 15 inner faults ready to drop into your novel, screenplay or RPG sheet.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Character role</label>
+      <input id="bn-kw" type="text" placeholder="protagonist, antagonist..." value="protagonist" />
+
+      <label for="bn-style" style="margin-top:1rem">Source of the flaw</label>
+      <select id="bn-style">
+        <option value="emotional">Emotional</option>
+        <option value="moral">Moral</option>
+        <option value="virtue">Virtue taken to extreme</option>
+        <option value="social">Social / interpersonal</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 15 flaws</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why great characters have flaws</h2>
+      <p>
+        Without a flaw, there's no arc. The difference between a flat character and a memorable
+        one almost always lies in the inner fault the author lets them carry. Perfect characters
+        don't change because they have nothing to learn. And a character who doesn't change
+        doesn't deliver a story. The key question: what's the flaw the character can't see, the
+        one that will collide with the main conflict?
+      </p>
+      <ol>
+        <li><strong>Identify one central flaw.</strong> One, well-defined. Too many dilute the arc.</li>
+        <li><strong>Connect it to the central want.</strong> The flaw should interfere with what the character is after.</li>
+        <li><strong>Give it an origin.</strong> Great flaws come from somewhere (a wound, a family rule, a trauma).</li>
+        <li><strong>Keep it unconscious at first.</strong> The character shouldn't see their own flaw in act one.</li>
+        <li><strong>Show it onstage.</strong> Declaring the flaw isn't enough: it has to act in scenes.</li>
+      </ol>
+
+      <h2>Categories of flaws that work</h2>
+      <ul>
+        <li><strong>Emotional</strong>: can't ask for help, fear of rejection, conflict avoidance, emotional dependency.</li>
+        <li><strong>Moral</strong>: lying out of habit, justifying small cruelties, stalling tough decisions.</li>
+        <li><strong>Extreme virtues</strong>: blind loyalty, brutal honesty, paralyzing perfectionism, self-destructive generosity.</li>
+        <li><strong>Social</strong>: constant approval-seeking, inability to delegate, defensive sarcasm, voluntary isolation.</li>
+        <li><strong>Cognitive</strong>: rigid thinking, over-planning, intuition without verification.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        Most common: cosmetic flaws that don't affect the plot. "Messy desk" isn't a narrative
+        flaw. Another: flaws without origin, just there. The fault has to have history. And a
+        third: the "pretty flaw", like being "too generous" or "too loyal", framed without real
+        cost. If the generosity costs the character nothing, it isn't a flaw — it's a disguised
+        virtue.
+      </p>
+
+      <h2>After generating</h2>
+      <ol>
+        <li>Pick ONE central flaw and connect it to the want.</li>
+        <li>Define the origin in one sentence.</li>
+        <li>Write three scenes where the flaw acts.</li>
+        <li>Decide the awareness moment: when the character sees the fault.</li>
+        <li>Plan the climax decision: do they overcome it or fall to it?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Why do I need flaws?</summary><p>No flaw, no arc.</p></details>
+      <details><summary>How many?</summary><p>One or two central. More turns into caricature.</p></details>
+      <details><summary>Virtue as flaw?</summary><p>Yes, taken to extreme.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.6rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.85rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const EMO = ['Cannot ask for help. When something breaks, tries to fix it alone even at double the cost.', 'Avoids conflict at any price. Prefers a soft lie to holding a fight.', 'Needs to control everything. When others decide, feels attacked.', 'Confuses caring with controlling. Affection comes off as suffocating.', 'Cannot stand silence. Fills every pause with words she later regrets.'];
+  const MORAL = ['Lies out of habit, even on small things. Not for protection — incapable of holding truths.', 'Has stalled a decision for years and prefers not to resolve it.', 'Justifies small things he would never tell his best friend.', "Feels entitled to break small rules because he 'knows better'.", "Promises things he knows he won't deliver."];
+  const VIR = ['So honest she destroys situations that only needed tact.', 'Loyalty leads her to defend people who no longer deserve it.', 'Perfectionism keeps her from delivering good work on time.', 'Generosity leaves her empty when she needs resources most.', 'Her sense of duty makes her sacrifice her own projects.'];
+  const SOC = ['Needs the room’s approval before any decision of her own.', 'Uses sarcasm as a wall. When someone gets close, attacks with a joke.', 'Will not delegate: prefers doing it badly to teaching.', 'Isolates whenever things go well, as if not allowed to celebrate.', 'Competes even when nothing is at stake.'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function shuffle<T>(arr: T[]): T[] { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const r = new Uint32Array(1); crypto.getRandomValues(r); const j = r[0] % (i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  function generate() {
+    const items = shuffle([...EMO, ...MORAL, ...VIR, ...SOC]).slice(0, 15);
+    out.innerHTML = '';
+    items.forEach(text => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = text;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.textContent; el.textContent = '✓ copied'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

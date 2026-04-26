@@ -1,0 +1,155 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de tema de debate | Genfy';
+const description = 'Temas de debate equilibrados para aulas, equipos y clubes. Ética, tecnología, sociedad. Cada tema tiene argumentos a favor y en contra.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Sirven para clases?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, son ideales para debates estructurados, escritos argumentativos o ejercicios de retórica.' } },
+    { '@type': 'Question', name: '¿Hay temas controversiales?', acceptedAnswer: { '@type': 'Answer', text: 'Tenemos un mix: livianos, ético-filosóficos y tecnológicos. Evitamos temas demasiado polarizantes políticamente.' } },
+    { '@type': 'Question', name: '¿Vienen con argumentos?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, cada tema incluye un punto a favor y otro en contra para empezar a pensar.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión / Fun" title="Generador de tema de debate"
+    intro="Temas equilibrados con argumentos para empezar. Ideal para aula, equipo o club.">
+
+    <div slot="tool" class="db">
+      <div class="db-card">
+        <p id="db-text" class="db-text">Tocá generar para empezar.</p>
+        <details class="db-pros"><summary>Argumentos a favor / en contra</summary>
+          <p><strong>A favor:</strong> <span id="db-pro">—</span></p>
+          <p><strong>En contra:</strong> <span id="db-con">—</span></p>
+        </details>
+      </div>
+      <div class="db-controls">
+        <label for="db-cat">Categoría</label>
+        <select id="db-cat">
+          <option value="all">Todas</option>
+          <option value="tecnologia">Tecnología</option>
+          <option value="sociedad">Sociedad</option>
+          <option value="educacion">Educación</option>
+          <option value="liviano">Liviano / Diversión</option>
+        </select>
+      </div>
+      <button id="db-gen" class="btn btn-primary" type="button">Otro tema</button>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué debatir es ejercicio mental clave</h2>
+      <p>
+        Debatir te obliga a hacer cosas que la conversación cotidiana no exige: estructurar
+        un argumento, anticipar la objeción, defender una posición que tal vez no comparte
+        del todo. La práctica de debate desde joven correlaciona con mejor escritura,
+        mejor pensamiento crítico y más confianza al hablar en público. No es casualidad
+        que las mejores universidades del mundo tengan clubs de debate de un siglo de
+        antigüedad.
+      </p>
+
+      <h2>Cómo estructurar un buen debate</h2>
+      <ol>
+        <li><strong>Definí el tema en una sola oración afirmativa.</strong> "Las redes sociales hacen más mal que bien a los adolescentes".</li>
+        <li><strong>Asigná posiciones por sorteo.</strong> Defender una posición que no compartís entrena la empatía argumentativa.</li>
+        <li><strong>Tiempo cerrado.</strong> 4 minutos a favor, 4 minutos en contra, 2 minutos de réplica cruzada.</li>
+        <li><strong>Sin ataques personales.</strong> Atacar el argumento, nunca a la persona.</li>
+        <li><strong>Cierre con votación.</strong> No por quién tiene razón, sino por quién argumentó mejor.</li>
+      </ol>
+
+      <h2>Tres categorías de temas y cuándo usarlas</h2>
+      <ul>
+        <li><strong>Tecnología:</strong> útiles para empresas y aulas STEM. "¿La inteligencia artificial debería tener derechos?".</li>
+        <li><strong>Sociedad:</strong> útiles para humanidades y clubes adultos. "¿Las ciudades deberían eliminar los autos del centro?".</li>
+        <li><strong>Educación:</strong> útiles en facultades de educación o equipos de RRHH. "¿Las tareas son útiles o solo carga?".</li>
+        <li><strong>Liviano:</strong> útiles para grupos sin experiencia previa o en after-office. "¿Pizza con piña es un crimen culinario?".</li>
+      </ul>
+
+      <h2>Errores frecuentes en debate</h2>
+      <p>
+        El más común: confundir convicción con argumentación. Decir "es así porque sí" no
+        es debate. Otros errores: usar datos sin fuente, ridiculizar al oponente, hablar
+        más fuerte para parecer más convincente, citar autoridad sin verificar (atribuir
+        frases a personas que no las dijeron). En debate de calidad, ganás cuando la otra
+        parte concede que tu punto tiene mérito, no cuando la dejaste sin palabras.
+      </p>
+
+      <h2>Debate en la era de redes sociales</h2>
+      <p>
+        Twitter y otras plataformas premian el zinger sobre el argumento. Esto es lo
+        opuesto al debate real. Practicar debate estructurado es antídoto contra la
+        cultura del meme: te entrena a pensar largo, no a reaccionar rápido. En entornos
+        empresariales, los equipos que debaten bien toman mejores decisiones porque
+        consideran las objeciones antes de actuar, no después.
+      </p>
+
+      <h2>Recurso: la regla del Steel-manning</h2>
+      <p>
+        Antes de atacar el argumento del oponente, formúlalo de la mejor manera posible
+        (steel-manning). Si tu versión del argumento contrario es más fuerte que la que él
+        usó, demostrás dominio del tema. Es la herramienta retórica más poderosa que casi
+        nadie usa porque exige humildad. Cualquier tema de este generador se puede
+        practicar así: armás los dos lados con la mejor versión de cada uno, y solo
+        después elegís cuál defender.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para chicos?</summary><p>Los del filtro "liviano" funcionan desde primaria.</p></details>
+      <details><summary>¿Para empresas?</summary><p>Sí, los de tecnología y sociedad sirven en talleres corporativos.</p></details>
+      <details><summary>¿Hay tiempo recomendado?</summary><p>20-30 minutos por tema en formato estructurado.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .db-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; }
+  .db-text { font-size: 1.125rem; line-height: 1.6; margin: 0 0 1rem; font-weight: 500; }
+  .db-pros { padding: 0.75rem; background: var(--bg-inset); border-radius: var(--radius); }
+  .db-pros summary { cursor: pointer; font-weight: 600; }
+  .db-pros p { margin: 0.75rem 0 0; color: var(--text-soft); }
+  .db-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const D: { cat: string; t: string; pro: string; con: string }[] = [
+    { cat: "tecnologia", t: "La inteligencia artificial debería tener regulación estricta.", pro: "Sin regulación, los riesgos sociales (deepfakes, sesgo, desempleo masivo) escalan rápido.", con: "Regular demasiado pronto frena innovación que podría resolver problemas reales (medicina, ciencia)." },
+    { cat: "tecnologia", t: "Las redes sociales hacen más mal que bien a los adolescentes.", pro: "Estudios vinculan uso intensivo con ansiedad, depresión y bajo rendimiento académico.", con: "También crean comunidad para minorías, alfabetización digital y oportunidades laborales." },
+    { cat: "tecnologia", t: "El home office es mejor que la oficina presencial.", pro: "Ahorra tiempo de viaje, da flexibilidad y aumenta productividad medida.", con: "Reduce vínculo de equipo, dificulta mentoría y borra límites trabajo-vida." },
+    { cat: "tecnologia", t: "Los autos eléctricos son la solución al cambio climático.", pro: "Cero emisiones directas, eficiencia energética superior, acelera transición renovable.", con: "Producción de baterías es costosa ambientalmente; depende de energía limpia en la red." },
+    { cat: "sociedad", t: "Las ciudades deberían eliminar los autos privados del centro.", pro: "Menos contaminación, más espacios públicos, mejor calidad de vida urbana.", con: "Afecta comercio, requiere transporte público de altísima calidad, no funciona sin alternativa." },
+    { cat: "sociedad", t: "El servicio militar obligatorio debería volver.", pro: "Genera disciplina, conexión cívica y formación práctica.", con: "Restringe libertad individual, costoso para el Estado, mejor alternativa: servicio civil voluntario." },
+    { cat: "sociedad", t: "Los influencers son una profesión legítima.", pro: "Generan economía real, empleo y nuevas formas de comunicación.", con: "Promueven consumo superficial, son inestables financieramente y distorsionan aspiraciones juveniles." },
+    { cat: "sociedad", t: "El voto debería ser obligatorio.", pro: "Aumenta representación, fuerza ciudadanía activa, evita captura por minorías.", con: "Resta calidad al voto, restringe libertad de no participar, no garantiza voto informado." },
+    { cat: "educacion", t: "Las tareas son útiles para el aprendizaje.", pro: "Refuerzan contenido, desarrollan disciplina y autonomía.", con: "Sobrecargan a chicos, generan desigualdad por contexto familiar y reducen tiempo de juego/descanso." },
+    { cat: "educacion", t: "Los exámenes estandarizados deberían eliminarse.", pro: "Reducen creatividad, generan ansiedad y miden mal el aprendizaje real.", con: "Son comparables, baratos y dan métrica común para todo el sistema." },
+    { cat: "educacion", t: "Aprender programación debería ser obligatorio en secundaria.", pro: "Desarrolla pensamiento lógico y prepara para el mercado laboral del futuro.", con: "Quita tiempo a otras materias, no todos van a programar y enseñarlo bien requiere docentes especializados." },
+    { cat: "educacion", t: "Los uniformes escolares mejoran la educación.", pro: "Reducen comparación social, ahorran tiempo de elección, fomentan identidad de grupo.", con: "Restringen expresión, no impactan en calidad académica, aumentan costo a familias de bajos ingresos." },
+    { cat: "liviano", t: "La pizza con piña es un crimen culinario.", pro: "Combina ingredientes contradictorios; lo dulce no va con lo salado de la pizza tradicional.", con: "El contraste dulce-salado es delicioso (jamón con melón, etc.); cada uno con su gusto." },
+    { cat: "liviano", t: "Los gatos son mejores mascotas que los perros.", pro: "Más independientes, requieren menos atención, mantienen casa libre de ratones.", con: "Menos afecto demostrado, no acompañan al exterior, son menos entrenables." },
+    { cat: "liviano", t: "Mejor leer el libro antes que ver la película.", pro: "Mantenés la imaginación libre, captás detalles, la película te decepciona menos.", con: "Toma horas vs. minutos; algunas adaptaciones superan al libro original." }
+  ];
+
+  const text = document.getElementById('db-text') as HTMLElement;
+  const pro = document.getElementById('db-pro') as HTMLElement;
+  const con = document.getElementById('db-con') as HTMLElement;
+  const cat = document.getElementById('db-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('db-gen') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? D : D.filter(x => x.cat === filter);
+    const item = pick(pool);
+    text.textContent = item.t;
+    pro.textContent = item.pro;
+    con.textContent = item.con;
+  }
+  genBtn.addEventListener('click', generate);
+  generate();
+</script>
+</content>
+</invoke>

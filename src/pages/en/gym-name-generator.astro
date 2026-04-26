@@ -1,0 +1,140 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Gym Name Generator | Genfy';
+const description = 'Generate unique names for your gym, CrossFit box or functional studio. Mix concept, intensity or discipline and get 20 ideas ready to validate.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Aggressive name or minimalist?', acceptedAnswer: { '@type': 'Answer', text: 'Depends on the audience: CrossFit and powerlifting work with strong, short names; premium or women-focused strength studios benefit from minimalist names.' } },
+    { '@type': 'Question', name: 'How do I stand out from chains?', acceptedAnswer: { '@type': 'Answer', text: 'Avoid generic terms like "Power Gym" or "Strong Gym". Find a concrete angle: neighborhood, specialty, community.' } },
+    { '@type': 'Question', name: 'How do I check availability?', acceptedAnswer: { '@type': 'Answer', text: 'Google Maps, Instagram, domain and trademark register before investing in signage or uniforms.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Fitness" title="Gym Name Generator"
+    intro="Mix intensity, discipline or concept and get 20 ideas for your gym, box or functional studio. Built to validate Instagram handle instantly.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Keywords (intensity, discipline, concept)</label>
+      <input id="bn-kw" type="text" placeholder="iron, anchor, strength..." value="iron, anchor" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="strong">Strong (Iron, Steel, Rock)</option>
+        <option value="box">Box / cross</option>
+        <option value="minimal">Minimalist (Pulse, Anchor)</option>
+        <option value="local">Local + Gym / Box</option>
+        <option value="number">Number + concept (22 Reps)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a gym name</h2>
+      <p>
+        A gym competes against well-funded chains and other local boxes. The name has to make
+        three things clear: training type (functional, strength, cardio, mixed), expected
+        intensity, and community feel (quiet, loud, technical, recreational). If your name
+        communicates none of the three, you depend on marketing to explain what a good name
+        would do for free.
+      </p>
+      <ol>
+        <li><strong>Matches the discipline.</strong> "Iron Box" suggests strength; "Pulse" suggests mind-body.</li>
+        <li><strong>Explicit intensity.</strong> Your client should know whether to expect to suffer or relax.</li>
+        <li><strong>No mythological names.</strong> Skip references to deities or pantheons; use neutral terms: anchor, strength, base, pillar.</li>
+        <li><strong>Findable on Maps and ClassPass.</strong> Unique in your radius.</li>
+        <li><strong>T-shirt printable.</strong> Your best ad walks around town.</li>
+      </ol>
+
+      <h2>Styles by gym type</h2>
+      <ul>
+        <li><strong>Strong:</strong> "Iron", "Steel", "Rock", "Anchor". Pure strength.</li>
+        <li><strong>Box / cross:</strong> "Box 22", "The Pit", "Reps". CrossFit and functional.</li>
+        <li><strong>Minimalist:</strong> "Pulse", "Anchor", "Base", "Pillar". Premium, mixed, ideal for boutique studios.</li>
+        <li><strong>Local + Gym:</strong> "Mission Box", "Capitol Gym". Local SEO.</li>
+        <li><strong>Number + concept:</strong> "22 Reps", "10 Rounds". Memorable and specific.</li>
+      </ul>
+
+      <h2>What to avoid</h2>
+      <p>
+        Avoid generics like "Power Gym", "Strong Fitness" or "Total Body Gym": every city has
+        hundreds. Avoid references to Greek, Roman or Norse deities, or religious figures:
+        besides saturated, they alienate part of the audience. "Olympia", "Olympus", "Titans"
+        have thousands of competitors. Better "Anchor Gym", "Pillar Box" or "Base Strength".
+      </p>
+
+      <h2>Quick validation</h2>
+      <ol>
+        <li>Google Maps within 3 miles.</li>
+        <li>Instagram, TikTok, ClassPass or Mindbody.</li>
+        <li>Domain on Namecheap.</li>
+        <li>Trademark register (USPTO, UKIPO).</li>
+        <li>Print on a T-shirt and walk around 10 minutes: what do strangers ask?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Aggressive or minimalist?</summary><p>CrossFit/powerlifting goes aggressive; premium and women-focused goes minimalist.</p></details>
+      <details><summary>How to stand out from chains?</summary><p>Avoid generics. Find neighborhood, specialty or community angle.</p></details>
+      <details><summary>How to check availability?</summary><p>Google Maps, Instagram, domain and trademark register.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const STRONG = ['Iron', 'Steel', 'Rock', 'Granite', 'Anchor', 'Rope', 'Weight', 'Chain', 'Lead', 'Cement'];
+  const BOX = ['The Box', 'The Pit', 'Reps', 'Sets', 'Rounds', 'Lift House', 'Iron Box', 'Cross Box', 'Drill', 'Reps Lab'];
+  const MIN = ['Pulse', 'Anchor', 'Base', 'Pillar', 'Trace', 'Edge', 'Sprout', 'Axis', 'Ridge', 'Vertex'];
+  const LOCAL = ['Mission', 'SoHo', 'Brera', 'Capitol', 'Hudson', 'River', 'Park', 'Pier'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function num() { const i = new Uint32Array(1); crypto.getRandomValues(i); return (i[0] % 50) + 1; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Gym';
+      let name = '';
+      if (s === 'strong') name = pick(STRONG) + ' Gym';
+      else if (s === 'box') name = pick(BOX);
+      else if (s === 'minimal') name = pick(MIN) + ' Gym';
+      else if (s === 'local') name = pick(LOCAL) + ' Box';
+      else if (s === 'number') name = num() + ' ' + pick(['Reps', 'Sets', 'Rounds']);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

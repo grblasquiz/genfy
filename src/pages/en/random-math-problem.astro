@@ -1,0 +1,172 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random Math Problem Generator | Genfy';
+const description = 'Generate random math problems. Addition, subtraction, multiplication, division. Three difficulty levels for kids and adults.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a math problem generator for?', acceptedAnswer: { '@type': 'Answer', text: 'Mental arithmetic practice, school worksheets, exam prep and keeping numerical agility sharp.' } },
+    { '@type': 'Question', name: 'Which operations does it include?', acceptedAnswer: { '@type': 'Answer', text: 'Addition, subtraction, multiplication and division, with three difficulty levels.' } },
+    { '@type': 'Question', name: 'Does it show the answer?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. You can show or hide the answer for self-check or printable worksheets.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Education" title="Random Math Problem Generator"
+    intro="Generate random math problems for mental arithmetic. Three difficulty levels and four operations. Built for kids, teachers and adults who want to stay sharp.">
+
+    <div slot="tool">
+      <div class="rw-row">
+        <div>
+          <label for="mp-op">Operation</label>
+          <select id="mp-op">
+            <option value="all">Mixed</option>
+            <option value="add">Addition</option>
+            <option value="sub">Subtraction</option>
+            <option value="mul">Multiplication</option>
+            <option value="div">Division</option>
+          </select>
+        </div>
+        <div>
+          <label for="mp-lvl">Difficulty</label>
+          <select id="mp-lvl">
+            <option value="easy">Easy</option>
+            <option value="med" selected>Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:0.75rem;">
+        <button id="mp-go" class="btn btn-primary" type="button">New problem</button>
+        <button id="mp-show" class="btn btn-ghost" type="button">Show answer</button>
+      </div>
+      <div id="mp-out" class="mp-out" aria-live="polite"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why mental math still matters</h2>
+      <p>
+        Calculators live on every phone, but mental arithmetic agility isn't obsolete: it helps you
+        negotiate a price, split a restaurant bill, sanity-check a discount before you buy. More
+        importantly, regular numerical practice maintains cognitive flexibility, attention and working
+        memory. It's exercise for the brain.
+      </p>
+
+      <h2>The three levels</h2>
+      <ul>
+        <li><strong>Easy</strong> — single digits (sums and subtraction up to 20, multiplication up to 5x5). Ideal for early elementary.</li>
+        <li><strong>Medium</strong> — two digits in addition/subtraction, times tables up to 10. Upper elementary, adult refresher.</li>
+        <li><strong>Hard</strong> — two to three digits, larger multiplication, division with remainders. Middle school and beyond, adult challenge.</li>
+      </ul>
+
+      <h2>For teachers</h2>
+      <p>
+        Building worksheets by hand is slow. With this tool you can produce 30 problems in 30 seconds,
+        paste them into a doc and have your sheet ready. Each problem is random, so no two sheets are
+        identical — useful when you want to discourage copying. Also great as a warm-up kit at the start
+        of class: five problems while students sit down and open their notebooks.
+      </p>
+
+      <h2>For parents at home</h2>
+      <p>
+        A simple routine: five problems a day, three days a week. In a month, kids show measurable
+        improvement in speed and accuracy. Important: don't time them at first — speed comes after
+        confidence. Make them feel capable first, fast later. If a level feels comfortable for a week,
+        bump up.
+      </p>
+
+      <h2>For adults</h2>
+      <p>
+        If you've been calculator-dependent for years, your numerical agility atrophies. Getting it back
+        is fast: five minutes a day for a month. Start at medium, climb to hard when comfortable. Studies
+        on cognitive aging document benefits: regular arithmetic practice is associated with better
+        performance on attention tasks.
+      </p>
+
+      <h2>Mental math tricks</h2>
+      <ul>
+        <li><strong>Round-and-correct addition</strong> — for 47+38, do 50+38=88 and subtract 3 = 85.</li>
+        <li><strong>Multiply by 5</strong> — multiply by 10 and divide by 2: 36x5 = 360/2 = 180.</li>
+        <li><strong>Multiply by 11</strong> — add the digits and place between: 23x11 = 2(2+3)3 = 253.</li>
+        <li><strong>Squares ending in 5</strong> — first digit times (first+1), append 25: 35² = 3x4=12, append 25 → 1225.</li>
+        <li><strong>Divide by 9</strong> — subtract 1 from the dividend, sum digits to verify.</li>
+      </ul>
+
+      <h2>When to back off</h2>
+      <p>
+        If a student gets stuck on a level, drop down. Getting frustrated at age 8 with problems they
+        can't solve creates math aversion that lasts decades. Better they succeed at easy for a month and
+        climb confidently than stall at medium and learn to hate the subject. Progression is
+        psychological before it's cognitive.
+      </p>
+
+      <h2>A note on math and curriculum</h2>
+      <p>
+        Modern curricula often shift weight away from mental arithmetic toward abstract reasoning. That's
+        a reasonable trend: math is more than arithmetic. But arithmetic is still the brick: without
+        numerical fluency, later concepts get harder because working memory is consumed by basic
+        calculations. A light arithmetic routine complements any program.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a math problem generator for?</summary><p>Mental arithmetic, worksheets, exam prep and numerical fluency.</p></details>
+      <details><summary>Which operations does it include?</summary><p>Addition, subtraction, multiplication and division, three levels.</p></details>
+      <details><summary>Does it show the answer?</summary><p>Yes. Toggle for self-check or printable sheets.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; }
+  .mp-out { margin-top: 1rem; padding: 1.5rem; background: var(--bg-soft, #f5f5f7); border-radius: var(--radius-md, 8px); font-family: var(--font-mono); font-size: 1.5rem; min-height: 5rem; text-align: center; }
+  @media (max-width: 600px) { .rw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const opEl = document.getElementById('mp-op') as HTMLSelectElement;
+  const lvlEl = document.getElementById('mp-lvl') as HTMLSelectElement;
+  const out = document.getElementById('mp-out') as HTMLDivElement;
+  const go = document.getElementById('mp-go') as HTMLButtonElement;
+  const show = document.getElementById('mp-show') as HTMLButtonElement;
+  let answer = 0;
+  let problemHTML = '';
+
+  function rint(min: number, max: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return min + (i[0] % (max - min + 1)); }
+  function gen() {
+    const lvl = lvlEl.value;
+    let op = opEl.value;
+    if (op === 'all') op = ['add','sub','mul','div'][rint(0,3)];
+    let a = 0, b = 0, sym = '', res = 0;
+    if (op === 'add') {
+      if (lvl === 'easy') { a = rint(1,10); b = rint(1,10); }
+      else if (lvl === 'med') { a = rint(10,50); b = rint(10,50); }
+      else { a = rint(100,500); b = rint(100,500); }
+      sym = '+'; res = a + b;
+    } else if (op === 'sub') {
+      if (lvl === 'easy') { a = rint(5,15); b = rint(1,a); }
+      else if (lvl === 'med') { a = rint(20,80); b = rint(1,a); }
+      else { a = rint(200,800); b = rint(50,a); }
+      sym = '−'; res = a - b;
+    } else if (op === 'mul') {
+      if (lvl === 'easy') { a = rint(2,5); b = rint(2,5); }
+      else if (lvl === 'med') { a = rint(2,10); b = rint(2,10); }
+      else { a = rint(11,25); b = rint(2,15); }
+      sym = '×'; res = a * b;
+    } else {
+      const divr = lvl === 'easy' ? rint(2,5) : lvl === 'med' ? rint(2,10) : rint(3,12);
+      const quo = lvl === 'easy' ? rint(2,5) : lvl === 'med' ? rint(2,12) : rint(10,30);
+      a = divr * quo; b = divr;
+      sym = '÷'; res = quo;
+    }
+    answer = res;
+    problemHTML = `${a} ${sym} ${b} = ?`;
+    out.textContent = problemHTML;
+  }
+  go.addEventListener('click', gen);
+  show.addEventListener('click', () => { out.textContent = problemHTML.replace('?', String(answer)); });
+  gen();
+</script>

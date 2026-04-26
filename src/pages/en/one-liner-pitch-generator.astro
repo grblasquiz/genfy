@@ -1,0 +1,136 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free One-Liner Pitch Generator | Genfy';
+const description = 'Sum up your business in one line. Generate 8 one-liners for your bio, hero, deck or LinkedIn using proven formulas like X-for-Y and Job-to-be-done.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a one-liner pitch?', acceptedAnswer: { '@type': 'Answer', text: 'A single sentence that explains what your company does, for whom and why it matters. The shortest version of your pitch — it must read in 5 seconds.' } },
+    { '@type': 'Question', name: 'Where do I use it?', acceptedAnswer: { '@type': 'Answer', text: 'On the homepage hero, X / LinkedIn bio, deck slide one, email signature, ads, and when you introduce yourself at events.' } },
+    { '@type': 'Question', name: 'Which formulas work best?', acceptedAnswer: { '@type': 'Answer', text: 'X for Y, problem-solution, contrast with status quo, and job-to-be-done with a quantifiable outcome.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="One-Liner Pitch Generator"
+    intro="Sum up your business in a single sentence. We return 8 one-liners using proven formulas: X-for-Y, problem-solution, contrast and job-to-be-done.">
+
+    <div slot="tool" class="ol">
+      <label>Company</label>
+      <input id="ol-co" type="text" value="Acme Corp" />
+
+      <label style="margin-top:1rem">Category / what you do in 3 words</label>
+      <input id="ol-cat" type="text" value="online courses platform" />
+
+      <label style="margin-top:1rem">Audience</label>
+      <input id="ol-aud" type="text" value="professionals switching careers" />
+
+      <label style="margin-top:1rem">Known brand from a neighbor space (for X-for-Y)</label>
+      <input id="ol-ref" type="text" value="Netflix" />
+
+      <label style="margin-top:1rem">Outcome in one phrase</label>
+      <input id="ol-res" type="text" value="land a better job" />
+
+      <button id="ol-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 8 versions</button>
+
+      <div id="ol-out" class="ol-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why summarizing your company in one line is so hard</h2>
+      <p>
+        Anyone who has shipped a landing page knows the hardest section is the first sentence in
+        the hero. It's where the most rewrites happen and the most egos collide. The reason is
+        simple: in one line you have to say what you do, for whom, and why it matters, without
+        sounding generic or grandiose. The most memorable one-liners aren't clever — they're
+        brutally clear.
+      </p>
+
+      <h2>The 4 formulas that work</h2>
+      <ol>
+        <li><strong>X for Y:</strong> "The Netflix for online courses." Works when the reference is famous and the analogy is honest.</li>
+        <li><strong>Problem → solution:</strong> "Online sales die from slow landings. We fix them in an hour."</li>
+        <li><strong>Contrast with status quo:</strong> "The least painful way to file your taxes."</li>
+        <li><strong>Job-to-be-done with result:</strong> "Land your next job in 90 days, without your boss finding out."</li>
+      </ol>
+
+      <h2>Mistakes that hollow it out</h2>
+      <ul>
+        <li>Too many adjectives. "Innovative, scalable, disruptive platform..." — nobody reads that.</li>
+        <li>Buzzwords. If your sentence has "empower", "leverage", "all-in-one solutions", rewrite it.</li>
+        <li>Talking about the company, not the customer. "We're the leader in X" — no one cares.</li>
+        <li>Trying to cover everything. A one-liner doesn't include all 5 segments you sell to. Pick the main one.</li>
+        <li>Internal metrics: "We have 200 features." What matters is what the customer can do with them.</li>
+      </ul>
+
+      <h2>How to test it</h2>
+      <ol>
+        <li>Show it to 5 people outside your customer base and ask, "what does this company do?". If they hesitate more than 2 seconds, rewrite.</li>
+        <li>Ask a current customer if they'd actually use that line to recommend you in a casual conversation.</li>
+        <li>Run two versions as LinkedIn or Google ads and compare CTR.</li>
+        <li>Search it on Google. If another brand already uses it, change it.</li>
+      </ol>
+
+      <h2>Where to use it</h2>
+      <ul>
+        <li>Homepage hero, first line, largest font.</li>
+        <li>Deck slide 1, without a distracting logo.</li>
+        <li>X / LinkedIn bio.</li>
+        <li>Automatic email signature.</li>
+        <li>Slide zero of any commercial proposal.</li>
+        <li>What you say when someone asks, "what do you do?".</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a one-liner?</summary><p>A single sentence that explains what your company does and why it matters. Reads in 5 seconds.</p></details>
+      <details><summary>Where to use it?</summary><p>Hero of the site, social bio, deck slide one, email signature, intro at events.</p></details>
+      <details><summary>Which formulas?</summary><p>X-for-Y, problem-solution, contrast with status quo, or JTBD with a clear outcome.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ol-out { display: grid; gap: 0.5rem; margin-top: 1.25rem; }
+  .ol-item { padding: 0.875rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .ol-item:hover { border-color: var(--primary); }
+  .ol-tag { display: inline-block; font-size: 0.75rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+</style>
+
+<script>
+  const co = document.getElementById('ol-co') as HTMLInputElement;
+  const cat = document.getElementById('ol-cat') as HTMLInputElement;
+  const aud = document.getElementById('ol-aud') as HTMLInputElement;
+  const ref = document.getElementById('ol-ref') as HTMLInputElement;
+  const res = document.getElementById('ol-res') as HTMLInputElement;
+  const out = document.getElementById('ol-out')!;
+  const gen = document.getElementById('ol-gen') as HTMLButtonElement;
+
+  function generate() {
+    const lines = [
+      { tag: 'X for Y', text: `The ${ref.value} for ${aud.value}.` },
+      { tag: 'Problem → solution', text: `The simplest way to ${res.value} without fighting the old ${cat.value}.` },
+      { tag: 'Job-to-be-done', text: `${co.value}: we help ${aud.value} ${res.value} faster.` },
+      { tag: 'Status quo contrast', text: `Forget boring ${cat.value}. ${co.value} is the real shortcut to ${res.value}.` },
+      { tag: 'Result first', text: `${res.value[0].toUpperCase() + res.value.slice(1)} with ${co.value} — the new ${cat.value} built for ${aud.value}.` },
+      { tag: 'Direct question', text: `Ready to ${res.value}? ${co.value} is the ${cat.value} made for ${aud.value}.` },
+      { tag: 'Time promise', text: `${co.value}: the ${cat.value} that helps ${aud.value} ${res.value} in weeks, not years.` },
+      { tag: 'Concrete and visual', text: `${co.value} turns ${aud.value} into people who ${res.value} — friction-free.` },
+    ];
+
+    out.innerHTML = '';
+    lines.forEach(l => {
+      const el = document.createElement('div');
+      el.className = 'ol-item';
+      el.innerHTML = `<span class="ol-tag">${l.tag}</span><div>${l.text}</div>`;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(l.text); el.style.borderColor = 'var(--primary)'; setTimeout(() => el.style.borderColor = '', 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

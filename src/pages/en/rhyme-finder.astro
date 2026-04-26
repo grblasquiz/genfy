@@ -1,0 +1,133 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Rhyme Finder | Genfy';
+const description = 'Find English rhymes instantly: perfect rhymes and near rhymes for songwriting, poetry, slogans and rap.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What kinds of rhymes does it return?', acceptedAnswer: { '@type': 'Answer', text: 'Perfect rhymes (matching final stressed sounds) and near rhymes (matching ending letters but not exact phonetics).' } },
+    { '@type': 'Question', name: 'Is it good for songwriting?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. That is one of the main use cases — finding line endings for lyrics, rap and poetry.' } },
+    { '@type': 'Question', name: 'Are rhymes useful for slogans?', acceptedAnswer: { '@type': 'Answer', text: 'Very. Rhyme is a strong memory hook; rhyming slogans stick better than non-rhyming ones.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Languages" title="Rhyme Finder"
+    intro="Find English rhymes instantly. Perfect or near rhymes for any word. Built for lyrics, poetry, rap, slogans and copy.">
+
+    <div slot="tool">
+      <label for="rh-q">Word</label>
+      <input id="rh-q" type="text" placeholder="e.g. heart, dream, light..." />
+      <div class="rh-row" style="margin-top:0.75rem;">
+        <label class="rh-check"><input type="radio" name="rh-type" value="per" checked /> Perfect</label>
+        <label class="rh-check"><input type="radio" name="rh-type" value="near" /> Near</label>
+      </div>
+      <div style="margin-top:0.75rem;">
+        <button id="rh-go" class="btn btn-primary" type="button">Find rhymes</button>
+        <button id="rh-copy" class="btn btn-ghost" type="button">Copy</button>
+      </div>
+      <textarea id="rh-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Perfect vs. near rhyme</h2>
+      <p>
+        A <strong>perfect rhyme</strong> matches the last stressed vowel and every sound after it: "light /
+        bright / fight". A <strong>near rhyme</strong> (also called slant or imperfect) matches roughly,
+        often through ending letters but not exact pronunciation: "love / move", "shape / cape / tape" vs.
+        "rope". Perfect rhyme is showy and sharp; near rhyme is freer and feels more modern, especially in
+        rap and indie songwriting.
+      </p>
+
+      <h2>When to use each</h2>
+      <ul>
+        <li><strong>Pop songs and rap</strong> — perfect rhyme dominates because it lands on the beat.</li>
+        <li><strong>Modern poetry</strong> — near rhyme is everywhere; it gives sonic texture without sounding sing-song.</li>
+        <li><strong>Slogans</strong> — short perfect rhymes, easy to remember.</li>
+        <li><strong>Freestyle</strong> — mix; rappers slide between perfect and near rhyme to keep flow.</li>
+        <li><strong>Children's verse</strong> — strict perfect rhymes, simple and fun.</li>
+      </ul>
+
+      <h2>The cliché problem</h2>
+      <p>
+        In English, certain rhyme pairs are so overused they've become clichés: "love / above", "fire /
+        desire", "heart / apart". They work, but the listener spots them a mile away. To avoid the trap:
+        pick less obvious matches. The generator shows several — the first ones are usually the obvious
+        clichés, the middle ones are the interesting ones. Top lyricists know this trick.
+      </p>
+
+      <h2>Techniques to not get trapped by rhyme</h2>
+      <p>
+        The beginner's mistake is to build a line backwards from the rhyme: "I need an -ight ending, so I
+        say X". The line ends up forced. The pro technique is to write the idea freely and adjust afterward:
+        if your last word doesn't rhyme, reorder the phrase or look for a synonym. Rhyme should serve
+        meaning, not the other way around.
+      </p>
+
+      <h2>Stress matters</h2>
+      <p>
+        English rhyme respects stress. "Today" (stressed on the last syllable) doesn't perfectly rhyme with
+        "Sunday" (stressed on the first), even though they share letters. If your word ends on a stressed
+        syllable, your rhymes should too. Mismatched stress is the most common reason a rhyme "feels off"
+        without you knowing why.
+      </p>
+
+      <h2>Advertising applications</h2>
+      <p>
+        Rhyming slogans are remembered better: ad memory studies show retention up to 30% higher with a
+        clear rhyme. That's why so many historic taglines rhyme. For a small founder or agency, a simple
+        memorable rhyme can be worth more than a complex visual identity.
+      </p>
+
+      <h2>Beyond the list</h2>
+      <p>
+        The finder is a starting point, not a verdict. If the perfect word doesn't appear, try variants:
+        synonyms, plurals, different verb forms. Often the rhyme is hiding in a grammatical variant the
+        system didn't try. The final creative move is always yours.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What kinds of rhymes does it return?</summary><p>Perfect rhymes and near rhymes — pick which one you want.</p></details>
+      <details><summary>Is it good for songwriting?</summary><p>Yes — one of the main use cases for lyrics, rap and poetry.</p></details>
+      <details><summary>Are rhymes useful for slogans?</summary><p>Very. Rhyme is a strong memory anchor for short copy.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rh-row { display: flex; gap: 1rem; }
+  .rh-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.95rem; }
+  .rh-check input { width: auto; }
+</style>
+
+<script>
+  const POOL = ("light bright fight night sight tight flight kite write sky high try fly sigh die lie pie tie buy guy free tree see knee three sea bee me we he be sweet feet meet street greet beat heat seat heart smart part chart art start cart depart apart heart heart love above dove glove shove move groove prove improve fire desire higher tire mire wire admire entire dream stream cream beam team scheme gleam scream ring sing king bring spring cling thing wing sting blue true new view through threw flew clue moon soon spoon noon tune june dune ground sound found round bound town down crown frown hour power flower shower tower devour rain pain main gain stain plain sane train chain gold cold bold sold told fold hold rolled wave save brave gave cave grave shave road code load bowed slow flow grow show throw glow throw blow song long strong wrong bell tell sell well fell yell cell dwell").split(/\s+/);
+
+  const q = document.getElementById('rh-q') as HTMLInputElement;
+  const out = document.getElementById('rh-out') as HTMLTextAreaElement;
+  const go = document.getElementById('rh-go') as HTMLButtonElement;
+  const cp = document.getElementById('rh-copy') as HTMLButtonElement;
+
+  function tail(w: string, n: number) { return w.toLowerCase().slice(-n); }
+  function search() {
+    const w = q.value.trim().toLowerCase();
+    if (!w) { out.value = ''; return; }
+    const type = (document.querySelector('input[name="rh-type"]:checked') as HTMLInputElement).value;
+    const k = type === 'per' ? Math.min(3, w.length) : Math.min(2, w.length);
+    const t = tail(w, k);
+    const matches: string[] = [];
+    for (const cand of POOL) {
+      if (cand === w) continue;
+      if (tail(cand, k) === t) matches.push(cand);
+      if (matches.length >= 30) break;
+    }
+    out.value = matches.length ? matches.join(', ') : `No rhymes in pool for "${w}". Try a more common word.`;
+  }
+  go.addEventListener('click', search);
+  q.addEventListener('keydown', (e) => { if (e.key === 'Enter') search(); });
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de grupo WhatsApp gratis | Genfy';
+const description = 'Generá nombres divertidos para tu grupo de WhatsApp. Combiná tipo de grupo y tono y obtené 20 sugerencias para amigos, trabajo, familia o vecinos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno al nombre de un grupo?', acceptedAnswer: { '@type': 'Answer', text: 'Que sea fácil de identificar al ver el listado de chats, refleje el tono del grupo y no se confunda con otros similares.' } },
+    { '@type': 'Question', name: '¿Conviene cambiarlo seguido?', acceptedAnswer: { '@type': 'Answer', text: 'En grupos de amigos sí, ayuda a mantener la energía. En grupos laborales o familiares es mejor mantener uno estable.' } },
+    { '@type': 'Question', name: '¿Cuántos caracteres soporta?', acceptedAnswer: { '@type': 'Answer', text: 'WhatsApp permite hasta 25 caracteres en el nombre del grupo. Apuntá a algo más corto para que se lea entero en la lista.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Comunicación" title="Generador de nombre de grupo WhatsApp"
+    intro="Combiná tipo de grupo y tono y obtené 20 sugerencias para tu chat de amigos, trabajo, familia o vecinos. Pensados para 25 caracteres y máxima identificación.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Contexto opcional</label>
+      <input id="bn-kw" type="text" placeholder="amigos, asado, oficina..." value="amigos" />
+
+      <label for="bn-style" style="margin-top:1rem">Tipo de grupo</label>
+      <select id="bn-style">
+        <option value="friends">Amigos / divertido</option>
+        <option value="work">Trabajo</option>
+        <option value="family">Familia (sin pelearse)</option>
+        <option value="trip">Viaje / evento</option>
+        <option value="neighbors">Vecinos / consorcio</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo nombrar un grupo de WhatsApp</h2>
+      <p>
+        El nombre de tu grupo aparece cada vez que un miembro abre WhatsApp y escanea la
+        lista de chats. Si tenés cinco grupos llamados "Amigos", uno gana en función de
+        quién haya escrito último; el resto se vuelven invisibles. Un buen nombre te ahorra
+        horas de "espera, ¿en qué grupo lo dijimos?".
+      </p>
+      <ol>
+        <li><strong>Identificable a la primera mirada.</strong> Tipo de grupo + un detalle distintivo.</li>
+        <li><strong>Tono coherente.</strong> Un grupo familiar no necesita el mismo nombre absurdo que el de tus amigos del fútbol.</li>
+        <li><strong>Corto.</strong> 15-20 caracteres se leen completos en la lista.</li>
+        <li><strong>Sin ambigüedad.</strong> "Amigos 2024" es mejor que solo "Amigos".</li>
+        <li><strong>Compatible con notificaciones.</strong> El nombre aparece en cada notification: que no sea vergonzoso.</li>
+      </ol>
+
+      <h2>Estilos por tipo de grupo</h2>
+      <ul>
+        <li><strong>Amigos / divertido:</strong> "Los del Asado", "Comité de Memes", "Domingos Productivos". Humor + identidad.</li>
+        <li><strong>Trabajo:</strong> "Equipo Proyecto X", "Marketing 2026". Claro y profesional.</li>
+        <li><strong>Familia:</strong> "Familia Pérez", "Cumpleaños Mamá". Funcional y sin chistes que ofendan.</li>
+        <li><strong>Viaje / evento:</strong> "Viaje Bariloche Marzo", "Casamiento Ana Bruno". Específico y temporal.</li>
+        <li><strong>Vecinos / consorcio:</strong> "Edificio Av. Santa Fe 2200", "Vecinos Manzana 4". Operativo.</li>
+      </ul>
+
+      <h2>Errores que evitar</h2>
+      <p>
+        Evitá nombres tan absurdos que cuando aparece la notificación en la pantalla de tu
+        teléfono delante de un colega, te avergüencen. Evitá nombres que solo entiende uno o
+        dos del grupo: el resto se siente excluido. Y evitá usar el grupo como editorial:
+        cambiar el nombre cinco veces por día es divertido al principio, molesto a la
+        semana.
+      </p>
+
+      <h2>Buenas prácticas</h2>
+      <ol>
+        <li>Definí el nombre antes de agregar a la 5° persona.</li>
+        <li>Para grupos laborales, mantenelo estable.</li>
+        <li>Para grupos de amigos, podés rotarlo cada 6 meses.</li>
+        <li>Si cambia el contexto (terminó el viaje), archiva o renombrá.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno al nombre?</summary><p>Identificable, refleja el tono y no se confunde con otros similares.</p></details>
+      <details><summary>¿Cambiarlo seguido?</summary><p>En grupos de amigos sí; en laborales o familiares mejor mantener uno estable.</p></details>
+      <details><summary>¿Cuántos caracteres?</summary><p>Hasta 25, pero apuntá a 15-20 para que se lea completo en la lista.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const FRIENDS = ['Los del Asado', 'Comité de Memes', 'Domingos Productivos', 'Reunión Cumbre', 'Los Sin Plan', 'Sobremesa Eterna', 'Reunión Ministerial', 'Junta Directiva', 'Mesa Chica', 'Liga de la Justicia'];
+  const WORK = ['Equipo Proyecto X', 'Marketing 2026', 'Coordinación Q1', 'Sala de Reuniones', 'Mesa de Trabajo', 'Squad Mobile', 'Ventas Norte'];
+  const FAMILY = ['Familia Pérez', 'Cumpleaños Mamá', 'Casa Familiar', 'Hermanos', 'Primos', 'Tribu Familiar'];
+  const TRIP = ['Viaje Bariloche', 'Trip Roma', 'Casamiento Ana Bruno', 'Salida Sábado', 'Escapada Playa', 'Finde Largo'];
+  const NEIGHBORS = ['Edificio Santa Fe 2200', 'Vecinos Manzana 4', 'Consorcio 1°B', 'Barrio Cerrado', 'Pasillo 3 Piso'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = style.value;
+    let pool: string[] = [];
+    if (s === 'friends') pool = FRIENDS;
+    else if (s === 'work') pool = WORK;
+    else if (s === 'family') pool = FAMILY;
+    else if (s === 'trip') pool = TRIP;
+    else if (s === 'neighbors') pool = NEIGHBORS;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const base = pick(pool);
+      const variant = Math.random();
+      let name = base;
+      if (variant < 0.3) name = base + ' 2026';
+      else if (variant < 0.5) name = base + ' (oficial)';
+      else if (variant < 0.65) name = '🎉 ' + base;
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

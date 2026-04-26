@@ -1,0 +1,146 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de bar gratis | Genfy';
+const description = 'Generá nombres únicos para tu bar, pub o coctelería. Combiná concepto, barrio o estilo y obtené 20 ideas listas para validar dominio y redes.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué tipo de nombre conviene para un bar?', acceptedAnswer: { '@type': 'Answer', text: 'Depende del concepto: un pub de barrio se beneficia de nombres cálidos o con apellidos, un cocktail bar moderno funciona con una sola palabra fuerte, y un bar de hotel conviene asociarlo a algo único del lugar.' } },
+    { '@type': 'Question', name: '¿Cómo verifico que el nombre esté libre?', acceptedAnswer: { '@type': 'Answer', text: 'Buscá en Google Maps en 5 km, en TripAdvisor, en Instagram y en el registro de marcas local antes de imprimir cartelería o cartas.' } },
+    { '@type': 'Question', name: '¿Puedo usar nombres con doble sentido?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, pero leelos en voz alta a clientes potenciales. Lo que parece ingenioso en la cabeza puede sonar incómodo cuando alguien dice "te espero en X" frente a su jefe.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Bares" title="Generador de nombre de bar"
+    intro="Combiná concepto, barrio o ingrediente y obtené 20 ideas para tu pub, cocktail bar o speakeasy. Pensado para validar dominio y handle de Instagram en minutos.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabras clave (concepto, barrio, objeto)</label>
+      <input id="bn-kw" type="text" placeholder="lobo, esquina, vinilo..." value="lobo, esquina" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="pub">Pub clásico (El, La, Casa)</option>
+        <option value="cocktail">Cocktail bar moderno</option>
+        <option value="speakeasy">Speakeasy / oculto</option>
+        <option value="object">Animal u objeto + bar</option>
+        <option value="single">Una palabra (Bruma, Sereno)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de un bar</h2>
+      <p>
+        El nombre de un bar tiene que sobrevivir tres pruebas: la del cartel a las 11 de la
+        noche, la del boca a boca de un grupo eligiendo dónde encontrarse, y la del taxi cuando
+        alguien dice la dirección en lugar del nombre. Si tu candidato no pasa las tres,
+        tachalo.
+      </p>
+      <ol>
+        <li><strong>Pronunciable a los gritos.</strong> Si no se entiende sobre música a 90 dB, lo perdés en el "vení para acá".</li>
+        <li><strong>Memorable después de dos copas.</strong> Lo más corto y concreto, mejor.</li>
+        <li><strong>Compatible con la decoración.</strong> "Casa del Vinilo" se contradice con un bar de cocteles modernos.</li>
+        <li><strong>Buscable en Maps y reservas.</strong> Tiene que ganar la primera búsqueda en tu barrio.</li>
+        <li><strong>Handle de Instagram libre.</strong> Es donde vas a publicar la carta del trago de la semana.</li>
+      </ol>
+
+      <h2>Estilos por tipo de bar</h2>
+      <ul>
+        <li><strong>Pub clásico:</strong> "Casa del Roble", "El Faro", "La Vereda". Cálido, comunica reunión.</li>
+        <li><strong>Cocktail bar moderno:</strong> "Sereno", "Niebla", "Bruma". Una palabra fuerte, atmósfera.</li>
+        <li><strong>Speakeasy:</strong> nombres crípticos o muy específicos: "Habitación 13", "Apartamento 4B". Crean misterio.</li>
+        <li><strong>Animal u objeto + bar:</strong> "Lobo Bar", "Vinilo Bar". Memorable y fácil de ilustrar.</li>
+        <li><strong>Una palabra:</strong> "Brote", "Quieto", "Vela". Versátiles, fáciles de tatuar en una posavasos.</li>
+      </ul>
+
+      <h2>Errores típicos</h2>
+      <p>
+        Evitá nombres que ya saturaron la categoría: cualquier "El Boliche", "El Fortín" o
+        "Tasca de…" ya tiene cien resultados en Google Maps. Evitá juegos de palabras con
+        bebidas alcohólicas que envejezcan mal o que limiten tu concepto si querés agregar
+        comida. Y cuidado con los nombres muy temáticos: si decorás todo de un solo concepto,
+        cuando quieras renovar te queda incoherente.
+      </p>
+
+      <h2>Cómo validar tu favorito</h2>
+      <ol>
+        <li>Google Maps en 5 km.</li>
+        <li>Instagram, TikTok, Untappd si servís cerveza.</li>
+        <li>Dominio .com y nacional en Namecheap.</li>
+        <li>Registro de marcas (INPI, USPTO, EUIPO).</li>
+        <li>Leerlo a 5 amigos en un grupo de WhatsApp: "¿quedamos en X?"</li>
+        <li>Verificar que se entienda en una llamada con ruido de fondo.</li>
+      </ol>
+      <p>
+        Recordá comunicar con responsabilidad: la promoción de bebidas alcohólicas debe respetar
+        la legislación local sobre publicidad de alcohol y horarios.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué tipo de nombre conviene para un bar?</summary><p>Depende del concepto: pub cálido, cocktail bar de una palabra, speakeasy críptico, o nombre con animal/objeto.</p></details>
+      <details><summary>¿Cómo verifico que esté libre?</summary><p>Google Maps, TripAdvisor, Instagram y registro de marcas local.</p></details>
+      <details><summary>¿Puedo usar doble sentido?</summary><p>Sí, pero probalo diciéndoselo a alguien adelante de su jefe antes de imprimir cartas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const PUB = ['Casa', 'El Faro', 'La Vereda', 'El Patio', 'La Esquina', 'El Roble', 'La Tasca', 'El Almacén', 'La Vecina', 'El Hueco'];
+  const COCKTAIL = ['Sereno', 'Niebla', 'Bruma', 'Pétalo', 'Ámbar', 'Velo', 'Roca', 'Sombra', 'Vidrio', 'Carbón'];
+  const SPEAK = ['Habitación 13', 'Apartamento 4B', 'Sala 7', 'Puerta 22', 'Buzón', 'Llave', 'Pasillo', 'Sótano', 'Bodega 9'];
+  const ANIMAL = ['Lobo', 'Cuervo', 'Zorro', 'Búho', 'Ciervo', 'Tigre', 'Halcón', 'Liebre'];
+  const OBJ = ['Vinilo', 'Cuerda', 'Llave', 'Botón', 'Reloj', 'Bombilla', 'Carbón'];
+  const SINGLE = ['Brote', 'Quieto', 'Vela', 'Eco', 'Reverso', 'Lento', 'Bruma', 'Ozono', 'Acero', 'Arpa'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Bar';
+      let name = '';
+      if (s === 'pub') name = pick(PUB) + (Math.random() > 0.5 ? ' ' + cap(w) : '');
+      else if (s === 'cocktail') name = pick(COCKTAIL);
+      else if (s === 'speakeasy') name = pick(SPEAK);
+      else if (s === 'object') name = (Math.random() > 0.5 ? pick(ANIMAL) : pick(OBJ)) + ' Bar';
+      else if (s === 'single') name = pick(SINGLE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

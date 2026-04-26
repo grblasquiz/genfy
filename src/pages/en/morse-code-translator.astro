@@ -1,0 +1,143 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Morse Code Translator | Genfy';
+const description = 'Translate text to Morse code and back. Full international table: letters, numbers and punctuation. Ideal for ham radio, scouts and curious learners.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is Morse code?', acceptedAnswer: { '@type': 'Answer', text: 'A coding system representing letters and numbers as sequences of dots (.) and dashes (-), invented by Samuel Morse in 1836 for telegraph transmission.' } },
+    { '@type': 'Question', name: 'Is it still used today?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Ham radio, emergency communication, aviation, navigation aids and as a teaching tool for kids.' } },
+    { '@type': 'Question', name: 'Can I translate Morse back to text?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. The translator works in both directions.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Fun" title="Morse Code Translator"
+    intro="Convert text to Morse and Morse back to text. Full International Morse table: letters, numbers and punctuation. For ham radio, scouts, escape rooms and the curious.">
+
+    <div slot="tool">
+      <label for="ms-in">Text or Morse</label>
+      <textarea id="ms-in" rows="5" placeholder="SOS  or  ... --- ..." style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div class="ms-row" style="margin-top:0.75rem;">
+        <label class="ms-check"><input type="radio" name="ms-dir" value="t2m" checked /> Text → Morse</label>
+        <label class="ms-check"><input type="radio" name="ms-dir" value="m2t" /> Morse → Text</label>
+      </div>
+      <div style="margin-top:0.75rem;">
+        <button id="ms-go" class="btn btn-primary" type="button">Translate</button>
+        <button id="ms-copy" class="btn btn-ghost" type="button">Copy</button>
+      </div>
+      <label for="ms-out" style="margin-top:1rem;">Result</label>
+      <textarea id="ms-out" rows="5" readonly style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>A history that's still alive</h2>
+      <p>
+        Samuel Morse and Alfred Vail developed Morse code in 1836 to send messages over the electric
+        telegraph. The idea was elegant: each letter is a sequence of short pulses (dots) and long pulses
+        (dashes), transmittable over any medium that distinguishes two states — current, light, sound,
+        knocks on a wall. That simplicity explains why Morse is still useful nearly two centuries later.
+      </p>
+
+      <h2>The international alphabet</h2>
+      <p>
+        The "International Morse" we use today is a refined version of the original. Standardized in the
+        19th century, it assigns the shortest sequences to the most frequent letters in English: E is a
+        single dot, T is a single dash. Rare letters (Q, J, Y) get longer codes. It's one of the earliest
+        examples of frequency-based compression, conceptually similar to modern algorithms like Huffman
+        coding.
+      </p>
+
+      <h2>SOS: the most famous</h2>
+      <p>
+        SOS is the international distress signal. "S O S" was chosen not for what it stands for (it doesn't
+        officially mean "Save Our Souls") but because its Morse pattern is the most recognizable:
+        ...---... — three short, three long, three short, with no pauses. Even untrained ears can catch
+        it. Adopted in 1908, it remains a valid emergency signal.
+      </p>
+
+      <h2>Modern uses</h2>
+      <ul>
+        <li><strong>Ham radio</strong> — operators worldwide still use Morse (CW) for its efficiency in weak signals.</li>
+        <li><strong>Aviation and navigation</strong> — some lighthouses and radio aids identify themselves in Morse.</li>
+        <li><strong>Emergency comms</strong> — when everything else fails, Morse gets through.</li>
+        <li><strong>Accessibility</strong> — people with limited mobility can write using a single binary device tapping Morse.</li>
+        <li><strong>Education</strong> — scouts, schools: introduction to the idea of code.</li>
+        <li><strong>Escape rooms</strong> — classic clue.</li>
+      </ul>
+
+      <h2>How Morse is transmitted</h2>
+      <p>
+        Traditionally with a key that opens and closes an electric circuit, producing tones of variable
+        duration. But Morse can travel any binary channel: flashlight, whistles, knocks, flags, code. The
+        relative timing matters: a dash lasts three times a dot, gap between letters equals three dots,
+        gap between words equals seven.
+      </p>
+
+      <h2>Easier to learn than you'd think</h2>
+      <p>
+        The modern learning approach (Koch method) recommends starting with two letters at high speed
+        (at least 15 wpm), adding one letter at a time. In 4-6 weeks of short daily practice you can hit
+        20 wpm receive. The key is to stop translating letter by letter mentally: each letter must be
+        learned as a single sound unit.
+      </p>
+
+      <h2>Trivia</h2>
+      <ul>
+        <li>The last commercial Morse message in the U.S. was sent in 1999 with the line: "Calling all. This is our last cry before our eternal silence."</li>
+        <li>The FCC dropped the Morse requirement for ham radio licenses in 2007, but it's still popular as a hobby.</li>
+        <li>"73" in Morse is a friendly sign-off between operators: it means "best regards".</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is Morse code?</summary><p>Coding with dots and dashes for letters and numbers, invented in 1836.</p></details>
+      <details><summary>Is it still used today?</summary><p>Yes. Ham radio, emergencies, aviation, accessibility, education.</p></details>
+      <details><summary>Can I translate Morse back to text?</summary><p>Yes — works both ways.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ms-row { display: flex; gap: 1rem; }
+  .ms-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.95rem; }
+  .ms-check input { width: auto; }
+</style>
+
+<script>
+  const T2M: Record<string,string> = {
+    'A':'.-','B':'-...','C':'-.-.','D':'-..','E':'.','F':'..-.','G':'--.','H':'....','I':'..',
+    'J':'.---','K':'-.-','L':'.-..','M':'--','N':'-.','O':'---','P':'.--.','Q':'--.-','R':'.-.',
+    'S':'...','T':'-','U':'..-','V':'...-','W':'.--','X':'-..-','Y':'-.--','Z':'--..',
+    '0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...',
+    '8':'---..','9':'----.','.':'.-.-.-',',':'--..--','?':'..--..',"'":'.----.','!':'-.-.--',
+    '/':'-..-.','(':'-.--.',')':'-.--.-','&':'.-...',':':'---...',';':'-.-.-.','=':'-...-',
+    '+':'.-.-.','-':'-....-','_':'..--.-','"':'.-..-.','$':'...-..-','@':'.--.-.'
+  };
+  const M2T: Record<string,string> = Object.fromEntries(Object.entries(T2M).map(([k,v])=>[v,k]));
+
+  const inEl = document.getElementById('ms-in') as HTMLTextAreaElement;
+  const outEl = document.getElementById('ms-out') as HTMLTextAreaElement;
+  const go = document.getElementById('ms-go') as HTMLButtonElement;
+  const cp = document.getElementById('ms-copy') as HTMLButtonElement;
+
+  function t2m(s: string): string {
+    return s.toUpperCase().split(/(\s+)/).map(part => {
+      if (/^\s+$/.test(part)) return ' / ';
+      return part.split('').map(c => T2M[c] || '').filter(Boolean).join(' ');
+    }).join('');
+  }
+  function m2t(s: string): string {
+    return s.split('/').map(group => {
+      return group.trim().split(/\s+/).map(code => M2T[code] || '').join('');
+    }).join(' ');
+  }
+  go.addEventListener('click', () => {
+    const dir = (document.querySelector('input[name="ms-dir"]:checked') as HTMLInputElement).value;
+    outEl.value = dir === 't2m' ? t2m(inEl.value) : m2t(inEl.value);
+  });
+  cp.addEventListener('click', async () => { if (!outEl.value) return; await navigator.clipboard.writeText(outEl.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

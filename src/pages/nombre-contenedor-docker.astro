@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de contenedor Docker | Genfy';
+const description = 'Generá nombres aleatorios para contenedores Docker estilo "happy-otter" o "calm-river". Memorables y compatibles con Docker naming rules.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Reglas de nombres en Docker?', acceptedAnswer: { '@type': 'Answer', text: 'Caracteres permitidos: a-z, 0-9, _, ., -. Largo máximo 64 caracteres. No empezar con guión.' } },
+    { '@type': 'Question', name: '¿Por qué adjetivo + animal?', acceptedAnswer: { '@type': 'Answer', text: 'Patrón inspirado en Docker mismo. Memorable, fácil de comunicar verbalmente y suficientemente único para entornos chicos.' } },
+    { '@type': 'Question', name: '¿En producción se usan así?', acceptedAnswer: { '@type': 'Answer', text: 'En producción se prefiere nombre del servicio + entorno + sufijo (api-prod-1). Los nombres aleatorios son para dev y debug.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech / Dev"
+    title="Generador de nombre de contenedor Docker"
+    intro="Generá nombres memorables tipo 'happy-otter' o 'calm-river'. Compatibles con Docker naming rules."
+  >
+    <div slot="tool" class="dk-tool">
+      <div class="dk-grid">
+        <div>
+          <label for="dk-style">Estilo</label>
+          <select id="dk-style">
+            <option value="adj-animal">adjetivo-animal</option>
+            <option value="adj-nature">adjetivo-naturaleza</option>
+            <option value="service-env">servicio-entorno (prod)</option>
+          </select>
+        </div>
+        <div>
+          <label for="dk-count">Cantidad</label>
+          <input id="dk-count" type="number" min="1" max="50" value="10" />
+        </div>
+      </div>
+      <div class="dk-actions">
+        <button id="dk-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="dk-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+      <textarea id="dk-out" class="mono" rows="12" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Reglas de nombres en Docker</h2>
+      <p>
+        Docker permite los caracteres <code>[a-zA-Z0-9_.-]</code> en nombres de contenedor, con un
+        máximo de 64 caracteres. El primer carácter no puede ser <code>-</code>. Si no especificás
+        nombre, Docker genera uno aleatorio (de ahí los <em>happy_curie</em> y similares que ves
+        sin querer).
+      </p>
+
+      <h2>Estilo "adjetivo-sustantivo"</h2>
+      <p>
+        El patrón <code>&lt;adjetivo&gt;-&lt;sustantivo&gt;</code> tiene la ventaja de ser
+        memorable: es más fácil decir "happy-otter" en una llamada que un hash hex. Para entornos
+        de dev y staging con pocos contenedores, alcanza. Para clusters grandes hay que sumar
+        sufijo numérico para evitar colisiones.
+      </p>
+
+      <h2>Naming en producción</h2>
+      <p>
+        En clusters reales, el patrón es <code>&lt;servicio&gt;-&lt;entorno&gt;-&lt;índice&gt;</code>:
+        <code>api-prod-1</code>, <code>api-prod-2</code>, <code>worker-staging-3</code>. Permite
+        scripting, listado por servicio (<code>docker ps --filter name=api-prod</code>) y
+        métricas agregadas en Prometheus.
+      </p>
+
+      <h2>Container vs image</h2>
+      <p>
+        Distinguí: el <strong>nombre de imagen</strong> es <code>my-org/my-app:1.2.3</code>; el
+        <strong>nombre de contenedor</strong> es la instancia corriente. Mismo image puede tener
+        cien contenedores corriendo, cada uno con nombre único.
+      </p>
+
+      <h2>Naming en docker-compose</h2>
+      <p>
+        Compose por default nombra <code>&lt;proyecto&gt;_&lt;servicio&gt;_&lt;índice&gt;</code>.
+        Podés sobreescribir con <code>container_name:</code> en el YAML, pero perdés escalabilidad
+        (no podés correr dos instancias del mismo servicio). Suele convenir dejar el default y
+        usar <code>service</code> para referirse al pool.
+      </p>
+
+      <h2>Naming en Kubernetes</h2>
+      <p>
+        En K8s, el "nombre del contenedor" vive dentro del Pod y debe seguir DNS-1123:
+        minúsculas, números y guiones, máximo 63 caracteres, debe empezar y terminar con
+        alfanumérico. El nombre del Pod se autogenera: <code>&lt;deployment&gt;-&lt;hash&gt;-&lt;hash&gt;</code>.
+      </p>
+
+      <h2>Anti-patrones</h2>
+      <ul>
+        <li>Nombres con espacios o caracteres especiales: rompen scripts.</li>
+        <li>Nombres específicos de host (<code>my-laptop-app</code>): no portables.</li>
+        <li>Nombres con datos sensibles: aparecen en logs y métricas.</li>
+        <li>Reusar nombre tras <code>docker rm</code>: el ID viejo puede vivir en metadata de monitoreo.</li>
+      </ul>
+
+      <h2>Limpieza</h2>
+      <p>
+        Contenedores con nombres aleatorios se acumulan en máquinas de dev. <code>docker container
+        prune</code> elimina todos los detenidos. <code>docker system prune -a</code> agrega
+        imágenes y volúmenes sueltos. Hacelo de tanto en tanto en máquinas de desarrollo.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Reglas Docker?</summary><p>a-z, 0-9, _, ., -. Max 64 chars. No empezar con guión.</p></details>
+      <details><summary>¿Por qué adj+animal?</summary><p>Memorables, fácil de comunicar.</p></details>
+      <details><summary>¿En prod?</summary><p>Mejor servicio-entorno-índice (api-prod-1).</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .dk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .dk-grid { grid-template-columns: 1fr; } }
+  .dk-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const style = document.getElementById('dk-style') as HTMLSelectElement;
+  const count = document.getElementById('dk-count') as HTMLInputElement;
+  const out = document.getElementById('dk-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('dk-gen') as HTMLButtonElement;
+  const copy = document.getElementById('dk-copy') as HTMLButtonElement;
+
+  const adjectives = ['happy', 'calm', 'swift', 'brave', 'gentle', 'curious', 'cheerful', 'lively', 'kind', 'bright', 'eager', 'quiet', 'mellow', 'witty', 'nimble', 'sturdy', 'tidy', 'clever', 'jolly', 'spry', 'patient', 'graceful', 'placid', 'sleek', 'merry', 'cozy', 'hardy', 'bold', 'humble', 'serene'];
+  const animals = ['otter', 'falcon', 'panda', 'lynx', 'koala', 'penguin', 'rabbit', 'badger', 'fox', 'sparrow', 'beaver', 'dolphin', 'turtle', 'squirrel', 'heron', 'goose', 'hedgehog', 'ferret', 'puffin', 'chipmunk', 'pelican', 'seal', 'meerkat', 'crane', 'mongoose', 'walrus', 'wombat', 'capybara', 'platypus', 'newt'];
+  const nature = ['river', 'meadow', 'forest', 'valley', 'pine', 'willow', 'maple', 'cedar', 'orchid', 'fern', 'breeze', 'pebble', 'cliff', 'cove', 'glade', 'hill', 'lagoon', 'dune', 'creek', 'tide', 'shore', 'reef', 'thicket', 'grove', 'spring', 'brook', 'cove', 'ridge', 'bay', 'bluff'];
+  const services = ['api', 'web', 'worker', 'queue', 'cache', 'admin', 'billing', 'auth', 'search', 'notify', 'reports', 'gateway'];
+  const envs = ['dev', 'staging', 'prod', 'qa'];
+
+  function rand<T>(arr: T[]): T { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function gen1() {
+    if (style.value === 'adj-animal') return `${rand(adjectives)}-${rand(animals)}`;
+    if (style.value === 'adj-nature') return `${rand(adjectives)}-${rand(nature)}`;
+    return `${rand(services)}-${rand(envs)}-${Math.floor(Math.random() * 9) + 1}`;
+  }
+
+  function build() {
+    const n = Math.min(50, Math.max(1, parseInt(count.value || '10', 10)));
+    const arr: string[] = [];
+    const seen = new Set<string>();
+    while (arr.length < n) {
+      const x = gen1();
+      if (!seen.has(x)) { seen.add(x); arr.push(x); }
+    }
+    out.value = arr.join('\n');
+  }
+  gen.addEventListener('click', build);
+  [style, count].forEach(el => el.addEventListener('change', build));
+  count.addEventListener('input', build);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copiado';
+    setTimeout(() => { icon.textContent = 'Copiar'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

@@ -1,0 +1,138 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de robot gratis | Genfy';
+const description = 'Generá nombres de robots, androides e IAs para tu historia, juego o producto. Combiná códigos alfanuméricos y nombres de modelo en segundos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo nombro un robot que no suene cliché?', acceptedAnswer: { '@type': 'Answer', text: 'Combiná código alfanumérico (R-X4, K-9) con un sufijo funcional (Forge, Helix, Sentinel). Evitá nombres demasiado humanos para robots no humanoides.' } },
+    { '@type': 'Question', name: '¿Es mejor un nombre humano o alfanumérico?', acceptedAnswer: { '@type': 'Answer', text: 'Depende del rol. Robots de servicio doméstico funcionan con nombres humanos. Robots militares o industriales suenan más creíbles con códigos.' } },
+    { '@type': 'Question', name: '¿Puedo usar el nombre de un robot existente?', acceptedAnswer: { '@type': 'Answer', text: 'Mejor no. R2-D2, WALL-E o Bender ya están registrados. Conviene inventar combinaciones nuevas.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de nombre de robot"
+    intro="Generá nombres de robots, androides e IAs para historia, juego o producto. Combiná códigos alfanuméricos y nombres de modelo para conseguir 20 ideas listas para usar.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Función o uso (opcional)</label>
+      <input id="bn-kw" type="text" placeholder="combate, soporte, exploración..." value="exploración" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="model">Código de modelo (R-X4 Forge)</option>
+        <option value="suffix">Nombre + número (Helix-9)</option>
+        <option value="acronym">Acrónimo (S.E.N.T.I.N.E.L.)</option>
+        <option value="friendly">Nombre humano (Beto, Klar)</option>
+        <option value="industrial">Industrial (Unit-44, Bay-7)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo nombrar a un robot sin caer en lo cliché</h2>
+      <p>
+        El naming de robots tiene una trampa muy común: copiar el formato de R2-D2 o WALL-E
+        creyendo que cualquier código alfanumérico funciona. La verdad es que un buen nombre de
+        robot dice algo sobre su función. R-X4 Forge sugiere un robot industrial, Helix-9 sugiere
+        un asistente médico. Si tu nombre no te dice qué hace el robot, está incompleto.
+      </p>
+      <ol>
+        <li><strong>Empezá por la función.</strong> ¿Es de combate, soporte, doméstico, exploración? Eso define el tono del nombre.</li>
+        <li><strong>Elegí un formato consistente.</strong> Si tu universo usa código + número, mantenelo en toda la flota.</li>
+        <li><strong>Evitá nombres demasiado humanos para robots no humanoides.</strong> "Tomás" no le queda a un brazo robótico industrial.</li>
+        <li><strong>Probalo en diálogo.</strong> ¿El nombre es fácil de gritar en una escena de tensión? Si no, descartalo.</li>
+        <li><strong>Verificá colisiones.</strong> Buscá en Google entre comillas: ¿hay otro robot famoso con ese nombre?</li>
+      </ol>
+
+      <h2>Estilos de naming para robots</h2>
+      <ul>
+        <li><strong>Código de modelo</strong>: letra-número + sufijo funcional (R-X4 Forge, K-2 Sentinel). Suena militar o industrial.</li>
+        <li><strong>Nombre + número</strong>: una palabra evocadora más un dígito (Helix-9, Vortex-3). Funciona para asistentes y exploradores.</li>
+        <li><strong>Acrónimo</strong>: cada letra significa una función real (S.E.N.T.I.N.E.L. = Sistema...). Pesado pero realista.</li>
+        <li><strong>Nombre humano corto</strong>: para robots de compañía o asistentes domésticos (Beto, Klar, Mira).</li>
+        <li><strong>Industrial</strong>: Unit-44, Bay-7, Mark-12. Funciona para flota numerada o producción.</li>
+      </ul>
+
+      <h2>Errores en nombres de robots</h2>
+      <p>
+        El más común: robots de servicio doméstico con nombres militares (no, "Drone-X9 Forge" no
+        es un buen nombre para un aspiradora con personalidad). Otro: combinar idiomas reales sin
+        sistema (un robot llamado "Hikari-Bravo-Sigma" suena pretencioso). Y un tercero: códigos
+        impronunciables (R-7XK4-Z9F) que el lector tiene que volver a leer cada vez que aparecen.
+        El nombre de un robot tiene que rodar en boca.
+      </p>
+
+      <h2>Después de generar</h2>
+      <ol>
+        <li>Elegí los cinco que mejor encajen con la función definida.</li>
+        <li>Verificá que se puedan pronunciar de corrido.</li>
+        <li>Probalos en una escena de comando: "¡___, atacá!" / "___, escaneá la zona". ¿Funciona?</li>
+        <li>Mantené coherencia: todos los robots de la misma serie deben seguir el mismo patrón.</li>
+        <li>Buscá colisiones con franquicias conocidas.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo nombro un robot que no suene cliché?</summary><p>Combiná código alfanumérico con sufijo funcional. Evitá nombres muy humanos en robots no humanoides.</p></details>
+      <details><summary>¿Mejor humano o alfanumérico?</summary><p>Depende del rol: doméstico, humano. Militar o industrial, código.</p></details>
+      <details><summary>¿Puedo usar nombres existentes?</summary><p>Mejor no. R2-D2, WALL-E ya tienen marca.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const LET = ['R', 'K', 'X', 'D', 'V', 'M', 'T', 'Z', 'B', 'S'];
+  const SUF = ['Forge', 'Sentinel', 'Vector', 'Cipher', 'Helix', 'Pylon', 'Vortex', 'Tracker', 'Drift', 'Echo', 'Patrol', 'Field'];
+  const HUM = ['Beto', 'Klar', 'Mira', 'Tilo', 'Bren', 'Velo', 'Niko', 'Drix'];
+  const ROLE = ['Unit', 'Bay', 'Mark', 'Series', 'Block'];
+  const ACR = ['S.E.N.T.I.N.E.L.', 'V.E.C.T.O.R.', 'H.E.L.I.X.', 'F.O.R.G.E.', 'D.R.I.F.T.'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function num(max = 99) { const i = new Uint32Array(1); crypto.getRandomValues(i); return (i[0] % max) + 1; }
+
+  function generate() {
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'model') name = pick(LET) + '-' + pick(LET) + num(9) + ' ' + pick(SUF);
+      else if (s === 'suffix') name = pick(SUF) + '-' + num(99);
+      else if (s === 'acronym') name = pick(ACR);
+      else if (s === 'friendly') name = pick(HUM);
+      else if (s === 'industrial') name = pick(ROLE) + '-' + num(99);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

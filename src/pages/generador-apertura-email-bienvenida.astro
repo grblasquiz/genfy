@@ -1,0 +1,163 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de apertura de email de bienvenida gratis | Genfy';
+const description = 'Generá la apertura del email de bienvenida que el suscriptor ve apenas se suscribe. La métrica que define el resto de la relación con tu lista.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué el welcome email es el más importante?', acceptedAnswer: { '@type': 'Answer', text: 'Es el email con mayor open rate de toda tu lista (60-90%). Define la primera impresión y predice si el suscriptor abrirá los próximos.' } },
+    { '@type': 'Question', name: '¿Qué debe tener una apertura de welcome email?', acceptedAnswer: { '@type': 'Answer', text: 'Cumplir la promesa por la que se suscribió, presentación breve, y una acción inmediata. Nada de "gracias por suscribirte" sin más contexto.' } },
+    { '@type': 'Question', name: '¿Cuándo se debe enviar el welcome email?', acceptedAnswer: { '@type': 'Answer', text: 'Inmediato. Idealmente en menos de 60 segundos desde el opt-in. La intención está caliente: cualquier delay reduce engagement.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Email" title="Generador de apertura de email de bienvenida"
+    intro="Cargá tu propuesta y el lead magnet (si aplica). Genfy te devuelve 4 aperturas para tu welcome email.">
+
+    <div slot="tool" class="we">
+      <label for="we-promise">Qué prometiste al suscribirse</label>
+      <input id="we-promise" type="text" placeholder="Tips de inversion para freelancers..." value="Tips de inversion semanales para freelancers" />
+
+      <label for="we-magnet" style="margin-top:1rem">Lead magnet (opcional)</label>
+      <input id="we-magnet" type="text" placeholder="Guia gratis de primeros pasos..." value="Guia gratis: 5 pasos para empezar a invertir" />
+
+      <label for="we-name" style="margin-top:1rem">Quién escribe (tu nombre)</label>
+      <input id="we-name" type="text" placeholder="Mariana..." value="Mariana" />
+
+      <label for="we-credibility" style="margin-top:1rem">Credibilidad breve</label>
+      <input id="we-credibility" type="text" placeholder="Coach de finanzas hace 8 anos" value="Coach de finanzas hace 8 anos" />
+
+      <button id="we-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 4 aperturas</button>
+
+      <div id="we-out" class="we-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué el welcome email es el más estratégico de toda tu lista</h2>
+      <p>
+        El welcome email tiene los open rates más altos de toda tu cuenta de email: entre 60% y 90% según la industria. Eso es 3 a 4 veces más que un email regular. La razón es simple: la persona acaba de tomar una decisión activa de darte su email. La intención está caliente, la atención está disponible, y el filtro mental "marketing" todavía no se activó.
+      </p>
+      <p>
+        Eso convierte al welcome en la oportunidad más valiosa de tu funnel de email. Lo que escribas acá define la relación con todos los emails siguientes. Si el welcome confirma la promesa, presenta valor concreto y pide una pequeña acción, la lista te abre los próximos. Si es genérico, baja a 30% en el segundo email y a 15% en el tercero.
+      </p>
+
+      <h2>La estructura del welcome email que rinde</h2>
+      <ol>
+        <li><strong>Cumplir la promesa primero:</strong> si prometiste un PDF, el link al PDF es lo primero, no al final.</li>
+        <li><strong>Presentación corta y específica:</strong> "Soy Mariana, llevo 8 años ayudando a freelancers a ahorrar." 2 frases máximo.</li>
+        <li><strong>Qué pueden esperar:</strong> "Te voy a escribir cada martes con tips concretos." Frecuencia y formato.</li>
+        <li><strong>Una acción inmediata:</strong> responder al email, hacer click en algo, leer un recurso.</li>
+        <li><strong>Cierre humano:</strong> firma con nombre, no con marca corporativa.</li>
+      </ol>
+
+      <h2>Las 4 estructuras de apertura que rinden</h2>
+      <ul>
+        <li><strong>Apertura "entrega + bienvenida":</strong> "Acá está tu guía: [link]. Antes que nada: gracias por suscribirte."</li>
+        <li><strong>Apertura "presentación humana":</strong> "Hola, soy Mariana. Llevo 8 años en finanzas y este newsletter es donde escribo lo que aprendí."</li>
+        <li><strong>Apertura "honesta sobre qué viene":</strong> "Te voy a ser sincero: te voy a escribir cada martes y a veces voy a recomendarte algo de pago."</li>
+        <li><strong>Apertura "acción inmediata":</strong> "Antes que sigamos, una cosa: respondé este email con tu mayor problema con [tema]. Lo leo todo."</li>
+      </ul>
+
+      <h2>El error más común: el welcome genérico</h2>
+      <p>
+        El welcome promedio dice "Gracias por suscribirte. En las próximas semanas te escribiré sobre X. Saludos." Es educado y técnicamente correcto. Y rinde 30% peor que un welcome con personalidad. Por qué:
+      </p>
+      <ul>
+        <li>No cumple la promesa específica (¿dónde está el PDF que prometí?).</li>
+        <li>No presenta a una persona, presenta a una marca anónima.</li>
+        <li>No pide ninguna acción, así que la persona archiva y olvida.</li>
+        <li>No diferencia tu cuenta del resto de las 50 newsletters a las que está suscripto.</li>
+      </ul>
+
+      <h2>Por qué pedir una acción mejora todo el funnel</h2>
+      <p>
+        Pedir una acción en el welcome (responder con una pregunta, hacer click en un recurso, completar un mini-quiz) tiene tres beneficios concretos:
+      </p>
+      <ol>
+        <li><strong>Mejora deliverability:</strong> Gmail y Outlook leen las respuestas del usuario como señal de que el email es importante. Más respuestas = mejor inbox placement futuro.</li>
+        <li><strong>Genera data:</strong> aprendés qué le interesa a cada suscriptor desde el día 1.</li>
+        <li><strong>Establece dinámica:</strong> si responden el primero, es más probable que respondan los siguientes.</li>
+      </ol>
+
+      <h2>El timing: cuándo enviar y por qué importa</h2>
+      <p>
+        Welcome email tiene que llegar en menos de 60 segundos del opt-in. Idealmente menos de 30. Por qué: la persona todavía está en la pantalla, todavía recuerda por qué se suscribió, todavía tiene el contexto activo. Si llega 6 horas después, el contexto se enfrió. Si llega al día siguiente, se siente fuera de lugar.
+      </p>
+      <p>
+        Plataformas como ConvertKit, Klaviyo, MailerLite y Mailchimp permiten configurar trigger de "inmediato al opt-in". Si tu plataforma no lo permite, cambiá de plataforma.
+      </p>
+
+      <h2>Cómo presentar credibilidad sin sonar a CV</h2>
+      <p>
+        La credibilidad en un welcome se construye con 1-2 datos específicos, no con una lista. Comparemos:
+      </p>
+      <ul>
+        <li>"Soy Mariana, MBA en X, ex-Banco Y, CFA, autora del libro Z, speaker en eventos..." — suena a CV.</li>
+        <li>"Soy Mariana, llevo 8 años ayudando a freelancers a invertir su primer peso." — suena humano y específico.</li>
+      </ul>
+
+      <h2>Errores típicos en welcome emails</h2>
+      <ul>
+        <li><strong>Sin personalización del sender:</strong> "info@empresa.com" en lugar de "mariana@empresa.com" baja open rate 15%.</li>
+        <li><strong>Demasiado largo:</strong> 5 párrafos de bienvenida sin acción concreta.</li>
+        <li><strong>Demasiados links:</strong> 8 botones de "lee esto, escuchá aquello" abruma.</li>
+        <li><strong>Footer corporativo gigante:</strong> el primer email debe sentirse personal, no corporativo.</li>
+        <li><strong>No mencionar frecuencia:</strong> la gente quiere saber qué esperar.</li>
+        <li><strong>Auto-promo en el welcome:</strong> "Comprá mi curso" en el primer email es el camino directo al unsubscribe.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuándo enviar el welcome?</summary><p>Inmediato (menos de 60 seg). La intención está caliente.</p></details>
+      <details><summary>¿Cuántos links incluir?</summary><p>1-2 acciones concretas. Más abruma y diluye conversión.</p></details>
+      <details><summary>¿Mencionar frecuencia?</summary><p>Sí. "Te escribo cada martes" baja unsubscribes futuros.</p></details>
+      <details><summary>¿Auto-promo en el welcome?</summary><p>Mejor no. Confianza primero, ventas en emails 4-5 en adelante.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .we-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .we-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; }
+  .we-card:hover { border-color: var(--accent); }
+  .we-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const promise = document.getElementById('we-promise') as HTMLInputElement;
+  const magnet = document.getElementById('we-magnet') as HTMLInputElement;
+  const name = document.getElementById('we-name') as HTMLInputElement;
+  const cred = document.getElementById('we-credibility') as HTMLInputElement;
+  const gen = document.getElementById('we-gen') as HTMLButtonElement;
+  const out = document.getElementById('we-out')!;
+
+  function generate() {
+    const Pr = promise.value.trim() || 'tips utiles';
+    const M = magnet.value.trim();
+    const N = name.value.trim() || 'Soy yo';
+    const C = cred.value.trim() || 'el creador de este newsletter';
+
+    const intros = [
+      `${M ? 'Acá esta lo que prometi: ' + M + ' (link al final del email).\n\n' : ''}Antes que nada: gracias por suscribirte. Soy ${N}, ${C.toLowerCase()}.\n\nEn este newsletter te voy a mandar ${Pr.toLowerCase()}, sin relleno.`,
+      `Hola, soy ${N}.\n\n${C}, y este es el lugar donde escribo lo que aprendí en ese tiempo.\n\n${M ? 'Empezamos con tu primer recurso: ' + M + '.\n\n' : ''}Te escribo cada semana. Si en algún momento te aburre, podes salir con un click abajo.`,
+      `Te voy a ser directo: te voy a escribir cada semana, a veces dos. ${Pr}.\n\n${M ? 'Tu primer recurso prometido: ' + M + '.\n\n' : ''}Si esto suena bien, segui leyendo. Si no, gracias igual y nos vemos.`,
+      `Antes de que sigamos, una cosa: respondeme este email con tu mayor problema sobre ${Pr.toLowerCase().split(' ').slice(0, 3).join(' ')}.\n\nLo leo todo, sin secretaria de por medio.\n\nSoy ${N}, ${C.toLowerCase()}.${M ? '\n\nTu primer recurso: ' + M + '.' : ''}`,
+    ];
+
+    out.innerHTML = '';
+    intros.forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'we-card';
+      el.title = 'Click para copiar';
+      el.innerHTML = b.replace(/\n/g, '<br>') + `<div class="we-meta">Apertura ${i+1} · ${b.length} caracteres</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copiada'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

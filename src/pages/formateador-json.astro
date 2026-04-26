@@ -1,0 +1,136 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Formateador JSON gratis | Genfy';
+const description = 'Formateá, indentá y validá JSON al instante en el navegador. Detecta errores de sintaxis y muestra la posición exacta. 100% local.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace un formateador JSON?', acceptedAnswer: { '@type': 'Answer', text: 'Toma JSON sin formato (todo en una línea o con indentación inconsistente) y lo reescribe con espacios y saltos de línea uniformes para que sea legible. También detecta errores de sintaxis.' } },
+    { '@type': 'Question', name: '¿Mi JSON se sube a algún servidor?', acceptedAnswer: { '@type': 'Answer', text: 'No. El formateo se hace 100% en tu navegador con JSON.parse y JSON.stringify. El contenido nunca sale de tu dispositivo, perfecto para datos sensibles.' } },
+    { '@type': 'Question', name: '¿Por qué fallan algunos JSON válidos?', acceptedAnswer: { '@type': 'Answer', text: 'JSON estricto no permite comentarios, comas finales (trailing commas), comillas simples ni claves sin comillas. Estas cosas son comunes en JavaScript pero rompen el parser de JSON.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Datos" title="Formateador JSON"
+    intro="Pegá JSON crudo y obtené una versión indentada, validada y lista para leer. Detecta errores de sintaxis y muestra dónde están.">
+
+    <div slot="tool">
+      <div class="jf-row">
+        <div>
+          <label for="jf-indent">Indentación</label>
+          <select id="jf-indent">
+            <option value="2">2 espacios</option>
+            <option value="4">4 espacios</option>
+            <option value="\t">Tab</option>
+          </select>
+        </div>
+      </div>
+      <label for="jf-in">JSON</label>
+      <textarea id="jf-in" rows="8" style="font-family: var(--font-mono); font-size: 0.9rem;">&lcub;"name":"Genfy","version":1,"tags":["dev","tools"],"active":true&rcub;</textarea>
+      <button id="jf-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Formatear</button>
+      <button id="jf-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <div id="jf-status" class="jf-status" aria-live="polite"></div>
+      <label for="jf-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="jf-out" rows="12" readonly style="font-family: var(--font-mono); font-size: 0.9rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué importa formatear JSON</h2>
+      <p>
+        En producción, JSON suele viajar minificado: todo en una línea, sin espacios, sin saltos. Esto ahorra bytes pero lo vuelve ilegible para humanos. Cuando estás debuggeando una respuesta de API, leyendo un archivo de configuración largo o auditando un export de base de datos, lo primero que hacés es formatear. Un buen formateador convierte una sopa de caracteres en una estructura jerárquica clara en menos de un segundo.
+      </p>
+
+      <h2>Reglas estrictas de JSON</h2>
+      <ul>
+        <li><strong>Comillas dobles obligatorias.</strong> JSON no acepta comillas simples. <code>'name'</code> rompe el parser; <code>"name"</code> funciona.</li>
+        <li><strong>Sin trailing commas.</strong> <code>&lcub;"a":1,&rcub;</code> es JavaScript válido pero JSON inválido.</li>
+        <li><strong>Sin comentarios.</strong> Ni <code>//</code> ni <code>/* */</code>. Si necesitás comentarios, usá JSON5 o JSONC (la variante de VS Code).</li>
+        <li><strong>Claves siempre entre comillas.</strong> <code>&lcub;name: "Genfy"&rcub;</code> rompe; <code>&lcub;"name": "Genfy"&rcub;</code> funciona.</li>
+        <li><strong>Booleanos en minúscula.</strong> <code>true</code> y <code>false</code>, no <code>True</code>.</li>
+      </ul>
+
+      <h2>Tipos de datos válidos</h2>
+      <p>
+        JSON soporta seis tipos: string, number, boolean, null, object y array. No tiene fechas (se representan como strings ISO), ni undefined (se omite la clave), ni funciones, ni símbolos. Cuando una librería serializa un objeto JavaScript a JSON, todo lo que no entra en esos seis tipos se pierde silenciosamente.
+      </p>
+
+      <h2>Indentación: 2 espacios, 4 espacios o tab</h2>
+      <p>
+        No hay un estándar universal. La convención más común en proyectos JavaScript es 2 espacios (npm package.json, Prettier por default). Python tiende a 4. Algunos equipos usan tabs por razones de accesibilidad. Lo que importa es la consistencia dentro de un mismo proyecto: si tu repo usa 2 espacios, no introduzcas archivos con 4.
+      </p>
+
+      <h2>Errores de sintaxis frecuentes</h2>
+      <ul>
+        <li><strong>Coma sobrante al final de un array u objeto.</strong> Suele venir de borrar la última línea sin actualizar la coma anterior.</li>
+        <li><strong>Comillas curvas.</strong> Cuando copiás de Word o Google Docs, las comillas se transforman a "smart quotes" (" ") que JSON no entiende.</li>
+        <li><strong>Caracteres de control en strings.</strong> Tabs y saltos de línea literales dentro de strings rompen el parser; hay que escaparlos como <code>\t</code> y <code>\n</code>.</li>
+        <li><strong>Anidamiento incorrecto.</strong> Llaves o corchetes desbalanceados.</li>
+      </ul>
+
+      <h2>Tips para trabajar con JSON grande</h2>
+      <p>
+        Si tu archivo supera los 10 MB, evitá editores web — pueden colgar el navegador. Usá una herramienta de línea de comandos como <code>jq</code> para filtrar y reformatear. Si solo querés inspeccionar parte de la estructura, considerá <code>jq 'keys'</code> para listar las claves del nivel superior antes de buscar más profundo.
+      </p>
+
+      <h2>JSON vs alternativas modernas</h2>
+      <ul>
+        <li><strong>JSON5:</strong> permite comentarios, trailing commas, claves sin comillas. Útil para configs.</li>
+        <li><strong>YAML:</strong> más legible pero ambiguo (un valor sin comillas puede interpretarse como string o number).</li>
+        <li><strong>TOML:</strong> popular en Rust y en algunos configs (Cargo, pyproject.toml).</li>
+        <li><strong>Protocol Buffers:</strong> binario, mucho más eficiente que JSON para tráfico interno entre servicios.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace un formateador JSON?</summary><p>Toma JSON sin formato y lo reescribe con indentación uniforme. Además detecta errores de sintaxis.</p></details>
+      <details><summary>¿Mi JSON se sube a algún servidor?</summary><p>No. El formateo es 100% local en tu navegador.</p></details>
+      <details><summary>¿Por qué fallan algunos JSON válidos?</summary><p>JSON estricto no permite comentarios, trailing commas, comillas simples ni claves sin comillas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .jf-row { display: flex; gap: 1rem; margin-bottom: 1rem; }
+  .jf-status { font-family: var(--font-mono); font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.25rem; }
+  .jf-status.ok { color: var(--success); }
+  .jf-status.err { color: var(--danger); }
+</style>
+
+<script>
+  const inEl = document.getElementById('jf-in') as HTMLTextAreaElement;
+  const out = document.getElementById('jf-out') as HTMLTextAreaElement;
+  const indentEl = document.getElementById('jf-indent') as HTMLSelectElement;
+  const status = document.getElementById('jf-status') as HTMLDivElement;
+  const genBtn = document.getElementById('jf-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('jf-copy') as HTMLButtonElement;
+
+  function run() {
+    const txt = inEl.value;
+    if (!txt.trim()) { out.value = ''; status.textContent = ''; status.className = 'jf-status'; return; }
+    try {
+      const parsed = JSON.parse(txt);
+      const indent = indentEl.value === '\\t' ? '\t' : parseInt(indentEl.value, 10);
+      out.value = JSON.stringify(parsed, null, indent);
+      status.textContent = '✓ JSON válido';
+      status.className = 'jf-status ok';
+    } catch (e: any) {
+      out.value = '';
+      status.textContent = '✗ ' + (e.message || 'JSON inválido');
+      status.className = 'jf-status err';
+    }
+  }
+  inEl.addEventListener('input', run);
+  indentEl.addEventListener('change', run);
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

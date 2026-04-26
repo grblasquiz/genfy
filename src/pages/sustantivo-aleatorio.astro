@@ -1,0 +1,131 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Sustantivo aleatorio en español | Genfy';
+const description = 'Generador de sustantivos al azar en español. Filtrá por concretos, abstractos o naturaleza. Útil para naming, escritura, prompts y juegos de palabras.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve un sustantivo al azar?', acceptedAnswer: { '@type': 'Answer', text: 'Para naming de marcas, prompts de escritura, ejercicios de redacción, brainstorming creativo y juegos de palabras.' } },
+    { '@type': 'Question', name: '¿Puedo separar concretos y abstractos?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Los concretos refieren a objetos físicos; los abstractos, a conceptos. Filtrar por uno u otro cambia mucho el output creativo.' } },
+    { '@type': 'Question', name: '¿La lista incluye palabras raras?', acceptedAnswer: { '@type': 'Answer', text: 'No. Mantenemos sustantivos reconocibles para hispanohablantes; lo "raro" se gana por combinación, no por palabra obscura.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Idiomas" title="Sustantivo aleatorio"
+    intro="Sacá un sustantivo al azar en español. Filtrá por concretos, abstractos o de naturaleza. Ideal para naming, escritura creativa, prompts y juegos.">
+
+    <div slot="tool">
+      <div class="rw-row">
+        <div>
+          <label for="su-cat">Categoría</label>
+          <select id="su-cat">
+            <option value="all">Todos</option>
+            <option value="con">Concretos</option>
+            <option value="abs">Abstractos</option>
+            <option value="nat">Naturaleza</option>
+          </select>
+        </div>
+        <div>
+          <label for="su-amount">Cantidad</label>
+          <input id="su-amount" type="number" min="1" max="30" value="5" />
+        </div>
+      </div>
+      <button id="su-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="su-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="su-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>El sustantivo es la base del nombre</h2>
+      <p>
+        Cuando alguien busca el nombre para una marca, un proyecto, un libro o un personaje, suele empezar
+        por el sustantivo. La razón es simple: el sustantivo carga el concepto principal, y todo lo demás
+        (adjetivos, verbos, contexto) se monta encima. "Casa" ya dice algo. "Casa serena" dice más. "La casa
+        serena del río" cuenta una historia.
+      </p>
+
+      <h2>Concretos, abstractos, naturaleza</h2>
+      <p>
+        Los <strong>concretos</strong> nombran objetos físicos: silla, libro, río. Son los más fáciles de
+        visualizar y los que mejor funcionan en branding cuando querés un nombre tangible. Los
+        <strong>abstractos</strong> nombran conceptos: libertad, orden, esperanza. Son potentes pero
+        riesgosos: si no los acompañás bien, suenan a slogan vacío. Los de <strong>naturaleza</strong>
+        (montaña, valle, raíz, hoja) tienen un aura aspiracional que se usa muchísimo en marcas
+        eco-friendly, retiro, bienestar y outdoors.
+      </p>
+
+      <h2>Casos de uso reales</h2>
+      <ul>
+        <li><strong>Naming</strong> — sacá 30 sustantivos, marcá los cinco que te suenen, pasalos por un test de disponibilidad de dominio.</li>
+        <li><strong>Escritura creativa</strong> — un sustantivo al azar como prompt diario garantiza que no escribís siempre sobre lo mismo.</li>
+        <li><strong>Brainstorming</strong> — para sesiones de "pensar afuera de la caja", un sustantivo random funciona como provocación.</li>
+        <li><strong>Juegos</strong> — Stop, Pictionary, Charadas. Si la palabra es abstracta, sube la dificultad de Pictionary.</li>
+        <li><strong>Educación</strong> — concordancia de género, número, formación de plurales, derivación.</li>
+      </ul>
+
+      <h2>Errores típicos en naming</h2>
+      <ul>
+        <li><strong>Genérico</strong> — "Casa", "Tienda", "Estudio" sin más es invisible. Sumale un adjetivo o un sustantivo segundo.</li>
+        <li><strong>Forzado</strong> — un sustantivo que no tiene nada que ver con tu propuesta confunde y obliga a explicar.</li>
+        <li><strong>Difícil de pronunciar</strong> — si tu cliente tiene que deletrearlo, perdiste.</li>
+        <li><strong>Marca registrada</strong> — siempre verificá disponibilidad antes de enamorarte de un nombre.</li>
+      </ul>
+
+      <h2>Una rutina de 10 minutos</h2>
+      <p>
+        Si estás trabajando en naming, dale 10 minutos al generador así: sacá 50 sustantivos. Marcá
+        rápidamente los 10 que te llamen la atención por sonido, no por significado. De esos 10, generá
+        adjetivos al azar y combinalos. De las 30-40 combinaciones que salgan, vas a tener tres o cuatro
+        candidatos legítimos. Es un proceso mecánico, casi industrial, que produce mejores resultados que
+        sentarse a "pensar un nombre".
+      </p>
+
+      <h2>Combinaciones que abren puertas</h2>
+      <p>
+        Probá generar dos sustantivos a la vez y conectarlos con "de" o "y": "Casa de la Lluvia", "Río y
+        Piedra", "Tinta y Pan". Esta fórmula simple es la base de muchísimos nombres de marca, librerías,
+        cafés, bandas y proyectos. Funciona porque genera intriga sin opacar el concepto.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve un sustantivo al azar?</summary><p>Naming, prompts, ejercicios de redacción, brainstorming y juegos.</p></details>
+      <details><summary>¿Puedo separar concretos y abstractos?</summary><p>Sí. Filtralos según el tipo de palabra que necesites.</p></details>
+      <details><summary>¿La lista incluye palabras raras?</summary><p>No. Sustantivos reconocibles; lo creativo se gana por combinación, no por palabra obscura.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const CON = "casa silla mesa puerta ventana libro lápiz cuaderno teléfono reloj llave botella vaso plato cuchara tenedor cama cortina lámpara espejo cuadro alfombra escalera puente pared techo calle bicicleta auto tren barco avión maleta caja bolso paraguas".split(' ');
+  const ABS = "amistad libertad esperanza memoria tiempo silencio paciencia coraje verdad bondad calma fuerza paz ternura curiosidad alegría duda olvido futuro pasado destino oficio vocación humildad orden caos ritmo idea sentido vínculo energía".split(' ');
+  const NAT = "río montaña valle bosque playa lago laguna arena piedra raíz hoja flor árbol semilla cielo nube lluvia nieve viento sol luna estrella ola arroyo cima ladera musgo barro rocío niebla horizonte".split(' ');
+
+  const cEl = document.getElementById('su-cat') as HTMLSelectElement;
+  const amEl = document.getElementById('su-amount') as HTMLInputElement;
+  const out = document.getElementById('su-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('su-gen') as HTMLButtonElement;
+  const cp = document.getElementById('su-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function build() {
+    const c = cEl.value;
+    const pool = c === 'con' ? CON : c === 'abs' ? ABS : c === 'nat' ? NAT : [...CON, ...ABS, ...NAT];
+    const n = Math.max(1, Math.min(30, parseInt(amEl.value || '1', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) lines.push(pick(pool));
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', build);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+  build();
+</script>

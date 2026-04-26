@@ -1,0 +1,156 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random Clean Joke Generator | Genfy';
+const description = 'Clean jokes safe for all audiences: office, family, classroom. No risque content, no stereotypes, no politics. Ready to copy and share.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Are they kid-safe?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, all jokes are filtered to be appropriate at home, classroom and office.' } },
+    { '@type': 'Question', name: 'Are there office jokes?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, filter by "work" category.' } },
+    { '@type': 'Question', name: 'Can I use them in presentations?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, perfect for opening a talk or lighting up a slide.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Diversión / Fun" title="Random clean joke generator"
+    intro="Jokes appropriate for any audience. No risque content or stereotypes.">
+
+    <div slot="tool" class="ck">
+      <div class="ck-card">
+        <p id="ck-text" class="ck-text">Tap generate to start.</p>
+      </div>
+      <div class="ck-controls">
+        <label for="ck-cat">Type</label>
+        <select id="ck-cat">
+          <option value="all">All</option>
+          <option value="absurd">Absurd</option>
+          <option value="work">Work / Office</option>
+          <option value="dad">Dad jokes</option>
+          <option value="food">Food</option>
+        </select>
+      </div>
+      <button id="ck-gen" class="btn btn-primary" type="button">Another joke</button>
+      <button id="ck-copy" class="btn btn-ghost" type="button">Copy</button>
+    </div>
+
+    <div slot="content">
+      <h2>Why a clean joke works better</h2>
+      <p>
+        When you speak to a mixed group (classroom, extended family, office), the risky
+        joke is the joke that fails. A great clean joke is built on absurdity, everyday
+        situations and wordplay. It doesn't depend on degrading anyone. That's why
+        top-quality kid comedy (Pixar, Disney, Studio Ghibli) builds humor on observation,
+        not offense: it has to work for everyone.
+      </p>
+
+      <h2>Four structures of clean humor</h2>
+      <ol>
+        <li><strong>Misdirection:</strong> setup points to one expectation, punchline goes elsewhere. "My doctor told me to avoid heavy dinners. Now I eat with a plastic spoon."</li>
+        <li><strong>Wordplay (puns):</strong> language double meaning. "I used to hate facial hair, but then it grew on me."</li>
+        <li><strong>Absurd:</strong> impossible situation taken to the limit. "I called my brain's tech support. They put me on hold listening to my own thoughts."</li>
+        <li><strong>Observational:</strong> truths everyone lives but nobody says. "The gym is where you pay money to feel bad in a healthy way."</li>
+      </ol>
+
+      <h2>When to use each type</h2>
+      <ul>
+        <li><strong>Family:</strong> dad jokes and absurd. Work in mixed-age groups.</li>
+        <li><strong>Office:</strong> observational about meetings, coffee or Mondays. Builds quick empathy.</li>
+        <li><strong>Kids:</strong> simple puns and obvious answers.</li>
+        <li><strong>Presentations:</strong> one well-placed at the open or close. Never as a repeated crutch.</li>
+      </ul>
+
+      <h2>Common joke-telling mistakes</h2>
+      <p>
+        Mistake #1 is laughing at your own joke before the punchline. Kills the surprise.
+        #2 is explaining the joke if it didn't land: makes it worse. #3 is telling the same
+        joke to the same person twice. If in doubt, don't tell. Better one less joke than
+        a repeat. Humor is like coffee: the right dose is delicious, too much is bitter.
+      </p>
+
+      <h2>Humor across cultures</h2>
+      <p>
+        British humor leans on irony and understatement. American on punchlines and
+        observation. Japanese on cuteness and absurdity. The thing they share: humor that
+        endures laughs at situations, not at people. If you follow that principle when
+        telling a joke, you'll do fine with any audience.
+      </p>
+
+      <h2>Taboo: what to avoid</h2>
+      <p>
+        Ethnic, religious, gender or orientation stereotypes: never. Partisan politics:
+        never in mixed professional contexts. Jokes about recent tragedies: zero. Jokes
+        that require a listener to feel bad about their body: out. If your joke needs a
+        target, it's not a joke, it's disguised aggression.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Spanish version?</summary><p>Available at /chiste-aleatorio.</p></details>
+      <details><summary>How many?</summary><p>50+ with category rotation.</p></details>
+      <details><summary>Can I submit jokes?</summary><p>Not yet, but open contributions are coming.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ck-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; }
+  .ck-text { font-size: 1.125rem; line-height: 1.6; margin: 0; }
+  .ck-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const J: { cat: string; t: string }[] = [
+    { cat: "absurd", t: "I called my brain's tech support. They put me on hold for two hours listening to my own thoughts." },
+    { cat: "absurd", t: "My GPS says 'recalculating' so often I feel like we're in a toxic relationship." },
+    { cat: "absurd", t: "I bought a book on how to stop procrastinating. I've been thinking about it for six months." },
+    { cat: "absurd", t: "My fridge has so many magnets it's developed a personality." },
+    { cat: "absurd", t: "Every time I open Netflix I spend 40 minutes choosing and end up watching the same Office episode." },
+    { cat: "absurd", t: "My grandma cooks so well her food offends the rest of the family." },
+    { cat: "absurd", t: "My houseplant has a better social life than I do. People talk to it daily." },
+    { cat: "work", t: "This meeting could have been an email. And this email could have been an emoji." },
+    { cat: "work", t: "Monday is that weekly lesson we never seem to learn." },
+    { cat: "work", t: "The gym is where you pay money to feel bad in a healthy way." },
+    { cat: "work", t: "I have two modes: 'urgent' and 'not yet urgent'. Guess which I use most." },
+    { cat: "work", t: "The most effective team-building event is a company-wide internet outage." },
+    { cat: "work", t: "My Google calendar and my actual life are parallel universes that occasionally meet." },
+    { cat: "work", t: "Working from home is like space: feels infinite, but eventually you miss the office." },
+    { cat: "dad", t: "Why don't scientists trust atoms? Because they make up everything." },
+    { cat: "dad", t: "I used to hate facial hair, but then it grew on me." },
+    { cat: "dad", t: "Why did the scarecrow win an award? He was outstanding in his field." },
+    { cat: "dad", t: "I'm reading a book about anti-gravity. I can't put it down." },
+    { cat: "dad", t: "What do you call fake spaghetti? An impasta." },
+    { cat: "dad", t: "I would tell you a construction joke, but I'm still working on it." },
+    { cat: "dad", t: "Did you hear about the kidnapping at the playground? They woke up." },
+    { cat: "food", t: "Waiter, there's a fly in my soup. Don't worry, it's not very thirsty." },
+    { cat: "food", t: "My diet has been starting on Monday since 1998." },
+    { cat: "food", t: "I ordered salad to go with the pizza. The scale doesn't believe me." },
+    { cat: "food", t: "Broccoli is the only vegetable that always looks angry." },
+    { cat: "food", t: "Coffee doesn't affect me. I'm on my seventh cup and still falling asleep at my desk." },
+    { cat: "food", t: "There are two kinds of foods: chocolate and supporting characters." }
+  ];
+
+  const text = document.getElementById('ck-text') as HTMLElement;
+  const cat = document.getElementById('ck-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('ck-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('ck-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? J : J.filter(s => s.cat === filter);
+    text.textContent = pick(pool).t;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(text.textContent || '');
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de utilería gratis | Genfy';
+const description = 'Generá nombres internos de utilería para teatro, cine, eventos y producción audiovisual. Fácil de listar, etiquetar e inventariar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve nombrar la utilería con un código interno?', acceptedAnswer: { '@type': 'Answer', text: 'Un nombre interno consistente acelera el inventario, evita confusiones entre escenas y permite que regidores y asistentes encuentren los objetos en pocos segundos durante la función.' } },
+    { '@type': 'Question', name: '¿Qué información debe llevar un buen nombre de utilería?', acceptedAnswer: { '@type': 'Answer', text: 'Tres datos: tipo del objeto, distintivo visual y referencia de escena o personaje. Por ejemplo: "Carta-roja-Acto2" o "Espada-corta-Inés".' } },
+    { '@type': 'Question', name: '¿Sirve para producción de cine y eventos corporativos?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, los nombres funcionan para teatro, cine, publicidad, ferias y eventos. Mantené el formato consistente en toda la producción.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Producción" title="Generador de nombre de utilería"
+    intro="Etiquetá props con códigos limpios, consistentes y fáciles de leer. Ahorrás tiempo en montaje, ensayo, función y desarme.">
+
+    <div slot="tool" class="up">
+      <label for="up-cat">Categoría</label>
+      <select id="up-cat">
+        <option value="hand">Utilería de mano</option>
+        <option value="set">Utilería de escenario</option>
+        <option value="costume">Vestuario / accesorio</option>
+        <option value="food">Comida / bebida en escena</option>
+      </select>
+
+      <label for="up-scene" style="margin-top:1rem">Escena o acto</label>
+      <input id="up-scene" type="text" value="Acto2" placeholder="Acto1, Esc3, Final..." />
+
+      <button id="up-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 etiquetas</button>
+      <div id="up-out" class="up-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué un nombre claro de prop ahorra horas en montaje</h2>
+      <p>En cualquier producción mediana, una sola escena puede tener 15 o 20 objetos. Si la lista del regidor dice "vaso" tres veces y "carta" cinco, alguien va a confundir el vaso del Acto 1 con el del Acto 3 a los diez días de ensayo. Un sistema de nombres consistente reduce errores en función, simplifica el inventario al desarmar y permite que un asistente nuevo encuentre todo sin tener que preguntar.</p>
+      <h2>Estructura recomendada</h2>
+      <ol>
+        <li><strong>Tipo del objeto:</strong> carta, vaso, espada, libro, llave.</li>
+        <li><strong>Distintivo visual:</strong> color, tamaño, material o detalle único (roja, corta, sellada).</li>
+        <li><strong>Referencia de uso:</strong> escena, acto o personaje al que pertenece.</li>
+      </ol>
+      <p>El resultado: <code>Carta-roja-Acto2</code>, <code>Espada-corta-Inés</code>, <code>Vaso-vacio-Final</code>. Tres bloques separados por guiones, fáciles de buscar en una hoja de cálculo y de imprimir en una etiqueta.</p>
+      <h2>Errores que ves todo el tiempo y cómo evitarlos</h2>
+      <ul>
+        <li><strong>Nombres genéricos:</strong> "vaso 1", "vaso 2". Funcionan dos días, después nadie recuerda cuál era cuál.</li>
+        <li><strong>Mezcla de idiomas:</strong> alternar inglés y español en la misma producción confunde al equipo.</li>
+        <li><strong>Espacios y caracteres especiales:</strong> usá guiones medios o bajos, evitá espacios para que los códigos pasen bien por planillas y QR.</li>
+        <li><strong>Nombres demasiado largos:</strong> más de cuatro bloques se vuelven ilegibles en una etiqueta de cinta de papel.</li>
+      </ul>
+      <h2>Inventario y trazabilidad</h2>
+      <p>Una vez que tenés todos los props con código, armá una hoja de cálculo con seis columnas: código, descripción, escena de entrada, escena de salida, ubicación off-stage y responsable. Si trabajás con QR, generá uno por prop y pegalo en la base del objeto: el regidor escanea, ve la ficha y sabe en segundos a dónde va. Para giras, agregá una columna de "estado" (ok, dañado, por reponer) y revisá antes de cada función.</p>
+      <h2>Buenas prácticas para teatro, cine y eventos</h2>
+      <p>En cine se suele agregar la referencia de escena del guion (ESC-12, ESC-12B). En teatro alcanza con acto y escena. En eventos corporativos conviene agregar el nombre del cliente o evento ("Lanzamiento-X"). Lo importante es elegir un formato y respetarlo en toda la producción para que cualquiera pueda leer el inventario sin glosario.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve nombrar utilería con código interno?</summary><p>Acelera inventario, evita confusiones y permite encontrar objetos en segundos durante la función.</p></details>
+      <details><summary>¿Qué información debe llevar?</summary><p>Tipo del objeto, distintivo visual y referencia de escena o personaje.</p></details>
+      <details><summary>¿Sirve para cine y eventos?</summary><p>Sí, funciona para teatro, cine, publicidad, ferias y eventos corporativos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .up-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .up-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-mono, monospace); font-size: 0.875rem; cursor: pointer; }
+  .up-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const HAND = ['Carta', 'Vaso', 'Llave', 'Reloj', 'Pluma', 'Sobre', 'Pañuelo', 'Anillo', 'Pipa', 'Botella', 'Cartera', 'Libro'];
+  const SET = ['Sillón', 'Mesa', 'Lámpara', 'Cuadro', 'Cortina', 'Espejo', 'Florero', 'Baúl', 'Telar', 'Banco', 'Paragüero', 'Atril'];
+  const COSTUME = ['Sombrero', 'Bastón', 'Bufanda', 'Broche', 'Guante', 'Capa', 'Cinturón', 'Chal', 'Boina', 'Pañoleta', 'Antifaz', 'Brazalete'];
+  const FOOD = ['Manzana', 'Pan', 'Vino', 'Café', 'Tarta', 'Sopa', 'Queso', 'Té', 'Galleta', 'Ensalada', 'Caldo', 'Aceitunas'];
+  const ATTR = ['roja', 'azul', 'corta', 'larga', 'rota', 'sellada', 'vacía', 'llena', 'vieja', 'nueva', 'doble', 'falsa'];
+
+  const cat = document.getElementById('up-cat') as HTMLSelectElement;
+  const scene = document.getElementById('up-scene') as HTMLInputElement;
+  const gen = document.getElementById('up-gen') as HTMLButtonElement;
+  const out = document.getElementById('up-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const c = cat.value;
+    const sc = (scene.value || 'Acto1').replace(/\s+/g, '');
+    let pool: string[] = HAND;
+    if (c === 'set') pool = SET;
+    else if (c === 'costume') pool = COSTUME;
+    else if (c === 'food') pool = FOOD;
+    const set = new Set<string>(); let tries = 0;
+    while (set.size < 20 && tries < 200) {
+      tries++;
+      const tag = `${pick(pool)}-${pick(ATTR)}-${sc}`;
+      set.add(tag);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'up-item'; el.textContent = n; el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

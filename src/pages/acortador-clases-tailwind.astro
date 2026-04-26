@@ -1,0 +1,107 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Acortador de clases Tailwind | Genfy';
+const description = 'Acortá listas largas de clases Tailwind detectando duplicados, ordenándolas y agrupando shorthand. Útil para legibilidad y diff limpios.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Esta tool reemplaza a un linter?', acceptedAnswer: { '@type': 'Answer', text: 'No. Para proyectos serios usá tailwindcss/prettier-plugin que ordena por reglas oficiales. Esta tool es práctica para revisar a mano un className puntual.' } },
+    { '@type': 'Question', name: '¿Funciona con clases custom?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Quita duplicados y ordena alfabéticamente cualquier clase, no solo de Tailwind.' } },
+    { '@type': 'Question', name: '¿Por qué importa el orden?', acceptedAnswer: { '@type': 'Answer', text: 'En Tailwind no afecta porque las clases tienen especificidad por su orden en CSS, no en el className. Pero un orden consistente facilita lectura y diffs en git.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Acortador de clases Tailwind"
+    intro="Pegá un className largo y desorganizado. Devolvemos la versión sin duplicados, ordenada por categoría.">
+
+    <div slot="tool" class="tw">
+      <label for="tw-in">Input</label>
+      <textarea id="tw-in" rows="4">flex flex p-4 text-sm text-gray-500 hover:text-gray-700 p-4 rounded-md bg-white shadow-sm flex items-center justify-between</textarea>
+
+      <div class="tw-actions">
+        <button id="tw-gen" class="btn btn-primary" type="button">Acortar</button>
+        <button id="tw-cp" class="btn btn-ghost" type="button">Copiar</button>
+      </div>
+
+      <label>Output</label>
+      <pre><code id="tw-out"></code></pre>
+
+      <div class="tw-stats" id="tw-stats"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cuándo usar el acortador</h2>
+      <p>Tailwind tiende a producir className muy largos y con duplicados accidentales. Cuando refactorizás un componente o copiás un snippet de otro lugar, terminás con clases repetidas, espacios extras y orden caótico. Esta tool elimina duplicados, normaliza espacios y ordena alfabéticamente para que el código sea más fácil de revisar.</p>
+
+      <h2>Qué hace exactamente</h2>
+      <ul>
+        <li><strong>Elimina duplicados</strong>: <code>flex flex</code> queda como <code>flex</code>.</li>
+        <li><strong>Normaliza espacios</strong>: múltiples espacios o saltos de línea quedan como un solo espacio.</li>
+        <li><strong>Ordena alfabéticamente</strong>: facilita lectura y comparación entre componentes.</li>
+        <li><strong>Cuenta clases</strong>: te muestra cuántas tenías y cuántas quedaron.</li>
+      </ul>
+
+      <h2>Cuándo no usarla</h2>
+      <p>Si tu proyecto usa <code>prettier-plugin-tailwindcss</code> (recomendado), esa herramienta ordena las clases siguiendo el orden oficial de Tailwind: layout, flex, grid, spacing, sizing, typography, etc. Esa convención hace los componentes más predecibles. Para producción, usá el plugin oficial. Esta tool es para revisar y limpiar un className puntual a mano.</p>
+
+      <h2>Por qué importa la limpieza</h2>
+      <p>Un componente con un className de 30 clases en orden aleatorio es difícil de auditar. ¿Está aplicando padding? ¿Hay un hover state? ¿Aparece un breakpoint? Cuando las clases están ordenadas, el ojo encuentra patrones rápido. En equipos grandes, esta consistencia reduce errores y facilita PRs.</p>
+
+      <h2>Patrones que ayudan</h2>
+      <ul>
+        <li><strong>Componentes en lugar de utilidades</strong>: si repetís el mismo combo 5 veces, extraelo a un componente.</li>
+        <li><strong>@apply con criterio</strong>: para combos muy comunes podés usar @apply en CSS, pero no abuses: pierde uno de los beneficios de Tailwind.</li>
+        <li><strong>clsx o cn helpers</strong>: condicionar clases con JS de forma legible.</li>
+        <li><strong>tailwind-variants o cva</strong>: para variantes complejas, una librería que te da estructura.</li>
+      </ul>
+
+      <h2>Errores comunes</h2>
+      <ul>
+        <li><strong>Aplicar la misma propiedad dos veces</strong>: <code>p-2 p-4</code>: gana la última en el HTML, pero si ambas tienen la misma especificidad CSS, gana la que está después en el archivo CSS, no en className.</li>
+        <li><strong>Mezclar Tailwind con CSS custom sin convención</strong>: hace difícil saber dónde está cada estilo.</li>
+        <li><strong>Hover y focus states perdidos</strong>: si tenés muchas clases con prefijo, agrupalas mentalmente.</li>
+      </ul>
+
+      <h2>Conclusión</h2>
+      <p>Esta tool sirve para revisión rápida. Para producción, integrá <code>prettier-plugin-tailwindcss</code> en tu pipeline: corre en cada save y mantiene todo el codebase consistente sin esfuerzo. La diferencia entre un componente con 30 clases ordenadas y uno con 30 clases desordenadas es la diferencia entre un código que un colega entiende en 10 segundos y uno que lo frena 2 minutos.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Reemplaza a un linter?</summary><p>No. Para proyectos serios usá prettier-plugin-tailwindcss. Esta tool es para limpieza puntual.</p></details>
+      <details><summary>¿Funciona con clases custom?</summary><p>Sí. Quita duplicados y ordena cualquier clase.</p></details>
+      <details><summary>¿Importa el orden?</summary><p>No técnicamente. Pero un orden consistente ayuda a la lectura y a los diffs en git.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tw-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; white-space: pre-wrap; word-break: break-word; }
+  .tw-stats { margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-soft); }
+</style>
+
+<script>
+  const inp = document.getElementById('tw-in') as HTMLTextAreaElement;
+  const out = document.getElementById('tw-out') as HTMLElement;
+  const stats = document.getElementById('tw-stats') as HTMLElement;
+  const gen = document.getElementById('tw-gen') as HTMLButtonElement;
+  const cp = document.getElementById('tw-cp') as HTMLButtonElement;
+
+  function render() {
+    const raw = inp.value.split(/\s+/).filter(Boolean);
+    const unique = Array.from(new Set(raw)).sort();
+    out.textContent = unique.join(' ');
+    stats.textContent = `Original: ${raw.length} clases · Resultado: ${unique.length} clases · Removidas: ${raw.length - unique.length}`;
+  }
+  gen.addEventListener('click', render);
+  inp.addEventListener('input', render);
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar', 1500);
+  });
+  render();
+</script>

@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de programa de fidelidad gratis | Genfy';
+const description = 'Generá nombres para programas de loyalty: niveles, puntos, club premium. Tono moderno, branded, listo para retail, banca y SaaS.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno a un nombre de programa de fidelidad?', acceptedAnswer: { '@type': 'Answer', text: 'Tres condiciones: que sugiera pertenencia o estatus, que se pueda extender a varios niveles (Silver, Gold, Plus), y que combine con la marca madre sin canibalizarla.' } },
+    { '@type': 'Question', name: '¿Cuántos niveles debe tener?', acceptedAnswer: { '@type': 'Answer', text: 'Tres niveles funcionan en la mayoría de los casos: básico (entrada), intermedio (recurrente) y premium (top). Más de cinco confunde al cliente y complica la operación.' } },
+    { '@type': 'Question', name: '¿Conviene cobrar membresía?', acceptedAnswer: { '@type': 'Answer', text: 'Solo si el beneficio justifica claramente el precio. Amazon Prime cobra y funciona porque el envío gratis paga el costo. Si no podés justificar el cobro, mejor empezá con loyalty gratuito y subí después con un nivel premium pago.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de nombre de programa de fidelidad"
+    intro="Combiná palabra base, formato (Club, Plus, Inner) y nombre de marca. Funciona para retail, banca, e-commerce y SaaS.">
+
+    <div slot="tool" class="lp">
+      <label for="lp-brand">Marca o sector</label>
+      <input id="lp-brand" type="text" value="Norte" placeholder="Norte, Nuva, Acme..." />
+
+      <label for="lp-style" style="margin-top:1rem">Estilo</label>
+      <select id="lp-style">
+        <option value="club">Club / Inner</option>
+        <option value="plus">Plus / Pro / Prime</option>
+        <option value="word">Palabra moderna (Pulse, Crest)</option>
+        <option value="tier">3 niveles listos</option>
+      </select>
+
+      <button id="lp-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 ideas</button>
+      <div id="lp-out" class="lp-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué el nombre del programa importa más de lo que parece</h2>
+      <p>Un programa de fidelidad bien nombrado puede sumar tres puntos de retención solo por el efecto de pertenencia. "Sephora Beauty Insider" suena como un círculo cerrado al que uno quiere entrar. "Programa de puntos Sephora" suena a planilla de Excel. La diferencia es psicológica y se nota en la conversión a alta y la frecuencia de uso.</p>
+      <h2>Estructuras que funcionan</h2>
+      <ol>
+        <li><strong>Marca + Club:</strong> "Norte Club", "Acme Inner Circle". Comunica pertenencia.</li>
+        <li><strong>Marca + Plus / Prime:</strong> "Norte Plus", "Acme Prime". Sugiere mejora frente al producto base.</li>
+        <li><strong>Palabra moderna + marca:</strong> "Pulse Norte", "Crest Acme". Suena premium, ideal si querés despegar el programa de la marca operativa.</li>
+        <li><strong>Tres niveles ya nombrados:</strong> Bronze / Silver / Gold sigue funcionando, pero hoy gana mejor con palabras tipo Spark / Bloom / Beacon.</li>
+      </ol>
+      <h2>Errores comunes al diseñar el programa</h2>
+      <ul>
+        <li><strong>Demasiados niveles:</strong> 5 o 6 niveles confunden al cliente y duplican el trabajo de comunicación.</li>
+        <li><strong>Beneficio difuso:</strong> "puntos para canjear más tarde" no motiva. Mejor: descuento concreto, envío gratis, acceso a un drop limitado.</li>
+        <li><strong>Mecánica oculta:</strong> si para entender cómo se acumulan puntos hay que leer 20 líneas, perdés activación.</li>
+        <li><strong>Nombres mitológicos:</strong> nombrar niveles con deidades antiguas se siente clásico pero ya está hiper-saturado y, además, choca culturalmente con muchos clientes. Usá palabras modernas: Spark, Bloom, Crest, Beacon.</li>
+      </ul>
+      <h2>Cómo decidir el formato según tu negocio</h2>
+      <p>Para retail físico, conviene un nombre familiar que la cajera pueda decir 200 veces por turno: "Norte Club". Para e-commerce, podés ir a algo más distintivo: "Pulse Norte". Para banca, prima la sensación de estatus: "Black", "Selecta", "Inner". Para SaaS, integrá el programa con el plan: "Norte Pro" suena a versión paga, "Norte Inner" suena a comunidad de poweruser.</p>
+      <h2>Validación antes de lanzar</h2>
+      <p>Antes de gastar en branding, hacé este test con 50 clientes existentes: enviales un mail con tres nombres candidatos y preguntales cuál los haría sentir más parte de algo. Si dos de tres opciones obtienen baja respuesta y una clara mayoría ganan, ya tenés tu ganadora. Si todas tienen voto similar, simplificá: la diferencia probablemente esté en los beneficios, no en el nombre.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno al nombre?</summary><p>Sugiere pertenencia, se extiende a niveles y combina con la marca madre.</p></details>
+      <details><summary>¿Cuántos niveles?</summary><p>Tres niveles funcionan para la mayoría de los casos.</p></details>
+      <details><summary>¿Conviene cobrar membresía?</summary><p>Solo si el beneficio justifica el precio claramente.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .lp-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .lp-item { padding: 0.75rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
+  .lp-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const CLUB = ['Club', 'Inner', 'Círculo', 'Sociedad', 'Comunidad'];
+  const PLUS = ['Plus', 'Pro', 'Prime', 'Selecta', 'Black', 'Élite'];
+  const WORDS = ['Pulse', 'Crest', 'Bloom', 'Beacon', 'Spark', 'Forge', 'Drift', 'Tide', 'Frame', 'Loop'];
+  const TIERS = ['Spark / Bloom / Beacon', 'Bronze / Silver / Gold', 'Pulse / Crest / Summit', 'Forge / Tide / Crown', 'Bloom / Crest / Apex'];
+
+  const brand = document.getElementById('lp-brand') as HTMLInputElement;
+  const style = document.getElementById('lp-style') as HTMLSelectElement;
+  const gen = document.getElementById('lp-gen') as HTMLButtonElement;
+  const out = document.getElementById('lp-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function generate() {
+    const b = (brand.value || 'Marca').trim();
+    const s = style.value;
+    const set = new Set<string>(); let tries = 0;
+    while (set.size < 20 && tries < 200) {
+      tries++;
+      let name = '';
+      if (s === 'club') name = `${cap(b)} ${pick(CLUB)}`;
+      else if (s === 'plus') name = `${cap(b)} ${pick(PLUS)}`;
+      else if (s === 'word') name = `${pick(WORDS)} ${cap(b)}`;
+      else name = pick(TIERS);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'lp-item'; el.textContent = n; el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

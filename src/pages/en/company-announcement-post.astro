@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Company Announcement Post Generator | Genfy';
+const description = 'Generate the perfect post to announce your company, launch or funding round on LinkedIn, X / Twitter or newsletter. 5 ready-to-paste versions.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What does a good company announcement need?', acceptedAnswer: { '@type': 'Answer', text: 'A strong hook in the first line, 2-3 sentences of context, what changes now, a concrete metric and a clear CTA at the end.' } },
+    { '@type': 'Question', name: 'Should I announce before or after launch?', acceptedAnswer: { '@type': 'Answer', text: 'On LinkedIn and X, the day of launch + a follow-up a week later with results. For media, a week before under embargo.' } },
+    { '@type': 'Question', name: 'How long should it be?', acceptedAnswer: { '@type': 'Answer', text: 'LinkedIn: 800-1300 characters works well. X: a 4-6 tweet thread. Newsletter: up to 600 words.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Company Announcement Post"
+    intro="Generate the perfect post to announce your company, round, partnership or launch. 5 versions for LinkedIn, X and newsletter, ready to copy.">
+
+    <div slot="tool" class="ca">
+      <label>Company</label>
+      <input id="ca-co" type="text" value="Acme Corp" />
+
+      <label style="margin-top:1rem">Type of announcement</label>
+      <select id="ca-type">
+        <option value="launch">Product launch</option>
+        <option value="funding">Funding round</option>
+        <option value="partnership">Strategic partnership</option>
+        <option value="company">Company launch</option>
+        <option value="milestone">Milestone (customers, revenue)</option>
+      </select>
+
+      <label style="margin-top:1rem">Key detail</label>
+      <input id="ca-key" type="text" value="$2M seed for the new courses platform" />
+
+      <label style="margin-top:1rem">Main audience</label>
+      <input id="ca-aud" type="text" value="professionals switching careers" />
+
+      <button id="ca-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 5 versions</button>
+
+      <div id="ca-out" class="ca-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why a well-crafted announcement is worth the extra hour</h2>
+      <p>
+        A good company announcement does three things at once: brings organic press, attracts
+        talent that didn't know you, and reminds prospects you exist. Companies that invest one
+        hour in a tight announcement instead of 10 minutes on a generic post see the difference
+        in reads, comments and DMs.
+      </p>
+
+      <h2>Structure of an announcement that works</h2>
+      <ol>
+        <li><strong>Hook:</strong> first line that stops the scroll. A striking number, a question, an unexpected angle.</li>
+        <li><strong>Context:</strong> 2-3 sentences that explain it without assuming prior knowledge.</li>
+        <li><strong>What changes:</strong> what does this enable for customers and the team.</li>
+        <li><strong>Concrete metric:</strong> a real number (customers, savings, time) backing the announcement.</li>
+        <li><strong>Team / partners credit:</strong> name people and companies that helped.</li>
+        <li><strong>Clear CTA:</strong> what should the reader do next (subscribe, book demo, read the article).</li>
+      </ol>
+
+      <h2>Channel differences</h2>
+      <ul>
+        <li><strong>LinkedIn:</strong> professional but personal tone. Starting in first person ("18 months ago...") works well, plus team photo and short paragraphs.</li>
+        <li><strong>X / Twitter:</strong> 4-6 tweet thread. First tweet with the strongest data point and a visual cue (number, simple emoji, dash separator).</li>
+        <li><strong>Newsletter:</strong> tell the story behind it — the obstacles, the lessons. Your readers picked you, reward them with depth.</li>
+        <li><strong>Instagram:</strong> 5-7 slide carousel with one big headline and one data point per slide.</li>
+      </ul>
+
+      <h2>Mistakes that bury your post</h2>
+      <ol>
+        <li>Starting with "We're excited to announce...". Banned in 2026.</li>
+        <li>No number. An announcement without a metric is an internal memo.</li>
+        <li>Ignoring the team. If you achieved something, several people did. Name at least 3.</li>
+        <li>No CTA. If readers don't know what's next, you lost the conversion.</li>
+        <li>Posting Friday at 6pm. Try Tuesday and Wednesday between 9 and 11 local time.</li>
+      </ol>
+
+      <h2>How to amplify reach</h2>
+      <ul>
+        <li>Ask 5-10 teammates to reshare at the same time.</li>
+        <li>Tag investors, partners and 1-2 relevant media accounts.</li>
+        <li>Make a thread version for X and a separate one for LinkedIn — don't copy-paste.</li>
+        <li>Email the announcement to your list 1-2 hours before publishing publicly.</li>
+        <li>After 24 hours, do a follow-up post with the most interesting comments and your replies.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Before or after launch?</summary><p>Day of launch + follow-up a week later on social. For media, a week ahead under embargo.</p></details>
+      <details><summary>How long?</summary><p>LinkedIn 800-1300 chars. X 4-6 tweet thread. Newsletter up to 600 words.</p></details>
+      <details><summary>What does it need?</summary><p>Hook, context, what changes, metric, team credit, CTA.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ca-out { display: grid; gap: 0.875rem; margin-top: 1.25rem; }
+  .ca-card { padding: 1.125rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-md); cursor: pointer; transition: border-color 0.1s; white-space: pre-wrap; }
+  .ca-card:hover { border-color: var(--primary); }
+  .ca-card h4 { margin: 0 0 0.5rem; font-size: 0.875rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+</style>
+
+<script>
+  const co = document.getElementById('ca-co') as HTMLInputElement;
+  const type = document.getElementById('ca-type') as HTMLSelectElement;
+  const key = document.getElementById('ca-key') as HTMLInputElement;
+  const aud = document.getElementById('ca-aud') as HTMLInputElement;
+  const out = document.getElementById('ca-out')!;
+  const gen = document.getElementById('ca-gen') as HTMLButtonElement;
+
+  function generate() {
+    const v1 = `News.\n\n${co.value} just closed ${key.value}.\n\nWhat this means for ${aud.value}: more speed, better product, and a team that can finally focus 100% on customer outcomes.\n\nThanks to the team, our investors, and the customers who believed from day one.\n\nWant to see what's next? Newsletter link in the first comment.`;
+    const v2 = `18 months ago, ${co.value} was an idea on a napkin.\n\nToday: ${key.value}.\n\nThe path was anything but linear. We pivoted twice, lost customers we thought were core, and discovered the real problem for ${aud.value} was different from what we assumed.\n\nOnto the next chapter.`;
+    const v3 = `Three quick facts:\n\n1. We launched ${co.value} 12 months ago.\n2. ${key.value}.\n3. We're hiring.\n\nIf you're curious how we build for ${aud.value}, book a 15-minute chat — link in profile.`;
+    const v4 = `Thread (1/5).\n\n${co.value} just announced ${key.value}. Here's what changes for ${aud.value} and for the team.\n\n(2/5) The product moves to the next level: features customers have been asking for are now in the backlog.\n\n(3/5) Four key hires across product, data and support.\n\n(4/5) We're opening a waiting list for enterprise.\n\n(5/5) Thanks. Questions? Reply below.`;
+    const v5 = `For ${aud.value}: ${co.value} just closed ${key.value}.\n\nWhat changes this week:\n— Faster response times.\n— Limited-time annual plan discount.\n— Personalized demos with the product team.\n\nDetails in the comments.`;
+
+    const versions = [
+      { tag: 'LinkedIn — classic (hook + metric + thanks)', text: v1 },
+      { tag: 'LinkedIn — narrative (origin + present)', text: v2 },
+      { tag: 'X / short — 3 facts', text: v3 },
+      { tag: 'X — 5-tweet thread', text: v4 },
+      { tag: 'Email to customer base', text: v5 },
+    ];
+
+    out.innerHTML = '';
+    versions.forEach(v => {
+      const c = document.createElement('div');
+      c.className = 'ca-card';
+      c.innerHTML = `<h4>${v.tag}</h4>`;
+      const p = document.createElement('div');
+      p.textContent = v.text;
+      c.appendChild(p);
+      c.title = 'Click to copy';
+      c.addEventListener('click', () => { navigator.clipboard.writeText(v.text); c.style.borderColor = 'var(--primary)'; setTimeout(() => c.style.borderColor = '', 800); });
+      out.appendChild(c);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

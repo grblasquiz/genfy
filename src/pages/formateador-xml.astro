@@ -1,0 +1,153 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Formateador XML gratis | Genfy';
+const description = 'Indentá, formateá y validá XML al instante en el navegador. Útil para SOAP, RSS, sitemaps, configs Java/Spring y respuestas legacy.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿XML sigue vigente?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, en muchísimos contextos. Sitemaps de Google, RSS, SOAP en sistemas legacy, configs de Spring y .NET, SVG, Office Open XML (.docx, .xlsx). JSON dominó la web pública pero XML sobrevive en empresa, gobierno y banca.' } },
+    { '@type': 'Question', name: '¿Detecta errores?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Usa el parser nativo del navegador. Si tu XML no está bien formado (etiquetas sin cerrar, anidamiento incorrecto, atributos sin comillas), te lo avisa con la posición.' } },
+    { '@type': 'Question', name: '¿Mi XML se sube a un servidor?', acceptedAnswer: { '@type': 'Answer', text: 'No. El parser corre 100% en tu browser con DOMParser. Tu XML nunca sale del dispositivo, lo que importa cuando contiene datos sensibles de empresa.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Datos" title="Formateador XML"
+    intro="Pegá XML crudo y obtené una versión bien indentada. Útil para inspeccionar respuestas SOAP, sitemaps, RSS y configs legacy.">
+
+    <div slot="tool">
+      <div class="xf-row">
+        <div>
+          <label for="xf-indent">Indentación</label>
+          <select id="xf-indent">
+            <option value="2">2 espacios</option>
+            <option value="4">4 espacios</option>
+            <option value="\t">Tab</option>
+          </select>
+        </div>
+      </div>
+      <label for="xf-in">XML</label>
+      <textarea id="xf-in" rows="8" style="font-family: var(--font-mono); font-size: 0.9rem;">&lt;?xml version="1.0"?&gt;&lt;libros&gt;&lt;libro id="1"&gt;&lt;titulo&gt;Cien Años&lt;/titulo&gt;&lt;autor&gt;García Márquez&lt;/autor&gt;&lt;/libro&gt;&lt;libro id="2"&gt;&lt;titulo&gt;Rayuela&lt;/titulo&gt;&lt;autor&gt;Cortázar&lt;/autor&gt;&lt;/libro&gt;&lt;/libros&gt;</textarea>
+      <button id="xf-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Formatear</button>
+      <button id="xf-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <div id="xf-status" class="xf-status" aria-live="polite"></div>
+      <label for="xf-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="xf-out" rows="12" readonly style="font-family: var(--font-mono); font-size: 0.9rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué seguir formateando XML en 2026</h2>
+      <p>
+        Mucho del software que el mundo usa todos los días corre sobre XML: el sitemap.xml que Google necesita para indexar tu sitio, los feeds RSS que alimentan podcasts y newsletters, las facturas electrónicas en países como Argentina, México y España, los archivos de Microsoft Office que parecen binarios pero son zips con XML adentro, las configs de Spring Boot, los responses SOAP en sistemas bancarios. Cuando algo falla en cualquiera de estos contextos, lo primero que hacés es inspeccionar el XML formateado.
+      </p>
+
+      <h2>Reglas básicas de XML bien formado</h2>
+      <ul>
+        <li><strong>Una raíz única.</strong> Todo el documento debe estar dentro de un elemento raíz.</li>
+        <li><strong>Etiquetas balanceadas.</strong> Cada apertura tiene su cierre, en el orden correcto. <code>&lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt;</code> es inválido.</li>
+        <li><strong>Atributos entre comillas.</strong> <code>id=1</code> rompe; <code>id="1"</code> funciona.</li>
+        <li><strong>Caracteres reservados escapados.</strong> <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code> dentro de contenido y atributos.</li>
+        <li><strong>Case-sensitive.</strong> <code>&lt;Libro&gt;</code> y <code>&lt;libro&gt;</code> son etiquetas distintas.</li>
+      </ul>
+
+      <h2>XML vs JSON</h2>
+      <p>
+        JSON ganó la web pública por un margen brutal: es más conciso, los browsers lo parsean nativamente con <code>JSON.parse</code>, y las APIs REST modernas casi todas lo usan. Pero XML no está muerto. Tiene cosas que JSON no resuelve elegantemente: namespaces, esquemas formales con XSD para validar estructura, mixed content (texto mezclado con tags), CDATA para incluir contenido sin escapar. En entornos donde hay contratos formales entre sistemas (banca, gobierno, salud), XML sigue siendo el estándar.
+      </p>
+
+      <h2>Errores típicos que detecta el parser</h2>
+      <ul>
+        <li><strong>Etiqueta sin cerrar.</strong> <code>&lt;p&gt;hola</code>.</li>
+        <li><strong>Cierre desordenado.</strong> <code>&lt;b&gt;&lt;i&gt;texto&lt;/b&gt;&lt;/i&gt;</code>.</li>
+        <li><strong>Carácter ilegal.</strong> Un <code>&amp;</code> sin escapar como entidad.</li>
+        <li><strong>Multiple raíces.</strong> Más de un elemento al nivel superior.</li>
+        <li><strong>Atributo duplicado.</strong> <code>&lt;p class="a" class="b"&gt;</code>.</li>
+      </ul>
+
+      <h2>Casos de uso donde formatear ayuda</h2>
+      <ul>
+        <li><strong>Auditar un sitemap.</strong> Verificás que todas las URLs estén bien escritas y con prioridades coherentes.</li>
+        <li><strong>Debuggear un response SOAP.</strong> Los servicios SOAP devuelven XML enorme; sin formato, encontrar el error tarda.</li>
+        <li><strong>Editar configs de Spring.</strong> Cuando un colega te pasa un application.xml minificado, el primer paso es darle formato.</li>
+        <li><strong>Inspeccionar feeds RSS.</strong> Si tu feed no se valida en los lectores, formatearlo permite ver dónde está la etiqueta inválida.</li>
+      </ul>
+
+      <h2>Tips de productividad</h2>
+      <p>
+        Para XML grande (más de 10 MB) considerá usar un editor desktop con streaming (XMLSpy, oXygen) en lugar de un browser. Si trabajás regularmente con SOAP, instalate la extensión "XML Tree" en Chrome: te muestra el árbol jerárquico y podés colapsar nodos. Cuando convertís XML a JSON, recordá que los atributos no tienen mapeo directo: librerías como xml2js los ponen bajo una clave especial (típicamente <code>$</code> o <code>@attr</code>).
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿XML sigue vigente?</summary><p>Sí. Sitemaps, RSS, SOAP, configs de Spring/.NET, SVG, Office Open XML. JSON dominó la web pública pero XML sigue en empresa, banca y gobierno.</p></details>
+      <details><summary>¿Detecta errores?</summary><p>Sí. Usa el parser nativo del navegador y reporta dónde falla.</p></details>
+      <details><summary>¿Mi XML se sube a un servidor?</summary><p>No. Todo es local en tu navegador con DOMParser.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .xf-row { display: flex; gap: 1rem; margin-bottom: 1rem; }
+  .xf-status { font-family: var(--font-mono); font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.25rem; }
+  .xf-status.ok { color: var(--success); }
+  .xf-status.err { color: var(--danger); }
+</style>
+
+<script>
+  const inEl = document.getElementById('xf-in') as HTMLTextAreaElement;
+  const out = document.getElementById('xf-out') as HTMLTextAreaElement;
+  const indentEl = document.getElementById('xf-indent') as HTMLSelectElement;
+  const status = document.getElementById('xf-status') as HTMLDivElement;
+  const genBtn = document.getElementById('xf-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('xf-copy') as HTMLButtonElement;
+
+  function format(xml: string, indentStr: string): string {
+    let formatted = '';
+    let pad = 0;
+    const reg = /(>)(<)(\/*)/g;
+    xml = xml.replace(reg, '$1\n$2$3');
+    const lines = xml.split('\n');
+    for (const node of lines) {
+      let indent = 0;
+      if (node.match(/.+<\/\w[^>]*>$/)) indent = 0;
+      else if (node.match(/^<\//)) { if (pad > 0) pad--; }
+      else if (node.match(/^<[^!?][^>]*[^/]>$/)) indent = 1;
+      else indent = 0;
+      formatted += indentStr.repeat(pad) + node + '\n';
+      pad += indent;
+    }
+    return formatted.trim();
+  }
+
+  function run() {
+    const txt = inEl.value.trim();
+    if (!txt) { out.value = ''; status.textContent = ''; status.className = 'xf-status'; return; }
+    try {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(txt, 'application/xml');
+      const errNode = doc.querySelector('parsererror');
+      if (errNode) throw new Error(errNode.textContent || 'XML inválido');
+      const indent = indentEl.value === '\\t' ? '\t' : ' '.repeat(parseInt(indentEl.value, 10));
+      out.value = format(txt, indent);
+      status.textContent = '✓ XML válido';
+      status.className = 'xf-status ok';
+    } catch (e: any) {
+      out.value = '';
+      status.textContent = '✗ ' + (e.message || 'XML inválido').slice(0, 200);
+      status.className = 'xf-status err';
+    }
+  }
+  inEl.addEventListener('input', run);
+  indentEl.addEventListener('change', run);
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

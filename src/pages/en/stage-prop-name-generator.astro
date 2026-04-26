@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Stage Prop Name Generator | Genfy';
+const description = 'Generate internal prop names for theater, film, events and audiovisual productions. Easy to list, label and inventory.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why use an internal code for each prop?', acceptedAnswer: { '@type': 'Answer', text: 'A consistent naming system speeds up inventory, avoids confusion between scenes, and lets stage managers and assistants find props in seconds during a show.' } },
+    { '@type': 'Question', name: 'What info should a good prop name carry?', acceptedAnswer: { '@type': 'Answer', text: 'Three pieces: object type, visual distinction, and a scene or character reference. For example: red-letter-act2, short-sword-Ines.' } },
+    { '@type': 'Question', name: 'Does it work for film and corporate events?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, the names work for theater, film, advertising, trade shows and events. Keep the format consistent across the whole production.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Production" title="Stage Prop Name Generator"
+    intro="Tag props with clean, consistent codes. Saves time in load-in, rehearsal, performance and strike.">
+
+    <div slot="tool" class="up">
+      <label for="up-cat">Category</label>
+      <select id="up-cat">
+        <option value="hand">Hand prop</option>
+        <option value="set">Set prop</option>
+        <option value="costume">Costume / accessory</option>
+        <option value="food">Food / drink on stage</option>
+      </select>
+
+      <label for="up-scene" style="margin-top:1rem">Scene or act</label>
+      <input id="up-scene" type="text" value="Act2" placeholder="Act1, Sc3, Final..." />
+
+      <button id="up-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 tags</button>
+      <div id="up-out" class="up-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why a clear prop name saves hours in load-in</h2>
+      <p>Any mid-sized production can have 15 to 20 objects in a single scene. If the stage manager's list says "glass" three times and "letter" five, someone is going to mix up the Act 1 glass with the Act 3 glass within ten days of rehearsal. A consistent naming system reduces show errors, simplifies inventory at strike, and lets a new assistant find everything without asking.</p>
+      <h2>Recommended structure</h2>
+      <ol>
+        <li><strong>Object type:</strong> letter, glass, sword, book, key.</li>
+        <li><strong>Visual distinction:</strong> color, size, material or unique detail (red, short, sealed).</li>
+        <li><strong>Use reference:</strong> scene, act or character it belongs to.</li>
+      </ol>
+      <p>Result: <code>red-letter-Act2</code>, <code>short-sword-Ines</code>, <code>empty-glass-Final</code>. Three blocks split by hyphens, easy to search in a spreadsheet and to print on a tape label.</p>
+      <h2>Mistakes you see all the time and how to avoid them</h2>
+      <ul>
+        <li><strong>Generic names:</strong> "glass 1", "glass 2". Works for two days, then nobody remembers which was which.</li>
+        <li><strong>Mixed languages:</strong> alternating English and Spanish in the same show confuses the crew.</li>
+        <li><strong>Spaces and special characters:</strong> use hyphens or underscores, avoid spaces so codes work in spreadsheets and QR.</li>
+        <li><strong>Names too long:</strong> more than four blocks are unreadable on a small spike-tape label.</li>
+      </ul>
+      <h2>Inventory and traceability</h2>
+      <p>Once every prop has a code, build a spreadsheet with six columns: code, description, scene in, scene out, off-stage location, owner. If you work with QR, print one per prop and stick it on the base: stage manager scans, sees the file, knows in seconds where it goes. For tours, add a "status" column (ok, damaged, replace) and review before each show.</p>
+      <h2>Best practices for theater, film and events</h2>
+      <p>In film, add the script scene reference (SC-12, SC-12B). In theater, act and scene are enough. In corporate events, add the client or event name ("Launch-X"). The key is to pick a format and stick to it across the whole production so anyone can read the inventory without a glossary.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Why use an internal code for props?</summary><p>Speeds inventory, avoids confusion and lets crew find objects in seconds during the show.</p></details>
+      <details><summary>What info should it carry?</summary><p>Object type, visual distinction and scene or character reference.</p></details>
+      <details><summary>Does it work for film and events?</summary><p>Yes, it works for theater, film, advertising and corporate events.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .up-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .up-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-mono, monospace); font-size: 0.875rem; cursor: pointer; }
+  .up-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const HAND = ['letter', 'glass', 'key', 'watch', 'pen', 'envelope', 'kerchief', 'ring', 'pipe', 'bottle', 'wallet', 'book'];
+  const SET = ['armchair', 'table', 'lamp', 'painting', 'curtain', 'mirror', 'vase', 'chest', 'rug', 'bench', 'umbrella-stand', 'lectern'];
+  const COSTUME = ['hat', 'cane', 'scarf', 'brooch', 'glove', 'cape', 'belt', 'shawl', 'beret', 'bandana', 'mask', 'bracelet'];
+  const FOOD = ['apple', 'bread', 'wine', 'coffee', 'pie', 'soup', 'cheese', 'tea', 'cookie', 'salad', 'broth', 'olives'];
+  const ATTR = ['red', 'blue', 'short', 'long', 'broken', 'sealed', 'empty', 'full', 'old', 'new', 'double', 'fake'];
+
+  const cat = document.getElementById('up-cat') as HTMLSelectElement;
+  const scene = document.getElementById('up-scene') as HTMLInputElement;
+  const gen = document.getElementById('up-gen') as HTMLButtonElement;
+  const out = document.getElementById('up-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const c = cat.value;
+    const sc = (scene.value || 'Act1').replace(/\s+/g, '');
+    let pool: string[] = HAND;
+    if (c === 'set') pool = SET;
+    else if (c === 'costume') pool = COSTUME;
+    else if (c === 'food') pool = FOOD;
+    const set = new Set<string>(); let tries = 0;
+    while (set.size < 20 && tries < 200) {
+      tries++;
+      const tag = `${pick(ATTR)}-${pick(pool)}-${sc}`;
+      set.add(tag);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'up-item'; el.textContent = n; el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

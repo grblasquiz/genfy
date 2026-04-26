@@ -1,0 +1,152 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de descripción de personaje gratis | Genfy';
+const description = 'Generá descripciones físicas y de personalidad para personajes de ficción. Combiná edad, rasgos y motivación para tener 10 perfiles listos al instante.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo describir un personaje?', acceptedAnswer: { '@type': 'Answer', text: 'No empieces por la descripción física. Empezá por la motivación y el conflicto interno; recién después agregá detalles de apariencia que refuercen ese conflicto.' } },
+    { '@type': 'Question', name: '¿Cuántos detalles físicos debo dar?', acceptedAnswer: { '@type': 'Answer', text: 'Tres rasgos concretos suelen ser suficientes. El lector completa el resto. Demasiado detalle físico hace que el personaje pierda elasticidad imaginativa.' } },
+    { '@type': 'Question', name: '¿Sirve para guion y para novela?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. La descripción cambia de formato (más visual en guion, más interna en novela), pero la base de motivación y conflicto es la misma.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de descripción de personaje"
+    intro="Generá descripciones de personaje en segundos. Combiná edad, rasgos físicos, personalidad y motivación para conseguir 10 perfiles narrativos completos.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Tipo de personaje (rol)</label>
+      <input id="bn-kw" type="text" placeholder="protagonista, antagonista, mentor..." value="protagonista" />
+
+      <label for="bn-style" style="margin-top:1rem">Tono</label>
+      <select id="bn-style">
+        <option value="realist">Realista contemporáneo</option>
+        <option value="noir">Noir / thriller</option>
+        <option value="fantasy">Fantasía</option>
+        <option value="comedy">Comedia / liviano</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 10 perfiles</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo describir un personaje (sin caer en lo de siempre)</h2>
+      <p>
+        La trampa más común al describir un personaje es empezar por el aspecto físico. "Pelo
+        castaño, ojos verdes, alta, delgada" no le dice nada al lector. La descripción potente
+        empieza por la motivación: qué quiere, qué teme, qué evita. La apariencia llega después,
+        y los rasgos elegidos refuerzan el conflicto: si el personaje quiere pasar inadvertido,
+        describí cómo se viste para no llamar la atención.
+      </p>
+      <ol>
+        <li><strong>Empezá por el deseo.</strong> Una sola frase: "Quiere recuperar la confianza de su hija". Todo lo demás se cuelga de ahí.</li>
+        <li><strong>Definí la contradicción.</strong> Los grandes personajes quieren una cosa pero su hábito los empuja a otra. Esa fricción es la historia.</li>
+        <li><strong>Tres rasgos físicos máximo.</strong> El lector completa el resto. Demasiado detalle anestesia.</li>
+        <li><strong>Una manía concreta.</strong> Un gesto, una palabra repetida, una superstición. Eso vuelve único al personaje.</li>
+        <li><strong>Una herida del pasado.</strong> No hace falta explicarla en la primera escena, pero tiene que existir como motor invisible.</li>
+      </ol>
+
+      <h2>Plantilla rápida de descripción de personaje</h2>
+      <ul>
+        <li><strong>Nombre y edad.</strong></li>
+        <li><strong>Deseo central</strong>: lo que quiere conseguir en esta historia.</li>
+        <li><strong>Miedo central</strong>: lo que evita inconscientemente.</li>
+        <li><strong>Rasgo físico distintivo</strong>: una sola imagen que el lector recuerde.</li>
+        <li><strong>Voz</strong>: cómo habla. ¿Lacónico? ¿Verborrágico? ¿Sarcástico?</li>
+        <li><strong>Tic o manía</strong>: gesto repetido, palabra, ritual.</li>
+        <li><strong>Herida del pasado</strong>: el evento que explica por qué evita lo que evita.</li>
+      </ul>
+
+      <h2>Errores frecuentes en descripción de personajes</h2>
+      <p>
+        El más típico es el "personaje espejo": un protagonista que es una copia idealizada del
+        autor. Esos personajes carecen de fricción interna porque el autor no les permite
+        equivocarse. Otro error: dar demasiada información de golpe en la primera escena. La
+        descripción debe dosificarse a lo largo de la historia. Y un tercero: confundir
+        descripción con etiqueta. "Es valiente" es etiqueta. Una escena donde entra a un cuarto
+        oscuro sin esperar refuerzos es descripción.
+      </p>
+
+      <h2>Después de generar: cómo afinar el perfil</h2>
+      <ol>
+        <li>Escribí el deseo central en una sola frase.</li>
+        <li>Escribí el miedo central en una sola frase. Verificá que entren en conflicto.</li>
+        <li>Sumá un rasgo físico distintivo y una manía.</li>
+        <li>Ensayá un diálogo de tres líneas: ¿se siente la voz?</li>
+        <li>Pasalo por la "prueba del antagonista": ¿el personaje se opondría a sí mismo en otra historia?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo describir un personaje?</summary><p>Empezá por la motivación y el conflicto interno. La apariencia viene después y refuerza el conflicto.</p></details>
+      <details><summary>¿Cuántos detalles físicos debo dar?</summary><p>Tres rasgos concretos suelen ser suficientes. El lector completa el resto.</p></details>
+      <details><summary>¿Sirve para guion y novela?</summary><p>Sí, cambia el formato pero la base de motivación es la misma.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+  .bn-item { padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.55; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const AGES = [18, 22, 27, 32, 38, 45, 52, 60];
+  const REALIST_DESIRE = ['recuperar la confianza de su hija', 'volver a su pueblo natal', 'cerrar un trato que sostiene a su familia', 'terminar la novela que abandonó hace años', 'pagar una deuda silenciosa'];
+  const REALIST_FEAR = ['repetir los errores de su padre', 'quedarse otra vez sin trabajo', 'que su pareja descubra una mentira', 'el silencio del fin de semana', 'volver a sentirse irrelevante'];
+  const REALIST_TRAIT = ['lleva siempre una libreta gastada', 'ríe tarde, después del chiste', 'tiene un mechón de pelo blanco prematuro', 'usa la misma campera todo el año'];
+  const NOIR_DESIRE = ['encontrar al testigo desaparecido', 'pagar una vieja deuda con sangre', 'cerrar el caso antes de su jubilación', 'recuperar un manuscrito robado'];
+  const NOIR_FEAR = ['volver a fallar a un cliente', 'ser reconocido en su propio barrio', 'quedarse sin tiempo'];
+  const NOIR_TRAIT = ['cojea levemente del lado izquierdo', 'fuma sin terminar el cigarrillo', 'siempre se sienta de espaldas a la pared'];
+  const FANTASY_DESIRE = ['proteger el último puente del valle', 'encontrar a su hermano cautivo', 'devolver una reliquia robada a su tribu'];
+  const FANTASY_FEAR = ['el regreso de la sequía', 'traicionar la palabra dada', 'quedarse sola en la montaña'];
+  const FANTASY_TRAIT = ['lleva una cicatriz delgada en la palma', 'habla siempre en voz baja', 'tiene un anillo grabado con runas que no entiende'];
+  const COMEDY_DESIRE = ['ganar el concurso del barrio', 'ser invitada a la mejor mesa', 'que la jefa por fin recuerde su nombre'];
+  const COMEDY_FEAR = ['quedar como tonto en público', 'que su madre revise su Instagram', 'volver a fallar el examen de manejo'];
+  const COMEDY_TRAIT = ['siempre llega cinco minutos tarde por elegir el outfit', 'habla con su perro en plural', 'pide café americano sin azúcar y le pone tres'];
+
+  const NAMES = ['Lucía', 'Tomás', 'Marta', 'Pablo', 'Sofía', 'Bruno', 'Camila', 'Diego', 'Elena', 'Nico', 'Clara', 'Andrés'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const role = kw.value.trim() || 'protagonista';
+    const s = style.value;
+    let DESIRE: string[], FEAR: string[], TRAIT: string[];
+    if (s === 'noir') { DESIRE = NOIR_DESIRE; FEAR = NOIR_FEAR; TRAIT = NOIR_TRAIT; }
+    else if (s === 'fantasy') { DESIRE = FANTASY_DESIRE; FEAR = FANTASY_FEAR; TRAIT = FANTASY_TRAIT; }
+    else if (s === 'comedy') { DESIRE = COMEDY_DESIRE; FEAR = COMEDY_FEAR; TRAIT = COMEDY_TRAIT; }
+    else { DESIRE = REALIST_DESIRE; FEAR = REALIST_FEAR; TRAIT = REALIST_TRAIT; }
+    out.innerHTML = '';
+    const seen = new Set<string>();
+    let attempts = 0;
+    while (seen.size < 10 && attempts < 60) {
+      attempts++;
+      const name = pick(NAMES);
+      const age = pick(AGES);
+      const desc = `${name}, ${age} años. ${role.charAt(0).toUpperCase() + role.slice(1)}. Quiere ${pick(DESIRE)}, pero teme ${pick(FEAR)}. ${pick(TRAIT).charAt(0).toUpperCase() + pick(TRAIT).slice(1)}.`;
+      if (seen.has(desc)) continue;
+      seen.add(desc);
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = desc;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(desc); const orig = el.textContent; el.textContent = '✓ copiado'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    }
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,173 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Tabla de códigos HTTP | Genfy';
+const description = 'Referencia completa de códigos de estado HTTP: 1xx, 2xx, 3xx, 4xx, 5xx. Buscá por código o categoría con descripción y cuándo usarlos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué diferencia hay entre 401 y 403?', acceptedAnswer: { '@type': 'Answer', text: '401 Unauthorized indica falta o invalidez de credenciales. 403 Forbidden significa que las credenciales son válidas pero no tienen permiso para el recurso.' } },
+    { '@type': 'Question', name: '¿Cuándo usar 422 vs 400?', acceptedAnswer: { '@type': 'Answer', text: '400 es un request mal formado (JSON inválido). 422 es un request bien formado pero semánticamente incorrecto (validación de campos).' } },
+    { '@type': 'Question', name: '¿204 o 200 con body vacío?', acceptedAnswer: { '@type': 'Answer', text: '204 No Content es el correcto cuando no devolvés cuerpo. 200 con body vacío es ambiguo y desperdicia bytes en headers.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech / Dev"
+    title="Tabla de códigos HTTP"
+    intro="Buscá cualquier código HTTP por número o palabra clave. Descripción, categoría y cuándo usarlo."
+  >
+    <div slot="tool" class="http-tool">
+      <input id="http-search" type="text" placeholder="Buscá: 404, validation, redirect..." />
+      <div id="http-list" class="http-list"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Las cinco categorías</h2>
+      <p>
+        Los códigos HTTP se agrupan por la primera cifra. <strong>1xx</strong> son informativos
+        (raros en la práctica). <strong>2xx</strong> indican éxito. <strong>3xx</strong> son
+        redirecciones. <strong>4xx</strong> son errores del cliente: el request está mal o el
+        recurso no existe. <strong>5xx</strong> son errores del servidor: el cliente hizo todo
+        bien pero algo falló del otro lado.
+      </p>
+
+      <h2>2xx: éxito con matices</h2>
+      <p>
+        <strong>200 OK</strong> es el "todo bien" general. <strong>201 Created</strong> se usa
+        después de crear un recurso (POST exitoso) y debería incluir un header <code>Location</code>
+        apuntando al recurso nuevo. <strong>202 Accepted</strong> indica que el request fue recibido
+        pero se procesará async. <strong>204 No Content</strong> es la respuesta correcta cuando no
+        hay body (típico en DELETE o PUT exitosos sin retorno).
+      </p>
+
+      <h2>3xx: redirecciones</h2>
+      <p>
+        <strong>301 Moved Permanently</strong> indica que el recurso cambió de URL para siempre;
+        los buscadores actualizan el índice. <strong>302 Found</strong> y <strong>307 Temporary
+        Redirect</strong> son redirecciones temporales (la diferencia: 307 obliga a mantener el
+        método HTTP). <strong>304 Not Modified</strong> se devuelve cuando el cliente tiene una
+        copia válida en caché y no hace falta retransmitir.
+      </p>
+
+      <h2>4xx: errores del cliente</h2>
+      <p>
+        Los más comunes: <strong>400 Bad Request</strong> (request mal formado),
+        <strong>401 Unauthorized</strong> (faltan credenciales o son inválidas),
+        <strong>403 Forbidden</strong> (autenticado pero sin permiso),
+        <strong>404 Not Found</strong> (recurso inexistente), <strong>409 Conflict</strong>
+        (estado actual incompatible con el request, típico en concurrencia),
+        <strong>422 Unprocessable Entity</strong> (validación de campos),
+        <strong>429 Too Many Requests</strong> (rate limit excedido).
+      </p>
+
+      <h2>5xx: errores del servidor</h2>
+      <p>
+        <strong>500 Internal Server Error</strong> es el catch-all: algo falló y no es culpa del
+        cliente. <strong>502 Bad Gateway</strong> indica que un upstream devolvió error.
+        <strong>503 Service Unavailable</strong> es mantenimiento o sobrecarga (mandá
+        <code>Retry-After</code>). <strong>504 Gateway Timeout</strong>: el upstream no respondió
+        a tiempo.
+      </p>
+
+      <h2>401 vs 403: el clásico</h2>
+      <p>
+        La distinción es: 401 = "no sé quién sos"; 403 = "sé quién sos pero no podés". Si el
+        usuario está logueado y trata de acceder al panel admin sin ser admin, devolvé 403. Si el
+        token expiró, devolvé 401 con header <code>WWW-Authenticate</code>.
+      </p>
+
+      <h2>422 vs 400</h2>
+      <p>
+        400 es para syntax errors: JSON inválido, header faltante. 422 (semantic) es cuando el
+        JSON parsea bien pero los datos no cumplen reglas: email inválido, edad negativa, campo
+        requerido vacío. Acompañalo con un body que liste los errores por campo.
+      </p>
+
+      <h2>Idempotencia y retries</h2>
+      <p>
+        GET, PUT y DELETE son idempotentes: repetirlos no cambia el estado. POST no lo es. Esto
+        importa cuando el cliente reintenta tras un 5xx: con PUT podés repetir sin miedo, con
+        POST puede crear duplicados. La práctica actual es usar header
+        <code>Idempotency-Key</code> en POST para garantizar que no se duplique.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Diferencia entre 401 y 403?</summary><p>401: falta o invalidez de credenciales. 403: credenciales válidas pero sin permiso.</p></details>
+      <details><summary>¿422 o 400?</summary><p>400 para request mal formado (JSON inválido). 422 para validación semántica de campos.</p></details>
+      <details><summary>¿204 o 200 vacío?</summary><p>204 es lo correcto cuando no hay body. 200 vacío es ambiguo.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .http-tool input { width: 100%; margin-bottom: 1rem; }
+  .http-list { display: grid; gap: 0.5rem; max-height: 480px; overflow-y: auto; padding-right: 0.5rem; }
+  .http-row { display: grid; grid-template-columns: 64px 1fr; gap: 1rem; padding: 0.75rem; background: var(--bg-inset); border-radius: var(--radius); border: 1px solid var(--border-soft); }
+  .http-row .code { font-family: var(--font-mono); font-weight: 600; }
+  .http-row .desc { color: var(--text-soft); font-size: 0.9375rem; }
+  .http-row .name { font-weight: 500; }
+  .http-row .meta { font-size: 0.8125rem; color: var(--text-subtle); margin-top: 0.25rem; }
+</style>
+
+<script>
+  const codes = [
+    [100, 'Continue', 'Cliente puede continuar enviando el resto del request.'],
+    [101, 'Switching Protocols', 'Cambio de protocolo (ej. HTTP a WebSocket).'],
+    [200, 'OK', 'Éxito general. Body con la respuesta esperada.'],
+    [201, 'Created', 'Recurso creado. Incluí Location apuntando al nuevo recurso.'],
+    [202, 'Accepted', 'Request aceptado pero se procesa async.'],
+    [204, 'No Content', 'Éxito sin body. Típico en DELETE o PUT.'],
+    [206, 'Partial Content', 'Respuesta parcial (Range requests).'],
+    [301, 'Moved Permanently', 'Redirect permanente. Buscadores actualizan el índice.'],
+    [302, 'Found', 'Redirect temporal. Antes "Moved Temporarily".'],
+    [304, 'Not Modified', 'Cache válida; no se retransmite el body.'],
+    [307, 'Temporary Redirect', 'Redirect temporal manteniendo método HTTP.'],
+    [308, 'Permanent Redirect', 'Redirect permanente manteniendo método.'],
+    [400, 'Bad Request', 'Request mal formado (JSON inválido, header faltante).'],
+    [401, 'Unauthorized', 'Faltan credenciales o son inválidas.'],
+    [403, 'Forbidden', 'Autenticado pero sin permiso para el recurso.'],
+    [404, 'Not Found', 'Recurso inexistente.'],
+    [405, 'Method Not Allowed', 'Verbo HTTP no soportado por el recurso.'],
+    [406, 'Not Acceptable', 'No se puede satisfacer el Accept del cliente.'],
+    [408, 'Request Timeout', 'Cliente tardó demasiado en enviar el request.'],
+    [409, 'Conflict', 'Estado actual incompatible (concurrencia, duplicados).'],
+    [410, 'Gone', 'Recurso eliminado permanentemente.'],
+    [413, 'Payload Too Large', 'Body excede el límite del servidor.'],
+    [415, 'Unsupported Media Type', 'Content-Type no aceptado.'],
+    [422, 'Unprocessable Entity', 'Validación de campos: bien formado pero inválido.'],
+    [429, 'Too Many Requests', 'Rate limit excedido. Mandá Retry-After.'],
+    [500, 'Internal Server Error', 'Error genérico del servidor.'],
+    [501, 'Not Implemented', 'Funcionalidad no soportada.'],
+    [502, 'Bad Gateway', 'Upstream devolvió error.'],
+    [503, 'Service Unavailable', 'Mantenimiento o sobrecarga.'],
+    [504, 'Gateway Timeout', 'Upstream no respondió a tiempo.'],
+  ];
+
+  const list = document.getElementById('http-list') as HTMLDivElement;
+  const search = document.getElementById('http-search') as HTMLInputElement;
+
+  function render(filter: string) {
+    const f = filter.toLowerCase().trim();
+    list.innerHTML = '';
+    for (const [code, name, desc] of codes) {
+      const text = `${code} ${name} ${desc}`.toLowerCase();
+      if (f && !text.includes(f)) continue;
+      const cat = String(code)[0] + 'xx';
+      const row = document.createElement('div');
+      row.className = 'http-row';
+      row.innerHTML = `<div class="code">${code}</div><div><div class="name">${name}</div><div class="desc">${desc}</div><div class="meta">Categoría: ${cat}</div></div>`;
+      list.appendChild(row);
+    }
+  }
+  search.addEventListener('input', () => render(search.value));
+  render('');
+</script>
+</content>
+</invoke>

@@ -1,0 +1,159 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Google Ad Description Generator | Genfy';
+const description = 'Generate Google Ads descriptions optimized for Quality Score. 90 characters with benefit, proof and CTA in each of the 4 RSA descriptions.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many characters per Google Ads description?', acceptedAnswer: { '@type': 'Answer', text: 'Each description allows up to 90 characters. Responsive ads accept up to 4 descriptions, Google shows 2 at a time.' } },
+    { '@type': 'Question', name: 'Should headline and description repeat info?', acceptedAnswer: { '@type': 'Answer', text: 'No. Headline and description complement: if headline has the main benefit, description adds detail, proof or specific CTA.' } },
+    { '@type': 'Question', name: 'Do descriptions impact CTR?', acceptedAnswer: { '@type': 'Answer', text: 'Yes but less than the headline. Description confirms intent and helps qualify the lead before the click.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Google Ad Description Generator"
+    intro="Drop in product, benefit and proof. Genfy returns 4 complementary descriptions for your RSA, all within 90 characters.">
+
+    <div slot="tool" class="gd">
+      <label for="gd-product">Product or service</label>
+      <input id="gd-product" type="text" placeholder="Online English course" value="Online English course" />
+
+      <label for="gd-benefit" style="margin-top:1rem">Detailed benefit</label>
+      <input id="gd-benefit" type="text" placeholder="Real conversations in 6 months..." value="Real conversations in 6 months" />
+
+      <label for="gd-proof" style="margin-top:1rem">Proof or guarantee</label>
+      <input id="gd-proof" type="text" placeholder="5,000+ certified students..." value="5,000+ certified students" />
+
+      <label for="gd-cta" style="margin-top:1rem">CTA</label>
+      <input id="gd-cta" type="text" placeholder="Try free for 7 days" value="Try free for 7 days" />
+
+      <button id="gd-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 4 descriptions</button>
+
+      <div id="gd-out" class="gd-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>The role of the description inside an RSA</h2>
+      <p>
+        In a responsive search ad, headlines are the head and descriptions the body. You load up to 4 descriptions of 90 characters each, and Google shows 2 at a time. The description's job is to confirm user intent and give the final push before the click. Headline attracts, description closes.
+      </p>
+      <p>
+        That means each description must add something new. If the headline says "Online English Course | 6 Months", the description shouldn't say "Online English course in 6 months with expert teachers". It must add proof, detail, guarantee or an additional benefit.
+      </p>
+
+      <h2>The 4 descriptions, well distributed</h2>
+      <ol>
+        <li><strong>Description 1 — Detailed benefit:</strong> "Speak English with confidence in 6 months. Method validated by 5,000+ students."</li>
+        <li><strong>Description 2 — Proof or authority:</strong> "Certified native teachers. 4.8★ on verified Google reviews."</li>
+        <li><strong>Description 3 — Guarantee or friction-reducer:</strong> "Try 7 days free. No card needed. Cancel anytime."</li>
+        <li><strong>Description 4 — CTA with soft urgency:</strong> "Book your trial now. Limited monthly availability."</li>
+      </ol>
+
+      <h2>The 90-character limit and how to use it</h2>
+      <p>
+        90 characters give more room than a headline but less than it seems. A good description is one short sentence and an even shorter one. Structure: claim + support. "Speak fluently in 6 months. Method validated by 5,000+ students." (63 chars + margin).
+      </p>
+      <p>
+        Common errors using the 90 chars: cramming two unrelated benefits, padding with adjectives, weird punctuation to fill space.
+      </p>
+
+      <h2>How Google combines headlines and descriptions</h2>
+      <p>
+        Google shows 3 headlines + 2 descriptions per RSA at a time. The choice is not random: the system tests combinations and prioritizes those with better CTR for the context. If your 4 descriptions are interchangeable, Google learns nothing. If each has a different angle (benefit, proof, guarantee, CTA), the system can pair the right description with the right headline for each search.
+      </p>
+
+      <h2>What Google allows and doesn't in descriptions</h2>
+      <p>Google rejects descriptions with:</p>
+      <ul>
+        <li><strong>Excessive caps:</strong> "MAKE MONEY NOW" — rejected in review.</li>
+        <li><strong>Strange punctuation:</strong> "!!!", "???" — limited to one per sentence.</li>
+        <li><strong>Non-standard symbols:</strong> ★★★★★, ✅ in excess.</li>
+        <li><strong>Unverifiable absolute claims:</strong> "100% guaranteed", "world's best" without backing.</li>
+        <li><strong>Personal info:</strong> phones, emails (go in extensions, not in text).</li>
+      </ul>
+
+      <h2>How to write a description that confirms intent</h2>
+      <p>
+        When someone searches "online english course" and your headline says "Online English Course | 6 Months", the ideal description doesn't repeat that. It must confirm it's what the user wants and answer a possible objection. Three patterns that perform:
+      </p>
+      <ul>
+        <li><strong>"Answer to objection" pattern:</strong> "No card. No contracts. Try 7 days free."</li>
+        <li><strong>"Specific proof" pattern:</strong> "5,000+ certified students. 4.8★ on Google Reviews."</li>
+        <li><strong>"What's included" pattern:</strong> "Live classes + platform + certificate. All from $19/month."</li>
+      </ul>
+
+      <h2>Common mistakes that hurt conversion</h2>
+      <ul>
+        <li><strong>Repeating the headline in the description:</strong> the user just read it.</li>
+        <li><strong>No CTA:</strong> at least one of the 4 descriptions must close with a specific CTA.</li>
+        <li><strong>Vague promises:</strong> "The best option in the market" without backing.</li>
+        <li><strong>Heavy keyword stuffing:</strong> "Online english course english course best english course" — Google penalizes.</li>
+        <li><strong>Forgetting strategic pinning:</strong> if you want a disclaimer to always appear, pin it to position 1 or 2.</li>
+      </ul>
+
+      <h2>Pinning: when to use and when not</h2>
+      <p>
+        Google allows pinning headlines and descriptions to specific positions. When it pays off:
+      </p>
+      <ul>
+        <li><strong>Regulatory disclaimers:</strong> finance, health, insurance — pin to fixed position.</li>
+        <li><strong>Brand-critical description:</strong> if a description contains the main offer and you want it guaranteed.</li>
+        <li><strong>When NOT to pin:</strong> most cases. Pinning blocks algorithm optimization. Pin only what's essential.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many characters per description?</summary><p>90. Up to 4 descriptions per RSA.</p></details>
+      <details><summary>Should I pin?</summary><p>Only for regulatory disclaimers or critical info. Otherwise let Google optimize.</p></details>
+      <details><summary>Should headlines and descriptions repeat?</summary><p>They shouldn't. They contribute different angles to the same message.</p></details>
+      <details><summary>How many descriptions to load?</summary><p>4 (the max) with different angles: benefit, proof, guarantee, CTA.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .gd-out { margin-top: 1.25rem; display: grid; gap: 0.5rem; }
+  .gd-card { padding: 0.75rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .gd-card:hover { border-color: var(--accent); }
+  .gd-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.4rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const product = document.getElementById('gd-product') as HTMLInputElement;
+  const benefit = document.getElementById('gd-benefit') as HTMLInputElement;
+  const proof = document.getElementById('gd-proof') as HTMLInputElement;
+  const cta = document.getElementById('gd-cta') as HTMLInputElement;
+  const gen = document.getElementById('gd-gen') as HTMLButtonElement;
+  const out = document.getElementById('gd-out')!;
+
+  function generate() {
+    const P = product.value.trim() || 'Product';
+    const B = benefit.value.trim() || 'Fast results';
+    const Pr = proof.value.trim() || 'Validated';
+    const C = cta.value.trim() || 'Start now';
+
+    const list = [
+      `${B}. ${Pr}.`.slice(0, 90),
+      `${Pr}. Full guarantee and human support. ${C}.`.slice(0, 90),
+      `No card. ${C}. Cancel anytime.`.slice(0, 90),
+      `${P} with ${B.toLowerCase()}. ${C} today.`.slice(0, 90),
+    ];
+
+    out.innerHTML = '';
+    list.forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'gd-card';
+      el.title = 'Click to copy';
+      const len = b.length;
+      el.innerHTML = `${b}<div class="gd-meta">D${i+1} · ${len}/90 characters</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

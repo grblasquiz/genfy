@@ -1,0 +1,140 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free SWOT Analysis Template | Genfy';
+const description = 'Generate a complete SWOT analysis: strengths, weaknesses, opportunities and threats, with guiding questions and a TOWS action plan.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a SWOT analysis?', acceptedAnswer: { '@type': 'Answer', text: 'A framework to assess a company’s strategic position by identifying strengths, weaknesses, opportunities and threats. It supports medium-term decisions.' } },
+    { '@type': 'Question', name: 'When should I run a SWOT?', acceptedAnswer: { '@type': 'Answer', text: 'Before launching a new product, when closing the annual plan, after a crisis, when evaluating a new market or when a strong competitor appears.' } },
+    { '@type': 'Question', name: 'What is the most common mistake?', acceptedAnswer: { '@type': 'Answer', text: 'Listing many items without prioritizing. A useful SWOT has 3 to 5 actionable points per quadrant, not an unfiltered brainstorm.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="SWOT Analysis Template"
+    intro="Fill in your industry and model and get a SWOT with guiding questions per quadrant and a TOWS action close. Paste it into your plan or take it to the workshop.">
+
+    <div slot="tool" class="sw">
+      <label>Company or product</label>
+      <input id="sw-co" type="text" value="Acme Corp — online courses platform" />
+
+      <label style="margin-top:1rem">Industry</label>
+      <input id="sw-ind" type="text" value="B2C EdTech" />
+
+      <button id="sw-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate SWOT</button>
+
+      <pre id="sw-out" class="sw-out"></pre>
+    </div>
+
+    <div slot="content">
+      <h2>What SWOT is for</h2>
+      <p>
+        SWOT is one of the oldest strategic frameworks still in use. Popularized by Harvard
+        Business School in the 1960s, it's the first exercise most consultants run with a new
+        company. Its strength is its simplicity: four quadrants that separate internal factors
+        (strengths and weaknesses) from external ones (opportunities and threats).
+      </p>
+
+      <h2>The 4 quadrants with guiding questions</h2>
+      <ul>
+        <li><strong>Strengths (internal positive):</strong> What do we do better than anyone? What assets do we have that competitors don't? What do customers praise without being asked?</li>
+        <li><strong>Weaknesses (internal negative):</strong> What breaks when a new customer onboards? What processes live in one person's head? Where do we trail the closest competitor?</li>
+        <li><strong>Opportunities (external positive):</strong> Which trend plays in our favor (tech, regulatory, demographic)? Which segment is underserved? Which partner could multiply reach?</li>
+        <li><strong>Threats (external negative):</strong> Who could take share tomorrow? Which regulation could affect us? What if the economy contracts or CAC rises?</li>
+      </ul>
+
+      <h2>The step almost nobody runs: the TOWS matrix</h2>
+      <p>Listing items in the four quadrants is only half the work. What makes the exercise
+        actionable is crossing them. The TOWS matrix produces four strategy types:</p>
+      <ol>
+        <li><strong>SO (Strengths + Opportunities):</strong> how do we use what we're strong at to capture the opportunity? Offensive plays.</li>
+        <li><strong>WO (Weaknesses + Opportunities):</strong> which weakness must we fix to not miss the opportunity? Adaptive plays.</li>
+        <li><strong>ST (Strengths + Threats):</strong> how do we use strengths to absorb the threat? Defensive plays.</li>
+        <li><strong>WT (Weaknesses + Threats):</strong> what to avoid or retreat from? Survival plays.</li>
+      </ol>
+
+      <h2>Mistakes that leave SWOT in the drawer</h2>
+      <ul>
+        <li>Too many unprioritized items. 12 strengths means none.</li>
+        <li>Mixing internal with external. A market trend is an opportunity, not a strength.</li>
+        <li>Doing it solo. Value comes from putting marketing, sales, product and CS in the same room.</li>
+        <li>Never revisiting the doc. A SWOT without a 6-month review is decoration.</li>
+        <li>Using real brand names as examples without context. Stick to "Acme Corp" or "competitor X".</li>
+      </ul>
+
+      <h2>Running the workshop in 60 minutes</h2>
+      <ol>
+        <li>Send the template 24 hours ahead and ask each person to fill all four quadrants privately.</li>
+        <li>In session, cluster items by quadrant (15 min).</li>
+        <li>Vote the top 3 per quadrant (10 min).</li>
+        <li>Cross SO/WO/ST/WT into TOWS, pick 3 priority strategies (25 min).</li>
+        <li>Close with owner + due date for each (10 min).</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is SWOT?</summary><p>A strategy framework that separates internal (strengths, weaknesses) from external (opportunities, threats) to make better calls.</p></details>
+      <details><summary>When to do it?</summary><p>Before a launch, at annual planning, after a crisis or entering a new market.</p></details>
+      <details><summary>How many items per quadrant?</summary><p>3 to 5 prioritized. Anything more is brainstorming, not analysis.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .sw-out { margin-top: 1.25rem; padding: 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.8125rem; line-height: 1.55; }
+</style>
+
+<script>
+  const C = document.getElementById('sw-co') as HTMLInputElement;
+  const I = document.getElementById('sw-ind') as HTMLInputElement;
+  const out = document.getElementById('sw-out')!;
+  const gen = document.getElementById('sw-gen') as HTMLButtonElement;
+
+  function generate() {
+    const co = C.value.trim();
+    const ind = I.value.trim();
+    const t = `SWOT ANALYSIS — ${co} (${ind})
+
+STRENGTHS (internal positive)
+- Team with deep experience in the problem we solve.
+- Product feature that's hard to replicate short-term.
+- Loyal user community generating word of mouth.
+- Lower operating costs than traditional competitors.
+
+WEAKNESSES (internal negative)
+- Brand awareness limited to current segment.
+- Dependence on one acquisition channel (risk if algorithm shifts).
+- Critical processes centralized in a few people.
+- Lack of quantitative data for product decisions.
+
+OPPORTUNITIES (external positive)
+- Growing trend in ${ind} toward digital / self-service.
+- Adjacent segments still underserved.
+- Possible partnerships with platforms that have complementary audiences.
+- Regulatory or tech shifts opening up the category.
+
+THREATS (external negative)
+- Entry of a well-funded competitor.
+- Rising paid CAC.
+- Algorithm changes on platforms we depend on.
+- Economic contraction affecting average ticket.
+
+TOWS MATRIX — PRIORITY STRATEGIES
+- SO (offensive): leverage expert team to ship educational content that captures the digital trend.
+- WO (adaptive): invest in brand to reduce single-channel dependency before CAC rises.
+- ST (defensive): protect the loyal base with loyalty + referral programs.
+- WT (survival): document critical processes and reduce single-person dependency.
+
+NEXT STEPS
+1. Pick 3 TOWS strategies for the next 90 days.
+2. Assign owner and metric for each.
+3. Review this SWOT in 6 months with real progress data.`;
+    out.textContent = t;
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

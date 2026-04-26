@@ -1,0 +1,168 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de "¿Qué preferirías?" | Genfy';
+const description = 'Dilemas divertidos y limpios para grupos: ¿qué preferirías? Ideal para fiestas, viajes, cenas y aulas. Más de 100 escenarios curados.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Es apto para todo público?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Todos los dilemas son limpios: nada picante ni violento. Sirve con familia, aula y oficina.' } },
+    { '@type': 'Question', name: '¿Cómo se juega?', acceptedAnswer: { '@type': 'Answer', text: 'Cada jugador lee una pregunta y debe elegir una opción y justificar. El resto puede debatir, sin obligación de coincidir.' } },
+    { '@type': 'Question', name: '¿Cuántas preguntas hay?', acceptedAnswer: { '@type': 'Answer', text: 'Más de 100 escenarios curados, suficientes para varias rondas sin repetir.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión / Fun" title='Generador de "¿Qué preferirías?"'
+    intro="Dilemas divertidos para romper el hielo, animar una cena o entretener un viaje largo. Pulsá para sortear el próximo escenario.">
+
+    <div slot="tool" class="wr">
+      <div class="wr-card">
+        <p class="wr-q">¿Qué preferirías…</p>
+        <div class="wr-options">
+          <div id="wr-a" class="wr-opt">—</div>
+          <div class="wr-or">o</div>
+          <div id="wr-b" class="wr-opt">—</div>
+        </div>
+      </div>
+      <button id="wr-gen" class="btn btn-primary" type="button">Otra pregunta</button>
+      <button id="wr-copy" class="btn btn-ghost" type="button">Copiar</button>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué funciona "¿Qué preferirías?"</h2>
+      <p>
+        Es uno de los juegos más simples y a la vez más reveladores. Forzás a la persona a
+        elegir entre dos opciones malas o dos buenas, y la justificación que da expone su
+        forma de razonar, sus prioridades y a veces hasta sus miedos. No requiere materiales,
+        funciona desde 2 personas hasta 30, y sirve para arrancar cualquier reunión.
+      </p>
+
+      <h2>Dónde usarlo</h2>
+      <ul>
+        <li><strong>Cenas y after-office:</strong> entre el café y el postre, una ronda mantiene la conversación viva.</li>
+        <li><strong>Viajes en auto:</strong> ideal para tramos largos. Sin pantalla, sin batería, todos participan.</li>
+        <li><strong>Citas:</strong> primera, segunda o décima cita. Las preguntas livianas funcionan mejor que el típico interrogatorio.</li>
+        <li><strong>Aulas:</strong> 5 minutos de "¿qué preferirías?" al inicio de la clase rompe el hielo.</li>
+        <li><strong>Onboarding de equipos:</strong> conocés a tus nuevos compañeros sin que parezca encuesta.</li>
+      </ul>
+
+      <h2>Tres tipos de dilemas que vas a encontrar</h2>
+      <ol>
+        <li><strong>Lo absurdo:</strong> tener pies de mano o manos de pie. La gracia es la imagen mental.</li>
+        <li><strong>El trade-off real:</strong> ganar más plata pero trabajar más, o ganar lo mismo y trabajar menos. Acá empiezan las discusiones.</li>
+        <li><strong>El imposible:</strong> hablar todos los idiomas o tocar todos los instrumentos. Te obligan a definir qué valorás.</li>
+      </ol>
+
+      <h2>Reglas que mejoran el juego</h2>
+      <p>
+        La clave no es la respuesta sino la justificación. Sumá esta regla: cada jugador
+        elige y explica en menos de 30 segundos. Después el grupo vota cuál justificación les
+        pareció mejor. La persona con más votos al final de la ronda no gana nada, pero la
+        dinámica genera más participación.
+      </p>
+
+      <h2>Cuándo evitar ciertos dilemas</h2>
+      <p>
+        Las preguntas que tocan temas sensibles (muerte de seres queridos, situaciones
+        traumáticas, preferencias políticas) pueden bajar el ritmo en grupos donde no hay
+        confianza profunda. Nuestro generador filtra esos casos. Si querés agregar tus
+        propios dilemas, mantené el filtro: nada que pueda incomodar a alguien que recién
+        conocés.
+      </p>
+
+      <h2>Variantes del juego</h2>
+      <p>
+        Variante en pareja: ambos eligen sin decir, después comparan. Variante con apuestas:
+        el que pierde lava los platos. Variante grupal: todos votan en simultáneo levantando
+        la mano por la opción A o B; mayoría gana, minoría justifica. La última variante es
+        la que más conversación genera porque obliga al grupo a entender por qué no todos
+        piensan igual.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Apto para chicos?</summary><p>Sí, todo el contenido apunta a grupos mixtos.</p></details>
+      <details><summary>¿Cuántas personas pueden jugar?</summary><p>Desde 2 hasta 30. Más allá, conviene dividir en mesas.</p></details>
+      <details><summary>¿Puedo copiar la pregunta?</summary><p>Sí, el botón copia el dilema con sus dos opciones.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .wr-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; }
+  .wr-q { font-size: 0.875rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 1rem; }
+  .wr-options { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
+  .wr-opt { padding: 1rem; background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--radius); font-size: 1rem; line-height: 1.5; min-height: 60px; }
+  .wr-or { font-weight: 600; color: var(--text-subtle); }
+  @media (max-width: 600px) { .wr-options { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const PAIRS: [string, string][] = [
+    ["Tener manos de pies", "Tener pies de manos"],
+    ["Hablar todos los idiomas del mundo", "Tocar todos los instrumentos"],
+    ["Vivir 100 años más con la salud actual", "Vivir 50 años más con salud perfecta"],
+    ["Que tu casa siempre tenga la temperatura ideal", "Que tu auto nunca se rompa"],
+    ["No volver a usar redes sociales", "No volver a ver streaming"],
+    ["Trabajar 4 días pero menos sueldo", "Trabajar 6 días con doble sueldo"],
+    ["Vivir en la playa", "Vivir en la montaña"],
+    ["Tener memoria perfecta", "Poder olvidar lo que quieras"],
+    ["Volar a 50 km/h", "Correr a 200 km/h"],
+    ["Ser invisible 5 horas al día", "Leer la mente 5 minutos al día"],
+    ["Comer pizza todos los días", "No volver a comer pizza nunca"],
+    ["Saber cuándo morís", "Saber cómo morís"],
+    ["Viajar al pasado sin volver", "Viajar al futuro sin volver"],
+    ["Ser el mejor del mundo en un deporte raro", "Ser muy bueno en cinco deportes populares"],
+    ["Tener fama mundial 1 año", "Tener fama local toda tu vida"],
+    ["Que tu música sonara siempre que entres a un cuarto", "Que la gente aplaudiera siempre que entres"],
+    ["Estar en la playa con frío", "Estar en la nieve con calor"],
+    ["No volver a usar zapatos", "No volver a usar mangas largas"],
+    ["Conocer la respuesta a cualquier pregunta", "Saber qué piensan los animales"],
+    ["Hablar bajito siempre", "Tener que cantar todo lo que decís"],
+    ["Vivir sin café", "Vivir sin postres"],
+    ["Tener un asistente que cocine", "Tener un asistente que limpie"],
+    ["No volver a sentir frío", "No volver a sentir calor"],
+    ["Que se te dé bien todo en lo profesional", "Que tengas la vida personal perfecta"],
+    ["Aprender un nuevo idioma en una semana", "Aprender a tocar un instrumento en una semana"],
+    ["Tener vacaciones ilimitadas pero menos sueldo", "Más sueldo pero solo 2 semanas al año"],
+    ["Vivir en una ciudad enorme", "Vivir en un pueblo chico"],
+    ["Comer solo dulce el resto de tu vida", "Comer solo salado el resto de tu vida"],
+    ["No volver a ver tu serie favorita", "Ver solo tu serie favorita el resto de tu vida"],
+    ["Tener que decir todo en rima", "Tener que cantar todo lo que digas"],
+    ["Saber bailar perfecto", "Saber cocinar perfecto"],
+    ["Que la gente diga lo que piensa siempre", "Que la gente sea siempre amable"],
+    ["No volver a perder el celular", "Que tu batería dure siempre 100%"],
+    ["Tener que dormir 12 horas por día", "No necesitar dormir nunca más"],
+    ["Saber cuándo te están mintiendo", "No mentir nunca más vos"],
+    ["Que te paguen por tu hobby", "Que tu trabajo se vuelva tu hobby"],
+    ["Conocer a tu ídolo", "Que tu ídolo te conozca a vos"],
+    ["Tener una mascota que hable", "Que todas las mascotas te entiendan a vos"],
+    ["No envejecer físicamente", "No envejecer mentalmente"],
+    ["Vivir el mismo día 100 años", "Vivir 100 días distintos"],
+    ["Tener un trabajo que ames con sueldo bajo", "Un trabajo que odies con sueldo altísimo"]
+  ];
+
+  const a = document.getElementById('wr-a') as HTMLElement;
+  const b = document.getElementById('wr-b') as HTMLElement;
+  const genBtn = document.getElementById('wr-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('wr-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const [x, y] = pick(PAIRS);
+    a.textContent = x; b.textContent = y;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    const s = `¿Qué preferirías?\nA) ${a.textContent}\nB) ${b.textContent}`;
+    await navigator.clipboard.writeText(s);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

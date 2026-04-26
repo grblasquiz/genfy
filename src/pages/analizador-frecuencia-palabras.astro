@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Analizador de frecuencia de palabras | Genfy';
+const description = 'Analizá la frecuencia de palabras en un texto. Top palabras más usadas, descartando artículos y conectores. Ideal para SEO, edición y análisis.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué se usa el análisis de frecuencia?', acceptedAnswer: { '@type': 'Answer', text: 'Para detectar palabras repetidas, encontrar términos clave de un texto, optimizar SEO y mejorar la edición.' } },
+    { '@type': 'Question', name: '¿Filtra palabras vacías?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Descarta artículos, preposiciones, conjunciones y otras palabras "stop" tanto en español como en inglés.' } },
+    { '@type': 'Question', name: '¿Qué tan grande puede ser el texto?', acceptedAnswer: { '@type': 'Answer', text: 'Funciona bien hasta varios cientos de miles de caracteres. Todo se procesa en tu navegador, sin enviar datos.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto" title="Analizador de frecuencia de palabras"
+    intro="Pegá un texto y obtené las palabras más frecuentes, ignorando artículos, conectores y palabras vacías. Útil para SEO, edición, análisis literario y trabajos académicos.">
+
+    <div slot="tool">
+      <label for="wf-in">Texto</label>
+      <textarea id="wf-in" rows="10" placeholder="Pegá tu texto acá..." style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div class="wf-row" style="margin-top:0.75rem;">
+        <div>
+          <label for="wf-top">Top N palabras</label>
+          <input id="wf-top" type="number" min="5" max="100" value="20" />
+        </div>
+        <label class="wf-check"><input type="checkbox" id="wf-stop" checked /> Filtrar palabras vacías</label>
+      </div>
+      <div style="margin-top:0.75rem;">
+        <button id="wf-go" class="btn btn-primary" type="button">Analizar</button>
+        <button id="wf-copy" class="btn btn-ghost" type="button">Copiar</button>
+      </div>
+      <textarea id="wf-out" rows="12" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Qué te dice la frecuencia de palabras</h2>
+      <p>
+        Si una palabra aparece 30 veces en un texto, dice algo. A veces dice "este es el tema central"; otras
+        veces dice "estás repitiendo demasiado y no te das cuenta". El análisis de frecuencia es el primer
+        paso de cualquier diagnóstico de texto: SEO, edición, análisis literario, investigación académica.
+      </p>
+
+      <h2>Casos de uso reales</h2>
+      <ul>
+        <li><strong>SEO</strong> — verificar que tus palabras clave aparezcan con la densidad correcta sin saturar.</li>
+        <li><strong>Edición</strong> — detectar muletillas y palabras repetidas que distraen al lector.</li>
+        <li><strong>Análisis literario</strong> — entender qué obsesiona a un autor o personaje.</li>
+        <li><strong>Trabajos académicos</strong> — descubrir si tu tesis usa términos clave de manera consistente.</li>
+        <li><strong>Periodismo</strong> — analizar discursos, entrevistas, comunicados.</li>
+        <li><strong>Investigación social</strong> — análisis cualitativo de respuestas abiertas.</li>
+      </ul>
+
+      <h2>Por qué filtrar palabras vacías</h2>
+      <p>
+        Si no filtrás, el ranking se llena de "el", "la", "de", "que", "y", "a". No te dice nada porque
+        cualquier texto tiene esas palabras al tope. Las llamadas <em>stop words</em> (palabras vacías) son
+        las que aportan estructura gramatical pero no contenido. Filtrarlas deja a la vista los términos que
+        de verdad caracterizan al texto.
+      </p>
+
+      <h2>Densidad ideal en SEO</h2>
+      <p>
+        En SEO antiguo, se hablaba de "densidad de palabra clave" del 2% al 4%. Hoy Google usa procesamiento
+        más sofisticado y ya no premia repeticiones forzadas, pero la frecuencia sigue siendo una señal de
+        relevancia. Lo importante es que tu palabra clave aparezca naturalmente en título, primer párrafo,
+        H2s y a lo largo del cuerpo, sin sentirse forzada. Si la frecuencia es muy baja (1-2 menciones en
+        un artículo de 1.500 palabras), el motor podría no entender el tema.
+      </p>
+
+      <h2>Detección de muletillas</h2>
+      <p>
+        Cuando edités un texto propio, pasalo por el analizador. Si una palabra aparece más veces de lo que
+        esperabas y no es la palabra clave, probablemente es una muletilla: "realmente", "básicamente",
+        "obviamente", "claramente". Reducirlas mejora la fluidez del texto un 20% sin tocar el contenido.
+        Es uno de los trucos más subestimados de la edición rápida.
+      </p>
+
+      <h2>Análisis comparativo</h2>
+      <p>
+        Comparar frecuencias entre dos textos te da insight inmediato. ¿Tu competencia menciona 50 veces
+        "automatización" y vos solo 3? Saben algo que vos no. ¿Tu newsletter usa 20 veces "comunidad" y la
+        de tu rival solo 2? Diferencia de posicionamiento. Esta técnica se llama análisis de corpus y se usa
+        en lingüística computacional, marketing y forensia digital.
+      </p>
+
+      <h2>Limitaciones del análisis</h2>
+      <ul>
+        <li>No detecta sinónimos: "auto" y "vehículo" se cuentan por separado.</li>
+        <li>No entiende contexto: "banco" es siempre la misma palabra para el contador.</li>
+        <li>No diferencia plurales y singulares: "casa" y "casas" son distintas.</li>
+        <li>No interpreta intención: solo cuenta apariciones.</li>
+      </ul>
+
+      <h2>Cómo leer los resultados</h2>
+      <p>
+        Mirá los primeros 10. Esas son las palabras "alma" del texto. Si te sorprende alguna ("¿por qué uso
+        tanto X?"), seguramente algo en tu pensamiento se está colando sin querer. Si no aparece la palabra
+        clave que esperabas, tu enfoque está disperso. El analizador es, en pequeño, una radiografía del
+        texto.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué se usa el análisis de frecuencia?</summary><p>Detectar repeticiones, encontrar términos clave, optimizar SEO y mejorar la edición.</p></details>
+      <details><summary>¿Filtra palabras vacías?</summary><p>Sí, descarta artículos, preposiciones y conectores comunes en español e inglés.</p></details>
+      <details><summary>¿Qué tan grande puede ser el texto?</summary><p>Funciona bien con cientos de miles de caracteres. Todo se procesa en tu navegador.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .wf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; }
+  .wf-check { display: flex; align-items: center; gap: 0.5rem; margin: 0; }
+  .wf-check input { width: auto; }
+  @media (max-width: 600px) { .wf-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const STOP = new Set("a al algo ante con como cual cuando de del e el en es ese eso esta este esto fue ha han hay la las le les lo los más me mi muy ni no nos o para pero por que qué se sin son su sus también te ti tu tus un una uno unos y ya you we i it the and of to in for is on that this with as at by an be was were has have had not but or so if then than there here their them my your his her our its them they she he it which who whom whose how when where why what".split(/\s+/));
+
+  const inEl = document.getElementById('wf-in') as HTMLTextAreaElement;
+  const topEl = document.getElementById('wf-top') as HTMLInputElement;
+  const stopEl = document.getElementById('wf-stop') as HTMLInputElement;
+  const out = document.getElementById('wf-out') as HTMLTextAreaElement;
+  const go = document.getElementById('wf-go') as HTMLButtonElement;
+  const cp = document.getElementById('wf-copy') as HTMLButtonElement;
+
+  function analyze() {
+    const text = inEl.value.toLowerCase();
+    const words = text.match(/[a-záéíóúñü]+/gi) || [];
+    const map = new Map<string, number>();
+    const filter = stopEl.checked;
+    for (const w of words) {
+      if (w.length < 2) continue;
+      if (filter && STOP.has(w)) continue;
+      map.set(w, (map.get(w) || 0) + 1);
+    }
+    const arr = [...map.entries()].sort((a, b) => b[1] - a[1]);
+    const n = Math.max(5, Math.min(100, parseInt(topEl.value || '20', 10)));
+    const top = arr.slice(0, n);
+    out.value = top.length ? top.map(([w, c], i) => `${(i+1).toString().padStart(2)}. ${w.padEnd(20)} ${c}`).join('\n') : 'Sin palabras detectadas.';
+  }
+  go.addEventListener('click', analyze);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

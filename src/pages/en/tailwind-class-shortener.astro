@@ -1,0 +1,107 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Tailwind Class Shortener | Genfy';
+const description = 'Shorten long Tailwind className strings by removing duplicates, sorting them and grouping shorthand. Great for readability and clean diffs.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Does this replace a linter?', acceptedAnswer: { '@type': 'Answer', text: 'No. For serious projects, use tailwindcss/prettier-plugin which sorts by official rules. This tool is handy for cleaning a single className by hand.' } },
+    { '@type': 'Question', name: 'Does it work with custom classes?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. It removes duplicates and sorts alphabetically for any class, not just Tailwind.' } },
+    { '@type': 'Question', name: 'Why does order matter?', acceptedAnswer: { '@type': 'Answer', text: 'In Tailwind, order in className does not affect specificity (CSS source order rules). But a consistent order helps reading and git diffs.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design / Diseño" title="Tailwind Class Shortener"
+    intro="Paste a long, messy className. We return the deduped, ordered version.">
+
+    <div slot="tool" class="tw">
+      <label for="tw-in">Input</label>
+      <textarea id="tw-in" rows="4">flex flex p-4 text-sm text-gray-500 hover:text-gray-700 p-4 rounded-md bg-white shadow-sm flex items-center justify-between</textarea>
+
+      <div class="tw-actions">
+        <button id="tw-gen" class="btn btn-primary" type="button">Shorten</button>
+        <button id="tw-cp" class="btn btn-ghost" type="button">Copy</button>
+      </div>
+
+      <label>Output</label>
+      <pre><code id="tw-out"></code></pre>
+
+      <div class="tw-stats" id="tw-stats"></div>
+    </div>
+
+    <div slot="content">
+      <h2>When to use this</h2>
+      <p>Tailwind tends to produce very long className strings with accidental duplicates. When you refactor a component or copy a snippet from somewhere else, you end up with repeated classes, extra whitespace and chaotic order. This tool removes duplicates, normalizes whitespace and sorts alphabetically so the code is easier to review.</p>
+
+      <h2>What it does</h2>
+      <ul>
+        <li><strong>Removes duplicates</strong>: <code>flex flex</code> becomes <code>flex</code>.</li>
+        <li><strong>Normalizes whitespace</strong>: multiple spaces or line breaks become a single space.</li>
+        <li><strong>Sorts alphabetically</strong>: makes reading and comparing easier.</li>
+        <li><strong>Counts classes</strong>: shows how many you had and how many remain.</li>
+      </ul>
+
+      <h2>When not to use it</h2>
+      <p>If your project uses <code>prettier-plugin-tailwindcss</code> (recommended), that tool sorts classes following the official Tailwind order: layout, flex, grid, spacing, sizing, typography, etc. That convention makes components more predictable. For production, use the official plugin. This tool is for cleaning a single className by hand.</p>
+
+      <h2>Why cleanup matters</h2>
+      <p>A component with 30 classes in random order is hard to audit. Is it applying padding? Is there a hover state? A breakpoint? When classes are ordered, the eye finds patterns quickly. On large teams, that consistency reduces errors and speeds up PRs.</p>
+
+      <h2>Patterns that help</h2>
+      <ul>
+        <li><strong>Components instead of utilities</strong>: if you repeat the same combo 5 times, extract a component.</li>
+        <li><strong>@apply with care</strong>: for very common combos you can use @apply in CSS, but do not overdo it — you lose one of Tailwind's benefits.</li>
+        <li><strong>clsx or cn helpers</strong>: condition classes from JS in a readable way.</li>
+        <li><strong>tailwind-variants or cva</strong>: for complex variants, a library brings structure.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Same property twice</strong>: <code>p-2 p-4</code>: order in className does not decide; CSS source order does.</li>
+        <li><strong>Mixing Tailwind and custom CSS without convention</strong>: makes it hard to know where each style lives.</li>
+        <li><strong>Hover and focus lost</strong>: when there are many prefixed classes, group them mentally.</li>
+      </ul>
+
+      <h2>Wrap-up</h2>
+      <p>This tool is for quick review. For production, integrate <code>prettier-plugin-tailwindcss</code> in your pipeline: it runs on save and keeps the codebase consistent with no effort. The difference between a component with 30 ordered classes and 30 random ones is the difference between code a colleague understands in 10 seconds and code that slows them down for 2 minutes.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Does it replace a linter?</summary><p>No. For serious projects use prettier-plugin-tailwindcss. This is for spot cleanup.</p></details>
+      <details><summary>Custom classes?</summary><p>Yes. Removes duplicates and sorts any class.</p></details>
+      <details><summary>Does order matter?</summary><p>Not technically. But a consistent order helps reading and diffs.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tw-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; white-space: pre-wrap; word-break: break-word; }
+  .tw-stats { margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-soft); }
+</style>
+
+<script>
+  const inp = document.getElementById('tw-in') as HTMLTextAreaElement;
+  const out = document.getElementById('tw-out') as HTMLElement;
+  const stats = document.getElementById('tw-stats') as HTMLElement;
+  const gen = document.getElementById('tw-gen') as HTMLButtonElement;
+  const cp = document.getElementById('tw-cp') as HTMLButtonElement;
+
+  function render() {
+    const raw = inp.value.split(/\s+/).filter(Boolean);
+    const unique = Array.from(new Set(raw)).sort();
+    out.textContent = unique.join(' ');
+    stats.textContent = `Original: ${raw.length} classes · Result: ${unique.length} classes · Removed: ${raw.length - unique.length}`;
+  }
+  gen.addEventListener('click', render);
+  inp.addEventListener('input', render);
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copied'; setTimeout(() => cp.textContent = 'Copy', 1500);
+  });
+  render();
+</script>

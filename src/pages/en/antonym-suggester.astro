@@ -1,0 +1,155 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Antonym Suggester | Genfy';
+const description = 'Find English antonyms instantly. Enter a word and get opposites ready to use in writing, debate, classroom and vocabulary practice.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What kind of antonyms does it return?', acceptedAnswer: { '@type': 'Answer', text: 'Direct antonyms when they exist, and the closest contextual opposites when they don\'t.' } },
+    { '@type': 'Question', name: 'Why look up antonyms?', acceptedAnswer: { '@type': 'Answer', text: 'To anchor meaning by contrast, write counter-arguments, run classroom drills and sharpen lexical precision.' } },
+    { '@type': 'Question', name: 'Is there always a clear antonym?', acceptedAnswer: { '@type': 'Answer', text: 'No. Many words have no exact opposite — context defines what counts as the opposite.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Languages" title="Antonym Suggester"
+    intro="Enter a word and get English antonyms instantly. Built for writing, classroom drills, debate and learning vocabulary through contrast.">
+
+    <div slot="tool">
+      <label for="ant-q">Word</label>
+      <input id="ant-q" type="text" placeholder="e.g. happy, cold, big..." />
+      <div style="margin-top:0.75rem;">
+        <button id="ant-go" class="btn btn-primary" type="button">Find antonyms</button>
+        <button id="ant-copy" class="btn btn-ghost" type="button">Copy</button>
+      </div>
+      <textarea id="ant-out" rows="8" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why antonyms teach more than synonyms</h2>
+      <p>
+        There's a known cognitive effect: you learn words better when you see them next to their opposite.
+        The brain locks meaning by contrast. If someone explains "bitter" to you, it lands faster when they
+        remind you it's the opposite of "sweet". That's why, in teaching, antonyms are a stronger anchor for
+        new vocabulary than synonyms.
+      </p>
+
+      <h2>Types of antonyms</h2>
+      <ul>
+        <li><strong>Gradable</strong> — accept degrees: "cold" and "hot" have "warm" in between.</li>
+        <li><strong>Complementary</strong> — no middle ground: "alive/dead", "present/absent".</li>
+        <li><strong>Relational</strong> — one implies the other: "buy/sell", "parent/child".</li>
+        <li><strong>Contextual</strong> — only opposite in some contexts: "light" can oppose "dark" or "heavy" depending on use.</li>
+      </ul>
+
+      <h2>When to reach for an antonym</h2>
+      <p>
+        If you're writing against a position, antonyms are the fastest way to find the language of the
+        opposite side. If you're storytelling with tension, opposing adjectives create rhythm: "night and
+        day", "fire and water", "silence and shout". If you're studying a language, learn in pairs: never
+        learn "patient" without "impatient".
+      </p>
+
+      <h2>Antonyms in argumentation</h2>
+      <p>
+        A classic rhetorical move is the antithesis: stating what something is not to reinforce what it is.
+        "We don't seek luxury: we seek austerity." "It isn't speed: it's precision." It works because
+        readers process the contrast in milliseconds and the assertion gains weight. To find the right
+        opposite quickly, an antonym suggester beats brute thinking.
+      </p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Forcing antonyms where none exist</strong> — words like "water", "Monday" or proper nouns have no opposite.</li>
+        <li><strong>Picking the first one without thinking</strong> — the right opposite depends on your specific sense.</li>
+        <li><strong>Confusing negation with antonym</strong> — "not happy" isn't the same as "sad"; "not rich" isn't "poor".</li>
+        <li><strong>Looking for the antonym of a neutral word</strong> — "tall" yes, "building" no.</li>
+      </ul>
+
+      <h2>Classroom exercises</h2>
+      <p>
+        For teachers: dictate 10 adjectives and ask for the antonym of each; build sentences containing
+        both the word and its opposite ("she spoke firmly, without hesitation"); write a poem or description
+        playing with opposite pairs. These exercises are simple, easy to grade and surprisingly effective
+        at locking vocabulary.
+      </p>
+
+      <h2>Beyond the list</h2>
+      <p>
+        Remember many words have no single antonym. "Hot" can oppose "cold" but also "lukewarm", depending
+        on context. When the suggester offers several opposites, read them and pick the one that works in
+        your specific sentence. Automation helps; judgment stays human.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What kind of antonyms does it return?</summary><p>Direct antonyms when available, and the closest contextual opposite when they aren't.</p></details>
+      <details><summary>Why look up antonyms?</summary><p>To anchor meaning by contrast and sharpen lexical precision.</p></details>
+      <details><summary>Is there always a clear antonym?</summary><p>No. Many words have no exact opposite — context defines it.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const DICT: Record<string,string[]> = {
+    'happy': ['sad','unhappy','miserable'],
+    'sad': ['happy','glad','cheerful'],
+    'big': ['small','tiny','little'],
+    'small': ['big','large','huge'],
+    'fast': ['slow','sluggish'],
+    'slow': ['fast','quick','rapid'],
+    'hot': ['cold','chilly','freezing'],
+    'cold': ['hot','warm','heated'],
+    'strong': ['weak','feeble','frail'],
+    'weak': ['strong','sturdy','robust'],
+    'tall': ['short'],
+    'short': ['tall','long'],
+    'good': ['bad','poor','harmful'],
+    'bad': ['good','fine','pleasant'],
+    'easy': ['hard','difficult','tough'],
+    'hard': ['easy','simple','soft'],
+    'light': ['heavy','dark'],
+    'dark': ['light','bright'],
+    'full': ['empty'],
+    'empty': ['full','packed'],
+    'clean': ['dirty','filthy'],
+    'dirty': ['clean','tidy','spotless'],
+    'rich': ['poor','broke'],
+    'poor': ['rich','wealthy','affluent'],
+    'young': ['old','elderly','aged'],
+    'old': ['young','new','recent'],
+    'near': ['far','distant','remote'],
+    'far': ['near','close','nearby'],
+    'early': ['late'],
+    'late': ['early','prompt'],
+    'friend': ['enemy','foe','rival'],
+    'peace': ['war','conflict'],
+    'love': ['hate','contempt'],
+    'truth': ['lie','falsehood'],
+    'beginning': ['end','finish','conclusion'],
+    'success': ['failure','defeat'],
+    'accept': ['reject','refuse','deny'],
+    'rise': ['fall','drop','descend'],
+    'open': ['close','shut'],
+    'remember': ['forget']
+  };
+
+  const q = document.getElementById('ant-q') as HTMLInputElement;
+  const out = document.getElementById('ant-out') as HTMLTextAreaElement;
+  const go = document.getElementById('ant-go') as HTMLButtonElement;
+  const cp = document.getElementById('ant-copy') as HTMLButtonElement;
+
+  function search() {
+    const w = q.value.trim().toLowerCase();
+    if (!w) { out.value = ''; return; }
+    const list = DICT[w];
+    if (!list) { out.value = `No matches for "${w}". Try a common adjective, verb or noun.`; return; }
+    out.value = `${w} → ${list.join(', ')}`;
+  }
+  go.addEventListener('click', search);
+  q.addEventListener('keydown', (e) => { if (e.key === 'Enter') search(); });
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

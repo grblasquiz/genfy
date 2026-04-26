@@ -1,0 +1,130 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random Adjective Generator | Genfy';
+const description = 'Generate random adjectives in English. Filter by positive, negative or neutral tone. Useful for writing, naming, headlines and classroom drills.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'When is a random adjective useful?', acceptedAnswer: { '@type': 'Answer', text: 'For describing characters in fiction, generating brand or product names, drafting reviews and training descriptive vocabulary.' } },
+    { '@type': 'Question', name: 'Can I filter by tone?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — pick positive, negative or neutral depending on whether you need praise, criticism or objective description.' } },
+    { '@type': 'Question', name: 'Does it help with headlines?', acceptedAnswer: { '@type': 'Answer', text: 'A lot. A strong adjective lifts an average headline. Combine it with a noun to test quick variants.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Languages" title="Random Adjective Generator"
+    intro="Pull random English adjectives. Filter by positive, negative or neutral tone. Built for creative writing, naming, headlines and classroom drills.">
+
+    <div slot="tool">
+      <div class="rw-row">
+        <div>
+          <label for="adj-tone">Tone</label>
+          <select id="adj-tone">
+            <option value="all">All</option>
+            <option value="pos">Positive</option>
+            <option value="neg">Negative</option>
+            <option value="neu">Neutral</option>
+          </select>
+        </div>
+        <div>
+          <label for="adj-amount">Amount</label>
+          <input id="adj-amount" type="number" min="1" max="30" value="5" />
+        </div>
+      </div>
+      <button id="adj-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="adj-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="adj-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>The adjective: the word that sets the tone</h2>
+      <p>
+        A text without adjectives is flat: it tells you what happens but not how it feels. A text with weak
+        adjectives ("very good", "quite interesting") sounds like a school essay. The difference between a
+        memorable line of copy and a forgettable one usually lives in one or two well-chosen adjectives.
+        That's why having a quick adjective bank at hand pays off.
+      </p>
+
+      <h2>When to use the generator</h2>
+      <ul>
+        <li><strong>Fiction characters</strong> — pull three random adjectives and build a character around them. More original than starting from the cliché.</li>
+        <li><strong>Branding and naming</strong> — combine an adjective with a noun for brand names: "Honest House", "Lucid Studio", "Sure Coffee".</li>
+        <li><strong>Reviews and testimonials</strong> — vary your adjectives instead of repeating "amazing" in every review.</li>
+        <li><strong>Headlines</strong> — a strong adjective raises a headline's CTR without changing the noun.</li>
+        <li><strong>Classroom</strong> — comparative drills, agreement, vocabulary expansion.</li>
+      </ul>
+
+      <h2>Tones: positive, negative, neutral</h2>
+      <p>
+        <strong>Positive</strong> adjectives serve praise, marketing, aspirational branding and favorable
+        description. <strong>Negative</strong> ones are your stock for criticism, contrast, antagonist
+        characters and honest reviews. <strong>Neutral</strong> ones are the most useful for objective
+        description: technical, journalism, essay. Moving between the three registers is what separates a
+        writer with craft from one without.
+      </p>
+
+      <h2>Common mistakes with adjectives</h2>
+      <ul>
+        <li><strong>Stacking</strong> — "a beautiful, bright, unforgettable morning" weakens the effect. One sharp adjective beats three average ones.</li>
+        <li><strong>Generic ones</strong> — "good", "nice", "interesting" carry nothing. Replace with specifics.</li>
+        <li><strong>Inflation</strong> — if everything is "epic", "amazing" and "revolutionary", nothing is. Save the superlatives.</li>
+        <li><strong>Forced rhythm</strong> — don't bend a sentence to fit a shiny adjective; cut it instead.</li>
+      </ul>
+
+      <h2>Combinations that work</h2>
+      <p>
+        A pro trick: instead of asking the generator for one adjective, pull five and pick the least obvious
+        one that still works with your noun. That second tier of the list is usually where the best options
+        live — the ones you wouldn't have produced spontaneously. The first idea is always the closest to
+        the cliché.
+      </p>
+
+      <h2>Adjective + noun: the perfect match</h2>
+      <p>
+        For naming or headlines, generate an adjective and a noun in parallel, write down the pairings that
+        click and discard 80% of them. What remains is gold. Agencies use this technique for naming
+        products, editorial lines and campaigns. It works because it breaks the inertia of "what we always
+        say" and forces you to evaluate combinations you wouldn't have proposed alone.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>When is a random adjective useful?</summary><p>For characters, names, reviews, descriptive vocabulary and more vivid headlines.</p></details>
+      <details><summary>Can I filter by tone?</summary><p>Yes — positive, negative or neutral depending on the effect you need.</p></details>
+      <details><summary>Does it help with headlines?</summary><p>A lot. Generate several and test which one converts better.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const POS = "kind clever bright brave generous honest radiant patient calm sincere warm caring upright cheerful strong sensible thoughtful curious humble witty prudent friendly respectful reliable empathetic steady candid fair joyful courageous gentle".split(' ');
+  const NEG = "harsh arrogant clumsy jealous mean fickle rude lying indifferent whiny stubborn rough careless impatient selfish aggressive messy distracted cold hostile dull cowardly ungrateful obstinate vain negligent boring twisted petty envious".split(' ');
+  const NEU = "tall short large small wide narrow long slow fast new old young ancient round square deep flat dark light warm cold dry damp soft hard light heavy dense thick firm smooth steady".split(' ');
+
+  const toneEl = document.getElementById('adj-tone') as HTMLSelectElement;
+  const amEl = document.getElementById('adj-amount') as HTMLInputElement;
+  const out = document.getElementById('adj-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('adj-gen') as HTMLButtonElement;
+  const cp = document.getElementById('adj-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function build() {
+    const t = toneEl.value;
+    const pool = t === 'pos' ? POS : t === 'neg' ? NEG : t === 'neu' ? NEU : [...POS, ...NEG, ...NEU];
+    const n = Math.max(1, Math.min(30, parseInt(amEl.value || '1', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) lines.push(pick(pool));
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', build);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+  build();
+</script>

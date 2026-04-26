@@ -1,0 +1,136 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de grupo de lectura gratis | Genfy';
+const description = 'Generá nombres para tu club de lectura. Combiná género literario o tono y obtené 20 ideas memorables para Goodreads, Discord o WhatsApp.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno al nombre de un club de lectura?', acceptedAnswer: { '@type': 'Answer', text: 'Que comunique el género o tono predominante, sea memorable, fácil de tipear en Goodreads o Discord, y sugiera el nivel de exigencia (relajado, académico, mixto).' } },
+    { '@type': 'Question', name: '¿Conviene un nombre por género?', acceptedAnswer: { '@type': 'Answer', text: 'Si tu club está enfocado, sí. Si querés flexibilidad para cambiar, mejor un nombre genérico tipo "Página 22" o "Capítulo 7".' } },
+    { '@type': 'Question', name: '¿Cómo encuentro miembros?', acceptedAnswer: { '@type': 'Answer', text: 'Goodreads Groups, Reddit (r/bookclub), Bookstagram, librerías locales, Meetup.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Lectura" title="Generador de nombre de grupo de lectura"
+    intro="Combiná género o tono y obtené 20 ideas para tu club de lectura. Pensados para Goodreads, Discord, WhatsApp o reuniones en librerías locales.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Género o tono</label>
+      <input id="bn-kw" type="text" placeholder="ficción, poesía, ensayo..." value="ficción" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="page">Página + número</option>
+        <option value="literary">Literario (Marginalia, Errata)</option>
+        <option value="cozy">Acogedor (El Sillón, La Mesa)</option>
+        <option value="genre">Por género (Ficción Club)</option>
+        <option value="local">Local + Lectura</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo nombrar un club de lectura</h2>
+      <p>
+        Un buen nombre de club de lectura comunica tres cosas: tipo de libros que se leen,
+        nivel de exigencia (académico vs casual), y tono de las reuniones (silencioso vs
+        debate abierto). Si tu club promete novelas contemporáneas y se llama "Filólogos
+        Reunidos", la gente que entra esperando otra cosa va a abandonar.
+      </p>
+      <ol>
+        <li><strong>Comunica género o flexibilidad.</strong> "Ficción Club" enfoca; "Página 22" deja abierto.</li>
+        <li><strong>Memorable.</strong> Tu miembro lo recomienda al amigo lector.</li>
+        <li><strong>Compatible con Goodreads.</strong> Buscalo antes de crear el grupo.</li>
+        <li><strong>Tono coherente.</strong> Académico vs casual cambian todo.</li>
+        <li><strong>Disponible como handle.</strong> Si pensás Instagram o newsletter, registrá el handle.</li>
+      </ol>
+
+      <h2>Estilos clásicos</h2>
+      <ul>
+        <li><strong>Página + número:</strong> "Página 22", "Capítulo 7". Memorable y abstracto.</li>
+        <li><strong>Literario:</strong> "Marginalia", "Errata", "Epígrafe", "Subrayado". Para clubes serios.</li>
+        <li><strong>Acogedor:</strong> "El Sillón", "La Mesa de Lectura", "Mesita de Noche". Casual.</li>
+        <li><strong>Por género:</strong> "Ficción Club", "Poesía Mensual", "Ensayo Trimestral". Foco claro.</li>
+        <li><strong>Local + Lectura:</strong> "Palermo Lee", "Recoleta Reads". SEO local.</li>
+      </ul>
+
+      <h2>Errores que evitar</h2>
+      <p>
+        Evitá nombres que prometan más de lo que entregás: "Maestros de la Literatura" cuando
+        el grupo es casual ahuyenta a los que querés sumar. Evitá referencias a una sola
+        autora muy popular: "Las Hijas de Sally Rooney" envejece mal y limita los géneros.
+        Evitá nombres demasiado intelectualizados que asustan a lectores nuevos.
+      </p>
+
+      <h2>Cómo crecer el club</h2>
+      <ol>
+        <li>Creá un grupo en Goodreads con el nombre claro.</li>
+        <li>Replicá en Discord o WhatsApp para conversación diaria.</li>
+        <li>Programá una reunión por mes con un libro fijo.</li>
+        <li>Subí mini reseñas a Bookstagram para atraer miembros.</li>
+        <li>Si llegás a 30+ miembros, considerá un newsletter mensual.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno al nombre?</summary><p>Comunica género o tono, memorable, buscable en Goodreads.</p></details>
+      <details><summary>¿Por género?</summary><p>Sí si está enfocado; genérico si querés flexibilidad.</p></details>
+      <details><summary>¿Cómo encuentro miembros?</summary><p>Goodreads, Reddit r/bookclub, Bookstagram, librerías, Meetup.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const LITERARY = ['Marginalia', 'Errata', 'Epígrafe', 'Subrayado', 'Anotación', 'Glosa', 'Colofón', 'Índice', 'Prólogo'];
+  const COZY = ['El Sillón', 'La Mesa de Lectura', 'Mesita de Noche', 'El Cojín', 'La Lámpara', 'El Té', 'La Sobremesa', 'El Marcador'];
+  const GENRES = ['Ficción', 'Poesía', 'Ensayo', 'Crónica', 'Memoir', 'Misterio', 'Ciencia Ficción', 'Histórica', 'Contemporánea'];
+  const LOCAL = ['Palermo', 'Recoleta', 'Brera', 'Mission', 'Soho', 'Capitol', 'Boedo'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function num() { const i = new Uint32Array(1); crypto.getRandomValues(i); return (i[0] % 99) + 1; }
+
+  function generate() {
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'page') name = pick(['Página', 'Capítulo', 'Tomo', 'Volumen']) + ' ' + num();
+      else if (s === 'literary') name = pick(LITERARY);
+      else if (s === 'cozy') name = pick(COZY);
+      else if (s === 'genre') name = pick(GENRES) + ' Club';
+      else if (s === 'local') name = pick(LOCAL) + ' Lee';
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

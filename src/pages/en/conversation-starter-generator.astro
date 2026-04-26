@@ -1,0 +1,154 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Conversation Starter Generator | Genfy';
+const description = 'Curated conversation starters for dates, networking, first day at work, and dinners. Skip the weather and start with something memorable.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What situations is this for?', acceptedAnswer: { '@type': 'Answer', text: 'Dates, professional networking, first day at a team, dinners with strangers, formal and casual meetings.' } },
+    { '@type': 'Question', name: 'Is it the same as an icebreaker?', acceptedAnswer: { '@type': 'Answer', text: 'Similar. Icebreakers are usually group games. Starters target a 1:1 chat that can go deeper.' } },
+    { '@type': 'Question', name: 'How do I pick the right one?', acceptedAnswer: { '@type': 'Answer', text: 'Try three and use the one that fits the tone. For interviews: professional. For dates: personal but not intimate.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Diversión / Fun" title="Conversation starter generator"
+    intro="Skip the weather. Use a curated starter for the right context.">
+
+    <div slot="tool" class="cs">
+      <div class="cs-card">
+        <p id="cs-text" class="cs-text">Tap "Generate" to begin.</p>
+      </div>
+      <div class="cs-controls">
+        <label for="cs-cat">Context</label>
+        <select id="cs-cat">
+          <option value="all">All</option>
+          <option value="date">Date</option>
+          <option value="networking">Networking</option>
+          <option value="friends">Friends / Dinner</option>
+          <option value="work">Work / Team</option>
+        </select>
+      </div>
+      <button id="cs-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="cs-copy" class="btn btn-ghost" type="button">Copy</button>
+    </div>
+
+    <div slot="content">
+      <h2>Why conversation starters matter</h2>
+      <p>
+        The first minute sets the tone. If you open with "what do you do?" or "where are you
+        from?", the other person clicks into autopilot and gives you the same answer they've
+        used 200 times. Open with something different and the brain switches on, sending the
+        chat in an unpredictable direction. Not magic: opening psychology.
+      </p>
+
+      <h2>Types of starters and when to use them</h2>
+      <ol>
+        <li><strong>Context-specific:</strong> "What brought you to this event?" at a conference. Shows you paid attention.</li>
+        <li><strong>Genuine curiosity:</strong> "What's exciting you this week?" Personal but not intimate. Works almost anywhere.</li>
+        <li><strong>Shared experience:</strong> "What's the last thing you learned that surprised you?" Creates vulnerability without forcing it.</li>
+        <li><strong>Preference:</strong> "Coffee, tea or yerba mate?" Sounds trivial, opens a door to habits and routine.</li>
+        <li><strong>Projection:</strong> "What are you working on that's keeping you up?" Useful with founders and creatives.</li>
+      </ol>
+
+      <h2>Starters to avoid</h2>
+      <ul>
+        <li><strong>"What do you do?":</strong> bypass it when you can. People are tired of being identified by their job.</li>
+        <li><strong>The weather:</strong> useful only if it's truly extreme. Otherwise, noise.</li>
+        <li><strong>Politics or religion:</strong> in low-trust contexts, risky territory.</li>
+        <li><strong>Comments on appearance:</strong> even compliments. Makes the other person feel evaluated before greeted.</li>
+      </ul>
+
+      <h2>The follow-up trick</h2>
+      <p>
+        A great starter is half the work. The other half is the follow-up. If they say "I'm
+        learning to cook Thai", don't just say "cool" and pivot to yourself. Ask: "what dish
+        came out best?", "which ingredient was hardest to find?", "who taught you?". The
+        follow-up shows you listened and is almost always where real connection lives.
+      </p>
+
+      <h2>Practice: three encounters, three starters</h2>
+      <p>
+        This week use a different one in each interaction: a new coworker, your partner at
+        dinner, someone in line. Notice which one drives the most conversation. You'll spot
+        patterns: some people respond to abstract, others to concrete. Calibrate by them, not
+        by you.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Useful for interviews?</summary><p>Yes, the "work" filter has openers good for formal kickoffs.</p></details>
+      <details><summary>And for dates?</summary><p>The "date" filter has questions designed for connection without pressure.</p></details>
+      <details><summary>Can I save them?</summary><p>Copy your favorites and build your own list in notes.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cs-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; }
+  .cs-text { font-size: 1.125rem; line-height: 1.6; margin: 0; }
+  .cs-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const STARTERS: { cat: string; t: string }[] = [
+    { cat: "date", t: "What's the last thing you learned just out of curiosity?" },
+    { cat: "date", t: "If you had a free day with no plans, what would you do first?" },
+    { cat: "date", t: "What music did you listen to at 16 that you don't anymore?" },
+    { cat: "date", t: "What book left a mark on you this past year?" },
+    { cat: "date", t: "What do you tend to overspend on without thinking?" },
+    { cat: "date", t: "What was your weirdest job?" },
+    { cat: "date", t: "Outside of work, what would you like people to know you for?" },
+    { cat: "date", t: "What do you do best when you're in a good mood?" },
+    { cat: "date", t: "What's your ideal Sunday?" },
+    { cat: "networking", t: "What brought you to this event today?" },
+    { cat: "networking", t: "What are you working on that's been on your mind?" },
+    { cat: "networking", t: "What's the biggest change in your work this year?" },
+    { cat: "networking", t: "What industry trend feels overhyped to you?" },
+    { cat: "networking", t: "Who do you admire professionally and why?" },
+    { cat: "networking", t: "What new tool did you adopt that's worth it?" },
+    { cat: "networking", t: "Where are you in your career right now?" },
+    { cat: "networking", t: "How did you decide on what you do?" },
+    { cat: "friends", t: "What put you in a good mood this week?" },
+    { cat: "friends", t: "What's the last thing you watched that you'd recommend?" },
+    { cat: "friends", t: "What dish do you cook to impress?" },
+    { cat: "friends", t: "What do you miss most from 10 years ago?" },
+    { cat: "friends", t: "What trip do you remember best?" },
+    { cat: "friends", t: "What new hobby would you like to start?" },
+    { cat: "friends", t: "What do you spend money on without guilt?" },
+    { cat: "friends", t: "What's the last funny thing that happened to you?" },
+    { cat: "work", t: "What part of your job energizes you most?" },
+    { cat: "work", t: "Best professional decision you made this year?" },
+    { cat: "work", t: "What's your team learning lately?" },
+    { cat: "work", t: "What do you do on impossible days?" },
+    { cat: "work", t: "What's the most useful feedback you ever got?" },
+    { cat: "work", t: "Which of your projects taught you the most?" },
+    { cat: "work", t: "How do you organize your week?" },
+    { cat: "work", t: "What productivity tool changed your routine?" }
+  ];
+
+  const text = document.getElementById('cs-text') as HTMLElement;
+  const cat = document.getElementById('cs-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('cs-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('cs-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? STARTERS : STARTERS.filter(s => s.cat === filter);
+    text.textContent = pick(pool).t;
+  }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(text.textContent || '');
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

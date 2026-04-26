@@ -1,0 +1,155 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Sugeridor de antónimos | Genfy';
+const description = 'Encontrá antónimos en español al instante. Ingresá una palabra y obtené opuestos listos para usar en redacción, debate y aprendizaje.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué tipo de antónimos devuelve?', acceptedAnswer: { '@type': 'Answer', text: 'Mostramos antónimos directos cuando existen y, si no, opuestos contextuales más cercanos al uso real.' } },
+    { '@type': 'Question', name: '¿Para qué sirve buscar antónimos?', acceptedAnswer: { '@type': 'Answer', text: 'Para reforzar significado por contraste, escribir argumentos opuestos, ejercicios de aula y mejorar precisión léxica.' } },
+    { '@type': 'Question', name: '¿Hay siempre un antónimo claro?', acceptedAnswer: { '@type': 'Answer', text: 'No. Muchas palabras no tienen un opuesto exacto: lo "contrario" depende del contexto.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Idiomas" title="Sugeridor de antónimos"
+    intro="Ingresá una palabra y conseguí antónimos en español al instante. Pensado para redacción, ejercicios de aula, debate y aprendizaje de vocabulario por contraste.">
+
+    <div slot="tool">
+      <label for="ant-q">Palabra</label>
+      <input id="ant-q" type="text" placeholder="ej: feliz, frío, grande..." />
+      <div style="margin-top:0.75rem;">
+        <button id="ant-go" class="btn btn-primary" type="button">Buscar antónimos</button>
+        <button id="ant-copy" class="btn btn-ghost" type="button">Copiar</button>
+      </div>
+      <textarea id="ant-out" rows="8" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los antónimos enseñan más que los sinónimos</h2>
+      <p>
+        Hay un fenómeno cognitivo conocido: aprendés mejor las palabras cuando las ves junto a su opuesto.
+        El cerebro fija el significado por contraste. Si te explican qué es "amargo", lo entendés más rápido
+        si te recuerdan que es lo opuesto a "dulce". Por eso, en didáctica, los antónimos son una
+        herramienta más potente que los sinónimos para fijar vocabulario nuevo.
+      </p>
+
+      <h2>Tipos de antónimos</h2>
+      <ul>
+        <li><strong>Graduales</strong> — admiten matices: "frío" y "caliente" tienen "tibio" entre medio.</li>
+        <li><strong>Complementarios</strong> — no admiten medio: "vivo/muerto", "presente/ausente".</li>
+        <li><strong>Recíprocos</strong> — uno implica al otro: "comprar/vender", "padre/hijo".</li>
+        <li><strong>Contextuales</strong> — solo son opuestos en cierto contexto: "luz" puede oponerse a "oscuridad" o a "peso", según uso.</li>
+      </ul>
+
+      <h2>Cuándo buscar el antónimo</h2>
+      <p>
+        Si estás escribiendo un argumento contra una postura, los antónimos son la forma más rápida de
+        encontrar el lenguaje del lado opuesto. Si estás haciendo storytelling con tensión, contraponer
+        adjetivos opuestos crea ritmo: "noche y día", "fuego y agua", "silencio y grito". Si estudiás un
+        idioma, hacelo siempre en pares: nunca aprendas "patient" sin aprender "impatient".
+      </p>
+
+      <h2>Antónimos en argumentación</h2>
+      <p>
+        Una técnica clásica de oratoria es presentar la antítesis: decir lo que algo no es para reforzar lo
+        que es. "No buscamos lujos: buscamos austeridad". "No es velocidad: es precisión". El truco
+        funciona porque el lector procesa el contraste en una fracción de segundo y la afirmación gana peso.
+        Para encontrar el contraste justo, un sugeridor de antónimos es más útil que pensar en frío.
+      </p>
+
+      <h2>Errores frecuentes</h2>
+      <ul>
+        <li><strong>Forzar antónimos donde no los hay</strong> — palabras como "agua", "lunes" o nombres propios no tienen opuesto.</li>
+        <li><strong>Tomar el primero sin pensar</strong> — el opuesto correcto depende del sentido específico que estés usando.</li>
+        <li><strong>Confundir negación con antónimo</strong> — "no feliz" no es lo mismo que "triste"; "no rico" no es "pobre".</li>
+        <li><strong>Buscar antónimo de algo neutro</strong> — "alto" sí, "edificio" no.</li>
+      </ul>
+
+      <h2>Ejercicios para clase</h2>
+      <p>
+        Para docentes: dictar una lista de 10 adjetivos y pedir el antónimo de cada uno; armar oraciones que
+        contengan a la vez palabra y antónimo ("le habló con firmeza, sin dudar"); escribir un poema o una
+        descripción jugando con pares opuestos. Estos ejercicios son simples, fáciles de corregir y
+        sorprendentemente efectivos para fijar vocabulario.
+      </p>
+
+      <h2>Más allá de la lista</h2>
+      <p>
+        Recordá que muchas palabras no tienen un único antónimo. "Caliente" puede oponerse a "frío" pero
+        también a "tibio", según contexto. Cuando el sugeridor te ofrece varios opuestos, leelos y elegí el
+        que funciona en tu oración específica. La automatización ayuda; el criterio sigue siendo humano.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué tipo de antónimos devuelve?</summary><p>Antónimos directos y, si no existen, los opuestos contextuales más cercanos al uso real.</p></details>
+      <details><summary>¿Para qué sirve buscar antónimos?</summary><p>Para fijar significado por contraste, escribir contrapuntos y mejorar precisión léxica.</p></details>
+      <details><summary>¿Hay siempre un antónimo claro?</summary><p>No. Muchas palabras no tienen opuesto único; depende del sentido en uso.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const DICT: Record<string,string[]> = {
+    'feliz': ['triste','infeliz','desdichado'],
+    'triste': ['feliz','alegre','contento'],
+    'grande': ['pequeño','chico','reducido'],
+    'pequeño': ['grande','enorme','amplio'],
+    'rápido': ['lento','pausado','tardo'],
+    'lento': ['rápido','veloz','ágil'],
+    'caliente': ['frío','helado','gélido'],
+    'frío': ['caliente','cálido','tibio'],
+    'fuerte': ['débil','flojo','endeble'],
+    'débil': ['fuerte','vigoroso','robusto'],
+    'alto': ['bajo','corto','reducido'],
+    'bajo': ['alto','elevado'],
+    'bueno': ['malo','perjudicial','negativo'],
+    'malo': ['bueno','correcto','virtuoso'],
+    'fácil': ['difícil','complicado','arduo'],
+    'difícil': ['fácil','sencillo','simple'],
+    'claro': ['oscuro','turbio','confuso'],
+    'oscuro': ['claro','luminoso','iluminado'],
+    'lleno': ['vacío','desierto'],
+    'vacío': ['lleno','colmado','repleto'],
+    'limpio': ['sucio','manchado'],
+    'sucio': ['limpio','aseado','pulcro'],
+    'rico': ['pobre','humilde','austero'],
+    'pobre': ['rico','adinerado','próspero'],
+    'joven': ['viejo','anciano','mayor'],
+    'viejo': ['joven','nuevo','reciente'],
+    'cerca': ['lejos','distante','remoto'],
+    'lejos': ['cerca','próximo','contiguo'],
+    'temprano': ['tarde','tardío'],
+    'tarde': ['temprano','pronto'],
+    'amigo': ['enemigo','rival','adversario'],
+    'paz': ['guerra','conflicto','pelea'],
+    'amor': ['odio','desprecio','rechazo'],
+    'verdad': ['mentira','falsedad'],
+    'principio': ['final','fin','término'],
+    'éxito': ['fracaso','derrota'],
+    'aceptar': ['rechazar','negar'],
+    'subir': ['bajar','descender'],
+    'abrir': ['cerrar','sellar'],
+    'recordar': ['olvidar']
+  };
+
+  const q = document.getElementById('ant-q') as HTMLInputElement;
+  const out = document.getElementById('ant-out') as HTMLTextAreaElement;
+  const go = document.getElementById('ant-go') as HTMLButtonElement;
+  const cp = document.getElementById('ant-copy') as HTMLButtonElement;
+
+  function search() {
+    const w = q.value.trim().toLowerCase();
+    if (!w) { out.value = ''; return; }
+    const list = DICT[w];
+    if (!list) { out.value = `Sin coincidencias para "${w}". Probá con un adjetivo, verbo o sustantivo común.`; return; }
+    out.value = `${w} → ${list.join(', ')}`;
+  }
+  go.addEventListener('click', search);
+  q.addEventListener('keydown', (e) => { if (e.key === 'Enter') search(); });
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

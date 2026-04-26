@@ -1,0 +1,163 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Validador de email online | Genfy';
+const description = 'Validá direcciones de email una por una o en bloque. Detecta sintaxis incorrecta, dominios sospechosos y typos comunes (gmial, hotmial, etc).';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Verifica que el email exista realmente?', acceptedAnswer: { '@type': 'Answer', text: 'No. Validamos sintaxis y detectamos errores comunes. Para verificar existencia real necesitás un servicio SMTP que cuesta dinero.' } },
+    { '@type': 'Question', name: '¿Qué considera "sintaxis correcta"?', acceptedAnswer: { '@type': 'Answer', text: 'Seguimos un subset razonable de RFC 5322: usuario, arroba, dominio con punto, sin espacios ni caracteres prohibidos. Strict mode aplica reglas más estrictas.' } },
+    { '@type': 'Question', name: '¿Detecta typos como "gmial.com"?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Tenemos una lista de typos frecuentes en dominios populares (gmail, hotmail, outlook, yahoo) y sugerimos la corrección probable.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Datos" title="Validador de email"
+    intro="Validá una dirección o pegá una lista entera. Te decimos cuáles tienen sintaxis correcta, cuáles tienen typos típicos y cuáles habría que descartar.">
+
+    <div slot="tool">
+      <label for="ev-in">Email o lista (una por línea)</label>
+      <textarea id="ev-in" rows="8" placeholder="ejemplo@gmail.com"></textarea>
+
+      <button id="ev-go" class="btn btn-primary" type="button">Validar</button>
+      <button id="ev-copy" class="btn btn-ghost" type="button">Copiar válidos</button>
+
+      <div id="ev-result" class="ev-result"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué hace este validador</h2>
+      <p>
+        Validamos en tres niveles:
+      </p>
+      <ul>
+        <li><strong>Sintaxis básica.</strong> Que tenga arroba, dominio con punto, sin espacios y sin caracteres prohibidos.</li>
+        <li><strong>Estructura del dominio.</strong> Que el TLD tenga al menos dos caracteres y no termine en punto.</li>
+        <li><strong>Detección de typos.</strong> Si escribiste <code>gmial.com</code>, <code>hotmial.com</code>, <code>outlok.com</code> u otros errores frecuentes, te sugerimos la corrección.</li>
+      </ul>
+
+      <h2>Lo que no hacemos</h2>
+      <p>
+        No verificamos si el buzón existe realmente. Eso requiere conexión SMTP a los
+        servidores de cada dominio, mantenimiento de IP reputation, y servicios pagos como
+        ZeroBounce, NeverBounce o Kickbox. Para validación de existencia en volumen, usá esos
+        servicios. Para limpieza rápida de sintaxis y typos, este tool es suficiente y gratis.
+      </p>
+
+      <h2>Por qué importa validar</h2>
+      <ul>
+        <li><strong>Tasa de rebote.</strong> Mailchimp, SendGrid, Klaviyo y cualquier ESP castigan tu reputación si más del 2% de tus envíos rebotan. Una lista mal validada te puede congelar la cuenta.</li>
+        <li><strong>Costos.</strong> Cobrás por contacto activo en muchos CRMs: cada email inválido en tu base es dinero tirado.</li>
+        <li><strong>Conversión.</strong> Si un usuario se registra con typo y nunca recibe el email de confirmación, lo perdiste.</li>
+        <li><strong>Soporte.</strong> Tickets que llegan con email inválido en el formulario son imposibles de resolver.</li>
+      </ul>
+
+      <h2>Cómo manejar los resultados</h2>
+      <p>
+        Después de validar, mostramos tres categorías:
+      </p>
+      <ul>
+        <li><strong>Válidos</strong> — pasan sintaxis y no tienen typos detectables.</li>
+        <li><strong>Con sugerencia</strong> — sintaxis OK pero el dominio se parece sospechosamente a uno popular. Mostramos la corrección.</li>
+        <li><strong>Inválidos</strong> — sintaxis rota; descartar o pedir al usuario que reingrese.</li>
+      </ul>
+
+      <h2>Limitaciones del enfoque por sintaxis</h2>
+      <p>
+        Un email puede ser sintácticamente perfecto y aún así no existir. Ejemplos:
+        <code>x@gmail.com</code> pasa todas las reglas pero probablemente no tiene cuenta.
+        <code>fakeemail123@gmail.com</code> también. Para casos donde la calidad importa
+        muchísimo (B2B, compras altas), combinar este filtro con un servicio de verificación
+        SMTP da los mejores resultados: este descarta el 70-80% de los problemas, el SMTP el
+        resto.
+      </p>
+
+      <h2>Privacidad</h2>
+      <p>
+        Los emails que pegás se procesan en tu navegador. No los enviamos a un servidor, no
+        los guardamos, no los logueamos. Podés validar listas de clientes sin preocupación —
+        el código corre 100% local.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Verifica que el email exista realmente?</summary><p>No. Validamos sintaxis y typos. Verificación SMTP requiere servicios pagos.</p></details>
+      <details><summary>¿Qué considera "sintaxis correcta"?</summary><p>Subset razonable de RFC 5322 con reglas estrictas opcionales.</p></details>
+      <details><summary>¿Detecta typos como "gmial.com"?</summary><p>Sí, en dominios populares: gmail, hotmail, outlook, yahoo y otros.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ev-result { margin-top: 1rem; }
+  .ev-group { margin-bottom: 1rem; }
+  .ev-group h4 { margin: 0 0 0.5rem; font-size: 0.9rem; }
+  .ev-group ul { margin: 0; padding-left: 1.25rem; font-family: var(--font-mono); font-size: 0.875rem; }
+  .ev-ok h4 { color: #2e8540; }
+  .ev-warn h4 { color: #b07a00; }
+  .ev-bad h4 { color: #c0392b; }
+</style>
+
+<script>
+  const TYPOS: Record<string,string> = {
+    'gmial.com':'gmail.com','gmai.com':'gmail.com','gmal.com':'gmail.com','gnail.com':'gmail.com','gmail.co':'gmail.com',
+    'hotmial.com':'hotmail.com','hotmai.com':'hotmail.com','hormail.com':'hotmail.com','hotmail.co':'hotmail.com',
+    'outlok.com':'outlook.com','outloo.com':'outlook.com','outlook.co':'outlook.com',
+    'yaho.com':'yahoo.com','yhoo.com':'yahoo.com','yahoo.co':'yahoo.com',
+    'iclod.com':'icloud.com','icoud.com':'icloud.com',
+    'live.co':'live.com','live.cm':'live.com'
+  };
+
+  const inEl = document.getElementById('ev-in') as HTMLTextAreaElement;
+  const result = document.getElementById('ev-result') as HTMLDivElement;
+  const go = document.getElementById('ev-go') as HTMLButtonElement;
+  const copy = document.getElementById('ev-copy') as HTMLButtonElement;
+  const RX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function check(line: string): { kind: 'ok' | 'warn' | 'bad', email: string, suggestion?: string } {
+    const e = line.trim().toLowerCase();
+    if (!e) return { kind: 'bad', email: line };
+    if (!RX.test(e)) return { kind: 'bad', email: line };
+    const at = e.lastIndexOf('@');
+    const domain = e.slice(at + 1);
+    if (TYPOS[domain]) return { kind: 'warn', email: line, suggestion: e.slice(0, at + 1) + TYPOS[domain] };
+    if (domain.endsWith('.con') || domain.endsWith('.cm') || domain.endsWith('.co')) {
+      const fixed = domain.replace(/\.(con|cm|co)$/, '.com');
+      return { kind: 'warn', email: line, suggestion: e.slice(0, at + 1) + fixed };
+    }
+    return { kind: 'ok', email: line };
+  }
+
+  let validList: string[] = [];
+
+  function run() {
+    const lines = inEl.value.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+    const ok: string[] = [], warn: string[] = [], bad: string[] = [];
+    validList = [];
+    for (const l of lines) {
+      const r = check(l);
+      if (r.kind === 'ok') { ok.push(l); validList.push(l); }
+      else if (r.kind === 'warn') warn.push(`${l}  →  sugerencia: ${r.suggestion}`);
+      else bad.push(l);
+    }
+    let html = '';
+    if (ok.length) html += `<div class="ev-group ev-ok"><h4>Válidos (${ok.length})</h4><ul>${ok.map(e => `<li>${e}</li>`).join('')}</ul></div>`;
+    if (warn.length) html += `<div class="ev-group ev-warn"><h4>Con sugerencia (${warn.length})</h4><ul>${warn.map(e => `<li>${e}</li>`).join('')}</ul></div>`;
+    if (bad.length) html += `<div class="ev-group ev-bad"><h4>Inválidos (${bad.length})</h4><ul>${bad.map(e => `<li>${e}</li>`).join('')}</ul></div>`;
+    if (!html) html = '<p style="color: var(--text-muted)">Pegá emails y hacé click en Validar.</p>';
+    result.innerHTML = html;
+  }
+
+  go.addEventListener('click', run);
+  copy.addEventListener('click', async () => {
+    if (!validList.length) return;
+    await navigator.clipboard.writeText(validList.join('\n'));
+    const t = copy.textContent; copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = t; }, 1200);
+  });
+</script>
+</content>
+</invoke>

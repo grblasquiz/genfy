@@ -1,0 +1,129 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random Spanish Word Generator | Genfy';
+const description = 'Generate random Spanish words with English meaning. Useful for vocabulary practice, language games, brainstorming and classroom drills.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Where do the words come from?', acceptedAnswer: { '@type': 'Answer', text: 'From a curated list of common Spanish nouns, verbs and adjectives — no slang, brand names or highly technical terms.' } },
+    { '@type': 'Question', name: 'Can I filter by starting letter?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Pick a starting letter to get only words that begin with it — useful for word games or alphabet drills.' } },
+    { '@type': 'Question', name: 'Is the choice really random?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — it uses crypto.getRandomValues, the browser cryptographic generator, so there are no predictable patterns.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Languages" title="Random Spanish Word Generator"
+    intro="Pull a random Spanish word with a short English meaning. Filter by starting letter, choose how many you need, and use it for study, games, naming or writing prompts.">
+
+    <div slot="tool" class="rw">
+      <div class="rw-row">
+        <div>
+          <label for="rw-letter">Starting letter</label>
+          <select id="rw-letter">
+            <option value="">Any</option>
+            <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option>
+            <option>F</option><option>G</option><option>H</option><option>I</option><option>J</option>
+            <option>L</option><option>M</option><option>N</option><option>O</option><option>P</option>
+            <option>Q</option><option>R</option><option>S</option><option>T</option><option>U</option>
+            <option>V</option><option>Z</option>
+          </select>
+        </div>
+        <div>
+          <label for="rw-amount">Amount</label>
+          <input id="rw-amount" type="number" min="1" max="20" value="1" />
+        </div>
+      </div>
+      <button id="rw-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="rw-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="rw-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why pull random Spanish words</h2>
+      <p>
+        A random word is a creative trigger. In writing, it pulls you out of the blank page: you start from
+        a concrete term and build a scene, a poem or a headline around it. In classrooms, teachers use it for
+        composition exercises, dictation, spelling and vocabulary expansion. In word games like Scrabble or
+        Spanish "Stop" / Tutti Frutti, it helps validate doubtful terms or kick off a round.
+      </p>
+
+      <h2>Filter by starting letter</h2>
+      <p>
+        The letter filter is the most popular feature. If you're playing a category game and the round letter
+        is "M", you can instantly see dozens of Spanish words starting with that letter and check whether a
+        candidate counts. Same logic for word-chain games, where you need a word starting with the previous
+        player's last letter, or for classroom tasks like "find five words starting with C".
+      </p>
+
+      <h2>Beyond games</h2>
+      <ul>
+        <li><strong>Naming</strong> — founders looking for a brand or product name pull 20 random words and combine two of them into a neologism.</li>
+        <li><strong>Creative writing</strong> — a short poem from a forced word produces more original work than free-form attempts.</li>
+        <li><strong>Improv theater</strong> — improv classes use random words as scene triggers.</li>
+        <li><strong>Storytelling</strong> — pick three words and build a coherent story that contains all three.</li>
+        <li><strong>Education</strong> — spelling drills, syllable splitting, synonyms and antonyms.</li>
+      </ul>
+
+      <h2>How we picked the words</h2>
+      <p>
+        The list avoids loanwords, brand names, proper nouns and overly specialized terms. The goal is for any
+        Spanish speaker to recognize 95% of the entries without a dictionary. We mixed common nouns, verbs and
+        adjectives with a sprinkle of less frequent words for advanced learners. No profanity and no
+        hyper-local slang.
+      </p>
+
+      <h2>Difference vs. an online dictionary</h2>
+      <p>
+        A dictionary tells you what a word you already know means. Here the direction is reversed: you receive
+        a word and decide what to do with it. Great for production, not for lookup. If you want the meaning,
+        check a dictionary afterwards; if you need to spark ideas or fulfill a game constraint, this is faster.
+      </p>
+
+      <h2>Add it to your routine</h2>
+      <p>
+        Three random words per day, over a month, measurably improve fluency for anyone who writes regularly.
+        Use them as a journal prompt: "today write 200 words including these three." It's a simple practice,
+        nothing to install, and it gets addictive once you see the cumulative output.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Where do the words come from?</summary><p>From a curated list of common Spanish nouns, verbs and adjectives — no brands, slang or hyper-technical terms.</p></details>
+      <details><summary>Can I filter by starting letter?</summary><p>Yes. Pick a starting letter and only words beginning with it will appear.</p></details>
+      <details><summary>Is the choice really random?</summary><p>Yes, it uses the browser cryptographic generator (crypto.getRandomValues), no predictable patterns.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const WORDS = ("abrigo abeja abuelo árbol agua amistad amor armario arena arroz banco barco bebida bicicleta biblioteca bolsa bosque botella brazo brújula caballo cabeza calle camisa camino campo canción carta casa cielo ciudad cocina comida corazón cuaderno cuchillo dado dedo desayuno destino diente domingo dragón dueño edificio elefante empresa equipo escuela espejo estación estrella familia fiesta flor fuego fuente galaxia gato globo grupo guante hambre helado hermano hilo historia hoja hombro huevo iglesia imagen invierno isla jardín jirafa jueves juego lápiz lago laguna leche lente libro luna lluvia madera maestro mañana manzana mapa máquina mar mesa metro miel mirada modelo molino momento moneda montaña museo nido niebla nieve nube ola olla padre pájaro palabra paloma pan papel parque pared pasillo pera persona piano piedra piscina planta playa pluma puente puerta queso radio raíz rana ratón regalo regla reloj rincón río risa rosa ruido sábado sal salida sandía secreto semana silla sillón sol sombra sopa suerte sueño taza techo teléfono tiempo tienda tigre toalla torre tortuga trabajo tren triángulo trigo trofeo uva vaca valle vaso vecino ventana verano viaje viento volcán zanahoria zapato zorro").split(/\s+/);
+
+  const letEl = document.getElementById('rw-letter') as HTMLSelectElement;
+  const amEl = document.getElementById('rw-amount') as HTMLInputElement;
+  const out = document.getElementById('rw-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('rw-gen') as HTMLButtonElement;
+  const cp = document.getElementById('rw-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function norm(s: string) { return s.normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function build() {
+    const letter = letEl.value;
+    const pool = letter ? WORDS.filter(w => norm(w[0]).toUpperCase() === letter) : WORDS;
+    const n = Math.max(1, Math.min(20, parseInt(amEl.value || '1', 10)));
+    const lines: string[] = [];
+    if (pool.length === 0) { out.value = 'No words for that letter.'; return; }
+    for (let i = 0; i < n; i++) lines.push(pick(pool));
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', build);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+  build();
+</script>

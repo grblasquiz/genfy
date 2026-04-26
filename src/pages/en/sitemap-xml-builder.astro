@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Sitemap.xml Builder | Genfy';
+const description = 'Build a sitemap.xml from a list of URLs. Includes lastmod and priorities. Ready for Google Search Console.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Do I need a sitemap?', acceptedAnswer: { '@type': 'Answer', text: 'For small sites, not strictly required: Google finds everything by following links. For large sites, orphan pages or many URLs, yes it helps a lot.' } },
+    { '@type': 'Question', name: 'How many URLs can I have?', acceptedAnswer: { '@type': 'Answer', text: 'Up to 50,000 URLs per sitemap or 50 MB uncompressed. Beyond that, split into multiple sitemaps and create a sitemap index.' } },
+    { '@type': 'Question', name: 'Where do I upload it?', acceptedAnswer: { '@type': 'Answer', text: 'Ideally at the root: yoursite.com/sitemap.xml. Then submit it in Google Search Console and reference it from robots.txt.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design / Diseño" title="Sitemap.xml Builder"
+    intro="Paste your URLs, set lastmod and priority. Download a valid sitemap.xml ready to submit to Search Console.">
+
+    <div slot="tool" class="sm">
+      <label for="sm-urls">URLs (one per line)</label>
+      <textarea id="sm-urls" rows="6">https://mycompany.com/&#10;https://mycompany.com/blog/&#10;https://mycompany.com/contact/</textarea>
+
+      <div class="sm-grid">
+        <div>
+          <label for="sm-lastmod">Lastmod (YYYY-MM-DD)</label>
+          <input id="sm-lastmod" type="date" />
+        </div>
+        <div>
+          <label for="sm-priority">Priority</label>
+          <input id="sm-priority" type="number" min="0" max="1" step="0.1" value="0.8" />
+        </div>
+        <div>
+          <label for="sm-freq">Frequency</label>
+          <select id="sm-freq">
+            <option>always</option><option>hourly</option><option>daily</option>
+            <option selected>weekly</option><option>monthly</option><option>yearly</option><option>never</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sm-actions">
+        <button id="sm-gen" class="btn btn-primary" type="button">Generate</button>
+        <button id="sm-cp" class="btn btn-ghost" type="button">Copy</button>
+        <button id="sm-dl" class="btn btn-ghost" type="button">Download XML</button>
+      </div>
+
+      <pre><code id="sm-out"></code></pre>
+    </div>
+
+    <div slot="content">
+      <h2>What a sitemap is</h2>
+      <p>A sitemap is an XML file that lists all the important URLs of your site. It works as an index you hand to Google and other engines so they find your pages quickly, without depending solely on internal links. It is especially useful for large sites, blogs with old posts, or pages that are not well interconnected.</p>
+
+      <h2>Basic structure</h2>
+      <p>Each entry is a &lt;url&gt; with four optional fields:</p>
+      <ul>
+        <li><strong>loc</strong>: absolute URL (required).</li>
+        <li><strong>lastmod</strong>: last modification date in ISO format (YYYY-MM-DD).</li>
+        <li><strong>changefreq</strong>: how often it changes (daily, weekly, monthly).</li>
+        <li><strong>priority</strong>: relative importance from 0.0 to 1.0.</li>
+      </ul>
+      <p>In practice Google ignores changefreq and priority. It does use lastmod to prioritize crawling, so keep that updated.</p>
+
+      <h2>When you need a sitemap</h2>
+      <ul>
+        <li><strong>Large sites</strong>: hundreds or thousands of URLs. Without a sitemap, Google may take a while to discover all of them.</li>
+        <li><strong>Orphan pages</strong>: URLs not linked from the menu or home.</li>
+        <li><strong>New sites</strong>: with low authority and few external links.</li>
+        <li><strong>Multimedia content</strong>: videos or images you want indexed.</li>
+      </ul>
+
+      <h2>When you don't</h2>
+      <p>Small sites (under 50 pages) that are well interconnected, with a clear menu and internal links, are usually fine without a sitemap. Google follows links like a spider and discovers everything. A sitemap is extra help, not magic.</p>
+
+      <h2>Technical limits</h2>
+      <ul>
+        <li><strong>50,000 URLs</strong> per sitemap.</li>
+        <li><strong>50 MB</strong> uncompressed.</li>
+        <li><strong>UTF-8</strong> required.</li>
+        <li><strong>Absolute URLs</strong> with protocol (https://).</li>
+      </ul>
+      <p>If you exceed these limits, split into multiple sitemaps and create a "sitemap index" that references them. It is an XML that lists other sitemaps instead of URLs.</p>
+
+      <h2>How to register it</h2>
+      <p>Three steps: upload sitemap.xml to the root, add Sitemap: https://yoursite.com/sitemap.xml to your robots.txt, and submit it in Google Search Console. Then monitor the coverage report to see which URLs were indexed and which had issues.</p>
+
+      <h2>Maintenance</h2>
+      <p>Modern sitemaps are generated automatically. If you use a CMS or framework (WordPress, Astro, Next.js), there are plugins or configs that regenerate the sitemap whenever you publish. Maintaining a sitemap by hand is doable for small sites but does not scale.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Do I need a sitemap?</summary><p>For small sites, not critical. For large sites or those with orphan pages, yes it helps a lot.</p></details>
+      <details><summary>How many URLs can I have?</summary><p>Up to 50,000 or 50 MB. Beyond that, split into multiple sitemaps and create a sitemap index.</p></details>
+      <details><summary>Where do I upload it?</summary><p>At the root: yoursite.com/sitemap.xml. Then register it in Search Console and reference from robots.txt.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .sm-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1rem 0; }
+  .sm-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+  @media (max-width: 600px) { .sm-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const urls = document.getElementById('sm-urls') as HTMLTextAreaElement;
+  const lm = document.getElementById('sm-lastmod') as HTMLInputElement;
+  const pr = document.getElementById('sm-priority') as HTMLInputElement;
+  const fr = document.getElementById('sm-freq') as HTMLSelectElement;
+  const out = document.getElementById('sm-out') as HTMLElement;
+  const gen = document.getElementById('sm-gen') as HTMLButtonElement;
+  const cp = document.getElementById('sm-cp') as HTMLButtonElement;
+  const dl = document.getElementById('sm-dl') as HTMLButtonElement;
+
+  function esc(s: string) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function render() {
+    const list = urls.value.split('\n').map(s => s.trim()).filter(Boolean);
+    const today = lm.value || new Date().toISOString().slice(0, 10);
+    const items = list.map(u => `  <url>\n    <loc>${esc(u)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${fr.value}</changefreq>\n    <priority>${pr.value}</priority>\n  </url>`).join('\n');
+    out.textContent = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${items}\n</urlset>\n`;
+  }
+  gen.addEventListener('click', render);
+  [urls, lm, pr, fr].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copied'; setTimeout(() => cp.textContent = 'Copy', 1500);
+  });
+  dl.addEventListener('click', () => {
+    const blob = new Blob([out.textContent || ''], { type: 'application/xml' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'sitemap.xml'; a.click();
+  });
+  render();
+</script>

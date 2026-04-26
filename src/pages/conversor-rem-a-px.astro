@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Conversor de rem a px | Genfy';
+const description = 'Convertí rem a píxeles usando un base font size configurable. Ideal para inspeccionar valores de un design system.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuándo necesito convertir rem a px?', acceptedAnswer: { '@type': 'Answer', text: 'Cuando lees un design system en rem y querés saber el equivalente en px para validar contra un mockup, o cuando coordinás con diseñadores que trabajan en px.' } },
+    { '@type': 'Question', name: '¿La fórmula es siempre la misma?', acceptedAnswer: { '@type': 'Answer', text: 'Sí: px = rem * base. Solo cambia la base si tu proyecto la cambió en html (típicamente 16, a veces 10).' } },
+    { '@type': 'Question', name: '¿Puedo confiar en el cálculo si el usuario cambió el zoom?', acceptedAnswer: { '@type': 'Answer', text: 'En un browser real, si el usuario aumentó el font-size base, los rem se renderizan más grandes. Pero la fórmula nominal (basada en 16px) sigue siendo correcta para un diseño.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Conversor de rem a px"
+    intro="Ingresá un valor en rem y la base. Devolvemos el equivalente en píxeles y una tabla rápida.">
+
+    <div slot="tool" class="cv">
+      <div class="cv-grid">
+        <div>
+          <label for="cv-rem">Valor en rem</label>
+          <input id="cv-rem" type="number" step="0.125" value="1.5" />
+        </div>
+        <div>
+          <label for="cv-base">Base (px)</label>
+          <input id="cv-base" type="number" value="16" />
+        </div>
+      </div>
+
+      <div class="cv-result" id="cv-result"></div>
+
+      <div class="cv-actions">
+        <button id="cv-cp" class="btn btn-ghost" type="button">Copiar valor</button>
+      </div>
+
+      <h3>Tabla rápida</h3>
+      <table class="cv-table"><thead><tr><th>rem</th><th>px</th></tr></thead><tbody id="cv-table"></tbody></table>
+    </div>
+
+    <div slot="content">
+      <h2>Cuándo convertir rem a px</h2>
+      <p>El caso más común: estás revisando un design system o un componente que usa rem y necesitás saber el tamaño físico equivalente para validar contra un mockup en Figma. Diseñadores y desarrolladores suelen trabajar en sistemas de unidades distintas, y traducir entre ellos es parte del workflow diario.</p>
+
+      <h2>La fórmula</h2>
+      <pre><code>px = rem * base</code></pre>
+      <p>Con la base default de 16: 1rem = 16px, 1.5rem = 24px, 2rem = 32px. Si tu proyecto redefine el font-size del root, ajustá la base.</p>
+
+      <h2>Cómo verificarlo en el navegador</h2>
+      <p>Abrí DevTools, inspeccioná un elemento, y mirá el panel de Computed. Ahí los valores aparecen calculados en px reales, sin importar las unidades originales del CSS. Es la fuente de verdad cuando querés validar la conversión.</p>
+
+      <h2>Cuándo NO querés convertir</h2>
+      <p>Si trabajás con un design system definido en rem, mantenelo en rem. La conversión a px es para mockups o validación, no para escribir código. Convertir rem a px en producción rompe la propiedad clave del rem: que escala con preferencias del usuario.</p>
+
+      <h2>Tabla mental para diseño</h2>
+      <ul>
+        <li><strong>0.5rem = 8px</strong>: micro-spacing.</li>
+        <li><strong>0.75rem = 12px</strong>: caption, ayudas.</li>
+        <li><strong>1rem = 16px</strong>: body text.</li>
+        <li><strong>1.25rem = 20px</strong>: subtítulo o lead.</li>
+        <li><strong>1.5rem = 24px</strong>: h3.</li>
+        <li><strong>2rem = 32px</strong>: h2.</li>
+        <li><strong>3rem = 48px</strong>: h1 mediano.</li>
+        <li><strong>4rem = 64px</strong>: hero.</li>
+      </ul>
+
+      <h2>Notas para diseñadores</h2>
+      <p>Si trabajás en Figma con un design system, podés crear una grilla de 4 u 8 píxeles y trabajar siempre en múltiplos. Eso traduce limpio a rem (4px = 0.25rem, 8px = 0.5rem) y mantiene consistencia visual. Los sistemas de tipografía con escala 1.125, 1.25 o golden ratio (1.618) producen jerarquías equilibradas y se traducen sin redondeos raros.</p>
+
+      <h2>Errores comunes</h2>
+      <ul>
+        <li><strong>Confundir base</strong>: si el proyecto usa 62.5% trick, la base es 10px no 16.</li>
+        <li><strong>Convertir todo a px</strong>: pierde el beneficio de accesibilidad.</li>
+        <li><strong>Asumir 16 universalmente</strong>: validá inspeccionando el computed value en DevTools.</li>
+      </ul>
+
+      <h2>Conclusión</h2>
+      <p>Convertir rem a px sirve para validar mockups y comunicarse con diseño. Para escribir código, mantené el rem.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuándo necesito convertir?</summary><p>Para validar contra mockups en px o coordinar con diseñadores que trabajan en px.</p></details>
+      <details><summary>¿Fórmula universal?</summary><p>px = rem * base. La base depende de tu proyecto (típicamente 16).</p></details>
+      <details><summary>¿Cambia con el zoom?</summary><p>Sí en runtime. Para diseño, la fórmula nominal sigue siendo correcta.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .cv-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .cv-result { padding: 1.5rem; background: var(--bg-inset); border-radius: var(--radius); font-family: var(--font-mono); font-size: 1.25rem; text-align: center; margin-bottom: 1rem; }
+  .cv-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.875rem; }
+  .cv-table th, .cv-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); text-align: left; }
+  @media (max-width: 600px) { .cv-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const rem = document.getElementById('cv-rem') as HTMLInputElement;
+  const base = document.getElementById('cv-base') as HTMLInputElement;
+  const result = document.getElementById('cv-result') as HTMLElement;
+  const table = document.getElementById('cv-table') as HTMLElement;
+  const cp = document.getElementById('cv-cp') as HTMLButtonElement;
+
+  function render() {
+    const v = +rem.value, b = +base.value || 16;
+    result.textContent = `${v}rem = ${v * b}px`;
+    const presets = [0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3, 4];
+    table.innerHTML = presets.map(p => `<tr><td>${p}rem</td><td>${(p * b)}px</td></tr>`).join('');
+  }
+  [rem, base].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    const v = +rem.value, b = +base.value || 16;
+    await navigator.clipboard.writeText(`${v * b}px`);
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar valor', 1500);
+  });
+  render();
+</script>

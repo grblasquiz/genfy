@@ -1,0 +1,137 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Twitter Card Generator | Genfy';
+const description = 'Generate Twitter Card meta tags to preview your site on X (Twitter). Summary, summary_large_image — copy with one click.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Which card type should I use?', acceptedAnswer: { '@type': 'Answer', text: 'For most cases, summary_large_image: shows a large image, ideal for articles and landing pages. summary shows a small thumbnail next to the title.' } },
+    { '@type': 'Question', name: 'Do I need @site?', acceptedAnswer: { '@type': 'Answer', text: 'Not required, but if your brand has an X account, set twitter:site so the card attributes back to you.' } },
+    { '@type': 'Question', name: 'Why is my card not showing?', acceptedAnswer: { '@type': 'Answer', text: 'Common causes: broken image, missing og:image, robots.txt blocking Twitterbot, or cache. Try pasting the URL in a test tweet.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design / Diseño" title="Twitter Card Generator"
+    intro="Build the Twitter Card meta tags so your links look great on X. Pick a type, fill the fields, copy the code.">
+
+    <div slot="tool" class="tw">
+      <div class="tw-grid">
+        <div>
+          <label for="tw-card">Type</label>
+          <select id="tw-card">
+            <option value="summary_large_image" selected>summary_large_image</option>
+            <option value="summary">summary</option>
+          </select>
+        </div>
+        <div>
+          <label for="tw-title">Title</label>
+          <input id="tw-title" type="text" value="Your title" />
+        </div>
+        <div>
+          <label for="tw-desc">Description</label>
+          <textarea id="tw-desc" rows="3">A description up to 200 characters.</textarea>
+        </div>
+        <div>
+          <label for="tw-img">Image URL</label>
+          <input id="tw-img" type="url" value="https://mycompany.com/og.png" />
+        </div>
+        <div>
+          <label for="tw-site">@site (optional)</label>
+          <input id="tw-site" type="text" value="@mycompany" />
+        </div>
+        <div>
+          <label for="tw-creator">@creator (optional)</label>
+          <input id="tw-creator" type="text" value="@author" />
+        </div>
+      </div>
+
+      <div class="tw-actions">
+        <button id="tw-gen" class="btn btn-primary" type="button">Generate</button>
+        <button id="tw-cp" class="btn btn-ghost" type="button">Copy</button>
+      </div>
+
+      <pre><code id="tw-out"></code></pre>
+    </div>
+
+    <div slot="content">
+      <h2>What is a Twitter Card</h2>
+      <p>A Twitter Card is the rich preview that shows up when someone shares a link on X (formerly Twitter). Without it, your link appears as plain text. With it, you get image, title and description — far more attention-grabbing in the feed.</p>
+
+      <h2>Card types</h2>
+      <ul>
+        <li><strong>summary</strong>: small square thumbnail next to the title. Good for sites where the image is not the focus.</li>
+        <li><strong>summary_large_image</strong>: large horizontal image above the title. Default choice for most landings and articles.</li>
+        <li><strong>player</strong>: for embedded video or audio. Requires Twitter approval.</li>
+        <li><strong>app</strong>: to promote mobile apps with a direct link to the store.</li>
+      </ul>
+
+      <h2>Image sizes</h2>
+      <p>For summary_large_image: 1200x628 pixels, 1.91:1 ratio, minimum 300x157, max 5 MB. JPG, PNG, WebP or static GIF. For summary: minimum 144x144, 1:1 ratio.</p>
+
+      <h2>How Twitter detects your card</h2>
+      <p>Twitter uses a bot called Twitterbot that fetches your URL and parses the meta tags. If your robots.txt blocks Twitterbot, no card. No card either if the server returns 4xx/5xx, if the page is too slow, or if meta tags are malformed.</p>
+
+      <h2>Open Graph as fallback</h2>
+      <p>Twitter is smart: if it does not find meta name="twitter:..." but does find meta property="og:..." (Open Graph), it uses OG as fallback. So if you already set OG properly, Twitter Card works even without specific tags. Twitter-specific tags only override OG when you want to show something different on X than on Facebook or LinkedIn.</p>
+
+      <h2>Validation and debug</h2>
+      <p>Twitter changed its historical validator, but you can test by pasting your URL in a draft tweet and checking the preview. If no card: confirm the image is publicly reachable, the HTML has the meta tags, the site returns 200, and clear cache if the image was recently changed.</p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Relative image URL</strong>: use absolute URLs (with https://), never relative paths.</li>
+        <li><strong>Image behind auth</strong>: the image must be public.</li>
+        <li><strong>Wrong type</strong>: if you do not specify summary_large_image, X falls back to summary.</li>
+        <li><strong>Cache</strong>: og:image changes can take time to propagate.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Which card type should I use?</summary><p>For most cases, summary_large_image. If your site does not benefit from a large image, use summary.</p></details>
+      <details><summary>Do I need @site?</summary><p>Not required. If your brand has an X account, set it so the card attributes correctly.</p></details>
+      <details><summary>Why is my card not showing?</summary><p>Broken image, robots blocking Twitterbot, missing og:image or cache. Try pasting the URL in a draft tweet.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tw-grid { display: grid; gap: 1rem; margin-bottom: 1rem; }
+  .tw-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+</style>
+
+<script>
+  const card = document.getElementById('tw-card') as HTMLSelectElement;
+  const title = document.getElementById('tw-title') as HTMLInputElement;
+  const desc = document.getElementById('tw-desc') as HTMLTextAreaElement;
+  const img = document.getElementById('tw-img') as HTMLInputElement;
+  const site = document.getElementById('tw-site') as HTMLInputElement;
+  const creator = document.getElementById('tw-creator') as HTMLInputElement;
+  const out = document.getElementById('tw-out') as HTMLElement;
+  const gen = document.getElementById('tw-gen') as HTMLButtonElement;
+  const cp = document.getElementById('tw-cp') as HTMLButtonElement;
+
+  function esc(s: string) { return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function render() {
+    const lines: string[] = [];
+    lines.push(`<meta name="twitter:card" content="${esc(card.value)}" />`);
+    lines.push(`<meta name="twitter:title" content="${esc(title.value)}" />`);
+    lines.push(`<meta name="twitter:description" content="${esc(desc.value)}" />`);
+    lines.push(`<meta name="twitter:image" content="${esc(img.value)}" />`);
+    if (site.value) lines.push(`<meta name="twitter:site" content="${esc(site.value)}" />`);
+    if (creator.value) lines.push(`<meta name="twitter:creator" content="${esc(creator.value)}" />`);
+    out.textContent = lines.join('\n');
+  }
+  gen.addEventListener('click', render);
+  [card, title, desc, img, site, creator].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copied'; setTimeout(() => cp.textContent = 'Copy', 1500);
+  });
+  render();
+</script>

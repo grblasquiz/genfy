@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de trama de historia gratis | Genfy';
+const description = 'Generá tramas para novela, guion o cuento corto. Combiná protagonista, conflicto y giro para obtener 10 premisas listas para desarrollar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace que una trama funcione?', acceptedAnswer: { '@type': 'Answer', text: 'Una trama funciona cuando hay un personaje con un deseo claro, un obstáculo que parece imposible y una decisión moral que cambia algo dentro del personaje al final.' } },
+    { '@type': 'Question', name: '¿Cómo paso de una premisa a una novela?', acceptedAnswer: { '@type': 'Answer', text: 'Tomá la premisa y desarrollá tres puntos de giro: detonante, crisis del medio y resolución. Recién entonces podés bosquejar capítulos.' } },
+    { '@type': 'Question', name: '¿Sirve para guion?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Las premisas generadas siguen estructura clásica de tres actos, fácil de adaptar a guion.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de trama de historia"
+    intro="Generá ideas de trama para novela, guion o cuento corto. Combiná un protagonista, un conflicto y un giro para conseguir 10 premisas listas para desarrollar.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Tema o ambiente</label>
+      <input id="bn-kw" type="text" placeholder="pueblo, oficina, viaje..." value="pueblo" />
+
+      <label for="bn-style" style="margin-top:1rem">Género</label>
+      <select id="bn-style">
+        <option value="drama">Drama familiar</option>
+        <option value="thriller">Thriller</option>
+        <option value="romance">Romance</option>
+        <option value="scifi">Ciencia ficción</option>
+        <option value="literary">Literaria / minimalista</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 10 tramas</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo construir una trama que enganche</h2>
+      <p>
+        Una trama no es lo que pasa. Es lo que el protagonista decide hacer con lo que le pasa. La
+        diferencia entre una historia que funciona y una que aburre suele estar en el verbo: si
+        tu protagonista solo "le pasan cosas", la historia es pasiva. Si tu protagonista
+        "decide", "renuncia", "miente", "vuelve" — la historia se mueve sola.
+      </p>
+      <ol>
+        <li><strong>Empezá por el deseo.</strong> ¿Qué quiere el protagonista al inicio?</li>
+        <li><strong>Definí el obstáculo.</strong> ¿Qué le impide conseguirlo? Mejor si el obstáculo más grande es interno (su propio miedo).</li>
+        <li><strong>Sumá un detonante.</strong> Un evento concreto que rompe el equilibrio del primer acto.</li>
+        <li><strong>Pensá la crisis del medio.</strong> El momento donde todo parece perdido.</li>
+        <li><strong>Resolución que cambia al personaje.</strong> No alcanza con que gane o pierda: tiene que aprender algo, aunque sea amargo.</li>
+      </ol>
+
+      <h2>Formatos clásicos de premisa</h2>
+      <ul>
+        <li><strong>"Cuando X descubre Y, debe Z antes de W"</strong>: la fórmula thriller básica. Funciona porque encierra deseo, obstáculo y reloj.</li>
+        <li><strong>"X vuelve a Y después de Z años y encuentra que…"</strong>: el regreso. Ideal para drama y literatura.</li>
+        <li><strong>"X y Y son enemigos hasta que…"</strong>: arco enemies-to-lovers o reconciliación.</li>
+        <li><strong>"En un mundo donde X, Y debe…"</strong>: la entrada clásica de ciencia ficción y fantasía.</li>
+        <li><strong>"X tiene Z días para…"</strong>: deadline, presión, escalera ascendente.</li>
+      </ul>
+
+      <h2>Errores frecuentes en una trama</h2>
+      <p>
+        El más común: tramas que se basan en coincidencias en el segundo acto. Si tu protagonista
+        avanza porque "casualmente" encuentra una pista, perdiste tensión. Otro: tramas con
+        demasiados antagonistas paralelos que diluyen el conflicto principal. Y un tercero: el
+        "deus ex machina" del final, donde una solución llega de afuera del mundo del personaje.
+        El protagonista debe resolver con sus propias herramientas, no con un milagro.
+      </p>
+
+      <h2>Después de generar: cómo desarrollar la premisa</h2>
+      <ol>
+        <li>Escribí el deseo y el miedo del protagonista en una frase cada uno.</li>
+        <li>Definí el detonante en menos de 50 palabras.</li>
+        <li>Bocetá la crisis del medio: ¿cuál es el peor escenario emocional?</li>
+        <li>Escribí el final en una frase. ¿Tu protagonista cambió?</li>
+        <li>Probá la premisa contándosela en voz alta a alguien: ¿quiere saber qué pasa?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace que una trama funcione?</summary><p>Personaje con deseo claro, obstáculo aparentemente imposible, y una decisión moral que lo cambia.</p></details>
+      <details><summary>¿Cómo paso de premisa a novela?</summary><p>Desarrollá detonante, crisis del medio y resolución. Recién entonces, capítulos.</p></details>
+      <details><summary>¿Sirve para guion?</summary><p>Sí, sigue estructura clásica de tres actos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+  .bn-item { padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.55; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const PROT = ['una arquitecta de 38 años', 'un panadero retirado', 'una estudiante de medicina', 'un ex-policía', 'una traductora freelance', 'una madre soltera', 'un periodista veterano', 'una hija que no volvió en años'];
+  const DRAMA_INC = ['recibe una carta de su madre fallecida', 'descubre que su padre tenía otra familia', 'vuelve al pueblo donde creció tras un divorcio', 'encuentra una caja de fotos en el altillo'];
+  const THRILLER_INC = ['encuentra un cuerpo en su propio jardín', 'recibe un mensaje anónimo con su dirección', 'descubre que su vecino mintió sobre su pasado', 'pierde quince minutos que no recuerda'];
+  const ROMANCE_INC = ['se reencuentra con un amor de la juventud', 'tiene que compartir oficina con quien la rechazó', 'descubre que su pareja le ocultó algo importante'];
+  const SCIFI_INC = ['recibe un correo desde su propia dirección, fechado en el futuro', 'descubre que la app de su empresa lee sueños', 'es la única persona que recuerda el lunes anterior'];
+  const LIT_INC = ['decide pasar el invierno en una casa vacía', 'empieza a llamar todos los lunes a un número que no responde', 'vuelve a un café cerrado hace diez años'];
+  const STAKE = ['antes de que sea demasiado tarde para repararlo', 'mientras la enfermedad de su madre avanza', 'mientras todos en el pueblo fingen no saber nada', 'sin que nadie más se entere'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const setting = kw.value.trim();
+    const s = style.value;
+    let INC: string[];
+    if (s === 'thriller') INC = THRILLER_INC;
+    else if (s === 'romance') INC = ROMANCE_INC;
+    else if (s === 'scifi') INC = SCIFI_INC;
+    else if (s === 'literary') INC = LIT_INC;
+    else INC = DRAMA_INC;
+    out.innerHTML = '';
+    const seen = new Set<string>();
+    let attempts = 0;
+    while (seen.size < 10 && attempts < 60) {
+      attempts++;
+      const where = setting ? ` en un ${setting}` : '';
+      const plot = `${pick(PROT).charAt(0).toUpperCase() + pick(PROT).slice(1)}${where} ${pick(INC)}, y debe enfrentar la verdad ${pick(STAKE)}.`;
+      if (seen.has(plot)) continue;
+      seen.add(plot);
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = plot;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(plot); const orig = el.textContent; el.textContent = '✓ copiado'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    }
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

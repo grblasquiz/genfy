@@ -1,0 +1,141 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Story Plot Generator | Genfy';
+const description = 'Generate plots for novels, screenplays or short stories. Mix protagonist, conflict and twist to get 10 premises ready to develop.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a plot work?', acceptedAnswer: { '@type': 'Answer', text: 'A plot works when there is a character with a clear want, an obstacle that feels impossible, and a moral decision that changes something inside the character at the end.' } },
+    { '@type': 'Question', name: 'How do I move from premise to novel?', acceptedAnswer: { '@type': 'Answer', text: 'Take the premise and develop three turning points: inciting incident, midpoint crisis and resolution. Then sketch chapters.' } },
+    { '@type': 'Question', name: 'Does it work for screenplay?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — the premises follow classic three-act structure, easy to adapt.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Story Plot Generator"
+    intro="Generate plot ideas for novels, screenplays or short stories. Combine a protagonist, a conflict and a twist to get 10 premises ready to develop.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Theme or setting</label>
+      <input id="bn-kw" type="text" placeholder="town, office, road..." value="town" />
+
+      <label for="bn-style" style="margin-top:1rem">Genre</label>
+      <select id="bn-style">
+        <option value="drama">Family drama</option>
+        <option value="thriller">Thriller</option>
+        <option value="romance">Romance</option>
+        <option value="scifi">Sci-fi</option>
+        <option value="literary">Literary / minimal</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 10 plots</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to build a plot that hooks</h2>
+      <p>
+        A plot is not what happens. It's what the protagonist decides to do with what happens. The
+        difference between a story that works and one that drags is usually in the verb: if your
+        protagonist only "has things happen to them", the story is passive. If your protagonist
+        "decides", "quits", "lies", "returns" — the story moves on its own.
+      </p>
+      <ol>
+        <li><strong>Start with the want.</strong> What does the protagonist want at the beginning?</li>
+        <li><strong>Name the obstacle.</strong> What stops them? Best when the biggest obstacle is internal (their own fear).</li>
+        <li><strong>Add an inciting incident.</strong> A concrete event that breaks the act-one balance.</li>
+        <li><strong>Plan the midpoint crisis.</strong> The moment everything seems lost.</li>
+        <li><strong>Resolution that changes them.</strong> Win or lose isn't enough — they have to learn something, even if bittersweet.</li>
+      </ol>
+
+      <h2>Classic premise formats</h2>
+      <ul>
+        <li><strong>"When X discovers Y, they must Z before W"</strong>: the basic thriller formula. Works because it has want, obstacle, clock.</li>
+        <li><strong>"X returns to Y after Z years and finds that..."</strong>: the homecoming. Great for drama and literary fiction.</li>
+        <li><strong>"X and Y are enemies until..."</strong>: enemies-to-lovers or reconciliation arc.</li>
+        <li><strong>"In a world where X, Y must..."</strong>: classic sci-fi/fantasy entry.</li>
+        <li><strong>"X has Z days to..."</strong>: deadline, pressure, rising stakes.</li>
+      </ul>
+
+      <h2>Common plot mistakes</h2>
+      <p>
+        Most common: plots that hinge on coincidences in act two. If your protagonist advances
+        because they "happen to find" a clue, you've lost tension. Another: too many parallel
+        antagonists that dilute the main conflict. And a third: the act-three deus ex machina,
+        where the solution arrives from outside the character's world. The protagonist has to
+        resolve with their own tools, not a miracle.
+      </p>
+
+      <h2>After generating: how to develop the premise</h2>
+      <ol>
+        <li>Write the protagonist's want and fear in one sentence each.</li>
+        <li>Define the inciting incident in under 50 words.</li>
+        <li>Sketch the midpoint crisis: what's the worst emotional scenario?</li>
+        <li>Write the ending in one sentence. Did the protagonist change?</li>
+        <li>Pitch the premise out loud to someone: do they want to know what happens?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a plot work?</summary><p>Character with a clear want, an obstacle that feels impossible, a moral decision that changes them.</p></details>
+      <details><summary>From premise to novel?</summary><p>Develop inciting incident, midpoint and resolution first.</p></details>
+      <details><summary>Works for screenplay?</summary><p>Yes, follows three-act structure.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+  .bn-item { padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.55; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const PROT = ['a 38-year-old architect', 'a retired baker', 'a medical student', 'a former police officer', 'a freelance translator', 'a single mother', 'a veteran journalist', 'a daughter who has not visited in years'];
+  const DRAMA_INC = ["receives a letter from her late mother", 'discovers her father had another family', 'returns to the town where she grew up after a divorce', 'finds a box of photos in the attic'];
+  const THRILLER_INC = ['finds a body in her own backyard', 'receives an anonymous text with her address', 'discovers her neighbor lied about his past', 'loses fifteen minutes she cannot account for'];
+  const ROMANCE_INC = ['runs into a college flame', 'has to share an office with the person who rejected her', 'discovers her partner has been hiding something important'];
+  const SCIFI_INC = ['receives an email from her own address dated next year', 'discovers her company app reads dreams', 'is the only person who remembers last Monday'];
+  const LIT_INC = ['decides to spend the winter in an empty house', 'starts calling every Monday a number that never picks up', 'returns to a cafe that closed ten years ago'];
+  const STAKE = ['before it is too late to repair it', "while her mother's illness gets worse", 'while everyone in town pretends not to know', 'without anyone else finding out'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const setting = kw.value.trim();
+    const s = style.value;
+    let INC: string[];
+    if (s === 'thriller') INC = THRILLER_INC;
+    else if (s === 'romance') INC = ROMANCE_INC;
+    else if (s === 'scifi') INC = SCIFI_INC;
+    else if (s === 'literary') INC = LIT_INC;
+    else INC = DRAMA_INC;
+    out.innerHTML = '';
+    const seen = new Set<string>();
+    let attempts = 0;
+    while (seen.size < 10 && attempts < 60) {
+      attempts++;
+      const where = setting ? ` in a ${setting}` : '';
+      const plot = `${pick(PROT).charAt(0).toUpperCase() + pick(PROT).slice(1)}${where} ${pick(INC)}, and must face the truth ${pick(STAKE)}.`;
+      if (seen.has(plot)) continue;
+      seen.add(plot);
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = plot;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(plot); const orig = el.textContent; el.textContent = '✓ copied'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    }
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

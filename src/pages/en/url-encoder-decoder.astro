@@ -1,0 +1,119 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'URL Encoder / Decoder — Free Tool | Genfy';
+const description = 'Encode or decode URLs and parameters with percent-encoding (RFC 3986). Useful for query strings, APIs and links that break.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is percent-encoding?', acceptedAnswer: { '@type': 'Answer', text: 'A scheme defined in RFC 3986 that replaces unsafe characters in URLs with their hexadecimal representation prefixed by %. For example, a space encodes to %20.' } },
+    { '@type': 'Question', name: 'When does a URL break?', acceptedAnswer: { '@type': 'Answer', text: 'When it contains reserved characters left unencoded: spaces, &, ?, =, # inside a parameter, or non-ASCII characters like accents and ñ. The server or browser may cut the URL at the first problem character.' } },
+    { '@type': 'Question', name: 'encodeURI or encodeURIComponent?', acceptedAnswer: { '@type': 'Answer', text: 'encodeURI encodes a complete URL preserving structure (it leaves / ? & = alone). encodeURIComponent encodes a value going inside a parameter (it encodes everything). For query strings you almost always want encodeURIComponent.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Web" title="URL Encoder / Decoder"
+    intro="Convert special characters into their percent-encoded equivalents for safe use in URLs, query strings or APIs.">
+
+    <div slot="tool">
+      <div class="ue-modes">
+        <label class="chk"><input type="radio" name="ue-mode" value="encode" checked /> Encode</label>
+        <label class="chk"><input type="radio" name="ue-mode" value="decode" /> Decode</label>
+      </div>
+      <div class="ue-modes">
+        <label class="chk"><input type="radio" name="ue-fn" value="component" checked /> encodeURIComponent</label>
+        <label class="chk"><input type="radio" name="ue-fn" value="uri" /> encodeURI</label>
+      </div>
+      <label for="ue-in">Input</label>
+      <textarea id="ue-in" rows="5" style="font-family: var(--font-mono);">https://genfy.net/search?q=hello world&lang=en</textarea>
+      <button id="ue-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Convert</button>
+      <button id="ue-copy" class="btn btn-ghost" type="button">Copy</button>
+      <label for="ue-out" style="margin-top:1rem;">Output</label>
+      <textarea id="ue-out" rows="5" readonly style="font-family: var(--font-mono);"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What percent-encoding is and why it exists</h2>
+      <p>
+        URLs were born in 1994 with a restricted alphabet: ASCII letters, digits, and a handful of special characters that carry structural meaning (<code>/</code>, <code>?</code>, <code>&amp;</code>, <code>=</code>, <code>#</code>). Anything else — a space, an accented letter, an emoji — must be represented some other way so browser and server transmit it without ambiguity. That mechanism is percent-encoding (a.k.a. URL encoding), defined in RFC 3986.
+      </p>
+
+      <h2>The basic rule</h2>
+      <p>
+        Each unsafe byte in a URL is replaced by <code>%</code> followed by the two hex digits representing that byte. A space (byte 0x20) becomes <code>%20</code>. A <code>ñ</code> in UTF-8 is two bytes (0xC3 0xB1) and encodes to <code>%C3%B1</code>. Encoding operates on bytes, not characters, so the result depends on the encoding (UTF-8 has been the de facto standard for 20 years).
+      </p>
+
+      <h2>encodeURI vs encodeURIComponent</h2>
+      <ul>
+        <li><strong>encodeURI:</strong> respects URL structure. It does not encode <code>/ ? &amp; = # :</code>. Use when you have a complete URL with special characters in the path that should still be navigable.</li>
+        <li><strong>encodeURIComponent:</strong> encodes aggressively. It also encodes <code>/ ? &amp; = # :</code>. Use for values going inside a parameter (after <code>=</code>) that must not be confused with structure.</li>
+      </ul>
+
+      <h2>Typical scenarios</h2>
+      <ul>
+        <li><strong>Building URLs dynamically.</strong> If you concatenate <code>?q=</code> with a user search, that search must go through encodeURIComponent. If the user typed "coffee &amp; cake", an unencoded <code>&amp;</code> looks like a new parameter to the browser.</li>
+        <li><strong>Calling REST APIs.</strong> Same idea: any value traveling in a query string must be encoded.</li>
+        <li><strong>Decoding what you receive.</strong> When you read <code>req.query</code> in a backend, frameworks usually decode for you, but if you handle raw URLs you must decode manually.</li>
+        <li><strong>UTM and tracking.</strong> If a campaign uses accents in the medium or campaign field, encode them; otherwise analytics tools lose them.</li>
+      </ul>
+
+      <h2>Reserved characters</h2>
+      <p>
+        RFC 3986 defines two groups. <em>Reserved</em> characters carry structural meaning: <code>: / ? # [ ] @ ! $ &amp; ' ( ) * + , ; =</code>. <em>Unreserved</em> characters are always safe: letters, digits, <code>- _ . ~</code>. Everything else must be encoded. encodeURIComponent encodes all reserved; encodeURI leaves the structurally meaningful ones alone.
+      </p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Double-encoding.</strong> <code>%20</code> becomes <code>%2520</code>. If the server decodes only once, you end up with literal <code>%20</code> in your data.</li>
+        <li><strong>Forgetting + in query strings.</strong> Some systems encode space as <code>+</code> (legacy of application/x-www-form-urlencoded). Know which one you're dealing with.</li>
+        <li><strong>Encoding domains.</strong> Hostnames with non-ASCII characters use IDN (punycode), not percent-encoding. <code>café.com</code> becomes <code>xn--caf-dma.com</code>, not <code>caf%C3%A9.com</code>.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is percent-encoding?</summary><p>An RFC 3986 scheme that replaces unsafe characters with % followed by two hex digits. A space encodes to %20.</p></details>
+      <details><summary>When does a URL break?</summary><p>When it contains unencoded reserved characters (spaces, &amp;, ?, =, #) or non-ASCII characters where they're not allowed.</p></details>
+      <details><summary>encodeURI or encodeURIComponent?</summary><p>encodeURI for whole URLs. encodeURIComponent for parameter values. Almost always encodeURIComponent for query strings.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ue-modes { display: flex; gap: 1.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+  .chk { display: flex; align-items: center; gap: 0.5rem; margin: 0; }
+  .chk input { width: auto; }
+</style>
+
+<script>
+  const inEl = document.getElementById('ue-in') as HTMLTextAreaElement;
+  const out = document.getElementById('ue-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('ue-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('ue-copy') as HTMLButtonElement;
+
+  function run() {
+    const mode = (document.querySelector('input[name="ue-mode"]:checked') as HTMLInputElement).value;
+    const fn = (document.querySelector('input[name="ue-fn"]:checked') as HTMLInputElement).value;
+    try {
+      if (mode === 'encode') {
+        out.value = fn === 'component' ? encodeURIComponent(inEl.value) : encodeURI(inEl.value);
+      } else {
+        out.value = fn === 'component' ? decodeURIComponent(inEl.value) : decodeURI(inEl.value);
+      }
+    } catch (e) {
+      out.value = 'Error: invalid sequence';
+    }
+  }
+  inEl.addEventListener('input', run);
+  document.querySelectorAll('input[name="ue-mode"], input[name="ue-fn"]').forEach(el => el.addEventListener('change', run));
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

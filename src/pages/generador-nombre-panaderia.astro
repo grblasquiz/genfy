@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de panadería gratis | Genfy';
+const description = 'Generá nombres únicos para tu panadería. Combiná ingrediente, técnica o concepto y obtené 20 ideas listas para vidriera, dominio y redes.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Conviene un nombre tradicional o moderno?', acceptedAnswer: { '@type': 'Answer', text: 'Depende del público: una panadería de barrio se beneficia de nombres cálidos y familiares; una boulangerie boutique se ve mejor con nombres modernos o de oficio.' } },
+    { '@type': 'Question', name: '¿Cómo evito confusión con otras panaderías?', acceptedAnswer: { '@type': 'Answer', text: 'Buscá en Google Maps en 5 km, en Instagram con el handle exacto y en el registro de marcas local antes de imprimir bolsas o vitrinas.' } },
+    { '@type': 'Question', name: '¿Conviene incluir "Panadería" o "Bakery" en el nombre?', acceptedAnswer: { '@type': 'Answer', text: 'No es obligatorio si la fachada lo deja claro, pero ayuda al SEO local en Google Business Profile.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Gastronomía" title="Generador de nombre de panadería"
+    intro="Combiná harina, técnica o barrio y obtené 20 ideas para tu panadería de masa madre, croissantería o panadería de barrio. Listas para validar dominio.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabras clave (ingrediente, técnica, barrio)</label>
+      <input id="bn-kw" type="text" placeholder="trigo, masa madre, horno..." value="trigo, miga" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="warm">Cálido tradicional (La, El, Casa)</option>
+        <option value="craft">Oficio (Masa, Horno, Levadura)</option>
+        <option value="french">Francés / boutique</option>
+        <option value="single">Una palabra (Miga, Corteza)</option>
+        <option value="local">Local + Bakery / Panadería</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de una panadería</h2>
+      <p>
+        El nombre de una panadería compite contra dos cosas: el aroma del local en sí (que vende
+        más que cualquier campaña) y la tradición de la categoría. Tu nombre tiene que respetar
+        el oficio sin caer en cliché.
+      </p>
+      <ol>
+        <li><strong>Cálido o de oficio.</strong> "La Miga", "Horno", "Levadura" funcionan; "Bread Co" suena impersonal.</li>
+        <li><strong>Compatible con vitrina.</strong> Tipografías serif funcionan muy bien en panaderías de barrio.</li>
+        <li><strong>Imprimible en bolsas de papel kraft.</strong> Una sola tinta, alto contraste.</li>
+        <li><strong>Buscable en Maps.</strong> Único en tu radio de 5 km.</li>
+        <li><strong>Handle de IG corto.</strong> Para postear el pan del día sin pelearte con el largo.</li>
+      </ol>
+
+      <h2>Estilos clásicos para panaderías</h2>
+      <ul>
+        <li><strong>Cálido tradicional:</strong> "La Miga", "El Horno de Mamá", "Casa Lola". Comunica oficio familiar.</li>
+        <li><strong>Oficio:</strong> "Masa Madre", "Levadura", "Horno 22". Para boutiques de pan artesanal.</li>
+        <li><strong>Francés / boutique:</strong> nombres con resonancia francesa funcionan en croissanterías y boulangeries premium, sin caer en estereotipo.</li>
+        <li><strong>Una palabra:</strong> "Miga", "Corteza", "Greña". Memorable, fácil para handle.</li>
+        <li><strong>Local + Bakery:</strong> "Palermo Bakery", "Boedo Pan". SEO local fuerte.</li>
+      </ul>
+
+      <h2>Errores que evitar</h2>
+      <p>
+        El error más común es elegir un nombre demasiado largo: "La Verdadera Panadería
+        Tradicional Argentina" no entra en el cartel ni en el handle. El segundo es usar
+        términos saturados: "Pan Artesanal", "Pan de Campo" o "Boulangerie Tradicionnelle"
+        compiten contra cientos. El tercero es usar caracteres acentuados que rompen URLs y
+        handles.
+      </p>
+
+      <h2>Validación rápida</h2>
+      <ol>
+        <li>Google Maps en 5 km.</li>
+        <li>Instagram y TikTok con handle exacto.</li>
+        <li>.com y .com.ar / .es en Namecheap o Cloudflare.</li>
+        <li>Registro de marcas (INPI, USPTO, EUIPO).</li>
+        <li>Imprimir en bolsa de prueba: ¿se lee a 5 metros?</li>
+        <li>Decirlo a 5 vecinos: ¿lo entienden y lo escriben bien?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Tradicional o moderno?</summary><p>Depende del público y la zona. Un barrio familiar se beneficia de cálido; una boutique premium de moderno o francés.</p></details>
+      <details><summary>¿Cómo evito confusión?</summary><p>Google Maps, Instagram y registro de marcas local.</p></details>
+      <details><summary>¿Incluir "Panadería" en el nombre?</summary><p>No obligatorio. Si la fachada lo deja claro, podés ahorrar caracteres para el handle.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const WARM = ['La Miga', 'El Horno', 'Casa', 'La Greña', 'El Trigal', 'La Vecina', 'El Almacén', 'La Mesa', 'El Patio', 'La Costra'];
+  const CRAFT = ['Masa Madre', 'Levadura', 'Horno 22', 'Hojaldre', 'Trigo', 'Greña', 'Cobertura', 'Vapor', 'Cocción', 'Reposo'];
+  const FRENCH = ['Petit Four', 'Petit Pain', 'Atelier', 'Maison', 'Boulange', 'Levain', 'Beurre', 'Demi'];
+  const SINGLE = ['Miga', 'Corteza', 'Greña', 'Hojaldre', 'Espiga', 'Almendra', 'Trigo', 'Pan', 'Levadura', 'Horno'];
+  const LOCAL = ['Palermo', 'Boedo', 'Recoleta', 'Brera', 'Mission', 'Soho', 'Capitol', 'Flores', 'Centro', 'Chacarita'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Pan';
+      let name = '';
+      if (s === 'warm') name = pick(WARM) + (Math.random() > 0.5 ? ' de ' + cap(w) : '');
+      else if (s === 'craft') name = pick(CRAFT);
+      else if (s === 'french') name = pick(FRENCH) + ' ' + cap(w);
+      else if (s === 'single') name = pick(SINGLE);
+      else if (s === 'local') name = pick(LOCAL) + ' Panadería';
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

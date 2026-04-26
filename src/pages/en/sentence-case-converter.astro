@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Sentence case Converter | Genfy';
+const description = 'Convert text to Sentence case: capitalize only the first letter of each sentence. Perfect for modern UI, conversational copy and clean blog headings.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is Sentence case?', acceptedAnswer: { '@type': 'Answer', text: 'A capitalization style where only the first letter of each sentence is uppercase, plus proper nouns. Common in modern UI and conversational copy.' } },
+    { '@type': 'Question', name: 'Why convert from Title Case to Sentence case?', acceptedAnswer: { '@type': 'Answer', text: 'For modern apps, conversational tone, blog posts that aim to feel less formal and more readable.' } },
+    { '@type': 'Question', name: 'Does it preserve proper nouns?', acceptedAnswer: { '@type': 'Answer', text: 'It cannot detect proper nouns automatically. After conversion, review the result and re-capitalize brand names, places and acronyms.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text" title="Sentence case Converter"
+    intro="Convert any text to Sentence case (only first letter of each sentence). Built for modern UI, blog headings, transactional emails and conversational copy.">
+
+    <div slot="tool">
+      <label for="sc-in">Text</label>
+      <textarea id="sc-in" rows="6" placeholder="Paste your text here..." style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div style="margin-top:0.75rem;">
+        <button id="sc-go" class="btn btn-primary" type="button">Convert</button>
+        <button id="sc-copy" class="btn btn-ghost" type="button">Copy result</button>
+      </div>
+      <label for="sc-out" style="margin-top:1rem;">Result</label>
+      <textarea id="sc-out" rows="6" readonly style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What Sentence case is</h2>
+      <p>
+        Sentence case is the natural way to write a sentence: capital on the first letter and on proper
+        nouns; everything else lowercase. It's the default for body copy and increasingly for headings in
+        modern apps and editorial sites. Even when it looks "obvious", many writers paste content with
+        Title Case habits and it ends up feeling stiff.
+      </p>
+
+      <h2>When Sentence case fits best</h2>
+      <ul>
+        <li><strong>Modern UI</strong> — Material Design, Apple HIG, Linear, Notion: all default to Sentence case in menus, buttons and headings.</li>
+        <li><strong>Casual blogs</strong> — close, conversational tone.</li>
+        <li><strong>Newsletters</strong> — subjects feel more like a friend writing than an ad.</li>
+        <li><strong>Transactional emails</strong> — clearer and warmer than Title Case.</li>
+        <li><strong>Push notifications</strong> — mobile-first apps almost always use Sentence case.</li>
+      </ul>
+
+      <h2>The problem of copying English Title Case</h2>
+      <p>
+        When you translate or migrate content into a Sentence-case style guide, you often end up with text
+        translated but capitalized like the source (Title Case). That's a style error. Running the text
+        through a Sentence case converter is one of the final steps of any professional editing pass. Same
+        thing applies to repurposing copy from international brand manuals: always review the
+        capitalization.
+      </p>
+
+      <h2>Watch out for proper nouns</h2>
+      <p>
+        An automatic converter can't tell "Apple" the brand from "apple" the fruit. After converting, reread
+        the result to restore caps on proper nouns, brand names, countries, cities and acronyms. That quick
+        review is the difference between a polished text and a sloppy one.
+      </p>
+
+      <h2>Sentence case in branding</h2>
+      <ul>
+        <li><strong>Approachable tone</strong> — startups and D2C brands tend to choose Sentence case across all comms.</li>
+        <li><strong>Modern web</strong> — SaaS products use it in navigation, dashboards and transactional emails.</li>
+        <li><strong>Productivity apps</strong> — Linear, Notion, Slack: everything in Sentence case.</li>
+        <li><strong>Mobile messaging</strong> — push notifications and in-app messages, almost always Sentence case.</li>
+      </ul>
+
+      <h2>Comparative examples</h2>
+      <p>
+        Title Case: "How To Boost Your Productivity In Ten Steps". Sentence case: "How to boost your
+        productivity in ten steps". Both communicate the same idea, but the second feels lighter and more
+        contemporary on a screen. The difference is subtle but readers process it: Sentence case signals
+        confidence and modernity.
+      </p>
+
+      <h2>Consistency is what matters</h2>
+      <p>
+        Beyond the chosen style, the critical thing is being consistent. If your blog uses Sentence case,
+        every heading must use it. If a brand uses Title Case, don't mix in. Inconsistencies show up more
+        than the specific rule you adopt. A converter helps you standardize long files in seconds.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is Sentence case?</summary><p>Capital only on the first letter of each sentence (plus proper nouns).</p></details>
+      <details><summary>Why convert from Title Case to Sentence case?</summary><p>For modern UI, conversational tone or to match a sentence-case style guide.</p></details>
+      <details><summary>Does it preserve proper nouns?</summary><p>Not automatically. Review and re-capitalize brand names and proper nouns afterwards.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const inEl = document.getElementById('sc-in') as HTMLTextAreaElement;
+  const outEl = document.getElementById('sc-out') as HTMLTextAreaElement;
+  const go = document.getElementById('sc-go') as HTMLButtonElement;
+  const cp = document.getElementById('sc-copy') as HTMLButtonElement;
+
+  function sentenceCase(str: string) {
+    const lower = str.toLowerCase();
+    return lower.replace(/(^|[.!?]\s+|\n\s*)([a-z])/g, (_, p1, p2) => p1 + p2.toUpperCase());
+  }
+
+  go.addEventListener('click', () => { outEl.value = sentenceCase(inEl.value); });
+  cp.addEventListener('click', async () => { if (!outEl.value) return; await navigator.clipboard.writeText(outEl.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

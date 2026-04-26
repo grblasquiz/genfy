@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Rapper Name Generator | Genfy';
+const description = 'Generate stage names for rap, trap or hip hop. Mix your name, an attribute and a suffix to get 20 unique aliases instantly.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do I pick a good rapper name?', acceptedAnswer: { '@type': 'Answer', text: 'Find an alias that is short, easy to chant in a battle, unique on Spotify and YouTube, and that does not clash with an established artist. Personal meaning is a plus.' } },
+    { '@type': 'Question', name: 'Should I trademark my stage name?', acceptedAnswer: { '@type': 'Answer', text: 'If you plan to release singles and build a brand, claim the social handles and file with the USPTO in your main market. SoundExchange and PROs need it too.' } },
+    { '@type': 'Question', name: 'Can I change my rapper name later?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, plenty of artists do, but you lose the connection with your fanbase and platform stats. Pick one that survives five years before dropping a single.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Rapper Name Generator"
+    intro="Generate aliases for rap, trap or hip hop in seconds. Combine your name, an attribute and a format to get 20 names ready for your first track.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Your name or seed word</label>
+      <input id="bn-kw" type="text" placeholder="Martin, Sofi, Wolf..." value="Martin" />
+
+      <label for="bn-style" style="margin-top:1rem">Format</label>
+      <select id="bn-style">
+        <option value="lil">Prefix (Lil, Big, Young)</option>
+        <option value="el">"The ___" (The Wolf)</option>
+        <option value="suffix">Last name or suffix (-G, -Z, Cash)</option>
+        <option value="single">One-word handle (Roar)</option>
+        <option value="combo">Attribute + noun (Heavy Cold)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 aliases</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick your rap alias</h2>
+      <p>
+        A rap stage name is more than a label: it's your public identity, the chant on a stage, the
+        token the algorithm attaches to every track you upload. Nailing it is hard. Changing it
+        once you have followers is twice as hard. Take the time to choose one that represents
+        what you want to say and that doesn't make you cringe at family events.
+      </p>
+      <ol>
+        <li><strong>Short and chantable.</strong> If a crowd can't shout it back at a show, you lose energy on stage.</li>
+        <li><strong>Easy to search.</strong> No weird characters or strange homophones. Type it into Spotify and see what comes up.</li>
+        <li><strong>Unique in your scene.</strong> If a known rapper in your country or region already owns the name, drop it. Confusion costs streams.</li>
+        <li><strong>Linked to something personal.</strong> An alias works better when there's a story behind it: a neighborhood nickname, a key word, a physical trait.</li>
+        <li><strong>Survives the transition.</strong> Will it still represent you at 30? If it sounds ridiculous past 25, drop it.</li>
+      </ol>
+
+      <h2>Classic rap-name styles</h2>
+      <ul>
+        <li><strong>Prefix (Lil, Big, Young, MC)</strong>: the modern trap default. Communicates fast, flexible. Thousands of "Lil ___" — pick a unique word.</li>
+        <li><strong>"The ___"</strong>: more narrative, character-driven (The Wolf, The Hawk).</li>
+        <li><strong>Last name or hard suffix</strong>: one heavy syllable at the end (-G, -Z, -Cash, -Loco).</li>
+        <li><strong>One-word handle</strong>: jackpot if you can get it free (Roar, Thunder).</li>
+        <li><strong>Attribute + noun</strong>: a full image in two words (Heavy Cold, Real Cash).</li>
+      </ul>
+
+      <h2>Mistakes that kill an alias</h2>
+      <p>
+        We've seen artists miss opportunities with too much leetspeak (numbers replacing letters),
+        copying a US rapper's exact format without translating it to a local scene, or picking an
+        alias tied to a meme that fades in six months. Another common one: profanity in the name
+        that bars you from festival posters and radio rotations.
+      </p>
+
+      <h2>After generating: the validation flow</h2>
+      <p>With your top three:</p>
+      <ol>
+        <li>Exact search on Spotify, Apple Music, YouTube and SoundCloud.</li>
+        <li>Check handles on Instagram, TikTok and X.</li>
+        <li>Google in exact quotes: any active artist with the same name?</li>
+        <li>Shout it three times in a row. If you stumble, it's wrong.</li>
+        <li>If you're going pro, file a USPTO trademark.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I pick a good rapper name?</summary><p>Short, chantable, unique in your scene, no weird characters, with personal meaning, future-proofed.</p></details>
+      <details><summary>Should I trademark my stage name?</summary><p>Yes, claim handles and file before your first big single drop.</p></details>
+      <details><summary>Can I change it later?</summary><p>You can, but you lose fanbase recognition. Pick one that survives five years.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const PREFIX = ['Lil', 'Big', 'Young', 'MC', 'King', 'Don', 'Sir'];
+  const SUFFIX = ['G', 'Z', 'Cash', 'Loco', 'King', 'Boss', 'One', 'Pro', 'Real'];
+  const NOUN = ['Wolf', 'Thunder', 'Ice', 'Crow', 'Tiger', 'Roar', 'Street', 'Cold', 'Shadow', 'Tooth', 'Claw', 'Cobra'];
+  const ADJ = ['Cold', 'Heavy', 'Real', 'Raw', 'Wild', 'Deep', 'Black', 'Clean'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : pick(NOUN);
+      let name = '';
+      if (s === 'lil') name = pick(PREFIX) + ' ' + cap(w);
+      else if (s === 'el') name = 'The ' + cap(w);
+      else if (s === 'suffix') name = cap(w) + ' ' + pick(SUFFIX);
+      else if (s === 'single') name = cap(pick(NOUN));
+      else if (s === 'combo') name = pick(ADJ) + ' ' + cap(w);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

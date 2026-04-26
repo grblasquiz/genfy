@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Eliminar líneas duplicadas online | Genfy';
+const description = 'Quitá líneas duplicadas de cualquier lista en segundos. Mantenés solo valores únicos, opcionalmente ordenados. Procesamiento local en tu navegador.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Mantiene el orden original?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Por defecto se conserva la primera aparición de cada línea. Si activás "ordenar resultado" se ordena alfabéticamente.' } },
+    { '@type': 'Question', name: '¿Distingue mayúsculas?', acceptedAnswer: { '@type': 'Answer', text: 'Por defecto sí. Se puede desactivar para considerar "Email" y "email" como duplicados.' } },
+    { '@type': 'Question', name: '¿Cuántas líneas soporta?', acceptedAnswer: { '@type': 'Answer', text: 'Decenas de miles sin problema. El procesamiento es en tu navegador, así que el límite real es la memoria del dispositivo.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto" title="Eliminar líneas duplicadas"
+    intro="Limpiá listas de emails, keywords, IDs o cualquier texto. Mantenés solo valores únicos, con opción de ordenar y mostrar conteo.">
+
+    <div slot="tool">
+      <label for="dd-in">Lista</label>
+      <textarea id="dd-in" rows="8" placeholder="Una línea por elemento…"></textarea>
+
+      <div class="dd-opts">
+        <label><input type="checkbox" id="dd-case" /> Ignorar mayúsculas</label>
+        <label><input type="checkbox" id="dd-trim" checked /> Quitar espacios</label>
+        <label><input type="checkbox" id="dd-empty" checked /> Quitar líneas vacías</label>
+        <label><input type="checkbox" id="dd-sort" /> Ordenar resultado</label>
+      </div>
+
+      <button id="dd-go" class="btn btn-primary" type="button">Quitar duplicados</button>
+      <button id="dd-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <span id="dd-stats" class="dd-stats" aria-live="polite"></span>
+
+      <label for="dd-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="dd-out" rows="8" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué necesitás un dedupe rápido</h2>
+      <p>
+        Listas de emails, keywords, IDs de pedidos, nombres de archivos: cualquier base de
+        datos manual termina con duplicados. Los problemas: mandás dos veces el mismo email,
+        comprás keywords repetidas en Google Ads, o tu reporte sobreestima el conteo. Excel y
+        Sheets pueden hacerlo, pero abrir una hoja para 200 líneas es exagerado. Pegá acá,
+        click, copiá.
+      </p>
+
+      <h2>Casos típicos</h2>
+      <ul>
+        <li><strong>Listas de emails.</strong> Antes de subir a Mailchimp, Klaviyo o tu CRM, eliminá duplicados para no quemar reputación de envío.</li>
+        <li><strong>Keywords de SEO.</strong> Cuando combinás listas de varias herramientas (Ahrefs, SEMrush, Search Console), terminás con la misma keyword tres veces.</li>
+        <li><strong>IDs únicos.</strong> Validar que un export no tenga duplicados antes de procesarlo en tu base de datos.</li>
+        <li><strong>Tags y categorías.</strong> Cuando consolidás taxonomías de varios sitios o de versiones distintas de un CMS.</li>
+        <li><strong>Logs y direcciones IP.</strong> Para análisis de tráfico, contar IPs únicas que llegaron a una página.</li>
+      </ul>
+
+      <h2>Modo "ignorar mayúsculas"</h2>
+      <p>
+        Por defecto el dedupe es exacto: <code>"juan@email.com"</code> y
+        <code>"Juan@email.com"</code> son distintos. Para emails (que son
+        case-insensitive según RFC 5321), conviene activar "ignorar mayúsculas". Para IDs
+        técnicos donde el casing importa, dejarlo apagado.
+      </p>
+
+      <h2>Trim de espacios</h2>
+      <p>
+        Una causa silenciosa de "duplicados que no parecen duplicados" son los espacios
+        sobrantes al inicio o final. <code>"Buenos Aires"</code> y <code>"Buenos Aires "</code>
+        son distintos para el algoritmo si no normalizás. Por eso "quitar espacios" está
+        activo por defecto.
+      </p>
+
+      <h2>El conteo importa</h2>
+      <p>
+        Después de procesar, mostramos cuántas líneas había antes y cuántas quedaron. Si la
+        diferencia es enorme (de 1000 a 100), probablemente la fuente del duplicado está
+        rota — quizás un export con join mal armado. Vale la pena investigar antes de seguir
+        usando esa lista en producción.
+      </p>
+
+      <h2>Privacidad de listas sensibles</h2>
+      <p>
+        Si tu lista contiene emails de clientes, IDs internos o cualquier dato confidencial,
+        este tool es seguro: nada se envía a un servidor. Todo el procesamiento es JavaScript
+        local. Igual recordá que pegar datos de clientes en cualquier herramienta web debe
+        cumplir con tu política interna y, si aplica, con normativas como GDPR.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Mantiene el orden original?</summary><p>Sí, por defecto. Hay opción para ordenar alfabéticamente.</p></details>
+      <details><summary>¿Distingue mayúsculas?</summary><p>Por defecto sí. Toggle para tratar "Email" y "email" como iguales.</p></details>
+      <details><summary>¿Cuántas líneas soporta?</summary><p>Decenas de miles. El límite es la memoria de tu navegador.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .dd-opts { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; color: var(--text-soft); }
+  .dd-opts label { display: inline-flex; gap: 0.4rem; align-items: center; margin: 0; }
+  .dd-opts input { width: auto; }
+  .dd-stats { margin-left: 1rem; color: var(--text-muted); font-size: 0.875rem; }
+</style>
+
+<script>
+  const inEl = document.getElementById('dd-in') as HTMLTextAreaElement;
+  const out = document.getElementById('dd-out') as HTMLTextAreaElement;
+  const cs = document.getElementById('dd-case') as HTMLInputElement;
+  const tr = document.getElementById('dd-trim') as HTMLInputElement;
+  const em = document.getElementById('dd-empty') as HTMLInputElement;
+  const so = document.getElementById('dd-sort') as HTMLInputElement;
+  const stats = document.getElementById('dd-stats') as HTMLSpanElement;
+  const go = document.getElementById('dd-go') as HTMLButtonElement;
+  const copy = document.getElementById('dd-copy') as HTMLButtonElement;
+
+  function run() {
+    let lines = inEl.value.split(/\r?\n/);
+    if (tr.checked) lines = lines.map(l => l.trim());
+    if (em.checked) lines = lines.filter(l => l.length > 0);
+    const before = lines.length;
+    const seen = new Set<string>();
+    const unique: string[] = [];
+    for (const l of lines) {
+      const key = cs.checked ? l.toLowerCase() : l;
+      if (!seen.has(key)) { seen.add(key); unique.push(l); }
+    }
+    if (so.checked) unique.sort((a, b) => a.localeCompare(b, 'es'));
+    out.value = unique.join('\n');
+    stats.textContent = `${before} → ${unique.length} líneas (${before - unique.length} duplicados)`;
+  }
+
+  go.addEventListener('click', run);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copy.textContent; copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = t; }, 1200);
+  });
+</script>
+</content>
+</invoke>

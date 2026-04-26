@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de álbum gratis | Genfy';
+const description = 'Generá títulos de álbum musicales en segundos. Combiná emoción, imagen poética y formato para conseguir 20 ideas listas para tu próximo disco.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo elijo el título de un álbum?', acceptedAnswer: { '@type': 'Answer', text: 'Elegí un título que resuma el clima emocional del disco en una imagen concreta. Tiene que ser pronunciable, memorable y, si es posible, único en Spotify y Apple Music para evitar confusiones.' } },
+    { '@type': 'Question', name: '¿El título tiene que ser una canción del disco?', acceptedAnswer: { '@type': 'Answer', text: 'No. Muchos discos clásicos llevan un título que no aparece en ninguna canción. Lo importante es que la palabra elegida funcione como ancla conceptual del álbum.' } },
+    { '@type': 'Question', name: '¿Cuánto debe medir un título de álbum?', acceptedAnswer: { '@type': 'Answer', text: 'De una a cinco palabras suele ser lo ideal. Más de cinco palabras se vuelve difícil de citar en prensa, redes y portadas.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de nombre de álbum"
+    intro="Generá títulos de álbum musicales en segundos. Pensado para discos indie, pop, rock, electrónica, hip hop o folk: combiná una emoción, una imagen poética y un estilo de título.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabra clave (tema central del disco)</label>
+      <input id="bn-kw" type="text" placeholder="amor, distancia, fuego..." value="distancia" />
+
+      <label for="bn-style" style="margin-top:1rem">Formato del título</label>
+      <select id="bn-style">
+        <option value="single">Una sola palabra (Vol, Hueso, Faro)</option>
+        <option value="article">"El / La ___" (La Hora Lenta)</option>
+        <option value="phrase">Frase poética (Cosas que arden)</option>
+        <option value="adj">Adjetivo + sustantivo (Cielo Roto)</option>
+        <option value="num">Con número (Habitación 7)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 títulos</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el título de tu álbum</h2>
+      <p>
+        El título de un álbum hace tres trabajos a la vez: resume el clima emocional del disco,
+        funciona como gancho de prensa y queda inscripto para siempre en la portada. La diferencia
+        entre un buen título y uno olvidable casi nunca está en la palabra: está en cómo esa
+        palabra dialoga con la imagen de tapa, la primera canción y la entrevista que vas a dar
+        repitiéndola cien veces.
+      </p>
+      <ol>
+        <li><strong>Resumí el disco en una emoción.</strong> ¿Es un disco de pérdida, de furia, de calma, de transición? Empezá por ahí.</li>
+        <li><strong>Buscá una imagen concreta.</strong> Los títulos abstractos ("Sentimientos", "Reflexiones") no quedan grabados. Una imagen sí: "Cosas que arden", "La hora lenta", "Habitación 7".</li>
+        <li><strong>Probalo en una entrevista mental.</strong> "Mi nuevo disco se llama ___". ¿Lo decís sin trabarte? ¿Te dan ganas de explicarlo?</li>
+        <li><strong>Buscá colisiones en Spotify.</strong> Si hay otro álbum con ese título, no es un bloqueo absoluto, pero los algoritmos te van a confundir.</li>
+        <li><strong>Pensá en la portada.</strong> ¿La palabra elegida soporta una imagen poderosa? "Vela" sí. "Sentimientos profundos", no.</li>
+      </ol>
+
+      <h2>Estilos de títulos que funcionan</h2>
+      <ul>
+        <li><strong>Una sola palabra</strong>: la apuesta más fuerte. Funciona si la palabra carga peso (Vol, Faro, Hueso, Vela).</li>
+        <li><strong>Con artículo definido</strong>: "La Hora Lenta", "El Final del Verano". Suena a obra concreta, definida.</li>
+        <li><strong>Frase poética</strong>: tres a cinco palabras que forman una imagen ("Cosas que arden", "Lo que queda del fuego").</li>
+        <li><strong>Adjetivo + sustantivo</strong>: "Cielo Roto", "Verano Eterno". Compacto y atmosférico.</li>
+        <li><strong>Con número o referencia</strong>: "Habitación 7", "Volumen 2". Funciona si el número significa algo dentro del concepto.</li>
+      </ul>
+
+      <h2>Errores frecuentes en títulos de álbum</h2>
+      <p>
+        El más común es elegir el título demasiado pronto: muchos artistas lo deciden cuando
+        todavía no terminaron de mezclar y, una vez completo el disco, ese nombre ya no encaja.
+        Otro clásico es usar palabras gastadas ("Renacer", "Esencia", "Despertar") que aparecen
+        en cientos de discos cada año. Y un tercero: títulos en inglés cuando el disco está en
+        español, sin un motivo claro. Si la imagen mental del título no se conecta con las
+        canciones, el álbum entero queda flojo.
+      </p>
+
+      <h2>Después de generar: cómo cerrar la decisión</h2>
+      <p>Cuando tengas tres a cinco favoritos, hacé este ejercicio:</p>
+      <ol>
+        <li>Mandalos a tres personas que ya escucharon el disco y pediles que voten su favorito.</li>
+        <li>Buscá cada uno en Spotify, Apple Music y YouTube. Verificá colisiones de álbum y de canción.</li>
+        <li>Probá cómo se ve el título escrito grande sobre la imagen de portada que tenés en mente.</li>
+        <li>Esperá 72 horas y volvé a leerlos. Casi siempre, uno destaca solo.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo elijo el título de un álbum?</summary><p>Resumí el clima emocional del disco en una imagen concreta. Pronunciable, memorable, sin colisiones obvias en Spotify.</p></details>
+      <details><summary>¿El título tiene que ser una canción del disco?</summary><p>No, muchos clásicos llevan un título que no aparece en ninguna canción. Lo importante es que ancle el concepto.</p></details>
+      <details><summary>¿Cuánto debe medir un título de álbum?</summary><p>De una a cinco palabras suele ser ideal. Más se vuelve difícil de citar.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ADJ = ['Lento', 'Roto', 'Eterno', 'Vacío', 'Hondo', 'Crudo', 'Frío', 'Tibio', 'Cierto', 'Tenue', 'Lejano', 'Suave', 'Negro', 'Blanco', 'Salvaje'];
+  const NOUN = ['Hora', 'Cielo', 'Río', 'Hueso', 'Vela', 'Faro', 'Eco', 'Sombra', 'Verano', 'Invierno', 'Cuarto', 'Camino', 'Niebla', 'Carbón', 'Reloj', 'Manada'];
+  const VERB = ['arden', 'pasan', 'duelen', 'quedan', 'vuelven', 'caen', 'crecen', 'tiemblan'];
+  const ART = ['El', 'La', 'Los', 'Las'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function num() { const i = new Uint32Array(1); crypto.getRandomValues(i); return (i[0] % 99) + 1; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : pick(NOUN);
+      let name = '';
+      if (s === 'single') name = cap(w);
+      else if (s === 'article') name = pick(ART) + ' ' + cap(w) + ' ' + pick(ADJ);
+      else if (s === 'phrase') name = 'Cosas que ' + pick(VERB);
+      else if (s === 'adj') name = pick(ADJ) + ' ' + cap(w);
+      else if (s === 'num') name = cap(w) + ' ' + num();
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

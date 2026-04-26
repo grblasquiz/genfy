@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de spa gratis | Genfy';
+const description = 'Generá nombres únicos para tu spa o centro de bienestar. Combiná concepto, sensación o servicio y obtené 20 ideas listas para vidriera y dominio.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué nombre conviene para un spa?', acceptedAnswer: { '@type': 'Answer', text: 'Algo que comunique calma, descanso y profesionalismo. Palabras como reposo, pausa, refugio o nombres con resonancia minimalista funcionan muy bien.' } },
+    { '@type': 'Question', name: '¿Cómo evito sonar como un cliché?', acceptedAnswer: { '@type': 'Answer', text: 'Evitá términos saturados como "wellness", "balance" o "armonía". Buscá metáforas concretas: agua, piedra, hilo, brote.' } },
+    { '@type': 'Question', name: '¿Cómo verifico disponibilidad?', acceptedAnswer: { '@type': 'Answer', text: 'Google Maps en 5 km, Instagram, dominio y registro de marcas local antes de invertir en señalización.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Bienestar" title="Generador de nombre de spa"
+    intro="Combiná elemento, concepto o sensación y obtené 20 ideas para tu spa, centro de masajes o lounge de bienestar. Pensado para validar dominio y handle al instante.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabras clave (concepto, sensación, elemento)</label>
+      <input id="bn-kw" type="text" placeholder="agua, pausa, piedra..." value="agua, pausa" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="single">Una palabra (Pausa, Reposo)</option>
+        <option value="elemental">Elemento + Spa (Agua Spa)</option>
+        <option value="boutique">Boutique (Atelier de Reposo)</option>
+        <option value="object">Objeto natural (Hilo, Piedra)</option>
+        <option value="local">Local + Spa</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de un spa</h2>
+      <p>
+        Un spa vende sensación más que servicio: calma, descanso, profesionalismo. El nombre
+        tiene que abrir esa sensación en menos de un segundo desde la fachada o un anuncio en
+        Instagram. Si tu candidato te hace pensar en estrés, en algo agresivo o en humor, no
+        funciona.
+      </p>
+      <ol>
+        <li><strong>Sugiere reposo, no obligación.</strong> "Reposo", "Pausa", "Refugio" funcionan; "Total Body Boost" presiona.</li>
+        <li><strong>Profesional, no informal.</strong> Tu cliente paga por confianza en el equipo y la limpieza.</li>
+        <li><strong>Vincula a un elemento concreto.</strong> Agua, piedra, hilo, brote — anclas reales, no abstracciones.</li>
+        <li><strong>Compatible con tonos suaves.</strong> Tipografía limpia sobre paleta neutra.</li>
+        <li><strong>Handle de IG corto.</strong> Donde subís treatments y testimonios.</li>
+      </ol>
+
+      <h2>Estilos que funcionan en spa</h2>
+      <ul>
+        <li><strong>Una palabra:</strong> "Pausa", "Reposo", "Quieto", "Refugio". Mood-driven, fácil de recordar.</li>
+        <li><strong>Elemento + Spa:</strong> "Agua Spa", "Piedra Spa". Concreto y profesional.</li>
+        <li><strong>Boutique:</strong> "Atelier de Reposo", "Maison Pausa". Premium sin caer en cliché.</li>
+        <li><strong>Objeto natural:</strong> "Hilo", "Piedra", "Brote", "Bruma". Anclas físicas.</li>
+        <li><strong>Local + Spa:</strong> "Palermo Spa", "Brera Spa". SEO local.</li>
+      </ul>
+
+      <h2>Lo que evitar</h2>
+      <p>
+        Evitá los términos saturados: "wellness", "armonía", "equilibrio" y "bienestar total"
+        compiten con cientos de resultados. Comunicá tu propuesta en términos prácticos
+        (relajación muscular, mejora del descanso, cuidado de la piel) y dejá las metáforas
+        para imágenes. También evitá nombres que prometan resultados médicos: cualquier
+        sugerencia de cura o tratamiento te puede meter en problemas regulatorios.
+      </p>
+
+      <h2>Validación rápida</h2>
+      <ol>
+        <li>Google Maps en 5 km.</li>
+        <li>Instagram, TikTok, Booksy o Treatwell.</li>
+        <li>Dominio en Namecheap o Cloudflare.</li>
+        <li>Registro de marcas local.</li>
+        <li>Imprimir en una toalla de prueba: ¿transmite calma?</li>
+        <li>Decirlo a 5 clientas potenciales: ¿les sugiere descanso?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué nombre conviene?</summary><p>Comunica calma, descanso y profesionalismo. Reposo, pausa, refugio funcionan.</p></details>
+      <details><summary>¿Cómo evito el cliché?</summary><p>Evitá "wellness", "armonía", "equilibrio". Buscá metáforas concretas.</p></details>
+      <details><summary>¿Cómo verifico disponibilidad?</summary><p>Google Maps, Instagram, dominio y registro de marcas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const SINGLE = ['Pausa', 'Reposo', 'Quieto', 'Refugio', 'Calma', 'Bruma', 'Sereno', 'Vapor', 'Manso', 'Linde'];
+  const ELEM = ['Agua', 'Piedra', 'Hilo', 'Brote', 'Niebla', 'Lino', 'Roca', 'Vapor', 'Sal', 'Bambú'];
+  const BOUT = ['Atelier de Reposo', 'Maison Pausa', 'Casa Calma', 'Estudio Bruma', 'Salón Pausa', 'Atelier Sereno'];
+  const LOCAL = ['Palermo', 'Recoleta', 'Brera', 'Mission', 'Soho', 'Capitol', 'Centro', 'Boedo'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Spa';
+      let name = '';
+      if (s === 'single') name = pick(SINGLE);
+      else if (s === 'elemental') name = pick(ELEM) + ' Spa';
+      else if (s === 'boutique') name = pick(BOUT);
+      else if (s === 'object') name = pick(ELEM);
+      else if (s === 'local') name = pick(LOCAL) + ' Spa';
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

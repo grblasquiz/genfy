@@ -1,0 +1,186 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'JSON a YAML — Conversor gratis | Genfy';
+const description = 'Convertí JSON a YAML legible al instante en el navegador. Útil para configs de Kubernetes, GitHub Actions, Docker Compose. 100% local.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué convertir JSON a YAML?', acceptedAnswer: { '@type': 'Answer', text: 'Porque YAML es más legible para humanos cuando el config va a editarse a mano. Un manifest de Kubernetes en JSON tiene 30% más caracteres y muchas más llaves; en YAML se lee como una lista.' } },
+    { '@type': 'Question', name: '¿Mantiene los tipos?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Numbers, booleans, null, strings y arrays se preservan. Las claves de objetos siempre se serializan como strings, igual que en JSON.' } },
+    { '@type': 'Question', name: '¿Pone comillas a los strings?', acceptedAnswer: { '@type': 'Answer', text: 'Solo si es necesario: cuando el string contiene caracteres especiales, empieza con un guion, parece booleano o número, o tiene espacios al principio o final.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Datos" title="JSON a YAML"
+    intro="Pegá JSON y obtené YAML legible para humanos. Útil cuando una config viene en JSON pero la querés editar como manifest de Kubernetes o GitHub Actions.">
+
+    <div slot="tool">
+      <label for="jy-in">JSON</label>
+      <textarea id="jy-in" rows="8" style="font-family: var(--font-mono); font-size: 0.9rem;">&lcub;
+  "name": "Genfy",
+  "version": 1.0,
+  "features": ["markdown", "json", "yaml"],
+  "database": &lcub;
+    "host": "localhost",
+    "port": 5432,
+    "active": true
+  &rcub;
+&rcub;</textarea>
+      <button id="jy-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Convertir</button>
+      <button id="jy-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <div id="jy-status" class="jy-status"></div>
+      <label for="jy-out" style="margin-top:1rem;">YAML</label>
+      <textarea id="jy-out" rows="12" readonly style="font-family: var(--font-mono); font-size: 0.9rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Cuándo conviene YAML sobre JSON</h2>
+      <p>
+        JSON es excelente para datos que viajan entre máquinas: estricto, rápido de parsear, soportado nativamente. YAML brilla en otro escenario: configuración que un humano va a editar a mano. Un manifest de Kubernetes con cien claves y cinco niveles de anidamiento se vuelve ilegible en JSON con tantas llaves y comas. En YAML, el mismo contenido se lee fluido, sin ruido visual.
+      </p>
+
+      <h2>Casos típicos</h2>
+      <ul>
+        <li><strong>Kubernetes.</strong> Toda la documentación de Kubernetes usa YAML para los manifests. Aunque <code>kubectl</code> acepta JSON, nadie escribe JSON a mano para esto.</li>
+        <li><strong>GitHub Actions.</strong> Los workflows en .github/workflows/*.yml son YAML. Si tenés un JSON con la definición, hay que convertir.</li>
+        <li><strong>Docker Compose.</strong> docker-compose.yml es exclusivamente YAML.</li>
+        <li><strong>Ansible.</strong> Playbooks de Ansible son YAML por convención.</li>
+        <li><strong>Editar configs largas en producción.</strong> Cuando hay que tocar un archivo de 500 líneas, YAML es más amable.</li>
+      </ul>
+
+      <h2>Cómo se serializa cada tipo</h2>
+      <ul>
+        <li><strong>Strings simples.</strong> Sin comillas si no contienen caracteres especiales.</li>
+        <li><strong>Strings con riesgo.</strong> Entre comillas dobles si contienen <code>:</code>, <code>#</code>, empiezan con espacio, o se confunden con booleanos/números.</li>
+        <li><strong>Numbers.</strong> Tal cual, sin comillas.</li>
+        <li><strong>Booleans.</strong> <code>true</code> o <code>false</code> en minúscula.</li>
+        <li><strong>Null.</strong> <code>null</code>.</li>
+        <li><strong>Arrays.</strong> Lista con guiones, un elemento por línea.</li>
+        <li><strong>Objetos.</strong> Clave seguida de dos puntos, con la jerarquía marcada por indentación.</li>
+      </ul>
+
+      <h2>Reglas de comillas en YAML</h2>
+      <p>
+        YAML interpreta agresivamente: muchos strings se vuelven booleanos o números si no se les pone comillas. Estos casos siempre se quotan:
+      </p>
+      <ul>
+        <li>Strings que coinciden con booleanos: "yes", "no", "true", "false", "on", "off".</li>
+        <li>Strings que parecen números: "123", "3.14", "1e5".</li>
+        <li>Strings que empiezan con guion (se confundirían con un item de lista): "-foo".</li>
+        <li>Strings que contienen <code>:</code>, <code>#</code>, <code>&amp;</code>, <code>*</code>, <code>!</code>, <code>|</code>, <code>&gt;</code>, <code>%</code>, <code>@</code>, <code>`</code>.</li>
+        <li>Strings con espacios iniciales o finales.</li>
+      </ul>
+
+      <h2>Indentación: la causa de la mayoría de bugs</h2>
+      <p>
+        YAML usa solo espacios (no tabs) y la cantidad debe ser consistente dentro de cada nivel. La convención más común es 2 espacios. Si dentro del mismo archivo mezclás 2 y 4, podés terminar con jerarquías que se interpretan distinto a lo que pensás. El conversor de Genfy emite siempre indentación de 2 espacios, alineada con la convención de Kubernetes y GitHub.
+      </p>
+
+      <h2>YAML que rompe</h2>
+      <p>
+        Algunos errores comunes que vas a notar al editar el YAML resultante:
+      </p>
+      <ul>
+        <li><strong>Olvidar el espacio después del dos puntos.</strong> <code>name:Genfy</code> es inválido; <code>name: Genfy</code> funciona.</li>
+        <li><strong>Indentar con tabs.</strong> Los editores modernos avisan, pero si pasás archivos entre sistemas, revisalo.</li>
+        <li><strong>Strings ambiguos.</strong> El famoso problema "NO" para Norway. Si dudás, quotalo.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Por qué convertir JSON a YAML?</summary><p>YAML es más legible para humanos cuando el config se edita a mano (Kubernetes, Docker Compose, GitHub Actions).</p></details>
+      <details><summary>¿Mantiene los tipos?</summary><p>Sí. Numbers, booleans, null, strings y arrays se preservan.</p></details>
+      <details><summary>¿Pone comillas a los strings?</summary><p>Solo si es necesario para evitar ambigüedad con booleanos, números o caracteres especiales.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .jy-status { font-family: var(--font-mono); font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.25rem; color: var(--text-soft); }
+</style>
+
+<script>
+  const inEl = document.getElementById('jy-in') as HTMLTextAreaElement;
+  const out = document.getElementById('jy-out') as HTMLTextAreaElement;
+  const status = document.getElementById('jy-status') as HTMLDivElement;
+  const genBtn = document.getElementById('jy-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('jy-copy') as HTMLButtonElement;
+
+  const RESERVED = /^(true|false|null|yes|no|on|off|y|n|true|false|null|~)$/i;
+
+  function quoteStr(s: string): string {
+    if (s === '') return "''";
+    if (RESERVED.test(s)) return JSON.stringify(s);
+    if (/^-?\d+(\.\d+)?([eE][+-]?\d+)?$/.test(s)) return JSON.stringify(s);
+    if (/^[\s-]/.test(s) || /[\s]$/.test(s)) return JSON.stringify(s);
+    if (/[:#&*!|>%@`{}\[\],]/.test(s)) return JSON.stringify(s);
+    if (/^[\?\-\*]/.test(s)) return JSON.stringify(s);
+    return s;
+  }
+
+  function emit(value: any, indent: number): string {
+    const pad = '  '.repeat(indent);
+    if (value === null) return 'null';
+    if (typeof value === 'boolean') return value ? 'true' : 'false';
+    if (typeof value === 'number') return String(value);
+    if (typeof value === 'string') return quoteStr(value);
+    if (Array.isArray(value)) {
+      if (value.length === 0) return '[]';
+      return value.map(v => {
+        if (v !== null && typeof v === 'object' && !Array.isArray(v)) {
+          const inner = emitObj(v, indent + 1);
+          return pad + '- ' + inner.slice(pad.length + 2);
+        }
+        return pad + '- ' + emit(v, indent + 1);
+      }).join('\n');
+    }
+    if (typeof value === 'object') return emitObj(value, indent);
+    return String(value);
+  }
+
+  function emitObj(obj: any, indent: number): string {
+    const keys = Object.keys(obj);
+    if (keys.length === 0) return '{}';
+    const pad = '  '.repeat(indent);
+    return keys.map(k => {
+      const v = obj[k];
+      const key = quoteStr(k);
+      if (v !== null && typeof v === 'object') {
+        if (Array.isArray(v)) {
+          if (v.length === 0) return pad + key + ': []';
+          return pad + key + ':\n' + emit(v, indent);
+        }
+        if (Object.keys(v).length === 0) return pad + key + ': {}';
+        return pad + key + ':\n' + emitObj(v, indent + 1);
+      }
+      return pad + key + ': ' + emit(v, indent);
+    }).join('\n');
+  }
+
+  function run() {
+    const txt = inEl.value;
+    if (!txt.trim()) { out.value = ''; status.textContent = ''; return; }
+    try {
+      const data = JSON.parse(txt);
+      const yaml = typeof data === 'object' && data !== null && !Array.isArray(data) ? emitObj(data, 0) : emit(data, 0);
+      out.value = yaml;
+      status.textContent = '✓ Convertido a YAML';
+    } catch (e: any) {
+      out.value = '';
+      status.textContent = 'Error: ' + (e.message || 'JSON inválido');
+    }
+  }
+  inEl.addEventListener('input', run);
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

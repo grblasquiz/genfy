@@ -1,0 +1,175 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Environment Variable Name Generator | Genfy';
+const description = 'Generate consistent SCREAMING_SNAKE_CASE environment variable names. Conventions for 12-factor apps.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why SCREAMING_SNAKE_CASE?', acceptedAnswer: { '@type': 'Answer', text: 'POSIX convention since Unix shells. Visual distinction from local variables and compatibility with every language.' } },
+    { '@type': 'Question', name: 'Project prefix?', acceptedAnswer: { '@type': 'Answer', text: 'Recommended: APP_DATABASE_URL instead of DATABASE_URL. Prevents collisions when multiple services share a host.' } },
+    { '@type': 'Question', name: 'Where to keep secrets?', acceptedAnswer: { '@type': 'Answer', text: 'Never in the repo. Use .env.local (gitignored), Vault, AWS Secrets Manager, GCP Secret Manager or your platform secret store.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Tech / Dev"
+    title="Env Variable Name Generator"
+    intro="Generate SCREAMING_SNAKE_CASE names with clear app prefix, area and purpose."
+  >
+    <div slot="tool" class="env-tool">
+      <div class="env-grid">
+        <div>
+          <label for="env-app">App prefix</label>
+          <input id="env-app" type="text" value="APP" />
+        </div>
+        <div>
+          <label for="env-area">Area</label>
+          <select id="env-area">
+            <option value="DB">DB (database)</option>
+            <option value="REDIS">REDIS</option>
+            <option value="API">API (third party)</option>
+            <option value="AWS">AWS</option>
+            <option value="MAIL">MAIL</option>
+            <option value="LOG">LOG</option>
+            <option value="AUTH">AUTH</option>
+            <option value="">(no area)</option>
+          </select>
+        </div>
+        <div>
+          <label for="env-purpose">Purpose</label>
+          <input id="env-purpose" type="text" value="connection url" />
+        </div>
+      </div>
+      <div class="env-actions">
+        <button id="env-gen" class="btn btn-primary" type="button">Generate</button>
+        <button id="env-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+      </div>
+      <textarea id="env-out" class="mono" rows="8" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>SCREAMING_SNAKE_CASE: the POSIX convention</h2>
+      <p>
+        In Unix shells, environment variables have been named in uppercase with underscores by
+        convention since the 1970s. <code>PATH</code>, <code>HOME</code>, <code>USER</code>.
+        Sticking to that convention guarantees compatibility with any language, framework and
+        orchestration tool.
+      </p>
+
+      <h2>12-factor's factor III</h2>
+      <p>
+        The 12-factor manifesto states that configuration must live in environment variables, not
+        in hardcoded files. This separates code from config and lets the same binary run in dev,
+        staging and prod just by changing the variables.
+      </p>
+
+      <h2>Recommended structure</h2>
+      <p>
+        <code>&lt;APP&gt;_&lt;AREA&gt;_&lt;PURPOSE&gt;</code>. Examples: <code>APP_DB_URL</code>,
+        <code>APP_REDIS_HOST</code>, <code>APP_AWS_REGION</code>,
+        <code>APP_MAIL_SMTP_HOST</code>. The prefix prevents collisions; the area groups
+        visually; the purpose identifies.
+      </p>
+
+      <h2>Conventional variables</h2>
+      <ul>
+        <li><strong>NODE_ENV</strong>: development, production, test (Node).</li>
+        <li><strong>DATABASE_URL</strong>: full connection string.</li>
+        <li><strong>PORT</strong>: port to listen on (PaaS sets it).</li>
+        <li><strong>LOG_LEVEL</strong>: debug, info, warn, error.</li>
+        <li><strong>TZ</strong>: time zone (default UTC).</li>
+        <li><strong>HTTP_PROXY</strong>, <strong>HTTPS_PROXY</strong>: outbound proxies.</li>
+      </ul>
+
+      <h2>Booleans as strings</h2>
+      <p>
+        Env vars are always strings. For booleans, the convention is <code>"true"</code> /
+        <code>"false"</code> or <code>"1"</code> / <code>"0"</code>. Never compare with
+        <code>== true</code> in JavaScript: the string <code>"false"</code> is truthy. Use
+        helpers like <code>parseBool(env.FEATURE_FLAG)</code>.
+      </p>
+
+      <h2>Secrets vs config</h2>
+      <p>
+        Secrets (passwords, API keys, tokens) shouldn't live in committable <code>.env</code>
+        files. Use <code>.env.local</code> (gitignored) in dev and a secret manager (Vault, AWS
+        Secrets Manager, GCP Secret Manager) in prod. Rotation should be part of the operational
+        process.
+      </p>
+
+      <h2>Validate at boot</h2>
+      <p>
+        Your app should fail fast if a critical variable is missing. Libraries like
+        <code>envalid</code> (Node), <code>pydantic-settings</code> (Python),
+        <code>dotenv-rb</code> + validators (Ruby) check types and presence at startup. Better a
+        clear crash than a null pointer on the first request.
+      </p>
+
+      <h2>Per-environment variables</h2>
+      <p>
+        Keep the list of variables identical across environments; change values. If
+        <code>APP_FEATURE_BETA</code> exists in prod but not staging, add it even with
+        <code>false</code>. Prevents divergent behavior between environments.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Why SCREAMING_SNAKE?</summary><p>POSIX convention since Unix. Universally compatible.</p></details>
+      <details><summary>Prefix?</summary><p>Yes: <code>APP_DATABASE_URL</code> avoids system collisions.</p></details>
+      <details><summary>Secrets where?</summary><p>Never in the repo. Vault, secret managers, .env.local in dev.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .env-grid { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .env-grid { grid-template-columns: 1fr; } }
+  .env-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const app = document.getElementById('env-app') as HTMLInputElement;
+  const area = document.getElementById('env-area') as HTMLSelectElement;
+  const purpose = document.getElementById('env-purpose') as HTMLInputElement;
+  const out = document.getElementById('env-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('env-gen') as HTMLButtonElement;
+  const copy = document.getElementById('env-copy') as HTMLButtonElement;
+
+  function up(s: string) { return s.toUpperCase().trim().replace(/[^A-Z0-9]+/g, '_').replace(/^_|_$/g, ''); }
+
+  function build() {
+    const ap = up(app.value || 'APP');
+    const ar = area.value;
+    const pu = up(purpose.value || 'value');
+    const main = ar ? `${ap}_${ar}_${pu}` : `${ap}_${pu}`;
+    const noPrefix = ar ? `${ar}_${pu}` : pu;
+    const variants = [
+      main,
+      noPrefix,
+      `${main}=changeme`,
+      `# .env example`,
+      main + '=',
+    ];
+    out.value = variants.join('\n');
+  }
+  gen.addEventListener('click', build);
+  [app, area, purpose].forEach(el => el.addEventListener('input', build));
+  area.addEventListener('change', build);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value.split('\n')[0]);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copied';
+    setTimeout(() => { icon.textContent = 'Copy'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

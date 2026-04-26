@@ -1,0 +1,165 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Greek-Style Lorem Ipsum Generator | Genfy';
+const description = 'Placeholder text using Greek-alphabet glyphs. Visually distinct from classic Lorem Ipsum, perfect when real copy and dummy text live side by side.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is the Greek variant for?', acceptedAnswer: { '@type': 'Answer', text: 'For mockups where you want placeholder content to be visually distinct from real Latin copy, avoiding confusion when both live in the same design.' } },
+    { '@type': 'Question', name: 'Is it real Greek?', acceptedAnswer: { '@type': 'Answer', text: 'No. It is pseudo-random text built from Greek-alphabet characters to keep the Lorem Ipsum feel with a different look.' } },
+    { '@type': 'Question', name: 'Does it work with fonts that lack Greek?', acceptedAnswer: { '@type': 'Answer', text: 'No. If your font lacks Greek glyphs you will see tofu boxes or font fallback. Test the font before using it for production mockups.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Content" title="Greek-Style Lorem Ipsum"
+    intro="Placeholder text using Greek-alphabet characters. Visually distinct from the classic Lorem, ideal when real copy and placeholder coexist in a mockup.">
+
+    <div slot="tool">
+      <div class="lg-row">
+        <div>
+          <label for="lg-amount">Amount</label>
+          <input id="lg-amount" type="number" min="1" max="50" value="3" />
+        </div>
+        <div>
+          <label for="lg-unit">Unit</label>
+          <select id="lg-unit">
+            <option value="paragraphs">Paragraphs</option>
+            <option value="sentences">Sentences</option>
+            <option value="words">Words</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="lg-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="lg-copy" class="btn btn-ghost" type="button">Copy</button>
+
+      <textarea id="lg-out" rows="14" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What is the Greek variant of Lorem Ipsum</h2>
+      <p>
+        Classic Lorem Ipsum uses Latin letters and, while meaningless, can be visually
+        confused with real Spanish or English copy. The Greek variant swaps in Greek-alphabet
+        glyphs (alpha, beta, gamma, delta, etc.), producing a placeholder the eye spots
+        immediately as dummy. Useful when a mockup contains both finalized and placeholder
+        copy.
+      </p>
+
+      <h2>When to choose the Greek variant</h2>
+      <ul>
+        <li><strong>Mixed-content mockups.</strong> When some sections have approved copy and others don't, Greek clearly marks what's still missing.</li>
+        <li><strong>Internal reviews.</strong> In presentations where stakeholders shouldn't get hung up on placeholder copy ("what does this mean?"), Greek prevents the trap.</li>
+        <li><strong>Multi-script type checks.</strong> If your product will support Greek (Greek tourism, Balkan markets), validating that the font renders the glyphs matters.</li>
+        <li><strong>Design classes.</strong> To show students that the "look" of Lorem Ipsum doesn't depend on the language but on character distribution.</li>
+      </ul>
+
+      <h2>Limitations</h2>
+      <p>
+        If your main font lacks Greek glyphs, you'll see white boxes (tofu) or automatic
+        substitution to another font. Before using this placeholder, check font support:
+        Inter, Roboto, Source Sans, Helvetica Neue, Arial, and most modern webfonts include
+        basic Greek. Display or historic serif fonts sometimes don't.
+      </p>
+
+      <h2>Differences from classic Lorem</h2>
+      <p>
+        Greek characters have different average widths than Latin ones. An omega (ω) is wider
+        than an <em>m</em>; an iota (ι) narrower than an <em>i</em>. If you use this variant
+        to validate exact copy lengths in a column, results will differ slightly from real
+        English text. For general layout that's fine; for pixel-perfect wireframing, less so.
+      </p>
+
+      <h2>How the generator works</h2>
+      <p>
+        We compose pseudo-random words from a lowercase Greek alphabet. Sentences start with a
+        Greek capital (Α, Β, Γ) and end with a period. Paragraphs combine 3 to 6 sentences of
+        variable length, just like the classic Lorem Ipsum.
+      </p>
+
+      <h2>When NOT to use it</h2>
+      <p>
+        On pages going live. Google and other crawlers will index the content and treat the
+        page as low-quality. This is design placeholder, not SEO content. Always replace it
+        before publishing.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is the Greek variant for?</summary><p>So placeholder visually contrasts with real copy when both share a mockup.</p></details>
+      <details><summary>Is it real Greek?</summary><p>No. Pseudo-random with Greek characters to mimic the Lorem Ipsum feel.</p></details>
+      <details><summary>Does it work with fonts lacking Greek?</summary><p>No. Confirm your font has Greek glyphs first.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .lg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .lg-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const LETTERS = 'αβγδεζηθικλμνξοπρστυφχψω'.split('');
+  const UPPER = 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ'.split('');
+
+  const amount = document.getElementById('lg-amount') as HTMLInputElement;
+  const unit = document.getElementById('lg-unit') as HTMLSelectElement;
+  const out = document.getElementById('lg-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('lg-gen') as HTMLButtonElement;
+  const copy = document.getElementById('lg-copy') as HTMLButtonElement;
+
+  function rint(min: number, max: number) { return min + Math.floor(Math.random() * (max - min + 1)); }
+  function word(): string {
+    const len = rint(3, 9);
+    let w = '';
+    for (let i = 0; i < len; i++) w += LETTERS[Math.floor(Math.random() * LETTERS.length)];
+    return w;
+  }
+  function sentence(): string {
+    const n = rint(8, 16);
+    const words: string[] = [];
+    for (let i = 0; i < n; i++) words.push(word());
+    const first = UPPER[Math.floor(Math.random() * UPPER.length)] + words[0].slice(1);
+    return first + ' ' + words.slice(1).join(' ') + '.';
+  }
+  function paragraph(): string {
+    const n = rint(3, 6);
+    const arr: string[] = [];
+    for (let i = 0; i < n; i++) arr.push(sentence());
+    return arr.join(' ');
+  }
+
+  function generate() {
+    const n = Math.max(1, Math.min(50, parseInt(amount.value || '1', 10)));
+    let text = '';
+    if (unit.value === 'paragraphs') {
+      const arr: string[] = [];
+      for (let i = 0; i < n; i++) arr.push(paragraph());
+      text = arr.join('\n\n');
+    } else if (unit.value === 'sentences') {
+      const arr: string[] = [];
+      for (let i = 0; i < n; i++) arr.push(sentence());
+      text = arr.join(' ');
+    } else {
+      const arr: string[] = [];
+      for (let i = 0; i < n; i++) arr.push(word());
+      text = arr.join(' ');
+    }
+    out.value = text;
+  }
+
+  gen.addEventListener('click', generate);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copy.textContent; copy.textContent = 'Copied!';
+    setTimeout(() => { copy.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

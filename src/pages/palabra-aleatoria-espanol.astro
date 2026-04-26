@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Palabra aleatoria en español | Genfy';
+const description = 'Generá palabras al azar en español. Útil para juegos como Stop, Scrabble, brainstorming, escritura creativa y ejercicios de aula.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿De dónde salen las palabras?', acceptedAnswer: { '@type': 'Answer', text: 'De una lista curada de sustantivos, verbos y adjetivos del español rioplatense y peninsular, sin extranjerismos ni términos técnicos.' } },
+    { '@type': 'Question', name: '¿Sirve para Stop o Tutti Frutti?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Filtrá por letra inicial y obtené palabras válidas para arrancar la ronda o validar respuestas dudosas.' } },
+    { '@type': 'Question', name: '¿La elección es realmente aleatoria?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Usa crypto.getRandomValues, el generador criptográfico del navegador, así que no se repiten patrones predecibles.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Idiomas" title="Palabra aleatoria en español"
+    intro="Una palabra al azar del español, con filtro por letra inicial y cantidad. Útil para juegos, ejercicios de clase, escritura creativa o simplemente para inspirarte.">
+
+    <div slot="tool" class="rw">
+      <div class="rw-row">
+        <div>
+          <label for="rw-letter">Letra inicial</label>
+          <select id="rw-letter">
+            <option value="">Cualquiera</option>
+            <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option>
+            <option>F</option><option>G</option><option>H</option><option>I</option><option>J</option>
+            <option>L</option><option>M</option><option>N</option><option>O</option><option>P</option>
+            <option>Q</option><option>R</option><option>S</option><option>T</option><option>U</option>
+            <option>V</option><option>Z</option>
+          </select>
+        </div>
+        <div>
+          <label for="rw-amount">Cantidad</label>
+          <input id="rw-amount" type="number" min="1" max="20" value="1" />
+        </div>
+      </div>
+      <button id="rw-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="rw-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <textarea id="rw-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Para qué sirve generar palabras al azar en español</h2>
+      <p>
+        Una palabra al azar funciona como detonante. En escritura creativa, te saca del bloqueo: en lugar de
+        mirar la pantalla en blanco, partís de una palabra concreta y armás una escena, un poema o un titular
+        a su alrededor. En aulas, los docentes la usan para ejercicios de redacción, dictados, ortografía y
+        ampliación de vocabulario. En juegos como Stop, Scrabble o Tutti Frutti, sirve para validar términos
+        dudosos o para arrancar la ronda con una palabra "semilla".
+      </p>
+
+      <h2>Filtrar por letra inicial</h2>
+      <p>
+        El filtro por letra es la función más usada. Si jugás Stop y la letra de la ronda es la "M", podés
+        ver al instante decenas de palabras que empiezan con esa letra y validar si "membrillo" o "molino"
+        cuentan. Lo mismo para juegos de palabras encadenadas, donde necesitás una con la letra final del
+        rival, o para ejercicios de clase de "buscá cinco palabras con la C".
+      </p>
+
+      <h2>Aplicaciones más allá del juego</h2>
+      <ul>
+        <li><strong>Naming</strong> — emprendedores que buscan nombre para una marca o un producto sacan 20 palabras al azar y combinan dos para crear un neologismo.</li>
+        <li><strong>Escritura creativa</strong> — un poema corto a partir de una palabra forzada produce textos más originales que los que salen "de la cabeza".</li>
+        <li><strong>Improvisación teatral</strong> — clases de impro usan palabras al azar como detonantes de escenas.</li>
+        <li><strong>Storytelling</strong> — sacá tres palabras y armá una historia que las contenga, sin forzar.</li>
+        <li><strong>Educación</strong> — ejercicios de ortografía, separación silábica, sinónimos y antónimos.</li>
+      </ul>
+
+      <h2>Cómo elegimos las palabras</h2>
+      <p>
+        El listado evita extranjerismos puros, marcas, nombres propios y términos técnicos demasiado
+        específicos. La idea es que cualquier hispanohablante reconozca el 95% de las palabras sin diccionario.
+        Mezclamos sustantivos, verbos y adjetivos comunes, con algunas palabras menos frecuentes para subirle
+        el nivel a quienes ya tengan vocabulario amplio. No incluimos palabras malsonantes ni jergas locales
+        muy cerradas.
+      </p>
+
+      <h2>Diferencias con un diccionario online</h2>
+      <p>
+        Un diccionario te muestra el significado de una palabra que ya conocés. Acá la dirección es inversa:
+        recibís una palabra y vos elegís qué hacer con ella. Esto es ideal para producción, no para consulta.
+        Si querés saber el significado, usá un diccionario después; si lo que buscás es disparar ideas o
+        cubrir una restricción de juego, este generador es más rápido.
+      </p>
+
+      <h2>Sumá esta herramienta a tu rutina</h2>
+      <p>
+        Tres palabras al azar al día, durante un mes, mejoran de manera medible la fluidez de cualquier
+        persona que escriba habitualmente. Probá usarlas como prompt de diario personal: "hoy escribí 200
+        palabras incluyendo estas tres". Es una práctica simple, sin instalar nada, y se vuelve adictiva
+        cuando ves los resultados acumulados.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿De dónde salen las palabras?</summary><p>De una lista curada en español neutral: sustantivos, verbos y adjetivos comunes, sin marcas ni jergas.</p></details>
+      <details><summary>¿Sirve para Stop o Tutti Frutti?</summary><p>Sí. Filtrá por letra inicial y conseguí palabras válidas para resolver dudas o arrancar la ronda.</p></details>
+      <details><summary>¿La elección es realmente aleatoria?</summary><p>Sí, usa el generador criptográfico del navegador (crypto.getRandomValues), no patrones predecibles.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const WORDS = ("abrigo abeja abuelo árbol agua amistad amor armario arena arroz banco barco bebida bicicleta biblioteca bolsa bosque botella brazo brújula caballo cabeza calle camisa camino campo canción carta casa cielo ciudad cocina comida corazón cuaderno cuchillo dado dedo desayuno destino diente domingo dragón dueño edificio elefante empresa equipo escuela espejo estación estrella familia fiesta flor fuego fuente galaxia gato globo grupo guante hambre helado hermano hilo historia hoja hombro huevo iglesia imagen invierno isla jardín jirafa jueves juego lápiz lago laguna leche lente libro luna lluvia madera maestro mañana manzana mapa máquina mar mesa metro miel mirada modelo molino momento moneda montaña museo nido niebla nieve nube ola olla padre pájaro palabra paloma pan papel parque pared pasillo pera persona piano piedra piscina planta playa pluma puente puerta queso radio raíz rana ratón regalo regla reloj rincón río risa rosa ruido sábado sal salida sandía secreto semana silla sillón sol sombra sopa suerte sueño taza techo teléfono tiempo tienda tigre toalla torre tortuga trabajo tren triángulo trigo trofeo uva vaca valle vaso vecino ventana verano viaje viento volcán zanahoria zapato zorro").split(/\s+/);
+
+  const letEl = document.getElementById('rw-letter') as HTMLSelectElement;
+  const amEl = document.getElementById('rw-amount') as HTMLInputElement;
+  const out = document.getElementById('rw-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('rw-gen') as HTMLButtonElement;
+  const cp = document.getElementById('rw-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function norm(s: string) { return s.normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function build() {
+    const letter = letEl.value;
+    const pool = letter ? WORDS.filter(w => norm(w[0]).toUpperCase() === letter) : WORDS;
+    const n = Math.max(1, Math.min(20, parseInt(amEl.value || '1', 10)));
+    const lines: string[] = [];
+    if (pool.length === 0) { out.value = 'Sin palabras para esa letra.'; return; }
+    for (let i = 0; i < n; i++) lines.push(pick(pool));
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', build);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+  build();
+</script>

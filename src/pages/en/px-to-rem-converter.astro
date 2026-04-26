@@ -1,0 +1,119 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Px to Rem Converter | Genfy';
+const description = 'Convert pixel values to rem using a configurable base font size. Quick reference table and copy-ready CSS.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why use rem?', acceptedAnswer: { '@type': 'Answer', text: 'It respects the user\'s font size preferences. If someone zooms in or changes the base size in their browser, everything scales proportionally.' } },
+    { '@type': 'Question', name: 'Is the base always 16px?', acceptedAnswer: { '@type': 'Answer', text: 'By default yes, but you can change it. Some systems use 10px (with html { font-size: 62.5% }) for easier math: 1rem = 10px.' } },
+    { '@type': 'Question', name: 'rem or em?', acceptedAnswer: { '@type': 'Answer', text: 'rem is always relative to root (html). em is relative to the parent. For general spacings and sizes, rem; for spacing inside a component with its own scale, em.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design / Diseño" title="Px to Rem Converter"
+    intro="Enter a pixel value and the base. Returns the rem equivalent and a quick reference table.">
+
+    <div slot="tool" class="cv">
+      <div class="cv-grid">
+        <div>
+          <label for="cv-px">Pixel value</label>
+          <input id="cv-px" type="number" value="24" />
+        </div>
+        <div>
+          <label for="cv-base">Base font size (px)</label>
+          <input id="cv-base" type="number" value="16" />
+        </div>
+      </div>
+
+      <div class="cv-result" id="cv-result"></div>
+
+      <div class="cv-actions">
+        <button id="cv-cp" class="btn btn-ghost" type="button">Copy value</button>
+      </div>
+
+      <h3>Quick table</h3>
+      <table class="cv-table"><thead><tr><th>px</th><th>rem</th></tr></thead><tbody id="cv-table"></tbody></table>
+    </div>
+
+    <div slot="content">
+      <h2>Why convert px to rem</h2>
+      <p>Pixel is absolute: 16px is always 16px, regardless of the user. rem is relative to the root font size (16px by default). When users increase browser font size for legibility, px values do not change but rem values do. That is why rem is the recommended unit for typography and spacing.</p>
+
+      <h2>The formula</h2>
+      <pre><code>rem = px / base</code></pre>
+      <p>With base 16: 16px = 1rem, 24px = 1.5rem, 32px = 2rem. To simplify the math, you can change the base to 10px with <code>html &lcub; font-size: 62.5%; &rcub;</code>: 24px = 2.4rem, 32px = 3.2rem. An old trick but still valid if dividing by 16 bothers you.</p>
+
+      <h2>When to use rem</h2>
+      <ul>
+        <li><strong>Typography</strong>: font sizes, line-heights.</li>
+        <li><strong>Spacing</strong>: padding, margin, gap.</li>
+        <li><strong>Max widths</strong>: container and prose max-widths.</li>
+        <li><strong>Border radius</strong>: so it scales with the system.</li>
+      </ul>
+
+      <h2>When NOT to use rem</h2>
+      <ul>
+        <li><strong>Border widths</strong>: 1px hairline must always be 1px.</li>
+        <li><strong>Shadows</strong>: blur and offsets typically in px.</li>
+        <li><strong>Small icons</strong>: when you don't want them scaling with text zoom.</li>
+        <li><strong>Pixel-perfect grids</strong>: when exact precision is needed.</li>
+      </ul>
+
+      <h2>Accessibility</h2>
+      <p>One of the strongest reasons to use rem is accessibility. About one in five users changes the default font size in their browser (preference or visual difficulty). If your site uses px everywhere, those users see exactly the size you set. With rem, everything scales. This is measured in accessibility audits and improves your Lighthouse score.</p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Mixing units without rules</strong>: px here, rem there with no logic. Pick a convention and stick to it.</li>
+        <li><strong>Using rem for everything</strong>: including hairline borders. Loses precision.</li>
+        <li><strong>Forgetting rem is relative</strong>: change the root font-size and everything changes. Useful when planned, problematic when not.</li>
+      </ul>
+
+      <h2>Practical table with base 16</h2>
+      <p>12px = 0.75rem, 14px = 0.875rem, 16px = 1rem, 18px = 1.125rem, 20px = 1.25rem, 24px = 1.5rem, 32px = 2rem, 48px = 3rem, 64px = 4rem. Memorizing the most common conversions speeds up daily work.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Why use rem?</summary><p>It respects user preferences. If they zoom text in, your site scales.</p></details>
+      <details><summary>Is base always 16?</summary><p>By default yes. Some use 10px with font-size: 62.5% to simplify math.</p></details>
+      <details><summary>rem or em?</summary><p>rem is relative to root, em to parent. For general spacing, rem.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .cv-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .cv-result { padding: 1.5rem; background: var(--bg-inset); border-radius: var(--radius); font-family: var(--font-mono); font-size: 1.25rem; text-align: center; margin-bottom: 1rem; }
+  .cv-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.875rem; }
+  .cv-table th, .cv-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); text-align: left; }
+  @media (max-width: 600px) { .cv-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const px = document.getElementById('cv-px') as HTMLInputElement;
+  const base = document.getElementById('cv-base') as HTMLInputElement;
+  const result = document.getElementById('cv-result') as HTMLElement;
+  const table = document.getElementById('cv-table') as HTMLElement;
+  const cp = document.getElementById('cv-cp') as HTMLButtonElement;
+
+  function render() {
+    const v = +px.value, b = +base.value || 16;
+    const rem = (v / b);
+    result.textContent = `${v}px = ${rem}rem`;
+    const presets = [12, 14, 16, 18, 20, 24, 32, 48, 64];
+    table.innerHTML = presets.map(p => `<tr><td>${p}px</td><td>${(p / b)}rem</td></tr>`).join('');
+  }
+  [px, base].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    const v = +px.value, b = +base.value || 16;
+    await navigator.clipboard.writeText(`${(v / b)}rem`);
+    cp.textContent = 'Copied'; setTimeout(() => cp.textContent = 'Copy value', 1500);
+  });
+  render();
+</script>

@@ -1,0 +1,153 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Promo Banner Copy Generator | Genfy';
+const description = 'Generate promo banner copy for Shopify, web or landing pages. Headlines, sub and CTAs in designer-ready format. 10 variants in one click.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How long should banner copy be?', acceptedAnswer: { '@type': 'Answer', text: 'Headline 4-7 words (25-45 characters). Sub-headline 8-12 words. CTA 2-3 words.' } },
+    { '@type': 'Question', name: 'Should the discount be in the headline?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, if it is the main driver of the promo. "30% off today only" converts better than a creative line with the discount below.' } },
+    { '@type': 'Question', name: 'Use countdown timers?', acceptedAnswer: { '@type': 'Answer', text: 'Yes for flash or weekend deals. Only if urgency is real — fake countdowns hurt trust once the customer comes back and sees it still running.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Promo Banner Copy Generator"
+    intro="Generate 10 banner copies ready for Shopify, your store or landing: headline, sub, CTA and legal note. For promos, launches, holidays and flash sales.">
+
+    <div slot="tool" class="bp">
+      <label>Promotion type</label>
+      <select id="bp-type">
+        <option value="discount">Percentage discount</option>
+        <option value="shipping">Free shipping</option>
+        <option value="bogo">Buy one, get one</option>
+        <option value="launch">Product launch</option>
+        <option value="holiday">Holiday (Black Friday, Valentine's)</option>
+      </select>
+
+      <label style="margin-top:1rem">Main benefit</label>
+      <input id="bp-benefit" type="text" value="30% off store-wide" />
+
+      <label style="margin-top:1rem">Validity / urgency</label>
+      <input id="bp-time" type="text" value="ends Sunday" />
+
+      <label style="margin-top:1rem">Category / product</label>
+      <input id="bp-cat" type="text" value="women's apparel" />
+
+      <button id="bp-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 10 variants</button>
+
+      <div id="bp-out" class="bp-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why banners need targeted copy, not free creativity</h2>
+      <p>
+        A banner has 3 to 5 seconds to capture attention and communicate the benefit. It's not a
+        brand ad — it's a billboard. Brands that get the best ROI on banners don't aim for clever
+        copy, they aim for clear copy: the what, the how much, and the how long.
+      </p>
+
+      <h2>Banner structure that converts</h2>
+      <ol>
+        <li><strong>Headline (top):</strong> the benefit in caps. "30% OFF STORE-WIDE".</li>
+        <li><strong>Sub-headline:</strong> context or category. "Women's apparel — summer drop".</li>
+        <li><strong>Urgency:</strong> time or stock. "Ends Sunday" or "Limited stock".</li>
+        <li><strong>CTA:</strong> 2-3 action words. "Shop now", "Grab it", "See collection".</li>
+        <li><strong>Fine print (when needed):</strong> exclusions, min spend. Small but not hidden.</li>
+      </ol>
+
+      <h2>The 5 non-negotiables</h2>
+      <ul>
+        <li><strong>One promise per banner.</strong> Don't combine two different discounts.</li>
+        <li><strong>Most important in caps and on top.</strong> The eye scans the biggest block first.</li>
+        <li><strong>Contrasting CTA.</strong> Button with contrasting color and present-tense verb.</li>
+        <li><strong>Mobile first.</strong> 70% of traffic is mobile — design for small screens first.</li>
+        <li><strong>Real expiry.</strong> If you say "ends Sunday", Monday it's gone.</li>
+      </ul>
+
+      <h2>Copy by promo type</h2>
+      <ul>
+        <li><strong>Percentage discount:</strong> "30% OFF EVERYTHING" + "Ends Sunday 11:59pm" + "Shop now".</li>
+        <li><strong>Free shipping:</strong> "FREE SHIPPING" + "On orders from $50" + "Grab it".</li>
+        <li><strong>BOGO:</strong> "BUY 2, PAY 1" + "On the summer line" + "See collection".</li>
+        <li><strong>Launch:</strong> "NEW COLLECTION" + "Online only this week" + "Discover".</li>
+        <li><strong>Holiday:</strong> "BLACK FRIDAY" + "Up to 50% off + free returns" + "See deals".</li>
+      </ul>
+
+      <h2>Mistakes that kill conversion</h2>
+      <ol>
+        <li>Headlines like "Don't miss out!" without saying what's at stake.</li>
+        <li>Vague CTAs: "Click here" or "Learn more". The CTA must promise a result.</li>
+        <li>Stacked discounts: "30% + 20% + 10% extra" — customer can't tell what they pay.</li>
+        <li>Huge fine print. If exclusions take more space than the benefit, you lost credibility.</li>
+        <li>Banner copy that doesn't match the landing. Says "free shipping", landing has conditions — trust drops.</li>
+      </ol>
+
+      <h2>Quick A/B testing</h2>
+      <p>
+        If your platform allows, run 2 banner versions for 24-48h. The biggest CTR levers: CTA
+        verb, countdown presence, and whether the % goes before or after the product. One variable
+        at a time, otherwise you don't know which won.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many characters?</summary><p>Headline 25-45 chars, sub 8-12 words, CTA 2-3 words.</p></details>
+      <details><summary>Discount in headline?</summary><p>Yes, when it's the main driver. Converts better.</p></details>
+      <details><summary>Countdown?</summary><p>Yes in flash sales, only if urgency is real.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bp-out { display: grid; gap: 0.75rem; margin-top: 1.25rem; }
+  .bp-card { padding: 1rem 1.125rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-md); cursor: pointer; transition: border-color 0.1s; }
+  .bp-card:hover { border-color: var(--primary); }
+  .bp-h { font-weight: 700; font-size: 1.0625rem; margin-bottom: 0.25rem; }
+  .bp-sub { color: var(--text-soft); font-size: 0.9375rem; margin-bottom: 0.25rem; }
+  .bp-cta { font-size: 0.875rem; color: var(--primary); font-weight: 600; }
+</style>
+
+<script>
+  const type = document.getElementById('bp-type') as HTMLSelectElement;
+  const benefit = document.getElementById('bp-benefit') as HTMLInputElement;
+  const time = document.getElementById('bp-time') as HTMLInputElement;
+  const cat = document.getElementById('bp-cat') as HTMLInputElement;
+  const out = document.getElementById('bp-out')!;
+  const gen = document.getElementById('bp-gen') as HTMLButtonElement;
+
+  function generate() {
+    const b = benefit.value;
+    const t = time.value;
+    const c = cat.value;
+
+    const items = [
+      { h: `${b.toUpperCase()}`, s: `On ${c}, ${t}.`, cta: 'Shop now' },
+      { h: `Today only: ${b}`, s: `${c} with a special drop.`, cta: 'Grab it' },
+      { h: `${b} on ${c}`, s: `Active ${t}. Limited stock.`, cta: 'See collection' },
+      { h: `Take ${b}`, s: `${t}, no codes needed.`, cta: 'Go to store' },
+      { h: `Your next order: ${b}`, s: `${c}, online and in store. ${t}.`, cta: 'Shop' },
+      { h: `${b}, no fine print`, s: `Applied automatically. ${t}.`, cta: 'Start' },
+      { h: `Ending soon: ${b}`, s: `Lock in your ${c} before it's gone.`, cta: 'I want it' },
+      { h: `${b} site-wide`, s: `${t}. Discount applied at checkout.`, cta: 'See products' },
+      { h: `Live now: ${b}`, s: `${c}. Plus fast shipping and free returns.`, cta: 'Shop now' },
+      { h: `${b} — ${t}`, s: `${c}. Best window of the month.`, cta: 'I want it' },
+    ];
+
+    out.innerHTML = '';
+    items.forEach(it => {
+      const c2 = document.createElement('div');
+      c2.className = 'bp-card';
+      c2.innerHTML = `<div class="bp-h">${it.h}</div><div class="bp-sub">${it.s}</div><div class="bp-cta">[ ${it.cta} ]</div>`;
+      const fullText = `${it.h}\n${it.s}\nCTA: ${it.cta}`;
+      c2.title = 'Click to copy';
+      c2.addEventListener('click', () => { navigator.clipboard.writeText(fullText); c2.style.borderColor = 'var(--primary)'; setTimeout(() => c2.style.borderColor = '', 800); });
+      out.appendChild(c2);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

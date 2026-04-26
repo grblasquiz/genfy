@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Formateador SQL gratis | Genfy';
+const description = 'Indentá y formateá queries SQL al instante. Soporta SELECT, INSERT, UPDATE, DELETE, JOIN, WHERE y subqueries. 100% en tu navegador.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué dialectos soporta?', acceptedAnswer: { '@type': 'Answer', text: 'El formateador es agnóstico de dialecto. Funciona con MySQL, PostgreSQL, SQLite, SQL Server, Oracle. Reconoce las keywords estándar y las pone en mayúsculas.' } },
+    { '@type': 'Question', name: '¿Mi SQL se sube a un servidor?', acceptedAnswer: { '@type': 'Answer', text: 'No. El formateo es 100% en el navegador. Podés pegar queries con datos reales sin riesgo de exponerlos.' } },
+    { '@type': 'Question', name: '¿Por qué importa formatear SQL?', acceptedAnswer: { '@type': 'Answer', text: 'Una query de 200 caracteres en una sola línea es ilegible. Formateada con saltos en cada SELECT, FROM, WHERE, JOIN te ahorra minutos en cada review de código y debugging.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Datos" title="Formateador SQL"
+    intro="Pegá una query SQL y obtené una versión bien indentada con keywords en mayúsculas. Ideal para code review, documentación y debugging.">
+
+    <div slot="tool">
+      <label for="sf-in">SQL</label>
+      <textarea id="sf-in" rows="6" style="font-family: var(--font-mono); font-size: 0.9rem;">select u.id, u.name, count(o.id) as total from users u left join orders o on o.user_id = u.id where u.created_at >= '2025-01-01' and u.active = true group by u.id, u.name order by total desc limit 10;</textarea>
+      <button id="sf-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Formatear</button>
+      <button id="sf-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <label for="sf-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="sf-out" rows="14" readonly style="font-family: var(--font-mono); font-size: 0.9rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué formatear SQL importa</h2>
+      <p>
+        Una query SQL en una sola línea, sin formato, es lo más cercano a leer ensamblador en una empresa. Cuando esa query falla en producción a las 3 AM y necesitás debuggear, perdés minutos solo en parsearla mentalmente. SQL formateado bien indentado: cada cláusula en su línea, joins alineados, condiciones en columna. La diferencia entre encontrar el bug en 30 segundos o en 5 minutos.
+      </p>
+
+      <h2>Convenciones de formato más usadas</h2>
+      <ul>
+        <li><strong>Keywords en mayúsculas.</strong> SELECT, FROM, WHERE, JOIN. Hace contraste visual con nombres de tablas y columnas en minúsculas.</li>
+        <li><strong>Cada cláusula en una nueva línea.</strong> SELECT, FROM, WHERE, GROUP BY, ORDER BY, LIMIT siempre rompen línea.</li>
+        <li><strong>JOINs en su propia línea.</strong> Cada JOIN se ve fácil cuando está aislado.</li>
+        <li><strong>Comas al inicio o al final.</strong> Hay dos escuelas; el formateador respeta el estilo de tu equipo si lo configurás.</li>
+        <li><strong>Indentar subqueries.</strong> Las subqueries van más adentro que el query principal.</li>
+      </ul>
+
+      <h2>Cuándo NO formatear</h2>
+      <ul>
+        <li><strong>Queries muy simples.</strong> <code>SELECT * FROM users WHERE id = 1</code> no necesita romperse en líneas.</li>
+        <li><strong>Migraciones masivas.</strong> Si tenés un script con cientos de INSERT, formatearlos todos lo hace ilegible y enorme.</li>
+        <li><strong>SQL generado por ORMs.</strong> El SQL que genera Sequelize o Hibernate ya está optimizado para máquina, formatearlo manualmente no aporta.</li>
+      </ul>
+
+      <h2>Estilo Stripe / Linear / Vercel para SQL</h2>
+      <p>
+        Empresas modernas tienden a este estilo: keywords en mayúsculas, una columna por línea en SELECT, indentación consistente de 2 espacios, JOINs después de FROM. Un SELECT que devuelve 8 columnas se ve así:
+      </p>
+      <pre><code>SELECT
+  u.id,
+  u.name,
+  u.email,
+  COUNT(o.id) AS total_orders
+FROM users u
+LEFT JOIN orders o ON o.user_id = u.id
+WHERE u.active = true
+GROUP BY u.id, u.name, u.email
+ORDER BY total_orders DESC
+LIMIT 10;</code></pre>
+
+      <h2>Limitaciones del formateador</h2>
+      <p>
+        Este es un formateador básico que cubre la mayoría de queries que vas a encontrar todos los días: SELECT, INSERT, UPDATE, DELETE, con joins, where, group by, order by, having, limit. No interpreta CTE complejos (WITH RECURSIVE), window functions con sintaxis muy particular, ni dialectos que se desvían fuerte (T-SQL de SQL Server, PL/SQL de Oracle). Para esos casos extremos, considerá formateadores específicos del dialecto.
+      </p>
+
+      <h2>SQL legible y SEO interno</h2>
+      <p>
+        En empresas grandes hay un patrón: queries críticas viven en una carpeta versionada en git. El equipo de datos las edita, las revisa, las commitea. Si las queries vienen sin formato, los reviews son una pesadilla y los bugs pasan inadvertidos. Establecer un estilo de formato uniforme y aplicarlo en pre-commit hooks es uno de esos cambios chicos que mejora la velocidad del equipo a mediano plazo.
+      </p>
+
+      <h2>Tips de productividad</h2>
+      <ul>
+        <li>Si trabajás con DataGrip, IntelliJ o DBeaver, tienen formateadores integrados que respetan tus preferencias. Configuralos una vez y nunca más pelees con formato.</li>
+        <li>En código JavaScript/TypeScript, considerá template strings con tagged templates como <code>sql\`SELECT ...\`</code>. Editores con extensiones como vscode-sql-template-literal te dan autocomplete y formato.</li>
+        <li>Para queries largas que vivirán en migraciones, comentá cada bloque importante con <code>-- propósito de este JOIN</code>. Tu yo del futuro te lo agradece.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué dialectos soporta?</summary><p>Es agnóstico. Funciona con MySQL, PostgreSQL, SQLite, SQL Server, Oracle.</p></details>
+      <details><summary>¿Mi SQL se sube a un servidor?</summary><p>No. Es 100% local en tu navegador.</p></details>
+      <details><summary>¿Por qué importa formatear SQL?</summary><p>Mejora la legibilidad en code reviews, documentación y debugging.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const inEl = document.getElementById('sf-in') as HTMLTextAreaElement;
+  const out = document.getElementById('sf-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('sf-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('sf-copy') as HTMLButtonElement;
+
+  const KEYWORDS = ['SELECT','FROM','WHERE','GROUP BY','ORDER BY','HAVING','LIMIT','OFFSET','JOIN','LEFT JOIN','RIGHT JOIN','INNER JOIN','OUTER JOIN','FULL JOIN','CROSS JOIN','ON','AND','OR','NOT','IN','LIKE','BETWEEN','IS','NULL','AS','UNION','UNION ALL','INTERSECT','EXCEPT','INSERT INTO','VALUES','UPDATE','SET','DELETE FROM','CREATE TABLE','ALTER TABLE','DROP TABLE','CASE','WHEN','THEN','ELSE','END','WITH','DISTINCT','COUNT','SUM','AVG','MIN','MAX'];
+
+  const NEWLINE_BEFORE = ['FROM','WHERE','GROUP BY','ORDER BY','HAVING','LIMIT','OFFSET','LEFT JOIN','RIGHT JOIN','INNER JOIN','OUTER JOIN','FULL JOIN','CROSS JOIN','JOIN','UNION','UNION ALL','INTERSECT','EXCEPT','VALUES','SET'];
+
+  function format(sql: string): string {
+    let s = sql.replace(/\s+/g, ' ').trim();
+    if (s.endsWith(';')) s = s.slice(0, -1);
+    let upper = s;
+    const sorted = [...KEYWORDS].sort((a,b) => b.length - a.length);
+    for (const kw of sorted) {
+      const re = new RegExp('\\b' + kw.replace(/ /g, '\\s+') + '\\b', 'gi');
+      upper = upper.replace(re, kw);
+    }
+    let result = upper;
+    for (const kw of NEWLINE_BEFORE) {
+      const re = new RegExp('\\s+' + kw.replace(/ /g, '\\s+') + '\\b', 'g');
+      result = result.replace(re, '\n' + kw);
+    }
+    result = result.replace(/\bSELECT\b/g, 'SELECT');
+    result = result.replace(/\bAND\b/g, '\n  AND');
+    result = result.replace(/\bOR\b/g, '\n  OR');
+    result = result.replace(/^SELECT\s+/, 'SELECT\n  ');
+    result = result.replace(/,\s*/g, ',\n  ');
+    result = result.replace(/\n  ([A-Z][A-Z ]+)\b/g, (m, kw) => {
+      if (NEWLINE_BEFORE.includes(kw.trim())) return '\n' + kw.trim();
+      return m;
+    });
+    return result.replace(/^\s+/gm, l => l).split('\n').map(l => l.trimEnd()).join('\n') + ';';
+  }
+
+  function run() {
+    const txt = inEl.value.trim();
+    if (!txt) { out.value = ''; return; }
+    try { out.value = format(txt); }
+    catch { out.value = txt; }
+  }
+  inEl.addEventListener('input', run);
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

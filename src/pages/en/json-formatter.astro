@@ -1,0 +1,136 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free JSON Formatter | Genfy';
+const description = 'Format, indent and validate JSON instantly in the browser. Pinpoints syntax errors and shows their exact location. 100% local.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What does a JSON formatter do?', acceptedAnswer: { '@type': 'Answer', text: 'It takes unformatted JSON (one-line or inconsistently indented) and rewrites it with uniform spacing and line breaks for readability. It also flags syntax errors.' } },
+    { '@type': 'Question', name: 'Does my JSON get uploaded?', acceptedAnswer: { '@type': 'Answer', text: 'No. Formatting runs 100% in your browser via JSON.parse and JSON.stringify. The content never leaves your device — perfect for sensitive data.' } },
+    { '@type': 'Question', name: 'Why do some valid-looking JSONs fail?', acceptedAnswer: { '@type': 'Answer', text: 'Strict JSON forbids comments, trailing commas, single quotes and unquoted keys. These are common in JavaScript but break the JSON parser.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Data" title="JSON Formatter"
+    intro="Paste raw JSON and get an indented, validated, readable version. Detects syntax errors and shows where they are.">
+
+    <div slot="tool">
+      <div class="jf-row">
+        <div>
+          <label for="jf-indent">Indent</label>
+          <select id="jf-indent">
+            <option value="2">2 spaces</option>
+            <option value="4">4 spaces</option>
+            <option value="\t">Tab</option>
+          </select>
+        </div>
+      </div>
+      <label for="jf-in">JSON</label>
+      <textarea id="jf-in" rows="8" style="font-family: var(--font-mono); font-size: 0.9rem;">&lcub;"name":"Genfy","version":1,"tags":["dev","tools"],"active":true&rcub;</textarea>
+      <button id="jf-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Format</button>
+      <button id="jf-copy" class="btn btn-ghost" type="button">Copy</button>
+      <div id="jf-status" class="jf-status" aria-live="polite"></div>
+      <label for="jf-out" style="margin-top:1rem;">Result</label>
+      <textarea id="jf-out" rows="12" readonly style="font-family: var(--font-mono); font-size: 0.9rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why formatting JSON matters</h2>
+      <p>
+        In production, JSON usually travels minified: one line, no spaces, no breaks. That saves bytes but makes it unreadable. When you're debugging an API response, scanning a long config, or auditing a database export, the first move is to format. A good formatter turns a soup of characters into a clear hierarchical structure in under a second.
+      </p>
+
+      <h2>Strict JSON rules</h2>
+      <ul>
+        <li><strong>Double quotes only.</strong> JSON doesn't accept single quotes. <code>'name'</code> breaks the parser; <code>"name"</code> works.</li>
+        <li><strong>No trailing commas.</strong> <code>&lcub;"a":1,&rcub;</code> is valid JavaScript but invalid JSON.</li>
+        <li><strong>No comments.</strong> No <code>//</code> and no <code>/* */</code>. If you need comments, use JSON5 or JSONC (VS Code's variant).</li>
+        <li><strong>Keys always quoted.</strong> <code>&lcub;name: "Genfy"&rcub;</code> breaks; <code>&lcub;"name": "Genfy"&rcub;</code> works.</li>
+        <li><strong>Booleans lowercase.</strong> <code>true</code> and <code>false</code>, not <code>True</code>.</li>
+      </ul>
+
+      <h2>Valid data types</h2>
+      <p>
+        JSON supports six types: string, number, boolean, null, object and array. No dates (represented as ISO strings), no undefined (the key gets dropped), no functions, no symbols. When a library serializes a JavaScript object to JSON, anything outside those six types disappears silently.
+      </p>
+
+      <h2>Indentation: 2 spaces, 4 spaces or tab</h2>
+      <p>
+        No universal standard. The most common convention in JavaScript projects is 2 spaces (npm package.json, Prettier default). Python leans toward 4. Some teams use tabs for accessibility reasons. What matters is consistency inside a project: if your repo uses 2 spaces, don't introduce files with 4.
+      </p>
+
+      <h2>Common syntax errors</h2>
+      <ul>
+        <li><strong>Trailing comma at the end of an array or object.</strong> Often comes from deleting the last line without updating the previous comma.</li>
+        <li><strong>Smart quotes.</strong> When you copy from Word or Google Docs, regular quotes get auto-replaced with curly quotes (" ") that JSON doesn't understand.</li>
+        <li><strong>Control characters in strings.</strong> Literal tabs and newlines inside strings break the parser; they must be escaped as <code>\t</code> and <code>\n</code>.</li>
+        <li><strong>Mismatched braces or brackets.</strong></li>
+      </ul>
+
+      <h2>Tips for working with large JSON</h2>
+      <p>
+        If your file is over 10 MB, avoid web editors — they may freeze the browser. Use a CLI tool like <code>jq</code> to filter and reformat. To inspect part of the structure, try <code>jq 'keys'</code> to list top-level keys before going deeper.
+      </p>
+
+      <h2>JSON vs modern alternatives</h2>
+      <ul>
+        <li><strong>JSON5:</strong> allows comments, trailing commas, unquoted keys. Useful for configs.</li>
+        <li><strong>YAML:</strong> more readable but ambiguous (an unquoted value can be parsed as string or number).</li>
+        <li><strong>TOML:</strong> popular in Rust and some config files (Cargo, pyproject.toml).</li>
+        <li><strong>Protocol Buffers:</strong> binary, much more efficient than JSON for internal service-to-service traffic.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What does a JSON formatter do?</summary><p>It rewrites unformatted JSON with uniform indentation and reports syntax errors.</p></details>
+      <details><summary>Does my JSON get uploaded?</summary><p>No. Formatting is 100% local in your browser.</p></details>
+      <details><summary>Why do some valid-looking JSONs fail?</summary><p>Strict JSON forbids comments, trailing commas, single quotes and unquoted keys.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .jf-row { display: flex; gap: 1rem; margin-bottom: 1rem; }
+  .jf-status { font-family: var(--font-mono); font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.25rem; }
+  .jf-status.ok { color: var(--success); }
+  .jf-status.err { color: var(--danger); }
+</style>
+
+<script>
+  const inEl = document.getElementById('jf-in') as HTMLTextAreaElement;
+  const out = document.getElementById('jf-out') as HTMLTextAreaElement;
+  const indentEl = document.getElementById('jf-indent') as HTMLSelectElement;
+  const status = document.getElementById('jf-status') as HTMLDivElement;
+  const genBtn = document.getElementById('jf-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('jf-copy') as HTMLButtonElement;
+
+  function run() {
+    const txt = inEl.value;
+    if (!txt.trim()) { out.value = ''; status.textContent = ''; status.className = 'jf-status'; return; }
+    try {
+      const parsed = JSON.parse(txt);
+      const indent = indentEl.value === '\\t' ? '\t' : parseInt(indentEl.value, 10);
+      out.value = JSON.stringify(parsed, null, indent);
+      status.textContent = '✓ Valid JSON';
+      status.className = 'jf-status ok';
+    } catch (e: any) {
+      out.value = '';
+      status.textContent = '✗ ' + (e.message || 'Invalid JSON');
+      status.className = 'jf-status err';
+    }
+  }
+  inEl.addEventListener('input', run);
+  indentEl.addEventListener('change', run);
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

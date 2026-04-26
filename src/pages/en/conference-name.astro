@@ -1,0 +1,109 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Conference Name Generator | Genfy';
+const description = 'Generate names for conferences, summits and professional events. Modern, premium, sponsor-ready.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a conference name memorable?', acceptedAnswer: { '@type': 'Answer', text: 'Few syllables, a strong base word (Pulse, Forge, Crest), a clear topic reference, and brand room to extend across multiple yearly editions.' } },
+    { '@type': 'Question', name: 'Should I include the year in the name?', acceptedAnswer: { '@type': 'Answer', text: 'Not in the main logo: use the year in the subtitle or per-edition collateral. That way you do not redesign everything every January.' } },
+    { '@type': 'Question', name: 'How do I validate it with sponsors?', acceptedAnswer: { '@type': 'Answer', text: 'Show the name with a logo mockup. If three potential sponsors associate it with the sector and nobody confuses it with another event, it is validated.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Events" title="Conference Name Generator"
+    intro="Mix base word, suffix and format to land premium names for summits, forums and conferences. Built for sponsors and press.">
+
+    <div slot="tool" class="cn">
+      <label for="cn-topic">Topic (word)</label>
+      <input id="cn-topic" type="text" value="data" placeholder="data, retail, health..." />
+
+      <label for="cn-format" style="margin-top:1rem">Format</label>
+      <select id="cn-format">
+        <option value="summit">Summit</option>
+        <option value="con">Con / Conf</option>
+        <option value="forum">Forum</option>
+        <option value="single">Single strong word</option>
+      </select>
+
+      <button id="cn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+      <div id="cn-out" class="cn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why the name sets the tone of the event</h2>
+      <p>A summit is not named like a meetup. The name filters the attendee and signals to the sponsor the conversation level. "Pulse Retail Summit" suggests executives, big stage, trend content. "RetailHack" suggests developers, workshops, more informal. Before generating names, define who you want to convene.</p>
+      <h2>Base words that age well</h2>
+      <p>A small group of modern words holds up over ten editions without going stale: Pulse, Forge, Crest, Bloom, Beacon, Spark, Shift, Frame, Loop, Drift. They are concrete, short, easy to pronounce in English and Spanish, and rarely clash with trademarks. Avoid solemn surnames lifted from ancient pantheons: beyond the cultural problem, they are usually already taken by dozens of events.</p>
+      <h2>Structures that work</h2>
+      <ol>
+        <li><strong>Base + topic + format:</strong> "Pulse Retail Summit", "Forge Data Forum".</li>
+        <li><strong>Topic + Con:</strong> "DataCon", "RetailCon". Works very well in tech.</li>
+        <li><strong>Single strong word:</strong> "Beacon". If you can invest in branding, an owned word pays more long term.</li>
+        <li><strong>Verb + topic:</strong> "Build Retail", "Shape Data". Active style, great for professional conferences.</li>
+      </ol>
+      <h2>Mistakes you pay for next year</h2>
+      <ul>
+        <li><strong>Year in the main logo:</strong> "Retail Conference 2026". Every January you redesign.</li>
+        <li><strong>Name too long:</strong> "Iberoamerican Retail Innovation Summit" doesn't fit on social and is impossible to shout at the venue.</li>
+        <li><strong>Forced acronyms:</strong> "IRRIS" means nothing to anyone new.</li>
+        <li><strong>Brand clash:</strong> register the domain and social handles before locking the name.</li>
+      </ul>
+      <h2>How to validate before printing banners</h2>
+      <p>Once you have your top 5, run this test: show the names to three potential sponsors (not staff). Ask them to rate each name on event level (1 to 5) and audience. If your name targets senior CMOs and sponsors associate it with a junior meetup, there's a mismatch. Fix it before building the website.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes it memorable?</summary><p>Few syllables, strong base word and a clear topic reference.</p></details>
+      <details><summary>Should I include the year?</summary><p>Not in the main logo, yes in per-edition collateral.</p></details>
+      <details><summary>How do I validate with sponsors?</summary><p>Show it with a mockup. If three potential sponsors connect it with the sector, it's validated.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .cn-item { padding: 0.75rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
+  .cn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const BASE = ['Pulse', 'Forge', 'Crest', 'Bloom', 'Beacon', 'Spark', 'Shift', 'Frame', 'Loop', 'Drift', 'Lumen', 'Tide', 'Vertex', 'Arc'];
+  const FORMATS = ['Forum', 'Summit', 'Conf', 'Talks', 'Days'];
+
+  const topic = document.getElementById('cn-topic') as HTMLInputElement;
+  const format = document.getElementById('cn-format') as HTMLSelectElement;
+  const gen = document.getElementById('cn-gen') as HTMLButtonElement;
+  const out = document.getElementById('cn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function generate() {
+    const t = (topic.value || 'tech').trim();
+    const f = format.value;
+    const set = new Set<string>(); let tries = 0;
+    while (set.size < 20 && tries < 200) {
+      tries++;
+      let name = '';
+      if (f === 'summit') name = `${pick(BASE)} ${cap(t)} Summit`;
+      else if (f === 'con') name = `${cap(t)}Con`;
+      else if (f === 'forum') name = `${pick(BASE)} ${cap(t)} ${pick(FORMATS)}`;
+      else name = pick(BASE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'cn-item'; el.textContent = n; el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,141 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Album Name Generator | Genfy';
+const description = 'Generate album title ideas in seconds. Mix a feeling, a poetic image and a format to get 20 album names ready for your next record.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do I choose an album title?', acceptedAnswer: { '@type': 'Answer', text: 'Pick a title that summarizes the emotional climate of the record in a concrete image. It should be pronounceable, memorable, and ideally unique on Spotify and Apple Music.' } },
+    { '@type': 'Question', name: 'Does the title have to be a track on the record?', acceptedAnswer: { '@type': 'Answer', text: 'No. Plenty of classic albums use a title that never appears as a song. What matters is that the word anchors the concept.' } },
+    { '@type': 'Question', name: 'How long should an album title be?', acceptedAnswer: { '@type': 'Answer', text: 'One to five words is ideal. Longer titles get hard to cite in press, social media and cover art.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Album Name Generator"
+    intro="Generate album titles in seconds. Built for indie, pop, rock, electronic, hip hop and folk records: mix an emotion, a poetic image and a style.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Keyword (central theme)</label>
+      <input id="bn-kw" type="text" placeholder="love, distance, fire..." value="distance" />
+
+      <label for="bn-style" style="margin-top:1rem">Title format</label>
+      <select id="bn-style">
+        <option value="single">Single word (Sail, Bone, Ash)</option>
+        <option value="article">"The ___" (The Slow Hour)</option>
+        <option value="phrase">Poetic phrase (Things That Burn)</option>
+        <option value="adj">Adjective + noun (Broken Sky)</option>
+        <option value="num">With a number (Room 7)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 titles</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick an album title</h2>
+      <p>
+        An album title does three jobs at once: it summarizes the emotional climate of the record,
+        it works as a press hook, and it lives forever on the cover. The difference between a
+        great title and a forgettable one is rarely about the word itself; it's about how the
+        word talks to the cover image, the opening track, and the interview where you'll repeat
+        it a hundred times.
+      </p>
+      <ol>
+        <li><strong>Sum the record up in one feeling.</strong> Loss, fury, calm, transition? Start there.</li>
+        <li><strong>Find a concrete image.</strong> Abstract titles ("Feelings", "Reflections") don't stick. Images do: "Things That Burn", "The Slow Hour", "Room 7".</li>
+        <li><strong>Run the interview test.</strong> "My new record is called ___". Do you say it without stumbling? Do you want to explain it?</li>
+        <li><strong>Search Spotify for clashes.</strong> Not a hard block, but a famous album with the same name will hurt your discoverability.</li>
+        <li><strong>Think of the artwork.</strong> Does the word support a strong cover image? "Sail" yes. "Deep Feelings" no.</li>
+      </ol>
+
+      <h2>Title styles that work</h2>
+      <ul>
+        <li><strong>Single word</strong>: highest-stakes choice. Works when the word carries weight (Sail, Lighthouse, Bone).</li>
+        <li><strong>With definite article</strong>: "The Slow Hour", "The End of Summer". Sounds like a defined work.</li>
+        <li><strong>Poetic phrase</strong>: three to five words forming an image ("Things That Burn", "What's Left of the Fire").</li>
+        <li><strong>Adjective + noun</strong>: "Broken Sky", "Eternal Summer". Compact and atmospheric.</li>
+        <li><strong>With number or reference</strong>: "Room 7", "Volume 2". Works when the number means something inside the concept.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        The most common mistake is picking the title too early: many artists lock it in before the
+        mix is finished, and once the record is done that name doesn't fit. Another classic is
+        using worn-out words ("Awakening", "Essence", "Reborn") that show up on hundreds of
+        records every year. And a third: switching to English when the record is in your native
+        language without a clear reason. If the mental image of the title doesn't connect with
+        the songs, the whole record feels off.
+      </p>
+
+      <h2>After generating: how to commit</h2>
+      <p>Once you have three to five favorites:</p>
+      <ol>
+        <li>Send them to three people who already heard the record and have them vote.</li>
+        <li>Search each one on Spotify, Apple Music and YouTube. Check both album and track collisions.</li>
+        <li>Mock up the title typeset large over the cover image you have in mind.</li>
+        <li>Wait 72 hours and reread. One almost always stands out.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I choose an album title?</summary><p>Sum up the record's emotional climate in a concrete image. Pronounceable, memorable, no obvious clashes on Spotify.</p></details>
+      <details><summary>Does the title have to be a song on the record?</summary><p>No, plenty of classic albums use titles that aren't tracks. What matters is the conceptual anchor.</p></details>
+      <details><summary>How long should an album title be?</summary><p>One to five words is ideal. Longer gets hard to cite.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ADJ = ['Slow', 'Broken', 'Eternal', 'Hollow', 'Deep', 'Raw', 'Cold', 'Warm', 'Quiet', 'Distant', 'Soft', 'Black', 'White', 'Wild', 'Faint'];
+  const NOUN = ['Hour', 'Sky', 'River', 'Bone', 'Sail', 'Lighthouse', 'Echo', 'Shadow', 'Summer', 'Winter', 'Room', 'Road', 'Fog', 'Coal', 'Clock', 'Pack'];
+  const VERB = ['burn', 'pass', 'stay', 'fall', 'grow', 'tremble', 'fade', 'return'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function num() { const i = new Uint32Array(1); crypto.getRandomValues(i); return (i[0] % 99) + 1; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : pick(NOUN);
+      let name = '';
+      if (s === 'single') name = cap(w);
+      else if (s === 'article') name = 'The ' + pick(ADJ) + ' ' + cap(w);
+      else if (s === 'phrase') name = 'Things That ' + cap(pick(VERB));
+      else if (s === 'adj') name = pick(ADJ) + ' ' + cap(w);
+      else if (s === 'num') name = cap(w) + ' ' + num();
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

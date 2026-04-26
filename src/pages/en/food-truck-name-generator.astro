@@ -1,0 +1,143 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Food Truck Name Generator | Genfy';
+const description = 'Generate unique names for your food truck. Mix specialty, animal or concept and get 20 ideas that look great on a wrap.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good food truck name?', acceptedAnswer: { '@type': 'Answer', text: 'Readable from 60 feet away, communicates the cuisine, memorable after a single visit, and has the Instagram handle available.' } },
+    { '@type': 'Question', name: 'Is a pun a good idea?', acceptedAnswer: { '@type': 'Answer', text: 'If it lands in one second and doesn\'t wear out, yes. If you have to explain it, no.' } },
+    { '@type': 'Question', name: 'How do I register it?', acceptedAnswer: { '@type': 'Answer', text: 'Check availability with the USPTO or your country\'s trademark office, plus city permits to operate as a mobile food vendor.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Food Trucks" title="Food Truck Name Generator"
+    intro="Mix specialty, animal or concept and get 20 ideas that look great on the side of a truck. Built to validate Instagram handle instantly.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Keywords (specialty, animal, concept)</label>
+      <input id="bn-kw" type="text" placeholder="taco, fire, wolf..." value="taco, fire" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="animal">Animal + food (Wolf Tacos)</option>
+        <option value="action">Verb + food (Sizzle, Crunch)</option>
+        <option value="ingredient">Ingredient + Truck</option>
+        <option value="alliteration">Alliteration (Tacos Tom)</option>
+        <option value="streetfood">Classic street food</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a food truck name</h2>
+      <p>
+        A food truck has no permanent storefront: the side of the wrap is your only sign and
+        Instagram is your only schedule map. The name has to survive three uses: readable from
+        60 feet on bold-colored vinyl, shoutable in a busy line, and fitting as an IG handle
+        without abbreviating.
+      </p>
+      <ol>
+        <li><strong>Short and vibrant.</strong> One or two words, max three if one is the specialty.</li>
+        <li><strong>Communicates the cuisine.</strong> "Tacos", "Burgers", "Bao" in the name or subtitle prevents confusion.</li>
+        <li><strong>Memorable post-visit.</strong> Happy customers should recommend you without Googling.</li>
+        <li><strong>Wrap-ready.</strong> Bold typography, limited colors.</li>
+        <li><strong>IG and TikTok handles available.</strong> Even if you launch tomorrow, register today.</li>
+      </ol>
+
+      <h2>Styles that work in street food</h2>
+      <ul>
+        <li><strong>Animal + food:</strong> "Wolf Tacos", "Raven Burgers". Memorable, easy to draw as a mascot.</li>
+        <li><strong>Verb + food:</strong> "Sizzle", "Crunch", "Stoke". Energetic, action-suggesting.</li>
+        <li><strong>Ingredient + Truck:</strong> "Corn Truck", "Ember Truck". Honest, communicates product.</li>
+        <li><strong>Alliteration:</strong> "Tacos Tom", "Pizza Pete". Catchy, easy to shout.</li>
+        <li><strong>Classic street food:</strong> nods to traditions (al pastor, smash, Oaxacan) without falling into cliche.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        Number one: a name too long. "The Authentic Traditional Grandma's Kitchen" doesn't fit
+        on a wrap or a handle. Number two: intentional misspellings ("Tackos", "Burgerz") that
+        give recommenders a headache. Number three: weird characters, emojis or accents that
+        break URLs and handles.
+      </p>
+
+      <h2>Quick validation</h2>
+      <ol>
+        <li>Google Maps and "food trucks + city" search.</li>
+        <li>Instagram and TikTok with the exact handle.</li>
+        <li>Print the name actual-size on a sheet and stick it on a wall 60 feet away.</li>
+        <li>Tell 5 friends: do they remember it the next day?</li>
+        <li>Verify city permits and trademark register.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good food truck name?</summary><p>Reads from 60 feet, communicates the food, memorable, IG handle available.</p></details>
+      <details><summary>Pun yes or no?</summary><p>Yes if it lands instantly; no if it needs explanation.</p></details>
+      <details><summary>How do I register?</summary><p>USPTO trademark plus city food vendor permits.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ANIMAL = ['Wolf', 'Raven', 'Fox', 'Owl', 'Tiger', 'Hawk', 'Hare', 'Bull', 'Bison', 'Octopus'];
+  const FOOD = ['Tacos', 'Burgers', 'Pizza', 'Bao', 'Chicken', 'Arepas', 'Sandwiches', 'Wraps', 'Bowls', 'Dumplings'];
+  const VERB = ['Sizzle', 'Crunch', 'Stoke', 'Pull', 'Char', 'Bite', 'Snap', 'Wake', 'Stoke'];
+  const INGR = ['Corn', 'Ember', 'Bone', 'Wheat', 'Lemon', 'Chili', 'Salt', 'Coal', 'Smoke', 'Honey'];
+  const ALLIT_NAMES = ['Tom', 'Pete', 'Frank', 'Bruno', 'Mo', 'Cam', 'Fred', 'Rita', 'Lola'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Tacos';
+      let name = '';
+      if (s === 'animal') name = pick(ANIMAL) + ' ' + (Math.random() > 0.5 ? cap(w) : pick(FOOD));
+      else if (s === 'action') name = pick(VERB) + ' ' + (Math.random() > 0.5 ? cap(w) : pick(FOOD));
+      else if (s === 'ingredient') name = pick(INGR) + ' Truck';
+      else if (s === 'alliteration') {
+        const f = pick(FOOD);
+        const n = pick(ALLIT_NAMES);
+        name = f + ' ' + n;
+      }
+      else if (s === 'streetfood') name = 'The ' + pick(INGR) + ' ' + pick(FOOD);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

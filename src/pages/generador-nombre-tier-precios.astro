@@ -1,0 +1,186 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de tier de precio | Genfy';
+const description = 'Generá nombres para tus planes de precios SaaS. Combinaciones de 3, 4 y 5 tiers con estilo Starter/Growth/Scale o nombres frescos como Pulse, Pivot, Crest.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuál es el mejor nombre de tier?', acceptedAnswer: { '@type': 'Answer', text: 'El que comunica la progresión sin necesidad de explicar. Starter / Growth / Scale / Enterprise es la combinación que más rinde porque se entiende a la primera.' } },
+    { '@type': 'Question', name: '¿Cuántos tiers conviene tener?', acceptedAnswer: { '@type': 'Answer', text: 'Tres es lo más frecuente y limpio. Cuatro funciona si tenés un free + tres pagos o un enterprise muy distinto. Más de cuatro suele confundir.' } },
+    { '@type': 'Question', name: '¿Conviene poner nombres creativos?', acceptedAnswer: { '@type': 'Answer', text: 'Solo si la jerarquía sigue siendo obvia. Pulse / Pivot / Forge funciona si los acompañan tags como Solo / Team / Scale. Nombres puramente creativos sin jerarquía clara bajan la conversión.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Empresa / Business" title="Generador de nombre de tier de precio"
+    intro="Elegí cantidad de tiers y estilo, y obtené 8 combinaciones listas para tu pricing page. De clásicas (Starter / Growth / Scale) a frescas (Pulse / Pivot / Crest).">
+
+    <div slot="tool" class="pt">
+      <label>Cantidad de tiers</label>
+      <select id="pt-qty">
+        <option value="3" selected>3 tiers</option>
+        <option value="4">4 tiers</option>
+        <option value="5">5 tiers</option>
+      </select>
+
+      <label style="margin-top:1rem">Estilo</label>
+      <select id="pt-style">
+        <option value="classic">Clásico (Starter, Growth, Scale)</option>
+        <option value="velocity">Velocidad (Lite, Pro, Boost, Enterprise)</option>
+        <option value="size">Tamaño (Solo, Team, Business, Enterprise)</option>
+        <option value="fresh">Fresco / inventado (Pulse, Pivot, Crest)</option>
+        <option value="numeric">Numérico (Plan 1, Plan 2, Plan 3)</option>
+      </select>
+
+      <button id="pt-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 8 combinaciones</button>
+
+      <div id="pt-out" class="pt-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los nombres de tu pricing importan más que el precio</h2>
+      <p>
+        Cuando un visitante mira una página de precios, decide en 5 segundos cuál tier le
+        corresponde. Si los nombres son confusos, vuelve a la página de inicio sin elegir. Los
+        nombres bien hechos hacen tres cosas a la vez: comunican progresión, sugieren a quién está
+        dirigido cada tier y refuerzan el posicionamiento de marca.
+      </p>
+
+      <h2>Los 5 estilos que funcionan</h2>
+      <ul>
+        <li><strong>Clásico — Starter / Growth / Scale / Enterprise:</strong> el más universal. No requiere explicación. Recomendado para SaaS B2B.</li>
+        <li><strong>Velocidad — Lite / Pro / Boost / Enterprise:</strong> sugiere progresión de potencia. Bueno para herramientas de productividad y marketing.</li>
+        <li><strong>Tamaño — Solo / Team / Business / Enterprise:</strong> muy claro a quién va cada uno. Ideal para herramientas con jerarquía de usuarios.</li>
+        <li><strong>Fresco — Pulse / Pivot / Crest / Forge:</strong> nombres modernos, propios, memorables. Solo si la jerarquía sigue siendo obvia.</li>
+        <li><strong>Numérico — Plan 1, 2, 3:</strong> simple pero impersonal. Funciona si el precio es claramente el driver y no el producto.</li>
+      </ul>
+
+      <h2>Las reglas no negociables</h2>
+      <ol>
+        <li><strong>Una sola escala.</strong> No mezcles dos lógicas (ej: "Solo" en uno y "Pro" en otro).</li>
+        <li><strong>Progresión obvia.</strong> Si tenés que explicar cuál es más caro, el nombre falló.</li>
+        <li><strong>Enterprise siempre presente.</strong> El último tier debe sugerir "estos son los grandes" y dejar la puerta abierta a un sales-led.</li>
+        <li><strong>Evitá metáforas raras.</strong> Nombres genéricos sin sentido (estilo nombres de planeta o personajes mitológicos) bajan la confianza.</li>
+        <li><strong>Mismo idioma en todos los tiers.</strong> No mezcles inglés y español en la misma página.</li>
+      </ol>
+
+      <h2>Errores típicos en pricing pages</h2>
+      <ul>
+        <li>Demasiados tiers (5+). El visitante se pierde y no elige.</li>
+        <li>El tier "más popular" sin destacar visualmente.</li>
+        <li>Diferencias entre tiers expresadas solo en features técnicas, no en outcomes.</li>
+        <li>Nombres demasiado creativos sin precio "ancla". Si "Crest" cuesta USD 49 sin contexto, parece caro.</li>
+        <li>Free tier sin claridad de cuándo upgradear.</li>
+      </ul>
+
+      <h2>Cómo elegir entre estilos</h2>
+      <p>
+        La pregunta no es cuál suena mejor, sino cuál coincide con tu posicionamiento. Si tu marca
+        es seria y B2B, andá por clásico o tamaño. Si es modern, opinionated, busca diferenciar,
+        andá por fresco con jerarquía obvia. Si tu producto es muy commodity (donde el precio es
+        el principal driver), numérico funciona. Lo que nunca funciona: nombres con metáforas
+        forzadas que el cliente tiene que descifrar.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Mejor nombre?</summary><p>El que comunica la progresión sin explicación. Starter / Growth / Scale es el patrón más limpio.</p></details>
+      <details><summary>¿Cuántos tiers?</summary><p>3 lo más limpio. 4 si tenés free + 3 pagos. 5+ confunde.</p></details>
+      <details><summary>¿Nombres creativos?</summary><p>Sí, pero solo si la jerarquía sigue siendo obvia.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pt-out { display: grid; gap: 0.75rem; margin-top: 1.25rem; }
+  .pt-row { padding: 0.875rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .pt-row:hover { border-color: var(--primary); }
+  .pt-tag { padding: 0.25rem 0.625rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.875rem; font-weight: 600; }
+</style>
+
+<script>
+  const qty = document.getElementById('pt-qty') as HTMLSelectElement;
+  const style = document.getElementById('pt-style') as HTMLSelectElement;
+  const out = document.getElementById('pt-out')!;
+  const gen = document.getElementById('pt-gen') as HTMLButtonElement;
+
+  const sets: Record<string, string[][]> = {
+    classic: [
+      ['Starter', 'Growth', 'Scale', 'Enterprise', 'Custom'],
+      ['Basic', 'Plus', 'Premium', 'Enterprise', 'Custom'],
+      ['Free', 'Standard', 'Advanced', 'Enterprise', 'Bespoke'],
+      ['Starter', 'Studio', 'Agency', 'Enterprise', 'Partner'],
+      ['Foundation', 'Growth', 'Pro', 'Scale', 'Enterprise'],
+      ['Launch', 'Grow', 'Scale', 'Custom', 'White-label'],
+      ['Free', 'Starter', 'Business', 'Enterprise', 'Strategic'],
+      ['Solo', 'Studio', 'Company', 'Enterprise', 'Custom'],
+    ],
+    velocity: [
+      ['Lite', 'Pro', 'Boost', 'Enterprise', 'Ultra'],
+      ['Basic', 'Pro', 'Power', 'Enterprise', 'Custom'],
+      ['Lite', 'Standard', 'Pro', 'Plus', 'Enterprise'],
+      ['Free', 'Pro', 'Pro+', 'Business', 'Enterprise'],
+      ['Starter', 'Pro', 'Boost', 'Scale', 'Enterprise'],
+      ['Light', 'Pro', 'Turbo', 'Enterprise', 'Custom'],
+      ['Lite', 'Pro', 'Premium', 'Elite', 'Enterprise'],
+      ['Free', 'Pro', 'Boost', 'Custom', 'Enterprise'],
+    ],
+    size: [
+      ['Solo', 'Team', 'Business', 'Enterprise', 'Strategic'],
+      ['Personal', 'Team', 'Company', 'Enterprise', 'Custom'],
+      ['Individual', 'Squad', 'Studio', 'Company', 'Enterprise'],
+      ['Solo', 'Duo', 'Team', 'Company', 'Enterprise'],
+      ['Free', 'Solo', 'Team', 'Business', 'Enterprise'],
+      ['Single', 'Team', 'Org', 'Multi-org', 'Enterprise'],
+      ['Personal', 'Pro', 'Team', 'Business', 'Enterprise'],
+      ['Solo', 'Team', 'Agency', 'Enterprise', 'Custom'],
+    ],
+    fresh: [
+      ['Pulse', 'Pivot', 'Crest', 'Summit', 'Beacon'],
+      ['Spark', 'Bloom', 'Flow', 'Crest', 'Beacon'],
+      ['Pulse', 'Forge', 'Crest', 'Beacon', 'Summit'],
+      ['Lift', 'Flow', 'Crest', 'Forge', 'Beacon'],
+      ['Pulse', 'Bloom', 'Forge', 'Crest', 'Summit'],
+      ['Spark', 'Pivot', 'Scale', 'Beacon', 'Custom'],
+      ['Bloom', 'Boost', 'Crest', 'Summit', 'Custom'],
+      ['Flow', 'Forge', 'Pulse', 'Crest', 'Beacon'],
+    ],
+    numeric: [
+      ['Plan 1', 'Plan 2', 'Plan 3', 'Plan 4', 'Plan 5'],
+      ['Tier I', 'Tier II', 'Tier III', 'Tier IV', 'Tier V'],
+      ['S1', 'S2', 'S3', 'S4', 'S5'],
+      ['Plan A', 'Plan B', 'Plan C', 'Plan D', 'Custom'],
+      ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Custom'],
+      ['Plan 100', 'Plan 500', 'Plan 1K', 'Plan 5K', 'Custom'],
+      ['Bronze', 'Silver', 'Gold', 'Platinum', 'Custom'],
+      ['Edition 1', 'Edition 2', 'Edition 3', 'Edition 4', 'Custom'],
+    ],
+  };
+
+  function generate() {
+    const N = parseInt(qty.value);
+    const all = sets[style.value];
+
+    out.innerHTML = '';
+    all.slice(0, 8).forEach(combo => {
+      const slice = combo.slice(0, N);
+      const row = document.createElement('div');
+      row.className = 'pt-row';
+      slice.forEach(name => {
+        const tag = document.createElement('span');
+        tag.className = 'pt-tag';
+        tag.textContent = name;
+        row.appendChild(tag);
+      });
+      const text = slice.join(' / ');
+      row.title = 'Click para copiar';
+      row.addEventListener('click', () => { navigator.clipboard.writeText(text); row.style.borderColor = 'var(--primary)'; setTimeout(() => row.style.borderColor = '', 800); });
+      out.appendChild(row);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

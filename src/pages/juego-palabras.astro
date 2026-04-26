@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de juego de palabras | Genfy';
+const description = 'Juegos de palabras y dobles sentidos en español. Para copywriting, redes, presentaciones y para hacer reír a tus amigos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es un juego de palabras?', acceptedAnswer: { '@type': 'Answer', text: 'Un chiste basado en doble sentido del idioma. Un mismo término significa dos cosas y la gracia surge del contraste.' } },
+    { '@type': 'Question', name: '¿Sirven para marketing?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Los juegos de palabras son herramienta clásica del copywriting publicitario.' } },
+    { '@type': 'Question', name: '¿Cómo invento mis propios?', acceptedAnswer: { '@type': 'Answer', text: 'Buscá palabras con doble significado y forzá el contexto. La práctica te entrena el oído.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión / Fun" title="Generador de juego de palabras"
+    intro="Dobles sentidos del español. Útiles para reírse, escribir copy o cerrar un mensaje con efecto.">
+
+    <div slot="tool" class="pn">
+      <div class="pn-card">
+        <p id="pn-text" class="pn-text">Tocá generar para empezar.</p>
+      </div>
+      <button id="pn-gen" class="btn btn-primary" type="button">Otro juego</button>
+      <button id="pn-copy" class="btn btn-ghost" type="button">Copiar</button>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es exactamente un pun (juego de palabras)</h2>
+      <p>
+        Un juego de palabras es un chiste construido sobre la ambigüedad lingüística. La
+        misma palabra (homonimia) o palabras parecidas (paronimia) se usan para crear un
+        doble significado. La gracia surge cuando el oyente "cae" en el segundo sentido un
+        instante después del primero. Es de las formas más antiguas de humor, presente
+        desde Cicerón hasta Tina Fey.
+      </p>
+
+      <h2>Tres tipos básicos</h2>
+      <ol>
+        <li><strong>Homonímico:</strong> misma palabra, dos significados. "Voy al banco a sacar plata" (institución vs. mueble).</li>
+        <li><strong>Paronímico:</strong> palabras parecidas. "Vino a la fiesta sin vino" (verbo vs. bebida).</li>
+        <li><strong>Sintáctico:</strong> la oración entera se puede leer de dos maneras. "Saludo a tu mamá de mi parte" / "Saludo a tu mamá, que de mi parte come en serio".</li>
+      </ol>
+
+      <h2>Por qué los pun rinden en marketing</h2>
+      <p>
+        El cerebro retiene mejor lo que sorprende. Una marca que usa un juego de palabras
+        en su tagline genera más recordación que una con copy directo. Pero hay riesgo: un
+        juego de palabras malo es peor que un copy plano. La regla del dorado: el juego
+        debe sentirse natural, como si fuera obvio. Si la audiencia tiene que pensarlo
+        mucho, perdiste. Marcas como M&M's, Heinz o KitKat construyeron campañas enteras
+        sobre puns simples y memorables.
+      </p>
+
+      <h2>Cómo crear los tuyos</h2>
+      <ul>
+        <li><strong>Empezá por la palabra ambigua.</strong> Hacé lista de palabras con doble sentido en tu rubro.</li>
+        <li><strong>Forzá el contexto donde el doble sentido brilla.</strong> No al revés.</li>
+        <li><strong>Probalo en voz alta con tres personas.</strong> Si tres lo entienden sin explicación, está listo.</li>
+        <li><strong>No abuses.</strong> Un juego de palabras por mensaje, no tres.</li>
+      </ul>
+
+      <h2>Pun en titulares periodísticos</h2>
+      <p>
+        Los periódicos deportivos del mundo viven de los puns en sus tapas. Cuando un
+        equipo llamado "Wolves" gana, "Wolves howl" funciona. Argentina tiene tradición:
+        Página/12 y Olé son escuelas de titular ingenioso. Estudiar tapas viejas de Olé es
+        casi un curso de creatividad lingüística aplicada.
+      </p>
+
+      <h2>Cuándo NO usar un pun</h2>
+      <p>
+        En contextos médicos, financieros serios o legales, un juego de palabras puede
+        sonar frívolo. En anuncios de duelo o crisis, jamás. En audiencias multilingües es
+        riesgoso porque el doble sentido raramente sobrevive la traducción. Y en discursos
+        formales, uno solo es elegancia; tres son falta de respeto.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Sirven para Twitter?</summary><p>Sí. Los puns son los tweets que más viralizan después del meme.</p></details>
+      <details><summary>¿Hay versión inglesa?</summary><p>Sí, en /en/random-pun-generator.</p></details>
+      <details><summary>¿Puedo usarlos en publicidad?</summary><p>Sí, son herramienta clásica de copywriting.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pn-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; }
+  .pn-text { font-size: 1.125rem; line-height: 1.6; margin: 0; }
+</style>
+
+<script>
+  const P: string[] = [
+    "Si una banana se cae al agua, ¿se moja o se pela?",
+    "Aprendí a tocar la guitarra para que mis problemas no me afinaran.",
+    "Mi cama y yo tenemos una relación tan profunda que me cuesta levantarla.",
+    "El que ríe último, piensa más lento.",
+    "El insomnio no es un problema, es tiempo libre extra.",
+    "Si la matemática fuera una fiesta, el álgebra sería el aguafiestas.",
+    "Mi memoria es como Wi-Fi: depende del lugar, la hora y mi humor.",
+    "El silencio es de oro… excepto cuando es WiFi y te pelean por la clave.",
+    "El optimista ve el vaso medio lleno; el pesimista, medio vacío; el ingeniero, mal dimensionado.",
+    "Si te dicen que no podés con todo, asentí y seguí intentando: te están subestimando.",
+    "El lunes es la única persona que llega antes que el café.",
+    "Mi gato no me habla porque entiende mucho.",
+    "Si el sueño fuera moneda, yo estaría quebrado.",
+    "El amor es como el WiFi: solo notás su falta cuando no funciona.",
+    "Tener fe es importante, tener internet también.",
+    "El que mucho abraza, poco apaga la computadora.",
+    "Las matemáticas son fáciles: el problema empieza cuando agregan letras.",
+    "Mi paciencia es como mi celular: dura una hora.",
+    "El que no llora, no carga el celular a tiempo.",
+    "Estudiar es la forma más larga de procrastinar.",
+    "El gerundio es el tiempo verbal más procrastinador del idioma.",
+    "Mi planta se mueve solo si la mira mi mamá.",
+    "El que duerme mucho, sueña con dormir más.",
+    "El brócoli sería más popular si pidiera disculpas.",
+    "El secreto del marketing es decir mucho diciendo poco.",
+    "El que mucho abarca, poco scrollea.",
+    "Tu opinión es válida; mi conexión Wi-Fi también, a veces.",
+    "El café no me despierta, solo me pone testigo de mi cansancio.",
+    "Una dieta exitosa empieza el lunes y termina el martes."
+  ];
+
+  const text = document.getElementById('pn-text') as HTMLElement;
+  const genBtn = document.getElementById('pn-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('pn-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() { text.textContent = pick(P); }
+  genBtn.addEventListener('click', generate);
+  copyBtn.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(text.textContent || '');
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  generate();
+</script>
+</content>
+</invoke>

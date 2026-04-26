@@ -1,0 +1,182 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Regex Tester | Genfy';
+const description = 'Test regular expressions in real time with match highlighting. JavaScript syntax compatible. 100% local.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Which regex dialect does it use?', acceptedAnswer: { '@type': 'Answer', text: 'JavaScript (ECMAScript). Very close to PCRE with minor differences: lookbehinds, named groups, flags. If your regex came from Python or Perl, expect minor adjustments.' } },
+    { '@type': 'Question', name: 'Which flags are supported?', acceptedAnswer: { '@type': 'Answer', text: 'g (global), i (case insensitive), m (multiline), s (dotall), u (unicode), y (sticky). Toggle them via checkboxes.' } },
+    { '@type': 'Question', name: 'Does my text get uploaded?', acceptedAnswer: { '@type': 'Answer', text: 'No. Testing runs 100% in the browser using the native JavaScript regex engine. Your text and pattern never leave your device.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Dev" title="Regex Tester"
+    intro="Test regular expressions with real-time highlighting, match count and group capture. JavaScript-syntax compatible.">
+
+    <div slot="tool">
+      <label for="rx-pat">Pattern</label>
+      <input id="rx-pat" type="text" value="\b\w+@\w+\.\w+\b" style="font-family: var(--font-mono);" />
+      <div class="rx-flags">
+        <label class="chk"><input type="checkbox" id="f-g" checked /> g (global)</label>
+        <label class="chk"><input type="checkbox" id="f-i" /> i (insensitive)</label>
+        <label class="chk"><input type="checkbox" id="f-m" /> m (multiline)</label>
+        <label class="chk"><input type="checkbox" id="f-s" /> s (dotall)</label>
+        <label class="chk"><input type="checkbox" id="f-u" /> u (unicode)</label>
+      </div>
+      <label for="rx-text" style="margin-top:1rem;">Text</label>
+      <textarea id="rx-text" rows="6" style="font-family: var(--font-mono); font-size: 0.9rem;">Contacts:
+ann@example.com
+pete_smith@email.co.uk
+admin@genfy.net</textarea>
+      <div id="rx-status" class="rx-status"></div>
+      <label style="margin-top:1rem;">Matches</label>
+      <div id="rx-matches" class="rx-matches"></div>
+    </div>
+
+    <div slot="content">
+      <h2>What a regular expression is</h2>
+      <p>
+        A regex is a mini-language for describing text patterns. With a few characters you can say things like "three digits, a hyphen, four digits" (a phone number <code>\d&lcub;3&rcub;-\d&lcub;4&rcub;</code>) or "an email" (<code>\b\w+@\w+\.\w+\b</code>). They've existed since 1968 and remain the most concise tool for validating, extracting and replacing text.
+      </p>
+
+      <h2>Most-used characters</h2>
+      <ul>
+        <li><code>.</code> — any character except newline.</li>
+        <li><code>\d</code> — a digit (0-9).</li>
+        <li><code>\w</code> — a word character (letter, digit, underscore).</li>
+        <li><code>\s</code> — a whitespace (includes tab and newline).</li>
+        <li><code>+</code> — one or more.</li>
+        <li><code>*</code> — zero or more.</li>
+        <li><code>?</code> — zero or one.</li>
+        <li><code>&lcub;n,m&rcub;</code> — between n and m repetitions.</li>
+        <li><code>^</code> — start of line (with m flag) or start of string.</li>
+        <li><code>$</code> — end of line or string.</li>
+        <li><code>[abc]</code> — one of a, b or c.</li>
+        <li><code>[^abc]</code> — anything but a, b or c.</li>
+      </ul>
+
+      <h2>Common patterns worth memorizing</h2>
+      <ul>
+        <li><strong>Simple email:</strong> <code>\b[\w.-]+@[\w.-]+\.\w+\b</code> — catches most real emails.</li>
+        <li><strong>URL:</strong> <code>https?://\S+</code> — http or https plus any non-space.</li>
+        <li><strong>IPv4:</strong> <code>\b\d&lcub;1,3&rcub;\.\d&lcub;1,3&rcub;\.\d&lcub;1,3&rcub;\.\d&lcub;1,3&rcub;\b</code>.</li>
+        <li><strong>Date YYYY-MM-DD:</strong> <code>\d&lcub;4&rcub;-\d&lcub;2&rcub;-\d&lcub;2&rcub;</code>.</li>
+        <li><strong>Hex color:</strong> <code>#[0-9a-fA-F]&lcub;3,8&rcub;</code>.</li>
+        <li><strong>Digits only:</strong> <code>^\d+$</code> with m flag to validate line-by-line.</li>
+      </ul>
+
+      <h2>Flags and what they change</h2>
+      <ul>
+        <li><strong>g (global):</strong> without it, regex returns only the first match. You almost always want it.</li>
+        <li><strong>i (insensitive):</strong> ignores case. <code>/Hello/i</code> matches HELLO, hello, HeLlO.</li>
+        <li><strong>m (multiline):</strong> makes <code>^</code> and <code>$</code> match line starts/ends, not just string.</li>
+        <li><strong>s (dotall):</strong> makes <code>.</code> also match newlines.</li>
+        <li><strong>u (unicode):</strong> proper handling of complex Unicode characters.</li>
+        <li><strong>y (sticky):</strong> match starts from lastIndex.</li>
+      </ul>
+
+      <h2>Common gotchas</h2>
+      <ul>
+        <li><strong>Greedy vs lazy.</strong> <code>.*</code> is greedy: takes as much as possible. <code>.*?</code> is lazy: takes as little as possible. To extract "the nearest content between quotes," use lazy.</li>
+        <li><strong>Forgetting the g flag.</strong> Without g, replace only changes the first match. <code>"aaa".replace(/a/, 'b')</code> gives "baa", not "bbb".</li>
+        <li><strong>Escapes in strings.</strong> In JavaScript, <code>"\d"</code> isn't the same as <code>"\\d"</code>. In literals <code>/\d/</code> works; in strings you must double-escape.</li>
+        <li><strong>Catastrophic backtracking.</strong> Patterns like <code>(a+)+b</code> on long input can hang the browser. Use linear patterns for big text.</li>
+      </ul>
+
+      <h2>When NOT to use regex</h2>
+      <p>
+        For parsing HTML, JSON, CSV or any nested format, regex is a bad idea. Those formats need real parsers. The famous Stack Overflow answer "you cannot parse [X]HTML with regex" is a universal truth: regex only handles regular languages, and HTML is not regular. Use the right parser (DOMParser, JSON.parse, a CSV library).
+      </p>
+
+      <h2>Productivity tips</h2>
+      <p>
+        If you'll reuse the same regex in multiple places, name and comment it. Regexes are illegible at first glance; a comment saves debugging time. In JavaScript, the x flag for whitespace tolerance isn't standard, but you can build the regex with <code>new RegExp(string)</code> from named pieces. In real code, consider validation libraries like Yup or Zod that abstract common regexes with declarative APIs.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Which regex dialect does it use?</summary><p>JavaScript (ECMAScript). Very close to PCRE.</p></details>
+      <details><summary>Which flags are supported?</summary><p>g, i, m, s, u, y — combinable via checkboxes.</p></details>
+      <details><summary>Does my text get uploaded?</summary><p>No. 100% local in the browser.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rx-flags { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.75rem; }
+  .chk { display: flex; align-items: center; gap: 0.4rem; margin: 0; font-size: 0.9rem; }
+  .chk input { width: auto; }
+  .rx-status { font-family: var(--font-mono); font-size: 0.85rem; margin-top: 0.75rem; min-height: 1.25rem; color: var(--text-soft); }
+  .rx-status.err { color: var(--danger); }
+  .rx-matches { background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; min-height: 4rem; font-family: var(--font-mono); font-size: 0.85rem; max-height: 240px; overflow: auto; }
+  .rx-match { display: block; padding: 0.25rem 0; }
+  .rx-match mark { background: var(--accent-soft); color: var(--text); padding: 0.05rem 0.2rem; border-radius: 3px; }
+</style>
+
+<script>
+  const patEl = document.getElementById('rx-pat') as HTMLInputElement;
+  const textEl = document.getElementById('rx-text') as HTMLTextAreaElement;
+  const status = document.getElementById('rx-status') as HTMLDivElement;
+  const matches = document.getElementById('rx-matches') as HTMLDivElement;
+  const flags = ['g','i','m','s','u'];
+
+  function escapeHtml(s: string) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function getFlags(): string {
+    let f = '';
+    for (const x of flags) {
+      const el = document.getElementById('f-' + x) as HTMLInputElement;
+      if (el && el.checked) f += x;
+    }
+    return f;
+  }
+
+  function run() {
+    const pat = patEl.value;
+    if (!pat) { matches.innerHTML = ''; status.textContent = ''; status.className = 'rx-status'; return; }
+    try {
+      const re = new RegExp(pat, getFlags());
+      const text = textEl.value;
+      const found: { match: string; index: number }[] = [];
+      let m: RegExpExecArray | null;
+      if (re.global) {
+        while ((m = re.exec(text)) !== null) {
+          found.push({ match: m[0], index: m.index });
+          if (m.index === re.lastIndex) re.lastIndex++;
+        }
+      } else {
+        m = re.exec(text);
+        if (m) found.push({ match: m[0], index: m.index });
+      }
+      status.textContent = `${found.length} match${found.length !== 1 ? 'es' : ''}`;
+      status.className = 'rx-status';
+      if (found.length === 0) { matches.innerHTML = '<em>No matches</em>'; return; }
+      let html = '';
+      let last = 0;
+      for (const f of found) {
+        html += escapeHtml(text.slice(last, f.index));
+        html += '<mark>' + escapeHtml(f.match) + '</mark>';
+        last = f.index + f.match.length;
+      }
+      html += escapeHtml(text.slice(last));
+      matches.innerHTML = '<pre style="margin:0; white-space: pre-wrap;">' + html + '</pre>';
+    } catch (e: any) {
+      status.textContent = 'Error: ' + (e.message || 'invalid regex');
+      status.className = 'rx-status err';
+      matches.innerHTML = '';
+    }
+  }
+
+  patEl.addEventListener('input', run);
+  textEl.addEventListener('input', run);
+  flags.forEach(f => {
+    const el = document.getElementById('f-' + f);
+    if (el) el.addEventListener('change', run);
+  });
+  run();
+</script>

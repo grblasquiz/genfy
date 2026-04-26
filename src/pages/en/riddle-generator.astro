@@ -1,0 +1,152 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Riddle Generator | Genfy';
+const description = 'Classic riddles with answers. For kids, parties, road trips and classrooms. Logic, wit and wordplay.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'For what ages?', acceptedAnswer: { '@type': 'Answer', text: 'Riddles for kids from age 7 and for adults. Filter by difficulty.' } },
+    { '@type': 'Question', name: 'Are answers visible?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, hidden behind a "show answer" toggle.' } },
+    { '@type': 'Question', name: 'Useful in class?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, short lateral-thinking exercises useful at the start of class.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Diversión / Fun" title="Riddle generator"
+    intro="Classic riddles with hidden answers. Think for a minute before peeking.">
+
+    <div slot="tool" class="rd">
+      <div class="rd-card">
+        <p id="rd-q" class="rd-q">Tap generate to start.</p>
+        <details class="rd-answer"><summary>Show answer</summary><p id="rd-a">—</p></details>
+      </div>
+      <div class="rd-controls">
+        <label for="rd-cat">Type</label>
+        <select id="rd-cat">
+          <option value="all">All</option>
+          <option value="logic">Logic</option>
+          <option value="words">Wordplay</option>
+          <option value="kids">Kids</option>
+          <option value="lateral">Lateral thinking</option>
+        </select>
+      </div>
+      <button id="rd-gen" class="btn btn-primary" type="button">Another riddle</button>
+    </div>
+
+    <div slot="content">
+      <h2>Why riddles are a cognitive tool</h2>
+      <p>
+        Solving a riddle activates several brain areas: logical reasoning, lexical recall,
+        divergent thinking. Not pure entertainment: it's light mental gymnastics. That's why
+        many schools use them at the start of class to "switch on" students' attention.
+        Same for adults: 5 minutes of riddles before a key meeting predisposes the team to
+        creative thinking.
+      </p>
+
+      <h2>Types of riddles</h2>
+      <ol>
+        <li><strong>Logic:</strong> a single deductive solution. "Three people, three clues, who's guilty?"</li>
+        <li><strong>Wordplay:</strong> rely on double meaning or sound. "What breaks without being touched?" (Silence.)</li>
+        <li><strong>Lateral thinking:</strong> require shifting perspective. The obvious answer is wrong.</li>
+        <li><strong>Numerical:</strong> sequences, disguised equations. Useful for math-leaning brains.</li>
+        <li><strong>For kids:</strong> visual or concrete answers. "Has a head but no hair, a mouth but doesn't eat." (A river.)</li>
+      </ol>
+
+      <h2>How to use them in groups</h2>
+      <p>
+        In a group, give one minute of silence so each person thinks. Then open. If nobody
+        gets it, give a hint. Solve it collectively, not as competition: the magic is in
+        how different brains approach the same problem. Optional prize for whoever solves
+        first, but not the point. The conversation it generates matters more.
+      </p>
+
+      <h2>Classics that still work</h2>
+      <ul>
+        <li><strong>"The more you take, the bigger it gets":</strong> a hole.</li>
+        <li><strong>"Has teeth but doesn't eat":</strong> a comb.</li>
+        <li><strong>"The more I walk, the further back I go":</strong> the clock (shadows).</li>
+        <li><strong>"Son of your father and mother but not your brother":</strong> yourself.</li>
+      </ul>
+
+      <h2>Difference between riddles, puzzles and enigmas</h2>
+      <p>
+        In English, "riddle" usually means short, sometimes rhyming. "Puzzle" is broader:
+        long, logical, adult. "Enigma" carries a more mysterious flavor, like a riddle with
+        narrative. The three are sometimes used as synonyms, but anyone running a riddle
+        evening should understand the differences to mix well.
+      </p>
+
+      <h2>When a riddle is a bad riddle</h2>
+      <p>
+        If the answer requires very specific knowledge only a Latin teacher would have,
+        it's not a riddle: it's trivia in disguise. A good riddle resolves with pure
+        reasoning and general knowledge. After the answer, if people say "ah, of course",
+        it's a good riddle. If they say "no way", it's probably poorly built.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many?</summary><p>50+ curated, with rotation.</p></details>
+      <details><summary>For class?</summary><p>Yes, especially the "kids" filter.</p></details>
+      <details><summary>Difficulty levels?</summary><p>Filter by category. Logic and lateral are harder.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rd-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; }
+  .rd-q { font-size: 1.125rem; line-height: 1.6; margin: 0 0 1rem; }
+  .rd-answer { padding: 0.75rem; background: var(--bg-inset); border-radius: var(--radius); }
+  .rd-answer summary { cursor: pointer; font-weight: 600; }
+  .rd-answer p { margin: 0.75rem 0 0; color: var(--text-soft); }
+  .rd-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const R: { cat: string; q: string; a: string }[] = [
+    { cat: "kids", q: "Has a head but no hair, a mouth but doesn't eat. What is it?", a: "A river." },
+    { cat: "kids", q: "The more you take, the bigger it gets. What is it?", a: "A hole." },
+    { cat: "kids", q: "Has teeth but doesn't eat. What is it?", a: "A comb." },
+    { cat: "kids", q: "Flies without wings, whistles without a mouth, hits without hands. What is it?", a: "The wind." },
+    { cat: "kids", q: "I have hands but cannot sew, numbers but cannot read. What am I?", a: "A clock." },
+    { cat: "kids", q: "I am round, shine at night, vanish by day. What am I?", a: "The moon." },
+    { cat: "kids", q: "What has many keys but cannot open a lock?", a: "A piano." },
+    { cat: "kids", q: "What has to be broken before you use it?", a: "An egg." },
+    { cat: "logic", q: "If three cats catch three mice in three minutes, how many cats catch 100 mice in 100 minutes?", a: "Three cats." },
+    { cat: "logic", q: "You have two coins that add up to 30 cents and one of them isn't a 5. What are they?", a: "A 25 and a 5. The one that isn't a 5 is the 25." },
+    { cat: "logic", q: "How many months in the year have 28 days?", a: "All of them. Every month has at least 28 days." },
+    { cat: "logic", q: "A man buys a horse for 60, sells for 70, buys for 80, sells for 90. How much did he gain?", a: "20 (two +10 operations)." },
+    { cat: "logic", q: "If you're running a race and pass the person in second place, what place are you in?", a: "Second place." },
+    { cat: "words", q: "What breaks without being touched?", a: "Silence." },
+    { cat: "words", q: "What word in the dictionary is always spelled wrong?", a: "The word 'wrong'." },
+    { cat: "words", q: "What goes up but never comes down?", a: "Your age." },
+    { cat: "words", q: "What has a neck but no head?", a: "A bottle." },
+    { cat: "words", q: "I'm tall when I'm young and short when I'm old. What am I?", a: "A candle." },
+    { cat: "lateral", q: "A man lives in a house where all four walls face south. Where is he?", a: "The North Pole." },
+    { cat: "lateral", q: "A plane crashes exactly on the border of two countries. Where do you bury the survivors?", a: "You don't bury survivors." },
+    { cat: "lateral", q: "Before Mt. Everest was discovered, what was the world's tallest mountain?", a: "Mt. Everest. It was already the tallest before discovery." },
+    { cat: "lateral", q: "What can travel around the world while staying in a corner?", a: "A stamp." }
+  ];
+
+  const qEl = document.getElementById('rd-q') as HTMLElement;
+  const aEl = document.getElementById('rd-a') as HTMLElement;
+  const cat = document.getElementById('rd-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('rd-gen') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? R : R.filter(x => x.cat === filter);
+    const item = pick(pool);
+    qEl.textContent = item.q;
+    aEl.textContent = item.a;
+  }
+  genBtn.addEventListener('click', generate);
+  generate();
+</script>
+</content>
+</invoke>

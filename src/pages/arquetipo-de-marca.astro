@@ -1,0 +1,173 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Sugeridor de arquetipo de marca | Genfy';
+const description = 'Descubrí qué arquetipo de marca le calza mejor a tu negocio. Respondé 5 preguntas y obtené el arquetipo recomendado con tono, paleta y referentes.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es un arquetipo de marca?', acceptedAnswer: { '@type': 'Answer', text: 'Es un patrón de personalidad reconocible que tu marca encarna para conectar con tu audiencia. Se basa en la teoría de los arquetipos psicológicos modernizada para el mundo del marketing.' } },
+    { '@type': 'Question', name: '¿Puedo combinar dos arquetipos?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. La mayoría de las marcas fuertes tienen un arquetipo dominante (70-80%) y uno secundario que matiza el tono. Lo ideal es no más de dos para no diluir el mensaje.' } },
+    { '@type': 'Question', name: '¿Cambio mi arquetipo si pivoteo el negocio?', acceptedAnswer: { '@type': 'Answer', text: 'Si el público objetivo cambia o el problema que resolvés cambia, vale revisarlo. Si solo cambia la oferta, el arquetipo suele mantenerse.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Empresa / Business" title="Sugeridor de arquetipo de marca"
+    intro="Respondé 5 preguntas y obtené el arquetipo dominante para tu marca, con tono recomendado, paleta y 3 referentes globales para inspirarte.">
+
+    <div slot="tool" class="ar">
+      <label>1. ¿Qué le promete tu marca al cliente?</label>
+      <select id="ar-q1">
+        <option value="hero">Coraje y superación</option>
+        <option value="caregiver">Cuidado y protección</option>
+        <option value="explorer">Aventura y libertad</option>
+        <option value="sage">Conocimiento y verdad</option>
+        <option value="creator">Originalidad y expresión</option>
+        <option value="lover">Conexión y sensualidad</option>
+        <option value="jester">Diversión y ligereza</option>
+        <option value="innocent">Simplicidad y optimismo</option>
+        <option value="visionary">Transformación y futuro</option>
+        <option value="outlaw">Rebeldía y disrupción</option>
+        <option value="ruler">Estatus y control</option>
+        <option value="everyman">Cercanía y pertenencia</option>
+      </select>
+
+      <label style="margin-top:1rem">2. ¿Cómo le hablás al cliente?</label>
+      <select id="ar-q2">
+        <option value="formal">Formal y experto</option>
+        <option value="cercano">Cercano y honesto</option>
+        <option value="atrevido">Atrevido y provocador</option>
+        <option value="calido">Cálido y empático</option>
+      </select>
+
+      <label style="margin-top:1rem">3. ¿Qué emoción querés despertar?</label>
+      <select id="ar-q3">
+        <option value="confianza">Confianza</option>
+        <option value="emocion">Emoción</option>
+        <option value="alegria">Alegría</option>
+        <option value="aspiracion">Aspiración</option>
+      </select>
+
+      <button id="ar-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Sugerir arquetipo</button>
+
+      <div id="ar-out" class="ar-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Los 12 arquetipos de marca, en versión moderna</h2>
+      <p>
+        Carl Jung describió patrones de personalidad universales que aparecen en todas las
+        culturas. Margaret Mark y Carol Pearson los adaptaron al mundo del marketing en
+        <em>The Hero and the Outlaw</em>, y desde entonces son la herramienta estándar para definir
+        la voz de una marca. Hay 12 arquetipos. Tu marca debería tener uno dominante.
+      </p>
+      <ul>
+        <li><strong>Héroe</strong> — supera obstáculos, motiva a actuar. Ej: Nike.</li>
+        <li><strong>Cuidador</strong> — protege y nutre. Ej: Johnson &amp; Johnson, Volvo.</li>
+        <li><strong>Explorador</strong> — busca libertad y nuevos horizontes. Ej: Patagonia, Jeep.</li>
+        <li><strong>Sabio</strong> — comparte conocimiento. Ej: Google, The Economist.</li>
+        <li><strong>Creador</strong> — celebra la originalidad. Ej: Lego, Adobe.</li>
+        <li><strong>Amante</strong> — conecta a través del placer y la estética. Ej: Chanel.</li>
+        <li><strong>Bufón</strong> — entretiene y rompe la rigidez. Ej: M&amp;M's, Old Spice.</li>
+        <li><strong>Inocente</strong> — promete simplicidad y bondad. Ej: Coca-Cola, Dove.</li>
+        <li><strong>Visionario / Innovador</strong> — transforma la realidad. Ej: Apple, Tesla.</li>
+        <li><strong>Rebelde</strong> — rompe reglas establecidas. Ej: Harley-Davidson, Diesel.</li>
+        <li><strong>Soberano</strong> — proyecta autoridad y estatus. Ej: Rolex, Mercedes-Benz.</li>
+        <li><strong>Compañero</strong> — celebra lo cotidiano y la pertenencia. Ej: IKEA, Levi's.</li>
+      </ul>
+
+      <h2>Cómo elegir el tuyo (sin caer en lo obvio)</h2>
+      <p>
+        El error más común es elegir el arquetipo que querés ser, no el que tu cliente percibe.
+        Hacé estos tres ejercicios antes de cerrar:
+      </p>
+      <ol>
+        <li>Preguntá a 5 clientes: "Si nuestra marca fuera una persona en una fiesta, ¿cómo sería?". Las palabras que se repiten apuntan al arquetipo real.</li>
+        <li>Mirá tu competencia. Si todos juegan al "Sabio" (lo más común en B2B), un giro hacia "Bufón" o "Rebelde" puede diferenciarte sin cambiar el producto.</li>
+        <li>Escribí tu home page actual y subrayá los adjetivos. ¿Son consistentes con un arquetipo, o saltan entre tres?</li>
+      </ol>
+
+      <h2>Cómo aplicar el arquetipo en concreto</h2>
+      <p>
+        Definir el arquetipo no es decorativo. Tiene que aterrizar en cuatro lugares:
+      </p>
+      <ul>
+        <li><strong>Voz y tono:</strong> guía editorial de 1 página con palabras a usar y palabras a evitar.</li>
+        <li><strong>Paleta y tipografía:</strong> el "Soberano" usa serifs y oro; el "Bufón" usa sans-serif redondas y colores brillantes.</li>
+        <li><strong>Naming de productos y planes:</strong> nombres como Starter, Growth, Scale o Enterprise funcionan para casi cualquier arquetipo y son más sólidos que metáforas forzadas.</li>
+        <li><strong>Atención al cliente:</strong> cómo respondés un email enojado revela el arquetipo más que cualquier campaña.</li>
+      </ul>
+
+      <h2>Combinar dos arquetipos sin diluir</h2>
+      <p>
+        Las marcas fuertes suelen tener un arquetipo primario (70-80%) y uno secundario (20-30%).
+        Apple es Visionario primario y Creador secundario. Patagonia es Explorador primario y
+        Cuidador secundario. La regla: si tenés que elegir más de dos, no estás eligiendo,
+        estás describiendo. Forzá la decisión.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es un arquetipo de marca?</summary><p>Un patrón de personalidad reconocible que tu marca encarna para conectar con su audiencia. Vienen de la psicología junguiana adaptada al marketing.</p></details>
+      <details><summary>¿Puedo combinar dos?</summary><p>Sí, uno dominante y uno secundario. Más de dos diluye el mensaje.</p></details>
+      <details><summary>¿Cuándo lo cambio?</summary><p>Cuando cambia el público objetivo o el problema que resolvés. Si solo cambia la oferta, el arquetipo se mantiene.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ar-out { margin-top: 1.25rem; }
+  .ar-card { padding: 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-md); }
+  .ar-card h3 { margin: 0 0 0.5rem; font-size: 1.25rem; }
+  .ar-card p { margin: 0.5rem 0; }
+  .ar-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+  .ar-pill { padding: 0.25rem 0.625rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.8125rem; }
+</style>
+
+<script>
+  const Q1 = document.getElementById('ar-q1') as HTMLSelectElement;
+  const Q2 = document.getElementById('ar-q2') as HTMLSelectElement;
+  const Q3 = document.getElementById('ar-q3') as HTMLSelectElement;
+  const out = document.getElementById('ar-out')!;
+  const gen = document.getElementById('ar-gen') as HTMLButtonElement;
+
+  type Arch = { name: string; desc: string; tone: string; refs: string; palette: string };
+  const A: Record<string, Arch> = {
+    hero:      { name: 'Héroe',       desc: 'Inspira al cliente a superar obstáculos y dar lo mejor de sí.', tone: 'Decidido, motivador, directo', refs: 'Nike, Adidas, Under Armour', palette: 'Negro, rojo, blanco' },
+    caregiver: { name: 'Cuidador',    desc: 'Protege, nutre y transmite seguridad.', tone: 'Cálido, atento, confiable', refs: 'Volvo, Pampers, Dove', palette: 'Azul suave, blanco, beige' },
+    explorer:  { name: 'Explorador',  desc: 'Promete libertad, descubrimiento y autenticidad.', tone: 'Aventurero, honesto, sin filtros', refs: 'Patagonia, Jeep, GoPro', palette: 'Verde bosque, naranja tierra, gris piedra' },
+    sage:      { name: 'Sabio',       desc: 'Aporta conocimiento, datos y claridad.', tone: 'Experto, sereno, didáctico', refs: 'Google, The Economist, Bloomberg', palette: 'Azul profundo, gris, blanco' },
+    creator:   { name: 'Creador',     desc: 'Celebra la originalidad y la expresión personal.', tone: 'Imaginativo, juguetón, inspirador', refs: 'Lego, Adobe, Etsy', palette: 'Multicolor sobre fondo neutro' },
+    lover:     { name: 'Amante',      desc: 'Conecta a través de la estética y el placer.', tone: 'Sensual, refinado, emocional', refs: 'Chanel, Häagen-Dazs, Victoria’s Secret', palette: 'Rojo vino, dorado suave, negro' },
+    jester:    { name: 'Bufón',       desc: 'Entretiene, rompe la rigidez y celebra el momento.', tone: 'Ágil, irreverente, fresco', refs: 'M&M’s, Old Spice, Skittles', palette: 'Amarillo, naranja, azul vibrante' },
+    innocent:  { name: 'Inocente',    desc: 'Promete simplicidad, optimismo y bondad.', tone: 'Sincero, claro, cálido', refs: 'Coca-Cola, Dove, Innocent Drinks', palette: 'Blanco, celeste, rojo cereza' },
+    visionary: { name: 'Visionario',  desc: 'Transforma la realidad con ideas que parecían imposibles.', tone: 'Audaz, conceptual, futurista', refs: 'Apple, Tesla, SpaceX', palette: 'Negro, plata, blanco hueso' },
+    outlaw:    { name: 'Rebelde',     desc: 'Rompe reglas establecidas y desafía el status quo.', tone: 'Filoso, desafiante, intenso', refs: 'Harley-Davidson, Diesel, Vice', palette: 'Negro, rojo sangre, gris carbón' },
+    ruler:     { name: 'Soberano',    desc: 'Proyecta autoridad, estatus y excelencia.', tone: 'Sobrio, premium, controlado', refs: 'Rolex, Mercedes-Benz, Louis Vuitton', palette: 'Negro, oro, blanco' },
+    everyman:  { name: 'Compañero',   desc: 'Celebra la pertenencia y lo cotidiano.', tone: 'Cercano, honesto, sin pretensión', refs: 'IKEA, Levi’s, Target', palette: 'Azul medio, blanco, amarillo cálido' },
+  };
+
+  function generate() {
+    const a = A[Q1.value];
+    const card = document.createElement('div');
+    card.className = 'ar-card';
+    card.innerHTML = `
+      <h3>${a.name}</h3>
+      <p>${a.desc}</p>
+      <p><strong>Tono:</strong> ${a.tone}</p>
+      <p><strong>Paleta sugerida:</strong> ${a.palette}</p>
+      <p><strong>Referentes:</strong> ${a.refs}</p>
+      <div class="ar-meta">
+        <span class="ar-pill">Voz: ${Q2.options[Q2.selectedIndex].text}</span>
+        <span class="ar-pill">Emoción: ${Q3.options[Q3.selectedIndex].text}</span>
+      </div>
+    `;
+    out.innerHTML = '';
+    out.appendChild(card);
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

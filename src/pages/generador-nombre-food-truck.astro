@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de food truck gratis | Genfy';
+const description = 'Generá nombres únicos para tu food truck. Combiná especialidad, animal o concepto y obtené 20 ideas que se vean bien en una camioneta.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno al nombre de un food truck?', acceptedAnswer: { '@type': 'Answer', text: 'Que se lea a 20 metros, que comunique el tipo de comida, que sea memorable después de una sola visita y que tenga handle de Instagram disponible.' } },
+    { '@type': 'Question', name: '¿Conviene un juego de palabras?', acceptedAnswer: { '@type': 'Answer', text: 'Si es claro y no agota su gracia en una visita, sí. Si el chiste depende de explicarlo, no.' } },
+    { '@type': 'Question', name: '¿Cómo lo registro?', acceptedAnswer: { '@type': 'Answer', text: 'Verificá disponibilidad en INPI o USPTO según el país, además de los permisos municipales para operar como food truck en tu ciudad.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Food trucks" title="Generador de nombre de food truck"
+    intro="Combiná especialidad, animal o concepto y obtené 20 ideas que se vean bien sobre la lateral de una camioneta. Pensado para validar handle de Instagram al instante.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabras clave (especialidad, animal, concepto)</label>
+      <input id="bn-kw" type="text" placeholder="taco, fuego, lobo..." value="taco, fuego" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="animal">Animal + comida (Lobo Tacos)</option>
+        <option value="action">Verbo + comida (Brasea, Pincha)</option>
+        <option value="ingredient">Ingrediente + truck</option>
+        <option value="alliteration">Aliteración (Tacos Tomás)</option>
+        <option value="streetfood">Street food clásico</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de un food truck</h2>
+      <p>
+        Un food truck no tiene fachada permanente: tu lateral es tu único cartel y tu Instagram
+        es tu único mapa de horarios. El nombre tiene que sobrevivir tres usos: leerse a 20
+        metros sobre vinilo de colores fuertes, gritarse en una fila apurada, y caber como
+        handle de IG sin abreviar.
+      </p>
+      <ol>
+        <li><strong>Corto y vibrante.</strong> Una o dos palabras, máximo tres si una es la especialidad.</li>
+        <li><strong>Comunica la cocina.</strong> "Tacos", "Burgers", "Bao" en el nombre o como subtítulo evitan confusión.</li>
+        <li><strong>Memorable post-visita.</strong> Gente que comió bien debe poder recomendarte sin googlear.</li>
+        <li><strong>Listo para vinilo.</strong> Tipografía bold, colores limitados.</li>
+        <li><strong>Handle de IG y TikTok libres.</strong> Aunque salgas mañana, registralos hoy.</li>
+      </ol>
+
+      <h2>Estilos que funcionan en street food</h2>
+      <ul>
+        <li><strong>Animal + comida:</strong> "Lobo Tacos", "Cuervo Burgers". Memorable, fácil de ilustrar como mascota.</li>
+        <li><strong>Verbo + comida:</strong> "Brasea", "Pincha", "Sopla". Energético, sugiere acción.</li>
+        <li><strong>Ingrediente + truck:</strong> "Maíz Truck", "Brasa Truck". Honesto, comunica producto.</li>
+        <li><strong>Aliteración:</strong> "Tacos Tomás", "Pizza Pepe". Pegadizo, fácil de gritar.</li>
+        <li><strong>Street food clásico:</strong> referencias a tradiciones (al pastor, smash, oaxaqueño) sin caer en cliché.</li>
+      </ul>
+
+      <h2>Errores frecuentes</h2>
+      <p>
+        El error número uno es elegir un nombre demasiado largo: "La Auténtica Cocina Tradicional
+        de la Abuela" no entra en una lateral ni en un handle. El segundo es nombres con
+        ortografía rara intencional ("Tackos", "Burgerz") que le dan dolor de cabeza a quien
+        quiere recomendarte. El tercero es usar caracteres raros: emojis, símbolos o eñes
+        rompen URLs y handles.
+      </p>
+
+      <h2>Validación rápida</h2>
+      <ol>
+        <li>Google Maps y búsqueda de "food trucks + ciudad".</li>
+        <li>Instagram y TikTok con el handle exacto.</li>
+        <li>Imprimir el nombre tamaño real en una hoja A4 y pegarlo en una pared a 20 metros.</li>
+        <li>Decirlo a 5 amigos: ¿lo recuerdan al día siguiente?</li>
+        <li>Verificar permisos municipales y registro de marcas.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno al nombre de un food truck?</summary><p>Se lee a 20 m, comunica la comida, es memorable y tiene handle de IG disponible.</p></details>
+      <details><summary>¿Juego de palabras sí o no?</summary><p>Sí si es claro de inmediato; no si necesita explicarse.</p></details>
+      <details><summary>¿Cómo lo registro?</summary><p>Marca en INPI o USPTO, más permisos municipales para operar.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ANIMAL = ['Lobo', 'Cuervo', 'Zorro', 'Búho', 'Tigre', 'Halcón', 'Liebre', 'Toro', 'Bisonte', 'Pulpo'];
+  const FOOD = ['Tacos', 'Burgers', 'Pizza', 'Bao', 'Pollo', 'Arepas', 'Sandwiches', 'Empanadas', 'Wraps', 'Bowls'];
+  const VERB = ['Brasea', 'Pincha', 'Sopla', 'Tira', 'Quema', 'Muerde', 'Crocante', 'Despierta', 'Atiza'];
+  const INGR = ['Maíz', 'Brasa', 'Hueso', 'Trigo', 'Limón', 'Chile', 'Sal', 'Carbón', 'Humo', 'Miel'];
+  const ALLIT_NAMES = ['Tomás', 'Pepe', 'Pancho', 'Bruno', 'Beto', 'Cami', 'Fede', 'Rita', 'Lola'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Tacos';
+      let name = '';
+      if (s === 'animal') name = pick(ANIMAL) + ' ' + (Math.random() > 0.5 ? cap(w) : pick(FOOD));
+      else if (s === 'action') name = pick(VERB) + ' ' + (Math.random() > 0.5 ? cap(w) : pick(FOOD));
+      else if (s === 'ingredient') name = pick(INGR) + ' Truck';
+      else if (s === 'alliteration') {
+        const f = pick(FOOD);
+        const n = pick(ALLIT_NAMES);
+        name = f + ' ' + n;
+      }
+      else if (s === 'streetfood') name = 'El ' + pick(INGR) + ' ' + pick(FOOD);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

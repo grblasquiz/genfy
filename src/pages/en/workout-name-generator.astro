@@ -1,0 +1,134 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Workout Name Generator | Genfy';
+const description = 'Generate unique names for workouts, training programs or circuits. Mix duration and intensity and get 20 ideas for your app or gym.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good workout name?', acceptedAnswer: { '@type': 'Answer', text: 'It communicates duration, intensity and focus (strength, cardio, functional). That helps clients know what to expect before starting.' } },
+    { '@type': 'Question', name: 'Epic or descriptive name?', acceptedAnswer: { '@type': 'Answer', text: 'Blend both: a strong word (Sprout, Pulse, Anchor) plus a duration/intensity descriptor works very well.' } },
+    { '@type': 'Question', name: 'How do I trademark it?', acceptedAnswer: { '@type': 'Answer', text: 'If you\'ll commercialize it as a digital product or subscription, register at the USPTO or your country\'s office.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Fitness" title="Workout Name Generator"
+    intro="Mix intensity, duration or focus and get 20 ideas for gym workouts, fitness app routines or training programs. Ready to validate.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Keywords (intensity, focus)</label>
+      <input id="bn-kw" type="text" placeholder="strength, hiit, cardio..." value="strength, base" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="duration">Duration + intensity (10x10)</option>
+        <option value="strong">Strong (Iron 30, Rock 45)</option>
+        <option value="protocol">Protocol (Base, Pulse, Anchor)</option>
+        <option value="action">Verb + number (Pull 5, Push 4)</option>
+        <option value="single">One word (Sprout, Edge)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to name a workout or program</h2>
+      <p>
+        A workout name plays a practical role: when your client opens the app or walks into the
+        box, they need to know in under a second how long it lasts, how intense it gets, and
+        what area it trains. If it's called "Total Body" or "Full Power", you're not
+        communicating anything.
+      </p>
+      <ol>
+        <li><strong>Explicit duration.</strong> "30 min", "45 min", "60 min". Saves questions.</li>
+        <li><strong>Clear intensity.</strong> "Base", "Pulse", "Edge" suggest different levels.</li>
+        <li><strong>Focus.</strong> If it's upper-body only, say "Push 5".</li>
+        <li><strong>No mythological names.</strong> Avoid deities; use physical terms: anchor, base, pillar, pulse.</li>
+        <li><strong>Memorable.</strong> Your client recommends it: "do the Base 45".</li>
+      </ol>
+
+      <h2>Styles by context</h2>
+      <ul>
+        <li><strong>Duration + intensity:</strong> "10x10", "5x5 Heavy", "30/30 HIIT". Box style.</li>
+        <li><strong>Strong:</strong> "Iron 30", "Rock 45", "Steel 60". Communicates load and rigor.</li>
+        <li><strong>Protocol:</strong> "Base", "Pulse", "Anchor", "Pillar". Progressive system.</li>
+        <li><strong>Verb + number:</strong> "Pull 5", "Push 4", "Squat 3". Specificity.</li>
+        <li><strong>One word:</strong> "Sprout", "Edge", "Trace". Mood-driven, premium.</li>
+      </ul>
+
+      <h2>What to avoid</h2>
+      <p>
+        Avoid generic names ("Total Body", "Full Power", "Beast Mode") that communicate
+        nothing. Avoid references to Greek, Roman or Norse deities or mythological figures:
+        besides saturated, they don't help the client. And avoid promising unrealistic results
+        ("Fat Burn 8000", "Six-Pack in 7 days"): manipulative and they expose you to fitness
+        advertising regulations.
+      </p>
+
+      <h2>Quick validation</h2>
+      <ol>
+        <li>Test it with 5 students: do they know what to expect before starting?</li>
+        <li>Print it on a gym whiteboard: is it clear?</li>
+        <li>Search App Store and Google Play: is there a competitor with the same name?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good workout name?</summary><p>Communicates duration, intensity and focus.</p></details>
+      <details><summary>Epic or descriptive?</summary><p>Blend both: strong word + duration/intensity descriptor.</p></details>
+      <details><summary>How to trademark?</summary><p>If commercialized as a product, USPTO or country office.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const STRONG = ['Iron', 'Rock', 'Steel', 'Granite', 'Lead', 'Rope', 'Chain', 'Cement', 'Anchor'];
+  const PROT = ['Base', 'Pulse', 'Anchor', 'Pillar', 'Ridge', 'Edge', 'Sprout', 'Trace', 'Vertex', 'Axis'];
+  const VERB = ['Pull', 'Push', 'Squat', 'Hinge', 'Carry', 'Drag', 'Step', 'Climb'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function num(max: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return (i[0] % max) + 1; }
+
+  function generate() {
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'duration') name = num(10) + 'x' + num(10);
+      else if (s === 'strong') name = pick(STRONG) + ' ' + (num(4) * 15);
+      else if (s === 'protocol') name = pick(PROT) + ' ' + (num(4) * 15);
+      else if (s === 'action') name = pick(VERB) + ' ' + num(10);
+      else if (s === 'single') name = pick(PROT);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

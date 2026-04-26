@@ -1,0 +1,134 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de rutina de ejercicio gratis | Genfy';
+const description = 'Generá nombres únicos para rutinas, programas de entrenamiento o circuitos. Combiná duración e intensidad y obtené 20 ideas para tu app o gimnasio.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno al nombre de una rutina?', acceptedAnswer: { '@type': 'Answer', text: 'Que comunique duración, intensidad y enfoque (fuerza, cardio, funcional). Eso ayuda a tus clientes a saber qué esperan antes de empezar.' } },
+    { '@type': 'Question', name: '¿Conviene un nombre épico o uno descriptivo?', acceptedAnswer: { '@type': 'Answer', text: 'Mezclá ambos: una palabra fuerte (Brote, Pulso, Ancla) más una descripción de duración o intensidad funciona muy bien.' } },
+    { '@type': 'Question', name: '¿Cómo lo registro?', acceptedAnswer: { '@type': 'Answer', text: 'Si vas a comercializarlo como producto digital o suscripción, registralo en INPI o USPTO según el mercado.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Fitness" title="Generador de nombre de rutina"
+    intro="Combiná intensidad, duración o enfoque y obtené 20 ideas para rutinas de gimnasio, app de fitness o programa de entrenamiento. Listas para validar.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabras clave (intensidad, enfoque)</label>
+      <input id="bn-kw" type="text" placeholder="fuerza, hiit, cardio..." value="fuerza, base" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="duration">Duración + intensidad (10x10)</option>
+        <option value="strong">Fuerte (Hierro 30, Roca 45)</option>
+        <option value="protocol">Protocolo (Base, Pulso, Ancla)</option>
+        <option value="action">Verbo + número (Pull 5, Push 4)</option>
+        <option value="single">Una palabra (Brote, Filo)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo nombrar una rutina o programa</h2>
+      <p>
+        El nombre de una rutina cumple un rol práctico: cuando tu cliente abre la app o entra
+        al box, tiene que saber en menos de un segundo cuánto va a durar, qué tan intenso será
+        y qué área trabaja. Si tu rutina se llama "Total Body" o "Full Power", no estás
+        comunicando nada.
+      </p>
+      <ol>
+        <li><strong>Duración explícita.</strong> "30 min", "45 min", "60 min". Ahorra preguntas.</li>
+        <li><strong>Intensidad clara.</strong> "Base", "Pulso", "Filo" sugieren niveles distintos.</li>
+        <li><strong>Enfoque.</strong> Si es solo tren superior, decilo: "Push 5".</li>
+        <li><strong>Sin nombres mitológicos.</strong> Evitá deidades; usá términos físicos: ancla, base, pilar, pulso.</li>
+        <li><strong>Memorable.</strong> Tu cliente recomienda la rutina al amigo: "hacé el Base 45".</li>
+      </ol>
+
+      <h2>Estilos por contexto</h2>
+      <ul>
+        <li><strong>Duración + intensidad:</strong> "10x10", "5x5 Heavy", "30/30 HIIT". Estilo box.</li>
+        <li><strong>Fuerte:</strong> "Hierro 30", "Roca 45", "Acero 60". Comunica peso y rigor.</li>
+        <li><strong>Protocolo:</strong> "Base", "Pulso", "Ancla", "Pilar". Sistema progresivo.</li>
+        <li><strong>Verbo + número:</strong> "Pull 5", "Push 4", "Squat 3". Especificidad.</li>
+        <li><strong>Una palabra:</strong> "Brote", "Filo", "Trazo". Mood-driven, premium.</li>
+      </ul>
+
+      <h2>Errores que evitar</h2>
+      <p>
+        Evitá nombres genéricos ("Total Body", "Full Power", "Beast Mode") que no comunican
+        información. Evitá referencias a deidades griegas, romanas, nórdicas o figuras
+        mitológicas: además de saturadas, no aportan al cliente. Y evitá prometer resultados
+        irreales ("Fat Burn 8000", "Six-Pack en 7 días"): además de manipuladoras, te exponen
+        a problemas regulatorios en publicidad de fitness.
+      </p>
+
+      <h2>Validación rápida</h2>
+      <ol>
+        <li>Probalo con 5 alumnos: ¿saben qué esperar antes de empezar?</li>
+        <li>Imprimilo en pizarra de gimnasio: ¿se entiende?</li>
+        <li>Buscalo en App Store y Google Play: ¿hay competidor con el mismo nombre?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno al nombre?</summary><p>Comunica duración, intensidad y enfoque. Ayuda a saber qué esperar.</p></details>
+      <details><summary>¿Épico o descriptivo?</summary><p>Mezclá ambos: palabra fuerte + descripción de duración o intensidad.</p></details>
+      <details><summary>¿Cómo lo registro?</summary><p>Si lo comercializás como producto, INPI o USPTO según el mercado.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const STRONG = ['Hierro', 'Roca', 'Acero', 'Granito', 'Plomo', 'Cuerda', 'Cadena', 'Cemento', 'Ancla'];
+  const PROT = ['Base', 'Pulso', 'Ancla', 'Pilar', 'Linde', 'Filo', 'Brote', 'Trazo', 'Vértice', 'Eje'];
+  const VERB = ['Pull', 'Push', 'Squat', 'Hinge', 'Carry', 'Drag', 'Step', 'Climb'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function num(max: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return (i[0] % max) + 1; }
+
+  function generate() {
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'duration') name = num(10) + 'x' + num(10);
+      else if (s === 'strong') name = pick(STRONG) + ' ' + (num(4) * 15);
+      else if (s === 'protocol') name = pick(PROT) + ' ' + (num(4) * 15);
+      else if (s === 'action') name = pick(VERB) + ' ' + num(10);
+      else if (s === 'single') name = pick(PROT);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

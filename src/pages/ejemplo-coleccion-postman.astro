@@ -1,0 +1,158 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Ejemplo de colección Postman | Genfy';
+const description = 'Generá un JSON de colección Postman v2.1 listo para importar. Ideal para arrancar a probar tu API o documentar endpoints.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo importo la colección?', acceptedAnswer: { '@type': 'Answer', text: 'En Postman: File > Import > Raw text, pegás el JSON y se crea la colección con todos los requests.' } },
+    { '@type': 'Question', name: '¿Qué es la versión v2.1?', acceptedAnswer: { '@type': 'Answer', text: 'Es el formato actual de colecciones Postman. Soporta variables de entorno, scripts, auth y request examples.' } },
+    { '@type': 'Question', name: '¿Sirve para Insomnia o Bruno?', acceptedAnswer: { '@type': 'Answer', text: 'Insomnia y Bruno pueden importar colecciones Postman v2.1, aunque algunos scripts pueden necesitar ajustes.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech / Dev"
+    title="Ejemplo de colección Postman"
+    intro="Generá una colección Postman v2.1 con CRUD completo (GET list, GET one, POST, PUT, DELETE) lista para importar."
+  >
+    <div slot="tool" class="pm-tool">
+      <div class="pm-grid">
+        <div>
+          <label for="pm-name">Nombre de la colección</label>
+          <input id="pm-name" type="text" value="My API" />
+        </div>
+        <div>
+          <label for="pm-base">Base URL (variable)</label>
+          <input id="pm-base" type="text" value="https://api.example.com/v1" />
+        </div>
+        <div>
+          <label for="pm-resource">Recurso</label>
+          <input id="pm-resource" type="text" value="users" />
+        </div>
+      </div>
+      <div class="pm-actions">
+        <button id="pm-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="pm-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+      <textarea id="pm-out" class="mono" rows="14" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>¿Qué es una colección Postman?</h2>
+      <p>
+        Una colección Postman es un grupo de requests organizados que podés ejecutar individualmente,
+        en secuencia o desde CI con Newman. Es el formato más usado para compartir APIs internamente
+        y para que un equipo de QA arme regresiones sin tocar código.
+      </p>
+
+      <h2>Variables y entornos</h2>
+      <p>
+        Usá variables como <code>&lcub;&lcub;baseUrl&rcub;&rcub;</code> y <code>&lcub;&lcub;token&rcub;&rcub;</code> en lugar de hardcodear.
+        Después definís un environment "dev" con <code>baseUrl=https://api-dev...</code> y otro
+        "prod" con la URL real. Cambiar entre ambos es un click. Variables que no querés versionar
+        (passwords) van como "Initial Value" vacío y "Current Value" en local.
+      </p>
+
+      <h2>Estructura del JSON</h2>
+      <p>
+        El JSON v2.1 tiene <code>info</code>, <code>item</code> (requests o folders),
+        <code>variable</code> y <code>auth</code>. Cada request define método, URL, headers y body.
+        Los folders agrupan por feature: <code>/users</code>, <code>/orders</code>, <code>/auth</code>.
+      </p>
+
+      <h2>Tests automáticos</h2>
+      <p>
+        En la pestaña Tests podés escribir JS:
+        <code>pm.test("status 200", function() &lcub; pm.response.to.have.status(200); &rcub;);</code>.
+        Postman corre el script tras cada request. Combinado con Newman, eso te da un suite de
+        tests de integración ejecutable desde GitHub Actions.
+      </p>
+
+      <h2>Auth: bearer, basic, OAuth2</h2>
+      <p>
+        Configurá auth a nivel colección o por request. Para JWT, usá Bearer Token con la variable
+        <code>&lcub;&lcub;token&rcub;&rcub;</code>. Para OAuth2, Postman tiene un wizard que obtiene el token y lo
+        guarda en una variable. Para Basic, Postman codifica base64 automáticamente.
+      </p>
+
+      <h2>Pre-request scripts</h2>
+      <p>
+        Útiles para refrescar tokens, generar payloads dinámicos o setear timestamps. Por ejemplo,
+        en un request de POST, generar un body con un UUID nuevo cada vez:
+        <code>pm.environment.set("orderId", crypto.randomUUID());</code>.
+      </p>
+
+      <h2>Newman: la colección en CI</h2>
+      <p>
+        Newman es el runner de Postman para CLI. <code>newman run my-collection.json -e dev.json</code>
+        ejecuta la colección completa y reporta resultados. En GitHub Actions o GitLab CI, eso te
+        da smoke tests sobre staging tras cada deploy.
+      </p>
+
+      <h2>Documentar a partir de la colección</h2>
+      <p>
+        Postman genera documentación pública automáticamente desde la colección. Describí cada
+        request en el campo Description y los ejemplos de respuesta como "Examples". El equipo
+        externo accede a una URL con todos los endpoints y puede probarlos en línea.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo importo la colección?</summary><p>File > Import > Raw text, pegás el JSON y se crea automáticamente.</p></details>
+      <details><summary>¿Qué es v2.1?</summary><p>Formato actual de colecciones Postman, soporta variables, scripts y auth.</p></details>
+      <details><summary>¿Sirve para Insomnia o Bruno?</summary><p>Sí, ambos importan v2.1, con ajustes menores en scripts.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pm-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .pm-grid { grid-template-columns: 1fr; } }
+  .pm-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.8125rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const name = document.getElementById('pm-name') as HTMLInputElement;
+  const base = document.getElementById('pm-base') as HTMLInputElement;
+  const resource = document.getElementById('pm-resource') as HTMLInputElement;
+  const out = document.getElementById('pm-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('pm-gen') as HTMLButtonElement;
+  const copy = document.getElementById('pm-copy') as HTMLButtonElement;
+
+  function build() {
+    const r = resource.value || 'items';
+    const collection = {
+      info: { name: name.value, schema: 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json', _postman_id: crypto.randomUUID ? crypto.randomUUID() : 'random-id' },
+      variable: [{ key: 'baseUrl', value: base.value }, { key: 'token', value: '' }],
+      auth: { type: 'bearer', bearer: [{ key: 'token', value: '{{token}}', type: 'string' }] },
+      item: [
+        { name: `List ${r}`, request: { method: 'GET', header: [], url: { raw: '{{baseUrl}}/' + r + '?page=1&limit=20', host: ['{{baseUrl}}'], path: [r], query: [{ key: 'page', value: '1' }, { key: 'limit', value: '20' }] } } },
+        { name: `Get ${r} by id`, request: { method: 'GET', header: [], url: { raw: '{{baseUrl}}/' + r + '/:id', host: ['{{baseUrl}}'], path: [r, ':id'], variable: [{ key: 'id', value: '1' }] } } },
+        { name: `Create ${r}`, request: { method: 'POST', header: [{ key: 'Content-Type', value: 'application/json' }], body: { mode: 'raw', raw: JSON.stringify({ name: 'Example', email: 'example@example.com' }, null, 2) }, url: { raw: '{{baseUrl}}/' + r, host: ['{{baseUrl}}'], path: [r] } } },
+        { name: `Update ${r}`, request: { method: 'PUT', header: [{ key: 'Content-Type', value: 'application/json' }], body: { mode: 'raw', raw: JSON.stringify({ name: 'Updated' }, null, 2) }, url: { raw: '{{baseUrl}}/' + r + '/:id', host: ['{{baseUrl}}'], path: [r, ':id'], variable: [{ key: 'id', value: '1' }] } } },
+        { name: `Delete ${r}`, request: { method: 'DELETE', header: [], url: { raw: '{{baseUrl}}/' + r + '/:id', host: ['{{baseUrl}}'], path: [r, ':id'], variable: [{ key: 'id', value: '1' }] } } },
+      ],
+    };
+    out.value = JSON.stringify(collection, null, 2);
+  }
+  gen.addEventListener('click', build);
+  [name, base, resource].forEach(el => el.addEventListener('input', build));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copiado';
+    setTimeout(() => { icon.textContent = 'Copiar'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

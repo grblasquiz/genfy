@@ -1,0 +1,198 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free YouTube Shorts Hook Generator | Genfy';
+const description = 'Generate YouTube Shorts hooks that retain and move the algorithm. More educated audience than TikTok, different hooks that perform.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Do YouTube Shorts and TikTok use the same hook format?', acceptedAnswer: { '@type': 'Answer', text: 'Similar but different. Shorts has audience coming from long-form YouTube: tolerates more explanatory hooks. TikTok needs punchier hooks.' } },
+    { '@type': 'Question', name: 'How long should Shorts be to perform?', acceptedAnswer: { '@type': 'Answer', text: 'Sweet spot: 30-50 seconds. Less than 15 drops relative watch time. More than 55 leaves Shorts format and competes with long video.' } },
+    { '@type': 'Question', name: 'Is it OK to reuse Shorts on other channels?', acceptedAnswer: { '@type': 'Answer', text: 'Yes but carefully. Shorts with TikTok watermark perform worse on YouTube. Better to export clean and re-edit.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="YouTube Shorts Hook Generator"
+    intro="Drop in topic and niche. Genfy returns 6 hooks designed for the YouTube Shorts audience, different from TikTok.">
+
+    <div slot="tool" class="ys">
+      <label for="ys-topic">Short topic</label>
+      <input id="ys-topic" type="text" placeholder="Productivity setup..." value="Productivity setup for freelancers" />
+
+      <label for="ys-niche" style="margin-top:1rem">Niche</label>
+      <input id="ys-niche" type="text" placeholder="Productivity..." value="Productivity and remote work" />
+
+      <label for="ys-tone" style="margin-top:1rem">Tone</label>
+      <select id="ys-tone">
+        <option value="educational">Educational / explainer</option>
+        <option value="curiosity">Curiosity / surprising data</option>
+        <option value="contrarian">Counterintuitive / opinion</option>
+        <option value="storytime">Brief storytime</option>
+      </select>
+
+      <button id="ys-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 6 hooks</button>
+
+      <div id="ys-out" class="ys-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>YouTube Shorts vs TikTok: why hooks are different</h2>
+      <p>
+        YouTube Shorts and TikTok seem identical but the audience is different. People landing on Shorts come from the long-form YouTube ecosystem: used to educational content, looking to learn something concrete, tolerating slightly longer and more explanatory hooks. The TikTok audience is more impatient: if the first 2 seconds don't hook, they scroll without thinking.
+      </p>
+      <p>
+        That means a hook that works on TikTok can be too punchy for Shorts, and vice versa. The key is understanding that on Shorts you can afford 4-6 seconds of hook if the promise is clear and specific.
+      </p>
+
+      <h2>How the Shorts algorithm works</h2>
+      <p>
+        YouTube ranks Shorts on a mix of:
+      </p>
+      <ul>
+        <li><strong>Absolute watch time:</strong> what percent of the Short people watch through.</li>
+        <li><strong>Likes and comments:</strong> Shorts weighs likes more than TikTok.</li>
+        <li><strong>Subscriptions generated:</strong> Shorts that generate new subs scale more.</li>
+        <li><strong>Channel clicks:</strong> if people go to your channel after the Short, big signal.</li>
+        <li><strong>Recency:</strong> less important than TikTok, Shorts can go viral weeks later.</li>
+      </ul>
+
+      <h2>Hook structures that perform on Shorts</h2>
+      <ol>
+        <li><strong>Specific promise with number:</strong> "These 3 changes doubled my productive hours."</li>
+        <li><strong>Pedagogical question:</strong> "Did you know your brain takes 23 minutes to refocus after each interruption?"</li>
+        <li><strong>Counterintuitive + reason:</strong> "Working more than 6 hours straight lowers productivity. Here's why."</li>
+        <li><strong>Comparison:</strong> "Tested 3 desk setups. Only one worked."</li>
+        <li><strong>Confession + lesson:</strong> "Worked 14 hours/day for 2 years. This was the mistake."</li>
+      </ol>
+
+      <h2>The factor YouTube prioritizes more than TikTok: subs</h2>
+      <p>
+        YouTube wants to build stable audiences around each channel. So Shorts that generate new subscriptions scale differently: the algorithm shows them to more people to see if it repeats. That means a Short ending with a soft CTA to the channel ("If you liked this, sub for more on productivity") can multiply its reach.
+      </p>
+
+      <h2>The final loop on Shorts</h2>
+      <p>
+        Like TikTok, Shorts count rewatch as a view. But since the audience is more educational, loops work differently:
+      </p>
+      <ul>
+        <li><strong>Open question at the end:</strong> "Which would you try first? Comment." — generates comments and re-watch.</li>
+        <li><strong>Quick recap on close:</strong> "Recap: step 1, step 2, step 3" — reinforces and motivates re-watch from the hook.</li>
+        <li><strong>Pedagogical cliffhanger:</strong> "And this is only half. The other half drops tomorrow" — works if the channel is active.</li>
+      </ul>
+
+      <h2>Practical recording differences</h2>
+      <ul>
+        <li><strong>Audio:</strong> YouTube prioritizes clear audio. Loud music penalizes more than on TikTok.</li>
+        <li><strong>Captions:</strong> mandatory. Half of Shorts are watched without sound.</li>
+        <li><strong>Aesthetic:</strong> tolerates more visual quality / static camera. TikTok-style "raw edit" performs worse.</li>
+        <li><strong>Duration:</strong> 30-50 seconds is sweet spot, more generous than TikTok (15-25).</li>
+        <li><strong>Watermarks:</strong> no TikTok logos, YouTube detects and lowers distribution.</li>
+      </ul>
+
+      <h2>How to use Shorts to grow a long-form YouTube channel</h2>
+      <p>
+        Shorts is the fastest sub-acquisition tool in 2026. Strategy:
+      </p>
+      <ol>
+        <li>Post 1-2 Shorts per day (consistency is key).</li>
+        <li>Shorts must thematize the same as your long content.</li>
+        <li>Mention the long content: "In my long video I explain this in depth".</li>
+        <li>Mind the first description line: it appears in feed.</li>
+        <li>Use a pinned comment to link the related long video.</li>
+      </ol>
+
+      <h2>Common mistakes that kill Shorts</h2>
+      <ul>
+        <li><strong>TikTok-style hook but generic:</strong> "POV: you're at X" without educational context underperforms.</li>
+        <li><strong>Robotic audio (TTS):</strong> YouTube detects and limits distribution.</li>
+        <li><strong>Bad auto-captions:</strong> better to write them manually.</li>
+        <li><strong>No CTA to the channel:</strong> wastes the chance to convert viewer to sub.</li>
+        <li><strong>Reusing TikTok with watermark:</strong> -50% distribution.</li>
+        <li><strong>Erratic frequency:</strong> 1 Short per month gives the algorithm no material.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How long should the Shorts hook be?</summary><p>4-6 seconds. More generous than TikTok because the audience tolerates explanation.</p></details>
+      <details><summary>Auto-captions?</summary><p>Better manual. Auto ones often have errors and lower retention.</p></details>
+      <details><summary>Can I reuse my TikToks?</summary><p>Yes, but export clean (no watermark). YouTube detects and penalizes.</p></details>
+      <details><summary>How many Shorts per week?</summary><p>Sweet spot: 5-7. Consistency outperforms sporadic volume.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ys-out { margin-top: 1.25rem; display: grid; gap: 0.5rem; }
+  .ys-card { padding: 0.875rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .ys-card:hover { border-color: var(--accent); }
+  .ys-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.4rem; font-family: var(--font-mono); }
+  select { width: 100%; padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-size: 0.9375rem; font-family: inherit; }
+</style>
+
+<script>
+  const topic = document.getElementById('ys-topic') as HTMLInputElement;
+  const niche = document.getElementById('ys-niche') as HTMLInputElement;
+  const tone = document.getElementById('ys-tone') as HTMLSelectElement;
+  const gen = document.getElementById('ys-gen') as HTMLButtonElement;
+  const out = document.getElementById('ys-out')!;
+
+  function generate() {
+    const T = topic.value.trim() || 'the topic';
+    const N = niche.value.trim() || 'the niche';
+    const To = tone.value;
+
+    let hooks: string[] = [];
+    if (To === 'educational') {
+      hooks = [
+        `${T} in 60 seconds. Here's the 3-step method.`,
+        `If you work in ${N.toLowerCase()}, this on ${T.toLowerCase()} will help.`,
+        `${T}: what I learned after testing it for 6 months.`,
+        `Three mistakes everyone makes with ${T.toLowerCase()}.`,
+        `${T} explained simple. The concept that saves you time.`,
+        `How to ${T.toLowerCase()} without spending much.`,
+      ];
+    } else if (To === 'curiosity') {
+      hooks = [
+        `Did you know ${T.toLowerCase()} changed how I work?`,
+        `${T}: the data point that will surprise you.`,
+        `Why almost no one knows this about ${T.toLowerCase()}.`,
+        `${T}. The reason most people fail.`,
+        `There's a key detail in ${T.toLowerCase()} and nobody talks about it.`,
+        `${T}: what I discovered testing 10 different methods.`,
+      ];
+    } else if (To === 'contrarian') {
+      hooks = [
+        `${T} doesn't work the way you've been told. Let me explain.`,
+        `You're doing ${T.toLowerCase()} wrong and here's why.`,
+        `Unpopular take on ${T.toLowerCase()}: most people approach it backwards.`,
+        `${T}: why the common advice is wrong.`,
+        `If everyone does ${T.toLowerCase()} the same way, there's a problem.`,
+        `${T} isn't what it seems. Watch this before starting.`,
+      ];
+    } else {
+      hooks = [
+        `Tested ${T.toLowerCase()} for 30 days. This happened.`,
+        `${T}: my honest story without filters.`,
+        `How my life changed when I discovered ${T.toLowerCase()}.`,
+        `${T} before vs after. Look at the real difference.`,
+        `Bought 5 things for ${T.toLowerCase()}. Only two were worth it.`,
+        `${T}: the one-month experiment that changed everything.`,
+      ];
+    }
+
+    out.innerHTML = '';
+    hooks.forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'ys-card';
+      el.title = 'Click to copy';
+      el.innerHTML = b + `<div class="ys-meta">Hook ${i+1} · ${b.length} characters</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

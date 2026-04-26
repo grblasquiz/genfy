@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de anuncio de empresa | Genfy';
+const description = 'Generá el post perfecto para anunciar tu empresa, lanzamiento o ronda en LinkedIn, Twitter / X o newsletter. 5 versiones listas para copiar y pegar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué tiene que llevar un buen anuncio de empresa?', acceptedAnswer: { '@type': 'Answer', text: 'Hook fuerte en la primera línea, contexto en 2-3 frases, qué cambia ahora, una métrica concreta y un CTA claro al final.' } },
+    { '@type': 'Question', name: '¿Conviene anunciar antes o después del lanzamiento?', acceptedAnswer: { '@type': 'Answer', text: 'En LinkedIn y X conviene un anuncio el día del lanzamiento + un follow-up a la semana con resultados. En medios, una semana antes con embargo.' } },
+    { '@type': 'Question', name: '¿Cuánto debe medir un post de anuncio?', acceptedAnswer: { '@type': 'Answer', text: 'En LinkedIn entre 800 y 1300 caracteres rinde bien. En X, dividilo en hilo de 4-6 tuits. En newsletter podés extenderte hasta 600 palabras.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Empresa / Business" title="Generador de anuncio de empresa"
+    intro="Generá el post perfecto para anunciar tu empresa, ronda, alianza o lanzamiento. 5 versiones para LinkedIn, X y newsletter, listas para copiar.">
+
+    <div slot="tool" class="ca">
+      <label>Empresa</label>
+      <input id="ca-co" type="text" value="Acme Corp" />
+
+      <label style="margin-top:1rem">Tipo de anuncio</label>
+      <select id="ca-type">
+        <option value="lanzamiento">Lanzamiento de producto</option>
+        <option value="ronda">Ronda de inversión</option>
+        <option value="alianza">Alianza estratégica</option>
+        <option value="empresa">Lanzamiento de la empresa</option>
+        <option value="hito">Hito (clientes, facturación)</option>
+      </select>
+
+      <label style="margin-top:1rem">Detalle clave</label>
+      <input id="ca-key" type="text" value="USD 2M de seed para la nueva plataforma de cursos" />
+
+      <label style="margin-top:1rem">Audiencia principal</label>
+      <input id="ca-aud" type="text" value="profesionales que cambian de carrera" />
+
+      <button id="ca-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 5 versiones</button>
+
+      <div id="ca-out" class="ca-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué un anuncio bien hecho compensa el esfuerzo</h2>
+      <p>
+        Un buen anuncio de empresa hace tres cosas a la vez: te trae prensa orgánica, atrae talento
+        que no te conocía y le recuerda a clientes potenciales que existís. Las empresas que
+        invierten 1 hora en escribir un anuncio bien armado, en lugar de 10 minutos en un post
+        genérico, ven la diferencia en lecturas, comentarios y mensajes directos.
+      </p>
+
+      <h2>La estructura de un anuncio que funciona</h2>
+      <ol>
+        <li><strong>Hook:</strong> primera línea que detiene el scroll. Una cifra impactante, una pregunta o un giro inesperado.</li>
+        <li><strong>Contexto:</strong> 2 a 3 frases que explican de qué se trata sin asumir conocimiento previo.</li>
+        <li><strong>Lo que cambia:</strong> qué hace posible este anuncio para tus clientes / para el equipo.</li>
+        <li><strong>Métrica concreta:</strong> un número real (clientes, ahorro, tiempo) que respalde el anuncio.</li>
+        <li><strong>Reconocimiento al equipo / partners:</strong> nombrar gente y empresas que ayudaron.</li>
+        <li><strong>CTA claro:</strong> qué querés que la persona haga después de leer (suscribirse, agendar demo, leer la nota).</li>
+      </ol>
+
+      <h2>Diferencias por canal</h2>
+      <ul>
+        <li><strong>LinkedIn:</strong> tono profesional pero personal. Funciona muy bien empezar en primera persona ("Hace 18 meses..."), foto del equipo, párrafos cortos.</li>
+        <li><strong>X / Twitter:</strong> hilo de 4-6 tuits. Primer tuit con el dato más fuerte y un signo visual (cifra, emoji simple, línea horizontal de guiones).</li>
+        <li><strong>Newsletter:</strong> podés contar la historia detrás, los obstáculos, los aprendizajes. La audiencia ya te eligió, recompensala con profundidad.</li>
+        <li><strong>Instagram:</strong> carrusel de 5-7 slides con titular grande y un dato por slide.</li>
+      </ul>
+
+      <h2>Errores que hacen que tu anuncio pase desapercibido</h2>
+      <ol>
+        <li>Empezar con "Estamos felices de anunciar...". Está prohibido en 2026.</li>
+        <li>No incluir un número. Un anuncio sin métrica es un comunicado interno.</li>
+        <li>Ignorar al equipo. Si lograste algo, lo lograron varias personas. Nombrá al menos 3.</li>
+        <li>No tener CTA. Si no sabés qué hacer después de leer, perdiste la chance de capturar valor.</li>
+        <li>Publicar el viernes a las 18hs. Probá martes y miércoles entre 9 y 11 hora local.</li>
+      </ol>
+
+      <h2>Cómo amplificar el alcance</h2>
+      <ul>
+        <li>Pediles a 5-10 personas del equipo que reposteen al mismo tiempo.</li>
+        <li>Tagueá a inversores, partners y a 1 o 2 medios relevantes.</li>
+        <li>Creá una versión en hilo para X y otra para LinkedIn — no copies y pegues una en la otra.</li>
+        <li>Mandá el anuncio por email a tu lista 1-2 horas antes de publicarlo público.</li>
+        <li>Después de 24 horas, hacé un follow-up con los comentarios más interesantes y respuestas.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Antes o después del lanzamiento?</summary><p>El día del lanzamiento + follow-up a la semana en redes. Para medios, una semana antes con embargo.</p></details>
+      <details><summary>¿Cuánto debe medir?</summary><p>LinkedIn 800-1300 caracteres. X hilo de 4-6 tuits. Newsletter hasta 600 palabras.</p></details>
+      <details><summary>¿Qué tiene que llevar?</summary><p>Hook, contexto, qué cambia, métrica, reconocimiento al equipo, CTA.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ca-out { display: grid; gap: 0.875rem; margin-top: 1.25rem; }
+  .ca-card { padding: 1.125rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-md); cursor: pointer; transition: border-color 0.1s; white-space: pre-wrap; }
+  .ca-card:hover { border-color: var(--primary); }
+  .ca-card h4 { margin: 0 0 0.5rem; font-size: 0.875rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+</style>
+
+<script>
+  const co = document.getElementById('ca-co') as HTMLInputElement;
+  const type = document.getElementById('ca-type') as HTMLSelectElement;
+  const key = document.getElementById('ca-key') as HTMLInputElement;
+  const aud = document.getElementById('ca-aud') as HTMLInputElement;
+  const out = document.getElementById('ca-out')!;
+  const gen = document.getElementById('ca-gen') as HTMLButtonElement;
+
+  function generate() {
+    const v1 = `Noticia.\n\n${co.value} acaba de cerrar ${key.value}.\n\nLo que esto significa para ${aud.value}: más velocidad, mejor producto, y un equipo que ahora puede enfocarse 100% en el resultado de cada cliente.\n\nGracias al equipo, a los inversores y a los clientes que creyeron desde el día uno.\n\n¿Querés ver lo que viene? Suscribite al newsletter en el primer comentario.`;
+    const v2 = `Hace 18 meses, ${co.value} era una idea anotada en una servilleta.\n\nHoy: ${key.value}.\n\nEl camino fue todo menos lineal. Cambiamos de modelo dos veces, perdimos clientes que pensábamos clave y descubrimos que el problema real de ${aud.value} era distinto al que asumíamos al inicio.\n\nVamos por el siguiente capítulo.`;
+    const v3 = `Tres datos para empezar:\n\n1. Lanzamos ${co.value} hace 12 meses.\n2. ${key.value}.\n3. Estamos buscando sumar al equipo.\n\nSi te interesa cómo construimos para ${aud.value}, agendá una llamada de 15 minutos en el link del perfil.`;
+    const v4 = `Hilo (1/5).\n\n${co.value} acaba de anunciar ${key.value}. Acá lo que más cambia para ${aud.value} y para el equipo.\n\n(2/5) El producto pasa al siguiente nivel: nuevas funciones que llevábamos pidiendo hace meses ya están en backlog.\n\n(3/5) Sumamos a 4 personas clave de producto, datos y soporte.\n\n(4/5) Abrimos lista de espera para el segmento enterprise.\n\n(5/5) Gracias. ¿Preguntas? Respondo abajo.`;
+    const v5 = `Para ${aud.value}: ${co.value} acaba de cerrar ${key.value}.\n\nQué cambia esta semana:\n— Mejor velocidad de respuesta.\n— Plan anual con descuento por tiempo limitado.\n— Demos personalizadas con el equipo de producto.\n\nLink al detalle en los comentarios.`;
+
+    const versions = [
+      { tag: 'LinkedIn — clásico (gancho + cifra + agradecimiento)', text: v1 },
+      { tag: 'LinkedIn — narrativo (origen + presente)', text: v2 },
+      { tag: 'X / breve — 3 datos', text: v3 },
+      { tag: 'X — hilo 5 tuits', text: v4 },
+      { tag: 'Email a base de clientes', text: v5 },
+    ];
+
+    out.innerHTML = '';
+    versions.forEach(v => {
+      const c = document.createElement('div');
+      c.className = 'ca-card';
+      c.innerHTML = `<h4>${v.tag}</h4>`;
+      const p = document.createElement('div');
+      p.textContent = v.text;
+      c.appendChild(p);
+      c.title = 'Click para copiar';
+      c.addEventListener('click', () => { navigator.clipboard.writeText(v.text); c.style.borderColor = 'var(--primary)'; setTimeout(() => c.style.borderColor = '', 800); });
+      out.appendChild(c);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

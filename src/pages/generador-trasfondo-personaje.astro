@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de trasfondo de personaje gratis | Genfy';
+const description = 'Generá historias previas (backstory) para personajes de ficción. Combiná infancia, herida y secreto para tener 10 trasfondos listos al instante.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es el trasfondo de un personaje?', acceptedAnswer: { '@type': 'Answer', text: 'Es la historia previa que explica por qué el personaje actúa como actúa. Incluye la herida fundacional, los hábitos heredados y los secretos que aún carga.' } },
+    { '@type': 'Question', name: '¿Cuánto trasfondo debo escribir?', acceptedAnswer: { '@type': 'Answer', text: 'Mucho más del que aparecerá en la historia. El lector solo verá un 20%, pero el autor necesita conocer todo para que las decisiones del personaje sean coherentes.' } },
+    { '@type': 'Question', name: '¿Cómo introduzco el trasfondo?', acceptedAnswer: { '@type': 'Answer', text: 'En cuentagotas. Una pista por escena, ligada a un objeto, un gesto o una palabra que el personaje evita.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de trasfondo de personaje"
+    intro="Generá la historia previa de tu personaje. Combiná infancia, herida fundacional y secreto para tener 10 trasfondos listos para tu novela o guion.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Tipo de personaje</label>
+      <input id="bn-kw" type="text" placeholder="protagonista, antagonista..." value="protagonista" />
+
+      <label for="bn-style" style="margin-top:1rem">Tono</label>
+      <select id="bn-style">
+        <option value="realist">Realista contemporáneo</option>
+        <option value="dark">Oscuro / noir</option>
+        <option value="bittersweet">Agridulce / drama</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 10 trasfondos</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo escribir un trasfondo que sostenga al personaje</h2>
+      <p>
+        El trasfondo es lo que el personaje ya vivió antes de que empiece la historia. No es
+        información para volcar al lector: es información para vos, autor o autora. Cada elección
+        del personaje en escena debe poder rastrearse a algo del trasfondo. Si tu protagonista
+        evita los hospitales, debería existir una razón concreta en su pasado, aunque nunca la
+        cuentes en voz alta.
+      </p>
+      <ol>
+        <li><strong>Una herida fundacional.</strong> Un evento clave entre los 6 y los 16 años que explica el patrón emocional adulto.</li>
+        <li><strong>Un secreto activo.</strong> Algo que el personaje sigue ocultando hoy. Cuanto más cotidiano, más interesante.</li>
+        <li><strong>Una decisión que se arrepiente.</strong> Un punto de bifurcación pasado donde eligió mal y carga el costo.</li>
+        <li><strong>Un hábito heredado.</strong> Algo que hace sin pensar porque lo aprendió de un padre, una madre, un hermano.</li>
+        <li><strong>Un trabajo previo.</strong> Lo que hacía antes de la historia define cómo resuelve problemas (un ex militar y un ex bailarín resuelven distinto).</li>
+      </ol>
+
+      <h2>Plantilla de trasfondo</h2>
+      <ul>
+        <li><strong>Familia de origen</strong>: padres, hermanos, lugar geográfico.</li>
+        <li><strong>Herida fundacional</strong>: el evento que explica el miedo central.</li>
+        <li><strong>Educación</strong>: formación o falta de ella.</li>
+        <li><strong>Trabajos previos</strong>: dos o tres anteriores al inicio de la historia.</li>
+        <li><strong>Relaciones importantes</strong>: parejas, amistades, deudas emocionales.</li>
+        <li><strong>Secreto activo</strong>: lo que sigue ocultando.</li>
+        <li><strong>Hábito heredado</strong>: gesto, palabra o ritual aprendido en casa.</li>
+      </ul>
+
+      <h2>Errores frecuentes</h2>
+      <p>
+        El más común: trasfondos demasiado dramáticos donde se acumulan tragedias para "explicar"
+        al personaje. Cuando todo es trauma, nada es trauma. Otro error: vomitar el trasfondo en
+        el primer capítulo en un monólogo interno. La regla es siempre dosificar: una pista por
+        escena, ligada a un objeto, un gesto o una frase que el personaje evita decir. Y un
+        tercero: trasfondos que contradicen la edad del personaje (un protagonista de 25 años con
+        cinco trabajos pasados de cinco años cada uno).
+      </p>
+
+      <h2>Después de generar</h2>
+      <ol>
+        <li>Marcá la herida fundacional y verificá que conecte con el deseo central de la historia.</li>
+        <li>Listá tres pistas físicas (objetos, lugares, cicatrices) que aludan al pasado.</li>
+        <li>Elegí qué parte del trasfondo se revela y qué parte queda oculta.</li>
+        <li>Verificá coherencia con la edad y la profesión actual.</li>
+        <li>Probá una escena donde el trasfondo influye sin ser explicado.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es el trasfondo?</summary><p>La historia previa que explica por qué el personaje actúa como actúa.</p></details>
+      <details><summary>¿Cuánto trasfondo debo escribir?</summary><p>Mucho más del que aparecerá en la historia. Solo un 20% se muestra.</p></details>
+      <details><summary>¿Cómo lo introduzco?</summary><p>En cuentagotas, ligado a objetos, gestos y palabras evitadas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+  .bn-item { padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.55; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const REALIST_W = ['perdió a su padre a los nueve y aprendió a callar las preguntas', 'creció traduciendo a su madre que no hablaba el idioma del país', 'fue el chico al que nadie elegía para los equipos de gimnasia', 'quedó al cuidado de un abuelo que dormía con la puerta cerrada'];
+  const REALIST_S = ['nunca le contó a su pareja que abandonó la carrera dos materias antes de recibirse', 'oculta una deuda que sus hermanos creen saldada', 'sigue cobrando a una clienta que ya no le exige resultados'];
+  const REALIST_J = ['trabajó tres años de cajero en un supermercado que cerró', 'fue traductor freelance hasta que un cliente le pidió firmar un texto que no había escrito', 'manejó la radio del pueblo con un horario imposible'];
+  const DARK_W = ['fue testigo a los doce de un robo que la familia decidió no denunciar', 'creció escondiendo a un hermano del padre violento', 'aprendió a leer las luces apagadas de su casa antes de entrar', 'pasó dos meses en un internado del que nadie habla'];
+  const DARK_S = ['firmó un papel que aún recuerda y que cree perdido', 'lleva tres años pagando un silencio sin saber a quién', 'no es la primera vez que cambia de ciudad por una desaparición'];
+  const DARK_J = ['fue oficial en una ciudad chica antes de retirarse sin explicaciones', 'manejaba la pensión hasta el incendio del 2014', 'trabajó cuatro años en una empresa de seguridad privada'];
+  const BITTER_W = ['perdió a una hermana en un accidente que pudo evitar', 'fue criada por un tío que la quería pero nunca lo dijo', 'cuidó a su madre enferma durante toda la adolescencia'];
+  const BITTER_S = ['nunca abrió la última carta que recibió de su padre', 'guarda una llave de una casa que ya no existe', 'paga un alquiler de un departamento vacío hace dos años'];
+  const BITTER_J = ['fue maestra rural hasta que cerraron la escuela', 'trabajó toda la vida en la imprenta familiar antes del cierre', 'fue enfermera de pediatría hasta el burnout'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const role = kw.value.trim() || 'protagonista';
+    const s = style.value;
+    let W: string[], S: string[], J: string[];
+    if (s === 'dark') { W = DARK_W; S = DARK_S; J = DARK_J; }
+    else if (s === 'bittersweet') { W = BITTER_W; S = BITTER_S; J = BITTER_J; }
+    else { W = REALIST_W; S = REALIST_S; J = REALIST_J; }
+    out.innerHTML = '';
+    const seen = new Set<string>();
+    let attempts = 0;
+    while (seen.size < 10 && attempts < 60) {
+      attempts++;
+      const text = `Este ${role} ${pick(W)}. Antes de la historia ${pick(J)}. Hoy ${pick(S)}.`;
+      if (seen.has(text)) continue;
+      seen.add(text);
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = text;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.textContent; el.textContent = '✓ copiado'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    }
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

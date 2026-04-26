@@ -1,0 +1,156 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de código de descuento | Genfy';
+const description = 'Generá códigos de descuento únicos para tu Shopify, web o campaña. Con prefijo, sufijo y formato personalizable. Hasta 100 códigos en un click.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno a un código de descuento?', acceptedAnswer: { '@type': 'Answer', text: 'Que sea fácil de tipear (sin caracteres ambiguos como 0/O o 1/I), corto (6-10 caracteres), único, y que comunique el beneficio o el contexto cuando sea posible.' } },
+    { '@type': 'Question', name: '¿Conviene códigos generales o únicos por persona?', acceptedAnswer: { '@type': 'Answer', text: 'Códigos únicos suben la conversión y previenen abusos, pero requieren más infraestructura. Códigos generales son más simples y mejores para campañas masivas.' } },
+    { '@type': 'Question', name: '¿Cuántos códigos generar?', acceptedAnswer: { '@type': 'Answer', text: 'Para un programa de referidos o campaña personalizada, 1 código por persona. Para promociones masivas, 5-10 códigos distintos por canal de tráfico para medir performance.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Empresa / Business" title="Generador de código de descuento"
+    intro="Generá códigos únicos listos para tu Shopify, ecommerce o campaña. Configurás prefijo, longitud y cantidad — el resto lo hacemos nosotros.">
+
+    <div slot="tool" class="dc">
+      <label>Prefijo (opcional, en mayúsculas)</label>
+      <input id="dc-prefix" type="text" value="VERANO" maxlength="10" />
+
+      <label style="margin-top:1rem">Longitud del código</label>
+      <select id="dc-len">
+        <option value="6">6 caracteres</option>
+        <option value="8" selected>8 caracteres</option>
+        <option value="10">10 caracteres</option>
+        <option value="12">12 caracteres</option>
+      </select>
+
+      <label style="margin-top:1rem">Cantidad de códigos</label>
+      <select id="dc-qty">
+        <option value="10">10</option>
+        <option value="25" selected>25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+
+      <label style="margin-top:1rem">
+        <input id="dc-numbers" type="checkbox" checked /> Incluir números
+      </label>
+
+      <label style="margin-top:0.5rem">
+        <input id="dc-readable" type="checkbox" checked /> Solo caracteres legibles (sin 0, O, 1, I, L)
+      </label>
+
+      <button id="dc-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar códigos</button>
+      <button id="dc-copy" class="btn" type="button" style="margin-top:1rem; margin-left: 0.5rem">Copiar todos</button>
+
+      <pre id="dc-out" class="dc-out"></pre>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo armar un buen código de descuento</h2>
+      <p>
+        El código de descuento parece un detalle, pero la diferencia entre uno bien hecho y uno
+        improvisado se nota en la conversión. Los buenos códigos cumplen 4 criterios: son fáciles
+        de tipear, no se confunden con caracteres parecidos, son lo suficientemente cortos para
+        recordarse, y comunican algo sobre la promoción cuando se ven en un email o anuncio.
+      </p>
+
+      <h2>Tres tipos de código y cuándo usar cada uno</h2>
+      <ul>
+        <li><strong>Código público:</strong> uno solo para toda la campaña, fácil de comunicar (ej: VERANO20). Mejor para campañas masivas y email marketing.</li>
+        <li><strong>Código único por persona:</strong> uno distinto por cada destinatario o referidor. Mejor para programas de afiliados, referidos y campañas premium.</li>
+        <li><strong>Código por canal:</strong> distintos por canal (Instagram, Facebook, podcast). Te permite medir qué canal trae más conversiones reales.</li>
+      </ul>
+
+      <h2>Buenas prácticas que casi nadie sigue</h2>
+      <ol>
+        <li>Evitá caracteres ambiguos: 0 vs O, 1 vs I vs L. Si los usás, multiplicás errores de tipeo y soporte.</li>
+        <li>Mantené longitud entre 6 y 12 caracteres. Más corto se adivina, más largo se equivoca.</li>
+        <li>Incluí el contexto cuando puedas: BLACKFRIDAY30, REFERIDO15, PODCAST10. Aumenta percepción de exclusividad.</li>
+        <li>Definí fecha de vencimiento clara. Sin vencimiento, todos esperan a comprar después.</li>
+        <li>Limitá usos por persona. Un código sin límite invita al abuso.</li>
+      </ol>
+
+      <h2>Cómo medir si tu campaña con código funcionó</h2>
+      <p>
+        No alcanza con mirar cuántos códigos se canjearon. Las métricas que importan:
+      </p>
+      <ul>
+        <li><strong>Tasa de uso:</strong> códigos canjeados / códigos emitidos. Por debajo del 5% probablemente la oferta es débil.</li>
+        <li><strong>Ticket promedio del que usó código vs el que no:</strong> si es muy distinto, podés estar canibalizando ventas que ya iban a pasar.</li>
+        <li><strong>Repetición:</strong> ¿el cliente que usó código volvió a comprar sin código? Si no, tu programa atrae cazadores de ofertas, no clientes.</li>
+        <li><strong>Margen real:</strong> descuento + envío gratis + costo operativo. A veces "20% off" es perder plata por unidad.</li>
+      </ul>
+
+      <h2>Errores comunes en programas de descuento</h2>
+      <ul>
+        <li>Códigos genéricos como "DESCUENTO" o "PROMO" — son los que más se filtran a sitios de cupones.</li>
+        <li>Combinar códigos sin reglas claras (un código de 20% + envío gratis sin tope = pérdida garantizada).</li>
+        <li>No comunicar reglas: monto mínimo, exclusiones, vencimiento.</li>
+        <li>Repetir el mismo código todos los meses. La urgencia se diluye.</li>
+        <li>No avisar a soporte. Si tus agentes no saben qué reglas aplican, el cliente termina enojado.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno a un código?</summary><p>Fácil de tipear, sin caracteres ambiguos, corto y con contexto cuando se puede.</p></details>
+      <details><summary>¿Generales o únicos?</summary><p>Únicos para referidos y afiliados, generales para campañas masivas.</p></details>
+      <details><summary>¿Cuántos generar?</summary><p>Uno por persona en programas personalizados, varios por canal en campañas masivas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .dc-out { margin-top: 1.25rem; padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.9375rem; line-height: 1.7; max-height: 400px; overflow-y: auto; }
+</style>
+
+<script>
+  const prefix = document.getElementById('dc-prefix') as HTMLInputElement;
+  const len = document.getElementById('dc-len') as HTMLSelectElement;
+  const qty = document.getElementById('dc-qty') as HTMLSelectElement;
+  const num = document.getElementById('dc-numbers') as HTMLInputElement;
+  const readable = document.getElementById('dc-readable') as HTMLInputElement;
+  const out = document.getElementById('dc-out')!;
+  const gen = document.getElementById('dc-gen') as HTMLButtonElement;
+  const cp = document.getElementById('dc-copy') as HTMLButtonElement;
+
+  function generate() {
+    const full = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const safe = 'ABCDEFGHJKMNPQRSTUVWXYZ';
+    const fullN = '0123456789';
+    const safeN = '23456789';
+
+    const letters = readable.checked ? safe : full;
+    const numbers = readable.checked ? safeN : fullN;
+    const chars = num.checked ? letters + numbers : letters;
+    const L = parseInt(len.value);
+    const Q = parseInt(qty.value);
+    const px = (prefix.value || '').toUpperCase().trim();
+
+    const set = new Set<string>();
+    while (set.size < Q) {
+      let code = '';
+      const innerLen = Math.max(L - px.length, 4);
+      const buf = new Uint32Array(innerLen);
+      crypto.getRandomValues(buf);
+      for (let i = 0; i < innerLen; i++) code += chars[buf[i] % chars.length];
+      set.add(px + code);
+    }
+    out.textContent = [...set].join('\n');
+  }
+
+  gen.addEventListener('click', generate);
+  cp.addEventListener('click', () => {
+    navigator.clipboard.writeText(out.textContent || '');
+    const orig = cp.textContent;
+    cp.textContent = '✓ Copiados';
+    setTimeout(() => cp.textContent = orig, 1200);
+  });
+  generate();
+</script>

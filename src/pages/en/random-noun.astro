@@ -1,0 +1,129 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random Noun Generator | Genfy';
+const description = 'Generate random English nouns. Filter by concrete, abstract or nature. Useful for naming, writing prompts, brainstorming and word games.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a random noun useful for?', acceptedAnswer: { '@type': 'Answer', text: 'Brand naming, writing prompts, composition exercises, creative brainstorming and word games.' } },
+    { '@type': 'Question', name: 'Can I separate concrete and abstract?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Concrete nouns name physical objects; abstract nouns name concepts. Filtering changes your creative output a lot.' } },
+    { '@type': 'Question', name: 'Are obscure words included?', acceptedAnswer: { '@type': 'Answer', text: 'No. We keep recognizable nouns; "creative" comes from combining them, not from rare words.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Languages" title="Random Noun Generator"
+    intro="Pull random English nouns. Filter by concrete, abstract or nature. Built for naming, creative writing, prompts and word games.">
+
+    <div slot="tool">
+      <div class="rw-row">
+        <div>
+          <label for="su-cat">Category</label>
+          <select id="su-cat">
+            <option value="all">All</option>
+            <option value="con">Concrete</option>
+            <option value="abs">Abstract</option>
+            <option value="nat">Nature</option>
+          </select>
+        </div>
+        <div>
+          <label for="su-amount">Amount</label>
+          <input id="su-amount" type="number" min="1" max="30" value="5" />
+        </div>
+      </div>
+      <button id="su-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="su-copy" class="btn btn-ghost" type="button">Copy</button>
+      <textarea id="su-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Nouns are the foundation of names</h2>
+      <p>
+        When someone hunts for a brand, project, book or character name, they usually start with the noun.
+        Reason: nouns carry the main concept and everything else (adjectives, verbs, context) builds on top
+        of it. "House" already says something. "Quiet House" says more. "The Quiet House by the River" tells
+        a story.
+      </p>
+
+      <h2>Concrete, abstract, nature</h2>
+      <p>
+        <strong>Concrete</strong> nouns name physical objects: chair, book, river. They're easy to picture
+        and work well for branding when you want a tangible name. <strong>Abstract</strong> nouns name
+        concepts: freedom, order, hope. They're powerful but risky: without good company, they sound like
+        empty slogans. <strong>Nature</strong> nouns (mountain, valley, root, leaf) carry an aspirational
+        aura widely used in eco-friendly, wellness and outdoor brands.
+      </p>
+
+      <h2>Real use cases</h2>
+      <ul>
+        <li><strong>Naming</strong> — pull 30 nouns, mark the five that resonate, run them through a domain availability check.</li>
+        <li><strong>Creative writing</strong> — a random noun as a daily prompt makes sure you don't write the same piece every time.</li>
+        <li><strong>Brainstorming</strong> — for "out of the box" sessions, a random noun acts as a provocation.</li>
+        <li><strong>Games</strong> — Pictionary, charades, category games. Abstract nouns raise the difficulty.</li>
+        <li><strong>Classroom</strong> — count vs. mass nouns, plurals, derivation, agreement.</li>
+      </ul>
+
+      <h2>Common mistakes in naming</h2>
+      <ul>
+        <li><strong>Generic</strong> — "House", "Studio", "Shop" alone is invisible. Add an adjective or a second noun.</li>
+        <li><strong>Forced</strong> — a noun that has nothing to do with your offer confuses and forces explanation.</li>
+        <li><strong>Hard to pronounce</strong> — if a customer must spell it twice, you've lost.</li>
+        <li><strong>Trademarked</strong> — always check availability before falling in love with a name.</li>
+      </ul>
+
+      <h2>A 10-minute routine</h2>
+      <p>
+        If you're working on naming, give the generator 10 focused minutes: pull 50 nouns. Mark the 10 that
+        catch your ear by sound, not meaning. For those 10, generate adjectives and combine. From the 30-40
+        combinations that come out, three or four will be legitimate candidates. It's a mechanical, almost
+        industrial process — it beats sitting down to "think of a name."
+      </p>
+
+      <h2>Combinations that open doors</h2>
+      <p>
+        Try generating two nouns at once and connecting them with "of" or "and": "House of Rain", "River and
+        Stone", "Ink and Bread". This simple formula is the backbone of countless brand, bookshop, café,
+        band and project names. It works because it creates intrigue without obscuring the concept.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a random noun useful for?</summary><p>Naming, writing prompts, composition, brainstorming and games.</p></details>
+      <details><summary>Can I separate concrete and abstract?</summary><p>Yes. Filter by the type of noun you need.</p></details>
+      <details><summary>Are obscure words included?</summary><p>No. Recognizable nouns only; creativity comes from combination, not rarity.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .rw-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const CON = "house chair table door window book pencil notebook phone clock key bottle glass plate spoon fork bed curtain lamp mirror frame rug stairs bridge wall roof street bicycle car train ship plane suitcase box bag umbrella".split(' ');
+  const ABS = "friendship freedom hope memory time silence patience courage truth kindness calm strength peace tenderness curiosity joy doubt forgetting future past destiny craft calling humility order chaos rhythm idea meaning bond energy".split(' ');
+  const NAT = "river mountain valley forest beach lake lagoon sand stone root leaf flower tree seed sky cloud rain snow wind sun moon star wave creek summit slope moss mud dew mist horizon".split(' ');
+
+  const cEl = document.getElementById('su-cat') as HTMLSelectElement;
+  const amEl = document.getElementById('su-amount') as HTMLInputElement;
+  const out = document.getElementById('su-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('su-gen') as HTMLButtonElement;
+  const cp = document.getElementById('su-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function build() {
+    const c = cEl.value;
+    const pool = c === 'con' ? CON : c === 'abs' ? ABS : c === 'nat' ? NAT : [...CON, ...ABS, ...NAT];
+    const n = Math.max(1, Math.min(30, parseInt(amEl.value || '1', 10)));
+    const lines: string[] = [];
+    for (let i = 0; i < n; i++) lines.push(pick(pool));
+    out.value = lines.join('\n');
+  }
+  gen.addEventListener('click', build);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+  build();
+</script>

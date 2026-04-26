@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de lenguaje leet (1337) | Genfy';
+const description = 'Convertí texto a lenguaje leet (1337 speak). Modo suave o intenso. Diversión retro de internet, gaming, foros y memes.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es el lenguaje leet?', acceptedAnswer: { '@type': 'Answer', text: 'Es una forma de escritura donde se reemplazan letras por números o símbolos similares (E→3, A→4, T→7). Surgió en BBSes y foros de los 80-90.' } },
+    { '@type': 'Question', name: '¿Para qué se usa hoy?', acceptedAnswer: { '@type': 'Answer', text: 'Diversión, nostalgia, memes, nicks de gaming, contraseñas inseguras (no recomendado) y cultura geek.' } },
+    { '@type': 'Question', name: '¿Cuál es la diferencia entre suave e intenso?', acceptedAnswer: { '@type': 'Answer', text: 'Suave reemplaza solo las letras más reconocibles (a, e, i, o, l, t, s). Intenso usa más sustituciones, incluso símbolos, para que el texto sea casi ilegible.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión" title="Generador de lenguaje leet (1337)"
+    intro="Convertí texto a 1337 speak con un click. Modo suave para que se entienda, o intenso para máxima estética hacker retro. Perfecto para nicks, memes y nostalgia geek.">
+
+    <div slot="tool">
+      <label for="lt-in">Texto</label>
+      <textarea id="lt-in" rows="5" placeholder="Hola mundo" style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div class="lt-row" style="margin-top:0.75rem;">
+        <label class="lt-check"><input type="radio" name="lt-mode" value="soft" checked /> Suave</label>
+        <label class="lt-check"><input type="radio" name="lt-mode" value="hard" /> Intenso</label>
+      </div>
+      <div style="margin-top:0.75rem;">
+        <button id="lt-go" class="btn btn-primary" type="button">Convertir</button>
+        <button id="lt-copy" class="btn btn-ghost" type="button">Copiar</button>
+      </div>
+      <label for="lt-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="lt-out" rows="5" readonly style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es el leet speak</h2>
+      <p>
+        El lenguaje leet (también escrito 1337, 31337 o "elite") es una forma de escritura nacida en los
+        BBS y foros de la cultura hacker entre los años 80 y 90. Reemplaza letras por números o símbolos
+        que se les parecen visualmente: A se vuelve 4, E se vuelve 3, I se vuelve 1, O se vuelve 0, T se
+        vuelve 7. La palabra "leet" misma se escribe "1337".
+      </p>
+
+      <h2>Origen y cultura</h2>
+      <p>
+        Surgió como una forma de evadir filtros automáticos de palabras prohibidas en foros, comunicarse en
+        clave entre la "elite" técnica de las primeras BBS, y eventualmente como marcador de pertenencia
+        cultural geek. Para los años 2000 ya era parte del folklore de internet, especialmente en gaming
+        (Counter-Strike, MMORPGs) y comunidades de hacking. Hoy sobrevive más como nostalgia y meme que
+        como herramienta funcional.
+      </p>
+
+      <h2>Sustituciones más comunes</h2>
+      <ul>
+        <li>A → 4 (o @)</li>
+        <li>B → 8</li>
+        <li>E → 3</li>
+        <li>G → 6 (o 9)</li>
+        <li>I → 1 (o !)</li>
+        <li>L → 1 (o |_)</li>
+        <li>O → 0</li>
+        <li>S → 5 ($ en intenso)</li>
+        <li>T → 7</li>
+        <li>Z → 2</li>
+      </ul>
+
+      <h2>Modos suave e intenso</h2>
+      <p>
+        En el modo <strong>suave</strong>, el texto sigue siendo legible: reemplazamos solo las
+        sustituciones más obvias, mantenemos la mayúscula/minúscula y no introducimos símbolos raros. Es
+        ideal para nicks, títulos, memes que necesitan que la audiencia pueda leerlos. En el modo
+        <strong>intenso</strong>, aplicamos sustituciones agresivas con símbolos, alternancia de
+        mayúsculas y minúsculas, y combinaciones extremas: el resultado es casi ilegible y queda muy
+        retro.
+      </p>
+
+      <h2>Casos de uso modernos</h2>
+      <ul>
+        <li><strong>Nicks de gaming</strong> — "Pr0Pl4y3r", "N0s07r0s_T31337".</li>
+        <li><strong>Memes</strong> — referencia instantánea a cultura geek de los 2000.</li>
+        <li><strong>Logos y branding retro</strong> — startups de gaming, eSports, ciberseguridad.</li>
+        <li><strong>Contraseñas (con cuidado)</strong> — convertir una palabra a leet aumenta entropía mínimamente.</li>
+        <li><strong>Cumpleaños y mensajes geek</strong> — un toque para el amigo nerd.</li>
+      </ul>
+
+      <h2>Por qué NO usar leet en contraseñas</h2>
+      <p>
+        Es un mito común que escribir tu contraseña en leet la hace más segura. No: los diccionarios de
+        ataque modernos prueban automáticamente todas las variantes leet de cada palabra del diccionario.
+        Si tu contraseña es "p4ssw0rd", se rompe igual que "password" en milisegundos. Para seguridad real,
+        usá frases largas aleatorias o un password manager. Para diversión y estética retro, el leet sigue
+        siendo divertido.
+      </p>
+
+      <h2>Generaciones del leet</h2>
+      <p>
+        Existe una jerarquía no escrita: leet "novato" usa solo 3-4 sustituciones; leet "intermedio" suma
+        @ y $; leet "elite" agrega símbolos compuestos como |\\| (para N), |\\/| (para M), o usa todas las
+        formas en una misma palabra. Nadie se toma esto en serio hoy, pero la jerarquía existió y existe
+        en comunidades muy de nicho.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es el lenguaje leet?</summary><p>Una forma de escritura que reemplaza letras por números o símbolos similares.</p></details>
+      <details><summary>¿Para qué se usa hoy?</summary><p>Diversión, nostalgia, nicks gaming, memes, branding retro.</p></details>
+      <details><summary>Diferencia entre suave e intenso</summary><p>Suave usa pocas sustituciones legibles; intenso usa muchas con símbolos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .lt-row { display: flex; gap: 1rem; }
+  .lt-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.95rem; }
+  .lt-check input { width: auto; }
+</style>
+
+<script>
+  const SOFT: Record<string,string> = { a:'4', e:'3', i:'1', l:'1', o:'0', s:'5', t:'7' };
+  const HARD: Record<string,string[]> = {
+    a: ['4','@','4'], b: ['8','8','|3'], c: ['(','<','('], d: ['|)','|)','D'], e: ['3','3','3'],
+    f: ['|=','f','|='], g: ['6','9','6'], h: ['#','|-|','H'], i: ['1','!','|'], j: ['_|','j','_|'],
+    k: ['|<','|<','K'], l: ['1','|_','L'], m: ['|\\/|','M','/\\/\\'], n: ['|\\|','N','|\\|'],
+    o: ['0','()','0'], p: ['|2','|*','P'], q: ['Q','Q','0_'], r: ['|2','R','®'],
+    s: ['5','$','5'], t: ['7','+','T'], u: ['|_|','U','|_|'], v: ['\\/','V','\\/'],
+    w: ['\\/\\/','W','VV'], x: ['><','X','%'], y: ['Y','`/','j'], z: ['2','Z','7_']
+  };
+  const inEl = document.getElementById('lt-in') as HTMLTextAreaElement;
+  const outEl = document.getElementById('lt-out') as HTMLTextAreaElement;
+  const go = document.getElementById('lt-go') as HTMLButtonElement;
+  const cp = document.getElementById('lt-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function convert(text: string): string {
+    const mode = (document.querySelector('input[name="lt-mode"]:checked') as HTMLInputElement).value;
+    let out = '';
+    for (const ch of text) {
+      const lower = ch.toLowerCase();
+      if (mode === 'soft' && SOFT[lower]) out += SOFT[lower];
+      else if (mode === 'hard' && HARD[lower]) out += pick(HARD[lower]);
+      else out += ch;
+    }
+    return out;
+  }
+  go.addEventListener('click', () => { outEl.value = convert(inEl.value); });
+  cp.addEventListener('click', async () => { if (!outEl.value) return; await navigator.clipboard.writeText(outEl.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

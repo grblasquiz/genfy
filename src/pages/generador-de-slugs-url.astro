@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de slugs URL gratis | Genfy';
+const description = 'Convertí cualquier título en un slug URL limpio: minúsculas, sin tildes, guiones medios y caracteres seguros para SEO.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es un slug URL?', acceptedAnswer: { '@type': 'Answer', text: 'Es la parte legible de una URL después del dominio. Por ejemplo, en /blog/como-hacer-pan, el slug es "como-hacer-pan". Debe ser corto, descriptivo y solo contener caracteres seguros.' } },
+    { '@type': 'Question', name: '¿Por qué importa para SEO?', acceptedAnswer: { '@type': 'Answer', text: 'Google usa el slug como una de las muchas señales de relevancia. Un slug claro, con palabras clave naturales, ayuda al click-through y a entender el contenido sin abrir la página.' } },
+    { '@type': 'Question', name: '¿Guion medio o guion bajo?', acceptedAnswer: { '@type': 'Answer', text: 'Guion medio. Google lo recomienda explícitamente: el guion medio (-) actúa como separador de palabras, el guion bajo (_) las une. /como-hacer-pan se indexa mejor que /como_hacer_pan.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Web" title="Generador de slugs URL"
+    intro="Pegá cualquier título y obtené un slug limpio: sin tildes, sin caracteres especiales, listo para WordPress, Astro, Next o cualquier CMS.">
+
+    <div slot="tool" class="sl">
+      <label for="sl-in">Título</label>
+      <input id="sl-in" type="text" value="Cómo hacer pan en casa: guía rápida 2026" />
+      <div class="sl-opts">
+        <label class="chk"><input type="checkbox" id="sl-low" checked /> Minúsculas</label>
+        <label class="chk"><input type="checkbox" id="sl-stop" /> Quitar palabras vacías</label>
+        <div>
+          <label for="sl-sep">Separador</label>
+          <select id="sl-sep">
+            <option value="-">Guion medio (-)</option>
+            <option value="_">Guion bajo (_)</option>
+          </select>
+        </div>
+      </div>
+      <button id="sl-gen" class="btn btn-primary" type="button">Generar</button>
+      <button id="sl-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <input id="sl-out" type="text" readonly style="margin-top:1rem; font-family: var(--font-mono);" />
+    </div>
+
+    <div slot="content">
+      <h2>Qué es un slug y por qué importa</h2>
+      <p>
+        El slug es la porción de la URL que identifica un recurso específico, después del dominio y de los segmentos de carpeta. En la URL <code>https://genfy.net/blog/generador-de-slugs</code>, el slug es <code>generador-de-slugs</code>. Es lo primero que ve el usuario antes de hacer click, lo que se comparte por WhatsApp, lo que aparece en los resultados de Google bajo el título.
+      </p>
+
+      <h2>Reglas de oro de un slug bien hecho</h2>
+      <ul>
+        <li><strong>Minúsculas siempre.</strong> Las URLs son case-sensitive en muchos servidores: <code>/Blog</code> y <code>/blog</code> pueden ser dos páginas distintas. Forzar minúsculas evita duplicados accidentales.</li>
+        <li><strong>Solo a-z, 0-9 y guion medio.</strong> Los caracteres especiales se codifican (la ñ se vuelve %C3%B1) y el resultado es feo, largo y difícil de copiar a mano.</li>
+        <li><strong>Sin tildes.</strong> "más" se transforma a "mas". Aunque los navegadores modernos manejan acentos, la convención global es ASCII puro para máxima compatibilidad.</li>
+        <li><strong>Corto pero descriptivo.</strong> Idealmente 3 a 6 palabras. Más largo aumenta la fricción al compartir.</li>
+        <li><strong>Sin palabras vacías innecesarias.</strong> Quitá artículos como "el", "la", "de", "the", "a" si no aportan al significado.</li>
+      </ul>
+
+      <h2>Guion medio vs guion bajo: el debate resuelto</h2>
+      <p>
+        Matt Cutts, ex jefe del equipo de spam de Google, aclaró años atrás que el guion medio funciona como separador de palabras y el guion bajo une palabras. Es decir, <code>como-hacer-pan</code> le dice a Google que hay tres palabras independientes; <code>como_hacer_pan</code> se interpreta como una sola cadena. Para SEO, siempre guion medio.
+      </p>
+
+      <h2>Slug y SEO en 2026</h2>
+      <p>
+        Google sigue usando el slug como una de las decenas de señales para entender el contenido y el contexto de una URL. No es el factor más importante (el contenido y los enlaces pesan mucho más), pero es uno de los pocos sobre los que tenés control directo sin tocar copy ni código. Un slug que repite la palabra clave principal del artículo refuerza la relevancia. Un slug genérico tipo <code>/post-12345</code> deja todo en manos del título.
+      </p>
+
+      <h2>Errores frecuentes</h2>
+      <ul>
+        <li><strong>Cambiar slugs en vivo sin redirección 301.</strong> Si tu artículo tenía 200 backlinks y cambiás el slug, perdés todo. Implementá siempre un redirect.</li>
+        <li><strong>Slugs con fecha.</strong> <code>/2024/03/articulo</code> envejece mal. Si actualizás el contenido en 2026, el slug miente.</li>
+        <li><strong>IDs internos.</strong> <code>/post?id=842</code> es horrible para SEO y confunde al usuario.</li>
+        <li><strong>Stop words excesivos.</strong> "el-mejor-articulo-sobre-como-hacer-pan-en-tu-casa-paso-a-paso" cabe pero abruma.</li>
+      </ul>
+
+      <h2>Cómo usar este generador</h2>
+      <p>
+        Pegá tu título tal cual lo escribiste para el artículo. Marcá la opción de minúsculas (siempre recomendado). Si tu CMS no quita stop words automáticamente, activá la casilla correspondiente. Elegí guion medio salvo que tu sistema requiera otra cosa (Notion, por ejemplo, usa guion medio por defecto). Copiá el resultado y pegalo en el campo "slug" o "permalink" de tu CMS.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es un slug URL?</summary><p>La parte legible de una URL después del dominio. Por ejemplo en /blog/como-hacer-pan, "como-hacer-pan" es el slug.</p></details>
+      <details><summary>¿Por qué importa para SEO?</summary><p>Google usa el slug como una de las señales de relevancia. Uno claro con palabras clave ayuda a entender el contenido y al click-through.</p></details>
+      <details><summary>¿Guion medio o guion bajo?</summary><p>Guion medio. Google lo recomienda: separa palabras, mientras que el guion bajo las une.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .sl-opts { display: grid; grid-template-columns: auto auto 1fr; gap: 1rem; align-items: end; margin: 1rem 0; }
+  .chk { display: flex; align-items: center; gap: 0.5rem; margin: 0; }
+  .chk input { width: auto; }
+  @media (max-width: 600px) { .sl-opts { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const STOP_ES = new Set(['el','la','los','las','un','una','unos','unas','de','del','y','o','u','en','a','al','con','por','para','que','se','su','sus','lo','le','les','es','son','fue','ser','este','esta','estos','estas','ese','esa','esos','esas']);
+  const inEl = document.getElementById('sl-in') as HTMLInputElement;
+  const lowEl = document.getElementById('sl-low') as HTMLInputElement;
+  const stopEl = document.getElementById('sl-stop') as HTMLInputElement;
+  const sepEl = document.getElementById('sl-sep') as HTMLSelectElement;
+  const out = document.getElementById('sl-out') as HTMLInputElement;
+  const genBtn = document.getElementById('sl-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('sl-copy') as HTMLButtonElement;
+
+  function slugify() {
+    let s = inEl.value || '';
+    if (lowEl.checked) s = s.toLowerCase();
+    s = s.normalize('NFD').replace(/[̀-ͯ]/g, '');
+    s = s.replace(/[^a-zA-Z0-9\s-]/g, ' ');
+    let parts = s.split(/\s+/).filter(Boolean);
+    if (stopEl.checked) parts = parts.filter(p => !STOP_ES.has(p.toLowerCase()));
+    out.value = parts.join(sepEl.value).replace(/-+/g, sepEl.value);
+  }
+  [inEl, lowEl, stopEl, sepEl].forEach(el => el.addEventListener('input', slugify));
+  genBtn.addEventListener('click', slugify);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  slugify();
+</script>

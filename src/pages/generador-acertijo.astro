@@ -1,0 +1,156 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de acertijos | Genfy';
+const description = 'Acertijos clásicos con respuesta. Para chicos, fiestas, viajes y aulas. Lógica, ingenio y juegos de palabras.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué edades?', acceptedAnswer: { '@type': 'Answer', text: 'Tenemos acertijos para chicos desde 7 años y para adultos. Filtrá por dificultad.' } },
+    { '@type': 'Question', name: '¿Las respuestas se ven?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, hay un botón "mostrar respuesta" oculto hasta que lo abrís.' } },
+    { '@type': 'Question', name: '¿Sirven para aula?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, son ejercicios cortos de pensamiento lateral muy útiles para empezar la clase.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión / Fun" title="Generador de acertijos"
+    intro="Acertijos clásicos con respuesta oculta. Pensá un minuto antes de mirar.">
+
+    <div slot="tool" class="rd">
+      <div class="rd-card">
+        <p id="rd-q" class="rd-q">Tocá generar para empezar.</p>
+        <details class="rd-answer"><summary>Mostrar respuesta</summary><p id="rd-a">—</p></details>
+      </div>
+      <div class="rd-controls">
+        <label for="rd-cat">Tipo</label>
+        <select id="rd-cat">
+          <option value="all">Todos</option>
+          <option value="logica">Lógica</option>
+          <option value="palabras">Juego de palabras</option>
+          <option value="ninos">Para chicos</option>
+          <option value="lateral">Pensamiento lateral</option>
+        </select>
+      </div>
+      <button id="rd-gen" class="btn btn-primary" type="button">Otro acertijo</button>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los acertijos son herramienta cognitiva</h2>
+      <p>
+        Resolver un acertijo activa varias zonas del cerebro: razonamiento lógico,
+        recuperación léxica, pensamiento divergente. No es entretenimiento puro: es
+        gimnasia mental ligera. Por eso muchas escuelas los usan al inicio de la clase
+        para "encender" la atención de los chicos. En adultos funciona igual: 5 minutos de
+        acertijos antes de una reunión importante predispone al equipo a pensar de forma
+        creativa.
+      </p>
+
+      <h2>Tipos de acertijos</h2>
+      <ol>
+        <li><strong>Lógica:</strong> tienen una solución única basada en deducción. "Tres personas, tres pistas, ¿quién es el culpable?".</li>
+        <li><strong>Juego de palabras:</strong> dependen del doble sentido o sonido. "¿Qué es lo que se rompe sin tocarlo?". (El silencio).</li>
+        <li><strong>Pensamiento lateral:</strong> requieren cambiar de perspectiva. La respuesta obvia no es la correcta.</li>
+        <li><strong>Numéricos:</strong> series, ecuaciones disfrazadas. Útiles para mentes matemáticas.</li>
+        <li><strong>Para chicos:</strong> respuesta visual o concreta. "Tiene cabeza pero no tiene pelo, tiene boca pero no come". (El río).</li>
+      </ol>
+
+      <h2>Cómo usarlos en grupo</h2>
+      <p>
+        En grupo, dejá un minuto de silencio para que cada uno piense. Después abrí. Si
+        nadie acierta, da una pista. Resolvé el acertijo en colectivo, no como competencia:
+        la magia está en cómo distintos cerebros se acercan al mismo problema. Premio
+        opcional para quien lo resuelva primero, pero no central. Lo importante es la
+        conversación que genera.
+      </p>
+
+      <h2>Acertijos clásicos que siguen funcionando</h2>
+      <ul>
+        <li><strong>"Cuanto más quitás, más grande se hace":</strong> el agujero.</li>
+        <li><strong>"Tiene dientes pero no come":</strong> el peine.</li>
+        <li><strong>"Cuanto más camino, más atrás voy":</strong> el reloj (las sombras).</li>
+        <li><strong>"Soy hijo de tu padre y de tu madre, pero no soy tu hermano":</strong> tú mismo.</li>
+      </ul>
+
+      <h2>Diferencia con adivinanzas y enigmas</h2>
+      <p>
+        En español, "adivinanza" suele ser breve, rimada y para chicos. "Acertijo" es más
+        amplio: puede ser largo, sin rima y con lógica adulta. "Enigma" suele tener
+        connotación más misteriosa, como un acertijo con narrativa. Las tres palabras se
+        usan a veces como sinónimos, pero quien arma una velada de acertijos debe entender
+        las diferencias para mezclar bien.
+      </p>
+
+      <h2>Cuándo el acertijo es mal acertijo</h2>
+      <p>
+        Si la respuesta requiere conocimiento muy específico que solo tu profesor de
+        latín tendría, no es acertijo: es trivia disfrazada. Un buen acertijo se puede
+        resolver con razonamiento puro y conocimiento general. Si después de la respuesta la
+        gente dice "ah claro, era obvio", es buen acertijo. Si dice "no lo iba a sacar
+        nunca", probablemente está mal formulado.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántos hay?</summary><p>Más de 50 curados, con rotación.</p></details>
+      <details><summary>¿Para clase?</summary><p>Sí, especialmente los del filtro "para chicos".</p></details>
+      <details><summary>¿Hay nivel?</summary><p>Filtrá por categoría. Lógica y lateral son más difíciles.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rd-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; }
+  .rd-q { font-size: 1.125rem; line-height: 1.6; margin: 0 0 1rem; }
+  .rd-answer { padding: 0.75rem; background: var(--bg-inset); border-radius: var(--radius); }
+  .rd-answer summary { cursor: pointer; font-weight: 600; }
+  .rd-answer p { margin: 0.75rem 0 0; color: var(--text-soft); }
+  .rd-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const R: { cat: string; q: string; a: string }[] = [
+    { cat: "ninos", q: "Tiene cabeza pero no tiene pelo, tiene boca pero no come. ¿Qué es?", a: "El río." },
+    { cat: "ninos", q: "Cuanto más quitás, más grande se hace. ¿Qué es?", a: "El agujero." },
+    { cat: "ninos", q: "Tiene dientes pero no come. ¿Qué es?", a: "El peine." },
+    { cat: "ninos", q: "Es blanca como el papel, fácil se deja arrugar. ¿Qué es?", a: "La sábana." },
+    { cat: "ninos", q: "Vuela sin alas, silba sin boca, golpea sin manos. ¿Qué es?", a: "El viento." },
+    { cat: "ninos", q: "Tengo agujas y no sé coser, tengo números y no sé leer. ¿Qué soy?", a: "El reloj." },
+    { cat: "ninos", q: "Soy redonda, brillo de noche y desaparezco de día. ¿Qué soy?", a: "La luna." },
+    { cat: "ninos", q: "Cuando más alta está, menos se ve. ¿Qué es?", a: "La oscuridad." },
+    { cat: "logica", q: "Si tres gatos cazan tres ratones en tres minutos, ¿cuántos gatos cazan 100 ratones en 100 minutos?", a: "Tres gatos." },
+    { cat: "logica", q: "Una persona vive en el piso 20. Cada mañana baja por ascensor; cada noche, si llueve, sube hasta el 20, si no llueve hasta el 10 y camina lo demás. ¿Por qué?", a: "Es de baja estatura: si llueve usa el paraguas para apretar el botón 20; si no, no llega y aprieta el 10." },
+    { cat: "logica", q: "Tenés dos monedas que suman 30 centavos, una no es de 5. ¿Cuáles son?", a: "Una de 25 y una de 5. La que no es de 5 es la de 25." },
+    { cat: "logica", q: "¿Cuántos meses del año tienen 28 días?", a: "Todos. Todos los meses tienen al menos 28 días." },
+    { cat: "logica", q: "Un señor compra un caballo a 60, lo vende a 70, lo compra a 80, lo vende a 90. ¿Cuánto ganó?", a: "20 (dos operaciones de +10)." },
+    { cat: "palabras", q: "¿Qué es lo que se rompe sin tocarlo?", a: "El silencio." },
+    { cat: "palabras", q: "Empieza con A y termina con Z, contiene todas las letras. ¿Qué es?", a: "El abecedario." },
+    { cat: "palabras", q: "¿Qué palabra del diccionario está siempre mal escrita?", a: "La palabra 'mal'." },
+    { cat: "palabras", q: "¿Qué tiene el rey y los demás no?", a: "La R al inicio (en la palabra 'rey')." },
+    { cat: "palabras", q: "¿Cuál es el animal que se moja la cola y la usa para escribir?", a: "La pluma (de un ave)." },
+    { cat: "lateral", q: "Un hombre vive en una casa donde todas las paredes dan al sur. ¿Dónde está?", a: "En el Polo Norte." },
+    { cat: "lateral", q: "¿Cómo metés una jirafa en un refrigerador?", a: "Abrís la puerta, metés la jirafa, cerrás la puerta. (Acertijo de pensamiento simple)." },
+    { cat: "lateral", q: "Hay un avión que se estrella exactamente en la frontera entre dos países. ¿Dónde se entierran los sobrevivientes?", a: "Los sobrevivientes no se entierran." },
+    { cat: "lateral", q: "Antes de subir al monte Everest, ¿cuál era la montaña más alta del mundo?", a: "El monte Everest. Ya era la más alta antes de descubrirse." }
+  ];
+
+  const qEl = document.getElementById('rd-q') as HTMLElement;
+  const aEl = document.getElementById('rd-a') as HTMLElement;
+  const cat = document.getElementById('rd-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('rd-gen') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? R : R.filter(x => x.cat === filter);
+    const item = pick(pool);
+    qEl.textContent = item.q;
+    aEl.textContent = item.a;
+  }
+  genBtn.addEventListener('click', generate);
+  generate();
+</script>
+</content>
+</invoke>

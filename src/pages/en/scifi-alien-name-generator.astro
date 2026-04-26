@@ -1,0 +1,140 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Sci-Fi Alien Name Generator | Genfy';
+const description = 'Generate alien and extraterrestrial race names for your science fiction stories. Mix phonemes and style to get 20 unique ideas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do I invent a believable alien name?', acceptedAnswer: { '@type': 'Answer', text: 'Use phonemes uncommon to your reader’s language, avoid words from real human languages, and keep internal coherence across names of the same species.' } },
+    { '@type': 'Question', name: 'How many syllables should it have?', acceptedAnswer: { '@type': 'Answer', text: 'Two to four is optimal. Longer and the reader skips it. Shorter and it sounds too earthly.' } },
+    { '@type': 'Question', name: 'Can different alien species share phonetic rules?', acceptedAnswer: { '@type': 'Answer', text: 'No. Each species should have its own phonetics. If everyone uses apostrophes and X, the universe loses depth.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Sci-Fi Alien Name Generator"
+    intro="Generate alien and extraterrestrial race names for your science fiction universe. Combine phonemes and styles for 20 unique names.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Preferred starting letter (optional)</label>
+      <input id="bn-kw" type="text" placeholder="K, X, Z..." value="" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="hard">Hard / consonant (Krexor, Brindo)</option>
+        <option value="soft">Soft / vocalic (Ulion, Eilan)</option>
+        <option value="apostrophe">With apostrophe (Ka'rel, Vex'ar)</option>
+        <option value="warrior">Warrior (Threx, Korm)</option>
+        <option value="race">Race name (The Ulion)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to invent an alien name that lands</h2>
+      <p>
+        Naming aliens well is craft, not luck. The most memorable alien names share three traits:
+        they use phonemes the reader's ear hears as "foreign", they keep internal coherence
+        within a species, and they're pronounceable enough not to trip the eye. Too weird and
+        nobody says it aloud. Too earthly and the trick shows.
+      </p>
+      <ol>
+        <li><strong>Pick two or three "anchor" consonants.</strong> K, X, Z. Those will recur in the species.</li>
+        <li><strong>Choose a dominant vowel.</strong> If every name carries the same central vowel (say e or i), they feel related.</li>
+        <li><strong>Cap syllables at 2-4.</strong> Past that, readers skip the name.</li>
+        <li><strong>Say it out loud.</strong> If you can't say it three times in a row, drop it.</li>
+        <li><strong>Different rules per species.</strong> Apostrophes for one, hard endings for another — the universe gains depth.</li>
+      </ol>
+
+      <h2>Alien-naming styles</h2>
+      <ul>
+        <li><strong>Hard / consonant</strong>: warlike species, crashed rockets, aggression (Krexor, Brindo, Vorath).</li>
+        <li><strong>Soft / vocalic</strong>: pacifist, telepathic, ancient species (Ulion, Eilan, Aramin).</li>
+        <li><strong>With apostrophe</strong>: space-opera classic, splits clan from individual (Ka'rel, Vex'ar).</li>
+        <li><strong>Short warrior</strong>: heavy monosyllables (Threx, Korm, Drax) for soldiers and bounty hunters.</li>
+        <li><strong>Race names</strong>: the species, not individuals. Often plural-coded ("The Ulion", "The Threxians").</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        Most common: phonetics copied from Star Trek or Star Wars. If your species is "The
+        Klyngonians", you have a problem. Another: mixing human-mythology origin names with
+        extraterrestrial suffixes; reads as a transparent copy. Don't blend phonetics from many
+        real Earth languages without a system. And a third: unpronounceable names (four+
+        consonants in a row) that readers skim past.
+      </p>
+
+      <h2>After generating</h2>
+      <ol>
+        <li>Pick five that feel like one species (same anchor consonants).</li>
+        <li>Test them in dialogue: can you alternate without stumbling?</li>
+        <li>Invent a gender or clan system (suffixes, prefixes).</li>
+        <li>Confirm none collide with established sci-fi characters.</li>
+        <li>Document the phonetic rules for future books.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I invent a believable alien name?</summary><p>Foreign phonemes, internal coherence, pronounceable.</p></details>
+      <details><summary>How many syllables?</summary><p>Two to four.</p></details>
+      <details><summary>Different species share rules?</summary><p>No — each species needs its own phonetics.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const HARD_C = ['K', 'Kr', 'Br', 'Dr', 'Tr', 'Vr', 'X', 'Z', 'Gr', 'Ql'];
+  const HARD_E = ['exor', 'indo', 'amor', 'oneth', 'avex', 'ulix', 'akor'];
+  const SOFT_C = ['U', 'Ei', 'Ar', 'On', 'Il', 'Ev', 'Ay', 'Or'];
+  const SOFT_E = ['lion', 'amin', 'ena', 'oran', 'esal', 'aren', 'orin'];
+  const APOS_S = ["a'", "e'", "u'", "i'"];
+  const WAR = ['Threx', 'Korm', 'Drax', 'Brun', 'Vrek', 'Krell', 'Zhar', 'Skarn'];
+  const RACE = ['Ulion', 'Threxian', 'Korman', 'Velari', 'Brindar'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const seed = kw.value.trim();
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'hard') name = (seed || pick(HARD_C)) + pick(HARD_E);
+      else if (s === 'soft') name = (seed || pick(SOFT_C)) + pick(SOFT_E);
+      else if (s === 'apostrophe') name = (seed || pick(HARD_C)) + pick(APOS_S) + pick(HARD_E);
+      else if (s === 'warrior') name = pick(WAR);
+      else if (s === 'race') name = 'The ' + pick(RACE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

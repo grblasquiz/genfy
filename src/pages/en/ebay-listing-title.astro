@@ -1,0 +1,150 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free eBay Listing Title Generator | Genfy';
+const description = 'Generate eBay titles optimized for Cassini. 80 characters with brand, model, attributes and condition that maximize visibility and clicks.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many characters does an eBay title allow?', acceptedAnswer: { '@type': 'Answer', text: 'eBay allows up to 80 characters in the title. It\'s one of the shortest limits among marketplaces, so every word must justify its place.' } },
+    { '@type': 'Question', name: 'How does Cassini, eBay\'s algorithm, work?', acceptedAnswer: { '@type': 'Answer', text: 'Cassini ranks results by relevance, seller historical performance, listing completeness and match with the buyer\'s saved searches.' } },
+    { '@type': 'Question', name: 'Does eBay penalize words like "L@@K" or "WOW"?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. eBay explicitly penalizes spammy keywords, excessive caps, decorative symbols and generic words that don\'t contribute to search.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="eBay Listing Title Generator"
+    intro="Drop in product, brand and attributes. Genfy returns 4 titles optimized for Cassini, all within the 80-character limit.">
+
+    <div slot="tool" class="eb">
+      <label for="eb-product">Product type</label>
+      <input id="eb-product" type="text" placeholder="Sneakers..." value="Running shoes" />
+
+      <label for="eb-brand" style="margin-top:1rem">Brand</label>
+      <input id="eb-brand" type="text" placeholder="Nike..." value="Nike" />
+
+      <label for="eb-model" style="margin-top:1rem">Model / reference</label>
+      <input id="eb-model" type="text" placeholder="Air Zoom Pegasus 40..." value="Air Zoom Pegasus 40" />
+
+      <label for="eb-attr" style="margin-top:1rem">Attributes (size, color, condition)</label>
+      <input id="eb-attr" type="text" placeholder="Size 9, black, new..." value="Size 9 US, black, new in box" />
+
+      <button id="eb-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 4 titles</button>
+
+      <div id="eb-out" class="eb-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cassini: eBay's algorithm and how it decides what to show</h2>
+      <p>
+        Cassini replaced Voyager in 2013 and since then orders results by a mix of relevance (keyword match with search) and performance (sell-through rate, seller feedback, shipping speed, listing completeness). A well-optimized title moves relevance, but historical performance is what holds ranking stable.
+      </p>
+      <p>
+        eBay's particular constraint: only 80 characters. That's a third of Amazon and almost half of Etsy. Every word counts double.
+      </p>
+
+      <h2>The structure that performs on eBay</h2>
+      <ol>
+        <li><strong>Brand:</strong> "Nike", "Apple", "Sony" — people search by brand on eBay more than on other marketplaces.</li>
+        <li><strong>Model or reference:</strong> "Air Zoom Pegasus 40", "iPhone 15 Pro 256GB".</li>
+        <li><strong>Product type:</strong> "running shoes", "smartphone".</li>
+        <li><strong>Critical attributes:</strong> size, color, condition.</li>
+        <li><strong>State:</strong> "new in box", "used", "refurbished".</li>
+      </ol>
+
+      <h2>What eBay explicitly bans in titles</h2>
+      <ul>
+        <li><strong>Decorative words:</strong> "L@@K", "WOW", "RARE!!!" — eBay penalizes them as "keyword spam".</li>
+        <li><strong>All caps:</strong> "NIKE RUNNING SHOES NEW" — penalized, lowers ranking.</li>
+        <li><strong>Decorative symbols:</strong> ★★★, ⚡, 🔥 — stripped or cause demote.</li>
+        <li><strong>Search-irrelevant text:</strong> "fast shipping", "100% authentic", "warranty".</li>
+        <li><strong>Hashtags:</strong> #vintage #rare — eBay doesn't index them and they eat characters.</li>
+      </ul>
+
+      <h2>The weight of product condition</h2>
+      <p>
+        On eBay, condition ("new in box", "used excellent", "refurbished") is real search: people filter by it. Including it in the title moves match a lot. "iPhone 15 Pro 256GB new sealed" ranks differently than "iPhone 15 Pro 256GB used". If your item is new, say so. If used, also.
+      </p>
+
+      <h2>How to research what people search on eBay</h2>
+      <ul>
+        <li><strong>eBay autocomplete:</strong> type brand + product and watch the suggestions.</li>
+        <li><strong>Terapeak (included in Pro subscription):</strong> shows volume, sell-through and avg price per keyword.</li>
+        <li><strong>Saved searches:</strong> see which advanced filters people use: size, color, condition.</li>
+        <li><strong>Top-rankers in your category:</strong> which keywords do listings with most watchers and sales use.</li>
+      </ul>
+
+      <h2>Why brand weighs so much on eBay (more than on other marketplaces)</h2>
+      <p>
+        eBay grew with buyers searching specific products by brand and model, especially in electronics, fashion and collectibles. Cassini knows this and gives extra weight to exact brand match. If you sell a mechanical keyboard, "Logitech G Pro X mechanical keyboard" ranks better than "premium gaming mechanical keyboard". Brand in the title isn't optional for almost any niche.
+      </p>
+
+      <h2>Specific attributes that move CTR</h2>
+      <ul>
+        <li><strong>Fashion:</strong> size, color, material, gender.</li>
+        <li><strong>Electronics:</strong> capacity, generation, release year.</li>
+        <li><strong>Collectibles:</strong> year, edition, condition, authenticity.</li>
+        <li><strong>Home:</strong> dimensions, color, material, set/single.</li>
+      </ul>
+
+      <h2>Common mistakes that kill ranking</h2>
+      <ul>
+        <li><strong>Starting with generic category:</strong> "Men's shoes Nike Air Zoom..." — wastes a premium slot.</li>
+        <li><strong>Repeating keywords:</strong> "Nike Nike Air Zoom Nike running" — penalized.</li>
+        <li><strong>Skipping the model:</strong> "Nike running shoes" ranks worse than "Nike Air Zoom Pegasus 40".</li>
+        <li><strong>Forgetting condition:</strong> "new in box" or "used excellent" moves much conversion.</li>
+        <li><strong>Overusing adjectives:</strong> "premium beautiful excellent new" — filler that eats characters.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many characters?</summary><p>Max 80. No mobile truncation, all count for click and ranking.</p></details>
+      <details><summary>Brand at the start?</summary><p>Yes. Cassini gives much weight to exact brand match.</p></details>
+      <details><summary>Symbols like ★ or 🔥?</summary><p>No. eBay considers them spam and lowers ranking.</p></details>
+      <details><summary>How long until it re-ranks?</summary><p>Cassini adjusts in 48-72 hours. Drastic changes can drop ranking temporarily.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .eb-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .eb-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; }
+  .eb-card:hover { border-color: var(--accent); }
+  .eb-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const product = document.getElementById('eb-product') as HTMLInputElement;
+  const brand = document.getElementById('eb-brand') as HTMLInputElement;
+  const model = document.getElementById('eb-model') as HTMLInputElement;
+  const attr = document.getElementById('eb-attr') as HTMLInputElement;
+  const gen = document.getElementById('eb-gen') as HTMLButtonElement;
+  const out = document.getElementById('eb-out')!;
+
+  function generate() {
+    const P = product.value.trim() || 'Product';
+    const Br = brand.value.trim() || 'Brand';
+    const M = model.value.trim() || 'Model';
+    const A = attr.value.trim() || 'new';
+
+    const v1 = `${Br} ${M} ${P} ${A}`;
+    const v2 = `${Br} ${M} - ${P} ${A}`;
+    const v3 = `${P} ${Br} ${M}, ${A}`;
+    const v4 = `${Br} ${M} ${P} | ${A}`;
+
+    out.innerHTML = '';
+    [v1, v2, v3, v4].forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'eb-card';
+      el.title = 'Click to copy';
+      const len = b.length;
+      el.innerHTML = b + `<div class="eb-meta">v${i+1} · ${len}/80 characters</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

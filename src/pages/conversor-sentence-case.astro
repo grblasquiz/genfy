@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Conversor a Sentence case | Genfy';
+const description = 'Convertí texto a Sentence case (mayúscula solo en la primera letra de cada oración). Útil para títulos en español, headings de UI y blogs modernos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es Sentence case?', acceptedAnswer: { '@type': 'Answer', text: 'Es la convención donde solo la primera letra de cada oración va en mayúscula, además de los nombres propios. Es el estilo natural del español y de muchas UI modernas.' } },
+    { '@type': 'Question', name: '¿Por qué pasar de Title Case a Sentence case?', acceptedAnswer: { '@type': 'Answer', text: 'Para textos en español, para UI conversacional y para blogs modernos donde se busca un tono menos formal y más legible.' } },
+    { '@type': 'Question', name: '¿Mantiene los nombres propios?', acceptedAnswer: { '@type': 'Answer', text: 'No detecta nombres propios automáticamente: si tenías "Google" en tu texto, revisá el resultado y restablecé las mayúsculas necesarias.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto" title="Conversor a Sentence case"
+    intro="Pasá texto a Sentence case (mayúscula solo en la primera letra de cada oración). Para títulos en español, blogs modernos, UI conversacional y comunicación informal.">
+
+    <div slot="tool">
+      <label for="sc-in">Texto</label>
+      <textarea id="sc-in" rows="6" placeholder="Pegá tu texto acá..." style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div style="margin-top:0.75rem;">
+        <button id="sc-go" class="btn btn-primary" type="button">Convertir</button>
+        <button id="sc-copy" class="btn btn-ghost" type="button">Copiar resultado</button>
+      </div>
+      <label for="sc-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="sc-out" rows="6" readonly style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es Sentence case</h2>
+      <p>
+        Sentence case es la forma natural de escribir oraciones: mayúscula en la primera letra de la oración
+        y en los nombres propios; todo lo demás en minúscula. En español es el estilo habitual para títulos,
+        subtítulos y prácticamente cualquier texto que no sea un acrónimo. Aunque parezca obvio, mucha gente
+        copia textos con Title Case (estilo inglés) y queda raro.
+      </p>
+
+      <h2>Cuándo conviene Sentence case</h2>
+      <ul>
+        <li><strong>Títulos en español</strong> — la norma de la RAE recomienda Sentence case para titulares.</li>
+        <li><strong>UI moderna</strong> — Material Design, Apple, Linear y muchas plataformas usan Sentence case en menús, botones y headings.</li>
+        <li><strong>Blogs informales</strong> — tono cercano, conversacional.</li>
+        <li><strong>Newsletters</strong> — los subjects funcionan mejor en Sentence case que en Title Case.</li>
+        <li><strong>Texto legal y académico en español</strong> — siempre Sentence case.</li>
+      </ul>
+
+      <h2>El problema de copiar de fuentes en inglés</h2>
+      <p>
+        Cuando traducís contenido del inglés, muchas veces te queda un texto traducido pero con la
+        capitalización original (Title Case). Eso es un error de estilo en español. Pasarlo por un conversor
+        a Sentence case es uno de los pasos finales de cualquier traducción profesional. Lo mismo aplica a
+        copiar de manuales de marca internacionales: revisar mayúsculas siempre.
+      </p>
+
+      <h2>Cuidado con los nombres propios</h2>
+      <p>
+        Un conversor automático no sabe distinguir "Apple" (la marca) de "apple" (la fruta). Después de
+        convertir, releé el resultado para volver a poner en mayúscula los nombres propios, marcas, países,
+        ciudades y siglas. Esa revisión rápida es la diferencia entre un texto profesional y uno descuidado.
+      </p>
+
+      <h2>Sentence case en branding</h2>
+      <ul>
+        <li><strong>Tono cercano</strong> — startups y D2C suelen elegir Sentence case en toda su comunicación.</li>
+        <li><strong>Web moderna</strong> — productos SaaS lo aplican en navegación, dashboards y emails transaccionales.</li>
+        <li><strong>Apps de productividad</strong> — Linear, Notion, Slack: todo en Sentence case.</li>
+        <li><strong>Mensajería</strong> — push notifications y mensajes in-app, casi siempre Sentence case.</li>
+      </ul>
+
+      <h2>Ejemplos comparativos</h2>
+      <p>
+        Title Case: "Cómo Mejorar Tu Productividad En Diez Pasos". Sentence case: "Cómo mejorar tu
+        productividad en diez pasos". Ambos comunican lo mismo, pero el segundo se siente más fluido y
+        respeta la norma del español. La diferencia es sutil pero el lector la procesa: Sentence case
+        transmite confianza idiomática.
+      </p>
+
+      <h2>Consistencia es lo que importa</h2>
+      <p>
+        Más allá del estilo elegido, lo crítico es ser consistente. Si tu blog usa Sentence case, todos los
+        títulos lo deben usar. Si una marca usa Title Case, no mezcle. Las inconsistencias se notan más que
+        la regla específica que adoptes. Un conversor te ayuda a estandarizar archivos largos en segundos.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es Sentence case?</summary><p>Mayúscula solo en la primera letra de cada oración (y en nombres propios).</p></details>
+      <details><summary>¿Por qué pasar de Title Case a Sentence case?</summary><p>Para textos en español, UI moderna y tono conversacional.</p></details>
+      <details><summary>¿Mantiene los nombres propios?</summary><p>No automáticamente. Revisá el resultado y restablecé mayúsculas en marcas y nombres propios.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const inEl = document.getElementById('sc-in') as HTMLTextAreaElement;
+  const outEl = document.getElementById('sc-out') as HTMLTextAreaElement;
+  const go = document.getElementById('sc-go') as HTMLButtonElement;
+  const cp = document.getElementById('sc-copy') as HTMLButtonElement;
+
+  function sentenceCase(str: string) {
+    const lower = str.toLowerCase();
+    return lower.replace(/(^|[.!?¡¿]\s+|\n\s*)([a-záéíóúñü])/g, (_, p1, p2) => p1 + p2.toUpperCase());
+  }
+
+  go.addEventListener('click', () => { outEl.value = sentenceCase(inEl.value); });
+  cp.addEventListener('click', async () => { if (!outEl.value) return; await navigator.clipboard.writeText(outEl.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

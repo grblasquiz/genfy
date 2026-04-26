@@ -1,0 +1,116 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'HTML Meta Tags Generator | Genfy';
+const description = 'Generate the essential SEO and social meta tags: title, description, Open Graph and Twitter Card. Copy with one click.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How long should the meta description be?', acceptedAnswer: { '@type': 'Answer', text: 'Between 150 and 160 characters. Longer and Google truncates; shorter and you lose the chance to sell the click.' } },
+    { '@type': 'Question', name: 'Do I need meta keywords?', acceptedAnswer: { '@type': 'Answer', text: 'No. Google has ignored meta keywords since 2009. It is dead code that only adds weight to your HTML.' } },
+    { '@type': 'Question', name: 'Are Open Graph and Twitter Card mandatory?', acceptedAnswer: { '@type': 'Answer', text: 'Not technically required, but without them your links look ugly when shared. Always worth adding.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design / Diseño" title="Meta Tags Generator"
+    intro="Build the essential meta tags for SEO and social previews. Copy and paste them into the head of your HTML.">
+
+    <div slot="tool" class="mt">
+      <div class="mt-grid">
+        <div>
+          <label for="mt-title">Title</label>
+          <input id="mt-title" type="text" value="My Site | Brand" />
+        </div>
+        <div>
+          <label for="mt-desc">Description</label>
+          <textarea id="mt-desc" rows="3">A clear, concise description of the page, between 150 and 160 characters.</textarea>
+        </div>
+        <div>
+          <label for="mt-url">Canonical URL</label>
+          <input id="mt-url" type="url" value="https://mycompany.com" />
+        </div>
+        <div>
+          <label for="mt-img">OG image URL (1200x630)</label>
+          <input id="mt-img" type="url" value="https://mycompany.com/og.png" />
+        </div>
+      </div>
+
+      <div class="mt-actions">
+        <button id="mt-gen" class="btn btn-primary" type="button">Generate</button>
+        <button id="mt-cp" class="btn btn-ghost" type="button">Copy</button>
+      </div>
+
+      <pre><code id="mt-out"></code></pre>
+    </div>
+
+    <div slot="content">
+      <h2>What meta tags are</h2>
+      <p>Meta tags are HTML elements that live inside the &lt;head&gt; and describe page content to the browser, Google and social platforms. Users do not see them directly: search engines read them to decide how to display your site in results, and Twitter, LinkedIn or WhatsApp read them to build the preview when someone shares the link.</p>
+
+      <h2>The essential meta tags</h2>
+      <ul>
+        <li><strong>title</strong>: the most important tag for SEO. Appears as the blue headline in Google and in the browser tab. Aim for 50–60 characters.</li>
+        <li><strong>meta description</strong>: the snippet beneath the title in Google. 150–160 characters. Has to sell the click.</li>
+        <li><strong>meta viewport</strong>: required for mobile. Without it, your site renders as desktop and is shrunk down.</li>
+        <li><strong>link canonical</strong>: declares the official URL for this page. Prevents duplicate-content penalties.</li>
+      </ul>
+
+      <h2>Open Graph and Twitter Card</h2>
+      <p>Open Graph is a standard created by Facebook adopted by nearly every platform (LinkedIn, WhatsApp, Slack, Discord, Telegram). Twitter uses its own variant, Twitter Card. Both define how your link looks when shared: image, title, description.</p>
+      <p>Without Open Graph, your link shows as plain text or grabs a random image from the page. With Open Graph properly set, you get a clean visual card that significantly increases CTR.</p>
+
+      <h2>Ideal Open Graph image size</h2>
+      <p>1200x630 pixels, PNG or JPG, under 1 MB. Keep critical content centered: many platforms crop the edges. Make sure text remains legible even in small thumbnails.</p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Same title across every page</strong>: each URL needs its own title.</li>
+        <li><strong>Generic description</strong>: "Welcome to our site" does not convert. Be specific.</li>
+        <li><strong>Forgetting canonical</strong>: with UTM parameters and no canonical, Google indexes N versions of the same page.</li>
+        <li><strong>Broken OG image</strong>: test your URL in Facebook Sharing Debugger and Twitter Card Validator before going live.</li>
+      </ul>
+
+      <h2>Validation</h2>
+      <p>Once you have pasted the meta tags, validate them with official tools: Facebook Sharing Debugger, Twitter Card Validator and Google Search Console URL inspection. These tools show you exactly how each platform parses your HTML and warn you about missing fields. Always test before shipping to production.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How long should the meta description be?</summary><p>150–160 characters. Longer and Google truncates; shorter and you lose the chance to sell the click.</p></details>
+      <details><summary>Do I need meta keywords?</summary><p>No. Google has ignored it since 2009. Dead code.</p></details>
+      <details><summary>Is Open Graph mandatory?</summary><p>No, but without it your links look ugly when shared. Always worth adding.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .mt-grid { display: grid; gap: 1rem; margin-bottom: 1rem; }
+  .mt-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+</style>
+
+<script>
+  const title = document.getElementById('mt-title') as HTMLInputElement;
+  const desc = document.getElementById('mt-desc') as HTMLTextAreaElement;
+  const url = document.getElementById('mt-url') as HTMLInputElement;
+  const img = document.getElementById('mt-img') as HTMLInputElement;
+  const out = document.getElementById('mt-out') as HTMLElement;
+  const gen = document.getElementById('mt-gen') as HTMLButtonElement;
+  const cp = document.getElementById('mt-cp') as HTMLButtonElement;
+
+  function esc(s: string) { return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function render() {
+    const t = esc(title.value); const d = esc(desc.value); const u = esc(url.value); const i = esc(img.value);
+    out.textContent = `<!-- Primary -->\n<title>${t}</title>\n<meta name="description" content="${d}" />\n<link rel="canonical" href="${u}" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n\n<!-- Open Graph -->\n<meta property="og:type" content="website" />\n<meta property="og:url" content="${u}" />\n<meta property="og:title" content="${t}" />\n<meta property="og:description" content="${d}" />\n<meta property="og:image" content="${i}" />\n\n<!-- Twitter -->\n<meta name="twitter:card" content="summary_large_image" />\n<meta name="twitter:url" content="${u}" />\n<meta name="twitter:title" content="${t}" />\n<meta name="twitter:description" content="${d}" />\n<meta name="twitter:image" content="${i}" />`;
+  }
+  gen.addEventListener('click', render);
+  [title, desc, url, img].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copied'; setTimeout(() => cp.textContent = 'Copy', 1500);
+  });
+  render();
+</script>

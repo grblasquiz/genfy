@@ -1,0 +1,139 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de mocktail gratis | Genfy';
+const description = 'Generá nombres únicos para mocktails y tragos sin alcohol. Combiná sabor y sensación y obtené 20 ideas para carta de bar, café o evento.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué diferencia el nombre de un mocktail del de un cóctel?', acceptedAnswer: { '@type': 'Answer', text: 'Un mocktail necesita comunicar frescura y sabor sin sugerir alcohol. Funcionan muy bien nombres relacionados con frutas, especias y sensaciones suaves.' } },
+    { '@type': 'Question', name: '¿Conviene poner "sin alcohol" en el nombre?', acceptedAnswer: { '@type': 'Answer', text: 'Mejor en el subtítulo o en una sección "Sin alcohol" de la carta. El nombre principal debe seducir por sí mismo.' } },
+    { '@type': 'Question', name: '¿Funcionan los mismos estilos que en cócteles?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, pero con un giro: enfatizá lo botánico, lo cítrico, lo herbal y lo refrescante. Evitá referencias que sugieran calor de alcohol.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Bartending" title="Generador de nombre de mocktail"
+    intro="Combiná fruta, hierba o sensación y obtené 20 nombres frescos para mocktails de carta, eventos o casamiento. Pensados para verse bien en la pizarra del día.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Sabor o ingrediente principal</label>
+      <input id="bn-kw" type="text" placeholder="frutilla, jengibre, menta..." value="menta, lima" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="botanical">Botánico (Hoja Cítrica)</option>
+        <option value="fresh">Fresco (Brisa Tropical)</option>
+        <option value="duo">Dos sabores (Lima & Menta)</option>
+        <option value="object">Objeto + fruta (Cobre Mango)</option>
+        <option value="single">Una palabra (Brote, Rocío)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo nombrar un mocktail</h2>
+      <p>
+        El mocktail compite contra dos cosas: la imagen mental que el cliente tiene de "jugo
+        cualquiera" y la oferta de cócteles con alcohol al lado. Tu nombre tiene que dejar
+        claro que es un trago serio, sofisticado, hecho con técnica.
+      </p>
+      <ol>
+        <li><strong>Frescura primero.</strong> "Brote", "Rocío", "Brisa", "Hoja". Sugieren producto recién hecho.</li>
+        <li><strong>Botánico u herbal.</strong> "Hoja Cítrica", "Romero & Lima". Comunica preparación cuidada.</li>
+        <li><strong>Sin sugerir alcohol.</strong> Evitá "fuego", "humo", "calor". Apuntá a frescura.</li>
+        <li><strong>Pronunciable.</strong> Tu mozo lo va a repetir muchas veces.</li>
+        <li><strong>Diferenciado del cóctel.</strong> Que no se confunda con el de la página de al lado.</li>
+      </ol>
+
+      <h2>Estilos de nombres para mocktails</h2>
+      <ul>
+        <li><strong>Botánico:</strong> "Hoja Cítrica", "Romero Verde", "Brote de Pera". Comunica natural y herbal.</li>
+        <li><strong>Fresco:</strong> "Brisa Tropical", "Rocío Cítrico", "Aire de Pomelo". Disparan sensación de hidratación.</li>
+        <li><strong>Dos sabores:</strong> "Lima & Menta", "Pera & Romero". Honesto sobre los ingredientes.</li>
+        <li><strong>Objeto + fruta:</strong> "Cobre Mango", "Hilo Pera". Premium, fácil de ilustrar.</li>
+        <li><strong>Una palabra:</strong> "Brote", "Rocío", "Linde", "Brisa". Memorable.</li>
+      </ul>
+
+      <h2>Errores que evitar</h2>
+      <p>
+        El error más común es llamarlos "virgin algo": ese término asocia el mocktail con la
+        ausencia, no con la presencia. "Virgin Mojito" sugiere "mojito al que le falta algo";
+        "Hoja Cítrica" sugiere un trago propio. También evitá nombres infantilizantes ("super
+        smoothie", "frutirico"): tus clientes adultos quieren un trago serio.
+      </p>
+
+      <h2>Validación</h2>
+      <ol>
+        <li>Probá los nombres junto a tus mocktails reales.</li>
+        <li>Pedí a 5 personas que adivinen los ingredientes.</li>
+        <li>Mostralo al lado de la sección de cócteles para asegurar que se diferencie.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Diferencia con un cóctel?</summary><p>Un mocktail debe comunicar frescura y técnica sin sugerir alcohol.</p></details>
+      <details><summary>¿Poner "sin alcohol" en el nombre?</summary><p>Mejor en el subtítulo o sección. El nombre principal debe seducir solo.</p></details>
+      <details><summary>¿Mismos estilos?</summary><p>Sí, pero con foco en lo botánico, cítrico, herbal y refrescante.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const BOT = ['Hoja', 'Romero', 'Albahaca', 'Cardamomo', 'Tomillo', 'Eucalipto', 'Hibisco', 'Brote'];
+  const FRUIT = ['Cítrica', 'Verde', 'de Pera', 'de Mango', 'de Lima', 'de Pomelo', 'de Frutilla', 'de Manzana'];
+  const FRESH = ['Brisa Tropical', 'Rocío Cítrico', 'Aire de Pomelo', 'Bruma de Pera', 'Brote Verde', 'Linde Cítrica'];
+  const DUO_A = ['Lima', 'Pera', 'Manzana', 'Frutilla', 'Pomelo', 'Mango', 'Sandía', 'Romero'];
+  const DUO_B = ['Menta', 'Romero', 'Albahaca', 'Cardamomo', 'Hibisco', 'Tomillo', 'Eucalipto'];
+  const OBJ = ['Cobre', 'Hilo', 'Lino', 'Velvet', 'Vidrio'];
+  const FR = ['Mango', 'Pera', 'Pomelo', 'Sandía', 'Frutilla', 'Manzana', 'Maracuyá'];
+  const SINGLE = ['Brote', 'Rocío', 'Linde', 'Brisa', 'Bruma', 'Sereno', 'Hoja', 'Cítrico'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'botanical') name = pick(BOT) + ' ' + pick(FRUIT);
+      else if (s === 'fresh') name = pick(FRESH);
+      else if (s === 'duo') {
+        let a = pick(DUO_A), b = pick(DUO_B);
+        name = a + ' & ' + b;
+      }
+      else if (s === 'object') name = pick(OBJ) + ' ' + pick(FR);
+      else if (s === 'single') name = pick(SINGLE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

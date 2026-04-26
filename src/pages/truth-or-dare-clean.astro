@@ -1,0 +1,187 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de Verdad o Reto (clean) | Genfy';
+const description = 'Verdad o Reto familiar: preguntas honestas y retos divertidos sin contenido picante. Ideal para fiestas, familia, viajes en auto y campamentos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Es apto para todas las edades?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Las preguntas y retos están curados para ser limpios: nada picante, humillante ni peligroso. Sirve con chicos, adolescentes, familia y oficina.' } },
+    { '@type': 'Question', name: '¿Puedo elegir solo verdad o solo reto?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, hay tres botones: Verdad, Reto o Sorpresa (uno al azar).' } },
+    { '@type': 'Question', name: '¿Se repiten las preguntas?', acceptedAnswer: { '@type': 'Answer', text: 'Dentro de una sesión rotamos para evitar repetir. Si recargás la página, el ciclo se reinicia.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión / Fun" title="Generador de Verdad o Reto (clean)"
+    intro="Preguntas honestas y retos divertidos, todo apto para todo público. Sin contenido picante, sin retos riesgosos.">
+
+    <div slot="tool" class="td">
+      <div class="td-card">
+        <span id="td-tag" class="td-pill">—</span>
+        <p id="td-text" class="td-text">Tocá un botón para empezar la ronda.</p>
+      </div>
+      <div class="td-actions">
+        <button id="td-truth" class="btn btn-primary" type="button">Verdad</button>
+        <button id="td-dare" class="btn btn-primary" type="button">Reto</button>
+        <button id="td-mix" class="btn btn-ghost" type="button">Sorpresa</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Para qué sirve un Verdad o Reto limpio</h2>
+      <p>
+        El juego clásico tiene mil versiones, y la mayoría online apuntan a fiestas adultas.
+        Este es distinto: cada pregunta y cada reto pasa el filtro "apto familia". Útil para
+        cumpleaños, campamentos, viajes en auto largos, actividades escolares o eventos de
+        oficina. Cuando el grupo es mixto (chicos, abuelos, compañeros de trabajo), no podés
+        permitirte una pregunta incómoda.
+      </p>
+
+      <h2>Cómo se juega una ronda</h2>
+      <p>
+        El primer jugador toca <strong>Verdad</strong> o <strong>Reto</strong> y responde o
+        cumple lo que aparezca. El turno pasa al jugador de la izquierda. Si elige
+        <strong>Sorpresa</strong>, el generador decide. Reglas opcionales que ayudan:
+      </p>
+      <ul>
+        <li><strong>3 saltos por ronda total:</strong> cada jugador puede saltarse 3 preguntas en toda la partida. Después debe responder o cumplir.</li>
+        <li><strong>Tiempo máximo 30 segundos:</strong> los retos físicos no duran más de medio minuto. Mantiene el ritmo.</li>
+        <li><strong>Honestidad por encima de todo:</strong> la magia de la verdad es que es real. Nada de inventar.</li>
+        <li><strong>Veto grupal:</strong> si alguien se siente incómodo con una pregunta, el grupo la salta sin gastar salto.</li>
+      </ul>
+
+      <h2>Tipos de preguntas que vas a ver</h2>
+      <ol>
+        <li><strong>Anécdotas inocentes:</strong> "¿Cuál fue tu peor corte de pelo?"</li>
+        <li><strong>Preferencias:</strong> "¿Playa o montaña? ¿Por qué?"</li>
+        <li><strong>Recuerdos familiares:</strong> "¿Cuál es tu primer recuerdo de la infancia?"</li>
+        <li><strong>Hipotéticas suaves:</strong> "Si pudieras viajar en el tiempo a una década, ¿cuál?"</li>
+        <li><strong>Confesiones livianas:</strong> "¿Qué cosa amás en secreto y nunca contás?"</li>
+      </ol>
+
+      <h2>Tipos de retos que pueden salir</h2>
+      <ul>
+        <li><strong>Físicos suaves:</strong> 10 sentadillas, imitar un animal, cantar en voz de personaje.</li>
+        <li><strong>Sociales:</strong> hacerle un cumplido sincero a tres personas del grupo, contar un chiste.</li>
+        <li><strong>Creativos:</strong> inventar una canción de 15 segundos sobre el último plato que comiste.</li>
+        <li><strong>De memoria:</strong> recitar el abecedario al revés, decir 10 capitales sin frenar.</li>
+      </ul>
+
+      <h2>Cuándo NO usar este juego</h2>
+      <p>
+        Aun en versión limpia, Verdad o Reto puede incomodar a personas muy reservadas. Si
+        estás en una junta donde todos se conocen por primera vez, arrancá con preguntas
+        rompehielos (más livianas) y guardá el Verdad o Reto para cuando ya hay confianza. Si
+        alguien claramente no quiere jugar, no insistas: forzar a un participante arruina el
+        clima de toda la mesa.
+      </p>
+
+      <h2>Ideas para potenciar la ronda</h2>
+      <p>
+        Sumá un cronómetro de 30 segundos para los retos. Hacé que el perdedor prepare la
+        próxima ronda de café o snacks. Grabá clips cortos de los retos para verlos al final.
+        Si jugás con familia, mezclá preguntas que conecten generaciones ("contale a tu nieto
+        cómo conociste a tu pareja"). Una buena ronda dura entre 20 y 40 minutos: pasada esa
+        franja, la atención cae. Cortá antes y dejala con ganas de otra ronda.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Apto para chicos?</summary><p>Sí, todo el contenido apunta a grupos mixtos incluyendo familia y aulas.</p></details>
+      <details><summary>¿Cuántos jugadores?</summary><p>De 3 a 15. Pasados los 15 conviene dividir en dos rondas paralelas.</p></details>
+      <details><summary>¿Puedo agregar mis propias preguntas?</summary><p>Por ahora no, pero estamos preparando una versión con preguntas custom.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .td-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 140px; }
+  .td-pill { display: inline-block; padding: 0.25rem 0.75rem; background: var(--bg-inset); border: 1px solid var(--border-strong); border-radius: var(--radius); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .td-text { font-size: 1.125rem; line-height: 1.6; margin: 0; }
+  .td-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+</style>
+
+<script>
+  const TRUTHS = [
+    "¿Cuál fue tu peor corte de pelo?",
+    "¿Cuál era tu materia favorita en la escuela y por qué?",
+    "Si pudieras vivir en cualquier lugar del mundo, ¿dónde?",
+    "¿Qué comida no soportás?",
+    "¿Cuál es la canción más vergonzosa que amás en secreto?",
+    "¿Qué superpoder elegirías?",
+    "¿Cuál fue tu mejor cumpleaños hasta ahora?",
+    "¿Qué hiciste de chico que hoy te causa risa?",
+    "¿Cuál es tu mejor recuerdo familiar?",
+    "Si tuvieras que revivir un día de tu vida, ¿cuál?",
+    "¿Qué libro o película recomendás que pocos conocen?",
+    "¿Cuál es tu rutina secreta de la mañana?",
+    "¿Qué te encanta y no le contás a nadie?",
+    "¿Quién es la persona más graciosa que conocés?",
+    "¿Qué animal te representa mejor y por qué?",
+    "Si fueras invisible un día, ¿qué harías?",
+    "¿Cuál es el regalo más raro que recibiste?",
+    "¿Qué postre te haría feliz ahora mismo?",
+    "¿Cuál es tu costumbre más rara?",
+    "¿Qué le dirías a tu yo de hace 10 años?",
+    "Si pudieras tocar un instrumento al instante, ¿cuál?",
+    "¿Cuál es tu hobbie que pocos conocen?",
+    "¿Qué profesión poco realista te tienta?",
+    "¿Cuál es la peor moda que seguiste?",
+    "¿Qué tres cosas te llevarías a una isla desierta?",
+    "¿Qué app abrís más en el día?",
+    "¿Cuál es la mentira piadosa que más usás?",
+    "¿Qué te da más nervios: hablar en público o cantar en público?",
+    "¿Cuál es tu palabra favorita en español?",
+    "¿Qué cosa te puso de buen humor esta semana?"
+  ];
+  const DARES = [
+    "Hacé 10 sentadillas mientras contás un chiste.",
+    "Imitá a un personaje de dibujos animados durante 30 segundos.",
+    "Hablá con acento extranjero hasta tu próximo turno.",
+    "Hacele un cumplido sincero a cada persona del grupo.",
+    "Cantá el estribillo de tu canción favorita.",
+    "Bailá 15 segundos sin música.",
+    "Recitá el abecedario al revés.",
+    "Inventá una canción de 15 segundos sobre lo último que comiste.",
+    "Contá un chiste sin reírte.",
+    "Mostrá la última foto de tu galería y explicala.",
+    "Decí 10 capitales del mundo sin frenar.",
+    "Hablá como narrador de documental durante un minuto.",
+    "Hacé tu mejor imitación de un amigo cercano.",
+    "Caminá como si tuvieras tacos altos hasta el otro lado del cuarto.",
+    "Decí un trabalenguas tres veces seguidas sin trabarte.",
+    "Cantá tu canción favorita de la infancia.",
+    "Hacé 5 jumping jacks mientras decís el abecedario.",
+    "Inventá una receta absurda con tres ingredientes que diga el grupo.",
+    "Improvisá un poema de 4 líneas sobre la persona a tu derecha.",
+    "Hablá en rima durante 30 segundos.",
+    "Imitá a un periodista dando el clima.",
+    "Dibujá algo con los ojos cerrados y mostralo.",
+    "Cantá 'Feliz Cumpleaños' como si fuera ópera.",
+    "Hacé una postura de yoga durante 20 segundos.",
+    "Decí 5 cosas en las que sos bueno.",
+    "Inventá un nombre artístico para vos y explicá por qué.",
+    "Imitá tres sonidos de animales y que el grupo adivine.",
+    "Mostrá tu mejor paso de baile.",
+    "Cantá la jingle más vieja que recuerdes.",
+    "Decí una frase con la boca llena de aire."
+  ];
+
+  const tag = document.getElementById('td-tag') as HTMLElement;
+  const text = document.getElementById('td-text') as HTMLElement;
+  const truthBtn = document.getElementById('td-truth') as HTMLButtonElement;
+  const dareBtn = document.getElementById('td-dare') as HTMLButtonElement;
+  const mixBtn = document.getElementById('td-mix') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function showTruth() { tag.textContent = 'Verdad'; text.textContent = pick(TRUTHS); }
+  function showDare() { tag.textContent = 'Reto'; text.textContent = pick(DARES); }
+  truthBtn.addEventListener('click', showTruth);
+  dareBtn.addEventListener('click', showDare);
+  mixBtn.addEventListener('click', () => { Math.random() < 0.5 ? showTruth() : showDare(); });
+</script>
+</content>
+</invoke>

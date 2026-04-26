@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Mezclar oraciones de un texto | Genfy';
+const description = 'Mezclá las oraciones de un texto en orden aleatorio. Útil para tests de coherencia, ejercicios de aula, escritura experimental y juegos.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve mezclar oraciones?', acceptedAnswer: { '@type': 'Answer', text: 'Para ejercicios de comprensión lectora, tests de coherencia, escritura experimental y entender qué tan bien estructurado está un texto.' } },
+    { '@type': 'Question', name: '¿Cómo detecta las oraciones?', acceptedAnswer: { '@type': 'Answer', text: 'Por puntos, signos de exclamación e interrogación. Funciona bien con textos limpios y prosa estándar.' } },
+    { '@type': 'Question', name: '¿Es realmente aleatorio?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Usa Fisher-Yates con crypto.getRandomValues, así que cada mezcla es uniforme.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto" title="Mezclar oraciones de un texto"
+    intro="Pegá un texto y obtené sus oraciones mezcladas al azar. Ideal para ejercicios de aula, escritura experimental, test de coherencia y juegos de lectura.">
+
+    <div slot="tool">
+      <label for="ss-in">Texto</label>
+      <textarea id="ss-in" rows="8" placeholder="Pegá tu texto acá..." style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div style="margin-top:0.75rem;">
+        <button id="ss-go" class="btn btn-primary" type="button">Mezclar</button>
+        <button id="ss-copy" class="btn btn-ghost" type="button">Copiar</button>
+      </div>
+      <textarea id="ss-out" rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Qué te enseña mezclar oraciones</h2>
+      <p>
+        Si mezclás las oraciones de un párrafo y el resultado sigue teniendo sentido, hay un problema:
+        seguramente el texto no avanza, no hay progresión lógica. La buena escritura tiene dirección. Si
+        cada oración construye sobre la anterior, mezclarlas produce un caos evidente. Por eso, mezclar es
+        un test diagnóstico: textos bien estructurados se "rompen" notoriamente cuando las oraciones se
+        desordenan.
+      </p>
+
+      <h2>Aplicaciones en el aula</h2>
+      <ul>
+        <li><strong>Comprensión lectora</strong> — entregás un texto mezclado y los alumnos deben reordenarlo. Excelente para escuela primaria y secundaria.</li>
+        <li><strong>Conectores</strong> — el ejercicio fuerza a identificar pistas: "por eso", "luego", "primero", "finalmente".</li>
+        <li><strong>Coherencia textual</strong> — ejercitar el reconocimiento de progresión temática.</li>
+        <li><strong>Escritura</strong> — al reordenar, los alumnos aprenden cómo se construye un párrafo bien armado.</li>
+      </ul>
+
+      <h2>Escritura experimental</h2>
+      <p>
+        Algunos autores usan la mezcla aleatoria como técnica creativa. William S. Burroughs y Brion Gysin
+        popularizaron el "cut-up" en los años 60: cortar texto, mezclarlo y descubrir conexiones nuevas.
+        David Bowie usaba algo similar para letras de canciones. La técnica funciona porque el azar produce
+        adyacencias que no salieron de tu cabeza, y a veces esas yuxtaposiciones inesperadas tienen poesía.
+      </p>
+
+      <h2>Test de redundancia</h2>
+      <p>
+        Otro uso menos obvio: si mezclás un texto y la versión mezclada se entiende casi igual, puede que
+        tu texto original tenga mucha redundancia. Cada oración debería aportar algo nuevo. Si las oraciones
+        son intercambiables, alguna sobra. Es una forma cruda pero útil de auditar tu propia escritura.
+      </p>
+
+      <h2>Juegos y dinámicas</h2>
+      <ul>
+        <li><strong>Reordenar el cuento</strong> — clásico de aula: en grupos, reordenan las oraciones de un cuento corto.</li>
+        <li><strong>Quien es la oración intrusa</strong> — agregar una oración que no pertenece y el grupo debe identificarla.</li>
+        <li><strong>Mezcla de dos textos</strong> — combinar dos párrafos distintos mezclados, los alumnos los separan.</li>
+        <li><strong>Cut-up creativo</strong> — escribir poemas a partir del orden aleatorio.</li>
+      </ul>
+
+      <h2>Cómo se detectan las oraciones</h2>
+      <p>
+        El algoritmo busca puntos, signos de exclamación e interrogación seguidos de espacio o salto de
+        línea. Maneja bien prosa estándar pero puede confundirse con abreviaturas ("Sr.", "etc.") o
+        siglas con puntos. Para textos muy técnicos, conviene revisar manualmente el resultado y unir
+        manualmente las divisiones erróneas.
+      </p>
+
+      <h2>Mezcla como herramienta de revisión</h2>
+      <p>
+        Probá esto con tu propio texto: mezclalo y leé. ¿Te confundís? Buena señal: tu original tiene
+        progresión clara. ¿Suena casi igual? Hay trabajo de edición por hacer. La revisión por mezcla es
+        una técnica que pocos editores conocen pero que produce mejoras concretas.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve mezclar oraciones?</summary><p>Comprensión lectora, escritura experimental y diagnóstico de coherencia.</p></details>
+      <details><summary>¿Cómo detecta las oraciones?</summary><p>Por puntos, exclamaciones e interrogaciones. Mejor en prosa estándar.</p></details>
+      <details><summary>¿Es realmente aleatorio?</summary><p>Sí. Fisher-Yates con generador criptográfico.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const inEl = document.getElementById('ss-in') as HTMLTextAreaElement;
+  const out = document.getElementById('ss-out') as HTMLTextAreaElement;
+  const go = document.getElementById('ss-go') as HTMLButtonElement;
+  const cp = document.getElementById('ss-copy') as HTMLButtonElement;
+
+  function rand(n: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return i[0] % n; }
+  function shuffle<T>(arr: T[]): T[] { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = rand(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  function splitSentences(text: string): string[] {
+    return text.split(/(?<=[.!?¡¿])\s+/).map(s => s.trim()).filter(Boolean);
+  }
+  function go_() {
+    const text = inEl.value.trim();
+    if (!text) { out.value = ''; return; }
+    const sents = splitSentences(text);
+    out.value = shuffle(sents).join(' ');
+  }
+  go.addEventListener('click', go_);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

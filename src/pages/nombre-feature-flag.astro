@@ -1,0 +1,188 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de feature flag | Genfy';
+const description = 'Generá nombres consistentes para feature flags / toggles. Convención clara para LaunchDarkly, Unleash, Flagsmith o flags caseros.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo nombrar un feature flag?', acceptedAnswer: { '@type': 'Answer', text: 'Tipo + área + descripción en kebab-case o snake_case. Por ejemplo: release.checkout.new-payment-flow.' } },
+    { '@type': 'Question', name: '¿Por qué incluir el tipo?', acceptedAnswer: { '@type': 'Answer', text: 'release/experiment/ops/permission tienen ciclos de vida distintos. El prefijo deja claro cuándo se elimina el flag.' } },
+    { '@type': 'Question', name: '¿Cuándo eliminar un flag?', acceptedAnswer: { '@type': 'Answer', text: 'Release flags: tras 100% rollout estable. Experiment flags: tras decisión. Permission flags: solo si la feature deja de existir.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech / Dev"
+    title="Generador de nombre de feature flag"
+    intro="Generá nombres consistentes para feature flags. Tipo, área y descripción para que cualquiera entienda qué hace cada flag."
+  >
+    <div slot="tool" class="ff-tool">
+      <div class="ff-grid">
+        <div>
+          <label for="ff-type">Tipo</label>
+          <select id="ff-type">
+            <option value="release">release</option>
+            <option value="experiment">experiment</option>
+            <option value="ops">ops</option>
+            <option value="permission">permission</option>
+          </select>
+        </div>
+        <div>
+          <label for="ff-area">Área / módulo</label>
+          <input id="ff-area" type="text" value="checkout" />
+        </div>
+        <div>
+          <label for="ff-desc">Descripción corta</label>
+          <input id="ff-desc" type="text" value="new payment flow" />
+        </div>
+        <div>
+          <label for="ff-case">Convención</label>
+          <select id="ff-case">
+            <option value="dot">dot.case</option>
+            <option value="kebab">kebab-case</option>
+            <option value="snake">snake_case</option>
+            <option value="camel">camelCase</option>
+          </select>
+        </div>
+      </div>
+      <div class="ff-actions">
+        <button id="ff-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="ff-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+      <textarea id="ff-out" class="mono" rows="6" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué nombrar bien los flags</h2>
+      <p>
+        Un proyecto sin convención termina con flags como <code>NEW_FLOW_2</code>,
+        <code>fix_thing</code> y <code>tmp_test_remove</code>. Tres meses después nadie sabe qué
+        hacen. Nombrar con disciplina convierte cada flag en algo legible incluso cuando el autor
+        original ya no está.
+      </p>
+
+      <h2>Los cuatro tipos según Pete Hodgson</h2>
+      <p>
+        El framework más usado divide los flags en cuatro categorías:
+        <strong>Release</strong> (esconden trabajo en progreso),
+        <strong>Experiment</strong> (A/B testing),
+        <strong>Ops</strong> (kill switches, throttling),
+        <strong>Permission</strong> (acceso por plan o rol). Cada uno tiene ciclo de vida y
+        criterios de eliminación distintos.
+      </p>
+
+      <h2>Estructura recomendada</h2>
+      <p>
+        <code>&lt;tipo&gt;.&lt;área&gt;.&lt;descripción-corta&gt;</code>. Ejemplos:
+        <code>release.checkout.new-payment-flow</code>,
+        <code>experiment.search.relevance-v2</code>,
+        <code>ops.queue.disable-batching</code>,
+        <code>permission.billing.beta-pricing</code>.
+      </p>
+
+      <h2>Convención de caso</h2>
+      <p>
+        <strong>dot.case</strong> es popular en LaunchDarkly y Flagsmith.
+        <strong>kebab-case</strong> en archivos de config.
+        <strong>SCREAMING_SNAKE_CASE</strong> es típico para flags como variables de entorno.
+        <strong>camelCase</strong> aparece en configs en JS. La regla es: una sola convención por
+        proyecto, sea cual sea.
+      </p>
+
+      <h2>Qué evitar</h2>
+      <ul>
+        <li><strong>Nombres en negativo:</strong> <code>disable_old_checkout</code> obliga a pensar al revés.</li>
+        <li><strong>Nombres genéricos:</strong> <code>new_thing</code>, <code>fix</code>.</li>
+        <li><strong>Iniciales del autor:</strong> <code>jp_test</code>.</li>
+        <li><strong>Tickets:</strong> <code>JIRA-1234</code> sólo. Quién lee el código no abre el ticket.</li>
+      </ul>
+
+      <h2>El plan de eliminación</h2>
+      <p>
+        Cada flag debería nacer con fecha de muerte. <strong>Release</strong>: se elimina tras
+        rollout exitoso al 100%. <strong>Experiment</strong>: tras la decisión y publicación de
+        resultados. <strong>Ops</strong>: pueden vivir indefinidamente.
+        <strong>Permission</strong>: viven mientras la feature exista.
+      </p>
+
+      <h2>Auditoría con tags</h2>
+      <p>
+        Plataformas como LaunchDarkly y Unleash permiten taggear flags con responsable, equipo,
+        ticket de creación y fecha esperada de baja. Una vez por trimestre, una auditoría lista
+        flags con más de N días: o se eliminan o se documenta por qué siguen vivos.
+      </p>
+
+      <h2>Naming colisiones</h2>
+      <p>
+        Si tu producto tiene varios sub-equipos, prefijá con la unidad de negocio:
+        <code>web.checkout.flow-v2</code>, <code>mobile.checkout.flow-v2</code>. Los flags
+        compartidos entre frontend y backend deberían tener nombres idénticos para que el debug
+        cruzado sea trivial.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo nombrar?</summary><p>Tipo + área + descripción. <code>release.checkout.new-payment-flow</code>.</p></details>
+      <details><summary>¿Tipos?</summary><p>release, experiment, ops, permission. Cada uno tiene ciclo de vida distinto.</p></details>
+      <details><summary>¿Cuándo borrar?</summary><p>Release tras 100%; experiment tras decisión; permission mientras la feature exista.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .ff-grid { grid-template-columns: 1fr; } }
+  .ff-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const type = document.getElementById('ff-type') as HTMLSelectElement;
+  const area = document.getElementById('ff-area') as HTMLInputElement;
+  const desc = document.getElementById('ff-desc') as HTMLInputElement;
+  const cs = document.getElementById('ff-case') as HTMLSelectElement;
+  const out = document.getElementById('ff-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('ff-gen') as HTMLButtonElement;
+  const copy = document.getElementById('ff-copy') as HTMLButtonElement;
+
+  function tokens(s: string) { return s.toLowerCase().trim().split(/[^a-z0-9]+/).filter(Boolean); }
+  function joinCase(tokens: string[], style: string) {
+    if (style === 'dot') return tokens.join('.');
+    if (style === 'kebab') return tokens.join('-');
+    if (style === 'snake') return tokens.join('_');
+    return tokens.map((t, i) => i === 0 ? t : t[0].toUpperCase() + t.slice(1)).join('');
+  }
+
+  function build() {
+    const ar = tokens(area.value || 'general');
+    const de = tokens(desc.value || 'short-description');
+    const all = [type.value, ...ar, ...de];
+    const main = joinCase(all, cs.value);
+    const upper = all.join('_').toUpperCase();
+    const variants = [
+      main,
+      `${type.value}.${joinCase(ar, cs.value === 'dot' ? 'kebab' : cs.value)}.${joinCase(de, cs.value === 'dot' ? 'kebab' : cs.value)}`,
+      upper,
+    ];
+    out.value = [...new Set(variants)].join('\n');
+  }
+  gen.addEventListener('click', build);
+  [type, area, desc, cs].forEach(el => el.addEventListener('input', build));
+  [type, cs].forEach(el => el.addEventListener('change', build));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value.split('\n')[0]);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copiado';
+    setTimeout(() => { icon.textContent = 'Copiar'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

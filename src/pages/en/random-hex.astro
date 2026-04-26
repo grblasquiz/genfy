@@ -1,0 +1,133 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random Hex Generator | Genfy';
+const description = 'Generate random hex colors instantly. Useful for prototypes, placeholders and visual experiments.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is random hex good for?', acceptedAnswer: { '@type': 'Answer', text: 'For quick prototypes where you need to distinguish elements visually without a curated palette. Also placeholders and testing.' } },
+    { '@type': 'Question', name: 'Are the colors uniform?', acceptedAnswer: { '@type': 'Answer', text: 'No. RGB random has bias: more grayish combinations than vibrant ones. For consistently vibrant colors, generate in HSL with fixed saturation and lightness.' } },
+    { '@type': 'Question', name: 'Good for production?', acceptedAnswer: { '@type': 'Answer', text: 'No. For production, define a palette. Random is for early stages or as a starting point.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design / Diseño" title="Random Hex Generator"
+    intro="Generate one random hex or several at once. Preview, copy.">
+
+    <div slot="tool" class="rh">
+      <div class="rh-grid">
+        <div>
+          <label for="rh-mode">Mode</label>
+          <select id="rh-mode">
+            <option value="random">Pure random (RGB)</option>
+            <option value="vivid">Vivid (HSL S=70 L=50)</option>
+            <option value="pastel">Pastel (HSL S=70 L=80)</option>
+            <option value="dark">Dark (HSL S=50 L=25)</option>
+          </select>
+        </div>
+        <div>
+          <label for="rh-count">Count</label>
+          <input id="rh-count" type="number" min="1" max="20" value="6" />
+        </div>
+      </div>
+
+      <div class="rh-actions">
+        <button id="rh-gen" class="btn btn-primary" type="button">Generate</button>
+      </div>
+
+      <div id="rh-list" class="rh-list"></div>
+    </div>
+
+    <div slot="content">
+      <h2>What random color is for</h2>
+      <p>Exploration. When wireframing, prototyping or generating temporary colors to distinguish elements in a debug view, random saves the "what color do I pick?" block. For production, define a palette.</p>
+
+      <h2>RGB random has bias</h2>
+      <p>If you generate three channels (R, G, B) each random 0–255, you end up with many grayish colors and few vibrant ones. Reason: most random three-number combos fall into the "neutral" zone of the space. For consistently striking colors, generate in HSL: random hue but saturation and lightness fixed at known-good values.</p>
+
+      <h2>Modes in this tool</h2>
+      <ul>
+        <li><strong>Pure random</strong>: RGB random across the whole space. You get what you get.</li>
+        <li><strong>Vivid</strong>: HSL at S=70%, L=50%. Punchy colors.</li>
+        <li><strong>Pastel</strong>: HSL at S=70%, L=80%. Soft tones for backgrounds.</li>
+        <li><strong>Dark</strong>: HSL at S=50%, L=25%. Useful for dark mode or text on light backgrounds.</li>
+      </ul>
+
+      <h2>When to use each mode</h2>
+      <p>For prototypes where each block must be distinct, "vivid" is the choice. For avatar placeholders or subtle cards, "pastel". For backgrounds with personality, generate several "dark" and combine. "Pure random" surfaces combinations you wouldn't have picked deliberately.</p>
+
+      <h2>Tip: deterministic random</h2>
+      <p>In real applications (avatars, charts) you sometimes want the "random color" to be stable. For example, a user's avatar should always have the same color. Hash the user ID and map to HSL. Looks random but is deterministic: same ID, same color every time.</p>
+
+      <h2>Random for charts</h2>
+      <p>If you must plot 10 series on a chart, random often produces problems: two series may end up too similar. Better: distribute hues uniformly. With 10 series, hue = i * 36° (360 / 10). Constant saturation and lightness give 10 always-distinguishable colors.</p>
+
+      <h2>Limitations</h2>
+      <p>Random does not respect accessibility. A random pair may have insufficient contrast for text. Before using a random color over a light or dark background, validate with a WCAG contrast checker. This tool is for exploration, not final decisions.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is it for?</summary><p>Prototypes and exploration. Not for final brand decisions.</p></details>
+      <details><summary>Uniform colors?</summary><p>No, RGB skews to grays. HSL with fixed saturation gives more predictable colors.</p></details>
+      <details><summary>Production-ready?</summary><p>No. For production, define a palette. Random is for early stages.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rh-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .rh-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .rh-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.5rem; }
+  .rh-card { padding: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; }
+  .rh-card .swatch { height: 80px; }
+  .rh-card .label { padding: 0.5rem; font-family: var(--font-mono); font-size: 0.8125rem; text-align: center; }
+  @media (max-width: 600px) { .rh-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const mode = document.getElementById('rh-mode') as HTMLSelectElement;
+  const count = document.getElementById('rh-count') as HTMLInputElement;
+  const list = document.getElementById('rh-list') as HTMLElement;
+  const gen = document.getElementById('rh-gen') as HTMLButtonElement;
+
+  function hsl2hex(h: number, s: number, l: number) {
+    s /= 100; l /= 100;
+    const k = (n: number) => (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    const to = (x: number) => Math.round(255 * x).toString(16).padStart(2, '0');
+    return '#' + to(f(0)) + to(f(8)) + to(f(4));
+  }
+
+  function gen1(): string {
+    const m = mode.value;
+    if (m === 'random') {
+      const n = Math.floor(Math.random() * 0xffffff);
+      return '#' + n.toString(16).padStart(6, '0');
+    }
+    const h = Math.floor(Math.random() * 360);
+    if (m === 'vivid') return hsl2hex(h, 70, 50);
+    if (m === 'pastel') return hsl2hex(h, 70, 80);
+    return hsl2hex(h, 50, 25);
+  }
+
+  function render() {
+    const n = Math.max(1, Math.min(20, +count.value || 1));
+    list.innerHTML = '';
+    for (let i = 0; i < n; i++) {
+      const c = gen1();
+      const card = document.createElement('div');
+      card.className = 'rh-card';
+      card.innerHTML = `<div class="swatch" style="background:${c}"></div><div class="label">${c}</div>`;
+      card.addEventListener('click', () => navigator.clipboard.writeText(c));
+      list.appendChild(card);
+    }
+  }
+  gen.addEventListener('click', render);
+  [mode, count].forEach(el => el.addEventListener('input', render));
+  render();
+</script>

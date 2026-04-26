@@ -1,0 +1,124 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Contador de palabras gratis | Genfy';
+const description = 'Contá palabras, oraciones, párrafos y tiempo de lectura al instante. Útil para artículos, ensayos, posts de redes y SEO.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo cuenta una palabra?', acceptedAnswer: { '@type': 'Answer', text: 'Una palabra es una secuencia de caracteres separada por espacios o saltos de línea. Por ejemplo, "Hola mundo" son 2 palabras. Guiones largos, signos de puntuación y números cuentan según su contexto.' } },
+    { '@type': 'Question', name: '¿Cómo calcula el tiempo de lectura?', acceptedAnswer: { '@type': 'Answer', text: 'Asume 200 palabras por minuto, el promedio de lectura silenciosa en adulto. Es una estimación: lectores rápidos llegan a 300-400, lectores cuidadosos bajan a 150.' } },
+    { '@type': 'Question', name: '¿Para qué sirve para SEO?', acceptedAnswer: { '@type': 'Answer', text: 'Google premia contenido sustancial. Un post de 300 palabras compite peor que uno de 1500 en queries informativas. El contador te ayuda a saber si llegaste al umbral mínimo del nicho.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto" title="Contador de palabras"
+    intro="Pegá texto y obtené métricas en tiempo real: palabras, caracteres, oraciones, párrafos y tiempo estimado de lectura.">
+
+    <div slot="tool">
+      <label for="wc-in">Texto</label>
+      <textarea id="wc-in" rows="10" style="font-family: var(--font-sans); font-size: 1rem;">Pegá tu texto acá para ver el conteo en tiempo real.
+
+El contador detecta palabras, oraciones y párrafos automáticamente.</textarea>
+      <div class="wc-stats">
+        <div class="wc-stat"><div class="wc-num" id="wc-words">0</div><div class="wc-lbl">Palabras</div></div>
+        <div class="wc-stat"><div class="wc-num" id="wc-chars">0</div><div class="wc-lbl">Caracteres</div></div>
+        <div class="wc-stat"><div class="wc-num" id="wc-chars-ns">0</div><div class="wc-lbl">Sin espacios</div></div>
+        <div class="wc-stat"><div class="wc-num" id="wc-sent">0</div><div class="wc-lbl">Oraciones</div></div>
+        <div class="wc-stat"><div class="wc-num" id="wc-para">0</div><div class="wc-lbl">Párrafos</div></div>
+        <div class="wc-stat"><div class="wc-num" id="wc-time">0 min</div><div class="wc-lbl">Lectura</div></div>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué importa contar palabras</h2>
+      <p>
+        Saber cuántas palabras tiene un texto no es solo una curiosidad. En SEO, el largo es una de las señales que Google interpreta como profundidad de cobertura: queries competitivas requieren contenido extenso. En periodismo, los pliegos editoriales fijan límites estrictos para columnas y notas. En academia, los abstracts no pueden pasar de 250 palabras. En redes sociales, cada plataforma tiene su límite y conviene aprovecharlo sin pasarse.
+      </p>
+
+      <h2>Largos típicos por formato</h2>
+      <ul>
+        <li><strong>Tweet/X:</strong> 280 caracteres (unas 40-50 palabras).</li>
+        <li><strong>LinkedIn post:</strong> 1300-1700 caracteres recomendado para máximo engagement.</li>
+        <li><strong>Instagram caption:</strong> hasta 2200 caracteres, pero los primeros 125 son los visibles antes del "ver más".</li>
+        <li><strong>Email subject:</strong> bajo los 60 caracteres.</li>
+        <li><strong>Meta description (SEO):</strong> 150-160 caracteres.</li>
+        <li><strong>Blog post típico:</strong> 800-2000 palabras según nicho.</li>
+        <li><strong>Pillar content / guías:</strong> 2500-5000 palabras.</li>
+        <li><strong>Abstract académico:</strong> 150-300 palabras.</li>
+      </ul>
+
+      <h2>Tiempo de lectura: cómo se calcula</h2>
+      <p>
+        El estándar es 200 palabras por minuto, basado en estudios de lectura silenciosa de adultos en idiomas latinos. La realidad varía: lectores entrenados llegan a 300-400, alguien leyendo en un idioma que no domina baja a 100. Para textos técnicos con código, fórmulas o terminología especializada, el ritmo cae entre 50% y 70%. Por eso muchas publicaciones serias muestran "5 min de lectura" como un mínimo: si el lector se detiene a pensar, va a tardar más.
+      </p>
+
+      <h2>Densidad de palabras clave</h2>
+      <p>
+        Para SEO, conviene saber no solo cuántas palabras totales tenés, sino cuántas veces aparece tu término objetivo. La densidad ideal es entre 0.5% y 2%: si tu post tiene 1000 palabras, mencionar la palabra clave entre 5 y 20 veces es razonable. Pasarse de 3% se vuelve keyword stuffing y Google lo penaliza desde hace una década.
+      </p>
+
+      <h2>Caracteres con o sin espacios</h2>
+      <p>
+        Algunos contextos cuentan caracteres incluyendo espacios (Twitter, SMS) y otros sin espacios (algunas pruebas de mecanografía, ciertos límites legales). El contador muestra ambos números. Para meta descriptions y title tags de SEO, lo que importa son los caracteres con espacios, porque los espacios ocupan ancho en pixeles tanto como las letras.
+      </p>
+
+      <h2>Oraciones y párrafos</h2>
+      <p>
+        El contador detecta oraciones por punto, signo de exclamación y signo de interrogación. Detecta párrafos por bloques separados por una línea en blanco. Para escritura clara, los párrafos cortos (1-3 oraciones) funcionan mejor en pantalla que párrafos largos al estilo libro. La regla "una idea, un párrafo" sigue siendo el mejor punto de partida.
+      </p>
+
+      <h2>Tips para escribir mejor a partir de las métricas</h2>
+      <ul>
+        <li>Si tus oraciones promedian más de 25 palabras, simplificá. Frases largas se pierden en pantalla.</li>
+        <li>Si tus párrafos promedian más de 100 palabras, dividilos. Bloques densos espantan al lector.</li>
+        <li>Si tu post de 2000 palabras se lee en 10 minutos pero tu CTR es bajo, el problema no es el largo sino el primer párrafo.</li>
+        <li>Para LinkedIn, apuntá a 200-400 caracteres en el primer párrafo, antes del "ver más". Lo que está después solo lo lee quien clickea.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo cuenta una palabra?</summary><p>Una secuencia de caracteres separada por espacios o saltos de línea.</p></details>
+      <details><summary>¿Cómo calcula el tiempo de lectura?</summary><p>Asume 200 palabras por minuto, el promedio adulto en lectura silenciosa.</p></details>
+      <details><summary>¿Para qué sirve para SEO?</summary><p>Google premia contenido sustancial. El largo es una señal de profundidad de cobertura.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .wc-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.75rem; margin-top: 1rem; }
+  .wc-stat { background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; text-align: center; }
+  .wc-num { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 600; color: var(--text); }
+  .wc-lbl { font-size: 0.75rem; color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.25rem; }
+</style>
+
+<script>
+  const inEl = document.getElementById('wc-in') as HTMLTextAreaElement;
+  const wEl = document.getElementById('wc-words')!;
+  const cEl = document.getElementById('wc-chars')!;
+  const cnEl = document.getElementById('wc-chars-ns')!;
+  const sEl = document.getElementById('wc-sent')!;
+  const pEl = document.getElementById('wc-para')!;
+  const tEl = document.getElementById('wc-time')!;
+
+  function run() {
+    const t = inEl.value;
+    const words = t.trim() ? t.trim().split(/\s+/).length : 0;
+    const chars = t.length;
+    const charsNoSp = t.replace(/\s/g, '').length;
+    const sentences = (t.match(/[^.!?]+[.!?]+/g) || []).length || (t.trim() ? 1 : 0);
+    const paragraphs = t.trim() ? t.trim().split(/\n\s*\n/).filter(Boolean).length : 0;
+    const minutes = Math.ceil(words / 200);
+    wEl.textContent = words.toLocaleString('es');
+    cEl.textContent = chars.toLocaleString('es');
+    cnEl.textContent = charsNoSp.toLocaleString('es');
+    sEl.textContent = sentences.toLocaleString('es');
+    pEl.textContent = paragraphs.toLocaleString('es');
+    tEl.textContent = minutes + ' min';
+  }
+  inEl.addEventListener('input', run);
+  run();
+</script>

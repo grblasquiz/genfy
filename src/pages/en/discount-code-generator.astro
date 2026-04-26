@@ -1,0 +1,154 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Discount Code Generator | Genfy';
+const description = 'Generate unique discount codes for Shopify, your website or campaign. Customizable prefix, length and quantity. Up to 100 codes in one click.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good discount code?', acceptedAnswer: { '@type': 'Answer', text: 'Easy to type (no ambiguous chars like 0/O or 1/I), short (6-10 chars), unique, and signaling the benefit or context when possible.' } },
+    { '@type': 'Question', name: 'General codes or unique per user?', acceptedAnswer: { '@type': 'Answer', text: 'Unique codes lift conversion and prevent abuse but need more setup. General codes are simpler and better for mass campaigns.' } },
+    { '@type': 'Question', name: 'How many codes should I generate?', acceptedAnswer: { '@type': 'Answer', text: 'For referrals or personalized campaigns, one per person. For mass promos, 5-10 distinct codes per traffic channel to measure performance.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Discount Code Generator"
+    intro="Generate unique codes ready for Shopify, your store or campaign. Configure prefix, length and quantity — we handle the rest.">
+
+    <div slot="tool" class="dc">
+      <label>Prefix (optional, uppercase)</label>
+      <input id="dc-prefix" type="text" value="SUMMER" maxlength="10" />
+
+      <label style="margin-top:1rem">Code length</label>
+      <select id="dc-len">
+        <option value="6">6 chars</option>
+        <option value="8" selected>8 chars</option>
+        <option value="10">10 chars</option>
+        <option value="12">12 chars</option>
+      </select>
+
+      <label style="margin-top:1rem">Quantity</label>
+      <select id="dc-qty">
+        <option value="10">10</option>
+        <option value="25" selected>25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+
+      <label style="margin-top:1rem">
+        <input id="dc-numbers" type="checkbox" checked /> Include numbers
+      </label>
+
+      <label style="margin-top:0.5rem">
+        <input id="dc-readable" type="checkbox" checked /> Readable only (no 0, O, 1, I, L)
+      </label>
+
+      <button id="dc-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate codes</button>
+      <button id="dc-copy" class="btn" type="button" style="margin-top:1rem; margin-left: 0.5rem">Copy all</button>
+
+      <pre id="dc-out" class="dc-out"></pre>
+    </div>
+
+    <div slot="content">
+      <h2>How to build a strong discount code</h2>
+      <p>
+        Discount codes look like a small detail, but the gap between a well-crafted one and a
+        rushed one shows up in conversion. Strong codes meet 4 criteria: easy to type, no
+        confusable characters, short enough to remember, and signaling something about the promo
+        when seen in an email or ad.
+      </p>
+
+      <h2>Three code types and when to use each</h2>
+      <ul>
+        <li><strong>Public code:</strong> one for the whole campaign, easy to communicate (e.g. SUMMER20). Best for mass campaigns and email marketing.</li>
+        <li><strong>Unique per person:</strong> different per recipient or referrer. Best for affiliate, referral and premium campaigns.</li>
+        <li><strong>Per channel:</strong> different by channel (Instagram, Facebook, podcast). Lets you measure which channel actually converts.</li>
+      </ul>
+
+      <h2>Best practices almost nobody follows</h2>
+      <ol>
+        <li>Avoid ambiguous chars: 0 vs O, 1 vs I vs L. Using them multiplies typos and support tickets.</li>
+        <li>Keep length between 6 and 12. Shorter gets guessed, longer gets mistyped.</li>
+        <li>Include context when possible: BLACKFRIDAY30, REFERRAL15, PODCAST10. Increases perceived exclusivity.</li>
+        <li>Set a clear expiry. Without it, everyone waits to buy later.</li>
+        <li>Cap uses per person. Uncapped codes invite abuse.</li>
+      </ol>
+
+      <h2>How to measure if your code campaign worked</h2>
+      <p>Redemption count alone isn't enough. The metrics that matter:</p>
+      <ul>
+        <li><strong>Use rate:</strong> codes redeemed / codes issued. Below 5% means the offer is weak.</li>
+        <li><strong>AOV with code vs without:</strong> if very different, you may be cannibalizing sales that were going to happen anyway.</li>
+        <li><strong>Repeat purchase:</strong> did the code user buy again at full price? If not, your program attracts deal hunters, not customers.</li>
+        <li><strong>Real margin:</strong> discount + free shipping + ops cost. Sometimes "20% off" loses money per unit.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li>Generic codes like "DISCOUNT" or "PROMO" — most likely to leak to coupon aggregator sites.</li>
+        <li>Stacking codes without rules (20% off + free shipping with no minimum = guaranteed loss).</li>
+        <li>Not communicating rules: minimum spend, exclusions, expiry.</li>
+        <li>Reusing the same code monthly. Urgency dies.</li>
+        <li>Not briefing support. If agents don't know the rules, customers leave angry.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good code?</summary><p>Easy to type, no ambiguous chars, short, with context where possible.</p></details>
+      <details><summary>General or unique?</summary><p>Unique for referrals/affiliates, general for mass campaigns.</p></details>
+      <details><summary>How many?</summary><p>One per person for personalized programs, several per channel for mass campaigns.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .dc-out { margin-top: 1.25rem; padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.9375rem; line-height: 1.7; max-height: 400px; overflow-y: auto; }
+</style>
+
+<script>
+  const prefix = document.getElementById('dc-prefix') as HTMLInputElement;
+  const len = document.getElementById('dc-len') as HTMLSelectElement;
+  const qty = document.getElementById('dc-qty') as HTMLSelectElement;
+  const num = document.getElementById('dc-numbers') as HTMLInputElement;
+  const readable = document.getElementById('dc-readable') as HTMLInputElement;
+  const out = document.getElementById('dc-out')!;
+  const gen = document.getElementById('dc-gen') as HTMLButtonElement;
+  const cp = document.getElementById('dc-copy') as HTMLButtonElement;
+
+  function generate() {
+    const full = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const safe = 'ABCDEFGHJKMNPQRSTUVWXYZ';
+    const fullN = '0123456789';
+    const safeN = '23456789';
+
+    const letters = readable.checked ? safe : full;
+    const numbers = readable.checked ? safeN : fullN;
+    const chars = num.checked ? letters + numbers : letters;
+    const L = parseInt(len.value);
+    const Q = parseInt(qty.value);
+    const px = (prefix.value || '').toUpperCase().trim();
+
+    const set = new Set<string>();
+    while (set.size < Q) {
+      let code = '';
+      const innerLen = Math.max(L - px.length, 4);
+      const buf = new Uint32Array(innerLen);
+      crypto.getRandomValues(buf);
+      for (let i = 0; i < innerLen; i++) code += chars[buf[i] % chars.length];
+      set.add(px + code);
+    }
+    out.textContent = [...set].join('\n');
+  }
+
+  gen.addEventListener('click', generate);
+  cp.addEventListener('click', () => {
+    navigator.clipboard.writeText(out.textContent || '');
+    const orig = cp.textContent;
+    cp.textContent = '✓ Copied';
+    setTimeout(() => cp.textContent = orig, 1200);
+  });
+  generate();
+</script>

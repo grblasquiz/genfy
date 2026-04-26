@@ -1,0 +1,145 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Cocktail Name Generator | Genfy';
+const description = 'Generate unique cocktail names for your bar menu, event or wedding. Mix flavor and sensation and get 20 memorable ideas.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good cocktail name?', acceptedAnswer: { '@type': 'Answer', text: 'It hints at flavor or final sensation, is easy for your server to pronounce, and looks good written on the menu.' } },
+    { '@type': 'Question', name: 'Should I use elaborate names?', acceptedAnswer: { '@type': 'Answer', text: 'No. Names that are overly elaborate or require backstory tire customers. Better to keep it simple, sensory and memorable.' } },
+    { '@type': 'Question', name: 'Can I use mythological names?', acceptedAnswer: { '@type': 'Answer', text: 'Better to avoid references to deities and pantheons because they\'re saturated and limit atmosphere. Lean into sensations, places or flavors.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Bartending" title="Cocktail Name Generator"
+    intro="Mix flavor, sensation or ingredient and get 20 memorable names for your menu. Built to look great on leather, kraft or cardstock.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Main flavor or ingredient</label>
+      <input id="bn-kw" type="text" placeholder="citrus, smoky, pear..." value="citrus, honey" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="sensory">Sensory (Citrus Spark)</option>
+        <option value="poetic">Poetic (Coastal Sunset)</option>
+        <option value="object">Object + sensation (Velvet Pear)</option>
+        <option value="duo">Two flavors (Smoke &amp; Honey)</option>
+        <option value="single">One word (Vapor, Sprout)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to name a cocktail</h2>
+      <p>
+        A good cocktail name makes the customer order without asking what's inside. The name
+        opens a sensory world in under a second: smooth, smoky, citrusy, fresh. If your name
+        needs explanation or sounds like a chemical formula, you've lost.
+      </p>
+      <ol>
+        <li><strong>Sensory first.</strong> Flavors, textures, temperatures. "Citrus Spark" communicates more than an abstract name.</li>
+        <li><strong>Tied to the ingredient.</strong> If the drink has honey, mention it; same for smoke.</li>
+        <li><strong>Pronounceable when shouted.</strong> The bartender will repeat it 20 times a night.</li>
+        <li><strong>Visually attractive on the menu.</strong> Looks good on leather, kraft or card.</li>
+        <li><strong>No mythological cliches.</strong> Avoid pantheon references; they sound saturated.</li>
+      </ol>
+
+      <h2>Classic naming styles</h2>
+      <ul>
+        <li><strong>Sensory:</strong> "Citrus Spark", "Smoky Mist", "Pear Veil". Trigger a concrete expectation.</li>
+        <li><strong>Poetic:</strong> "Coastal Sunset", "After the Rain". For literary menus or events.</li>
+        <li><strong>Object + sensation:</strong> "Velvet Pear", "Copper Citrus". Premium, easy to illustrate.</li>
+        <li><strong>Two flavors:</strong> "Smoke &amp; Honey", "Lime &amp; Rosemary". Honest, tells the customer what to expect.</li>
+        <li><strong>One word:</strong> "Vapor", "Sprout", "Coal". Mood-driven, premium.</li>
+      </ul>
+
+      <h2>What to avoid</h2>
+      <p>
+        Avoid Greek, Roman, Norse or any pantheon deity references: besides being saturated,
+        they suggest an atmosphere that limits your menu. Avoid puns on commercial brands or
+        living celebrities: legal trouble. Avoid names that are too long: "The Whisper of
+        Summer Breeze" doesn't get ordered at a busy bar.
+      </p>
+      <p>
+        Communicate your menu responsibly: alcohol marketing must follow local laws on
+        advertising.
+      </p>
+
+      <h2>How to test your names</h2>
+      <ol>
+        <li>Read them out loud as if you were a server on a busy night.</li>
+        <li>Ask 5 friends to guess the ingredients.</li>
+        <li>Show them next to the recipe and final presentation.</li>
+        <li>Trial the final version a week before printing.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good cocktail name?</summary><p>Hints at flavor or sensation, easy to pronounce, looks good on the menu.</p></details>
+      <details><summary>Elaborate names?</summary><p>No. Better simple, sensory and memorable.</p></details>
+      <details><summary>Mythological names?</summary><p>Better to avoid deities and pantheons; saturated and limiting.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const SENS = ['Spark', 'Mist', 'Veil', 'Breeze', 'Thread', 'Fold', 'Pulse', 'Sprout', 'Vapor'];
+  const FLAVOR = ['Citrus', 'Smoky', 'Copper', 'Honey', 'Pear', 'Lime', 'Rosemary', 'Pepper', 'Vanilla', 'Cardamom'];
+  const POETIC = ['Coastal Sunset', 'Summer Mist', 'After the Rain', 'Last Afternoon', 'Golden Shadow', 'Late Amber'];
+  const OBJ = ['Velvet', 'Copper', 'Linen', 'Bone', 'Cord', 'Glass'];
+  const DUO_A = ['Smoke', 'Honey', 'Lime', 'Rosemary', 'Cardamom', 'Pepper', 'Pear', 'Copper'];
+  const DUO_B = ['Honey', 'Smoke', 'Rosemary', 'Lime', 'Pear', 'Coal', 'Breeze', 'Vapor'];
+  const SINGLE = ['Vapor', 'Sprout', 'Coal', 'Copper', 'Veil', 'Thread', 'Pulse', 'Mist', 'Thistle'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (s === 'sensory') name = pick(FLAVOR) + ' ' + pick(SENS);
+      else if (s === 'poetic') name = pick(POETIC);
+      else if (s === 'object') name = pick(OBJ) + ' ' + pick(FLAVOR);
+      else if (s === 'duo') {
+        let a = pick(DUO_A), b = pick(DUO_B);
+        while (a === b) b = pick(DUO_B);
+        name = a + ' & ' + b;
+      }
+      else if (s === 'single') name = pick(SINGLE);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

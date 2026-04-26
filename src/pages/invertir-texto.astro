@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Invertir texto online | Genfy';
+const description = 'Invertí cualquier texto al instante: por carácter, por palabra o por línea. Útil para palíndromos, debugging, contraseñas mnemotécnicas y más.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve invertir texto?', acceptedAnswer: { '@type': 'Answer', text: 'Para verificar palíndromos, generar contraseñas mnemotécnicas, ofuscar texto, hacer ejercicios de programación o simplemente jugar con strings.' } },
+    { '@type': 'Question', name: '¿Soporta emojis y tildes?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Usamos segmentación Unicode para que los emojis compuestos y los caracteres acentuados queden intactos al invertir por carácter.' } },
+    { '@type': 'Question', name: '¿"Invertido" es lo mismo que "al revés"?', acceptedAnswer: { '@type': 'Answer', text: 'La inversión es por carácter. "Al revés" puede significar también invertir el orden de palabras o de líneas. Los tres modos están disponibles.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto" title="Invertir texto"
+    intro="Tres modos: caracteres, palabras y líneas. Soporte completo de Unicode para que emojis y tildes no se rompan.">
+
+    <div slot="tool" class="rv">
+      <label for="rv-in">Texto</label>
+      <textarea id="rv-in" rows="6" placeholder="Pegá tu texto…"></textarea>
+
+      <div class="rv-mode">
+        <label><input type="radio" name="rv-mode" value="char" checked /> Por carácter</label>
+        <label><input type="radio" name="rv-mode" value="word" /> Por palabra</label>
+        <label><input type="radio" name="rv-mode" value="line" /> Por línea</label>
+      </div>
+
+      <button id="rv-go" class="btn btn-primary" type="button">Invertir</button>
+      <button id="rv-copy" class="btn btn-ghost" type="button">Copiar</button>
+
+      <label for="rv-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="rv-out" rows="6" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Tres formas de invertir texto</h2>
+      <p>
+        "Invertir" significa cosas distintas según el contexto. Por eso esta herramienta tiene
+        tres modos:
+      </p>
+      <ul>
+        <li><strong>Por carácter</strong> — convierte <code>Genfy</code> en <code>yfneG</code>. El ejercicio clásico de Programación 101.</li>
+        <li><strong>Por palabra</strong> — convierte <em>"el gato come"</em> en <em>"come gato el"</em>. Útil para ciertas correcciones de copy o ejercicios de idiomas.</li>
+        <li><strong>Por línea</strong> — invierte el orden de filas. Si un log tiene la línea más vieja arriba, esto pone la más nueva primero.</li>
+      </ul>
+
+      <h2>Por qué importa Unicode</h2>
+      <p>
+        En JavaScript, hacer <code>"abc".split("").reverse().join("")</code> funciona para
+        ASCII pero rompe emojis compuestos: 🇦🇷 son dos puntos de código y al invertir por
+        carácter daría 🇷🇦, una bandera distinta. Esta herramienta usa
+        <code>Intl.Segmenter</code> cuando está disponible para tratar cada grafema como una
+        unidad. Los acentos compuestos (una <code>e</code> + grave en forma descompuesta)
+        también se mantienen como una sola unidad.
+      </p>
+
+      <h2>Usos reales</h2>
+      <ul>
+        <li><strong>Palíndromos.</strong> Verificar si una frase se lee igual en ambos sentidos: invertir, comparar, listo.</li>
+        <li><strong>Logs.</strong> Cuando un log está en orden cronológico ascendente y querés ver lo más reciente primero.</li>
+        <li><strong>Contraseñas mnemotécnicas.</strong> Una técnica clásica: tomar una palabra memorable y escribirla al revés como base. No reemplaza un gestor, pero sirve para ejercicios.</li>
+        <li><strong>Pruebas de tipografía.</strong> El texto invertido permite ver tu tipografía sin que tu cerebro lo lea automáticamente — expone problemas de kerning.</li>
+        <li><strong>Ejercicios de idiomas.</strong> Para estudiantes de idiomas con orden de palabras inverso (japonés, coreano), comparar oraciones invertidas ayuda a internalizar la sintaxis.</li>
+      </ul>
+
+      <h2>Lo que esta herramienta no es</h2>
+      <p>
+        No es un generador de texto espejo gráfico (con caracteres como <code>ɐ</code> que
+        parecen una <code>a</code> al revés). Para eso existen otras herramientas. Acá
+        invertimos orden, no la apariencia visual de cada glifo.
+      </p>
+
+      <h2>Cómo funciona la inversión por palabra</h2>
+      <p>
+        Tokenizamos por espacios y puntuación, luego reordenamos los tokens. La puntuación se
+        mantiene en posición relativa, así <em>"hola, mundo"</em> queda como <em>"mundo,
+        hola"</em> en lugar de dejar la coma huérfana.
+      </p>
+
+      <h2>Privacidad</h2>
+      <p>
+        El texto que pegás nunca sale de tu navegador. Si manejás material confidencial
+        (contratos, logs sensibles), esta página es segura para usar dentro de la red de tu
+        empresa: no hay request a servidor, todo el procesamiento es local.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve invertir texto?</summary><p>Palíndromos, contraseñas mnemotécnicas, ejercicios de programación, pruebas tipográficas, jugar con strings.</p></details>
+      <details><summary>¿Soporta emojis y tildes?</summary><p>Sí — la segmentación Unicode mantiene cada grafema intacto.</p></details>
+      <details><summary>¿"Invertido" es lo mismo que "al revés"?</summary><p>Por carácter es una opción; por palabra y por línea son las otras dos. Las tres están disponibles.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rv-mode { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; color: var(--text-soft); }
+  .rv-mode label { display: inline-flex; gap: 0.4rem; align-items: center; margin: 0; }
+  .rv-mode input { width: auto; }
+</style>
+
+<script>
+  const inEl = document.getElementById('rv-in') as HTMLTextAreaElement;
+  const out = document.getElementById('rv-out') as HTMLTextAreaElement;
+  const go = document.getElementById('rv-go') as HTMLButtonElement;
+  const copy = document.getElementById('rv-copy') as HTMLButtonElement;
+
+  function reverseGraphemes(s: string): string {
+    if (typeof Intl !== 'undefined' && (Intl as any).Segmenter) {
+      const seg = new (Intl as any).Segmenter(undefined, { granularity: 'grapheme' });
+      const arr: string[] = [];
+      for (const item of seg.segment(s)) arr.push(item.segment);
+      return arr.reverse().join('');
+    }
+    return Array.from(s).reverse().join('');
+  }
+
+  function reverseWords(s: string): string { return s.split(/(\s+)/).reverse().join(''); }
+  function reverseLines(s: string): string { return s.split(/\r?\n/).reverse().join('\n'); }
+
+  function run() {
+    const mode = (document.querySelector('input[name="rv-mode"]:checked') as HTMLInputElement)?.value || 'char';
+    const src = inEl.value;
+    if (mode === 'char') out.value = reverseGraphemes(src);
+    else if (mode === 'word') out.value = reverseWords(src);
+    else out.value = reverseLines(src);
+  }
+
+  go.addEventListener('click', run);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copy.textContent; copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = t; }, 1200);
+  });
+</script>
+</content>
+</invoke>

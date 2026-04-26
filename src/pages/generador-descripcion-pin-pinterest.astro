@@ -1,0 +1,152 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de descripción de pin Pinterest gratis | Genfy';
+const description = 'Generá descripciones de pin para Pinterest optimizadas para SEO. Hasta 500 caracteres con keywords naturales, contexto y CTA que mejora el alcance.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuántos caracteres permite la descripción de un pin?', acceptedAnswer: { '@type': 'Answer', text: 'Pinterest permite hasta 500 caracteres en la descripción del pin. El sweet spot está entre 150 y 300 caracteres: suficiente para incluir keywords y contexto sin saturar.' } },
+    { '@type': 'Question', name: '¿Hashtags en Pinterest sirven?', acceptedAnswer: { '@type': 'Answer', text: 'Sí pero con moderación. 2 a 4 hashtags relevantes ayudan al algoritmo a clasificar el pin. Más de 5 se considera spam y puede penalizar tu alcance.' } },
+    { '@type': 'Question', name: '¿Qué keywords poner en la descripción?', acceptedAnswer: { '@type': 'Answer', text: 'Keywords que la gente realmente busca en Pinterest, no en Google. Pinterest funciona como buscador visual: usá términos descriptivos del contenido, estilo y caso de uso.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de descripción de pin Pinterest"
+    intro="Cargá tema, keywords y CTA. Genfy te devuelve descripciones de pin SEO-friendly, dentro de los 500 caracteres permitidos.">
+
+    <div slot="tool" class="pp">
+      <label for="pp-topic">Tema del pin</label>
+      <input id="pp-topic" type="text" placeholder="Ideas de decoración minimalista..." value="Ideas de decoración para living pequeño" />
+
+      <label for="pp-keywords" style="margin-top:1rem">Keywords (separadas por coma)</label>
+      <input id="pp-keywords" type="text" placeholder="decoracion, hogar, minimalista..." value="decoracion living, espacios pequenos, minimalismo" />
+
+      <label for="pp-benefit" style="margin-top:1rem">Beneficio o gancho</label>
+      <input id="pp-benefit" type="text" placeholder="Sin gastar de mas..." value="Sin reformas y con poco presupuesto" />
+
+      <label for="pp-cta" style="margin-top:1rem">CTA</label>
+      <input id="pp-cta" type="text" placeholder="Mira la guia completa" value="Guarda este pin para inspirarte" />
+
+      <button id="pp-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 4 descripciones</button>
+
+      <div id="pp-out" class="pp-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Pinterest no es Instagram: la descripción importa más que la imagen</h2>
+      <p>
+        En Instagram la imagen domina y el caption es secundario. En Pinterest es al revés: Pinterest funciona como un motor de búsqueda visual, y el algoritmo decide a quién mostrarle tu pin leyendo el título, la descripción y el texto en la imagen. Una descripción optimizada puede triplicar el alcance de un pin idéntico con descripción genérica.
+      </p>
+      <p>
+        Cada pin tiene hasta 500 caracteres en la descripción, pero los primeros 50 a 75 son los que aparecen en los feeds antes del "...ver más". Ahí va el gancho.
+      </p>
+
+      <h2>La estructura que Pinterest premia</h2>
+      <ol>
+        <li><strong>Frase de apertura con keyword principal:</strong> "Ideas de decoración para living pequeño sin reformas."</li>
+        <li><strong>Contexto y beneficio:</strong> 2-3 frases que expandan el tema con keywords secundarias naturales.</li>
+        <li><strong>CTA suave:</strong> "Guardá este pin", "Mirá la guía completa", "Probá estas ideas en tu casa".</li>
+        <li><strong>Hashtags relevantes:</strong> 2 a 4, al final, separados por espacio.</li>
+      </ol>
+
+      <h2>El límite de 500 caracteres y por qué nadie debería usarlo entero</h2>
+      <p>
+        Tenés 500 caracteres pero el sweet spot está entre 150 y 300. Más allá de eso el lector se pierde y el algoritmo no le da peso adicional a la repetición. Tres frases bien construidas con keywords naturales rinden más que un párrafo lleno de términos forzados.
+      </p>
+
+      <h2>Cómo encontrar keywords reales de Pinterest</h2>
+      <p>
+        Pinterest tiene su propio buscador con autocompletar, y eso es oro puro. Escribí tu tema en la barra de búsqueda y mirá qué sugiere: esas son las búsquedas reales. También funciona el bloque "Más ideas" abajo de cada pin: muestra términos relacionados que la gente está buscando ahora.
+      </p>
+      <ul>
+        <li>Buscá tu tema en el buscador de Pinterest desde una sesión limpia (modo incógnito).</li>
+        <li>Anotá las 5-10 sugerencias del autocompletar.</li>
+        <li>Mirá los "guided search tiles" coloridos que aparecen arriba: cada uno es una keyword que Pinterest considera relevante.</li>
+        <li>Revisá los pins top-ranking del nicho y sus descripciones.</li>
+      </ul>
+
+      <h2>Hashtags en Pinterest: la regla de los 4</h2>
+      <p>
+        Pinterest tuvo años raros con los hashtags: a veces los premiaba, a veces los penalizaba. La política actual es claramente "úsalos con moderación". 2 a 4 hashtags específicos del nicho funcionan. 10 hashtags genéricos (#love #beautiful #inspiration) son señal de spam.
+      </p>
+
+      <h2>El CTA que funciona en Pinterest</h2>
+      <p>
+        Pinterest no es lugar para CTAs agresivos. La gente está en modo descubrimiento, no en modo compra inmediata. Funciona mejor:
+      </p>
+      <ul>
+        <li>"Guardá este pin para más tarde" — alta tasa de saves, que es la métrica que Pinterest premia.</li>
+        <li>"Mirá la guía completa" — empuja al click hacia el sitio.</li>
+        <li>"Probá esta receta esta semana" — accionable y temporal.</li>
+        <li>"Inspirate para tu próximo proyecto" — soft, ideal para nichos visuales.</li>
+      </ul>
+
+      <h2>Errores que matan el alcance</h2>
+      <ul>
+        <li><strong>Keyword stuffing:</strong> "decoración decoración living decoración pequeño decoración". Pinterest detecta y penaliza.</li>
+        <li><strong>Descripciones genéricas:</strong> "Mirá esta hermosa idea" — no le dice nada al algoritmo.</li>
+        <li><strong>Copiar y pegar la misma descripción en todos los pins:</strong> Pinterest valora la diversidad.</li>
+        <li><strong>Olvidarse del título del pin:</strong> el título es tan importante como la descripción y muchos lo dejan vacío.</li>
+        <li><strong>Links rotos o destinos genéricos:</strong> Pinterest mide la tasa de bounce y baja el ranking de pins con destinos malos.</li>
+      </ul>
+
+      <h2>Pin idle vs pin fresh: cuándo Pinterest decide mostrarlo</h2>
+      <p>
+        Un pin nuevo entra en una fase de prueba de 24-48 horas donde Pinterest lo muestra a una audiencia chica para medir engagement. Si los primeros 50-100 impresiones generan saves, clicks o close-ups, el pin escala. Si no, queda enterrado. La descripción es uno de los factores que más mueven esa primera prueba.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántos caracteres usar?</summary><p>Sweet spot: 150-300 caracteres. El máximo es 500 pero más es contraproducente.</p></details>
+      <details><summary>¿Hashtags?</summary><p>2 a 4 relevantes y específicos del nicho. Más de 5 se considera spam.</p></details>
+      <details><summary>¿Cómo encuentro keywords?</summary><p>Usá el autocompletar de Pinterest desde modo incógnito y los guided search tiles.</p></details>
+      <details><summary>¿Cada cuánto debería postear?</summary><p>Pinterest premia consistencia. 5-15 pins por semana es saludable, mejor que 50 un día y nada un mes.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pp-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .pp-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; white-space: pre-wrap; }
+  .pp-card:hover { border-color: var(--accent); }
+  .pp-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const topic = document.getElementById('pp-topic') as HTMLInputElement;
+  const kw = document.getElementById('pp-keywords') as HTMLInputElement;
+  const ben = document.getElementById('pp-benefit') as HTMLInputElement;
+  const cta = document.getElementById('pp-cta') as HTMLInputElement;
+  const gen = document.getElementById('pp-gen') as HTMLButtonElement;
+  const out = document.getElementById('pp-out')!;
+
+  function generate() {
+    const T = topic.value.trim() || 'Ideas creativas';
+    const K = kw.value.trim().split(',').map(s => s.trim()).filter(Boolean);
+    const B = ben.value.trim() || 'Resultados rapidos';
+    const C = cta.value.trim() || 'Guarda este pin';
+    const tags = K.slice(0, 3).map(k => '#' + k.replace(/\s+/g, '')).join(' ');
+
+    const v1 = `${T}. ${B}. Ideas practicas con ${K[0] || 'tips'} y ${K[1] || 'consejos'}. ${C}. ${tags}`;
+    const v2 = `Descubri ${T.toLowerCase()}. ${B} y aplicalo hoy. Inspiracion en ${K[0] || 'el tema'} para resultados reales. ${C} ↓ ${tags}`;
+    const v3 = `${T} | Guia paso a paso. ${B}. Perfecto si buscas ${K[0] || 'soluciones'} sin complicaciones. ${C}. ${tags}`;
+    const v4 = `Probaste todo y nada funciona? ${T} con enfoque diferente. ${B}. ${C} para tenerlo a mano. ${tags}`;
+
+    out.innerHTML = '';
+    [v1, v2, v3, v4].forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'pp-card';
+      el.title = 'Click para copiar';
+      const len = b.length;
+      el.innerHTML = b + `<div class="pp-meta">v${i+1} · ${len}/500 caracteres</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copiada'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

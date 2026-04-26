@@ -1,0 +1,124 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de código de referido gratis | Genfy';
+const description = 'Generá códigos de referido únicos, pegadizos y fáciles de compartir. Pensado para programas de invitación, e-commerce y SaaS.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace bueno a un código de referido?', acceptedAnswer: { '@type': 'Answer', text: 'Que sea corto (5-8 caracteres), fácil de dictar por teléfono, sin caracteres ambiguos (0/O, 1/l/I) y único por usuario.' } },
+    { '@type': 'Question', name: '¿Conviene usar el nombre del usuario en el código?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, los códigos personalizados con el nombre o un alias del usuario tienen tasa de conversión más alta porque suenan menos a spam y son más fáciles de recordar.' } },
+    { '@type': 'Question', name: '¿Cómo evito códigos repetidos?', acceptedAnswer: { '@type': 'Answer', text: 'Validá contra tu base antes de asignar y usá un sufijo numérico aleatorio. Con 6-8 caracteres alfanuméricos, la probabilidad de colisión es muy baja para programas con menos de 10 millones de usuarios.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de código de referido"
+    intro="Generá códigos personalizados con nombre del usuario o totalmente aleatorios. Listos para integrar en tu programa de invitación.">
+
+    <div slot="tool" class="rc">
+      <label for="rc-name">Nombre o alias del usuario (opcional)</label>
+      <input id="rc-name" type="text" value="LUCIA" placeholder="LUCIA, mart, ana..." />
+
+      <label for="rc-style" style="margin-top:1rem">Estilo</label>
+      <select id="rc-style">
+        <option value="name">Nombre + dígitos (LUCIA-742)</option>
+        <option value="namepal">Nombre + palabra (LUCIA-PULSE)</option>
+        <option value="rand">Aleatorio sin ambiguos (X7K9P2)</option>
+        <option value="word">Dos palabras (FOREST-PINE)</option>
+      </select>
+
+      <label for="rc-len" style="margin-top:1rem">Longitud (solo aleatorio)</label>
+      <select id="rc-len">
+        <option value="6">6 caracteres</option>
+        <option value="8" selected>8 caracteres</option>
+        <option value="10">10 caracteres</option>
+      </select>
+
+      <button id="rc-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 códigos</button>
+      <div id="rc-out" class="rc-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué el código de referido es marketing barato y efectivo</h2>
+      <p>Un programa de referidos bien diseñado puede traer entre el 15% y el 35% de las altas nuevas en SaaS y e-commerce maduros. Pero la diferencia entre un programa que funciona y uno que pasa desapercibido casi siempre está en la fricción: si el código es difícil de copiar, dictar o recordar, el usuario abandona antes de compartirlo. Cada caracter ambiguo (0 vs O, 1 vs l vs I) cuesta conversiones reales.</p>
+      <h2>Anatomía de un buen código de referido</h2>
+      <ol>
+        <li><strong>Corto:</strong> 6 a 10 caracteres. Más largo se vuelve incómodo de tipear en mobile.</li>
+        <li><strong>Sin ambiguos:</strong> evitá 0, O, 1, l, I. Si tu código se confunde por teléfono, perdés altas.</li>
+        <li><strong>Pronunciable o memorable:</strong> "LUCIA-742" se pronuncia. "X7K9P2QZ" no.</li>
+        <li><strong>Único por usuario:</strong> validalo contra tu base antes de asignar.</li>
+        <li><strong>Trackeable:</strong> tu sistema debe asociar cada código a quien lo generó para acreditar el premio.</li>
+      </ol>
+      <h2>Estilos según el tipo de programa</h2>
+      <ul>
+        <li><strong>Marketplace o consumer:</strong> usá el nombre del usuario más sufijo (LUCIA-742, MARTI-PULSE). Genera proximidad y se comparte más en WhatsApp.</li>
+        <li><strong>Fintech o banca:</strong> aleatorio limpio sin nombre, por seguridad y privacidad.</li>
+        <li><strong>SaaS B2B:</strong> el dominio del cliente abreviado (ACMECO-INV, NORTE-REF). Más profesional.</li>
+        <li><strong>Gaming o app social:</strong> dos palabras (FOREST-PINE, RIVER-CALM). Estilo invitación de servidor.</li>
+      </ul>
+      <h2>Errores típicos al lanzar un programa de referidos</h2>
+      <p>Tres errores comunes destruyen el ROI: códigos demasiado largos (la gente no los comparte), recompensa difusa ("ganás puntos" no motiva), y atribución mal medida (no sabés cuántas altas llegaron por referido vs por canal pago). Antes de lanzar, definí: cuánto recompensás al referidor, cuánto al referido, cuál es el techo mensual, y cómo trackeás. Sin esos cuatro datos, el programa va a fugar plata sin métrica clara.</p>
+      <h2>Buenas prácticas de UX</h2>
+      <p>Mostrá el código del usuario al inicio del flujo, con botón de copiar grande. Sumá un mensaje compartible pre-armado para WhatsApp, mail e Instagram. Mostrá el progreso (cuántos amigos invitó, cuántos completaron, cuánto ganó). Y enviá un mail de agradecimiento cuando un referido completa la compra: ese mail recupera referidores que estaban a punto de bajarse del programa.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace bueno a un código?</summary><p>Corto, sin caracteres ambiguos, único y trackeable.</p></details>
+      <details><summary>¿Conviene usar el nombre?</summary><p>Sí, los códigos con nombre tienen mejor conversión.</p></details>
+      <details><summary>¿Cómo evito repetidos?</summary><p>Validá contra tu base y agregá sufijo aleatorio.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rc-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .rc-item { padding: 0.75rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-mono, monospace); font-weight: 600; cursor: pointer; letter-spacing: 0.5px; }
+  .rc-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const SAFE = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'; // sin O,0,I,1,l
+  const WORDS = ['PULSE', 'CREST', 'BLOOM', 'BEACON', 'SPARK', 'FORGE', 'TIDE', 'FOREST', 'PINE', 'RIVER', 'CALM', 'SWIFT', 'GOLD', 'STEEL'];
+
+  const name = document.getElementById('rc-name') as HTMLInputElement;
+  const style = document.getElementById('rc-style') as HTMLSelectElement;
+  const len = document.getElementById('rc-len') as HTMLSelectElement;
+  const gen = document.getElementById('rc-gen') as HTMLButtonElement;
+  const out = document.getElementById('rc-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function rnd(n: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return i[0] % n; }
+  function randomCode(n: number) {
+    let s = '';
+    for (let i = 0; i < n; i++) s += SAFE[rnd(SAFE.length)];
+    return s;
+  }
+
+  function generate() {
+    const u = (name.value || 'USER').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8) || 'USER';
+    const s = style.value;
+    const n = parseInt(len.value, 10);
+    const set = new Set<string>(); let tries = 0;
+    while (set.size < 20 && tries < 200) {
+      tries++;
+      let code = '';
+      if (s === 'name') code = `${u}-${100 + rnd(900)}`;
+      else if (s === 'namepal') code = `${u}-${pick(WORDS)}`;
+      else if (s === 'rand') code = randomCode(n);
+      else code = `${pick(WORDS)}-${pick(WORDS)}`;
+      set.add(code);
+    }
+    out.innerHTML = '';
+    [...set].forEach(c => {
+      const el = document.createElement('div');
+      el.className = 'rc-item'; el.textContent = c; el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(c); el.textContent = '✓ ' + c; setTimeout(() => el.textContent = c, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

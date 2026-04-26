@@ -1,0 +1,161 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Conversor de mayúsculas y casing | Genfy';
+const description = 'Convertí texto a camelCase, snake_case, kebab-case, PascalCase, MAYÚSCULAS, minúsculas o Sentence case en un click. Ideal para programadores y editores.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuál casing usar para variables?', acceptedAnswer: { '@type': 'Answer', text: 'Depende del lenguaje. JavaScript y TypeScript usan camelCase. Python usa snake_case. C# y Go usan PascalCase para tipos. URLs y archivos suelen usar kebab-case.' } },
+    { '@type': 'Question', name: '¿Funciona con tildes y eñes?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Las conversiones a mayúsculas y minúsculas respetan tildes y la ñ. Para casing técnico (camel, snake, kebab) se eliminan los acentos siguiendo la convención habitual de identificadores.' } },
+    { '@type': 'Question', name: '¿Para qué sirve Sentence case?', acceptedAnswer: { '@type': 'Answer', text: 'Es el estilo donde solo la primera letra de la oración va en mayúscula, como un texto normal. Ideal para corregir títulos que llegan en MAYÚSCULAS o todo en minúsculas.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Texto" title="Conversor de mayúsculas y casing"
+    intro="Convertí texto a camelCase, snake_case, kebab-case, PascalCase, MAYÚSCULAS, minúsculas o Sentence case. Pegá, elegí formato y copiá.">
+
+    <div slot="tool" class="cv">
+      <label for="cv-in">Texto</label>
+      <textarea id="cv-in" rows="5" placeholder="Pegá tu texto…"></textarea>
+
+      <div class="cv-grid">
+        <button data-mode="upper" class="btn btn-ghost" type="button">MAYÚSCULAS</button>
+        <button data-mode="lower" class="btn btn-ghost" type="button">minúsculas</button>
+        <button data-mode="sentence" class="btn btn-ghost" type="button">Sentence case</button>
+        <button data-mode="title" class="btn btn-ghost" type="button">Title Case</button>
+        <button data-mode="camel" class="btn btn-ghost" type="button">camelCase</button>
+        <button data-mode="pascal" class="btn btn-ghost" type="button">PascalCase</button>
+        <button data-mode="snake" class="btn btn-ghost" type="button">snake_case</button>
+        <button data-mode="kebab" class="btn btn-ghost" type="button">kebab-case</button>
+        <button data-mode="constant" class="btn btn-ghost" type="button">CONSTANT_CASE</button>
+      </div>
+
+      <button id="cv-copy" class="btn btn-primary" type="button">Copiar resultado</button>
+
+      <label for="cv-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="cv-out" rows="5" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué hay tantos estilos de casing</h2>
+      <p>
+        En programación, los identificadores no pueden tener espacios ni puntuación. Cada
+        comunidad eligió una convención para combinar palabras: algunas usan mayúsculas como
+        separador (camelCase, PascalCase), otras usan guiones bajos (snake_case) o medios
+        (kebab-case). No hay uno mejor en abstracto; lo importante es ser consistente con el
+        ecosistema en el que trabajás.
+      </p>
+
+      <h2>Cuándo usar cada uno</h2>
+      <ul>
+        <li><strong>camelCase</strong> — variables y funciones en JavaScript, TypeScript, Java, C++.</li>
+        <li><strong>PascalCase</strong> — clases, tipos, componentes de React, modelos.</li>
+        <li><strong>snake_case</strong> — variables y funciones en Python, Ruby, Rust; columnas de bases de datos.</li>
+        <li><strong>kebab-case</strong> — URLs, slugs, nombres de archivos, atributos HTML, clases CSS.</li>
+        <li><strong>CONSTANT_CASE</strong> — constantes globales en casi todos los lenguajes.</li>
+        <li><strong>Title Case</strong> — títulos de artículos, libros, productos en inglés.</li>
+        <li><strong>Sentence case</strong> — texto corrido, especialmente en español, donde solo la primera palabra y los nombres propios llevan mayúscula.</li>
+      </ul>
+
+      <h2>Errores comunes</h2>
+      <p>
+        Mezclar casings en el mismo proyecto es la fuente número uno de bugs por typos. Si tu
+        equipo usa <code>userId</code> en algunos lugares y <code>user_id</code> en otros,
+        eventualmente alguien va a referenciar la variable equivocada. Definí la convención al
+        inicio del proyecto, idealmente con un linter (ESLint, Pylint, gofmt) que la imponga
+        automáticamente.
+      </p>
+
+      <h2>Casos prácticos del conversor</h2>
+      <ul>
+        <li>Tomar un nombre de columna SQL <code>order_total_amount</code> y convertirlo a la propiedad de objeto JS <code>orderTotalAmount</code>.</li>
+        <li>Convertir un título de artículo <em>"10 Tips Para Tu Landing"</em> en un slug <code>10-tips-para-tu-landing</code>.</li>
+        <li>Tomar un texto que llegó en MAYÚSCULAS desde un PDF mal exportado y bajarlo a Sentence case.</li>
+        <li>Generar el nombre de un componente React (PascalCase) a partir de su descripción en lenguaje natural.</li>
+      </ul>
+
+      <h2>Tildes y caracteres especiales</h2>
+      <p>
+        Para los modos MAYÚSCULAS / minúsculas / Sentence / Title preservamos tildes y la ñ
+        del español. Para los modos técnicos (camel, snake, kebab, constant) los eliminamos
+        porque la mayoría de los lenguajes y sistemas de archivos no aceptan acentos en
+        identificadores. Si necesitás conservar acentos en un slug, copialo del modo
+        Sentence/Title y reemplazá los espacios manualmente.
+      </p>
+
+      <h2>Procesamiento local</h2>
+      <p>
+        Este conversor no envía nada a un servidor. Todo el código corre en tu navegador, así
+        que podés usarlo con texto confidencial sin preocuparte por logs o métricas. Cuando
+        cerrás la pestaña, el contenido desaparece.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuál casing usar para variables?</summary><p>Depende del lenguaje: camelCase en JavaScript, snake_case en Python, PascalCase en C#/Go.</p></details>
+      <details><summary>¿Funciona con tildes y eñes?</summary><p>Sí en MAYÚSCULAS/minúsculas. Para casings técnicos se eliminan acentos como dicta la convención.</p></details>
+      <details><summary>¿Para qué sirve Sentence case?</summary><p>Solo la primera letra de la oración va en mayúscula. Útil para arreglar títulos mal escritos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin: 1rem 0; }
+  @media (max-width: 600px) { .cv-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+
+<script>
+  const inEl = document.getElementById('cv-in') as HTMLTextAreaElement;
+  const out = document.getElementById('cv-out') as HTMLTextAreaElement;
+  const copy = document.getElementById('cv-copy') as HTMLButtonElement;
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-mode]');
+
+  function stripAccents(s: string) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ñ/g, 'n').replace(/Ñ/g, 'N'); }
+  function tokenize(s: string): string[] {
+    return stripAccents(s)
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/[^a-zA-Z0-9]+/g, ' ')
+      .trim()
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(Boolean);
+  }
+
+  function convert(text: string, mode: string): string {
+    if (!text) return '';
+    if (mode === 'upper') return text.toUpperCase();
+    if (mode === 'lower') return text.toLowerCase();
+    if (mode === 'sentence') {
+      const lower = text.toLowerCase();
+      return lower.replace(/(^\s*\w|[.!?]\s+\w)/g, c => c.toUpperCase());
+    }
+    if (mode === 'title') {
+      return text.toLowerCase().replace(/\b\w+/g, w => w.charAt(0).toUpperCase() + w.slice(1));
+    }
+    const tokens = tokenize(text);
+    if (mode === 'camel') return tokens.map((w, i) => i === 0 ? w : w.charAt(0).toUpperCase() + w.slice(1)).join('');
+    if (mode === 'pascal') return tokens.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('');
+    if (mode === 'snake') return tokens.join('_');
+    if (mode === 'kebab') return tokens.join('-');
+    if (mode === 'constant') return tokens.join('_').toUpperCase();
+    return text;
+  }
+
+  buttons.forEach(b => b.addEventListener('click', () => {
+    const m = b.dataset.mode || 'lower';
+    out.value = convert(inEl.value, m);
+  }));
+
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copy.textContent; copy.textContent = '¡Copiado!';
+    setTimeout(() => { copy.textContent = t; }, 1200);
+  });
+</script>
+</content>
+</invoke>

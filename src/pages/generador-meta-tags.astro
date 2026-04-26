@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de meta tags HTML | Genfy';
+const description = 'Generá las meta tags esenciales para SEO y redes sociales: title, description, Open Graph y Twitter Card. Copialas con un click.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuántos caracteres debe tener la meta description?', acceptedAnswer: { '@type': 'Answer', text: 'Entre 150 y 160 caracteres. Más largo, Google trunca; más corto, perdés oportunidad de comunicar el valor de la página.' } },
+    { '@type': 'Question', name: '¿Hace falta meta keywords?', acceptedAnswer: { '@type': 'Answer', text: 'No. Google ignora la meta keywords desde 2009. Es código muerto que solo agrega peso al HTML.' } },
+    { '@type': 'Question', name: '¿Open Graph y Twitter Card son obligatorias?', acceptedAnswer: { '@type': 'Answer', text: 'No son técnicamente obligatorias, pero sin ellas tus links se ven feos cuando alguien los comparte. Vale la pena agregarlas siempre.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Generador de meta tags"
+    intro="Armá las meta tags esenciales para SEO y previsualizaciones en redes sociales. Copialas y pegalas en el head de tu HTML.">
+
+    <div slot="tool" class="mt">
+      <div class="mt-grid">
+        <div>
+          <label for="mt-title">Título</label>
+          <input id="mt-title" type="text" value="Mi sitio | Marca" />
+        </div>
+        <div>
+          <label for="mt-desc">Descripción</label>
+          <textarea id="mt-desc" rows="3">Una descripción clara y concisa de la página, entre 150 y 160 caracteres.</textarea>
+        </div>
+        <div>
+          <label for="mt-url">URL canónica</label>
+          <input id="mt-url" type="url" value="https://miempresa.com" />
+        </div>
+        <div>
+          <label for="mt-img">URL de la imagen OG (1200x630)</label>
+          <input id="mt-img" type="url" value="https://miempresa.com/og.png" />
+        </div>
+      </div>
+
+      <div class="mt-actions">
+        <button id="mt-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="mt-cp" class="btn btn-ghost" type="button">Copiar</button>
+      </div>
+
+      <pre><code id="mt-out"></code></pre>
+    </div>
+
+    <div slot="content">
+      <h2>Qué son las meta tags</h2>
+      <p>Las meta tags son etiquetas HTML que se ubican dentro del &lt;head&gt; y describen el contenido de la página al navegador, a Google y a redes sociales. No las ve el usuario directamente: las leen los buscadores para decidir cómo mostrar tu sitio en los resultados, y las leen Twitter, LinkedIn o WhatsApp para construir la previsualización cuando alguien comparte el link.</p>
+
+      <h2>Las meta tags imprescindibles</h2>
+      <ul>
+        <li><strong>title</strong>: lo más importante para SEO. Aparece como título azul en Google y en la pestaña del navegador. Entre 50 y 60 caracteres.</li>
+        <li><strong>meta description</strong>: el resumen debajo del título en Google. Entre 150 y 160 caracteres. Tiene que vender el click.</li>
+        <li><strong>meta viewport</strong>: imprescindible para mobile. Sin ella, tu sitio se ve renderizado en escritorio y achicado.</li>
+        <li><strong>link canonical</strong>: indica cuál es la URL oficial de esta página. Evita penalizaciones por contenido duplicado.</li>
+      </ul>
+
+      <h2>Open Graph y Twitter Card</h2>
+      <p>Open Graph es un estándar creado por Facebook que adoptaron casi todas las plataformas (LinkedIn, WhatsApp, Slack, Discord, Telegram). Twitter usa su propia variante, Twitter Card. Las dos definen cómo se muestra tu link cuando se comparte: imagen, título, descripción.</p>
+      <p>Sin Open Graph, tu link aparece como texto pelado o con la primera imagen aleatoria de la página. Con Open Graph bien armado, conseguís una tarjeta visual atractiva que aumenta el CTR significativamente.</p>
+
+      <h2>Tamaño de imagen ideal para Open Graph</h2>
+      <p>1200x630 píxeles, formato PNG o JPG, bajo 1 MB. Mantené el contenido importante en el centro: muchas plataformas recortan los bordes. Asegurate de que el texto sea legible incluso en thumbnails chicos.</p>
+
+      <h2>Errores comunes</h2>
+      <ul>
+        <li><strong>Title duplicado en todas las páginas</strong>: cada URL tiene que tener su propio title.</li>
+        <li><strong>Description genérica</strong>: "Bienvenido a nuestro sitio" no convierte. Sé específico.</li>
+        <li><strong>Olvidar el canonical</strong>: si tu sitio tiene parámetros UTM, sin canonical Google indexa N versiones.</li>
+        <li><strong>OG image rota</strong>: probá tu URL en el debugger de Facebook y la card validator de Twitter antes de publicar.</li>
+      </ul>
+
+      <h2>Validación</h2>
+      <p>Una vez que pegaste las meta tags, validalas con herramientas oficiales: el Sharing Debugger de Facebook, el Card Validator de Twitter y la inspección de URL en Google Search Console. Estas herramientas te muestran exactamente cómo cada plataforma interpreta tu HTML y te avisan si algo falta. Probá siempre antes de mandar a producción.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántos caracteres debe tener la meta description?</summary><p>Entre 150 y 160. Más largo, Google trunca; más corto, perdés oportunidad de vender el click.</p></details>
+      <details><summary>¿Hace falta meta keywords?</summary><p>No. Google la ignora desde 2009. Es código muerto.</p></details>
+      <details><summary>¿Open Graph es obligatoria?</summary><p>No, pero sin ella tus links se ven feos cuando se comparten. Vale la pena siempre.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .mt-grid { display: grid; gap: 1rem; margin-bottom: 1rem; }
+  .mt-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+</style>
+
+<script>
+  const title = document.getElementById('mt-title') as HTMLInputElement;
+  const desc = document.getElementById('mt-desc') as HTMLTextAreaElement;
+  const url = document.getElementById('mt-url') as HTMLInputElement;
+  const img = document.getElementById('mt-img') as HTMLInputElement;
+  const out = document.getElementById('mt-out') as HTMLElement;
+  const gen = document.getElementById('mt-gen') as HTMLButtonElement;
+  const cp = document.getElementById('mt-cp') as HTMLButtonElement;
+
+  function esc(s: string) { return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function render() {
+    const t = esc(title.value); const d = esc(desc.value); const u = esc(url.value); const i = esc(img.value);
+    out.textContent = `<!-- Primary -->\n<title>${t}</title>\n<meta name="description" content="${d}" />\n<link rel="canonical" href="${u}" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n\n<!-- Open Graph -->\n<meta property="og:type" content="website" />\n<meta property="og:url" content="${u}" />\n<meta property="og:title" content="${t}" />\n<meta property="og:description" content="${d}" />\n<meta property="og:image" content="${i}" />\n\n<!-- Twitter -->\n<meta name="twitter:card" content="summary_large_image" />\n<meta name="twitter:url" content="${u}" />\n<meta name="twitter:title" content="${t}" />\n<meta name="twitter:description" content="${d}" />\n<meta name="twitter:image" content="${i}" />`;
+  }
+  gen.addEventListener('click', render);
+  [title, desc, url, img].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar', 1500);
+  });
+  render();
+</script>

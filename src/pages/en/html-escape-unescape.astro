@@ -1,0 +1,120 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'HTML Escape / Unescape — Free Tool | Genfy';
+const description = 'Convert special characters (<, >, &, quotes) to HTML entities and back. Useful for displaying code in blogs and preventing XSS attacks.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What does HTML escaping mean?', acceptedAnswer: { '@type': 'Answer', text: 'Converting characters with special meaning in HTML (<, >, &, quotes) into their entity equivalents (&lt;, &gt;, &amp;, &quot;). The browser displays them as characters without interpreting them as code.' } },
+    { '@type': 'Question', name: 'Why escape?', acceptedAnswer: { '@type': 'Answer', text: 'To display HTML code snippets inside a page without rendering, and to prevent XSS attacks when inserting user content into the DOM.' } },
+    { '@type': 'Question', name: 'Is it the same as URL encoding?', acceptedAnswer: { '@type': 'Answer', text: 'No. HTML escaping is for content inside an HTML document. URL encoding is for parameters and values in a URL. Different rules and characters apply.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Web" title="HTML Escape / Unescape"
+    intro="Convert <, >, & and quotes into HTML entities to display code in blogs, prevent XSS, or clean up pasted text.">
+
+    <div slot="tool">
+      <div class="he-modes">
+        <label class="chk"><input type="radio" name="he-mode" value="escape" checked /> Escape</label>
+        <label class="chk"><input type="radio" name="he-mode" value="unescape" /> Unescape</label>
+      </div>
+      <label for="he-in">Input</label>
+      <textarea id="he-in" rows="6" style="font-family: var(--font-mono);">&lt;script&gt;alert("xss")&lt;/script&gt;</textarea>
+      <button id="he-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Convert</button>
+      <button id="he-copy" class="btn btn-ghost" type="button">Copy</button>
+      <label for="he-out" style="margin-top:1rem;">Output</label>
+      <textarea id="he-out" rows="6" readonly style="font-family: var(--font-mono);"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What HTML escaping is and why it matters</h2>
+      <p>
+        In HTML, certain characters carry structural meaning: <code>&lt;</code> opens a tag, <code>&gt;</code> closes it, <code>&amp;</code> starts an entity, quotes delimit attribute values. If you want a literal less-than sign on the page without the browser thinking you're opening a tag, you escape it as <code>&amp;lt;</code>. The rule applies to any content placed between tags or inside attributes.
+      </p>
+
+      <h2>The five main characters</h2>
+      <ul>
+        <li><code>&lt;</code> escapes to <code>&amp;lt;</code></li>
+        <li><code>&gt;</code> escapes to <code>&amp;gt;</code></li>
+        <li><code>&amp;</code> escapes to <code>&amp;amp;</code></li>
+        <li><code>"</code> escapes to <code>&amp;quot;</code></li>
+        <li><code>'</code> escapes to <code>&amp;#39;</code></li>
+      </ul>
+
+      <h2>XSS: the attack escaping prevents</h2>
+      <p>
+        Cross-Site Scripting (XSS) happens when an attacker injects JavaScript into a page other users will see. Classic vector: a blog comment. If the system renders <code>&lt;script&gt;stealCookies()&lt;/script&gt;</code> without escaping, that script runs in every visitor's browser with access to the session and cookies. Escaping every user input before inserting it into the DOM kills the vector. Modern frameworks (React, Vue, Astro) escape by default, but if you inject content via <code>innerHTML</code> or <code>dangerouslySetInnerHTML</code>, the responsibility shifts back to you.
+      </p>
+
+      <h2>When to escape and when not to</h2>
+      <ul>
+        <li><strong>Always escape</strong> when inserting user input into the DOM, when rendering content from an API you don't control, or when logging data on a page.</li>
+        <li><strong>Don't double-escape.</strong> If a framework already escapes, doing it manually turns <code>&amp;</code> into <code>&amp;amp;amp;</code> and the user sees garbage.</li>
+        <li><strong>Don't escape trusted, deliberate content.</strong> If you're inserting HTML you generated yourself and want it to render, escaping breaks it.</li>
+      </ul>
+
+      <h2>Showing code in a blog post</h2>
+      <p>
+        If your post teaches the <code>&lt;script&gt;</code> tag, you can't write it literally in the article HTML: the browser would interpret it as a real tag and try to execute whatever's inside. You escape the angle brackets to <code>&amp;lt;script&amp;gt;</code> and the reader sees the text. Many blog editors (WordPress, Ghost) escape automatically inside code blocks, but not always — keeping a manual escape tool around is handy.
+      </p>
+
+      <h2>Unescape: the reverse path</h2>
+      <p>
+        Sometimes you receive text that already comes with HTML entities (from an RSS feed, a JSON API that delivered HTML-encoded content, a database export). To display or process it as plain text, you unescape. If you're going to render it in the DOM afterwards, watch out: unescape and then inject via <code>innerHTML</code> is exactly what escaping prevents.
+      </p>
+
+      <h2>HTML vs URL encoding</h2>
+      <p>
+        Two different things. URL encoding turns unsafe characters into %XX (a space becomes %20). HTML escaping turns special characters into entities (a space stays the same, &lt; becomes &amp;lt;). Mix them up and you end up with strings like <code>%26lt%3B</code> that mean nothing in any context.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What does HTML escaping mean?</summary><p>Converting characters with special meaning (&lt;, &gt;, &amp;, quotes) into entities so the browser displays them without interpreting them.</p></details>
+      <details><summary>Why escape?</summary><p>To show HTML code in a page without rendering it and to prevent XSS when inserting user content into the DOM.</p></details>
+      <details><summary>Is it the same as URL encoding?</summary><p>No. They're two different schemes with different rules and use cases.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .he-modes { display: flex; gap: 1.5rem; margin-bottom: 1rem; }
+  .chk { display: flex; align-items: center; gap: 0.5rem; margin: 0; }
+  .chk input { width: auto; }
+</style>
+
+<script>
+  const inEl = document.getElementById('he-in') as HTMLTextAreaElement;
+  const out = document.getElementById('he-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('he-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('he-copy') as HTMLButtonElement;
+
+  function escape(s: string) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+  function unescape(s: string) {
+    const tx = document.createElement('textarea');
+    tx.innerHTML = s;
+    return tx.value;
+  }
+
+  function run() {
+    const mode = (document.querySelector('input[name="he-mode"]:checked') as HTMLInputElement).value;
+    out.value = mode === 'escape' ? escape(inEl.value) : unescape(inEl.value);
+  }
+  inEl.addEventListener('input', run);
+  document.querySelectorAll('input[name="he-mode"]').forEach(el => el.addEventListener('change', run));
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

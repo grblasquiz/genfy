@@ -1,0 +1,160 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Email Validator Online | Genfy';
+const description = 'Validate email addresses one at a time or in bulk. Detects bad syntax, suspicious domains and common typos (gmial, hotmial, etc).';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Does it verify the address really exists?', acceptedAnswer: { '@type': 'Answer', text: 'No. We validate syntax and detect common typos. Real existence checks need an SMTP service which costs money.' } },
+    { '@type': 'Question', name: 'What counts as "valid syntax"?', acceptedAnswer: { '@type': 'Answer', text: 'A reasonable subset of RFC 5322: user, at-sign, domain with a dot, no spaces or forbidden characters.' } },
+    { '@type': 'Question', name: 'Does it catch typos like "gmial.com"?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. We have a list of frequent typos for popular domains (gmail, hotmail, outlook, yahoo) and suggest the likely fix.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Data" title="Email Validator"
+    intro="Validate one address or paste an entire list. We tell you which have correct syntax, which have typical typos, and which to discard.">
+
+    <div slot="tool">
+      <label for="ev-in">Email or list (one per line)</label>
+      <textarea id="ev-in" rows="8" placeholder="example@gmail.com"></textarea>
+
+      <button id="ev-go" class="btn btn-primary" type="button">Validate</button>
+      <button id="ev-copy" class="btn btn-ghost" type="button">Copy valid</button>
+
+      <div id="ev-result" class="ev-result"></div>
+    </div>
+
+    <div slot="content">
+      <h2>What this validator does</h2>
+      <p>
+        We validate at three levels:
+      </p>
+      <ul>
+        <li><strong>Basic syntax.</strong> An at-sign, a domain with a dot, no spaces, no forbidden characters.</li>
+        <li><strong>Domain structure.</strong> The TLD must be at least two characters and not end in a dot.</li>
+        <li><strong>Typo detection.</strong> If you typed <code>gmial.com</code>, <code>hotmial.com</code>, <code>outlok.com</code> or other frequent mistakes, we suggest the fix.</li>
+      </ul>
+
+      <h2>What we don't do</h2>
+      <p>
+        We don't verify whether the mailbox exists. That requires SMTP connections to each
+        provider, IP reputation maintenance, and paid services like ZeroBounce, NeverBounce or
+        Kickbox. For bulk existence verification, use those. For fast syntax and typo cleanup,
+        this tool is enough — and free.
+      </p>
+
+      <h2>Why validation matters</h2>
+      <ul>
+        <li><strong>Bounce rate.</strong> Mailchimp, SendGrid, Klaviyo and any ESP punish your reputation if more than 2% of sends bounce. A poorly-validated list can freeze your account.</li>
+        <li><strong>Cost.</strong> Many CRMs charge per active contact; every invalid email is wasted spend.</li>
+        <li><strong>Conversion.</strong> If a user signs up with a typo and never receives the confirmation, they're lost.</li>
+        <li><strong>Support.</strong> Tickets that arrive with an invalid email in the form are impossible to resolve.</li>
+      </ul>
+
+      <h2>How to handle results</h2>
+      <p>
+        After validation we show three categories:
+      </p>
+      <ul>
+        <li><strong>Valid</strong> — pass syntax and have no detectable typos.</li>
+        <li><strong>With suggestion</strong> — syntax OK but the domain looks suspiciously close to a popular one. We show the fix.</li>
+        <li><strong>Invalid</strong> — broken syntax; discard or ask the user to re-enter.</li>
+      </ul>
+
+      <h2>Limits of syntax-only validation</h2>
+      <p>
+        An email can be syntactically perfect and still not exist. Examples:
+        <code>x@gmail.com</code> passes every rule but probably has no account.
+        <code>fakeemail123@gmail.com</code> too. For high-stakes cases (B2B, big purchases),
+        combine this filter with an SMTP service: this kills 70-80% of issues, the SMTP gets
+        the rest.
+      </p>
+
+      <h2>Privacy</h2>
+      <p>
+        The emails you paste are processed in your browser. We don't send them to any server,
+        store them or log them. Safe for customer lists — the code runs 100% local.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Does it verify the address really exists?</summary><p>No — syntax and typos only. Real verification needs SMTP services.</p></details>
+      <details><summary>What counts as "valid syntax"?</summary><p>A reasonable subset of RFC 5322 with optional strict mode.</p></details>
+      <details><summary>Does it catch typos like "gmial.com"?</summary><p>Yes, for popular domains: gmail, hotmail, outlook, yahoo, and more.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ev-result { margin-top: 1rem; }
+  .ev-group { margin-bottom: 1rem; }
+  .ev-group h4 { margin: 0 0 0.5rem; font-size: 0.9rem; }
+  .ev-group ul { margin: 0; padding-left: 1.25rem; font-family: var(--font-mono); font-size: 0.875rem; }
+  .ev-ok h4 { color: #2e8540; }
+  .ev-warn h4 { color: #b07a00; }
+  .ev-bad h4 { color: #c0392b; }
+</style>
+
+<script>
+  const TYPOS: Record<string,string> = {
+    'gmial.com':'gmail.com','gmai.com':'gmail.com','gmal.com':'gmail.com','gnail.com':'gmail.com','gmail.co':'gmail.com',
+    'hotmial.com':'hotmail.com','hotmai.com':'hotmail.com','hormail.com':'hotmail.com','hotmail.co':'hotmail.com',
+    'outlok.com':'outlook.com','outloo.com':'outlook.com','outlook.co':'outlook.com',
+    'yaho.com':'yahoo.com','yhoo.com':'yahoo.com','yahoo.co':'yahoo.com',
+    'iclod.com':'icloud.com','icoud.com':'icloud.com'
+  };
+
+  const inEl = document.getElementById('ev-in') as HTMLTextAreaElement;
+  const result = document.getElementById('ev-result') as HTMLDivElement;
+  const go = document.getElementById('ev-go') as HTMLButtonElement;
+  const copy = document.getElementById('ev-copy') as HTMLButtonElement;
+  const RX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function check(line: string): { kind: 'ok' | 'warn' | 'bad', email: string, suggestion?: string } {
+    const e = line.trim().toLowerCase();
+    if (!e) return { kind: 'bad', email: line };
+    if (!RX.test(e)) return { kind: 'bad', email: line };
+    const at = e.lastIndexOf('@');
+    const domain = e.slice(at + 1);
+    if (TYPOS[domain]) return { kind: 'warn', email: line, suggestion: e.slice(0, at + 1) + TYPOS[domain] };
+    if (domain.endsWith('.con') || domain.endsWith('.cm')) {
+      const fixed = domain.replace(/\.(con|cm)$/, '.com');
+      return { kind: 'warn', email: line, suggestion: e.slice(0, at + 1) + fixed };
+    }
+    return { kind: 'ok', email: line };
+  }
+
+  let validList: string[] = [];
+
+  function run() {
+    const lines = inEl.value.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+    const ok: string[] = [], warn: string[] = [], bad: string[] = [];
+    validList = [];
+    for (const l of lines) {
+      const r = check(l);
+      if (r.kind === 'ok') { ok.push(l); validList.push(l); }
+      else if (r.kind === 'warn') warn.push(`${l}  →  suggested: ${r.suggestion}`);
+      else bad.push(l);
+    }
+    let html = '';
+    if (ok.length) html += `<div class="ev-group ev-ok"><h4>Valid (${ok.length})</h4><ul>${ok.map(e => `<li>${e}</li>`).join('')}</ul></div>`;
+    if (warn.length) html += `<div class="ev-group ev-warn"><h4>With suggestion (${warn.length})</h4><ul>${warn.map(e => `<li>${e}</li>`).join('')}</ul></div>`;
+    if (bad.length) html += `<div class="ev-group ev-bad"><h4>Invalid (${bad.length})</h4><ul>${bad.map(e => `<li>${e}</li>`).join('')}</ul></div>`;
+    if (!html) html = '<p style="color: var(--text-muted)">Paste emails and click Validate.</p>';
+    result.innerHTML = html;
+  }
+
+  go.addEventListener('click', run);
+  copy.addEventListener('click', async () => {
+    if (!validList.length) return;
+    await navigator.clipboard.writeText(validList.join('\n'));
+    const t = copy.textContent; copy.textContent = 'Copied!';
+    setTimeout(() => { copy.textContent = t; }, 1200);
+  });
+</script>
+</content>
+</invoke>

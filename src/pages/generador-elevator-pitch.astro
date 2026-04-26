@@ -1,0 +1,135 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de elevator pitch | Genfy';
+const description = 'Armá tu elevator pitch de 30 segundos en minutos. Generá 3 versiones con la fórmula problema-solución-resultado, listas para tu próxima reunión o ronda.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuánto debe durar un elevator pitch?', acceptedAnswer: { '@type': 'Answer', text: 'Entre 30 y 60 segundos. Si pasa el minuto, ya no es un elevator pitch — es una presentación.' } },
+    { '@type': 'Question', name: '¿Qué tiene que incluir?', acceptedAnswer: { '@type': 'Answer', text: 'A quién ayudás, qué problema resolvés, cómo lo hacés diferente y qué resultado concreto obtienen tus clientes. Cierra con una pregunta o llamado a la acción.' } },
+    { '@type': 'Question', name: '¿Tiene que ser igual para todos?', acceptedAnswer: { '@type': 'Answer', text: 'No. Lo ideal es tener 3 versiones: una para inversores, una para clientes y una para futuros empleados o partners.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Empresa / Business" title="Generador de elevator pitch"
+    intro="Completá quién sos, qué hacés y para quién. Te devolvemos 3 versiones de elevator pitch listas para usar en una reunión, ronda o evento.">
+
+    <div slot="tool" class="ep">
+      <label>Empresa / producto</label>
+      <input id="ep-co" type="text" value="Acme Corp" />
+
+      <label style="margin-top:1rem">Audiencia (a quién ayudás)</label>
+      <input id="ep-aud" type="text" value="emprendedores que venden online" />
+
+      <label style="margin-top:1rem">Problema que resolvés</label>
+      <input id="ep-prob" type="text" value="pierden ventas porque su web no convierte" />
+
+      <label style="margin-top:1rem">Cómo lo hacés (1 frase)</label>
+      <input id="ep-how" type="text" value="con plantillas optimizadas y datos en tiempo real" />
+
+      <label style="margin-top:1rem">Resultado concreto</label>
+      <input id="ep-res" type="text" value="suben su conversión 30% en 30 días" />
+
+      <button id="ep-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 3 versiones</button>
+
+      <div id="ep-out" class="ep-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué es un elevator pitch (y qué no)</h2>
+      <p>
+        El elevator pitch nació con una imagen simple: tenés 30 segundos en un ascensor con la
+        persona que podría cambiar tu negocio. Si llegás al piso 12 sin haber dicho nada
+        accionable, perdiste la oportunidad. La idea sigue siendo la misma incluso sin ascensores
+        de por medio: en eventos, ferias, llamadas frías, primer mensaje en LinkedIn, la atención
+        que tenés es muy corta y muy valiosa.
+      </p>
+
+      <h2>La fórmula que funciona en cualquier industria</h2>
+      <p>Cuatro componentes en este orden:</p>
+      <ol>
+        <li><strong>Audiencia:</strong> "Ayudo a [perfil específico]". Cuanto más específico, más fuerte.</li>
+        <li><strong>Problema:</strong> "que sufren [problema concreto]". Si la otra persona se ve reflejada, escucha el resto.</li>
+        <li><strong>Solución diferencial:</strong> "ofreciéndoles [tu producto]". Acá entra el "cómo" que te hace distinto.</li>
+        <li><strong>Resultado:</strong> "para que [resultado medible en tiempo definido]". Sin esto, suena a marketing genérico.</li>
+        <li><strong>Cierre con pregunta:</strong> "¿conocés a alguien que podría tener este dolor?" o "¿tu equipo enfrenta esto hoy?".</li>
+      </ol>
+
+      <h2>Tres versiones para tres situaciones</h2>
+      <ul>
+        <li><strong>Versión inversor:</strong> enfatiza tamaño de mercado, tracción y por qué ahora. "Estamos creciendo 30% mes a mes en un mercado de USD 5B."</li>
+        <li><strong>Versión cliente:</strong> enfatiza el dolor que vos resolvés y el resultado concreto. "Te hacemos vender más sin contratar a nadie nuevo."</li>
+        <li><strong>Versión talento / partner:</strong> enfatiza la misión, el equipo y por qué vale la pena unirse. "Somos 12 personas construyendo X y buscamos a alguien que ame Y."</li>
+      </ul>
+
+      <h2>Errores que matan un buen pitch</h2>
+      <ol>
+        <li>Empezar por la solución antes que por el problema. Nadie compra una solución sin sentirse identificado con un dolor.</li>
+        <li>Listar features. "Tenemos integraciones con Stripe, Shopify y QuickBooks" no le dice a la persona qué gana.</li>
+        <li>No tener un resultado cuantificable. "Mejoramos la productividad" es hueco. "Reducimos 8 horas por semana de tareas administrativas" no.</li>
+        <li>Hablar más de un minuto. Si no cabe en 60 segundos, el problema es el pitch, no la audiencia.</li>
+        <li>No cerrar con pregunta. Sin pregunta, la conversación no continúa.</li>
+      </ol>
+
+      <h2>Cómo practicarlo bien</h2>
+      <p>
+        Grabate en video diciéndolo cinco veces seguidas. La primera vez vas a sonar mecánico, la
+        quinta natural. Después pasáselo a tres personas que no conocen tu negocio y preguntales:
+        "¿podrías recomendarnos en una frase?". Si lo que dicen no se parece a lo que querías
+        comunicar, reescribí. Tu pitch no es lo que decís, es lo que la otra persona repite.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuánto debe durar?</summary><p>Entre 30 y 60 segundos. Más de eso ya no es elevator pitch.</p></details>
+      <details><summary>¿Qué tiene que incluir?</summary><p>Audiencia, problema, solución diferencial, resultado y pregunta de cierre.</p></details>
+      <details><summary>¿Una sola versión?</summary><p>Idealmente tres: para inversores, clientes y talento/partners.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ep-out { display: grid; gap: 0.875rem; margin-top: 1.25rem; }
+  .ep-card { padding: 1.125rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-md); cursor: pointer; transition: border-color 0.1s; }
+  .ep-card:hover { border-color: var(--primary); }
+  .ep-card h4 { margin: 0 0 0.5rem; font-size: 0.875rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+  .ep-card p { margin: 0; line-height: 1.55; }
+</style>
+
+<script>
+  const co = document.getElementById('ep-co') as HTMLInputElement;
+  const aud = document.getElementById('ep-aud') as HTMLInputElement;
+  const prob = document.getElementById('ep-prob') as HTMLInputElement;
+  const how = document.getElementById('ep-how') as HTMLInputElement;
+  const res = document.getElementById('ep-res') as HTMLInputElement;
+  const out = document.getElementById('ep-out')!;
+  const gen = document.getElementById('ep-gen') as HTMLButtonElement;
+
+  function generate() {
+    const v1 = `En ${co.value} ayudamos a ${aud.value} que ${prob.value}, ${how.value}, para que ${res.value}. ¿Tu equipo enfrenta este problema hoy?`;
+    const v2 = `${co.value} es la forma más rápida para que ${aud.value} dejen de ${prob.value}. Combinamos ${how.value} y nuestros clientes ${res.value} en promedio. ¿Querés ver una demo de 5 minutos?`;
+    const v3 = `Imaginate ${aud.value} sin tener que ${prob.value}. Eso construimos en ${co.value}: ${how.value}. El resultado: ${res.value}. ¿Conocés a alguien a quien le sirva?`;
+
+    const versions = [
+      { tag: 'Versión clásica (problema → solución → resultado)', text: v1 },
+      { tag: 'Versión enfocada en velocidad y demo', text: v2 },
+      { tag: 'Versión narrativa (imaginate...)', text: v3 },
+    ];
+
+    out.innerHTML = '';
+    versions.forEach(v => {
+      const c = document.createElement('div');
+      c.className = 'ep-card';
+      c.innerHTML = `<h4>${v.tag}</h4><p>${v.text}</p>`;
+      c.title = 'Click para copiar';
+      c.addEventListener('click', () => { navigator.clipboard.writeText(v.text); c.style.borderColor = 'var(--primary)'; setTimeout(() => c.style.borderColor = '', 800); });
+      out.appendChild(c);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

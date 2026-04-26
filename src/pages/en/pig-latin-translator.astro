@@ -1,0 +1,130 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Pig Latin Translator | Genfy';
+const description = 'Translate any text to Pig Latin instantly. The classic English word game: move the first consonant to the end and add -ay.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is Pig Latin?', acceptedAnswer: { '@type': 'Answer', text: 'A playful English word game: move the first consonant to the end of each word and add "-ay". Vowel-initial words get "-way" or "-yay".' } },
+    { '@type': 'Question', name: 'Is it a real language?', acceptedAnswer: { '@type': 'Answer', text: 'No. It is a children\'s and casual code, no real grammar of its own.' } },
+    { '@type': 'Question', name: 'Is it useful for teaching English?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Great for kids to play with syllables, identify vowels and consonants, and have fun with language.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Fun" title="Pig Latin Translator"
+    intro="Turn any English text into Pig Latin. Classic word-play: move the first consonant to the end and add -ay. Instant fun for the classroom or just for laughs.">
+
+    <div slot="tool">
+      <label for="pl-in">Original text</label>
+      <textarea id="pl-in" rows="5" placeholder="Hello world" style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div style="margin-top:0.75rem;">
+        <button id="pl-go" class="btn btn-primary" type="button">Translate to Pig Latin</button>
+        <button id="pl-copy" class="btn btn-ghost" type="button">Copy</button>
+      </div>
+      <label for="pl-out" style="margin-top:1rem;">Result</label>
+      <textarea id="pl-out" rows="5" readonly style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What Pig Latin actually is</h2>
+      <p>
+        Pig Latin is a playful English code with simple rules: words starting with a consonant move that
+        consonant (or cluster) to the end and add "-ay". "Hello" becomes "ellohay", "pig" becomes "igpay".
+        Words starting with a vowel add "-way" (or "-yay" in some variants): "apple" becomes "appleway".
+      </p>
+
+      <h2>Origin and history</h2>
+      <p>
+        The game is documented in English since the 19th century, though playful language codes exist in
+        many cultures. In Spanish, similar games like "jeringoso" exist. The function is the same: encrypt
+        everyday speech among friends or kids, adding a layer of play to language. It isn't really Latin
+        and has no relation to classical Latin — the name is part of the joke.
+      </p>
+
+      <h2>Detailed rules</h2>
+      <ul>
+        <li><strong>Consonant-initial words</strong>: move that consonant to the end + "ay". "cat" → "atcay".</li>
+        <li><strong>Consonant clusters</strong>: move the whole cluster. "smile" → "ilesmay".</li>
+        <li><strong>Vowel-initial words</strong>: append "way". "egg" → "eggway".</li>
+        <li><strong>Capitalization</strong>: "Hello" → "Ellohay" (first letter of the result is capitalized).</li>
+        <li><strong>Punctuation</strong>: preserved at the end: "Hello!" → "Ellohay!".</li>
+      </ul>
+
+      <h2>What it's used for today</h2>
+      <ul>
+        <li><strong>Elementary education</strong> — teaching phonetics, vowels, consonants and syllable awareness.</li>
+        <li><strong>Children's games</strong> — speaking in code with friends.</li>
+        <li><strong>Programming</strong> — classic "first project" exercise in intro courses to teach string manipulation.</li>
+        <li><strong>Pop culture</strong> — references in films, books and shows.</li>
+        <li><strong>Language practice</strong> — playing with English in a low-pressure context.</li>
+      </ul>
+
+      <h2>Limitations</h2>
+      <p>
+        Pig Latin is designed for English, where the consonant-vowel distinction at the start of words is
+        clear. It works on Spanish too, but rules can produce odd results (consecutive vowels, diphthongs,
+        etc.). If you translate Spanish text, expect funny output but not always sensible. For Spanish
+        wordplay, "jeringoso" (inserting a syllable like "pa" or "chi" between every syllable) works much
+        better.
+      </p>
+
+      <h2>Regional variants</h2>
+      <p>
+        There are several Pig Latin versions: the "standard" with "-ay" and "-way", one with "-yay" for
+        vowels, and kid dialects where the pattern shifts to whatever the group decides. We use the most
+        classic version, the one in textbooks, Wikipedia and programming exercises.
+      </p>
+
+      <h2>As a programming exercise</h2>
+      <p>
+        Implementing Pig Latin is a classic intro-course problem. It combines string manipulation,
+        conditionals (vowel vs. consonant), loops to process words and edge cases (single-letter words,
+        punctuation, capitalization). If you're learning to code, write it from scratch before peeking at
+        our solution.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is Pig Latin?</summary><p>An English word game: move the initial consonant to the end and add -ay; -way for vowel-initial words.</p></details>
+      <details><summary>Is it a real language?</summary><p>No. A playful code with no grammar of its own.</p></details>
+      <details><summary>Is it useful for teaching English?</summary><p>Yes. Phonetics, syllables, fun with language.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const inEl = document.getElementById('pl-in') as HTMLTextAreaElement;
+  const outEl = document.getElementById('pl-out') as HTMLTextAreaElement;
+  const go = document.getElementById('pl-go') as HTMLButtonElement;
+  const cp = document.getElementById('pl-copy') as HTMLButtonElement;
+
+  const VOWELS = new Set(['a','e','i','o','u','A','E','I','O','U']);
+  function translateWord(w: string): string {
+    if (!w) return w;
+    const m = w.match(/^([^a-zA-Z]*)([a-zA-Z]+)([^a-zA-Z]*)$/);
+    if (!m) return w;
+    const [, lead, core, trail] = m;
+    if (!core) return w;
+    const isUpper = core[0] === core[0].toUpperCase();
+    const lower = core.toLowerCase();
+    let result: string;
+    if (VOWELS.has(lower[0])) {
+      result = lower + 'way';
+    } else {
+      let i = 0;
+      while (i < lower.length && !VOWELS.has(lower[i])) i++;
+      result = lower.slice(i) + lower.slice(0, i) + 'ay';
+    }
+    if (isUpper) result = result[0].toUpperCase() + result.slice(1);
+    return lead + result + trail;
+  }
+  function translate(text: string) {
+    return text.split(/(\s+)/).map(t => /\s+/.test(t) ? t : translateWord(t)).join('');
+  }
+  go.addEventListener('click', () => { outEl.value = translate(inEl.value); });
+  cp.addEventListener('click', async () => { if (!outEl.value) return; await navigator.clipboard.writeText(outEl.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

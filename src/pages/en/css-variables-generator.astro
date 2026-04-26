@@ -1,0 +1,170 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'CSS Variables Generator | Genfy';
+const description = 'Generate a :root with your custom properties: colors, spacing, typography, radii. Ready for your design system.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'CSS variables or Sass?', acceptedAnswer: { '@type': 'Answer', text: 'CSS variables work at runtime and respect the cascade. Sass compiles to static values. For theming, dark mode and dynamic JS, use CSS variables.' } },
+    { '@type': 'Question', name: 'How do I change one with JS?', acceptedAnswer: { '@type': 'Answer', text: 'document.documentElement.style.setProperty("--color", "#fff"). Works at runtime without recompiling anything.' } },
+    { '@type': 'Question', name: 'Can I use them inside @media?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. You can redefine variables inside @media to change the entire system based on viewport or color mode.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design / Diseño" title="CSS Variables Generator"
+    intro="Define colors, spacing, typography and radii. Generate a :root block ready to paste into your stylesheet.">
+
+    <div slot="tool" class="cv">
+      <div class="cv-grid">
+        <div>
+          <label for="cv-prim">Primary color</label>
+          <input id="cv-prim" type="color" value="#0f172a" />
+        </div>
+        <div>
+          <label for="cv-acc">Accent color</label>
+          <input id="cv-acc" type="color" value="#059669" />
+        </div>
+        <div>
+          <label for="cv-bg">Background</label>
+          <input id="cv-bg" type="color" value="#ffffff" />
+        </div>
+        <div>
+          <label for="cv-text">Text</label>
+          <input id="cv-text" type="color" value="#09090b" />
+        </div>
+        <div>
+          <label for="cv-radius">Base radius (px)</label>
+          <input id="cv-radius" type="number" value="8" />
+        </div>
+        <div>
+          <label for="cv-space">Base spacing (rem)</label>
+          <input id="cv-space" type="number" step="0.25" value="1" />
+        </div>
+      </div>
+
+      <div class="cv-actions">
+        <button id="cv-cp" class="btn btn-primary" type="button">Copy CSS</button>
+      </div>
+
+      <pre><code id="cv-out"></code></pre>
+    </div>
+
+    <div slot="content">
+      <h2>What CSS variables are</h2>
+      <p>CSS variables (also called custom properties) are reusable values defined once and referenced anywhere in your CSS. Syntax: <code>--my-var: value</code> to define, <code>var(--my-var)</code> to use. Unlike Sass variables, CSS ones live at runtime: you can change them with JS or media queries and the whole system updates.</p>
+
+      <h2>Why they matter</h2>
+      <ul>
+        <li><strong>Single source of truth</strong>: change a value, it updates everywhere.</li>
+        <li><strong>Dynamic theming</strong>: dark mode, high contrast, custom themes.</li>
+        <li><strong>Reusable components</strong>: components consume variables, not fixed values.</li>
+        <li><strong>Native cascade</strong>: variables respect inheritance, allowing scoped overrides.</li>
+      </ul>
+
+      <h2>Recommended structure</h2>
+      <p>Standard pattern is to define all global variables in :root:</p>
+      <pre><code>:root &lcub;
+  --color-primary: #0f172a;
+  --color-accent: #059669;
+  --bg: #ffffff;
+  --text: #09090b;
+  --radius: 8px;
+  --space: 1rem;
+&rcub;</code></pre>
+      <p>Then use <code>var(--color-primary)</code> wherever needed.</p>
+
+      <h2>Typical categories</h2>
+      <ul>
+        <li><strong>Color</strong>: primary, accent, background, text, borders, states (success, error, warning).</li>
+        <li><strong>Typography</strong>: font-family, sizes, weights, line-heights.</li>
+        <li><strong>Spacing</strong>: a scale (4, 8, 16, 24, 32, 48, 64).</li>
+        <li><strong>Radii</strong>: sm, md, lg, xl or a single base.</li>
+        <li><strong>Shadows</strong>: shadow-xs, sm, md, lg.</li>
+        <li><strong>Transitions</strong>: consistent durations and easings.</li>
+      </ul>
+
+      <h2>Dark mode with one media query</h2>
+      <p>The most powerful use of variables is dark mode. Define the light set in :root and the dark one inside @media (prefers-color-scheme: dark). Components don't know about modes: they consume --bg and --text, CSS does the rest.</p>
+      <pre><code>:root &lcub;
+  --bg: white;
+  --text: black;
+&rcub;
+@media (prefers-color-scheme: dark) &lcub;
+  :root &lcub;
+    --bg: black;
+    --text: white;
+  &rcub;
+&rcub;</code></pre>
+
+      <h2>Manipulation with JavaScript</h2>
+      <p>To change a variable from JS:</p>
+      <pre><code>document.documentElement.style.setProperty('--color', '#fff');</code></pre>
+      <p>This lets you implement theme pickers, sliders affecting the design system live, accessibility modes and any dynamic change without recompiling anything.</p>
+
+      <h2>Best practices</h2>
+      <p>Semantic names beat descriptive ones: <code>--color-primary</code> beats <code>--blue</code>. If primary changes to green tomorrow, you don't have to rename anything. Keep a consistent scale for spacing and typography: 4, 8, 16, 24 works better than arbitrary values. And group variables by category with clear comments.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>CSS variables or Sass?</summary><p>CSS for runtime, theming and dynamic JS. Sass for static compilation.</p></details>
+      <details><summary>How do I change them with JS?</summary><p>document.documentElement.style.setProperty(). No recompile.</p></details>
+      <details><summary>Do they work in @media?</summary><p>Yes. Redefine them in media queries to switch the system based on viewport or theme.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .cv-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+  @media (max-width: 600px) { .cv-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const prim = document.getElementById('cv-prim') as HTMLInputElement;
+  const acc = document.getElementById('cv-acc') as HTMLInputElement;
+  const bg = document.getElementById('cv-bg') as HTMLInputElement;
+  const text = document.getElementById('cv-text') as HTMLInputElement;
+  const radius = document.getElementById('cv-radius') as HTMLInputElement;
+  const space = document.getElementById('cv-space') as HTMLInputElement;
+  const out = document.getElementById('cv-out') as HTMLElement;
+  const cp = document.getElementById('cv-cp') as HTMLButtonElement;
+
+  function render() {
+    const r = +radius.value;
+    const s = +space.value;
+    out.textContent = `:root {
+  /* Colors */
+  --color-primary: ${prim.value};
+  --color-accent: ${acc.value};
+  --bg: ${bg.value};
+  --text: ${text.value};
+
+  /* Radius */
+  --radius-sm: ${r / 2}px;
+  --radius: ${r}px;
+  --radius-lg: ${r * 1.5}px;
+
+  /* Spacing */
+  --space-1: ${s * 0.25}rem;
+  --space-2: ${s * 0.5}rem;
+  --space-3: ${s}rem;
+  --space-4: ${s * 1.5}rem;
+  --space-5: ${s * 2}rem;
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, monospace;
+}`;
+  }
+  [prim, acc, bg, text, radius, space].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copied'; setTimeout(() => cp.textContent = 'Copy CSS', 1500);
+  });
+  render();
+</script>

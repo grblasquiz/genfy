@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de banda gratis | Genfy';
+const description = 'Generá ideas de nombres para tu banda en segundos. Combiná un sustantivo, un adjetivo y un estilo para conseguir 20 nombres únicos al instante.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace que un nombre de banda funcione?', acceptedAnswer: { '@type': 'Answer', text: 'Que sea pronunciable en una sola pasada, breve (idealmente 1 a 3 palabras), libre en Spotify, Instagram y dominio .com, y que sugiera el género o el clima sonoro de la banda.' } },
+    { '@type': 'Question', name: '¿Tengo que registrar el nombre de mi banda?', acceptedAnswer: { '@type': 'Answer', text: 'Antes de imprimir merchandising o subir a plataformas, verificá que no exista otra banda con ese nombre en Spotify, Apple Music y bases de marcas locales. Conviene reservar el handle social y el dominio enseguida.' } },
+    { '@type': 'Question', name: '¿Cuántos nombres debería generar?', acceptedAnswer: { '@type': 'Answer', text: 'Generá 30 a 50 ideas, filtrá las 5 que mejor sienten al decirlas en voz alta, y dejalas reposar 48 horas antes de decidir.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de nombre de banda"
+    intro="Combiná un género, un sustantivo evocador y un estilo para conseguir 20 ideas de nombre de banda al instante. Pensado para proyectos indie, rock, pop, electrónica o folk.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabras clave (separadas por coma)</label>
+      <input id="bn-kw" type="text" placeholder="noche, río, eco..." value="noche, eco" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="the">Con "Los / The" (Los Cobardes, The Cured)</option>
+        <option value="adj">Adjetivo + sustantivo (Niebla Eléctrica)</option>
+        <option value="single">Una sola palabra (Vela, Hueco)</option>
+        <option value="and">X y los Y (Marta y los Espejos)</option>
+        <option value="modern">Inventado moderno (Vexora, Plumira)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir un buen nombre de banda</h2>
+      <p>
+        El nombre de tu banda es lo primero que recuerda alguien que te escucha en la radio o ve un
+        flyer pegado en un poste. Un buen nombre no garantiza que el proyecto despegue, pero un mal
+        nombre sí puede hundir un buen disco antes de que nadie lo escuche. La regla más útil que
+        repetimos en cada lanzamiento: si el nombre tiene más de tres sílabas, va a costar el doble
+        que la gente lo recuerde.
+      </p>
+      <ol>
+        <li><strong>Pasalo por el filtro del bar.</strong> Si decís el nombre fuerte en una mesa con ruido y nadie tiene que pedirte que lo repitas, ya ganaste.</li>
+        <li><strong>Buscalo en Spotify y Apple Music.</strong> Si aparece otra banda activa con el mismo nombre o muy similar, los algoritmos te van a confundir y vas a perder reproducciones.</li>
+        <li><strong>Verificá Instagram, TikTok y el dominio.</strong> No tiene que ser el .com, pero sí algo limpio (.band, .fm, .music). Si el handle exacto está libre, agarralo el mismo día.</li>
+        <li><strong>Que aguante un disco serio y un demo de garage.</strong> "Pollito Frito" funciona para una banda de cumbia paródica, no para un disco conceptual de post-rock. Pensá si el nombre te va a representar dentro de cinco años.</li>
+        <li><strong>Probalo en un afiche imaginario.</strong> Escribilo grande, en tipografía bold, junto al de tres bandas grandes del estilo que querés tocar. ¿Pega o desentona?</li>
+      </ol>
+
+      <h2>Estilos clásicos de nombre de banda</h2>
+      <ul>
+        <li><strong>Con artículo "Los" / "The"</strong>: el formato más común del rock y el indie. Funciona con sustantivos plurales (Los Espíritus, The Strokes). Cuidado: hay miles, exigí un sustantivo distinto.</li>
+        <li><strong>Adjetivo + sustantivo</strong>: la fórmula más versátil (Niebla Eléctrica, Sangre Joven). Combina dos imágenes y construye una atmósfera en dos palabras.</li>
+        <li><strong>Una sola palabra</strong>: difícil, premium si lo conseguís. Funciona si la palabra es rara o tiene varios significados (Vela, Hueco, Garra).</li>
+        <li><strong>Persona + grupo</strong>: "Marta y los Espejos", "Tomás y la Manada". Suele señalar a un proyecto solista con banda estable.</li>
+        <li><strong>Inventado</strong>: nombres no-palabra que suenan bien (Vexora, Plumira). Más fáciles de registrar, pero requieren más rotación de prensa para que la gente los aprenda.</li>
+      </ul>
+
+      <h2>Errores que matan un buen nombre</h2>
+      <p>
+        Vimos lanzamientos importantes pegarle a la pared porque el nombre tenía un problema chico
+        que nadie chequeó: una sigla obscena al leerlo rápido, una colisión con un grupo extranjero
+        más famoso (cuando entrás a giras internacionales), o una palabra que se pronuncia distinto
+        en español y en inglés. Otro clásico: nombres con caracteres especiales o números raros que
+        complican la búsqueda en plataformas. Si tu nombre necesita ser explicado en cada
+        entrevista, está mal.
+      </p>
+
+      <h2>Después de generar: el flujo de validación</h2>
+      <p>
+        Cuando tengas tus cinco favoritos, validá cada uno con esta lista:
+      </p>
+      <ol>
+        <li>Buscar en Spotify, Apple Music, YouTube Music y Bandcamp.</li>
+        <li>Buscar en Google entre comillas exactas. ¿Hay otra banda activa de los últimos 10 años?</li>
+        <li>Verificar handle libre en Instagram, TikTok y X.</li>
+        <li>Verificar dominio (.com, .band o el de tu país).</li>
+        <li>Decirlo a cinco amigos por WhatsApp con audio: ¿lo entienden a la primera?</li>
+        <li>Buscar marca registrada en INPI (Argentina) o USPTO (EE.UU.) si el proyecto va en serio.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace que un nombre de banda funcione?</summary><p>Que sea pronunciable de una sola pasada, breve, libre en Spotify e Instagram, y que sugiera el clima sonoro del proyecto.</p></details>
+      <details><summary>¿Tengo que registrar el nombre antes de subir música?</summary><p>Antes de subir a plataformas o imprimir merchandising, chequeá que no exista otra banda activa con ese nombre y reservá los handles. Si vas en serio, registrá la marca.</p></details>
+      <details><summary>¿Cuántos nombres debería generar?</summary><p>Entre 30 y 50, filtrá los cinco mejores, dejalos reposar 48 horas y volvé a leerlos en voz alta.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ADJ = ['Eléctrico', 'Salvaje', 'Eterno', 'Lento', 'Frío', 'Roto', 'Brillante', 'Oculto', 'Lejano', 'Vacío', 'Crudo', 'Suave', 'Hondo', 'Ciego', 'Tibio', 'Negro'];
+  const NOUN = ['Eco', 'Niebla', 'Río', 'Faro', 'Hueso', 'Reloj', 'Cuervo', 'Espejo', 'Cuchillo', 'Vela', 'Manada', 'Trueno', 'Ceniza', 'Carbón', 'Verano', 'Invierno'];
+  const PERSON = ['Marta', 'Tomás', 'Lucía', 'Pablo', 'Camila', 'Nico', 'Sofía', 'Bruno', 'Clara', 'Dante'];
+  const MOD = ['Vexora', 'Plumira', 'Quintar', 'Brisol', 'Telmar', 'Vorino', 'Klaver', 'Drinto', 'Felmar', 'Solven', 'Tirvan', 'Norven'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : pick(NOUN);
+      let name = '';
+      if (s === 'the') name = 'Los ' + cap(w) + 's';
+      else if (s === 'adj') name = pick(ADJ) + ' ' + cap(w);
+      else if (s === 'single') name = cap(w);
+      else if (s === 'and') name = pick(PERSON) + ' y los ' + cap(w) + 's';
+      else if (s === 'modern') name = pick(MOD);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

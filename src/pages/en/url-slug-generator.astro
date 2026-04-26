@@ -1,0 +1,122 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free URL Slug Generator | Genfy';
+const description = 'Turn any title into a clean URL slug: lowercase, no accents, hyphens, and SEO-safe characters. Perfect for blogs, CMS and routing.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a URL slug?', acceptedAnswer: { '@type': 'Answer', text: 'It is the human-readable portion of a URL after the domain. In /blog/how-to-bake-bread, "how-to-bake-bread" is the slug. It should be short, descriptive and use only safe characters.' } },
+    { '@type': 'Question', name: 'Why does it matter for SEO?', acceptedAnswer: { '@type': 'Answer', text: 'Google uses the slug as one of many relevance signals. A clear slug with natural keywords helps click-through and content comprehension before opening the page.' } },
+    { '@type': 'Question', name: 'Hyphen or underscore?', acceptedAnswer: { '@type': 'Answer', text: 'Hyphen. Google explicitly recommends it: hyphens act as word separators, underscores join words. /how-to-bake-bread indexes better than /how_to_bake_bread.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Web" title="URL Slug Generator"
+    intro="Paste any title and get a clean slug back: no accents, no special characters, ready for WordPress, Astro, Next or any CMS.">
+
+    <div slot="tool" class="sl">
+      <label for="sl-in">Title</label>
+      <input id="sl-in" type="text" value="How to Bake Bread at Home: Quick 2026 Guide" />
+      <div class="sl-opts">
+        <label class="chk"><input type="checkbox" id="sl-low" checked /> Lowercase</label>
+        <label class="chk"><input type="checkbox" id="sl-stop" /> Remove stop words</label>
+        <div>
+          <label for="sl-sep">Separator</label>
+          <select id="sl-sep">
+            <option value="-">Hyphen (-)</option>
+            <option value="_">Underscore (_)</option>
+          </select>
+        </div>
+      </div>
+      <button id="sl-gen" class="btn btn-primary" type="button">Generate</button>
+      <button id="sl-copy" class="btn btn-ghost" type="button">Copy</button>
+      <input id="sl-out" type="text" readonly style="margin-top:1rem; font-family: var(--font-mono);" />
+    </div>
+
+    <div slot="content">
+      <h2>What a slug is and why it matters</h2>
+      <p>
+        The slug is the portion of a URL that identifies a specific resource, after the domain and folder segments. In <code>https://genfy.net/blog/url-slug-generator</code>, the slug is <code>url-slug-generator</code>. It's the first thing a user sees before clicking, what gets shared on Slack or WhatsApp, what shows up under your title in Google.
+      </p>
+
+      <h2>Golden rules of a good slug</h2>
+      <ul>
+        <li><strong>Always lowercase.</strong> URLs are case-sensitive on many servers — <code>/Blog</code> and <code>/blog</code> can be two distinct pages. Forcing lowercase prevents accidental duplicates.</li>
+        <li><strong>Only a-z, 0-9 and hyphens.</strong> Special characters get URL-encoded (ñ becomes %C3%B1) and the result looks ugly, runs long, and breaks when copied by hand.</li>
+        <li><strong>No accents.</strong> "café" turns to "cafe". Modern browsers handle accents, but the global convention is ASCII for maximum compatibility across systems.</li>
+        <li><strong>Short but descriptive.</strong> Ideally 3 to 6 words. Longer slugs add friction when sharing.</li>
+        <li><strong>Drop unnecessary stop words.</strong> Cut articles like "the", "a", "an", "of" when they don't add meaning.</li>
+      </ul>
+
+      <h2>Hyphen vs underscore: the settled debate</h2>
+      <p>
+        Matt Cutts, the former Google web spam team lead, clarified years ago that hyphens function as word separators while underscores join words. So <code>how-to-bake-bread</code> tells Google there are three independent words; <code>how_to_bake_bread</code> reads as a single string. For SEO, always hyphens.
+      </p>
+
+      <h2>Slugs and SEO in 2026</h2>
+      <p>
+        Google still uses the slug as one of dozens of signals to understand a URL's content and context. It isn't the most important factor (content and links weigh far more), but it's one of the few you can edit directly without rewriting copy or code. A slug echoing the article's main keyword reinforces relevance. A generic slug like <code>/post-12345</code> leaves everything to the title tag.
+      </p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Changing slugs live without a 301 redirect.</strong> If your post had 200 backlinks and you change the slug, you lose all of them. Always set up a redirect.</li>
+        <li><strong>Dates in slugs.</strong> <code>/2024/03/article</code> ages badly. If you refresh the content in 2026, the slug lies.</li>
+        <li><strong>Internal IDs.</strong> <code>/post?id=842</code> is terrible for SEO and confuses users.</li>
+        <li><strong>Excessive stop words.</strong> "the-best-article-about-how-to-bake-bread-at-home-step-by-step" fits but overwhelms.</li>
+      </ul>
+
+      <h2>How to use this generator</h2>
+      <p>
+        Paste your title exactly as you wrote it. Keep the lowercase option on (always recommended). If your CMS doesn't strip stop words automatically, toggle that checkbox. Pick hyphen unless your system requires otherwise (Notion, for instance, defaults to hyphens). Copy the result and paste it into the "slug" or "permalink" field of your CMS.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a URL slug?</summary><p>The human-readable part of a URL after the domain. In /blog/how-to-bake-bread, "how-to-bake-bread" is the slug.</p></details>
+      <details><summary>Why does it matter for SEO?</summary><p>Google uses it as a relevance signal. A clear slug with keywords helps content comprehension and click-through.</p></details>
+      <details><summary>Hyphen or underscore?</summary><p>Hyphen. Google recommends it because it acts as a word separator, while underscore joins words.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .sl-opts { display: grid; grid-template-columns: auto auto 1fr; gap: 1rem; align-items: end; margin: 1rem 0; }
+  .chk { display: flex; align-items: center; gap: 0.5rem; margin: 0; }
+  .chk input { width: auto; }
+  @media (max-width: 600px) { .sl-opts { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const STOP_EN = new Set(['the','a','an','and','or','of','to','in','on','at','for','with','by','from','as','is','are','was','were','be','been','being','it','this','that','these','those','i','you','he','she','we','they']);
+  const inEl = document.getElementById('sl-in') as HTMLInputElement;
+  const lowEl = document.getElementById('sl-low') as HTMLInputElement;
+  const stopEl = document.getElementById('sl-stop') as HTMLInputElement;
+  const sepEl = document.getElementById('sl-sep') as HTMLSelectElement;
+  const out = document.getElementById('sl-out') as HTMLInputElement;
+  const genBtn = document.getElementById('sl-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('sl-copy') as HTMLButtonElement;
+
+  function slugify() {
+    let s = inEl.value || '';
+    if (lowEl.checked) s = s.toLowerCase();
+    s = s.normalize('NFD').replace(/[̀-ͯ]/g, '');
+    s = s.replace(/[^a-zA-Z0-9\s-]/g, ' ');
+    let parts = s.split(/\s+/).filter(Boolean);
+    if (stopEl.checked) parts = parts.filter(p => !STOP_EN.has(p.toLowerCase()));
+    out.value = parts.join(sepEl.value).replace(/-+/g, sepEl.value);
+  }
+  [inEl, lowEl, stopEl, sepEl].forEach(el => el.addEventListener('input', slugify));
+  genBtn.addEventListener('click', slugify);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  slugify();
+</script>

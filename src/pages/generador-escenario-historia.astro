@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de escenario de historia gratis | Genfy';
+const description = 'Generá escenarios y ambientes para tus historias. Combiná lugar, época y atmósfera para conseguir 10 settings listos para tu próxima novela o guion.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué hace que un escenario funcione?', acceptedAnswer: { '@type': 'Answer', text: 'Un escenario funciona cuando influye en las decisiones del protagonista. No alcanza con describirlo: tiene que generar limitaciones, oportunidades o presión emocional.' } },
+    { '@type': 'Question', name: '¿Cuánto detalle debo dar?', acceptedAnswer: { '@type': 'Answer', text: 'Tres a cinco detalles sensoriales concretos por escena. Demasiada descripción detiene la trama.' } },
+    { '@type': 'Question', name: '¿Sirve para distintos géneros?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. La técnica es la misma: lugar concreto + época + atmósfera + un detalle único que solo aparece en ese mundo.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de escenario de historia"
+    intro="Encontrá el ambiente perfecto para tu historia. Combiná lugar, época y atmósfera para conseguir 10 escenarios listos para usar.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Tema o palabra clave</label>
+      <input id="bn-kw" type="text" placeholder="frío, soledad, lluvia..." value="lluvia" />
+
+      <label for="bn-style" style="margin-top:1rem">Tono</label>
+      <select id="bn-style">
+        <option value="contemporary">Contemporáneo realista</option>
+        <option value="historical">Histórico</option>
+        <option value="rural">Rural</option>
+        <option value="urban">Urbano nocturno</option>
+        <option value="enclosed">Cerrado / aislado</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 10 escenarios</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo construir un escenario que sume a la historia</h2>
+      <p>
+        Un escenario no es decoración: es presión. Si el protagonista podría tomar las mismas
+        decisiones en una cafetería que en una guerra, el escenario está mal elegido. Los grandes
+        ambientes literarios influyen en lo que el personaje puede o no puede hacer. La regla
+        práctica: si podés cambiar el lugar y la historia sigue siendo la misma, perdiste una
+        oportunidad.
+      </p>
+      <ol>
+        <li><strong>Limitá al personaje.</strong> Un buen escenario impone restricciones (frío, distancia, encierro, idioma desconocido).</li>
+        <li><strong>Tres detalles sensoriales por escena.</strong> Olor, sonido, textura. No todo a la vez.</li>
+        <li><strong>Una "anomalía" del lugar.</strong> Algo que solo existe ahí: la sirena de la fábrica a las 6 PM, el ruido de los trenes nocturnos.</li>
+        <li><strong>Que cambie con la historia.</strong> El mismo lugar puede sentirse distinto en el primer acto y en el último.</li>
+        <li><strong>Que tenga historia previa.</strong> Los lugares interesantes ya pasaron por algo antes de que llegara el protagonista.</li>
+      </ol>
+
+      <h2>Tipos de escenario y cómo usarlos</h2>
+      <ul>
+        <li><strong>Pueblos cerrados</strong>: ideales para drama y misterio. Todos se conocen, los secretos pesan más.</li>
+        <li><strong>Ciudades grandes</strong>: anonimato, contraste de barrios, ritmo acelerado. Perfectos para thriller urbano.</li>
+        <li><strong>Espacios aislados</strong> (cabaña, isla, hotel cerrado): presión psicológica máxima, ideal para tensión.</li>
+        <li><strong>Escenarios históricos</strong>: añaden capas de investigación pero generan estética inmediata.</li>
+        <li><strong>Lugares en transición</strong> (estación, aeropuerto, hospital): bueno para encuentros breves y monólogos internos.</li>
+      </ul>
+
+      <h2>Errores frecuentes en escenarios</h2>
+      <p>
+        El más común: escenarios genéricos que podrían ser cualquier ciudad o cualquier campo.
+        Si tu lectora termina la novela y no podría dibujar el barrio, el escenario está
+        desaprovechado. Otro error: dar demasiada información geográfica al inicio. La descripción
+        debe entrar por la acción, no por el inventario. Y un tercero: ignorar el clima como
+        elemento dramático. La lluvia, el calor, el viento — son aliados gratis para construir
+        atmósfera.
+      </p>
+
+      <h2>Después de generar</h2>
+      <ol>
+        <li>Elegí el escenario que mejor presione a tu protagonista.</li>
+        <li>Anotá tres detalles sensoriales que solo aparecen ahí.</li>
+        <li>Pensá un evento previo del lugar (un incendio antiguo, una despedida, un crimen).</li>
+        <li>Decidí cómo cambia el escenario entre el primer y el último capítulo.</li>
+        <li>Probá una escena: ¿se siente el lugar o el lugar es decoración?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué hace que un escenario funcione?</summary><p>Que influya en las decisiones del protagonista. Si la historia funciona en cualquier lado, el escenario falla.</p></details>
+      <details><summary>¿Cuánto detalle debo dar?</summary><p>Tres a cinco detalles sensoriales concretos por escena.</p></details>
+      <details><summary>¿Sirve para distintos géneros?</summary><p>Sí, la técnica es la misma: lugar + época + atmósfera + anomalía única.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+  .bn-item { padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.55; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const CONTEMP = ['Un edificio de oficinas semivacío en una zona financiera en decadencia', 'Un departamento heredado en un barrio que cambió por completo en diez años', 'Una cafetería de barrio que sigue abriendo a las 6 AM aunque ya no haya clientes', 'Un complejo de viviendas con un patio común que nadie barre'];
+  const HIST = ['Una imprenta clandestina en los años 70', 'Un hotel termal en decadencia en los años 30', 'Una estación de tren rural durante la última posguerra', 'Una hacienda de 1890 con caminos cortados por la lluvia'];
+  const RURAL = ['Un pueblo de mil habitantes rodeado de campos de soja', 'Una hostería al borde de un camino rural sin asfaltar', 'Una capilla de campo con un cementerio de quince tumbas', 'Una posada en la sierra con un solo cuarto disponible'];
+  const URBAN = ['Una calle del centro a las 3 AM, persianas bajas y luces de neón', 'Un subte vacío entre la última estación y el depósito', 'Un departamento en un edificio de 1925 con ascensor que falla', 'Una azotea con vista al puerto y al humo de las chimeneas'];
+  const ENCLOSED = ['Una cabaña de montaña sin señal, con tres días de tormenta encima', 'Un faro abandonado al que solo se llega caminando dos horas', 'Un hotel cerrado fuera de temporada con tres huéspedes', 'Una balsa en un lago en medio del invierno'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const mood = kw.value.trim();
+    const s = style.value;
+    let SET: string[];
+    if (s === 'historical') SET = HIST;
+    else if (s === 'rural') SET = RURAL;
+    else if (s === 'urban') SET = URBAN;
+    else if (s === 'enclosed') SET = ENCLOSED;
+    else SET = CONTEMP;
+    out.innerHTML = '';
+    const seen = new Set<string>();
+    let attempts = 0;
+    while (seen.size < 10 && attempts < 60) {
+      attempts++;
+      const moodSuffix = mood ? `. Atmósfera: ${mood}.` : '.';
+      const text = pick(SET) + moodSuffix;
+      if (seen.has(text)) continue;
+      seen.add(text);
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = text;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.textContent; el.textContent = '✓ copiado'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    }
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

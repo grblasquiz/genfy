@@ -1,0 +1,143 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Leet Speak Generator (1337) | Genfy';
+const description = 'Convert text to leet speak (1337). Soft or hardcore mode. Retro internet fun for gaming nicks, memes, forums and geek nostalgia.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is leet speak?', acceptedAnswer: { '@type': 'Answer', text: 'A way of writing where letters are replaced by visually similar numbers or symbols (E→3, A→4, T→7). It started in BBSes and forums in the 80s-90s.' } },
+    { '@type': 'Question', name: 'What is it used for today?', acceptedAnswer: { '@type': 'Answer', text: 'Fun, nostalgia, memes, gaming nicknames, weak passwords (not recommended) and geek culture.' } },
+    { '@type': 'Question', name: 'What\'s the difference between soft and hardcore?', acceptedAnswer: { '@type': 'Answer', text: 'Soft replaces only the most recognizable letters. Hardcore uses many substitutions including symbols, making the text nearly illegible.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Fun" title="Leet Speak Generator (1337)"
+    intro="Convert any text to 1337 speak in one click. Soft mode keeps it readable, hardcore goes full retro hacker aesthetic. Perfect for gaming nicks, memes and geek nostalgia.">
+
+    <div slot="tool">
+      <label for="lt-in">Text</label>
+      <textarea id="lt-in" rows="5" placeholder="Hello world" style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div class="lt-row" style="margin-top:0.75rem;">
+        <label class="lt-check"><input type="radio" name="lt-mode" value="soft" checked /> Soft</label>
+        <label class="lt-check"><input type="radio" name="lt-mode" value="hard" /> Hardcore</label>
+      </div>
+      <div style="margin-top:0.75rem;">
+        <button id="lt-go" class="btn btn-primary" type="button">Convert</button>
+        <button id="lt-copy" class="btn btn-ghost" type="button">Copy</button>
+      </div>
+      <label for="lt-out" style="margin-top:1rem;">Result</label>
+      <textarea id="lt-out" rows="5" readonly style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What leet speak is</h2>
+      <p>
+        Leet (also written 1337, 31337 or "elite") is a writing style born in BBSes and hacker forums
+        between the 80s and 90s. It replaces letters with numbers or symbols that look similar: A becomes
+        4, E becomes 3, I becomes 1, O becomes 0, T becomes 7. The word "leet" itself is written "1337".
+      </p>
+
+      <h2>Origin and culture</h2>
+      <p>
+        It started as a way to dodge automatic word filters in forums, communicate in code among the
+        technical "elite" of early BBSes and eventually as a marker of geek belonging. By the 2000s it was
+        part of internet folklore, especially in gaming (Counter-Strike, MMORPGs) and hacker communities.
+        Today it survives more as nostalgia and meme than as a functional tool.
+      </p>
+
+      <h2>Most common substitutions</h2>
+      <ul>
+        <li>A → 4 (or @)</li>
+        <li>B → 8</li>
+        <li>E → 3</li>
+        <li>G → 6 (or 9)</li>
+        <li>I → 1 (or !)</li>
+        <li>L → 1 (or |_)</li>
+        <li>O → 0</li>
+        <li>S → 5 ($ in hardcore)</li>
+        <li>T → 7</li>
+        <li>Z → 2</li>
+      </ul>
+
+      <h2>Soft and hardcore modes</h2>
+      <p>
+        In <strong>soft</strong> mode the text stays readable: only the most obvious substitutions, no
+        weird symbols, regular case. Ideal for nicknames, titles and memes that need to be parsed by the
+        audience. In <strong>hardcore</strong>, we apply aggressive substitutions with symbols, mixed
+        case and extreme combinations — the result is almost illegible and very retro.
+      </p>
+
+      <h2>Modern use cases</h2>
+      <ul>
+        <li><strong>Gaming nicknames</strong> — "Pr0Pl4y3r", "N0t_T0d4y_1337".</li>
+        <li><strong>Memes</strong> — instant 2000s geek-culture reference.</li>
+        <li><strong>Retro logos and branding</strong> — gaming startups, esports, cybersecurity.</li>
+        <li><strong>Passwords (carefully)</strong> — leet substitutions add minimal entropy.</li>
+        <li><strong>Birthday cards and geek messages</strong> — a touch for the nerdy friend.</li>
+      </ul>
+
+      <h2>Why NOT to use leet for passwords</h2>
+      <p>
+        It's a common myth that writing a password in leet makes it safer. It doesn't: modern attack
+        dictionaries automatically try every leet variant of every word. If your password is "p4ssw0rd",
+        it cracks just as fast as "password" — milliseconds. For real security, use long random
+        passphrases or a password manager. For fun and aesthetic, leet is still cool.
+      </p>
+
+      <h2>Leet generations</h2>
+      <p>
+        There's an unwritten hierarchy: "novice" leet uses only 3-4 substitutions; "intermediate" adds @
+        and $; "elite" leet adds composite symbols like |\\| (for N), |\\/| (for M), or stacks every form
+        inside a single word. Nobody takes this seriously today, but the hierarchy existed (and still does
+        in niche communities).
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is leet speak?</summary><p>A writing style replacing letters with visually similar numbers or symbols.</p></details>
+      <details><summary>What is it used for today?</summary><p>Fun, nostalgia, gaming nicks, memes, retro branding.</p></details>
+      <details><summary>Soft vs. hardcore?</summary><p>Soft uses few readable substitutions; hardcore uses many with symbols.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .lt-row { display: flex; gap: 1rem; }
+  .lt-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.95rem; }
+  .lt-check input { width: auto; }
+</style>
+
+<script>
+  const SOFT: Record<string,string> = { a:'4', e:'3', i:'1', l:'1', o:'0', s:'5', t:'7' };
+  const HARD: Record<string,string[]> = {
+    a: ['4','@','4'], b: ['8','8','|3'], c: ['(','<','('], d: ['|)','|)','D'], e: ['3','3','3'],
+    f: ['|=','f','|='], g: ['6','9','6'], h: ['#','|-|','H'], i: ['1','!','|'], j: ['_|','j','_|'],
+    k: ['|<','|<','K'], l: ['1','|_','L'], m: ['|\\/|','M','/\\/\\'], n: ['|\\|','N','|\\|'],
+    o: ['0','()','0'], p: ['|2','|*','P'], q: ['Q','Q','0_'], r: ['|2','R','®'],
+    s: ['5','$','5'], t: ['7','+','T'], u: ['|_|','U','|_|'], v: ['\\/','V','\\/'],
+    w: ['\\/\\/','W','VV'], x: ['><','X','%'], y: ['Y','`/','j'], z: ['2','Z','7_']
+  };
+  const inEl = document.getElementById('lt-in') as HTMLTextAreaElement;
+  const outEl = document.getElementById('lt-out') as HTMLTextAreaElement;
+  const go = document.getElementById('lt-go') as HTMLButtonElement;
+  const cp = document.getElementById('lt-copy') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function convert(text: string): string {
+    const mode = (document.querySelector('input[name="lt-mode"]:checked') as HTMLInputElement).value;
+    let out = '';
+    for (const ch of text) {
+      const lower = ch.toLowerCase();
+      if (mode === 'soft' && SOFT[lower]) out += SOFT[lower];
+      else if (mode === 'hard' && HARD[lower]) out += pick(HARD[lower]);
+      else out += ch;
+    }
+    return out;
+  }
+  go.addEventListener('click', () => { outEl.value = convert(inEl.value); });
+  cp.addEventListener('click', async () => { if (!outEl.value) return; await navigator.clipboard.writeText(outEl.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

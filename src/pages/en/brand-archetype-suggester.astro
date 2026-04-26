@@ -1,0 +1,170 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Brand Archetype Suggester | Genfy';
+const description = 'Find out which brand archetype fits your business. Answer 5 quick questions and get the recommended archetype with tone, palette and global references.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a brand archetype?', acceptedAnswer: { '@type': 'Answer', text: 'A recognizable personality pattern your brand embodies to connect with its audience, based on psychological archetypes adapted to marketing.' } },
+    { '@type': 'Question', name: 'Can I combine two archetypes?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Most strong brands have a primary archetype (70-80%) and a secondary one (20-30%) that flavors the tone. More than two dilutes the message.' } },
+    { '@type': 'Question', name: 'Do I change my archetype if I pivot?', acceptedAnswer: { '@type': 'Answer', text: 'If your audience or the problem you solve changes, revisit it. If only the offer changes, the archetype usually stays.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Brand Archetype Suggester"
+    intro="Answer 5 quick questions and get the dominant archetype for your brand, with recommended tone, palette and three global references.">
+
+    <div slot="tool" class="ar">
+      <label>1. What does your brand promise the customer?</label>
+      <select id="ar-q1">
+        <option value="hero">Courage and overcoming</option>
+        <option value="caregiver">Care and protection</option>
+        <option value="explorer">Adventure and freedom</option>
+        <option value="sage">Knowledge and truth</option>
+        <option value="creator">Originality and expression</option>
+        <option value="lover">Connection and sensuality</option>
+        <option value="jester">Fun and lightness</option>
+        <option value="innocent">Simplicity and optimism</option>
+        <option value="visionary">Transformation and the future</option>
+        <option value="outlaw">Rebellion and disruption</option>
+        <option value="ruler">Status and control</option>
+        <option value="everyman">Closeness and belonging</option>
+      </select>
+
+      <label style="margin-top:1rem">2. How do you talk to the customer?</label>
+      <select id="ar-q2">
+        <option value="formal">Formal and expert</option>
+        <option value="close">Close and honest</option>
+        <option value="bold">Bold and provocative</option>
+        <option value="warm">Warm and empathetic</option>
+      </select>
+
+      <label style="margin-top:1rem">3. What emotion do you want to spark?</label>
+      <select id="ar-q3">
+        <option value="trust">Trust</option>
+        <option value="excitement">Excitement</option>
+        <option value="joy">Joy</option>
+        <option value="aspiration">Aspiration</option>
+      </select>
+
+      <button id="ar-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Suggest archetype</button>
+
+      <div id="ar-out" class="ar-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>The 12 brand archetypes, in modern form</h2>
+      <p>
+        Carl Jung described universal personality patterns that show up across cultures. Margaret
+        Mark and Carol Pearson adapted them to marketing in <em>The Hero and the Outlaw</em>, and
+        ever since they have been the standard tool to define a brand's voice. There are 12
+        archetypes. Your brand should have one dominant.
+      </p>
+      <ul>
+        <li><strong>Hero</strong> — pushes through obstacles. e.g. Nike.</li>
+        <li><strong>Caregiver</strong> — protects and nurtures. e.g. Johnson &amp; Johnson, Volvo.</li>
+        <li><strong>Explorer</strong> — seeks freedom and new horizons. e.g. Patagonia, Jeep.</li>
+        <li><strong>Sage</strong> — shares knowledge. e.g. Google, The Economist.</li>
+        <li><strong>Creator</strong> — celebrates originality. e.g. Lego, Adobe.</li>
+        <li><strong>Lover</strong> — connects through aesthetics and pleasure. e.g. Chanel.</li>
+        <li><strong>Jester</strong> — entertains and breaks rigidity. e.g. M&amp;M's, Old Spice.</li>
+        <li><strong>Innocent</strong> — promises simplicity and goodness. e.g. Coca-Cola, Dove.</li>
+        <li><strong>Visionary / Innovator</strong> — transforms reality. e.g. Apple, Tesla.</li>
+        <li><strong>Outlaw</strong> — breaks established rules. e.g. Harley-Davidson, Diesel.</li>
+        <li><strong>Ruler</strong> — projects authority and status. e.g. Rolex, Mercedes-Benz.</li>
+        <li><strong>Everyman</strong> — celebrates the day-to-day and belonging. e.g. IKEA, Levi's.</li>
+      </ul>
+
+      <h2>How to pick yours (without going obvious)</h2>
+      <p>
+        The most common mistake is picking the archetype you want to be, not the one your customer
+        actually perceives. Run these three checks before locking in:
+      </p>
+      <ol>
+        <li>Ask 5 customers: "If our brand were a person at a party, who would they be?". The repeated words point to the real archetype.</li>
+        <li>Look at your competition. If everyone plays the Sage card (most common in B2B), shifting toward Jester or Outlaw can differentiate you without changing the product.</li>
+        <li>Print your home page and underline the adjectives. Are they consistent with one archetype, or do they hop between three?</li>
+      </ol>
+
+      <h2>How to actually apply the archetype</h2>
+      <ul>
+        <li><strong>Voice and tone:</strong> a one-page editorial guide with words to use and words to avoid.</li>
+        <li><strong>Palette and typography:</strong> the Ruler uses serifs and gold; the Jester uses round sans-serifs and bright colors.</li>
+        <li><strong>Product and tier naming:</strong> names like Starter, Growth, Scale or Enterprise work for almost any archetype and are sturdier than forced metaphors.</li>
+        <li><strong>Customer support:</strong> how you reply to an angry email tells the customer your archetype more than any campaign.</li>
+      </ul>
+
+      <h2>Combining two without dilution</h2>
+      <p>
+        Strong brands usually have a primary archetype (70-80%) and a secondary one (20-30%). Apple
+        is Visionary primary and Creator secondary. Patagonia is Explorer primary and Caregiver
+        secondary. The rule: if you have to pick more than two, you're not picking, you're
+        describing. Force the call.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a brand archetype?</summary><p>A recognizable personality pattern your brand embodies — Jungian psychology adapted to marketing.</p></details>
+      <details><summary>Can I combine two?</summary><p>Yes, one primary and one secondary. More than two dilutes the message.</p></details>
+      <details><summary>When do I change it?</summary><p>When the audience or the core problem changes. If only the offer changes, the archetype stays.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ar-out { margin-top: 1.25rem; }
+  .ar-card { padding: 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-md); }
+  .ar-card h3 { margin: 0 0 0.5rem; font-size: 1.25rem; }
+  .ar-card p { margin: 0.5rem 0; }
+  .ar-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+  .ar-pill { padding: 0.25rem 0.625rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.8125rem; }
+</style>
+
+<script>
+  const Q1 = document.getElementById('ar-q1') as HTMLSelectElement;
+  const Q2 = document.getElementById('ar-q2') as HTMLSelectElement;
+  const Q3 = document.getElementById('ar-q3') as HTMLSelectElement;
+  const out = document.getElementById('ar-out')!;
+  const gen = document.getElementById('ar-gen') as HTMLButtonElement;
+
+  type Arch = { name: string; desc: string; tone: string; refs: string; palette: string };
+  const A: Record<string, Arch> = {
+    hero:      { name: 'Hero',       desc: 'Inspires the customer to push through and do their best.', tone: 'Decisive, motivating, direct', refs: 'Nike, Adidas, Under Armour', palette: 'Black, red, white' },
+    caregiver: { name: 'Caregiver',  desc: 'Protects, nurtures and signals safety.', tone: 'Warm, attentive, dependable', refs: 'Volvo, Pampers, Dove', palette: 'Soft blue, white, beige' },
+    explorer:  { name: 'Explorer',   desc: 'Promises freedom, discovery and authenticity.', tone: 'Adventurous, honest, unfiltered', refs: 'Patagonia, Jeep, GoPro', palette: 'Forest green, earth orange, stone gray' },
+    sage:      { name: 'Sage',       desc: 'Brings knowledge, data and clarity.', tone: 'Expert, calm, didactic', refs: 'Google, The Economist, Bloomberg', palette: 'Deep blue, gray, white' },
+    creator:   { name: 'Creator',    desc: 'Celebrates originality and self-expression.', tone: 'Imaginative, playful, inspiring', refs: 'Lego, Adobe, Etsy', palette: 'Multicolor on neutral background' },
+    lover:     { name: 'Lover',      desc: 'Connects through aesthetics and pleasure.', tone: 'Sensual, refined, emotional', refs: 'Chanel, Häagen-Dazs, Victoria’s Secret', palette: 'Wine red, soft gold, black' },
+    jester:    { name: 'Jester',     desc: 'Entertains, breaks rigidity, lives in the moment.', tone: 'Quick, irreverent, fresh', refs: 'M&M’s, Old Spice, Skittles', palette: 'Yellow, orange, vibrant blue' },
+    innocent:  { name: 'Innocent',   desc: 'Promises simplicity, optimism and goodness.', tone: 'Sincere, clear, warm', refs: 'Coca-Cola, Dove, Innocent Drinks', palette: 'White, sky blue, cherry red' },
+    visionary: { name: 'Visionary',  desc: 'Transforms reality with ideas that seemed impossible.', tone: 'Bold, conceptual, futuristic', refs: 'Apple, Tesla, SpaceX', palette: 'Black, silver, off-white' },
+    outlaw:    { name: 'Outlaw',     desc: 'Breaks established rules and challenges the status quo.', tone: 'Sharp, defiant, intense', refs: 'Harley-Davidson, Diesel, Vice', palette: 'Black, blood red, charcoal' },
+    ruler:     { name: 'Ruler',      desc: 'Projects authority, status and excellence.', tone: 'Sober, premium, controlled', refs: 'Rolex, Mercedes-Benz, Louis Vuitton', palette: 'Black, gold, white' },
+    everyman:  { name: 'Everyman',   desc: 'Celebrates belonging and the everyday.', tone: 'Down-to-earth, honest, unpretentious', refs: 'IKEA, Levi’s, Target', palette: 'Mid blue, white, warm yellow' },
+  };
+
+  function generate() {
+    const a = A[Q1.value];
+    const card = document.createElement('div');
+    card.className = 'ar-card';
+    card.innerHTML = `
+      <h3>${a.name}</h3>
+      <p>${a.desc}</p>
+      <p><strong>Tone:</strong> ${a.tone}</p>
+      <p><strong>Suggested palette:</strong> ${a.palette}</p>
+      <p><strong>References:</strong> ${a.refs}</p>
+      <div class="ar-meta">
+        <span class="ar-pill">Voice: ${Q2.options[Q2.selectedIndex].text}</span>
+        <span class="ar-pill">Emotion: ${Q3.options[Q3.selectedIndex].text}</span>
+      </div>
+    `;
+    out.innerHTML = '';
+    out.appendChild(card);
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

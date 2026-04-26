@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de rapero gratis | Genfy';
+const description = 'Generá nombres artísticos para rap, trap o hip hop. Combiná tu nombre, un atributo y un sufijo para conseguir 20 alias únicos al instante.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo elijo un buen nombre de rapero?', acceptedAnswer: { '@type': 'Answer', text: 'Buscá un alias corto, fácil de gritar en una batalla, único en Spotify y YouTube, y que no se confunda con un artista ya consolidado. Si tiene un significado personal, mejor.' } },
+    { '@type': 'Question', name: '¿Tengo que registrar mi nombre artístico?', acceptedAnswer: { '@type': 'Answer', text: 'Si vas a sacar singles y construir marca, conviene reservar el handle social y registrar la marca en INPI o USPTO según donde operes. El SoundExchange y la SADAIC también lo necesitan.' } },
+    { '@type': 'Question', name: '¿Puedo cambiar el nombre más adelante?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, muchos artistas lo hacen, pero perdés conexión con tu fanbase y métricas en plataformas. Tratá de elegir uno que aguante 5 años antes de lanzar el primer single.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de nombre de rapero"
+    intro="Generá alias para rap, trap o hip hop en segundos. Combiná tu nombre, un atributo y un formato para conseguir 20 nombres listos para subir tu primer track.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Tu nombre o palabra base</label>
+      <input id="bn-kw" type="text" placeholder="Martín, Sofi, Lobo..." value="Martín" />
+
+      <label for="bn-style" style="margin-top:1rem">Formato</label>
+      <select id="bn-style">
+        <option value="lil">Prefijo (Lil, Big, Young)</option>
+        <option value="el">Con artículo "El / La" (El Lobo)</option>
+        <option value="suffix">Apellido o sufijo (-G, -Z, Cash)</option>
+        <option value="single">Apodo de una palabra (Rugido)</option>
+        <option value="combo">Atributo + sustantivo (Frío Pesado)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 alias</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir tu alias de rapero</h2>
+      <p>
+        El nombre artístico en rap es más que una etiqueta: es tu identidad pública, lo que la
+        gente grita en un show y lo que el algoritmo asocia a cada track que subís. Pegarle al
+        nombre cuesta. Cambiarlo después de tener seguidores cuesta el doble. Tomate el tiempo de
+        elegir uno que represente lo que querés contar y que tu vieja te pueda decir sin
+        avergonzarse.
+      </p>
+      <ol>
+        <li><strong>Que sea corto y gritable.</strong> Si en un show la gente no lo puede corear, perdés energía en cada presentación.</li>
+        <li><strong>Que se busque fácil.</strong> Sin caracteres raros, sin homófonos extraños. Probalo escribiéndolo en Spotify y mirá qué aparece.</li>
+        <li><strong>Único en tu escena.</strong> Si ya hay un rapero conocido con ese nombre en tu país o región, descartalo. La confusión te roba reproducciones.</li>
+        <li><strong>Conectado a algo personal.</strong> Un alias funciona mejor cuando tiene una historia: tu apodo de barrio, una palabra clave de tu vida, una característica física.</li>
+        <li><strong>Que sobreviva tu transición.</strong> ¿Te seguirá representando en cinco años, cuando ya no tengas 19? Si suena ridículo a los 30, descartalo.</li>
+      </ol>
+
+      <h2>Estilos clásicos del rap</h2>
+      <ul>
+        <li><strong>Prefijo (Lil, Big, Young, Mc)</strong>: el formato más usado del trap moderno. Comunica rápido y es flexible. Cuidado: hay miles de "Lil ___" — exigí una palabra distinta.</li>
+        <li><strong>Con artículo "El / La"</strong>: estilo más latino y narrativo (El Lobo, La Joaqui). Ideal cuando tu personaje tiene presencia.</li>
+        <li><strong>Apellido o sufijo seco</strong>: una sola sílaba pesada al final (-G, -Z, -Cash, -Loco). Funciona pegándolo a tu nombre real o a un apodo.</li>
+        <li><strong>Apodo de una palabra</strong>: el premio mayor (Rugido, Trueno, Bizarrap). Difícil de conseguir libre, pero imposible de olvidar.</li>
+        <li><strong>Atributo + sustantivo</strong>: una imagen completa en dos palabras (Frío Pesado, Cash Real).</li>
+      </ul>
+
+      <h2>Errores que arruinan un alias</h2>
+      <p>
+        Vimos a artistas perder oportunidades por nombres con leetspeak excesivo (números
+        reemplazando letras), por copiar el formato exacto de un rapero de Estados Unidos sin
+        traducirlo a su escena local, o por elegir un alias que se confunde con un meme efímero
+        que pasa de moda en seis meses. Otro error frecuente: nombres con palabrotas que después
+        no te dejan poner en cartelera de festival ni en spots de radio.
+      </p>
+
+      <h2>Después de generar: el flujo de validación</h2>
+      <p>Con tus tres favoritos:</p>
+      <ol>
+        <li>Búsqueda exacta en Spotify, Apple Music, YouTube y SoundCloud.</li>
+        <li>Verificá handles libres en Instagram, TikTok y X.</li>
+        <li>Buscá en Google entre comillas: ¿hay otro artista activo con ese nombre?</li>
+        <li>Probá gritarlo: si no podés repetirlo tres veces seguidas sin trabarte, no funciona.</li>
+        <li>Si va en serio, registrá la marca en el INPI o USPTO según donde operes.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo elijo un buen nombre de rapero?</summary><p>Corto, gritable, único en tu escena, sin caracteres raros, con conexión personal y proyectado a 5 años.</p></details>
+      <details><summary>¿Tengo que registrar mi nombre artístico?</summary><p>Sí, conviene reservar handles y registrar la marca antes de lanzar singles importantes.</p></details>
+      <details><summary>¿Puedo cambiarlo después?</summary><p>Sí, pero perdés conexión con la fanbase. Tratá de elegir uno que aguante 5 años.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const PREFIX = ['Lil', 'Big', 'Young', 'Mc', 'King', 'Don', 'El', 'La'];
+  const SUFFIX = ['G', 'Z', 'Cash', 'Loco', 'King', 'Boss', 'One', 'Pro', 'Real'];
+  const NOUN = ['Lobo', 'Trueno', 'Hielo', 'Cuervo', 'Tigre', 'Rugido', 'Calle', 'Frío', 'Sombra', 'Diente', 'Garra', 'Cobra'];
+  const ADJ = ['Frío', 'Pesado', 'Real', 'Crudo', 'Salvaje', 'Hondo', 'Negro', 'Limpio'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : pick(NOUN);
+      let name = '';
+      if (s === 'lil') name = pick(PREFIX) + ' ' + cap(w);
+      else if (s === 'el') name = 'El ' + cap(w);
+      else if (s === 'suffix') name = cap(w) + ' ' + pick(SUFFIX);
+      else if (s === 'single') name = cap(pick(NOUN));
+      else if (s === 'combo') name = pick(ADJ) + ' ' + cap(w);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

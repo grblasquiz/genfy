@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de título de cómic gratis | Genfy';
+const description = 'Generá títulos para cómics, novelas gráficas, webcomics y mangas. Estilos: acción, sci-fi, slice of life, indie y más.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo elijo un título para mi cómic?', acceptedAnswer: { '@type': 'Answer', text: 'Buscá un título que tenga ritmo, encaje en una portada cuadrada, y comunique género en menos de cinco palabras. Probalo en voz alta y en redes antes de fijarlo.' } },
+    { '@type': 'Question', name: '¿Sirve para webcomics y manga?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, los títulos generados funcionan para webcomic, manga, novela gráfica, mini-cómic y zine. Para webtoon vertical conviene un título corto que se lea bien en miniatura.' } },
+    { '@type': 'Question', name: '¿Tengo que registrar el título?', acceptedAnswer: { '@type': 'Answer', text: 'Antes de publicar comercialmente, verificá que no esté tomado en bases de datos de cómic (Comichron, ComicVine) y registrá la obra completa en la SADAIC, INPI o USPTO según el caso.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Creatividad" title="Generador de título de cómic"
+    intro="Combiná género, palabra clave y estilo para conseguir títulos atractivos para portada y plataformas. Funciona para webcomic, manga, novela gráfica e indie.">
+
+    <div slot="tool" class="ct">
+      <label for="ct-genre">Género</label>
+      <select id="ct-genre">
+        <option value="action">Acción / aventura</option>
+        <option value="scifi">Ciencia ficción</option>
+        <option value="slice">Slice of life</option>
+        <option value="indie">Indie / experimental</option>
+      </select>
+
+      <label for="ct-kw" style="margin-top:1rem">Palabra clave</label>
+      <input id="ct-kw" type="text" value="ciudad" placeholder="lluvia, fierro, café..." />
+
+      <button id="ct-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 títulos</button>
+      <div id="ct-out" class="ct-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué el título de un cómic es marketing puro</h2>
+      <p>En una librería el lector tiene tres segundos para decidir si saca el ejemplar del estante. En una plataforma de webcomic el thumbnail mide 200 píxeles. El título es la mitad del trabajo de portada, junto con la imagen. Si no se lee a un metro de distancia y no insinúa género, perdiste al lector incluso antes de que mire la página 1.</p>
+      <h2>Estructuras que funcionan en portada</h2>
+      <ol>
+        <li><strong>Una palabra fuerte:</strong> "Saga", "Berserk", "Frontera". Memorables, fáciles de pintar grandes.</li>
+        <li><strong>Sustantivo + número:</strong> "Distrito 9", "Año 5". Sugiere serialidad o universo extenso.</li>
+        <li><strong>Frase corta con verbo:</strong> "Volver a casa", "Cazar la noche".</li>
+        <li><strong>Nombre propio + algo:</strong> "Inés y los lobos", "El último de Marcos".</li>
+        <li><strong>Estilo manga:</strong> palabra japonesa o concepto + número de volumen ("Hashira", "Akari").</li>
+      </ol>
+      <h2>Errores típicos al titular un cómic</h2>
+      <ul>
+        <li><strong>Inglés mal calculado:</strong> traducciones literales tipo "The Last One" cuando hay treinta cómics así. Buscá tu candidato en Comichron antes de fijar.</li>
+        <li><strong>Demasiado largo:</strong> en portada de 17×26 cm tres palabras grandes pesan más que siete chicas.</li>
+        <li><strong>Cliché de género:</strong> "Crónicas de [algo]" está sobreusado. "Vol. 1: el despertar" también.</li>
+        <li><strong>Confuso con personaje:</strong> si tu protagonista se llama Bruno y el cómic se llama "Bruno", reservás todas las búsquedas para tu obra. Perfecto. Pero si Bruno es nombre demasiado común, considerá un apellido o un epíteto.</li>
+      </ul>
+      <h2>Ajuste por plataforma</h2>
+      <p>Para Webtoon o Tapas, los títulos cortos (1-3 palabras) ganan en miniatura vertical. Para Kindle Comics o Amazon, los títulos descriptivos rinden mejor en búsqueda. Para librería tradicional, conviene un título distintivo y una bajada en portada que aclare género ("Una novela gráfica de ciencia ficción"). Para autopublicación física, el título debe sobrevivir a una impresión a un solo color (sí: ¿se entiende en blanco y negro a 30 cm?).</p>
+      <h2>Validación antes de mandar a imprenta</h2>
+      <p>Antes de fijar el título, hacé tres pruebas. Una: buscalo en Google y en plataformas de cómic. Dos: pedile a cinco lectores potenciales que digan qué tipo de cómic creen que es. Tres: imprimilo a tamaño portada y miralo a tres metros de distancia. Si pasa los tres filtros, mandalo a imprenta.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo elijo un título?</summary><p>Ritmo, encaje en portada y género claro en menos de 5 palabras.</p></details>
+      <details><summary>¿Sirve para webcomic y manga?</summary><p>Sí, funciona para webcomic, manga, novela gráfica e indie.</p></details>
+      <details><summary>¿Tengo que registrarlo?</summary><p>Verificá en bases de cómic y registrá la obra completa en la entidad correspondiente.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .ct-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .ct-item { padding: 0.75rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
+  .ct-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ACTION = ['Frontera', 'Yunque', 'Acero', 'Fauces', 'Corte', 'Hierro', 'Cazador', 'Batalla'];
+  const SCIFI = ['Distrito', 'Sector', 'Año', 'Núcleo', 'Órbita', 'Borde', 'Faro', 'Cápsula'];
+  const SLICE = ['Café', 'Domingo', 'Patio', 'Vereda', 'Cuaderno', 'Vecino', 'Balcón', 'Rincón'];
+  const INDIE = ['Pez', 'Hueco', 'Tinta', 'Memoria', 'Vidrio', 'Polilla', 'Antena', 'Nube'];
+  const VERBS = ['Volver', 'Cruzar', 'Cazar', 'Romper', 'Esperar', 'Buscar', 'Soltar', 'Encender'];
+  const KW_TAIL = ['a casa', 'la noche', 'el silencio', 'la frontera', 'el último tren', 'al amanecer'];
+
+  const genre = document.getElementById('ct-genre') as HTMLSelectElement;
+  const kw = document.getElementById('ct-kw') as HTMLInputElement;
+  const gen = document.getElementById('ct-gen') as HTMLButtonElement;
+  const out = document.getElementById('ct-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function rnd(n: number) { const i = new Uint32Array(1); crypto.getRandomValues(i); return i[0] % n; }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function generate() {
+    const g = genre.value;
+    const k = (kw.value || '').trim().toLowerCase();
+    const set = new Set<string>(); let tries = 0;
+    let pool = ACTION;
+    if (g === 'scifi') pool = SCIFI;
+    else if (g === 'slice') pool = SLICE;
+    else if (g === 'indie') pool = INDIE;
+
+    while (set.size < 20 && tries < 200) {
+      tries++;
+      const variants = [
+        pick(pool),
+        `${pick(pool)} ${1 + rnd(9)}`,
+        `${pick(VERBS)} ${pick(KW_TAIL)}`,
+        `${cap(k || pick(pool))} y ${pick(pool).toLowerCase()}`,
+        `El último ${pick(pool).toLowerCase()}`,
+      ];
+      set.add(pick(variants));
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'ct-item'; el.textContent = n; el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

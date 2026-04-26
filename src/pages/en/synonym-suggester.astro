@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Synonym Suggester | Genfy';
+const description = 'Find English synonyms instantly. Enter a word and get ready-to-paste alternatives to improve your writing, copy and emails.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many synonyms per word?', acceptedAnswer: { '@type': 'Answer', text: 'Three to eight, depending on the word. Most-used first, regional slang excluded.' } },
+    { '@type': 'Question', name: 'Does it work offline?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. The synonym base lives in your browser; no external servers.' } },
+    { '@type': 'Question', name: 'Does it handle context?', acceptedAnswer: { '@type': 'Answer', text: 'Not always: a word can have several senses. Reread your sentence with the synonym in place before using it.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Languages" title="Synonym Suggester"
+    intro="Enter a word and get ready-to-use synonyms. Built for writing, copy, academic essays and adding variety to any text.">
+
+    <div slot="tool">
+      <label for="syn-q">Word</label>
+      <input id="syn-q" type="text" placeholder="e.g. fast, beautiful, talk..." />
+      <div style="margin-top:0.75rem;">
+        <button id="syn-go" class="btn btn-primary" type="button">Find synonyms</button>
+        <button id="syn-copy" class="btn btn-ghost" type="button">Copy</button>
+      </div>
+      <textarea id="syn-out" rows="8" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Why synonyms matter</h2>
+      <p>
+        Repeating the same word five times in a paragraph distracts the reader and weakens prose. Synonyms
+        are one of the simplest tools for raising the quality of any text. We're not just talking "good
+        writing": in SEO, copywriting, professional emails, even chat — varied vocabulary signals precision
+        and craft.
+      </p>
+
+      <h2>The mistake of automatic synonyms</h2>
+      <p>
+        Many people grab any synonym from a list and drop it into the sentence. Wrong: two words can be
+        synonyms in one sense and unrelated in another. "Bank" can be a riverbank or a financial
+        institution. "Run" can mean operate or sprint. Before swapping, read the sentence with the
+        candidate inside and ask whether it preserves the original nuance.
+      </p>
+
+      <h2>When synonyms help</h2>
+      <ul>
+        <li><strong>Forced repetition</strong> — when the same word appears three or more times in a few lines.</li>
+        <li><strong>Tone</strong> — some synonyms are more formal or more casual; use them to fine-tune register.</li>
+        <li><strong>Precision</strong> — a synonym may be sharper than the first word that came to mind.</li>
+        <li><strong>SEO</strong> — varying related terms helps cover similar search intents without cannibalizing.</li>
+        <li><strong>Study</strong> — looking up synonyms expands receptive and productive vocabulary.</li>
+      </ul>
+
+      <h2>When NOT to use synonyms</h2>
+      <ul>
+        <li><strong>Technical terms</strong> — if "polymer" is the right word, don't switch to "material".</li>
+        <li><strong>Brand or product names</strong> — names don't get synonymized.</li>
+        <li><strong>Deliberate repetition</strong> — in rhetoric, repeating is emphasis.</li>
+        <li><strong>To pad a text</strong> — adding "fancy" words doesn't improve it; saying the right thing does.</li>
+      </ul>
+
+      <h2>Perfect vs. approximate synonyms</h2>
+      <p>
+        In practice, perfect synonyms barely exist. Most are <em>approximate</em>: they share the core
+        meaning but differ in nuance, connotation, frequency or register. "House" and "home" are close but
+        not interchangeable: "I sold my house" isn't the same as "I sold my home". This kind of detail is
+        what separates a good edit from a blind replace.
+      </p>
+
+      <h2>An editing routine</h2>
+      <p>
+        Once your draft is done, do three passes. First: hunt down repeated words and replace. Second: mark
+        generic verbs ("do", "have", "be", "say") and find sharper specifics. Third: read aloud. Any word
+        you stumble on is a candidate for a smoother synonym. Fifteen minutes lifts any text by one or two
+        perceived-quality levels.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many synonyms per word?</summary><p>Three to eight, depending on the word. Most common first.</p></details>
+      <details><summary>Does it work offline?</summary><p>Yes, the dictionary lives in your browser.</p></details>
+      <details><summary>Does it handle context?</summary><p>Not always — reread your sentence with the synonym before using it.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const DICT: Record<string,string[]> = {
+    'fast': ['quick','swift','rapid','speedy','brisk'],
+    'slow': ['gradual','sluggish','leisurely','unhurried'],
+    'beautiful': ['lovely','gorgeous','stunning','attractive','pretty'],
+    'ugly': ['hideous','unattractive','plain','homely'],
+    'big': ['large','huge','vast','massive','sizable'],
+    'small': ['tiny','little','modest','compact','slight'],
+    'good': ['fine','solid','quality','decent','sound'],
+    'bad': ['poor','inferior','subpar','harmful','unfavorable'],
+    'happy': ['glad','cheerful','content','pleased','joyful'],
+    'sad': ['unhappy','sorrowful','downcast','gloomy','blue'],
+    'talk': ['speak','converse','chat','discuss','address'],
+    'walk': ['stroll','stride','amble','tread','march'],
+    'look': ['watch','observe','glance','gaze','view'],
+    'think': ['reflect','consider','ponder','reason','contemplate'],
+    'difficult': ['hard','tough','challenging','demanding','tricky'],
+    'easy': ['simple','straightforward','effortless','painless'],
+    'friend': ['companion','buddy','ally','mate','colleague'],
+    'house': ['home','residence','dwelling','abode'],
+    'work': ['job','labor','task','effort','employment'],
+    'idea': ['concept','notion','thought','plan','proposal'],
+    'problem': ['issue','difficulty','trouble','obstacle','setback'],
+    'important': ['key','crucial','essential','significant','vital'],
+    'eat': ['consume','dine','devour','ingest'],
+    'say': ['state','declare','utter','express','announce'],
+    'help': ['assist','aid','support','back','serve'],
+    'get': ['obtain','acquire','receive','gain','procure'],
+    'start': ['begin','launch','commence','initiate','open'],
+    'end': ['finish','conclude','close','complete','wrap up'],
+    'change': ['alter','modify','adjust','transform','shift'],
+    'make': ['create','build','craft','produce','form']
+  };
+
+  const q = document.getElementById('syn-q') as HTMLInputElement;
+  const out = document.getElementById('syn-out') as HTMLTextAreaElement;
+  const go = document.getElementById('syn-go') as HTMLButtonElement;
+  const cp = document.getElementById('syn-copy') as HTMLButtonElement;
+
+  function search() {
+    const w = q.value.trim().toLowerCase();
+    if (!w) { out.value = ''; return; }
+    const list = DICT[w];
+    if (!list) { out.value = `No matches for "${w}". Try a base word (e.g. fast, say, idea).`; return; }
+    out.value = `${w} → ${list.join(', ')}`;
+  }
+  go.addEventListener('click', search);
+  q.addEventListener('keydown', (e) => { if (e.key === 'Enter') search(); });
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

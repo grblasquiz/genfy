@@ -1,0 +1,160 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Quora Answer Opener Generator | Genfy';
+const description = 'Generate Quora answer openers that maximize upvotes. The first 2 lines are the only ones most people read before deciding.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why does the opener matter so much on Quora?', acceptedAnswer: { '@type': 'Answer', text: 'Quora truncates answers in the feed after 2-3 lines. People decide upvote or scroll based on those lines, before reading the full answer.' } },
+    { '@type': 'Question', name: 'Does Quora reward long or short answers?', acceptedAnswer: { '@type': 'Answer', text: 'It rewards engagement: many upvotes and reading time. A 200-word answer with a strong hook can outrank a 2000-word badly written one.' } },
+    { '@type': 'Question', name: 'Should I open with a controversial hook?', acceptedAnswer: { '@type': 'Answer', text: 'It works if you can back it. A counterintuitive claim with reasoning earns upvotes. Without backing, it lowers credibility and triggers reports.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Quora Answer Opener Generator"
+    intro="Drop in the question and your stance. Genfy returns 4 openers that hook in the first 2 lines, before the 'read more'.">
+
+    <div slot="tool" class="qa">
+      <label for="qa-question">Quora question</label>
+      <input id="qa-question" type="text" placeholder="Is learning programming worth it in 2026?..." value="Is learning programming worth it in 2026?" />
+
+      <label for="qa-position" style="margin-top:1rem">Your position or short answer</label>
+      <input id="qa-position" type="text" placeholder="Yes, but not for the obvious reasons" value="Yes, but not for the obvious reasons" />
+
+      <label for="qa-credential" style="margin-top:1rem">Relevant credential (optional)</label>
+      <input id="qa-credential" type="text" placeholder="12 years as a programmer..." value="12 years as a programmer" />
+
+      <label for="qa-twist" style="margin-top:1rem">Angle or twist</label>
+      <input id="qa-twist" type="text" placeholder="The real value isn't writing code anymore..." value="The real value is no longer writing code" />
+
+      <button id="qa-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 4 openers</button>
+
+      <div id="qa-out" class="qa-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why the opener is 80% of Quora success</h2>
+      <p>
+        Quora shows answers in a feed where each previews with the first 2-3 lines. If those lines don't hook, the user scrolls. If they do, they click "read more" and only then can they upvote. A brilliant answer with a mediocre opener performs worse than a decent answer with a strong opener.
+      </p>
+      <p>
+        The other factor: Quora ranks answers within a question by upvotes, age, and author authority. The first hours are crucial: if your opener doesn't generate early engagement, another answer overtakes you and yours ends up in position 8.
+      </p>
+
+      <h2>The 4 opener structures that perform</h2>
+      <ol>
+        <li><strong>"Direct answer + twist" opener:</strong> "Yes, but not for the obvious reasons." — the reader wants to know which.</li>
+        <li><strong>"Specific credential" opener:</strong> "I programmed professionally for 12 years. Here's what changed." — authority before opinion.</li>
+        <li><strong>"Counterintuitive claim" opener:</strong> "Learning to program in 2026 is more urgent than in 2015." — the reader needs to see the argument.</li>
+        <li><strong>"Personal story" opener:</strong> "Five years ago I quit my banking job to code. Here's whether it was worth it." — narrative hooks.</li>
+      </ol>
+
+      <h2>How upvotes work on Quora</h2>
+      <p>
+        A Quora upvote weighs more than a Reddit one: each upvote carries a credibility score (based on the voter's activity, their authority in the topic). One upvote from a top user in the topic counts more than ten from new accounts. That's why quality answers scale in visibility even with few raw votes.
+      </p>
+
+      <h2>The "read more" as a brutal filter</h2>
+      <p>
+        Quora shows roughly the first 240-300 characters before "read more". That's 3-4 sentences in English. In those sentences you must: (1) show you answer the question directly, (2) give credibility or hook, (3) promise the value of what's coming.
+      </p>
+      <p>
+        Openers that fail: rhetorical detours ("That's an excellent question..."), generic confirmations ("There are many ways to look at this..."), or context paragraphs before the answer.
+      </p>
+
+      <h2>Credentials: when yes and how</h2>
+      <p>
+        Quora has a "Credentials" field that appears next to your name. Use it: include your relevant role/experience. But within the answer, mentioning specific credentials reinforces authority. The rule: specific, verifiable, minimal. "I built systems for X company for 12 years" outperforms "I'm a programming expert".
+      </p>
+
+      <h2>The format Quora rewards in the body</h2>
+      <p>
+        After the hook, Quora favors structured answers: short paragraphs, bullet points, concrete examples, and a closing that invites comment or follow. Wall-of-text answers underperform versus those with visual breathing room.
+      </p>
+      <ul>
+        <li><strong>Short paragraphs:</strong> 2-3 sentences max.</li>
+        <li><strong>Bullets or numbered lists:</strong> scannable.</li>
+        <li><strong>Concrete examples:</strong> "On the X project I did in 2022...".</li>
+        <li><strong>Original images or screenshots:</strong> Quora boosts them (including in feed preview).</li>
+        <li><strong>Closing question:</strong> "Which would you pick?" generates comments.</li>
+      </ul>
+
+      <h2>How Quora rewards consistency</h2>
+      <p>
+        Answering regularly in the same area of expertise gets Quora to flag you as "Top Writer" in that topic. Your answers appear first on related questions. But it requires consistency: 3-5 answers per week for at least 2-3 months to start seeing the effect.
+      </p>
+
+      <h2>Promotion on Quora: the fine line</h2>
+      <p>
+        Quora allows linking to your site or service if the answer is genuinely useful and the link is contextual. But blatant spam gets reported and removed. Rules:
+      </p>
+      <ul>
+        <li>90% of the answer must add value without the link.</li>
+        <li>The link goes at the end, not at the start.</li>
+        <li>Max 1 link per answer.</li>
+        <li>The link must directly relate to the question.</li>
+      </ul>
+
+      <h2>Common mistakes that kill upvotes</h2>
+      <ul>
+        <li><strong>Generic opener:</strong> "That's an excellent question..." — loses the first upvote.</li>
+        <li><strong>Too much self-promotion:</strong> mentioning your product in every paragraph gets reported.</li>
+        <li><strong>Lists without context:</strong> "5 reasons..." without an opening paragraph doesn't hook.</li>
+        <li><strong>Answers that don't answer:</strong> rambling about the topic without addressing the specific question.</li>
+        <li><strong>Academic tone:</strong> Quora favors conversational, not formal.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How much shows before "read more"?</summary><p>Approx 240-300 characters, equivalent to 3-4 sentences in English.</p></details>
+      <details><summary>Should I mention credentials?</summary><p>Yes, specific and verifiable. "12 years in X" beats "I'm an expert".</p></details>
+      <details><summary>Can I link to my site?</summary><p>Yes, at the end, with direct relation to the question, max 1 link.</p></details>
+      <details><summary>How long until it ranks?</summary><p>The first 24-48 hours are key. If it doesn't get early engagement, it stays buried.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .qa-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .qa-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; }
+  .qa-card:hover { border-color: var(--accent); }
+  .qa-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const question = document.getElementById('qa-question') as HTMLInputElement;
+  const position = document.getElementById('qa-position') as HTMLInputElement;
+  const credential = document.getElementById('qa-credential') as HTMLInputElement;
+  const twist = document.getElementById('qa-twist') as HTMLInputElement;
+  const gen = document.getElementById('qa-gen') as HTMLButtonElement;
+  const out = document.getElementById('qa-out')!;
+
+  function generate() {
+    const Q = question.value.trim() || 'the question';
+    const P = position.value.trim() || 'It depends';
+    const Cr = credential.value.trim();
+    const Tw = twist.value.trim() || 'Here\'s the key detail';
+
+    const v1 = `${P}. And the "why" isn't what you'd expect.\n\n${Tw}.`;
+    const v2 = `${Cr ? Cr + '. ' : ''}Speaking from experience: ${P.toLowerCase()}.\n\n${Tw}.`;
+    const v3 = `Short answer: ${P.toLowerCase()}.\nLong answer: ${Tw.toLowerCase()}.`;
+    const v4 = `${Tw}. That's why ${P.toLowerCase()}.\n\nLet me explain the reasoning below.`;
+
+    out.innerHTML = '';
+    [v1, v2, v3, v4].forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'qa-card';
+      el.title = 'Click to copy';
+      const len = b.length;
+      el.innerHTML = b.replace(/\n/g, '<br>') + `<div class="qa-meta">v${i+1} · ${len} characters</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

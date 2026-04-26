@@ -1,0 +1,181 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de test | Genfy';
+const description = 'Generá nombres de test descriptivos siguiendo Given/When/Then o el patrón "should...". Compatible con Jest, Vitest, Mocha, RSpec, JUnit.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo nombrar un test?', acceptedAnswer: { '@type': 'Answer', text: 'Describí qué se está probando y cuál es el resultado esperado. "should return 404 when user is missing" es más útil que "test1".' } },
+    { '@type': 'Question', name: '¿Given/When/Then?', acceptedAnswer: { '@type': 'Answer', text: 'Es un patrón de BDD: Given (estado inicial), When (acción), Then (resultado). Útil para tests de integración y e2e.' } },
+    { '@type': 'Question', name: '¿Tests en español o inglés?', acceptedAnswer: { '@type': 'Answer', text: 'Inglés es lo estándar y compatible con cualquier integración. Si tu equipo es 100% hispano y no contribuye a OS, español también es válido.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="es"
+    tag="Tech / Dev"
+    title="Generador de nombre de test"
+    intro="Generá nombres de test descriptivos en Given/When/Then o estilo 'should...'. Compatibles con cualquier framework."
+  >
+    <div slot="tool" class="tn-tool">
+      <div class="tn-grid">
+        <div>
+          <label for="tn-style">Estilo</label>
+          <select id="tn-style">
+            <option value="should">should... (Mocha/Jest)</option>
+            <option value="gwt">Given/When/Then</option>
+            <option value="snake">snake_case (Python)</option>
+            <option value="java">methodName_state_expected (JUnit)</option>
+          </select>
+        </div>
+        <div>
+          <label for="tn-subject">Sujeto / unidad</label>
+          <input id="tn-subject" type="text" value="login service" />
+        </div>
+        <div>
+          <label for="tn-action">Acción / situación</label>
+          <input id="tn-action" type="text" value="invalid password" />
+        </div>
+        <div>
+          <label for="tn-expected">Resultado esperado</label>
+          <input id="tn-expected" type="text" value="returns 401" />
+        </div>
+      </div>
+      <div class="tn-actions">
+        <button id="tn-gen" class="btn btn-primary" type="button">Generar</button>
+        <button id="tn-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copiar</span></button>
+      </div>
+      <textarea id="tn-out" class="mono" rows="6" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>El nombre del test es la documentación</h2>
+      <p>
+        Cuando un test falla en CI tres meses después, el nombre es lo único que ves en el reporte
+        antes de abrir el código. "should reject login with invalid password" comunica intención,
+        contexto y resultado esperado en una línea. "test1" o "testLogin" no comunican nada.
+      </p>
+
+      <h2>El patrón "should..."</h2>
+      <p>
+        Usado en Mocha, Jest, Vitest, RSpec. Estructura: <code>describe("&lt;Subject&gt;", () =&gt; &lcub;
+        it("should &lt;expected behavior&gt; when &lt;condition&gt;", ...) &rcub;)</code>. El verbo en
+        tercera persona enfatiza que estás describiendo el comportamiento del sistema, no la
+        acción del programador.
+      </p>
+
+      <h2>Given/When/Then (BDD)</h2>
+      <p>
+        Patrón que viene de Cucumber y Gherkin. <strong>Given</strong> describe el estado inicial,
+        <strong>When</strong> la acción ejecutada, <strong>Then</strong> el resultado esperado.
+        Funciona muy bien para tests de integración y e2e: "Given an empty cart, when the user
+        adds a product, then the cart shows 1 item".
+      </p>
+
+      <h2>El patrón JUnit</h2>
+      <p>
+        En Java, la convención clásica es <code>methodName_stateUnderTest_expectedBehavior</code>.
+        Ejemplo: <code>login_invalidPassword_returns401</code>. Permite ordenar tests
+        alfabéticamente y agruparlos visualmente. En Kotlin se usa back-tick para nombres con
+        espacios: <code>fun \`returns 401 when password is invalid\`()</code>.
+      </p>
+
+      <h2>Snake case en Python</h2>
+      <p>
+        Pytest fomenta nombres descriptivos en snake_case:
+        <code>def test_login_returns_401_when_password_is_invalid():</code>. Largo pero claro.
+        Combina bien con <code>parametrize</code> para múltiples casos.
+      </p>
+
+      <h2>Qué evitar</h2>
+      <ul>
+        <li><strong>Nombres genéricos:</strong> "testLogin", "test1", "happyPath".</li>
+        <li><strong>Nombres con detalles de implementación:</strong> "shouldCallSpyWithObject" (rompe al refactorizar).</li>
+        <li><strong>Negaciones dobles:</strong> "should not fail when not invalid".</li>
+        <li><strong>Nombres en TODO MAYÚSCULAS o camelCaseSinEspacios largos.</strong></li>
+      </ul>
+
+      <h2>Estructura: AAA</h2>
+      <p>
+        Arrange-Act-Assert es el patrón clásico para el cuerpo del test. <strong>Arrange</strong>:
+        prepará el estado y los mocks. <strong>Act</strong>: ejecutá la acción que se prueba.
+        <strong>Assert</strong>: verificá el resultado. Un test debería tener un solo Act; si
+        ves dos, probablemente son dos tests.
+      </p>
+
+      <h2>Tests parametrizados</h2>
+      <p>
+        Si querés cubrir múltiples inputs, no copies el test cinco veces. Usá
+        <code>test.each</code> en Jest, <code>parametrize</code> en pytest, <code>theory</code>
+        en xUnit. Los nombres se generan automáticamente desde los parámetros, lo que mantiene
+        legibilidad sin duplicar código.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo nombrar?</summary><p>Describí comportamiento + condición. <code>should return 404 when user is missing</code>.</p></details>
+      <details><summary>¿GWT?</summary><p>Given/When/Then: estado, acción, resultado. Útil en BDD.</p></details>
+      <details><summary>¿Idioma?</summary><p>Inglés es estándar; español también vale para equipos hispanos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .tn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .tn-grid { grid-template-columns: 1fr; } }
+  .tn-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const style = document.getElementById('tn-style') as HTMLSelectElement;
+  const subject = document.getElementById('tn-subject') as HTMLInputElement;
+  const action = document.getElementById('tn-action') as HTMLInputElement;
+  const expected = document.getElementById('tn-expected') as HTMLInputElement;
+  const out = document.getElementById('tn-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('tn-gen') as HTMLButtonElement;
+  const copy = document.getElementById('tn-copy') as HTMLButtonElement;
+
+  function snake(s: string) { return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, ''); }
+  function camel(s: string) { const w = s.toLowerCase().trim().split(/[^a-z0-9]+/).filter(Boolean); return w.map((x, i) => i === 0 ? x : x[0].toUpperCase() + x.slice(1)).join(''); }
+
+  function build() {
+    const su = subject.value.trim() || 'subject';
+    const ac = action.value.trim() || 'condition';
+    const ex = expected.value.trim() || 'expected behavior';
+    const variants: string[] = [];
+    if (style.value === 'should') {
+      variants.push(`describe("${su}", () => { it("should ${ex} when ${ac}", () => { /* ... */ }); });`);
+      variants.push(`it("should ${ex} when ${ac}", ...)`);
+    } else if (style.value === 'gwt') {
+      variants.push(`describe("${su}", () => {`);
+      variants.push(`  it("Given ${ac}, when an action is taken, then ${ex}", ...)`);
+      variants.push(`});`);
+    } else if (style.value === 'snake') {
+      variants.push(`def test_${snake(su)}_${snake(ex)}_when_${snake(ac)}():`);
+      variants.push(`def test_${snake(su)}_${snake(ac)}_${snake(ex)}():`);
+    } else {
+      variants.push(`@Test public void ${camel(su)}_${camel(ac)}_${camel(ex)}() { /* ... */ }`);
+      variants.push(`fun \`${ex} when ${ac}\`() { /* ... */ }`);
+    }
+    out.value = variants.join('\n');
+  }
+  gen.addEventListener('click', build);
+  [style, subject, action, expected].forEach(el => el.addEventListener('input', build));
+  style.addEventListener('change', build);
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copiado';
+    setTimeout(() => { icon.textContent = 'Copiar'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

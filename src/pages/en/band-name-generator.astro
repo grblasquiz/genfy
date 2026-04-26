@@ -1,0 +1,141 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Band Name Generator | Genfy';
+const description = 'Generate band name ideas in seconds. Pick a style, mix in your keywords and get 20 unique names you can actually use on Spotify and Instagram.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good band name?', acceptedAnswer: { '@type': 'Answer', text: 'It is short (one to three words), easy to say once and remember, free on Spotify, Instagram and the .com domain, and hints at the band’s sound or mood.' } },
+    { '@type': 'Question', name: 'Do I need to trademark my band name?', acceptedAnswer: { '@type': 'Answer', text: 'Before pressing merch or uploading to streaming, check no other active band shares the name on Spotify and Apple Music. If you are touring or selling merch, file a trademark in your main market.' } },
+    { '@type': 'Question', name: 'How many names should I generate?', acceptedAnswer: { '@type': 'Answer', text: 'Generate 30 to 50, narrow to your five favorites, sleep on it 48 hours, then read them out loud the next day.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Band Name Generator"
+    intro="Combine a vibe, a noun and a style to get 20 band name ideas instantly. Built for indie, rock, pop, electronic and folk projects.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Keywords (comma separated)</label>
+      <input id="bn-kw" type="text" placeholder="night, river, echo..." value="night, echo" />
+
+      <label for="bn-style" style="margin-top:1rem">Style</label>
+      <select id="bn-style">
+        <option value="the">"The ___" (The Strokes, The Cured)</option>
+        <option value="adj">Adjective + noun (Electric Fog)</option>
+        <option value="single">Single word (Sail, Hollow)</option>
+        <option value="and">Name & the ___ (Marta and the Mirrors)</option>
+        <option value="modern">Invented modern (Vexora, Plumira)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to pick a great band name</h2>
+      <p>
+        Your band name is the first thing someone remembers from a flyer on a pole or a Spotify
+        algorithm push. A great name doesn't guarantee the project takes off, but a bad name can
+        bury an excellent record before anyone hears it. The most useful rule we keep coming back
+        to: if your name has more than three syllables, people will remember it half as well.
+      </p>
+      <ol>
+        <li><strong>Pass the loud-bar test.</strong> Say it across a noisy table. If nobody asks you to repeat it, you're golden.</li>
+        <li><strong>Search Spotify and Apple Music.</strong> If another active band has the same or a very similar name, the streaming algorithms will mix you up and you'll lose plays.</li>
+        <li><strong>Check Instagram, TikTok and the domain.</strong> Doesn't have to be a .com, but something clean (.band, .fm). Grab the handle the same day.</li>
+        <li><strong>Make sure it survives a serious record and a garage demo.</strong> "Fried Chicken" works for a parody act, not for a moody post-rock concept album. Will the name still represent you in five years?</li>
+        <li><strong>Picture it on a poster.</strong> Type it bold next to three bands in your genre. Does it fit or stick out badly?</li>
+      </ol>
+
+      <h2>Classic band-name styles</h2>
+      <ul>
+        <li><strong>"The ___"</strong>: the indie/rock default. Works with plural nouns. There are thousands, so demand a distinct noun.</li>
+        <li><strong>Adjective + noun</strong>: the most versatile formula (Electric Fog, Young Blood). Two images, instant atmosphere.</li>
+        <li><strong>Single word</strong>: hard but premium. Works when the word is rare or carries multiple meanings (Sail, Hollow, Claw).</li>
+        <li><strong>Name & the ___</strong>: signals a solo-led project with a stable backing group.</li>
+        <li><strong>Invented</strong>: non-words that sound musical (Vexora, Plumira). Easier to trademark, but you need press repetition for people to learn it.</li>
+      </ul>
+
+      <h2>Mistakes that kill a good name</h2>
+      <p>
+        We've seen real launches stumble because of small things nobody checked: an obscene
+        acronym when read fast, a clash with a more famous foreign band that becomes a problem
+        once you tour internationally, or a word that's pronounced differently in English and
+        Spanish. Another classic: special characters or numbers that confuse search and streaming
+        platforms. If your name needs explaining every interview, it's wrong.
+      </p>
+
+      <h2>After generating: the validation flow</h2>
+      <p>Once you have your top five, validate each one:</p>
+      <ol>
+        <li>Search Spotify, Apple Music, YouTube Music and Bandcamp.</li>
+        <li>Google in exact quotes. Any active band in the last 10 years?</li>
+        <li>Check Instagram, TikTok and X handles.</li>
+        <li>Check the domain (.com, .band, .fm).</li>
+        <li>Send the name as a voice note to five friends. Do they get it on the first listen?</li>
+        <li>If you're going pro, search the USPTO trademark database.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes a good band name?</summary><p>Short, easy to say once, free on Spotify and Instagram, hints at your sound.</p></details>
+      <details><summary>Do I need to trademark before releasing?</summary><p>Before merch or pressing, check Spotify and Apple Music for active bands with the same name. If you're touring or selling merch, file with the USPTO.</p></details>
+      <details><summary>How many names should I generate?</summary><p>30 to 50, pick five, wait 48 hours, then read out loud.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ADJ = ['Electric', 'Wild', 'Eternal', 'Slow', 'Cold', 'Broken', 'Bright', 'Hidden', 'Distant', 'Hollow', 'Raw', 'Soft', 'Deep', 'Blind', 'Warm', 'Black'];
+  const NOUN = ['Echo', 'Fog', 'River', 'Lighthouse', 'Bone', 'Clock', 'Crow', 'Mirror', 'Knife', 'Sail', 'Pack', 'Thunder', 'Ash', 'Coal', 'Summer', 'Winter'];
+  const PERSON = ['Marta', 'Thomas', 'Lucy', 'Paul', 'Camille', 'Nico', 'Sophie', 'Bruno', 'Clara', 'Dante'];
+  const MOD = ['Vexora', 'Plumira', 'Quintar', 'Brisol', 'Telmar', 'Vorino', 'Klaver', 'Drinto', 'Felmar', 'Solven', 'Tirvan', 'Norven'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : pick(NOUN);
+      let name = '';
+      if (s === 'the') name = 'The ' + cap(w) + 's';
+      else if (s === 'adj') name = pick(ADJ) + ' ' + cap(w);
+      else if (s === 'single') name = cap(w);
+      else if (s === 'and') name = pick(PERSON) + ' & the ' + cap(w) + 's';
+      else if (s === 'modern') name = pick(MOD);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de post para Threads gratis | Genfy';
+const description = 'Generá posts para Threads optimizados para el algoritmo. 500 caracteres con tono conversacional, hook directo y replies que generan engagement.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cuántos caracteres permite Threads?', acceptedAnswer: { '@type': 'Answer', text: 'Threads permite hasta 500 caracteres por post. Sweet spot: 100-300, suficiente para el hook y un punto, sin saturar el feed.' } },
+    { '@type': 'Question', name: '¿Qué tono funciona en Threads?', acceptedAnswer: { '@type': 'Answer', text: 'Conversacional, opinado, casual. Threads premia replies y discusión. Posts demasiado curados o corporativos rinden mal.' } },
+    { '@type': 'Question', name: '¿Replies o quote-posts pesan en el algoritmo?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Replies son la señal más fuerte de engagement en Threads. Un post con 50 replies y 100 likes rankea más que uno con 0 replies y 500 likes.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Marketing" title="Generador de post para Threads"
+    intro="Cargá tema y opinión. Genfy te devuelve 4 posts conversacionales optimizados para generar replies, dentro de los 500 caracteres permitidos.">
+
+    <div slot="tool" class="th">
+      <label for="th-topic">Tema o industria</label>
+      <input id="th-topic" type="text" placeholder="Marketing digital..." value="Marketing digital" />
+
+      <label for="th-take" style="margin-top:1rem">Tu opinión o observación</label>
+      <input id="th-take" type="text" placeholder="Las marcas obsesionadas con el feed..." value="Las marcas que se obsesionan con la estetica del feed pierden ventas" />
+
+      <label for="th-context" style="margin-top:1rem">Razón o contexto breve</label>
+      <input id="th-context" type="text" placeholder="Porque la gente compra..." value="La gente compra de cuentas que escriben, no de las que diseñan" />
+
+      <button id="th-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 4 posts</button>
+
+      <div id="th-out" class="th-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Threads no es Instagram con texto</h2>
+      <p>
+        Aunque Threads vive dentro del ecosistema de Meta y se vincula a Instagram, el feed se comporta distinto. Acá manda el texto, las opiniones y la conversación. Los posts demasiado curados, los hooks de TikTok migrados, y las "carreras de likes" rinden peor que en otras plataformas. Threads premia voz, opinión clara y respuesta a otros.
+      </p>
+      <p>
+        El otro factor: Threads tiene un algoritmo joven que está activamente probando señales. Por ahora prioriza recencia, replies y tiempo en post. Las cuentas pequeñas pueden tener virales si el contenido genera discusión.
+      </p>
+
+      <h2>La estructura que rinde en Threads</h2>
+      <ol>
+        <li><strong>Hook directo en la primera línea:</strong> opinión, pregunta o afirmación contraintuitiva.</li>
+        <li><strong>Razón o contexto:</strong> 1-2 frases que sostengan el hook.</li>
+        <li><strong>Pregunta abierta o invitación a debate:</strong> al final, para generar replies.</li>
+      </ol>
+
+      <h2>Por qué los replies son la métrica clave</h2>
+      <p>
+        En Threads cada reply es una señal de que el post generó algo en alguien. El algoritmo pondera replies por encima de likes y reposts. Un post con 50 replies y 100 likes va a rankear más alto que uno con 0 replies y 500 likes. Por eso los formatos que invitan a opinar funcionan mejor: opiniones polémicas, preguntas abiertas, observaciones que invitan a contar la propia historia.
+      </p>
+
+      <h2>Hooks que funcionan en Threads</h2>
+      <ul>
+        <li><strong>Opinión clara y específica:</strong> "Las marcas que se obsesionan con la estética del feed pierden ventas."</li>
+        <li><strong>Pregunta directa:</strong> "¿Por qué nadie habla de esto?"</li>
+        <li><strong>Confesión o vulnerabilidad:</strong> "Me equivoqué con X durante 5 años. Esto cambié."</li>
+        <li><strong>Observación cotidiana:</strong> "Gente que escribe 'gracias' en un canal de Slack. Te veo."</li>
+        <li><strong>Dato concreto:</strong> "El 90% de los posts de marca en Threads tienen menos de 10 likes."</li>
+      </ul>
+
+      <h2>Lo que NO funciona en Threads</h2>
+      <ul>
+        <li><strong>Hooks tipo TikTok:</strong> "POV: estás en X..." se lee como migración torpe.</li>
+        <li><strong>Hilos largos sin necesidad:</strong> 5-6 posts cuando se podía decir en uno.</li>
+        <li><strong>Carruseles migrados de Instagram:</strong> el formato se pierde en Threads.</li>
+        <li><strong>Posts solo de imagen sin texto:</strong> no aprovechan el formato de la plataforma.</li>
+        <li><strong>Self-promo descarada:</strong> "Comprá mi curso" se ignora.</li>
+      </ul>
+
+      <h2>Cómo aprovechar el cross-posting con Instagram</h2>
+      <p>
+        Threads permite postear y que aparezca también en Instagram (y viceversa para algunos formatos). La regla: lo que escribís específicamente para Threads queda raro en Instagram, y lo que es de Instagram (caption optimizado para imagen) queda raro en Threads. Mejor crear nativo para cada plataforma incluso si compartís ideas.
+      </p>
+
+      <h2>Frecuencia y horarios</h2>
+      <p>
+        Threads premia consistencia más que volumen. 1-3 posts por día rinde mejor que 10. Los horarios de mejor engagement son similares a Instagram: 7-10am y 6-9pm en la zona horaria de tu audiencia. Pero el efecto recencia es más fuerte: un post de hace 6 horas rara vez aparece en el feed.
+      </p>
+
+      <h2>Cómo crecer desde cero en Threads</h2>
+      <ol>
+        <li><strong>Postear todos los días por 30 días.</strong> El algoritmo necesita data para entender de qué hablás.</li>
+        <li><strong>Replicar a cuentas grandes con valor.</strong> Tus replies aparecen en el feed de la cuenta original — exposición gratis.</li>
+        <li><strong>Encontrar tu ángulo:</strong> elegí 2-3 temas y posteá sobre eso 80% del tiempo.</li>
+        <li><strong>Conversar:</strong> respondé los replies, eso refuerza la señal de engagement.</li>
+        <li><strong>Mostrar voz, no marca:</strong> Threads favorece personas sobre cuentas corporativas.</li>
+      </ol>
+
+      <h2>Errores típicos que matan engagement</h2>
+      <ul>
+        <li><strong>Posts neutros sin opinión:</strong> "Hoy fue un buen día" — no genera respuesta.</li>
+        <li><strong>Frases motivacionales genéricas:</strong> "Cree en vos mismo" se ignora masivamente.</li>
+        <li><strong>Links externos en el primer post:</strong> el algoritmo penaliza links salientes.</li>
+        <li><strong>Sub-posting en quote sin valor:</strong> "Esto" como caption no rinde.</li>
+        <li><strong>Auto-promo en cada post:</strong> Threads desindexa cuentas con promo descarada.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántos caracteres usar?</summary><p>Sweet spot: 100-300. Máximo: 500.</p></details>
+      <details><summary>¿Qué tipo de post rinde más?</summary><p>Opiniones específicas y preguntas abiertas. Replies son la métrica clave.</p></details>
+      <details><summary>¿Cross-postear con Instagram?</summary><p>Mejor crear nativo. Lo que es para Threads queda raro en Instagram.</p></details>
+      <details><summary>¿Cuántos posts por día?</summary><p>1-3 con consistencia rinde más que 10 esporádicos.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .th-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .th-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; white-space: pre-wrap; }
+  .th-card:hover { border-color: var(--accent); }
+  .th-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const topic = document.getElementById('th-topic') as HTMLInputElement;
+  const take = document.getElementById('th-take') as HTMLInputElement;
+  const context = document.getElementById('th-context') as HTMLInputElement;
+  const gen = document.getElementById('th-gen') as HTMLButtonElement;
+  const out = document.getElementById('th-out')!;
+
+  function generate() {
+    const T = topic.value.trim() || 'el tema';
+    const Tk = take.value.trim() || 'Una observacion';
+    const C = context.value.trim() || 'Lo veo todos los dias';
+
+    const v1 = `${Tk}.\n\n${C}.\n\nMe pasa solo a mi?`;
+    const v2 = `Opinion impopular sobre ${T.toLowerCase()}:\n\n${Tk}.\n\n${C}.`;
+    const v3 = `${Tk}.\n\nCambien mi opinion.`;
+    const v4 = `Algo que aprendi sobre ${T.toLowerCase()}: ${Tk.toLowerCase()}.\n\n${C}.\n\nVos que opinas?`;
+
+    out.innerHTML = '';
+    [v1, v2, v3, v4].forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'th-card';
+      el.title = 'Click para copiar';
+      const len = b.length;
+      el.innerHTML = b.replace(/\n/g, '<br>') + `<div class="th-meta">v${i+1} · ${len}/500 caracteres</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copiado'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

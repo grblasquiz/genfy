@@ -1,0 +1,130 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Two-Color Blender | Genfy';
+const description = 'Blend two colors at different ratios to get intermediate shades. Useful for gradients and palettes.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do colors mix on screen?', acceptedAnswer: { '@type': 'Answer', text: 'In RGB, the three channels are averaged with the slider weight. RGB blending does not always match perceptual blending; OKLab handles that better.' } },
+    { '@type': 'Question', name: 'Useful for palettes?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Blending the brand color with white gives light tints, with black gives dark shades. Foundation of many design system scales.' } },
+    { '@type': 'Question', name: 'Why do some blends look ugly?', acceptedAnswer: { '@type': 'Answer', text: 'Mixing two complementary colors in RGB passes through gray. For more vibrant blends, use HSL or LCH and rotate hues.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Design / Diseño" title="Two-Color Blender"
+    intro="Pick two colors and a ratio. We return the resulting color in HEX and RGB.">
+
+    <div slot="tool" class="mx">
+      <div class="mx-grid">
+        <div>
+          <label for="mx-c1">Color 1</label>
+          <input id="mx-c1" type="color" value="#3b82f6" />
+        </div>
+        <div>
+          <label for="mx-c2">Color 2</label>
+          <input id="mx-c2" type="color" value="#ef4444" />
+        </div>
+        <div class="mx-full">
+          <label for="mx-pct">Mix (% of color 2)</label>
+          <input id="mx-pct" type="range" min="0" max="100" value="50" />
+        </div>
+      </div>
+
+      <div class="mx-result">
+        <div id="mx-swatch" class="mx-swatch"></div>
+        <div class="mx-info">
+          <div><strong>HEX:</strong> <span id="mx-hex"></span></div>
+          <div><strong>RGB:</strong> <span id="mx-rgb"></span></div>
+        </div>
+      </div>
+
+      <div class="mx-actions">
+        <button id="mx-cp" class="btn btn-primary" type="button">Copy HEX</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>How blending works</h2>
+      <p>Blending colors on screen is not the same as mixing paint. On screen, colors are formed from red, green and blue light (RGB). When you "blend" two colors in RGB, you average the three channel values weighted by the percentage. At 50%, each channel sits halfway between the two colors.</p>
+
+      <h2>The formula</h2>
+      <pre><code>newR = R1 * (1 - p) + R2 * p
+newG = G1 * (1 - p) + G2 * p
+newB = B1 * (1 - p) + B2 * p</code></pre>
+      <p>Where p ranges 0–1. Linear interpolation between two colors.</p>
+
+      <h2>RGB vs perceptual blend</h2>
+      <p>Blending complementary colors (blue and orange, red and green) in RGB usually passes through a midway gray. Sometimes that's what you want (smooth transition); sometimes not (loses character). For more "vibrant" blends, color spaces like HSL, LCH and OKLab exist. Modern CSS supports <code>color-mix(in oklab, c1, c2 50%)</code> for perceptually uniform blends.</p>
+
+      <h2>Use cases</h2>
+      <ul>
+        <li><strong>Color scales</strong>: blend primary with white for lights (50, 100, 200), with black for darks (700, 800, 900).</li>
+        <li><strong>Gradients</strong>: helps understand which colors look good adjacent.</li>
+        <li><strong>States</strong>: hover, active are usually the base blended with black or white.</li>
+        <li><strong>Theming</strong>: derive secondary colors from a primary.</li>
+      </ul>
+
+      <h2>Building scales with blending</h2>
+      <p>A simple technique to generate a 10-stop scale from a primary: take the base as 500. Blend with white at 90%, 80%, 70%... 10% for stops 50, 100, 200... 400. Blend with black at 10%, 20%, 30%... 50% for 600, 700, 800, 900. Not perfect but a usable starting point for manual tweaks.</p>
+
+      <h2>Limitations</h2>
+      <p>RGB blending does not respect perceptual luminance. Blending yellow and blue 50/50 in RGB gives middle gray, not the green you'd expect from paint. For more natural blends, OKLCH is the best modern option: respects how the human eye perceives lightness.</p>
+
+      <h2>Design tip</h2>
+      <p>When blending two brand colors, check whether the midpoint is usable as a third palette color. Sometimes you stumble into something nice. Other times the middle looks "muddy" and is better skipped on the scale.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do they mix on screen?</summary><p>By averaging the three RGB channels with the slider weight.</p></details>
+      <details><summary>Useful for palettes?</summary><p>Yes. Blend the primary with white for lights, with black for darks.</p></details>
+      <details><summary>Why ugly blends?</summary><p>RGB blends can pass through gray. HSL or OKLab work better.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .mx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .mx-full { grid-column: 1 / -1; }
+  .mx-result { display: flex; gap: 1rem; align-items: center; padding: 1rem; background: var(--bg-inset); border-radius: var(--radius); margin-bottom: 1rem; }
+  .mx-swatch { width: 100px; height: 100px; border-radius: var(--radius); border: 1px solid var(--border); }
+  .mx-info { font-family: var(--font-mono); font-size: 0.875rem; }
+  .mx-info > div { margin-bottom: 0.5rem; }
+  .mx-actions { display: flex; gap: 0.5rem; }
+  @media (max-width: 600px) { .mx-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const c1 = document.getElementById('mx-c1') as HTMLInputElement;
+  const c2 = document.getElementById('mx-c2') as HTMLInputElement;
+  const pct = document.getElementById('mx-pct') as HTMLInputElement;
+  const swatch = document.getElementById('mx-swatch') as HTMLElement;
+  const hex = document.getElementById('mx-hex') as HTMLElement;
+  const rgb = document.getElementById('mx-rgb') as HTMLElement;
+  const cp = document.getElementById('mx-cp') as HTMLButtonElement;
+
+  function hex2rgb(h: string) { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+  function rgb2hex(r: number, g: number, b: number) { return '#' + [r, g, b].map(x => Math.round(x).toString(16).padStart(2, '0')).join(''); }
+
+  function render() {
+    const [r1, g1, b1] = hex2rgb(c1.value);
+    const [r2, g2, b2] = hex2rgb(c2.value);
+    const p = +pct.value / 100;
+    const r = r1 * (1 - p) + r2 * p;
+    const g = g1 * (1 - p) + g2 * p;
+    const b = b1 * (1 - p) + b2 * p;
+    const h = rgb2hex(r, g, b);
+    swatch.style.background = h;
+    hex.textContent = h;
+    rgb.textContent = `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+  }
+  [c1, c2, pct].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(hex.textContent || '');
+    cp.textContent = 'Copied'; setTimeout(() => cp.textContent = 'Copy HEX', 1500);
+  });
+  render();
+</script>

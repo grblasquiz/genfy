@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de hex aleatorio | Genfy';
+const description = 'Generá colores hexadecimales aleatorios al instante. Útil para prototipos, placeholders y experimentación visual.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Para qué sirve un hex aleatorio?', acceptedAnswer: { '@type': 'Answer', text: 'Para prototipos rápidos donde necesitás distinguir elementos visualmente sin diseñar una paleta. También para placeholders y testing.' } },
+    { '@type': 'Question', name: '¿Los colores son uniformes?', acceptedAnswer: { '@type': 'Answer', text: 'No. Aleatorio en RGB tiene sesgo: hay más combinaciones grisáceas que vibrantes. Para colores siempre vibrantes, conviene generar en HSL fijando saturación y luminosidad.' } },
+    { '@type': 'Question', name: '¿Esta tool es buena para producción?', acceptedAnswer: { '@type': 'Answer', text: 'No. Para producción, definí una paleta. Aleatorio sirve para etapas tempranas o como punto de partida.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Generador de hex aleatorio"
+    intro="Generá un color hex aleatorio o varios en una pasada. Vista previa, código copiable.">
+
+    <div slot="tool" class="rh">
+      <div class="rh-grid">
+        <div>
+          <label for="rh-mode">Modo</label>
+          <select id="rh-mode">
+            <option value="random">Aleatorio puro (RGB)</option>
+            <option value="vivid">Vibrante (HSL S=70 L=50)</option>
+            <option value="pastel">Pastel (HSL S=70 L=80)</option>
+            <option value="dark">Oscuro (HSL S=50 L=25)</option>
+          </select>
+        </div>
+        <div>
+          <label for="rh-count">Cantidad</label>
+          <input id="rh-count" type="number" min="1" max="20" value="6" />
+        </div>
+      </div>
+
+      <div class="rh-actions">
+        <button id="rh-gen" class="btn btn-primary" type="button">Generar</button>
+      </div>
+
+      <div id="rh-list" class="rh-list"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Para qué sirve un color aleatorio</h2>
+      <p>Es una herramienta de exploración. Cuando estás haciendo wireframes, prototipos o necesitás colores temporales para distinguir elementos en una vista de debug, generar al azar te ahorra el bloqueo de "¿qué color uso?". Para producción, mejor definí una paleta.</p>
+
+      <h2>Aleatorio en RGB tiene sesgo</h2>
+      <p>Si generás los tres canales (R, G, B) cada uno aleatorio entre 0 y 255, terminás con muchos colores grisáceos y pocos vibrantes. La razón: la mayoría de las combinaciones de tres números aleatorios cae en la zona "neutra" del espacio. Si querés colores siempre llamativos, generá en HSL: hue aleatorio, pero saturación y luminosidad fijas en valores que sabés que se ven bien.</p>
+
+      <h2>Modos de esta tool</h2>
+      <ul>
+        <li><strong>Aleatorio puro</strong>: RGB random, todo el espacio. Sale lo que sale.</li>
+        <li><strong>Vibrante</strong>: HSL con S=70%, L=50%. Colores con presencia.</li>
+        <li><strong>Pastel</strong>: HSL con S=70%, L=80%. Tonos suaves para fondos.</li>
+        <li><strong>Oscuro</strong>: HSL con S=50%, L=25%. Útil para dark mode o tipografía sobre fondos claros.</li>
+      </ul>
+
+      <h2>Cuándo usar cada modo</h2>
+      <p>Para prototipos donde cada bloque tiene que ser claramente diferente, "vibrante" es la opción. Para placeholders de avatar o cards sutiles, "pastel". Para inspirarte en un fondo con personalidad, podés generar varios "oscuro" y combinarlos. "Aleatorio puro" sirve para descubrir combinaciones que no se te ocurrirían a propósito.</p>
+
+      <h2>Tip: aleatorio determinista</h2>
+      <p>En aplicaciones reales (avatars, charts) a veces querés que el "color aleatorio" sea consistente. Por ejemplo, que el avatar de un usuario siempre tenga el mismo color. Para eso, hashea el ID del usuario y mappealo a HSL. Así parece aleatorio pero es estable: mismo ID, mismo color cada vez.</p>
+
+      <h2>Aleatorio para charts</h2>
+      <p>Si tenés que graficar 10 series en un chart, generar al azar suele dar problemas: dos series pueden quedar con colores muy similares. Mejor solución: distribuir los hues uniformemente. Si tenés 10 series, hue = i * 36° (360 / 10). Con saturación y luminosidad constantes, obtenés 10 colores siempre distinguibles.</p>
+
+      <h2>Limitaciones de aleatorio</h2>
+      <p>El aleatorio no respeta accesibilidad. Un par random puede tener contraste insuficiente para texto. Antes de usar un color aleatorio sobre fondo claro u oscuro, validá el ratio con una herramienta de contraste WCAG. Esta tool es para exploración, no para tomar decisiones finales.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Para qué sirve?</summary><p>Para prototipos y exploración. No para decisiones finales de marca.</p></details>
+      <details><summary>¿Son uniformes?</summary><p>No, en RGB hay sesgo a grises. HSL con saturación fija da colores más predecibles.</p></details>
+      <details><summary>¿Sirve para producción?</summary><p>No. Para producción, definí paleta. Aleatorio es para etapas tempranas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rh-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .rh-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .rh-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.5rem; }
+  .rh-card { padding: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; }
+  .rh-card .swatch { height: 80px; }
+  .rh-card .label { padding: 0.5rem; font-family: var(--font-mono); font-size: 0.8125rem; text-align: center; }
+  @media (max-width: 600px) { .rh-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const mode = document.getElementById('rh-mode') as HTMLSelectElement;
+  const count = document.getElementById('rh-count') as HTMLInputElement;
+  const list = document.getElementById('rh-list') as HTMLElement;
+  const gen = document.getElementById('rh-gen') as HTMLButtonElement;
+
+  function hsl2hex(h: number, s: number, l: number) {
+    s /= 100; l /= 100;
+    const k = (n: number) => (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    const to = (x: number) => Math.round(255 * x).toString(16).padStart(2, '0');
+    return '#' + to(f(0)) + to(f(8)) + to(f(4));
+  }
+
+  function gen1(): string {
+    const m = mode.value;
+    if (m === 'random') {
+      const n = Math.floor(Math.random() * 0xffffff);
+      return '#' + n.toString(16).padStart(6, '0');
+    }
+    const h = Math.floor(Math.random() * 360);
+    if (m === 'vivid') return hsl2hex(h, 70, 50);
+    if (m === 'pastel') return hsl2hex(h, 70, 80);
+    return hsl2hex(h, 50, 25);
+  }
+
+  function render() {
+    const n = Math.max(1, Math.min(20, +count.value || 1));
+    list.innerHTML = '';
+    for (let i = 0; i < n; i++) {
+      const c = gen1();
+      const card = document.createElement('div');
+      card.className = 'rh-card';
+      card.innerHTML = `<div class="swatch" style="background:${c}"></div><div class="label">${c}</div>`;
+      card.addEventListener('click', () => navigator.clipboard.writeText(c));
+      list.appendChild(card);
+    }
+  }
+  gen.addEventListener('click', render);
+  [mode, count].forEach(el => el.addEventListener('input', render));
+  render();
+</script>

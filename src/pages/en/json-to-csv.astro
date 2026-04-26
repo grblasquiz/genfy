@@ -1,0 +1,155 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'JSON to CSV — Free Converter | Genfy';
+const description = 'Convert a JSON array of objects into CSV with automatic headers. Proper handling of commas, quotes and line breaks. 100% local.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What kind of JSON does it accept?', acceptedAnswer: { '@type': 'Answer', text: 'A flat array of objects. For example, [&lcub;"name":"Ann","age":30&rcub;,&lcub;"name":"Pete","age":25&rcub;]. The keys of each object become CSV columns.' } },
+    { '@type': 'Question', name: 'What happens with nested values?', acceptedAnswer: { '@type': 'Answer', text: 'If a value is an object or array, it is serialized as JSON inside the cell. For deeply nested structures, flatten them first with a script.' } },
+    { '@type': 'Question', name: 'Does it handle special characters?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. If a value contains commas, quotes or line breaks, the converter wraps it in double quotes and escapes internal quotes by doubling them, per RFC 4180.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Data" title="JSON to CSV converter"
+    intro="Paste a JSON array of objects and get back a CSV ready to open in Excel, Google Sheets or load into a database.">
+
+    <div slot="tool">
+      <div class="jc-row">
+        <div>
+          <label for="jc-sep">Separator</label>
+          <select id="jc-sep">
+            <option value=",">Comma (,)</option>
+            <option value=";">Semicolon (;)</option>
+            <option value="\t">Tab</option>
+          </select>
+        </div>
+      </div>
+      <label for="jc-in">JSON</label>
+      <textarea id="jc-in" rows="8" style="font-family: var(--font-mono); font-size: 0.9rem;">[
+  &lcub;"name":"Ann","age":30,"city":"London"&rcub;,
+  &lcub;"name":"Pete","age":25,"city":"New York"&rcub;,
+  &lcub;"name":"Mary","age":35,"city":"Sydney"&rcub;
+]</textarea>
+      <button id="jc-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Convert</button>
+      <button id="jc-copy" class="btn btn-ghost" type="button">Copy</button>
+      <div id="jc-status" class="jc-status"></div>
+      <label for="jc-out" style="margin-top:1rem;">CSV</label>
+      <textarea id="jc-out" rows="8" readonly style="font-family: var(--font-mono); font-size: 0.9rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>From hierarchy to flat table</h2>
+      <p>
+        JSON and CSV solve different problems. JSON is great for hierarchical data: objects within objects, lists, nullable values. CSV is flat by definition: every row has the same fields, no depth. Converting JSON to CSV means accepting a controlled loss of structure — nestings get flattened or serialized as strings.
+      </p>
+
+      <h2>What this converter expects</h2>
+      <p>
+        The input must be an array of objects, each object representing a row. Keys in the first object define CSV columns (headers). If a later object has a key the first one didn't, it's left out. If it's missing a key, that cell stays empty. For very heterogeneous datasets, normalize first with a script that guarantees the same keys across all records.
+      </p>
+
+      <h2>The RFC 4180 standard</h2>
+      <ul>
+        <li>Each row ends with CRLF (most parsers accept LF too).</li>
+        <li>If a field contains the separator, wrap it in double quotes.</li>
+        <li>If a field contains double quotes, double them: <code>"she said ""hello"""</code>.</li>
+        <li>If a field contains line breaks, wrap it in quotes too.</li>
+        <li>The first record can be a header row (recommended).</li>
+      </ul>
+
+      <h2>Separators: comma, semicolon, tab</h2>
+      <p>
+        Although CSV stands for "comma-separated values," in practice the separator depends on context. In countries where the comma is the decimal separator (Spain, Germany), Excel defaults to semicolon to avoid clashes. If your CSV will open in a Spanish Excel, use <code>;</code>. If you're processing with pandas or loading into a database, comma is standard. TSV (tab-separated) is the safest option when content has lots of commas.
+      </p>
+
+      <h2>Common use cases</h2>
+      <ul>
+        <li><strong>Moving API data to Excel.</strong> A stakeholder asks for the month's orders; pull the API query as JSON, convert to CSV, open in Sheets.</li>
+        <li><strong>Loading data into tools that don't read JSON.</strong> Mailchimp, HubSpot, Salesforce and many others prefer CSV imports.</li>
+        <li><strong>Human-readable backup.</strong> A CSV from your database is easier to audit by eye than a giant JSON dump.</li>
+        <li><strong>Analysis with pandas or R.</strong> Both read JSON, but the native CSV functions are faster.</li>
+      </ul>
+
+      <h2>Limitations to know</h2>
+      <ul>
+        <li>Nested values (objects, arrays) get serialized as JSON in the cell. If your consumer doesn't expect that, it'll read literal text instead of structure.</li>
+        <li>Types are lost: everything is a string in CSV. A JSON <code>true</code> becomes the string <code>"true"</code>.</li>
+        <li>Date format depends on the source. If JSON stored ISO strings (<code>2026-04-26T10:00:00Z</code>), they pass through as strings.</li>
+        <li>Column order is set by the first object. To pin a specific order, sort the keys before exporting.</li>
+      </ul>
+
+      <h2>Productivity tips</h2>
+      <p>
+        If you'll open the CSV in Excel and have non-ASCII characters (accents, ñ), save with a UTF-8 BOM at the start so Excel detects the encoding. For database imports, consider <code>|</code> (pipe) as separator in datasets with many commas and quotes — it simplifies manual parsing dramatically.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What kind of JSON does it accept?</summary><p>A flat array of objects. The first object's keys become columns.</p></details>
+      <details><summary>What happens with nested values?</summary><p>They get serialized as JSON inside the cell. Flatten deep structures first.</p></details>
+      <details><summary>Does it handle special characters?</summary><p>Yes, per RFC 4180: it wraps in quotes and doubles internal quotes.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .jc-row { display: flex; gap: 1rem; margin-bottom: 1rem; }
+  .jc-status { font-family: var(--font-mono); font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.25rem; color: var(--text-soft); }
+</style>
+
+<script>
+  const inEl = document.getElementById('jc-in') as HTMLTextAreaElement;
+  const out = document.getElementById('jc-out') as HTMLTextAreaElement;
+  const sepEl = document.getElementById('jc-sep') as HTMLSelectElement;
+  const status = document.getElementById('jc-status') as HTMLDivElement;
+  const genBtn = document.getElementById('jc-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('jc-copy') as HTMLButtonElement;
+
+  function escapeCell(v: any, sep: string): string {
+    if (v === null || v === undefined) return '';
+    let s = typeof v === 'object' ? JSON.stringify(v) : String(v);
+    if (s.includes(sep) || s.includes('"') || s.includes('\n') || s.includes('\r')) {
+      s = '"' + s.replace(/"/g, '""') + '"';
+    }
+    return s;
+  }
+
+  function run() {
+    const txt = inEl.value;
+    if (!txt.trim()) { out.value = ''; status.textContent = ''; return; }
+    try {
+      const data = JSON.parse(txt);
+      if (!Array.isArray(data) || data.length === 0) {
+        status.textContent = 'A non-empty array of objects is required';
+        out.value = ''; return;
+      }
+      const sep = sepEl.value === '\\t' ? '\t' : sepEl.value;
+      const headers = Object.keys(data[0]);
+      const lines: string[] = [];
+      lines.push(headers.map(h => escapeCell(h, sep)).join(sep));
+      for (const row of data) {
+        lines.push(headers.map(h => escapeCell(row[h], sep)).join(sep));
+      }
+      out.value = lines.join('\n');
+      status.textContent = `${data.length} rows, ${headers.length} columns`;
+    } catch (e: any) {
+      out.value = '';
+      status.textContent = 'Error: ' + (e.message || 'Invalid JSON');
+    }
+  }
+  inEl.addEventListener('input', run);
+  sepEl.addEventListener('change', run);
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

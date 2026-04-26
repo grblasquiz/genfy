@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Plantilla de customer journey | Genfy';
+const description = 'Generá un customer journey map paso a paso: etapas, acciones, emociones, puntos de fricción y oportunidades. Listo para tu workshop o deck.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es un customer journey?', acceptedAnswer: { '@type': 'Answer', text: 'Es el mapa de todas las interacciones que tiene un cliente con tu marca, desde que descubre el problema hasta que se vuelve un usuario fiel o lo recomienda.' } },
+    { '@type': 'Question', name: '¿En qué se diferencia de un funnel?', acceptedAnswer: { '@type': 'Answer', text: 'El funnel mira métricas y conversión por etapa. El journey mira la experiencia del cliente: qué piensa, siente y hace en cada punto, y dónde aparecen fricciones.' } },
+    { '@type': 'Question', name: '¿Cuántas etapas debe tener?', acceptedAnswer: { '@type': 'Answer', text: 'Lo más común es 5 etapas: descubrimiento, consideración, compra, uso y fidelización. Podés desdoblar si tu producto tiene un onboarding largo.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Empresa / Business" title="Plantilla de customer journey"
+    intro="Completá tu producto y persona, y obtené un journey map de 5 etapas con acciones, emociones, fricciones y oportunidades de mejora.">
+
+    <div slot="tool" class="cj">
+      <label>Producto o servicio</label>
+      <input id="cj-prod" type="text" value="App de finanzas personales" />
+
+      <label style="margin-top:1rem">Buyer persona</label>
+      <input id="cj-pers" type="text" value="Profesional joven que quiere ahorrar" />
+
+      <button id="cj-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar journey</button>
+
+      <pre id="cj-out" class="cj-out"></pre>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué importa mapear el journey</h2>
+      <p>
+        Las empresas que crecen sostenido tienen una obsesión común: conocen el camino que recorre
+        su cliente al milímetro. No por hipótesis, sino por datos y entrevistas. El customer
+        journey no es un documento decorativo — es una herramienta operativa que te dice dónde
+        estás perdiendo gente, qué emociones aparecen en cada paso y cuáles son las palancas
+        concretas para mover una métrica.
+      </p>
+
+      <h2>Las 5 etapas estándar</h2>
+      <ol>
+        <li><strong>Descubrimiento:</strong> el cliente todavía no te conoce. Está sintiendo el dolor o el deseo. Acción típica: busca en Google, pregunta a un colega, escucha un podcast.</li>
+        <li><strong>Consideración:</strong> ya entendió que tiene un problema y compara opciones. Visita reviews, ve videos, mira casos de uso.</li>
+        <li><strong>Compra / decisión:</strong> elige una opción. Acá pesan precio, prueba gratis, garantía y la fricción del checkout.</li>
+        <li><strong>Uso / activación:</strong> empieza a usar el producto. El primer "wow moment" tiene que aparecer en los primeros minutos.</li>
+        <li><strong>Fidelización / advocacy:</strong> renueva, expande el uso, recomienda. Acá viven los referrals y el LTV alto.</li>
+      </ol>
+
+      <h2>Qué documentar en cada etapa</h2>
+      <p>Para que el journey sea útil, no alcanza con listar etapas. En cada una documentá:</p>
+      <ul>
+        <li><strong>Acciones:</strong> qué hace el cliente concretamente.</li>
+        <li><strong>Pensamiento:</strong> qué se pregunta. "¿Esto resuelve mi problema?", "¿Es seguro?".</li>
+        <li><strong>Emoción:</strong> ansiedad, curiosidad, alivio, frustración. Es el dato que más mueve decisiones.</li>
+        <li><strong>Touchpoints:</strong> qué canales toca (web, email, soporte, redes).</li>
+        <li><strong>Fricciones:</strong> qué puede hacer que abandone.</li>
+        <li><strong>Oportunidad:</strong> qué intervención podría resolver la fricción.</li>
+      </ul>
+
+      <h2>Cómo extraer datos sin tener equipo de research</h2>
+      <p>Tres fuentes alcanzan para una primera versión sólida:</p>
+      <ol>
+        <li>Entrevistar a 5-7 clientes recientes y preguntar: "Contame cómo llegaste a contratarnos. ¿Qué probaste antes? ¿En qué momento dudaste?".</li>
+        <li>Revisar todos los tickets de soporte de los últimos 90 días y agrupar por etapa.</li>
+        <li>Mirar el funnel real (analytics + CRM): dónde cae la gente, no donde creés que cae.</li>
+      </ol>
+
+      <h2>Errores típicos al armar el journey</h2>
+      <ul>
+        <li>Hacerlo desde la perspectiva interna (departamentos) en lugar de la perspectiva del cliente.</li>
+        <li>Saltarse la etapa de "Descubrimiento" porque no se mide bien — es la más barata de mejorar.</li>
+        <li>No marcar el momento "wow". Si no sabés cuál es, tu activación está rota.</li>
+        <li>Mezclar dos personas en el mismo journey. Un journey por persona.</li>
+        <li>Dejarlo en una pared y no convertirlo en backlog. Cada fricción documentada debe tener un dueño y un sprint.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es un customer journey?</summary><p>El mapa completo de interacciones del cliente con tu marca, desde que descubre el problema hasta que renueva o recomienda.</p></details>
+      <details><summary>¿Funnel o journey?</summary><p>Funnel mira métricas, journey mira experiencia. Los dos suman.</p></details>
+      <details><summary>¿Cuántas etapas?</summary><p>5 estándar: descubrimiento, consideración, compra, uso y fidelización.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cj-out { margin-top: 1.25rem; padding: 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.8125rem; line-height: 1.55; overflow-x: auto; }
+</style>
+
+<script>
+  const P = document.getElementById('cj-prod') as HTMLInputElement;
+  const U = document.getElementById('cj-pers') as HTMLInputElement;
+  const out = document.getElementById('cj-out')!;
+  const gen = document.getElementById('cj-gen') as HTMLButtonElement;
+
+  function generate() {
+    const prod = P.value.trim();
+    const pers = U.value.trim();
+    const t = `CUSTOMER JOURNEY — ${prod} / ${pers}
+
+1. DESCUBRIMIENTO
+- Acción: busca en Google, escucha el problema en un podcast, ve un anuncio.
+- Pensamiento: "¿Esto que me pasa tiene solución?"
+- Emoción: curiosidad, leve frustración.
+- Touchpoint: SEO, social ads, boca a boca.
+- Fricción: no encuentra contenido que hable su idioma.
+- Oportunidad: artículos largos que respondan dudas reales del segmento.
+
+2. CONSIDERACIÓN
+- Acción: compara ${prod} contra 2-3 alternativas. Lee reviews.
+- Pensamiento: "¿Cuál encaja con mi caso? ¿Vale el precio?"
+- Emoción: análisis, dudas.
+- Touchpoint: web, comparativas, reviews, demos.
+- Fricción: pricing poco claro o falta de casos de uso del segmento.
+- Oportunidad: página de comparación honesta + 3 casos breves del mismo perfil.
+
+3. COMPRA
+- Acción: crea cuenta, ingresa medio de pago, completa onboarding inicial.
+- Pensamiento: "¿Va a funcionar para mí? ¿Puedo cancelar?"
+- Emoción: expectativa con un poco de ansiedad.
+- Touchpoint: checkout, email de bienvenida.
+- Fricción: checkout largo, falta de garantía.
+- Oportunidad: free trial 14 días + email de bienvenida con un primer "wow" en 5 minutos.
+
+4. USO / ACTIVACIÓN
+- Acción: realiza la primera tarea útil (la "acción mágica" del producto).
+- Pensamiento: "Ah, esto sí me sirve."
+- Emoción: alivio, satisfacción.
+- Touchpoint: producto, soporte, ayuda en contexto.
+- Fricción: no encuentra cómo lograr el primer resultado.
+- Oportunidad: checklist de activación + tooltips contextuales en pasos críticos.
+
+5. FIDELIZACIÓN / ADVOCACY
+- Acción: renueva, contrata plan superior, recomienda.
+- Pensamiento: "Sin esto no vuelvo."
+- Emoción: confianza, orgullo de pertenencia.
+- Touchpoint: emails de uso, programa de referidos, comunidad.
+- Fricción: no hay incentivo claro para recomendar.
+- Oportunidad: programa de referidos con beneficio mutuo + comunidad activa.`;
+    out.textContent = t;
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

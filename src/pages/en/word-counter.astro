@@ -1,0 +1,124 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Word Counter | Genfy';
+const description = 'Count words, sentences, paragraphs and reading time instantly. Useful for articles, essays, social posts and SEO.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How does it count a word?', acceptedAnswer: { '@type': 'Answer', text: 'A word is a sequence of characters separated by whitespace. "Hello world" is 2 words. Hyphens, punctuation and numbers count according to context.' } },
+    { '@type': 'Question', name: 'How is reading time calculated?', acceptedAnswer: { '@type': 'Answer', text: 'It assumes 200 words per minute, the average for adult silent reading. It is an estimate: fast readers reach 300-400, careful readers drop to 150.' } },
+    { '@type': 'Question', name: 'Why does it matter for SEO?', acceptedAnswer: { '@type': 'Answer', text: 'Google rewards substantive content. A 300-word post competes worse than a 1500-word one for informational queries. The counter helps you check you hit the niche minimum.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text" title="Word Counter"
+    intro="Paste text and get real-time metrics: words, characters, sentences, paragraphs and estimated reading time.">
+
+    <div slot="tool">
+      <label for="wc-in">Text</label>
+      <textarea id="wc-in" rows="10" style="font-family: var(--font-sans); font-size: 1rem;">Paste your text here to see the live count.
+
+The counter detects words, sentences and paragraphs automatically.</textarea>
+      <div class="wc-stats">
+        <div class="wc-stat"><div class="wc-num" id="wc-words">0</div><div class="wc-lbl">Words</div></div>
+        <div class="wc-stat"><div class="wc-num" id="wc-chars">0</div><div class="wc-lbl">Characters</div></div>
+        <div class="wc-stat"><div class="wc-num" id="wc-chars-ns">0</div><div class="wc-lbl">No spaces</div></div>
+        <div class="wc-stat"><div class="wc-num" id="wc-sent">0</div><div class="wc-lbl">Sentences</div></div>
+        <div class="wc-stat"><div class="wc-num" id="wc-para">0</div><div class="wc-lbl">Paragraphs</div></div>
+        <div class="wc-stat"><div class="wc-num" id="wc-time">0 min</div><div class="wc-lbl">Reading</div></div>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>Why word counts matter</h2>
+      <p>
+        Knowing how many words a text has isn't just trivia. In SEO, length is a signal Google reads as depth of coverage: competitive queries demand long content. In journalism, editorial rules pin strict limits for columns and articles. In academia, abstracts cap at 250 words. On social, each platform has its limit — best to use it without overflowing.
+      </p>
+
+      <h2>Typical lengths by format</h2>
+      <ul>
+        <li><strong>Tweet/X:</strong> 280 characters (about 40-50 words).</li>
+        <li><strong>LinkedIn post:</strong> 1300-1700 characters for max engagement.</li>
+        <li><strong>Instagram caption:</strong> up to 2200 characters, but only the first 125 show before "see more".</li>
+        <li><strong>Email subject:</strong> under 60 characters.</li>
+        <li><strong>Meta description (SEO):</strong> 150-160 characters.</li>
+        <li><strong>Typical blog post:</strong> 800-2000 words depending on niche.</li>
+        <li><strong>Pillar content / guides:</strong> 2500-5000 words.</li>
+        <li><strong>Academic abstract:</strong> 150-300 words.</li>
+      </ul>
+
+      <h2>Reading time: how it's calculated</h2>
+      <p>
+        Standard is 200 words per minute, based on adult silent-reading studies in Romance languages. Reality varies: trained readers hit 300-400, someone reading a non-native language drops to 100. For technical text with code, formulas or specialized terms, pace falls 50-70%. That's why serious publications show "5 min read" as a floor: if the reader stops to think, it'll take longer.
+      </p>
+
+      <h2>Keyword density</h2>
+      <p>
+        For SEO, knowing your target term frequency matters. Ideal density is between 0.5% and 2%: a 1000-word post mentioning the keyword 5 to 20 times is reasonable. Going past 3% becomes keyword stuffing, which Google has been penalizing for over a decade.
+      </p>
+
+      <h2>Characters with or without spaces</h2>
+      <p>
+        Some contexts count characters including spaces (Twitter, SMS) and others without (typing tests, certain legal limits). The counter shows both. For SEO meta descriptions and title tags, characters-with-spaces is what matters because spaces take pixel width like letters.
+      </p>
+
+      <h2>Sentences and paragraphs</h2>
+      <p>
+        The counter detects sentences by period, exclamation point and question mark. It detects paragraphs by blocks separated by a blank line. For clear writing, short paragraphs (1-3 sentences) work better on screen than book-length paragraphs. "One idea, one paragraph" remains the best starting rule.
+      </p>
+
+      <h2>Tips for writing better from these metrics</h2>
+      <ul>
+        <li>If your sentences average over 25 words, simplify. Long sentences get lost on screen.</li>
+        <li>If your paragraphs average over 100 words, split them. Dense blocks scare readers off.</li>
+        <li>If your 2000-word post reads in 10 minutes but CTR is low, the problem isn't length — it's the first paragraph.</li>
+        <li>For LinkedIn, target 200-400 characters in the first paragraph, before the "see more". Anything after that only readers who clicked see.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How does it count a word?</summary><p>A character sequence separated by whitespace.</p></details>
+      <details><summary>How is reading time calculated?</summary><p>Based on 200 words per minute, the adult silent-reading average.</p></details>
+      <details><summary>Why does it matter for SEO?</summary><p>Google rewards substantive content. Length is a depth-of-coverage signal.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .wc-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.75rem; margin-top: 1rem; }
+  .wc-stat { background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; text-align: center; }
+  .wc-num { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 600; color: var(--text); }
+  .wc-lbl { font-size: 0.75rem; color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.25rem; }
+</style>
+
+<script>
+  const inEl = document.getElementById('wc-in') as HTMLTextAreaElement;
+  const wEl = document.getElementById('wc-words')!;
+  const cEl = document.getElementById('wc-chars')!;
+  const cnEl = document.getElementById('wc-chars-ns')!;
+  const sEl = document.getElementById('wc-sent')!;
+  const pEl = document.getElementById('wc-para')!;
+  const tEl = document.getElementById('wc-time')!;
+
+  function run() {
+    const t = inEl.value;
+    const words = t.trim() ? t.trim().split(/\s+/).length : 0;
+    const chars = t.length;
+    const charsNoSp = t.replace(/\s/g, '').length;
+    const sentences = (t.match(/[^.!?]+[.!?]+/g) || []).length || (t.trim() ? 1 : 0);
+    const paragraphs = t.trim() ? t.trim().split(/\n\s*\n/).filter(Boolean).length : 0;
+    const minutes = Math.ceil(words / 200);
+    wEl.textContent = words.toLocaleString('en');
+    cEl.textContent = chars.toLocaleString('en');
+    cnEl.textContent = charsNoSp.toLocaleString('en');
+    sEl.textContent = sentences.toLocaleString('en');
+    pEl.textContent = paragraphs.toLocaleString('en');
+    tEl.textContent = minutes + ' min';
+  }
+  inEl.addEventListener('input', run);
+  run();
+</script>

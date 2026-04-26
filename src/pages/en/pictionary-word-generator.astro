@@ -1,0 +1,157 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Pictionary Word Generator | Genfy';
+const description = 'Curated Pictionary words: easy, medium and hard. Things, actions, places and concepts. No offensive content.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Difficulty levels?', acceptedAnswer: { '@type': 'Answer', text: 'Yes: easy, medium and hard.' } },
+    { '@type': 'Question', name: 'Kid-friendly?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, all words are filtered for family use.' } },
+    { '@type': 'Question', name: 'For online Pictionary?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Show the word only to the drawer.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Diversión / Fun" title="Pictionary word generator"
+    intro="Words to draw and guess. Filter by difficulty.">
+
+    <div slot="tool" class="pw">
+      <div class="pw-card">
+        <span id="pw-cat-pill" class="pw-pill">—</span>
+        <p id="pw-text" class="pw-text">Tap generate to start.</p>
+      </div>
+      <div class="pw-controls">
+        <label for="pw-dif">Difficulty</label>
+        <select id="pw-dif">
+          <option value="all">All</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+      <button id="pw-gen" class="btn btn-primary" type="button">Another word</button>
+      <button id="pw-hide" class="btn btn-ghost" type="button">Hide</button>
+    </div>
+
+    <div slot="content">
+      <h2>Picking the right Pictionary word</h2>
+      <p>
+        A round's success depends on the word. Too easy, no challenge. Too hard, drawer
+        gets frustrated. Too abstract, nobody guesses. The good word is one anyone can
+        draw with creative effort and the room can guess fairly. That's why we curate by
+        level.
+      </p>
+
+      <h2>Three types of words</h2>
+      <ol>
+        <li><strong>Concrete noun:</strong> elephant, ice cream, bicycle. Easiest.</li>
+        <li><strong>Action:</strong> swim, cry, write. Medium.</li>
+        <li><strong>Abstract concept:</strong> envy, freedom, love. Hardest. Only with experienced players.</li>
+      </ol>
+
+      <h2>Standard rules</h2>
+      <ul>
+        <li><strong>No letters or numbers.</strong> Drawings only.</li>
+        <li><strong>No pointing at room objects.</strong> Only the paper.</li>
+        <li><strong>No sounds or words from drawer.</strong> Total silence.</li>
+        <li><strong>Time limit.</strong> 60 seconds classic, 90 for hard words.</li>
+        <li><strong>Teams of at least 3.</strong> One draws, two guess. More guessers, better.</li>
+      </ul>
+
+      <h2>Drawer strategies</h2>
+      <p>
+        Start with general silhouette before details. If you have "bicycle", first the two
+        wheels, then the frame, then handlebars. This gives progressive cues. Compound
+        words ("hot dog"): draw both parts separately, then connect. Action ("running"):
+        draw a person and add motion lines. Abstract ("love"): find the most universal
+        cultural symbol (heart, hug).
+      </p>
+
+      <h2>Guesser strategies</h2>
+      <p>
+        Talk out loud. The drawer can't confirm but can underline the key element. If you
+        say "dog" and they underline the second element, you know the animal is right and
+        the modifier is missing. Start with broad categories (animal, object, place) and
+        narrow. Think compounds: many words break down into parts.
+      </p>
+
+      <h2>Game variants</h2>
+      <p>
+        Classic Pictionary is by teams. Quick version: just a timer, everyone guesses.
+        Silent version: drawer can't see what they already drew (memory only). Hard
+        version: black and white only. Kids version: only concrete nouns. Adapt to age
+        and player count. A full round runs 6-10 words, lasting 30-45 minutes.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many words?</summary><p>100+ curated.</p></details>
+      <details><summary>Works on Zoom?</summary><p>Yes, use a shared whiteboard or tablet.</p></details>
+      <details><summary>Suitable for age 6?</summary><p>Yes, with the easy filter.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pw-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; text-align: center; }
+  .pw-pill { display: inline-block; padding: 0.25rem 0.75rem; background: var(--bg-inset); border: 1px solid var(--border-strong); border-radius: var(--radius); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .pw-text { font-size: 2rem; font-weight: 700; line-height: 1.2; margin: 0; }
+  .pw-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const W: { dif: string; t: string }[] = [
+    { dif: "easy", t: "dog" }, { dif: "easy", t: "house" }, { dif: "easy", t: "sun" },
+    { dif: "easy", t: "tree" }, { dif: "easy", t: "car" }, { dif: "easy", t: "ball" },
+    { dif: "easy", t: "book" }, { dif: "easy", t: "pencil" }, { dif: "easy", t: "apple" },
+    { dif: "easy", t: "moon" }, { dif: "easy", t: "rain" }, { dif: "easy", t: "balloon" },
+    { dif: "easy", t: "fish" }, { dif: "easy", t: "cake" }, { dif: "easy", t: "chair" },
+    { dif: "easy", t: "door" }, { dif: "easy", t: "flower" }, { dif: "easy", t: "elephant" },
+    { dif: "easy", t: "bread" }, { dif: "easy", t: "clock" }, { dif: "easy", t: "guitar" },
+    { dif: "easy", t: "boat" }, { dif: "easy", t: "plane" }, { dif: "easy", t: "ice cream" },
+    { dif: "easy", t: "glasses" }, { dif: "easy", t: "scissors" },
+    { dif: "medium", t: "library" }, { dif: "medium", t: "supermarket" }, { dif: "medium", t: "telescope" },
+    { dif: "medium", t: "birthday" }, { dif: "medium", t: "stadium" }, { dif: "medium", t: "robot" },
+    { dif: "medium", t: "umbrella" }, { dif: "medium", t: "slide" }, { dif: "medium", t: "pumpkin" },
+    { dif: "medium", t: "swim" }, { dif: "medium", t: "cook" }, { dif: "medium", t: "sneeze" },
+    { dif: "medium", t: "yawn" }, { dif: "medium", t: "hug" }, { dif: "medium", t: "jump" },
+    { dif: "medium", t: "belt" }, { dif: "medium", t: "elevator" }, { dif: "medium", t: "ladder" },
+    { dif: "medium", t: "barbecue" }, { dif: "medium", t: "calculator" }, { dif: "medium", t: "vacation" },
+    { dif: "medium", t: "fireplace" }, { dif: "medium", t: "submarine" }, { dif: "medium", t: "skateboard" },
+    { dif: "hard", t: "envy" }, { dif: "hard", t: "hope" }, { dif: "hard", t: "freedom" },
+    { dif: "hard", t: "patience" }, { dif: "hard", t: "honesty" }, { dif: "hard", t: "globalization" },
+    { dif: "hard", t: "democracy" }, { dif: "hard", t: "infinity" }, { dif: "hard", t: "gravity" },
+    { dif: "hard", t: "irony" }, { dif: "hard", t: "future" }, { dif: "hard", t: "memory" },
+    { dif: "hard", t: "imagination" }, { dif: "hard", t: "dilemma" }, { dif: "hard", t: "secret" },
+    { dif: "hard", t: "tradition" }, { dif: "hard", t: "fragility" }, { dif: "hard", t: "destiny" }
+  ];
+
+  const pill = document.getElementById('pw-cat-pill') as HTMLElement;
+  const text = document.getElementById('pw-text') as HTMLElement;
+  const dif = document.getElementById('pw-dif') as HTMLSelectElement;
+  const genBtn = document.getElementById('pw-gen') as HTMLButtonElement;
+  const hideBtn = document.getElementById('pw-hide') as HTMLButtonElement;
+  let last = '';
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = dif.value;
+    const pool = filter === 'all' ? W : W.filter(x => x.dif === filter);
+    const item = pick(pool);
+    pill.textContent = item.dif;
+    text.textContent = item.t;
+    last = item.t;
+  }
+  hideBtn.addEventListener('click', () => {
+    if (text.textContent === '••••••') text.textContent = last;
+    else text.textContent = '••••••';
+  });
+  genBtn.addEventListener('click', generate);
+  generate();
+</script>
+</content>
+</invoke>

@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Conversor de px a rem | Genfy';
+const description = 'Convertí valores en píxeles a rem usando un base font size configurable. Tabla rápida y CSS listo para copiar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué usar rem?', acceptedAnswer: { '@type': 'Answer', text: 'Porque respeta las preferencias de tamaño de fuente del usuario. Si alguien aumenta el zoom o cambia el tamaño base en su navegador, todo escala proporcionalmente.' } },
+    { '@type': 'Question', name: '¿La base es siempre 16px?', acceptedAnswer: { '@type': 'Answer', text: 'Por defecto sí, pero podés cambiarla. Algunos sistemas usan 10px (con html { font-size: 62.5% }) para que las cuentas sean fáciles: 1rem = 10px.' } },
+    { '@type': 'Question', name: '¿rem o em?', acceptedAnswer: { '@type': 'Answer', text: 'rem siempre es relativo al root (html). em es relativo al elemento padre. Para spacings y tamaños generales, rem; para spacing dentro de un componente que tiene su propia escala, em.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Conversor de px a rem"
+    intro="Ingresá un valor en píxeles y la base. Devolvemos el equivalente en rem y una tabla con las conversiones más comunes.">
+
+    <div slot="tool" class="cv">
+      <div class="cv-grid">
+        <div>
+          <label for="cv-px">Valor en píxeles</label>
+          <input id="cv-px" type="number" value="24" />
+        </div>
+        <div>
+          <label for="cv-base">Base font size (px)</label>
+          <input id="cv-base" type="number" value="16" />
+        </div>
+      </div>
+
+      <div class="cv-result" id="cv-result"></div>
+
+      <div class="cv-actions">
+        <button id="cv-cp" class="btn btn-ghost" type="button">Copiar valor</button>
+      </div>
+
+      <h3>Tabla rápida</h3>
+      <table class="cv-table"><thead><tr><th>px</th><th>rem</th></tr></thead><tbody id="cv-table"></tbody></table>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué convertir px a rem</h2>
+      <p>El píxel es absoluto: 16px es siempre 16px, independientemente del usuario. El rem es relativo al tamaño de fuente del root (por default, 16px). Cuando un usuario aumenta el tamaño de fuente del navegador para mejor legibilidad, los valores en px no cambian, pero los en rem sí. Por eso rem es la unidad recomendada para tipografía y spacing.</p>
+
+      <h2>La fórmula</h2>
+      <pre><code>rem = px / base</code></pre>
+      <p>Con base 16: 16px = 1rem, 24px = 1.5rem, 32px = 2rem. Si querés simplificar las cuentas, podés cambiar la base a 10px con <code>html &lcub; font-size: 62.5%; &rcub;</code>: 24px = 2.4rem, 32px = 3.2rem. Es un truco viejo pero válido si te molesta dividir por 16.</p>
+
+      <h2>Cuándo usar rem</h2>
+      <ul>
+        <li><strong>Tipografía</strong>: tamaños de fuente, line-heights.</li>
+        <li><strong>Spacing</strong>: padding, margin, gap.</li>
+        <li><strong>Anchos máximos</strong>: max-width de contenedores y prose.</li>
+        <li><strong>Border radius</strong>: para que escale con el sistema.</li>
+      </ul>
+
+      <h2>Cuándo NO usar rem</h2>
+      <ul>
+        <li><strong>Border widths</strong>: 1px hairline tiene que ser 1px siempre.</li>
+        <li><strong>Sombras</strong>: blur y offsets típicamente en px.</li>
+        <li><strong>Iconos pequeños</strong>: si querés que no escalen con el zoom de texto.</li>
+        <li><strong>Pixel-perfect grids</strong>: cuando necesitás precisión exacta.</li>
+      </ul>
+
+      <h2>Accesibilidad</h2>
+      <p>Una de las razones más fuertes para usar rem es accesibilidad. Aproximadamente uno de cada cinco usuarios cambia el tamaño de fuente predeterminado del navegador (sea por preferencia o por dificultad visual). Si tu sitio usa px en todos lados, esos usuarios ven exactamente el mismo tamaño que vos. Con rem, todo escala. Esto se mide en auditorías de accesibilidad y mejora tu Lighthouse score.</p>
+
+      <h2>Errores comunes</h2>
+      <ul>
+        <li><strong>Mezclar unidades sin criterio</strong>: usar px en algunas cosas y rem en otras sin lógica. Decidí una convención y mantenela.</li>
+        <li><strong>Usar rem para todo</strong>: incluyendo bordes hairline. Pierde precisión.</li>
+        <li><strong>Olvidar que rem es relativo</strong>: si cambiás el font-size del root, todo cambia. Útil cuando lo planeás, problemático si no.</li>
+      </ul>
+
+      <h2>Tabla práctica con base 16</h2>
+      <p>12px = 0.75rem, 14px = 0.875rem, 16px = 1rem, 18px = 1.125rem, 20px = 1.25rem, 24px = 1.5rem, 32px = 2rem, 48px = 3rem, 64px = 4rem. Memorizar las conversiones de los valores más comunes acelera mucho el desarrollo.</p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Por qué usar rem?</summary><p>Respeta preferencias del usuario. Si aumentan el zoom de texto, tu sitio escala.</p></details>
+      <details><summary>¿La base es siempre 16?</summary><p>Por default sí. Algunos usan 10px con font-size: 62.5% para simplificar cuentas.</p></details>
+      <details><summary>¿rem o em?</summary><p>rem es relativo al root, em al padre. Para spacings generales, rem.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .cv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .cv-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .cv-result { padding: 1.5rem; background: var(--bg-inset); border-radius: var(--radius); font-family: var(--font-mono); font-size: 1.25rem; text-align: center; margin-bottom: 1rem; }
+  .cv-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.875rem; }
+  .cv-table th, .cv-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); text-align: left; }
+  @media (max-width: 600px) { .cv-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const px = document.getElementById('cv-px') as HTMLInputElement;
+  const base = document.getElementById('cv-base') as HTMLInputElement;
+  const result = document.getElementById('cv-result') as HTMLElement;
+  const table = document.getElementById('cv-table') as HTMLElement;
+  const cp = document.getElementById('cv-cp') as HTMLButtonElement;
+
+  function render() {
+    const v = +px.value, b = +base.value || 16;
+    const rem = (v / b);
+    result.textContent = `${v}px = ${rem}rem`;
+    const presets = [12, 14, 16, 18, 20, 24, 32, 48, 64];
+    table.innerHTML = presets.map(p => `<tr><td>${p}px</td><td>${(p / b)}rem</td></tr>`).join('');
+  }
+  [px, base].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    const v = +px.value, b = +base.value || 16;
+    await navigator.clipboard.writeText(`${(v / b)}rem`);
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar valor', 1500);
+  });
+  render();
+</script>

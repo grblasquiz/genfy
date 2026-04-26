@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de título de canción gratis | Genfy';
+const description = 'Generá títulos para tu próxima canción en segundos. Combiná emoción, imagen y formato para encontrar 20 ideas pegadizas y memorables.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Cómo elijo un buen título de canción?', acceptedAnswer: { '@type': 'Answer', text: 'Buscá un título corto, fácil de cantar, que aparezca en el estribillo de la canción y que resuma la emoción central. Si funciona como hashtag, mejor.' } },
+    { '@type': 'Question', name: '¿El título tiene que estar en la letra?', acceptedAnswer: { '@type': 'Answer', text: 'Es la convención más común y la que más ayuda a la memoria del oyente, pero no es obligatorio. Hay clásicos que rompen la regla, aunque pagan un costo de identificación.' } },
+    { '@type': 'Question', name: '¿Cuánto debe medir el título?', acceptedAnswer: { '@type': 'Answer', text: 'De una a cuatro palabras suele ser lo ideal. Cuanto más corto, más fácil que la gente lo pida en la radio o lo busque en streaming.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de título de canción"
+    intro="Encontrá un título pegadizo para tu próxima canción. Combiná un sentimiento con una imagen y un formato para conseguir 20 ideas en segundos.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Tema o emoción central</label>
+      <input id="bn-kw" type="text" placeholder="amor, ruptura, viaje..." value="ruptura" />
+
+      <label for="bn-style" style="margin-top:1rem">Formato</label>
+      <select id="bn-style">
+        <option value="phrase">Frase corta (No vuelvas más)</option>
+        <option value="single">Una sola palabra (Verano)</option>
+        <option value="adj">Adjetivo + sustantivo (Sangre Tibia)</option>
+        <option value="question">Pregunta (¿Te acordás?)</option>
+        <option value="num">Con número (3 a la madrugada)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 títulos</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo encontrar el título perfecto</h2>
+      <p>
+        El título de una canción es la línea que la gente va a tener que escribir en el buscador de
+        Spotify después de escucharla en una fiesta. Si no se acuerda, no la encuentra. Esa es la
+        prueba operativa más simple: ¿se puede recordar después de un solo escuchada? Las canciones
+        con título corto y presente en el estribillo se buscan tres veces más que las que tienen
+        un título raro o ausente del coro.
+      </p>
+      <ol>
+        <li><strong>Buscá una línea del estribillo.</strong> En el 80% de los casos, el mejor título ya está en tu letra: es la frase que repetís más fuerte.</li>
+        <li><strong>Probá el "test de la fiesta".</strong> Si alguien escucha el tema borracho a las 3 AM, ¿puede recordar una línea para buscarlo al día siguiente?</li>
+        <li><strong>Que sea pronunciable en la radio.</strong> Si la locutora tiene que dudar antes de leerlo, te recortó el alcance.</li>
+        <li><strong>Funciona como hashtag.</strong> Sin caracteres raros, sin signos confusos. La gente va a usarlo en TikTok.</li>
+        <li><strong>Sumá una emoción concreta.</strong> "Sentimientos" no funciona. "No vuelvas más", sí.</li>
+      </ol>
+
+      <h2>Formatos clásicos de título de canción</h2>
+      <ul>
+        <li><strong>Frase corta del estribillo</strong>: lo más usado y lo que mejor funciona. "No vuelvas más", "Te vi venir".</li>
+        <li><strong>Una sola palabra</strong>: difícil pero memorable (Verano, Hoy, Quédate). Buscá una palabra emocional.</li>
+        <li><strong>Adjetivo + sustantivo</strong>: imágenes potentes en dos palabras (Sangre Tibia, Cielo Roto).</li>
+        <li><strong>Pregunta</strong>: arranca un diálogo con el oyente (¿Te acordás?, ¿Dónde estás?).</li>
+        <li><strong>Con número o referencia</strong>: precisa la escena (3 a la madrugada, Calle 13, Habitación 7).</li>
+      </ul>
+
+      <h2>Errores comunes en títulos de canción</h2>
+      <p>
+        El más típico: títulos demasiado largos que en Spotify aparecen cortados con "...". Si tu
+        título no entra en una pantalla móvil, perdés impacto. Otro error: títulos genéricos que
+        ya tienen miles de canciones (ojo con "Vuelve", "Solo tú", "Esta noche"; vas a competir
+        contra clásicos enormes en el algoritmo). Y un tercero: usar palabras en otro idioma sin
+        un motivo musical real, que confunde la búsqueda y la prensa.
+      </p>
+
+      <h2>Después de generar: cómo elegir</h2>
+      <p>Cuando tengas tus tres favoritos, hacé este chequeo:</p>
+      <ol>
+        <li>Escribí cada título en Spotify y mirá cuántas canciones aparecen con el mismo nombre.</li>
+        <li>Probá decirlo en voz alta con la melodía del estribillo. ¿Cuadra?</li>
+        <li>Mostralo a tres amigos sin escuchar la canción. ¿Adivinan de qué trata?</li>
+        <li>Verificá que se pueda escribir bien en hashtag (#Titulo).</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cómo elijo un buen título de canción?</summary><p>Corto, fácil de cantar, presente en el estribillo, que resuma la emoción central. Si funciona como hashtag, mejor.</p></details>
+      <details><summary>¿El título tiene que estar en la letra?</summary><p>No es obligatorio, pero es la convención que más ayuda al oyente a recordarla.</p></details>
+      <details><summary>¿Cuánto debe medir el título?</summary><p>De una a cuatro palabras es lo ideal. Más se vuelve difícil de buscar.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const ADJ = ['Tibio', 'Roto', 'Hondo', 'Lento', 'Fácil', 'Crudo', 'Tierno', 'Salvaje', 'Frío', 'Suave', 'Eterno', 'Ciego'];
+  const NOUN = ['Verano', 'Sangre', 'Cielo', 'Hueso', 'Vela', 'Fuego', 'Río', 'Sombra', 'Eco', 'Reloj', 'Beso', 'Calle'];
+  const PHRASE = ['No vuelvas más', 'Te vi venir', 'Quédate', 'Hasta mañana', 'Otra vez', 'Solo una vez', 'No me llames', 'Llamame'];
+  const QUESTION = ['¿Te acordás?', '¿Dónde estás?', '¿Volvés?', '¿Por qué te fuiste?', '¿Quién te avisó?'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function num() { const i = new Uint32Array(1); crypto.getRandomValues(i); return (i[0] % 12) + 1; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : pick(NOUN);
+      let name = '';
+      if (s === 'phrase') name = pick(PHRASE);
+      else if (s === 'single') name = cap(w);
+      else if (s === 'adj') name = cap(w) + ' ' + pick(ADJ);
+      else if (s === 'question') name = pick(QUESTION);
+      else if (s === 'num') name = num() + ' a la madrugada';
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

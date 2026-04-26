@@ -1,0 +1,146 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Word Frequency Analyzer | Genfy';
+const description = 'Analyze word frequency in any text. Top most-used words, stop words excluded. Ideal for SEO, editing and content analysis.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is word-frequency analysis used for?', acceptedAnswer: { '@type': 'Answer', text: 'Spotting repeated words, finding key terms in a text, SEO optimization and better editing.' } },
+    { '@type': 'Question', name: 'Does it filter stop words?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. It drops articles, prepositions, conjunctions and other "stop" words in English and Spanish.' } },
+    { '@type': 'Question', name: 'How large can the input be?', acceptedAnswer: { '@type': 'Answer', text: 'It handles hundreds of thousands of characters. Everything processes in your browser, no data is sent.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Text" title="Word Frequency Analyzer"
+    intro="Paste a text and get the most-used words, ignoring articles, prepositions and other stop words. Useful for SEO, editing, literary analysis and academic work.">
+
+    <div slot="tool">
+      <label for="wf-in">Text</label>
+      <textarea id="wf-in" rows="10" placeholder="Paste your text..." style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div class="wf-row" style="margin-top:0.75rem;">
+        <div>
+          <label for="wf-top">Top N words</label>
+          <input id="wf-top" type="number" min="5" max="100" value="20" />
+        </div>
+        <label class="wf-check"><input type="checkbox" id="wf-stop" checked /> Filter stop words</label>
+      </div>
+      <div style="margin-top:0.75rem;">
+        <button id="wf-go" class="btn btn-primary" type="button">Analyze</button>
+        <button id="wf-copy" class="btn btn-ghost" type="button">Copy</button>
+      </div>
+      <textarea id="wf-out" rows="12" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What word frequency tells you</h2>
+      <p>
+        If a word shows up 30 times in a text, that's information. Sometimes it says "this is the central
+        topic"; other times it says "you're over-repeating without realizing". Frequency analysis is the
+        first step in any text diagnostic: SEO, editing, literary study, academic research.
+      </p>
+
+      <h2>Real use cases</h2>
+      <ul>
+        <li><strong>SEO</strong> — confirm your target keywords appear at sane density without keyword stuffing.</li>
+        <li><strong>Editing</strong> — spot crutch words and accidental repeats that distract the reader.</li>
+        <li><strong>Literary analysis</strong> — see what obsesses an author or character.</li>
+        <li><strong>Academic work</strong> — confirm your thesis uses key terms consistently.</li>
+        <li><strong>Journalism</strong> — analyze speeches, interviews, press releases.</li>
+        <li><strong>Social research</strong> — qualitative analysis of open-ended survey responses.</li>
+      </ul>
+
+      <h2>Why filter stop words</h2>
+      <p>
+        Without filtering, the top of the list fills with "the", "a", "of", "and", "to". Useless — every
+        text tops out the same way. <em>Stop words</em> carry grammar but no content. Filtering them
+        surfaces the terms that actually characterize your text.
+      </p>
+
+      <h2>Ideal SEO density</h2>
+      <p>
+        Old-school SEO talked about 2-4% keyword density. Modern Google uses much more sophisticated
+        processing and won't reward forced repetition, but frequency is still a relevance signal. The play
+        is to make your keyword appear naturally in the title, first paragraph, H2s and across the body
+        without sounding forced. If frequency is very low (1-2 mentions in a 1,500-word piece), the engine
+        may not pin the topic.
+      </p>
+
+      <h2>Crutch-word detection</h2>
+      <p>
+        When you edit your own text, run it through the analyzer. If a word shows up more than expected and
+        it isn't your keyword, it's probably a crutch: "really", "basically", "obviously", "actually".
+        Cutting them improves flow by 20% without touching meaning. One of the most underrated quick-edit
+        tricks.
+      </p>
+
+      <h2>Comparative analysis</h2>
+      <p>
+        Comparing frequencies between two texts is instant insight. Does your competitor mention
+        "automation" 50 times and you only 3? They know something. Does your newsletter use "community" 20
+        times and your rival's only 2? Positioning gap. The technique is called corpus analysis and shows
+        up in computational linguistics, marketing and digital forensics.
+      </p>
+
+      <h2>Limits of the method</h2>
+      <ul>
+        <li>It doesn't see synonyms: "car" and "vehicle" count as separate.</li>
+        <li>It doesn't understand context: "bank" is always the same word to the counter.</li>
+        <li>It doesn't merge plurals and singulars: "house" and "houses" are different.</li>
+        <li>It doesn't interpret intent: only counts occurrences.</li>
+      </ul>
+
+      <h2>How to read the output</h2>
+      <p>
+        Look at the first 10. Those are the "soul" words of the text. If something surprises you ("why do I
+        use X this much?"), some pattern is leaking through unintentionally. If your expected keyword isn't
+        there, your focus is dispersed. The analyzer is, in miniature, an X-ray of the text.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is word-frequency analysis used for?</summary><p>Spotting repetition, finding key terms, SEO and editing.</p></details>
+      <details><summary>Does it filter stop words?</summary><p>Yes, English and Spanish stop words are excluded.</p></details>
+      <details><summary>How large can the input be?</summary><p>Hundreds of thousands of characters. Runs entirely in your browser.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .wf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; }
+  .wf-check { display: flex; align-items: center; gap: 0.5rem; margin: 0; }
+  .wf-check input { width: auto; }
+  @media (max-width: 600px) { .wf-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const STOP = new Set("a about above after again against all am an and any are as at be because been before being below between both but by could did do does doing down during each few for from further had has have having he her here hers herself him himself his how i if in into is it its itself just me more most my myself no nor not of off on once only or other our ours ourselves out over own same she should so some such than that the their theirs them themselves then there these they this those through to too under until up very was we were what when where which while who whom why will with you your yours yourself yourselves".split(/\s+/));
+
+  const inEl = document.getElementById('wf-in') as HTMLTextAreaElement;
+  const topEl = document.getElementById('wf-top') as HTMLInputElement;
+  const stopEl = document.getElementById('wf-stop') as HTMLInputElement;
+  const out = document.getElementById('wf-out') as HTMLTextAreaElement;
+  const go = document.getElementById('wf-go') as HTMLButtonElement;
+  const cp = document.getElementById('wf-copy') as HTMLButtonElement;
+
+  function analyze() {
+    const text = inEl.value.toLowerCase();
+    const words = text.match(/[a-z']+/gi) || [];
+    const map = new Map<string, number>();
+    const filter = stopEl.checked;
+    for (const w of words) {
+      if (w.length < 2) continue;
+      if (filter && STOP.has(w)) continue;
+      map.set(w, (map.get(w) || 0) + 1);
+    }
+    const arr = [...map.entries()].sort((a, b) => b[1] - a[1]);
+    const n = Math.max(5, Math.min(100, parseInt(topEl.value || '20', 10)));
+    const top = arr.slice(0, n);
+    out.value = top.length ? top.map(([w, c], i) => `${(i+1).toString().padStart(2)}. ${w.padEnd(20)} ${c}`).join('\n') : 'No words detected.';
+  }
+  go.addEventListener('click', analyze);
+  cp.addEventListener('click', async () => { if (!out.value) return; await navigator.clipboard.writeText(out.value); const t = cp.textContent; cp.textContent = 'Copied!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

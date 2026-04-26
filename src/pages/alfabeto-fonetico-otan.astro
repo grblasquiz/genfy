@@ -1,0 +1,129 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Deletreo fonético OTAN (Alpha Bravo) | Genfy';
+const description = 'Convertí palabras al alfabeto fonético OTAN (Alpha, Bravo, Charlie). Útil para deletrear nombres, códigos y direcciones por teléfono.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué es el alfabeto fonético OTAN?', acceptedAnswer: { '@type': 'Answer', text: 'Es un sistema estándar internacional donde cada letra se representa con una palabra (Alpha, Bravo, Charlie...) para evitar confusiones al deletrear por radio o teléfono.' } },
+    { '@type': 'Question', name: '¿En qué situaciones se usa?', acceptedAnswer: { '@type': 'Answer', text: 'Aviación, ejército, policía, atención al cliente, dictado de números de serie, contratos por teléfono y cualquier comunicación con ruido.' } },
+    { '@type': 'Question', name: '¿Es lo mismo que el alfabeto policial español?', acceptedAnswer: { '@type': 'Answer', text: 'No exactamente. En español a veces se usa "Antonio, Burgos, Carmen", pero el OTAN es el estándar internacional reconocido en aviación y militar.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión" title="Deletreo fonético OTAN"
+    intro="Convertí palabras al alfabeto fonético OTAN (Alpha, Bravo, Charlie...). Imprescindible cuando tenés que deletrear nombres por teléfono, dictar códigos o trabajar en radiocomunicaciones.">
+
+    <div slot="tool">
+      <label for="np-in">Texto</label>
+      <textarea id="np-in" rows="4" placeholder="ej: Genfy" style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+      <div style="margin-top:0.75rem;">
+        <button id="np-go" class="btn btn-primary" type="button">Deletrear</button>
+        <button id="np-copy" class="btn btn-ghost" type="button">Copiar</button>
+      </div>
+      <label for="np-out" style="margin-top:1rem;">Resultado</label>
+      <textarea id="np-out" rows="6" readonly style="font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué existe el alfabeto fonético OTAN</h2>
+      <p>
+        Si alguna vez intentaste deletrear un mail por teléfono, sabés el problema: "B como burro" no es lo
+        mismo que "V como vaca", y por la línea las dos suenan igual. El alfabeto fonético OTAN resuelve
+        esto con palabras seleccionadas para sonar distintas entre sí, incluso con ruido o mala señal.
+        Cada letra del alfabeto inglés tiene una palabra fija: A es Alpha, B es Bravo, C es Charlie, y así.
+      </p>
+
+      <h2>El alfabeto completo</h2>
+      <p>
+        A: Alpha. B: Bravo. C: Charlie. D: Delta. E: Echo. F: Foxtrot. G: Golf. H: Hotel. I: India.
+        J: Juliet. K: Kilo. L: Lima. M: Mike. N: November. O: Oscar. P: Papa. Q: Quebec. R: Romeo.
+        S: Sierra. T: Tango. U: Uniform. V: Victor. W: Whiskey. X: X-ray. Y: Yankee. Z: Zulu.
+      </p>
+
+      <h2>Cómo se eligieron las palabras</h2>
+      <p>
+        El alfabeto fue desarrollado en la década de 1950 por la OACI (Organización de Aviación Civil
+        Internacional) y adoptado por la OTAN. La selección no fue antojadiza: probaron docenas de
+        candidatas en condiciones reales (radio con ruido, mala calidad, hablantes no nativos de inglés)
+        para asegurar que cada palabra fuera inteligible y distinta de las demás. Por eso "Alpha" y no
+        "Adam", "Mike" y no "Michael".
+      </p>
+
+      <h2>Casos de uso reales</h2>
+      <ul>
+        <li><strong>Aviación</strong> — pilotos y controladores aéreos lo usan en cada comunicación.</li>
+        <li><strong>Militar y emergencias</strong> — radios policiales, militares, bomberos.</li>
+        <li><strong>Atención al cliente</strong> — confirmar emails, números de orden, códigos por teléfono.</li>
+        <li><strong>Banca y telefonía</strong> — dictar números de cuenta, IBAN, referencias.</li>
+        <li><strong>Logística</strong> — confirmación de tracking IDs internacionales.</li>
+        <li><strong>Hotelería</strong> — confirmar nombres de huéspedes en reservas.</li>
+      </ul>
+
+      <h2>Trucos para usarlo bien</h2>
+      <p>
+        Pronunciá cada palabra con énfasis claro y separá con una pausa breve. Si la persona del otro lado
+        no conoce el alfabeto, podés mezclar: "G de Golf, E de Echo, N de November...". Si dictás números,
+        decilos uno por uno: "tres-cinco-siete" en lugar de "trescientos cincuenta y siete". Y para
+        confirmar, repetí: "Charlie India Echo Lima Oscar — confirmado, ¿correcto?".
+      </p>
+
+      <h2>Variantes en español</h2>
+      <p>
+        En radio comercial española se usa a veces un alfabeto local: "Antonio, Burgos, Carmen, Dolores,
+        Enrique, Francia, Gerona, Historia, Inés, José, Kilo, Lorenzo, Madrid, Navarra, Oviedo, París,
+        Querido, Ramón, Sábado, Toledo, Ulises, Valencia, Washington, Xilófono, Yegua, Zaragoza". No hay
+        un único estándar; usalo si te entendés con tu interlocutor, pero el OTAN es el más internacional
+        y el más fácil de validar.
+      </p>
+
+      <h2>Aprenderlo de memoria</h2>
+      <p>
+        Memorizar las 26 palabras lleva una semana practicando 5 minutos por día. Estrategia: agrupá en
+        grupos de 5-7 letras (A-G, H-N, O-T, U-Z) y practicá cada grupo. Después combinalas en palabras
+        cortas reales: tu nombre, tu apellido, el de un amigo. En 10 días lo tenés automatizado y dejás de
+        depender de la herramienta.
+      </p>
+
+      <h2>El por qué de cada elección</h2>
+      <p>
+        "X-ray" no es solo X: usaron una palabra completa porque la X sola se escucha mal. "Whiskey"
+        prefiere a "Walter" o "William" porque empieza con un sonido nítido. "Zulu" gana sobre "Zebra"
+        porque era más reconocible para hablantes no anglófonos en los años 50. Cada elección estuvo
+        validada con tests de inteligibilidad reales — un buen ejemplo de diseño centrado en el usuario
+        décadas antes de que existiera el término.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué es el alfabeto fonético OTAN?</summary><p>Cada letra se asocia a una palabra (Alpha, Bravo...) para deletrear sin confusión.</p></details>
+      <details><summary>¿En qué situaciones se usa?</summary><p>Aviación, ejército, atención al cliente, banca y cualquier dictado por teléfono.</p></details>
+      <details><summary>¿Es lo mismo que el alfabeto español?</summary><p>No. En español hay un alfabeto local distinto, pero el OTAN es el estándar internacional.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const NATO: Record<string,string> = {
+    A:'Alpha',B:'Bravo',C:'Charlie',D:'Delta',E:'Echo',F:'Foxtrot',G:'Golf',H:'Hotel',I:'India',
+    J:'Juliet',K:'Kilo',L:'Lima',M:'Mike',N:'November',O:'Oscar',P:'Papa',Q:'Quebec',R:'Romeo',
+    S:'Sierra',T:'Tango',U:'Uniform',V:'Victor',W:'Whiskey',X:'X-ray',Y:'Yankee',Z:'Zulu',
+    '0':'Zero','1':'One','2':'Two','3':'Three','4':'Four','5':'Five','6':'Six','7':'Seven','8':'Eight','9':'Nine'
+  };
+  const inEl = document.getElementById('np-in') as HTMLTextAreaElement;
+  const outEl = document.getElementById('np-out') as HTMLTextAreaElement;
+  const go = document.getElementById('np-go') as HTMLButtonElement;
+  const cp = document.getElementById('np-copy') as HTMLButtonElement;
+  function convert(s: string): string {
+    return s.toUpperCase().split(/(\s+)/).map(part => {
+      if (/^\s+$/.test(part)) return ' | ';
+      return part.split('').map(c => NATO[c] || c).join(' ');
+    }).join('');
+  }
+  go.addEventListener('click', () => { outEl.value = convert(inEl.value); });
+  cp.addEventListener('click', async () => { if (!outEl.value) return; await navigator.clipboard.writeText(outEl.value); const t = cp.textContent; cp.textContent = '¡Copiado!'; setTimeout(() => { cp.textContent = t; }, 1200); });
+</script>

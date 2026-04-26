@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'HTML a Markdown — Conversor gratis | Genfy';
+const description = 'Convertí HTML a Markdown limpio en el navegador: p, h1-h6, ul, ol, a, img, code, strong, em y más. 100% local.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué convertir HTML a Markdown?', acceptedAnswer: { '@type': 'Answer', text: 'Para migrar contenido de un CMS viejo a uno nuevo, para guardar artículos en Obsidian o Notion, para versionar copia en git, o para limpiar la salida copiada de un editor visual.' } },
+    { '@type': 'Question', name: '¿Mantiene el formato 100%?', acceptedAnswer: { '@type': 'Answer', text: 'Markdown no soporta todo lo que soporta HTML (estilos inline, atributos personalizados, layouts complejos). El conversor preserva la estructura semántica; el resto se pierde, que es lo deseable en la mayoría de casos.' } },
+    { '@type': 'Question', name: '¿Sube algo a un servidor?', acceptedAnswer: { '@type': 'Answer', text: 'No. La conversión se hace localmente en tu navegador con el parser HTML del browser. Tu contenido nunca abandona tu dispositivo.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Conversor" title="HTML a Markdown"
+    intro="Pegá HTML y obtené Markdown limpio. Útil para migraciones de CMS, archivado en Obsidian o Notion, y versionado de copy en git.">
+
+    <div slot="tool">
+      <label for="hm-in">HTML</label>
+      <textarea id="hm-in" rows="10" style="font-family: var(--font-mono); font-size: 0.9rem;">&lt;h1&gt;Hola mundo&lt;/h1&gt;
+&lt;p&gt;Esto es &lt;strong&gt;HTML&lt;/strong&gt; convertido a &lt;em&gt;Markdown&lt;/em&gt;.&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Item 1&lt;/li&gt;&lt;li&gt;Item 2&lt;/li&gt;&lt;/ul&gt;
+&lt;a href="https://genfy.net"&gt;Genfy&lt;/a&gt;</textarea>
+      <button id="hm-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Convertir</button>
+      <button id="hm-copy" class="btn btn-ghost" type="button">Copiar</button>
+      <label for="hm-out" style="margin-top:1rem;">Markdown</label>
+      <textarea id="hm-out" rows="10" readonly style="font-family: var(--font-mono); font-size: 0.9rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Cuándo conviene la conversión inversa</h2>
+      <p>
+        Lo más común es ir de Markdown a HTML, pero el camino opuesto también tiene casos legítimos. Cuando migrás un blog viejo en WordPress a un sitio estático moderno (Astro, Hugo, Eleventy), todo el contenido vive en HTML dentro de la base de datos. Convertirlo a Markdown te permite versionar el copy en git y editarlo con un editor de texto plano sin abrir el panel del CMS.
+      </p>
+
+      <h2>Casos de uso reales</h2>
+      <ul>
+        <li><strong>Migración de CMS.</strong> WordPress, Drupal, Ghost — todos exportan HTML. Markdown es el formato intermedio universal para llevar el contenido a otra plataforma.</li>
+        <li><strong>Archivado en Obsidian o Notion.</strong> Si querés guardar artículos de blogs externos, Markdown es el formato natural de estas herramientas.</li>
+        <li><strong>Versionado en git.</strong> Markdown produce diffs legibles; HTML, no. Un cambio mínimo de copy se ve clarito en git diff.</li>
+        <li><strong>Limpiar HTML pegado.</strong> Cuando copiás de Word o Google Docs y pegás en un editor, viene con docenas de etiquetas y estilos basura. Convertir a Markdown limpia todo de un saque.</li>
+      </ul>
+
+      <h2>Lo que se pierde en la conversión</h2>
+      <p>
+        Markdown es deliberadamente pobre en expresividad: solo soporta elementos básicos. En la conversión perdés estilos inline (color rojo, font-size 14px), clases CSS, atributos personalizados (data-*, aria-*), tags semánticos avanzados (article, section, aside) y todo lo que sea presentación pura. Eso es bueno: el contenido queda libre de basura visual y se puede re-renderizar con cualquier estilo después.
+      </p>
+
+      <h2>Lo que se preserva</h2>
+      <ul>
+        <li>Jerarquía de títulos (h1-h6).</li>
+        <li>Párrafos y saltos de línea significativos.</li>
+        <li>Énfasis (strong, em, b, i).</li>
+        <li>Listas (ul, ol) con anidamiento básico.</li>
+        <li>Links y URLs.</li>
+        <li>Imágenes con alt y src.</li>
+        <li>Bloques de código y código inline.</li>
+        <li>Citas (blockquote).</li>
+      </ul>
+
+      <h2>Tips para una conversión limpia</h2>
+      <p>
+        Antes de convertir, pasá el HTML por un sanitizador si viene de Word o Outlook: esos editores meten markup con <code>&lt;o:p&gt;</code>, <code>&lt;span style="..."&gt;</code> y otras delicias. También conviene quitar <code>&lt;style&gt;</code> y <code>&lt;script&gt;</code> antes de pasarlo: no aportan nada al Markdown final. Si tu HTML usa tablas y necesitás conservarlas, considerá un parser más completo: Markdown estándar no las representa bien.
+      </p>
+
+      <h2>Diff entre formatos</h2>
+      <p>
+        Un párrafo HTML típico ocupa 80 caracteres entre etiquetas: <code>&lt;p&gt;Hola mundo&lt;/p&gt;</code>. El mismo en Markdown ocupa 11: <code>Hola mundo</code>. Multiplicado por miles de párrafos, la diferencia es brutal en bases de datos y repos. Un sitio que guarda contenido en Markdown y compila a HTML solo cuando hace falta es siempre más liviano.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Por qué convertir HTML a Markdown?</summary><p>Para migrar de un CMS a otro, archivar en Obsidian/Notion, versionar copy en git, o limpiar HTML pegado.</p></details>
+      <details><summary>¿Mantiene el formato 100%?</summary><p>No. Markdown es menos expresivo que HTML: pierde estilos inline, clases CSS y atributos personalizados. Preserva la estructura semántica.</p></details>
+      <details><summary>¿Sube algo a un servidor?</summary><p>No. La conversión es 100% local en el navegador.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<script>
+  const inEl = document.getElementById('hm-in') as HTMLTextAreaElement;
+  const out = document.getElementById('hm-out') as HTMLTextAreaElement;
+  const genBtn = document.getElementById('hm-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('hm-copy') as HTMLButtonElement;
+
+  function html2md(html: string): string {
+    const tpl = document.createElement('template');
+    tpl.innerHTML = html.trim();
+
+    function walk(node: Node, depth = 0): string {
+      if (node.nodeType === Node.TEXT_NODE) return (node.textContent || '').replace(/\s+/g, ' ');
+      if (node.nodeType !== Node.ELEMENT_NODE) return '';
+      const el = node as HTMLElement;
+      const tag = el.tagName.toLowerCase();
+      const inner = Array.from(el.childNodes).map(c => walk(c, depth + 1)).join('');
+      switch (tag) {
+        case 'h1': return '\n# ' + inner.trim() + '\n\n';
+        case 'h2': return '\n## ' + inner.trim() + '\n\n';
+        case 'h3': return '\n### ' + inner.trim() + '\n\n';
+        case 'h4': return '\n#### ' + inner.trim() + '\n\n';
+        case 'h5': return '\n##### ' + inner.trim() + '\n\n';
+        case 'h6': return '\n###### ' + inner.trim() + '\n\n';
+        case 'p': return '\n' + inner.trim() + '\n\n';
+        case 'br': return '  \n';
+        case 'hr': return '\n---\n\n';
+        case 'strong': case 'b': return '**' + inner + '**';
+        case 'em': case 'i': return '*' + inner + '*';
+        case 'del': case 's': return '~~' + inner + '~~';
+        case 'code': {
+          if (el.parentElement && el.parentElement.tagName === 'PRE') return inner;
+          return '`' + inner + '`';
+        }
+        case 'pre': return '\n```\n' + inner.trim() + '\n```\n\n';
+        case 'a': return '[' + inner + '](' + (el.getAttribute('href') || '') + ')';
+        case 'img': return '![' + (el.getAttribute('alt') || '') + '](' + (el.getAttribute('src') || '') + ')';
+        case 'ul': {
+          const items = Array.from(el.children).filter(c => c.tagName === 'LI').map(li => '- ' + walk(li, depth + 1).trim()).join('\n');
+          return '\n' + items + '\n\n';
+        }
+        case 'ol': {
+          const items = Array.from(el.children).filter(c => c.tagName === 'LI').map((li, i) => (i + 1) + '. ' + walk(li, depth + 1).trim()).join('\n');
+          return '\n' + items + '\n\n';
+        }
+        case 'li': return inner;
+        case 'blockquote': return '\n> ' + inner.trim().replace(/\n/g, '\n> ') + '\n\n';
+        default: return inner;
+      }
+    }
+
+    let md = '';
+    for (const child of Array.from(tpl.content.childNodes)) md += walk(child);
+    return md.replace(/\n{3,}/g, '\n\n').trim();
+  }
+
+  function run() {
+    try { out.value = html2md(inEl.value || ''); }
+    catch { out.value = 'Error al parsear el HTML'; }
+  }
+  inEl.addEventListener('input', run);
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = '¡Copiado!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

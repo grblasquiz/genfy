@@ -1,0 +1,131 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de defecto de personaje gratis | Genfy';
+const description = 'Generá defectos y debilidades creíbles para tus personajes de ficción. Encontrá la falla interna que vuelve humano a tu protagonista.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué necesito que mi personaje tenga defectos?', acceptedAnswer: { '@type': 'Answer', text: 'Los defectos hacen humano al personaje. Sin debilidad, no hay arco de transformación. Los héroes perfectos aburren porque no pueden cambiar.' } },
+    { '@type': 'Question', name: '¿Cuántos defectos debe tener?', acceptedAnswer: { '@type': 'Answer', text: 'Uno o dos defectos centrales suelen ser suficientes. Más allá de eso, el personaje se vuelve caricaturesco.' } },
+    { '@type': 'Question', name: '¿El defecto puede ser una virtud llevada al extremo?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, y es una de las técnicas más sólidas. Lealtad excesiva, honestidad brutal, perfeccionismo: virtudes que se vuelven obstáculos.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de defecto de personaje"
+    intro="Encontrá el defecto que vuelve humano a tu personaje. Generá 15 fallas internas listas para sumar a tu novela, guion o juego de rol.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Tipo de personaje</label>
+      <input id="bn-kw" type="text" placeholder="protagonista, antagonista..." value="protagonista" />
+
+      <label for="bn-style" style="margin-top:1rem">Origen del defecto</label>
+      <select id="bn-style">
+        <option value="emotional">Emocional</option>
+        <option value="moral">Moral</option>
+        <option value="virtue">Virtud llevada al extremo</option>
+        <option value="social">Social / interpersonal</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 15 defectos</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Por qué los grandes personajes tienen defectos</h2>
+      <p>
+        Sin defecto, no hay arco. La diferencia entre un personaje plano y uno memorable casi
+        siempre está en la falla interna que el autor le permite cargar. Los personajes
+        perfectos no cambian porque no tienen nada que aprender. Y un personaje que no cambia
+        no entrega historia. La pregunta clave: ¿cuál es la falla que el personaje no puede
+        ver y que va a chocar contra el conflicto principal?
+      </p>
+      <ol>
+        <li><strong>Identificá la falla central.</strong> Una sola, bien definida. Demasiados defectos diluyen el arco.</li>
+        <li><strong>Conectala con el deseo central.</strong> El defecto debe interferir con lo que el personaje quiere conseguir.</li>
+        <li><strong>Que tenga origen.</strong> Las grandes fallas vienen de algún lugar (una herida, una enseñanza familiar, un trauma).</li>
+        <li><strong>Que sea inconsciente al inicio.</strong> El personaje no debería ver su propio defecto en el primer acto.</li>
+        <li><strong>Que se manifieste en escena.</strong> No alcanza con declararlo: hay que mostrarlo en acción.</li>
+      </ol>
+
+      <h2>Categorías de defectos que funcionan</h2>
+      <ul>
+        <li><strong>Emocionales</strong>: incapacidad de pedir ayuda, miedo al rechazo, evitación del conflicto, dependencia emocional.</li>
+        <li><strong>Morales</strong>: mentir por costumbre, justificar pequeñas crueldades, postergar decisiones difíciles.</li>
+        <li><strong>Virtudes extremas</strong>: lealtad ciega, honestidad brutal, perfeccionismo paralizante, generosidad autodestructiva.</li>
+        <li><strong>Sociales</strong>: necesidad constante de aprobación, incapacidad de delegar, sarcasmo defensivo, aislamiento voluntario.</li>
+        <li><strong>Cognitivos</strong>: pensamiento rígido, exceso de planificación, intuición sin verificación.</li>
+      </ul>
+
+      <h2>Errores frecuentes al construir defectos</h2>
+      <p>
+        El más típico: defectos cosméticos que no afectan la trama. "Es desordenada en su
+        escritorio" no es un defecto narrativo. Otro error: defectos sin origen, que aparecen
+        porque sí. La falla tiene que tener historia. Y un tercero: el "defecto bonito", como
+        ser "demasiado generosa" o "demasiado leal", planteado sin costo real. Si la generosidad
+        no le cuesta nada al personaje, no es un defecto, es una virtud disfrazada.
+      </p>
+
+      <h2>Después de generar</h2>
+      <ol>
+        <li>Elegí UN defecto central y conectalo con el deseo del personaje.</li>
+        <li>Definí el origen del defecto en una frase.</li>
+        <li>Escribí tres escenas donde el defecto se manifieste en acción.</li>
+        <li>Definí el momento de revelación: cuándo el personaje toma conciencia de su falla.</li>
+        <li>Pensá la decisión del clímax: ¿el personaje supera el defecto o cae por él?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Por qué necesito defectos?</summary><p>Sin defecto, no hay arco. Los héroes perfectos no pueden cambiar.</p></details>
+      <details><summary>¿Cuántos defectos?</summary><p>Uno o dos centrales. Más vuelve caricatura al personaje.</p></details>
+      <details><summary>¿La virtud puede ser defecto?</summary><p>Sí, llevada al extremo. Es una técnica sólida.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.6rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.85rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const EMO = ['No puede pedir ayuda. Cuando algo se rompe, intenta arreglarlo solo aunque pierda el doble de tiempo.', 'Evita el conflicto al precio que sea. Prefiere mentir suave a sostener una pelea.', 'Necesita controlar todo. Cuando otros toman decisiones, se siente atacado.', 'Confunde cuidar con controlar. Sus muestras de afecto se sienten asfixiantes.', 'No tolera el silencio. Llena cualquier pausa con palabras que después lamenta.'];
+  const MORAL = ['Miente por costumbre, incluso en cosas pequeñas. No para protegerse: por incapacidad de sostener verdades.', 'Postergó una decisión durante años y ahora prefiere no resolverla.', 'Justifica con pequeños argumentos cosas que no se animaría a decirle a su mejor amigo.', 'Se siente con derecho a romper reglas chicas porque "él sí sabe".', 'Promete cosas que sabe que no va a cumplir.'];
+  const VIR = ['Es tan honesta que destruye situaciones que solo pedían tacto.', 'Su lealtad la lleva a defender personas que ya no la merecen.', 'Su perfeccionismo le impide entregar trabajos buenos a tiempo.', 'Su generosidad la deja sin recursos cuando más los necesita.', 'Su sentido del deber la lleva a sacrificar sus propios proyectos.'];
+  const SOC = ['Necesita la aprobación de la sala antes de tomar cualquier decisión propia.', 'Usa el sarcasmo como muralla. Cuando alguien intenta acercarse, ataca con un chiste.', 'No delega: prefiere hacer todo mal a tener que enseñar.', 'Se aisla cada vez que le va bien, como si no se permitiera celebrar.', 'Compite incluso cuando no hay nada en juego.'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+  function shuffle<T>(arr: T[]): T[] { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const r = new Uint32Array(1); crypto.getRandomValues(r); const j = r[0] % (i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  function generate() {
+    const s = style.value;
+    let SRC: string[];
+    if (s === 'moral') SRC = MORAL;
+    else if (s === 'virtue') SRC = VIR;
+    else if (s === 'social') SRC = SOC;
+    else SRC = EMO;
+    const items = shuffle([...SRC, ...EMO, ...MORAL, ...VIR, ...SOC]).slice(0, 15);
+    out.innerHTML = '';
+    items.forEach(text => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = text;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.textContent; el.textContent = '✓ copiado'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

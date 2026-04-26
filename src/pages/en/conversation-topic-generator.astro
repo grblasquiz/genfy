@@ -1,0 +1,128 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Conversation Topic Generator | Genfy';
+const description = 'Generate topics to start interesting conversations at dinners, dates, group activities or interviews. 15 ready-to-use ideas instantly.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How do I start an interesting conversation?', acceptedAnswer: { '@type': 'Answer', text: 'Skip yes/no questions and the weather. Start with open prompts that ask for a short personal story.' } },
+    { '@type': 'Question', name: 'Does it work for dates?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. On a date, alternate between light topics and ones that hint at values, without diving into the personal stuff cold.' } },
+    { '@type': 'Question', name: 'How do I keep it from dying?', acceptedAnswer: { '@type': 'Answer', text: 'Follow up answers with sharper questions. The thing that kills conversations is jumping topic to topic without listening.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Entertainment" title="Conversation Topic Generator"
+    intro="Find topics to start conversations at dinners, dates, group hangouts or interviews. Generate 15 prompts ready to use.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Context (optional)</label>
+      <input id="bn-kw" type="text" placeholder="dinner, first date, office..." value="dinner" />
+
+      <label for="bn-style" style="margin-top:1rem">Depth</label>
+      <select id="bn-style">
+        <option value="light">Light (icebreakers)</option>
+        <option value="medium">Medium (interests)</option>
+        <option value="deep">Deep (values)</option>
+        <option value="creative">Creative (hypothetical)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 15 topics</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How to start a conversation that lands</h2>
+      <p>
+        A great conversation isn't about speaking well — it's about asking the right questions at
+        the right time. The difference between a memorable dinner and a forgettable one almost
+        always comes down to who asks the first non-generic question. "What do you do?" is a
+        closing question. "What's the last thing that pulled you in so much you lost track of
+        time?" is an opening one.
+      </p>
+      <ol>
+        <li><strong>Skip closed questions.</strong> Yes/no answers kill conversation.</li>
+        <li><strong>Ask for stories.</strong> Best conversations happen when someone narrates a short personal moment.</li>
+        <li><strong>Follow up.</strong> Don't switch topics. Go deeper into what they said.</li>
+        <li><strong>Show real curiosity.</strong> People notice when you're just waiting your turn.</li>
+        <li><strong>Share something of your own.</strong> Conversation is two-way. Don't interrogate.</li>
+      </ol>
+
+      <h2>Topic depth levels</h2>
+      <ul>
+        <li><strong>Light (icebreakers)</strong>: food, recent travel, show recs, hobbies. First 10 minutes.</li>
+        <li><strong>Medium (interests)</strong>: personal projects, books that changed something, recent decisions. Build trust.</li>
+        <li><strong>Deep (values)</strong>: life priorities, big shifts, personal definitions. Save for established trust.</li>
+        <li><strong>Creative (hypothetical)</strong>: "if you had to...", "what would you do if...". Great for groups.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        Most common: starting too deep with someone you just met. "What's the worst moment of
+        your life?" on a first date ruins the night. Another: not listening, always pulling back
+        to your own topic. People notice. And a third: opining on what the other person just
+        said before they finish. Best conversations leave room for each story to land.
+      </p>
+
+      <h2>After generating</h2>
+      <ol>
+        <li>Start light to gauge the other's energy.</li>
+        <li>If it flows, add a medium topic. If not, stay light a bit longer.</li>
+        <li>Follow each answer with a sharper question.</li>
+        <li>Share something of your own before switching topics.</li>
+        <li>Close on a creative topic when the energy is high.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How do I start interesting?</summary><p>Skip yes/no and weather. Ask for a short personal story.</p></details>
+      <details><summary>Works for dates?</summary><p>Yes — alternate light and value-revealing topics.</p></details>
+      <details><summary>How to avoid it dying?</summary><p>Follow up answers with sharper questions.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.6rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.85rem 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const LIGHT = ['What was the best thing you ate this week?', "What show are you watching, and would you recommend it?", "What was your last trip that left you thinking?", "Any song you've played a hundred times this year?", "What book grabbed you in the last few months?", "If you could teleport somewhere right now, where?"];
+  const MEDIUM = ["What personal project are you putting time into this year?", "What was the last big decision you made and why?", "What new habit have you been trying to keep?", "Best advice you've gotten in the last few years?", "Anything you want to learn that you haven't started?"];
+  const DEEP = ["How would you define 'living well' today vs. five years ago?", "What's something you recently changed your mind about?", "Anything your family taught you that you now question?", "What makes you proud about how you live today?", "If you had to leave three rules to someone starting your career, what would they be?"];
+  const CREATIVE = ["If you could have breakfast once with any living person, who?", "If you had to live a year in another country with no internet, where?", "If you could spend a day in another profession, which?", "What everyday thing would you try for the first time if you were 10 years younger?"];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function shuffle<T>(arr: T[]): T[] { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const r = new Uint32Array(1); crypto.getRandomValues(r); const j = r[0] % (i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  function generate() {
+    const s = style.value;
+    let SRC: string[];
+    if (s === 'medium') SRC = [...MEDIUM, ...LIGHT];
+    else if (s === 'deep') SRC = [...DEEP, ...MEDIUM];
+    else if (s === 'creative') SRC = [...CREATIVE, ...LIGHT];
+    else SRC = [...LIGHT, ...CREATIVE];
+    const items = shuffle(SRC).slice(0, 15);
+    out.innerHTML = '';
+    items.forEach(text => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = text;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.textContent; el.textContent = '✓ copied'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

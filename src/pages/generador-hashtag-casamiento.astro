@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de hashtag de casamiento gratis | Genfy';
+const description = 'Generá hashtags únicos para tu casamiento. Combiná los nombres de los novios y obtené 20 hashtags creativos para Instagram y TikTok.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Por qué necesito un hashtag de casamiento?', acceptedAnswer: { '@type': 'Answer', text: 'Un hashtag único permite que vos y tus invitados encuentren todas las fotos del evento en un solo lugar, sin depender de que la gente las comparta directamente.' } },
+    { '@type': 'Question', name: '¿Cómo lo elijo?', acceptedAnswer: { '@type': 'Answer', text: 'Que sea único (chequealo en Instagram primero), corto, fácil de tipear y memorable. Si tiene un juego de palabras con tus apellidos o un guiño a su historia, mejor.' } },
+    { '@type': 'Question', name: '¿Cuándo lo comunico?', acceptedAnswer: { '@type': 'Answer', text: 'En el save the date, en la invitación formal y en cartelitos en la mesa el día del evento.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Casamiento" title="Generador de hashtag de casamiento"
+    intro="Combiná los nombres de los novios y obtené 20 hashtags únicos para Instagram. Ideales para imprimir en cartelitos de mesa, save the date e invitaciones.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-n1">Nombre 1</label>
+      <input id="bn-n1" type="text" placeholder="Ana" value="Ana" />
+
+      <label for="bn-n2" style="margin-top:1rem">Nombre 2</label>
+      <input id="bn-n2" type="text" placeholder="Bruno" value="Bruno" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="rhyme">Con rima (ForeverAna)</option>
+        <option value="merge">Combinado (AnaYBruno)</option>
+        <option value="adjective">Con adjetivo (HappyEverAB)</option>
+        <option value="date">Con fecha (AnaBruno2026)</option>
+        <option value="story">Storytelling (BrunoEncontroASuAna)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 hashtags</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir un buen hashtag de casamiento</h2>
+      <p>
+        Un hashtag de casamiento cumple un trabajo simple: agrupar todas las fotos y videos
+        que tus invitados suben durante y después del evento. Bien elegido, te ahorra horas
+        de pedirle fotos a cada amigo.
+      </p>
+      <ol>
+        <li><strong>Único.</strong> Verificalo en Instagram antes de imprimir cualquier cosa.</li>
+        <li><strong>Corto.</strong> Lo más corto posible: si tiene 30 caracteres, nadie lo va a tipear bien borracho a las 3 am.</li>
+        <li><strong>Fácil de tipear.</strong> Sin caracteres especiales, sin ñ ni tildes, sin números raros.</li>
+        <li><strong>Memorable.</strong> Si combina los nombres con humor o un guiño a su historia, mejor.</li>
+        <li><strong>Capitalización amigable.</strong> "AnaYBruno2026" se lee mejor que "anaybruno2026".</li>
+      </ol>
+
+      <h2>Estilos clásicos</h2>
+      <ul>
+        <li><strong>Con rima:</strong> "ForeverAna", "GoCrazyDavid". Funciona si rimás con "forever", "happy", "crazy", "loca".</li>
+        <li><strong>Combinado:</strong> "AnaYBruno", "PerezGonzalez2026". El más simple.</li>
+        <li><strong>Con adjetivo:</strong> "HappyEverAB", "WildlyLoveAB". Le da énfasis al sentimiento.</li>
+        <li><strong>Con fecha:</strong> "AnaBruno2026", "PerezGonzalez101225". Útil si pensás repetir hashtag en aniversarios.</li>
+        <li><strong>Storytelling:</strong> "BrunoEncontroASuAna", "ElDiaQueDijeronSi". Más creativo, requiere chequear largo.</li>
+      </ul>
+
+      <h2>Errores que evitar</h2>
+      <p>
+        El error más común es no chequear que el hashtag esté libre antes de imprimir
+        invitaciones: si ya hay 200 fotos de otra pareja con el mismo hashtag, las tuyas se
+        pierden. El segundo es elegir uno larguísimo: a la hora 4 del evento nadie va a
+        tipear "#ElCasamientoDeLaAnaYElBruno2026". El tercero es usar caracteres especiales:
+        Instagram no admite tildes ni eñes en hashtags.
+      </p>
+
+      <h2>Cómo comunicarlo</h2>
+      <ol>
+        <li>Save the date: incluí el hashtag en pequeño abajo.</li>
+        <li>Invitación formal: detrás de la tarjeta o en una hoja aparte.</li>
+        <li>Cartelitos de mesa: imprimí el hashtag con tipografía legible.</li>
+        <li>Espejo o cartel en la entrada: visible al llegar.</li>
+        <li>Mensaje de los novios al iniciar la fiesta: "subí todo a #..."</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Por qué necesito hashtag?</summary><p>Para encontrar todas las fotos del evento en un solo lugar, sin pedírselas a cada amigo.</p></details>
+      <details><summary>¿Cómo lo elijo?</summary><p>Único, corto, fácil de tipear y memorable. Sin tildes ni caracteres especiales.</p></details>
+      <details><summary>¿Cuándo lo comunico?</summary><p>Save the date, invitación formal, cartelitos de mesa y mensaje de los novios.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; font-family: monospace; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const RHYME = ['Forever', 'Happy', 'Crazy', 'Loca', 'Loco', 'Locos', 'Para Siempre', 'Wild', 'Sweet', 'Lovely'];
+  const ADJ = ['Happy', 'Wildly', 'Sweetly', 'Forever', 'Loca', 'Locos', 'Always', 'Eternal', 'True'];
+
+  const n1Input = document.getElementById('bn-n1') as HTMLInputElement;
+  const n2Input = document.getElementById('bn-n2') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function clean(s: string) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z]/g, ''); }
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const n1 = cap(clean(n1Input.value || 'Ana'));
+    const n2 = cap(clean(n2Input.value || 'Bruno'));
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let h = '';
+      if (s === 'rhyme') h = '#' + clean(pick(RHYME)) + n1 + n2;
+      else if (s === 'merge') {
+        const variant = Math.random();
+        if (variant < 0.33) h = '#' + n1 + 'Y' + n2;
+        else if (variant < 0.66) h = '#' + n1 + n2 + '2026';
+        else h = '#El' + n1 + n2;
+      }
+      else if (s === 'adjective') h = '#' + clean(pick(ADJ)) + 'Ever' + n1.charAt(0) + n2.charAt(0);
+      else if (s === 'date') h = '#' + n1 + n2 + (Math.random() > 0.5 ? '2026' : '101225');
+      else if (s === 'story') {
+        const stories = ['EncontroASu', 'DijoSiA', 'SeCasoCon', 'AmaA', 'BodaDe'];
+        h = '#' + n2 + pick(stories) + n1;
+      }
+      set.add(h);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

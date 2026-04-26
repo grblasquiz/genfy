@@ -1,0 +1,150 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Etsy Listing Title Generator | Genfy';
+const description = 'Generate Etsy listing titles optimized for the search algorithm. Up to 140 characters with front-loaded keywords, attributes and long-tail terms.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many characters does an Etsy title allow?', acceptedAnswer: { '@type': 'Answer', text: 'Etsy allows up to 140 characters. The algorithm gives more weight to the first words, so the primary keyword must go up front.' } },
+    { '@type': 'Question', name: 'Can I repeat keywords in an Etsy title?', acceptedAnswer: { '@type': 'Answer', text: 'Not advised. Etsy detects keyword stuffing and lowers ranking. Vary: use synonyms, attributes (color, size, material) and long-tail combos.' } },
+    { '@type': 'Question', name: 'Does Etsy SEO also use tags?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Etsy gives 13 tags per listing. Title and tags work together: don\'t repeat the same words, expand semantic coverage.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Etsy Listing Title Generator"
+    intro="Drop in product, attributes and use case. Genfy returns 4 titles optimized for Etsy's algorithm, all within the 140-character limit.">
+
+    <div slot="tool" class="et">
+      <label for="et-product">Main product</label>
+      <input id="et-product" type="text" placeholder="Silver earrings..." value="Sterling silver dangle earrings" />
+
+      <label for="et-attr" style="margin-top:1rem">Attributes (color, size, material)</label>
+      <input id="et-attr" type="text" placeholder="handmade, minimalist..." value="handmade, minimalist, hypoallergenic" />
+
+      <label for="et-use" style="margin-top:1rem">Use case or recipient</label>
+      <input id="et-use" type="text" placeholder="Gift for mom..." value="Birthday gift for mom" />
+
+      <label for="et-style" style="margin-top:1rem">Style</label>
+      <input id="et-style" type="text" placeholder="boho, vintage, modern..." value="modern boho style" />
+
+      <button id="et-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 4 titles</button>
+
+      <div id="et-out" class="et-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>How Etsy's search algorithm reads titles</h2>
+      <p>
+        Etsy's algorithm (internal, not Google) uses the title as the strongest relevance signal. The first 40 words weigh more than the last. If you sell "silver dangle earrings", those three words must appear in the first 40 characters, ideally the very first three. The rest is semantic filler that helps with long-tail but doesn't decide primary ranking.
+      </p>
+      <p>
+        Etsy combines title + tags + attributes + description to classify your listing. But when someone searches, the title match is what orders the top results.
+      </p>
+
+      <h2>The title structure that performs on Etsy</h2>
+      <ol>
+        <li><strong>Exact primary keyword (what people type):</strong> "Sterling silver dangle earrings".</li>
+        <li><strong>Key attributes:</strong> "handmade, minimalist, hypoallergenic".</li>
+        <li><strong>Use case or gift:</strong> "birthday gift for mom, anniversary gift".</li>
+        <li><strong>Style or niche:</strong> "boho style, minimalist jewelry".</li>
+      </ol>
+      <p>
+        Separated by commas or dashes — match the pattern that works for top-rankers in your category. Some niches prefer commas, others short hyphens.
+      </p>
+
+      <h2>The keyword stuffing trap and how to avoid it</h2>
+      <p>
+        "Silver earrings women earrings dangle silver women silver 925 earrings women silver gift" is the kind of title Etsy flags and demotes. Rule: each keyword appears max twice, always in phrases that read naturally. If it sounds like a robot when read aloud, the algorithm reads it the same way.
+      </p>
+
+      <h2>How to research real Etsy keywords</h2>
+      <p>
+        Etsy has autocomplete just like Pinterest. Type your main product and watch the suggestions: each one is a real search with volume. Three methods that work:
+      </p>
+      <ul>
+        <li><strong>Etsy autocomplete:</strong> clean session, language of target market, note the first 10 suggestions.</li>
+        <li><strong>EtsyHunt or eRank:</strong> paid tools that show estimated volume and keyword difficulty.</li>
+        <li><strong>Top-ranker analysis:</strong> open the first 5 listings of your target search and find common keywords.</li>
+      </ul>
+
+      <h2>Difference between title and tags</h2>
+      <p>
+        Etsy gives you 13 tags up to 20 characters each. Tags amplify the title's semantic coverage. If your title says "Sterling silver dangle earrings", your tags can cover "minimalist jewelry", "gift for her", "long earrings", "fine silver", etc. Repeating exact title words in tags is a waste: use tags for variants, synonyms and long-tail.
+      </p>
+
+      <h2>The length detail: 140 characters but they're not all equal</h2>
+      <p>
+        You have 140 characters but on mobile Etsy truncates to 60-80 in some results. What appears after that only counts for ranking, not for click. That's why the deciding keyword must always be in the first 60.
+      </p>
+
+      <h2>How to test if your title works</h2>
+      <ol>
+        <li>Search your primary keyword on Etsy and check where your listing ranks.</li>
+        <li>If it's on page 5+, your title likely lacks the exact keyword or your shop has low age/review count.</li>
+        <li>Change the title and wait 7-14 days for Etsy to reindex and adjust ranking.</li>
+        <li>Check the Etsy Stats panel: it tells you exactly which search brought each visit.</li>
+      </ol>
+
+      <h2>Common mistakes that kill sales</h2>
+      <ul>
+        <li><strong>Starting the title with your brand:</strong> "Acme Co - Earrings..." Etsy prioritizes the keyword, not the brand.</li>
+        <li><strong>Empty adjectives at the start:</strong> "Beautiful earrings..." wastes premium characters.</li>
+        <li><strong>Using the same title across listings:</strong> Etsy detects cannibalization.</li>
+        <li><strong>Not including material or main attribute:</strong> many people search "925 silver" not just "earrings".</li>
+        <li><strong>Skipping the use case:</strong> "gift for mom" or "anniversary gift" pulls long-tail searches.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many characters?</summary><p>Up to 140. The first 60 weigh most for ranking and click.</p></details>
+      <details><summary>Repeat keywords?</summary><p>Max twice and always in natural phrases. More is keyword stuffing.</p></details>
+      <details><summary>Brand in the title?</summary><p>Not at the start. If you want it, place at the end and only if your brand has real recognition.</p></details>
+      <details><summary>How long until it re-ranks?</summary><p>Etsy reindexes titles in 7-14 days. Change one at a time to measure impact.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .et-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .et-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.6; }
+  .et-card:hover { border-color: var(--accent); }
+  .et-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+</style>
+
+<script>
+  const product = document.getElementById('et-product') as HTMLInputElement;
+  const attr = document.getElementById('et-attr') as HTMLInputElement;
+  const use = document.getElementById('et-use') as HTMLInputElement;
+  const style = document.getElementById('et-style') as HTMLInputElement;
+  const gen = document.getElementById('et-gen') as HTMLButtonElement;
+  const out = document.getElementById('et-out')!;
+
+  function generate() {
+    const P = product.value.trim() || 'Handmade product';
+    const A = attr.value.trim() || 'handmade';
+    const U = use.value.trim() || 'Perfect gift';
+    const S = style.value.trim() || 'unique style';
+
+    const v1 = `${P}, ${A}, ${U}, ${S}`;
+    const v2 = `${P} - ${A} - ${U}`;
+    const v3 = `${P} ${S}, ${A}, ideal as ${U.toLowerCase()}`;
+    const v4 = `${P} | ${A} | ${U} | ${S}`;
+
+    out.innerHTML = '';
+    [v1, v2, v3, v4].forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'et-card';
+      el.title = 'Click to copy';
+      const len = b.length;
+      el.innerHTML = b + `<div class="et-meta">v${i+1} · ${len}/140 characters</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,154 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Debate Topic Generator | Genfy';
+const description = 'Balanced debate topics for classrooms, teams and clubs. Ethics, technology, society. Each comes with a pro and a con argument.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Useful for class?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, ideal for structured debates, argumentative essays or rhetoric exercises.' } },
+    { '@type': 'Question', name: 'Are there controversial topics?', acceptedAnswer: { '@type': 'Answer', text: 'A mix: light, ethical-philosophical and tech. We avoid extreme political polarization.' } },
+    { '@type': 'Question', name: 'Do they include arguments?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, each topic includes one pro and one con to start thinking.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Diversión / Fun" title="Debate topic generator"
+    intro="Balanced topics with starter arguments. Great for classroom, team or club.">
+
+    <div slot="tool" class="db">
+      <div class="db-card">
+        <p id="db-text" class="db-text">Tap generate to start.</p>
+        <details class="db-pros"><summary>Pro / Con arguments</summary>
+          <p><strong>Pro:</strong> <span id="db-pro">—</span></p>
+          <p><strong>Con:</strong> <span id="db-con">—</span></p>
+        </details>
+      </div>
+      <div class="db-controls">
+        <label for="db-cat">Category</label>
+        <select id="db-cat">
+          <option value="all">All</option>
+          <option value="tech">Technology</option>
+          <option value="society">Society</option>
+          <option value="education">Education</option>
+          <option value="light">Light / Fun</option>
+        </select>
+      </div>
+      <button id="db-gen" class="btn btn-primary" type="button">Another topic</button>
+    </div>
+
+    <div slot="content">
+      <h2>Why debate is key mental exercise</h2>
+      <p>
+        Debate forces things daily conversation doesn't: structuring an argument,
+        anticipating objections, defending a stance you may not fully share. Practicing
+        debate from a young age correlates with better writing, better critical thinking
+        and more confidence in public speaking. The world's top universities all have
+        debate clubs that go back a century.
+      </p>
+
+      <h2>How to structure a good debate</h2>
+      <ol>
+        <li><strong>Define the topic in one affirmative sentence.</strong> "Social media does more harm than good to teens."</li>
+        <li><strong>Assign sides by lottery.</strong> Defending a stance you don't share trains argumentative empathy.</li>
+        <li><strong>Closed timing.</strong> 4 minutes pro, 4 minutes con, 2 minutes cross-rebuttal.</li>
+        <li><strong>No personal attacks.</strong> Attack the argument, never the person.</li>
+        <li><strong>Close with a vote.</strong> Not on who's right, but who argued better.</li>
+      </ol>
+
+      <h2>Three categories and when to use them</h2>
+      <ul>
+        <li><strong>Tech:</strong> useful for companies and STEM classrooms. "Should AI have rights?"</li>
+        <li><strong>Society:</strong> useful for humanities and adult clubs. "Should city centers ban private cars?"</li>
+        <li><strong>Education:</strong> useful for ed schools and HR teams. "Is homework useful or just a load?"</li>
+        <li><strong>Light:</strong> useful for groups without prior experience or after-work. "Is pineapple on pizza a culinary crime?"</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <p>
+        The most common: confusing conviction with argument. "Because I say so" isn't
+        debate. Other errors: citing data without sources, mocking the opponent, talking
+        louder to seem more convincing, citing authority without checking (attributing
+        quotes to people who didn't say them). In quality debate, you win when the other
+        side concedes your point has merit, not when you've left them speechless.
+      </p>
+
+      <h2>Debate in the social-media era</h2>
+      <p>
+        Twitter and similar platforms reward zingers over arguments. That's the opposite
+        of real debate. Practicing structured debate is an antidote to meme culture: it
+        trains you to think long, not react fast. In corporate environments, teams that
+        debate well make better decisions because they consider objections before acting,
+        not after.
+      </p>
+
+      <h2>Resource: the steel-manning rule</h2>
+      <p>
+        Before attacking the opponent's argument, frame it as strongly as possible
+        (steel-manning). If your version of the opposing argument is stronger than the one
+        they used, you demonstrate mastery. It's the most powerful rhetorical tool that
+        almost nobody uses because it requires humility. Any topic in this generator can
+        be practiced this way: build both sides at their best, then choose which to
+        defend.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>For kids?</summary><p>The "light" filter works from primary school up.</p></details>
+      <details><summary>For companies?</summary><p>Yes, tech and society fit corporate workshops.</p></details>
+      <details><summary>Recommended timing?</summary><p>20-30 minutes per topic in structured format.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .db-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; }
+  .db-text { font-size: 1.125rem; line-height: 1.6; margin: 0 0 1rem; font-weight: 500; }
+  .db-pros { padding: 0.75rem; background: var(--bg-inset); border-radius: var(--radius); }
+  .db-pros summary { cursor: pointer; font-weight: 600; }
+  .db-pros p { margin: 0.75rem 0 0; color: var(--text-soft); }
+  .db-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const D: { cat: string; t: string; pro: string; con: string }[] = [
+    { cat: "tech", t: "AI should be strictly regulated.", pro: "Without regulation, social risks (deepfakes, bias, mass unemployment) escalate fast.", con: "Regulating too early stifles innovation that could solve real problems (medicine, science)." },
+    { cat: "tech", t: "Social media does more harm than good to teens.", pro: "Studies link heavy use with anxiety, depression and lower academic outcomes.", con: "Also creates community for minorities, digital literacy and career opportunities." },
+    { cat: "tech", t: "Working from home beats the office.", pro: "Saves commuting time, increases flexibility and measured productivity.", con: "Reduces team bond, makes mentoring harder and blurs work-life lines." },
+    { cat: "tech", t: "Electric cars are the answer to climate change.", pro: "Zero direct emissions, superior efficiency, accelerate the renewable shift.", con: "Battery production has heavy environmental cost; depends on a clean grid." },
+    { cat: "society", t: "Cities should ban private cars from their centers.", pro: "Less pollution, more public space, better urban quality of life.", con: "Hurts commerce, requires excellent transit, doesn't work without alternatives." },
+    { cat: "society", t: "Compulsory civil service should return.", pro: "Builds discipline, civic connection and practical training.", con: "Restricts freedom, costly for the state, voluntary service is a better alternative." },
+    { cat: "society", t: "Influencers are a legitimate profession.", pro: "Drive real economy, employment and new communication formats.", con: "Promote shallow consumption, financially unstable, distort youth aspirations." },
+    { cat: "society", t: "Voting should be mandatory.", pro: "Boosts representation, forces active citizenship, prevents minority capture.", con: "Lowers vote quality, restricts the freedom to abstain, doesn't ensure informed voting." },
+    { cat: "education", t: "Homework helps learning.", pro: "Reinforces content, builds discipline and autonomy.", con: "Overloads kids, creates inequality based on home context, cuts play and rest." },
+    { cat: "education", t: "Standardized exams should be abolished.", pro: "Reduce creativity, cause anxiety and poorly measure real learning.", con: "Comparable, cheap and provide a common metric across the system." },
+    { cat: "education", t: "Coding should be mandatory in high school.", pro: "Builds logic and prepares for the future job market.", con: "Takes time from other subjects, not everyone will code, requires trained teachers." },
+    { cat: "education", t: "School uniforms improve education.", pro: "Reduce social comparison, save morning decisions, foster group identity.", con: "Restrict expression, don't impact academic quality, add cost for low-income families." },
+    { cat: "light", t: "Pineapple on pizza is a culinary crime.", pro: "Mixes contradictory ingredients; sweet doesn't go with traditional pizza salt.", con: "Sweet-savory contrast is delicious (ham + melon, etc.); to each their own." },
+    { cat: "light", t: "Cats are better pets than dogs.", pro: "More independent, less attention required, keep the house mouse-free.", con: "Less openly affectionate, don't go on walks, harder to train." },
+    { cat: "light", t: "Read the book before watching the movie.", pro: "Imagination stays free, you catch details, less likely to be disappointed.", con: "Takes hours vs. minutes; some adaptations exceed the source." }
+  ];
+
+  const text = document.getElementById('db-text') as HTMLElement;
+  const pro = document.getElementById('db-pro') as HTMLElement;
+  const con = document.getElementById('db-con') as HTMLElement;
+  const cat = document.getElementById('db-cat') as HTMLSelectElement;
+  const genBtn = document.getElementById('db-gen') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = cat.value;
+    const pool = filter === 'all' ? D : D.filter(x => x.cat === filter);
+    const item = pick(pool);
+    text.textContent = item.t;
+    pro.textContent = item.pro;
+    con.textContent = item.con;
+  }
+  genBtn.addEventListener('click', generate);
+  generate();
+</script>
+</content>
+</invoke>

@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de nombre de estudio de yoga gratis | Genfy';
+const description = 'Generá nombres únicos para tu estudio de yoga. Combiná concepto, sensación o movimiento y obtené 20 ideas listas para vidriera, dominio y redes.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué tipo de nombre conviene para un estudio de yoga?', acceptedAnswer: { '@type': 'Answer', text: 'Algo que comunique movimiento, calma y rutina concreta. Palabras como brote, ancla, pulso, base o pilar funcionan sin caer en estereotipos.' } },
+    { '@type': 'Question', name: '¿Cómo evito sonar a cliché?', acceptedAnswer: { '@type': 'Answer', text: 'Evitá referencias a deidades, panteones o tradiciones espirituales específicas. Usá términos que comuniquen flexibilidad, respiración y práctica.' } },
+    { '@type': 'Question', name: '¿Cómo verifico disponibilidad?', acceptedAnswer: { '@type': 'Answer', text: 'Google Maps en 5 km, Instagram, dominio y registro de marcas local antes de imprimir mats o uniformes.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Bienestar" title="Generador de nombre de estudio de yoga"
+    intro="Combiná concepto, sensación o postura y obtené 20 ideas para tu estudio de yoga, vinyasa, hatha o yin. Pensado para validar dominio y handle al instante.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Palabras clave (concepto, postura, sensación)</label>
+      <input id="bn-kw" type="text" placeholder="ancla, pulso, base..." value="ancla, raíz" />
+
+      <label for="bn-style" style="margin-top:1rem">Estilo</label>
+      <select id="bn-style">
+        <option value="movement">Movimiento (Pulso, Ancla, Brote)</option>
+        <option value="single">Una palabra (Base, Pilar)</option>
+        <option value="studio">Studio + concepto</option>
+        <option value="local">Local + Yoga</option>
+        <option value="practical">Práctico (Stretch, Breathe)</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 20 nombres</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir el nombre de un estudio de yoga</h2>
+      <p>
+        Un estudio de yoga vende dos cosas concretas: práctica regular de movimiento y mejora
+        en flexibilidad, fuerza, respiración y descanso. El nombre tiene que comunicar ese
+        beneficio práctico, no una promesa abstracta. Mucha gente se aleja de estudios cuyo
+        nombre sugiere algo más allá de una clase de movimiento.
+      </p>
+      <ol>
+        <li><strong>Comunica práctica concreta.</strong> "Brote", "Ancla", "Pulso", "Pilar", "Base" sugieren rutina y constancia.</li>
+        <li><strong>Evitá referencias espirituales o de panteones.</strong> Tu estudio gana al ser inclusivo y no atado a ninguna tradición específica.</li>
+        <li><strong>Profesional, no informal.</strong> Tu cliente paga por la calidad del profesor y la limpieza del espacio.</li>
+        <li><strong>Compatible con mat estampado.</strong> Tipografía limpia, paleta limitada.</li>
+        <li><strong>Handle de IG corto.</strong> Donde subís horarios y reels de práctica.</li>
+      </ol>
+
+      <h2>Estilos que funcionan en yoga</h2>
+      <ul>
+        <li><strong>Movimiento:</strong> "Pulso", "Ancla", "Brote", "Vuelo". Concreto y mood-driven.</li>
+        <li><strong>Una palabra:</strong> "Base", "Pilar", "Raíz", "Linde". Versátil y memorable.</li>
+        <li><strong>Studio + concepto:</strong> "Movement Studio", "Breathe Studio", "Stretch Lab". Comunicación directa.</li>
+        <li><strong>Local + Yoga:</strong> "Palermo Yoga", "Brera Yoga". SEO local.</li>
+        <li><strong>Práctico:</strong> "Stretch", "Breathe", "Steady". Funciona muy bien con público nuevo.</li>
+      </ul>
+
+      <h2>Lo que evitar</h2>
+      <p>
+        Evitá nombres que evoquen deidades, conceptos religiosos o tradiciones espirituales
+        específicas. Además de saturados, alienan a parte del público que solo quiere mejorar
+        su flexibilidad y dormir mejor. Mantené el lenguaje en términos prácticos: respiración,
+        movilidad, fuerza, equilibrio postural, reducción de estrés. Si tu propuesta es ofrecer
+        clases regulares con beneficios físicos demostrables, tu nombre debe sugerirlo de
+        inmediato.
+      </p>
+      <p>
+        También evitá nombres que prometen resultados médicos o terapéuticos: cualquier
+        sugerencia de cura o tratamiento te puede meter en problemas regulatorios.
+      </p>
+
+      <h2>Validación rápida</h2>
+      <ol>
+        <li>Google Maps en 5 km.</li>
+        <li>Instagram, TikTok, ClassPass o Mindbody.</li>
+        <li>Dominio en Namecheap o Cloudflare.</li>
+        <li>Registro de marcas local.</li>
+        <li>Imprimir en remera y mat: ¿se ve profesional?</li>
+        <li>Decirlo a 5 personas que nunca hicieron yoga: ¿se animarían a entrar?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué tipo de nombre conviene?</summary><p>Comunica movimiento, calma y rutina concreta. Brote, ancla, pulso, base o pilar funcionan.</p></details>
+      <details><summary>¿Cómo evito el cliché?</summary><p>Evitá referencias a deidades o tradiciones espirituales. Lenguaje práctico de respiración y movimiento.</p></details>
+      <details><summary>¿Cómo verifico disponibilidad?</summary><p>Google Maps, Instagram, dominio y registro de marcas.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .bn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; user-select: text; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const MOVE = ['Pulso', 'Ancla', 'Brote', 'Vuelo', 'Trazo', 'Pliegue', 'Hilo', 'Eje', 'Ráfaga', 'Vértice'];
+  const SINGLE = ['Base', 'Pilar', 'Raíz', 'Linde', 'Roca', 'Brote', 'Ancla', 'Eje', 'Quilla', 'Tramo'];
+  const STUDIO_PRE = ['Movement', 'Breathe', 'Stretch', 'Steady', 'Calm', 'Flow', 'Anchor', 'Roots', 'Ground', 'Pulse'];
+  const STUDIO_SUF = ['Studio', 'Lab', 'House', 'Space', 'Atelier'];
+  const LOCAL = ['Palermo', 'Recoleta', 'Brera', 'Mission', 'Soho', 'Capitol', 'Centro', 'Boedo'];
+  const PRACT = ['Stretch', 'Breathe', 'Steady', 'Move', 'Flow', 'Roots'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const words = kw.value.split(',').map(s => s.trim()).filter(Boolean);
+    const s = style.value;
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      const w = words.length ? pick(words) : 'Yoga';
+      let name = '';
+      if (s === 'movement') name = pick(MOVE) + ' Yoga';
+      else if (s === 'single') name = pick(SINGLE);
+      else if (s === 'studio') name = pick(STUDIO_PRE) + ' ' + pick(STUDIO_SUF);
+      else if (s === 'local') name = pick(LOCAL) + ' Yoga';
+      else if (s === 'practical') name = pick(PRACT) + ' Studio';
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = n;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,163 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de CSS keyframes | Genfy';
+const description = 'Generá animaciones CSS con keyframes: fade, slide, bounce, pulse y custom. Previsualización en vivo y código listo para copiar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Qué son los keyframes?', acceptedAnswer: { '@type': 'Answer', text: 'Son los puntos clave de una animación CSS. Definís el estado en porcentajes (0%, 50%, 100%) y el navegador interpola entre ellos.' } },
+    { '@type': 'Question', name: '¿Animaciones CSS o JavaScript?', acceptedAnswer: { '@type': 'Answer', text: 'Para transiciones simples y estados, CSS es más performante. Para animaciones con lógica compleja o sincronizadas con scroll, JS o librerías como GSAP.' } },
+    { '@type': 'Question', name: '¿Animar todas las propiedades es seguro?', acceptedAnswer: { '@type': 'Answer', text: 'No. Animar transform y opacity es barato (composite). Animar width, height o top/left fuerza layout y daña la performance.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diseño / Design" title="Generador de CSS keyframes"
+    intro="Elegí un preset de animación o partí de uno y ajustá duración, easing y delay. Copiá el CSS listo para tu proyecto.">
+
+    <div slot="tool" class="kf">
+      <div class="kf-grid">
+        <div>
+          <label for="kf-preset">Preset</label>
+          <select id="kf-preset">
+            <option value="fadeIn" selected>fadeIn</option>
+            <option value="slideUp">slideUp</option>
+            <option value="bounce">bounce</option>
+            <option value="pulse">pulse</option>
+            <option value="spin">spin</option>
+            <option value="shake">shake</option>
+          </select>
+        </div>
+        <div>
+          <label for="kf-duration">Duración (s)</label>
+          <input id="kf-duration" type="number" step="0.1" value="1" />
+        </div>
+        <div>
+          <label for="kf-easing">Easing</label>
+          <select id="kf-easing">
+            <option>ease</option><option selected>ease-in-out</option><option>ease-in</option>
+            <option>ease-out</option><option>linear</option><option>cubic-bezier(0.2, 0.8, 0.2, 1)</option>
+          </select>
+        </div>
+        <div>
+          <label for="kf-iter">Iteraciones</label>
+          <input id="kf-iter" type="text" value="1" />
+        </div>
+      </div>
+
+      <div class="kf-actions">
+        <button id="kf-cp" class="btn btn-primary" type="button">Copiar CSS</button>
+        <button id="kf-replay" class="btn btn-ghost" type="button">Reproducir</button>
+      </div>
+
+      <pre><code id="kf-out"></code></pre>
+
+      <div class="kf-preview"><div id="kf-box">Box</div></div>
+    </div>
+
+    <div slot="content">
+      <h2>Qué son los keyframes</h2>
+      <p>Los @keyframes en CSS son la manera estándar de definir animaciones complejas. A diferencia de transition, que sólo interpola entre dos estados, keyframes te deja definir múltiples puntos intermedios y darle un nombre a la animación para reutilizarla.</p>
+
+      <h2>Sintaxis básica</h2>
+      <pre><code>@keyframes fadeIn &lcub;
+  from &lcub; opacity: 0; &rcub;
+  to &lcub; opacity: 1; &rcub;
+&rcub;
+
+.elemento &lcub;
+  animation: fadeIn 0.5s ease-in-out;
+&rcub;</code></pre>
+      <p>Podés usar <code>from/to</code> o porcentajes (<code>0%, 50%, 100%</code>). Los porcentajes te dan control fino sobre puntos intermedios.</p>
+
+      <h2>Animaciones que valen la pena</h2>
+      <ul>
+        <li><strong>fadeIn</strong>: entrada suave para elementos nuevos.</li>
+        <li><strong>slideUp / slideDown</strong>: revelado desde arriba o abajo.</li>
+        <li><strong>bounce</strong>: rebote elástico, útil para llamar atención.</li>
+        <li><strong>pulse</strong>: latido para indicar acción o estado.</li>
+        <li><strong>spin</strong>: rotación continua, clásica para loaders.</li>
+        <li><strong>shake</strong>: sacudida horizontal para señalar error.</li>
+      </ul>
+
+      <h2>Performance: animá lo que el GPU puede componer</h2>
+      <p>Los navegadores tienen tres etapas de rendering: layout, paint y composite. Animar propiedades que requieren layout (width, height, top, left) recalcula posiciones y es lento. Animar opacity y transform sólo toca la etapa de composite, que corre en GPU. Diferencia: 60fps vs jank.</p>
+      <ul>
+        <li><strong>Sí</strong>: opacity, transform (translate, scale, rotate).</li>
+        <li><strong>Cuidado</strong>: filter, color (paint).</li>
+        <li><strong>Evitar</strong>: width, height, padding, top, left (layout).</li>
+      </ul>
+
+      <h2>Easing</h2>
+      <p>El easing es la curva de aceleración de la animación. <code>linear</code> se siente mecánico. <code>ease-in-out</code> es el default agradable. <code>cubic-bezier()</code> te deja diseñar curvas custom: para movimiento "natural" probá <code>cubic-bezier(0.2, 0.8, 0.2, 1)</code>, popular en sistemas de diseño como Material y iOS.</p>
+
+      <h2>Animation shorthand</h2>
+      <pre><code>animation: name duration timing-function delay iteration-count direction fill-mode;</code></pre>
+      <p>Ejemplo completo: <code>animation: fadeIn 0.5s ease-in-out 0.2s 1 normal both;</code>. <code>fill-mode: both</code> mantiene el estado final para que no haya "pop" al terminar.</p>
+
+      <h2>Accesibilidad</h2>
+      <p>Respetá la preferencia <code>prefers-reduced-motion</code>. Algunas personas tienen vértigo o problemas vestibulares con animaciones. Envolvé tus animaciones en una media query así:</p>
+      <pre><code>@media (prefers-reduced-motion: no-preference) &lcub;
+  .elemento &lcub; animation: fadeIn 0.5s; &rcub;
+&rcub;</code></pre>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Qué son los keyframes?</summary><p>Puntos clave de una animación. El navegador interpola entre ellos en porcentajes.</p></details>
+      <details><summary>¿CSS o JS para animaciones?</summary><p>CSS es más performante para casos simples. JS conviene para lógica compleja o scroll-driven.</p></details>
+      <details><summary>¿Puedo animar todo?</summary><p>No. Quedate con opacity y transform. width/height fuerzan layout y rompen el frame rate.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .kf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .kf-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  pre { background: var(--bg-inset); padding: 1rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.8125rem; }
+  .kf-preview { padding: 2rem; background: var(--bg-inset); border-radius: var(--radius); margin-top: 1rem; display: flex; justify-content: center; align-items: center; min-height: 160px; }
+  #kf-box { width: 80px; height: 80px; border-radius: var(--radius); background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+  @media (max-width: 600px) { .kf-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const preset = document.getElementById('kf-preset') as HTMLSelectElement;
+  const dur = document.getElementById('kf-duration') as HTMLInputElement;
+  const ease = document.getElementById('kf-easing') as HTMLSelectElement;
+  const iter = document.getElementById('kf-iter') as HTMLInputElement;
+  const out = document.getElementById('kf-out') as HTMLElement;
+  const box = document.getElementById('kf-box') as HTMLElement;
+  const cp = document.getElementById('kf-cp') as HTMLButtonElement;
+  const replay = document.getElementById('kf-replay') as HTMLButtonElement;
+
+  const presets: Record<string, string> = {
+    fadeIn: '@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }',
+    slideUp: '@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }',
+    bounce: '@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }',
+    pulse: '@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }',
+    spin: '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }',
+    shake: '@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }',
+  };
+
+  function render() {
+    const kf = presets[preset.value];
+    const css = `${kf}\n\n.element {\n  animation: ${preset.value} ${dur.value}s ${ease.value} ${iter.value};\n}`;
+    out.textContent = css;
+    const styleId = 'kf-style';
+    let s = document.getElementById(styleId) as HTMLStyleElement | null;
+    if (!s) { s = document.createElement('style'); s.id = styleId; document.head.appendChild(s); }
+    s.textContent = kf;
+    box.style.animation = 'none';
+    void box.offsetWidth;
+    box.style.animation = `${preset.value} ${dur.value}s ${ease.value} ${iter.value}`;
+  }
+  [preset, dur, ease, iter].forEach(el => el.addEventListener('input', render));
+  cp.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(out.textContent || '');
+    cp.textContent = 'Copiado'; setTimeout(() => cp.textContent = 'Copiar CSS', 1500);
+  });
+  replay.addEventListener('click', render);
+  render();
+</script>

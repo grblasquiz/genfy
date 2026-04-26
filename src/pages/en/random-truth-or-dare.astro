@@ -1,0 +1,187 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Random Truth or Dare (clean) | Genfy';
+const description = 'Family-friendly Truth or Dare: honest questions and fun dares with no risque content. Perfect for parties, family gatherings, road trips and camps.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Is it suitable for all ages?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Questions and dares are curated to be clean: nothing risque, humiliating or dangerous. Works with kids, teens, family and the office.' } },
+    { '@type': 'Question', name: 'Can I pick only truth or only dare?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Three buttons: Truth, Dare, or Surprise (one at random).' } },
+    { '@type': 'Question', name: 'Do questions repeat?', acceptedAnswer: { '@type': 'Answer', text: 'Not within a session: we rotate. Reload the page and the cycle resets.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Diversión / Fun" title="Random Truth or Dare (clean)"
+    intro="Honest questions and fun dares, all family-friendly. No risque content, no risky dares.">
+
+    <div slot="tool" class="td">
+      <div class="td-card">
+        <span id="td-tag" class="td-pill">—</span>
+        <p id="td-text" class="td-text">Tap a button to start the round.</p>
+      </div>
+      <div class="td-actions">
+        <button id="td-truth" class="btn btn-primary" type="button">Truth</button>
+        <button id="td-dare" class="btn btn-primary" type="button">Dare</button>
+        <button id="td-mix" class="btn btn-ghost" type="button">Surprise</button>
+      </div>
+    </div>
+
+    <div slot="content">
+      <h2>What a clean Truth or Dare is for</h2>
+      <p>
+        The classic game has a thousand versions, and most online ones target adult parties.
+        This one is different: every question and dare passes a family-friendly filter. Use
+        it for birthday gatherings, camps, long road trips, school activities, or office team
+        events. When the group is mixed (kids, grandparents, coworkers), you can't afford an
+        awkward question.
+      </p>
+
+      <h2>How the round works</h2>
+      <p>
+        The first player taps <strong>Truth</strong> or <strong>Dare</strong> and answers or
+        performs whatever appears. Then turn passes to the player on the left. Picking
+        <strong>Surprise</strong> lets the generator choose. Optional rules that help:
+      </p>
+      <ul>
+        <li><strong>Three skips total:</strong> each player can skip three times across the round. After that they must answer or perform.</li>
+        <li><strong>30-second cap:</strong> physical dares run under half a minute. Keeps the energy high.</li>
+        <li><strong>Honesty above all:</strong> the magic of truths is that they're real. No making things up.</li>
+        <li><strong>Group veto:</strong> if anyone feels uncomfortable with a question, the group skips it without spending a skip.</li>
+      </ul>
+
+      <h2>Types of questions you'll see</h2>
+      <ol>
+        <li><strong>Innocent stories:</strong> "What was the worst haircut you ever had?"</li>
+        <li><strong>Preferences:</strong> "Beach or mountain? Why?"</li>
+        <li><strong>Family memories:</strong> "What's your earliest memory?"</li>
+        <li><strong>Soft hypotheticals:</strong> "If you could time-travel to one decade, which?"</li>
+        <li><strong>Light confessions:</strong> "What do you secretly love and never tell anyone?"</li>
+      </ol>
+
+      <h2>Dare flavors that may show up</h2>
+      <ul>
+        <li><strong>Light physical:</strong> 10 squats, animal impression, cartoon-character voice.</li>
+        <li><strong>Social:</strong> give a sincere compliment to three people in the group, tell a joke.</li>
+        <li><strong>Creative:</strong> invent a 15-second jingle about the last meal you ate.</li>
+        <li><strong>Memory:</strong> recite the alphabet backward, name 10 capitals without pausing.</li>
+      </ul>
+
+      <h2>When not to use this game</h2>
+      <p>
+        Even clean Truth or Dare can make very private people uncomfortable. If you're at a
+        gathering where everyone is meeting for the first time, start with icebreaker
+        questions (lighter) and save Truth or Dare for when there's some trust. Don't run it
+        if someone clearly doesn't want to play: forcing a participant breaks the vibe for the
+        whole group.
+      </p>
+
+      <h2>Ideas to amplify the round</h2>
+      <p>
+        Add a 30-second timer for dares. Have the loser prepare the next round of coffee or
+        snacks. Record short clips of the dares to watch at the end. If you're playing with
+        family, mix in questions that bridge generations ("tell your grandkid how you met
+        your spouse"). A solid round runs 20 to 40 minutes: past that, attention drops. Cut
+        it earlier and leave them wanting another round.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Kid-safe?</summary><p>Yes. All content targets mixed groups including family and classrooms.</p></details>
+      <details><summary>How many players?</summary><p>3 to 15. Past 15, split into two parallel rounds.</p></details>
+      <details><summary>Can I add my own questions?</summary><p>Not yet, but a custom-question version is in the works.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .td-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 140px; }
+  .td-pill { display: inline-block; padding: 0.25rem 0.75rem; background: var(--bg-inset); border: 1px solid var(--border-strong); border-radius: var(--radius); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .td-text { font-size: 1.125rem; line-height: 1.6; margin: 0; }
+  .td-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+</style>
+
+<script>
+  const TRUTHS = [
+    "What's the worst haircut you ever had?",
+    "What was your favorite school subject and why?",
+    "If you could live anywhere in the world, where?",
+    "What food can you not stand?",
+    "What's the most embarrassing song you secretly love?",
+    "What superpower would you pick?",
+    "What was your best birthday so far?",
+    "What's something you did as a kid that makes you laugh now?",
+    "What's your best family memory?",
+    "If you had to relive one day of your life, which?",
+    "What's a book or movie you recommend that few people know?",
+    "What's your secret morning routine?",
+    "What do you secretly love and tell no one?",
+    "Who's the funniest person you know?",
+    "What animal best represents you and why?",
+    "If you were invisible for a day, what would you do?",
+    "What's the strangest gift you've ever received?",
+    "What dessert would make you happy right now?",
+    "What's your weirdest habit?",
+    "What would you tell your 10-year-younger self?",
+    "If you could master one instrument instantly, which?",
+    "What hobby of yours do few people know about?",
+    "What unrealistic profession would tempt you?",
+    "What's the worst trend you ever followed?",
+    "What three things would you bring to a desert island?",
+    "What app do you open the most?",
+    "What white lie do you use the most?",
+    "What scares you more: public speaking or public singing?",
+    "What's your favorite English word?",
+    "What put you in a good mood this week?"
+  ];
+  const DARES = [
+    "Do 10 squats while telling a joke.",
+    "Impersonate a cartoon character for 30 seconds.",
+    "Speak with a foreign accent until your next turn.",
+    "Give a sincere compliment to every person in the group.",
+    "Sing the chorus of your favorite song.",
+    "Dance for 15 seconds without music.",
+    "Recite the alphabet backward.",
+    "Make up a 15-second jingle about the last thing you ate.",
+    "Tell a joke without laughing.",
+    "Show the latest photo on your camera roll and explain it.",
+    "Name 10 world capitals without pausing.",
+    "Speak like a documentary narrator for one minute.",
+    "Do your best impression of your best friend.",
+    "Walk as if wearing high heels across the room.",
+    "Say a tongue twister three times in a row without stumbling.",
+    "Sing your favorite childhood song.",
+    "Do 5 jumping jacks while reciting the alphabet.",
+    "Make up an absurd recipe with three ingredients the group names.",
+    "Improvise a four-line poem about the person on your right.",
+    "Speak in rhyme for 30 seconds.",
+    "Imitate a news anchor giving the weather.",
+    "Draw something with your eyes closed and show it.",
+    "Sing 'Happy Birthday' as if it were opera.",
+    "Hold a yoga pose for 20 seconds.",
+    "Say five things you're good at.",
+    "Invent a stage name for yourself and explain why.",
+    "Imitate three animal sounds; the group guesses.",
+    "Show your best dance move.",
+    "Sing the oldest commercial jingle you remember.",
+    "Say a sentence with your mouth full of air."
+  ];
+
+  const tag = document.getElementById('td-tag') as HTMLElement;
+  const text = document.getElementById('td-text') as HTMLElement;
+  const truthBtn = document.getElementById('td-truth') as HTMLButtonElement;
+  const dareBtn = document.getElementById('td-dare') as HTMLButtonElement;
+  const mixBtn = document.getElementById('td-mix') as HTMLButtonElement;
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function showTruth() { tag.textContent = 'Truth'; text.textContent = pick(TRUTHS); }
+  function showDare() { tag.textContent = 'Dare'; text.textContent = pick(DARES); }
+  truthBtn.addEventListener('click', showTruth);
+  dareBtn.addEventListener('click', showDare);
+  mixBtn.addEventListener('click', () => { Math.random() < 0.5 ? showTruth() : showDare(); });
+</script>
+</content>
+</invoke>

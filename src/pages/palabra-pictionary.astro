@@ -1,0 +1,160 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de palabra para Pictionary | Genfy';
+const description = 'Palabras para Pictionary curadas: fácil, medio y difícil. Cosas, acciones, lugares y conceptos. Sin contenido ofensivo.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿Hay niveles?', acceptedAnswer: { '@type': 'Answer', text: 'Sí: fácil, medio y difícil. También filtros por tema.' } },
+    { '@type': 'Question', name: '¿Apto para chicos?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, todas las palabras están filtradas para uso familiar.' } },
+    { '@type': 'Question', name: '¿Sirve para Pictionary online?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Mostrá la palabra solo al que dibuja.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Diversión / Fun" title="Generador de palabra para Pictionary"
+    intro="Palabras para dibujar y adivinar. Filtrá por dificultad y categoría.">
+
+    <div slot="tool" class="pw">
+      <div class="pw-card">
+        <span id="pw-cat-pill" class="pw-pill">—</span>
+        <p id="pw-text" class="pw-text">Tocá generar para empezar.</p>
+      </div>
+      <div class="pw-controls">
+        <label for="pw-dif">Dificultad</label>
+        <select id="pw-dif">
+          <option value="all">Todas</option>
+          <option value="facil">Fácil</option>
+          <option value="medio">Medio</option>
+          <option value="dificil">Difícil</option>
+        </select>
+      </div>
+      <button id="pw-gen" class="btn btn-primary" type="button">Otra palabra</button>
+      <button id="pw-hide" class="btn btn-ghost" type="button">Ocultar</button>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo elegir bien la palabra para Pictionary</h2>
+      <p>
+        El éxito de una ronda depende de la palabra. Si es muy fácil, no hay desafío. Si es
+        muy difícil, frustra al dibujante. Si es muy abstracta, nadie la adivina. La buena
+        palabra es la que cualquiera puede dibujar con esfuerzo creativo y la sala puede
+        adivinar sin trampa. Por eso curamos por nivel.
+      </p>
+
+      <h2>Tres tipos de palabras</h2>
+      <ol>
+        <li><strong>Sustantivo concreto:</strong> elefante, helado, bicicleta. Las más fáciles.</li>
+        <li><strong>Acción:</strong> nadar, llorar, escribir. Medias.</li>
+        <li><strong>Concepto abstracto:</strong> envidia, libertad, amor. Las más difíciles. Solo con jugadores experimentados.</li>
+      </ol>
+
+      <h2>Reglas estándar</h2>
+      <ul>
+        <li><strong>Sin letras ni números.</strong> Solo dibujos.</li>
+        <li><strong>Sin gestos hacia objetos del cuarto.</strong> Solo el papel.</li>
+        <li><strong>Sin sonidos ni palabras del dibujante.</strong> Silencio absoluto.</li>
+        <li><strong>Tiempo límite.</strong> 60 segundos clásico, 90 si la palabra es difícil.</li>
+        <li><strong>Equipos de mínimo 3.</strong> Uno dibuja, dos adivinan. Más adivinos, mejor.</li>
+      </ul>
+
+      <h2>Estrategias para el dibujante</h2>
+      <p>
+        Empezá por la silueta general antes que por el detalle. Si tenés "bicicleta", primero
+        las dos ruedas, después el cuadro, después el manubrio. Esto da pistas progresivas.
+        Si la palabra es compuesta ("perro caliente"), dibujá las dos partes por separado y
+        después uní. Si es acción ("correr"), dibujá una persona y agregá líneas de
+        movimiento. Si es abstracto ("amor"), busca el símbolo cultural más universal
+        (corazón, abrazo).
+      </p>
+
+      <h2>Estrategias para los adivinos</h2>
+      <p>
+        Hablá en voz alta. El dibujante no puede confirmar pero sí puede subrayar el
+        elemento clave. Si decís "perro" y subraya el segundo elemento, sabés que el
+        animal está bien y falta el modificador. Empezá por categorías amplias (animal,
+        objeto, lugar) y bajá. Pensá en compuestos: muchas palabras se descomponen en
+        partes.
+      </p>
+
+      <h2>Versiones del juego</h2>
+      <p>
+        El Pictionary clásico es por equipos. Versión rápida: solo cronómetro, todos
+        adivinan. Versión silenciosa: el dibujante no puede ver lo que ya dibujó (solo
+        recuerda). Versión difícil: solo en blanco y negro. Versión para chicos: solo
+        sustantivos concretos. Adapta según la edad y la cantidad de jugadores. Una
+        ronda completa son 6-10 palabras, dura 30-45 minutos.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿Cuántas palabras hay?</summary><p>Más de 100 curadas.</p></details>
+      <details><summary>¿Sirve para Zoom?</summary><p>Sí, usá pizarra compartida o tablet.</p></details>
+      <details><summary>¿Apto para 6 años?</summary><p>Sí, con filtro fácil.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .pw-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; min-height: 100px; text-align: center; }
+  .pw-pill { display: inline-block; padding: 0.25rem 0.75rem; background: var(--bg-inset); border: 1px solid var(--border-strong); border-radius: var(--radius); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .pw-text { font-size: 2rem; font-weight: 700; line-height: 1.2; margin: 0; }
+  .pw-controls { margin-bottom: 1rem; }
+  select { padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+</style>
+
+<script>
+  const W: { dif: string; t: string }[] = [
+    { dif: "facil", t: "perro" }, { dif: "facil", t: "casa" }, { dif: "facil", t: "sol" },
+    { dif: "facil", t: "árbol" }, { dif: "facil", t: "auto" }, { dif: "facil", t: "pelota" },
+    { dif: "facil", t: "libro" }, { dif: "facil", t: "lápiz" }, { dif: "facil", t: "manzana" },
+    { dif: "facil", t: "luna" }, { dif: "facil", t: "lluvia" }, { dif: "facil", t: "globo" },
+    { dif: "facil", t: "pez" }, { dif: "facil", t: "torta" }, { dif: "facil", t: "silla" },
+    { dif: "facil", t: "puerta" }, { dif: "facil", t: "flor" }, { dif: "facil", t: "elefante" },
+    { dif: "facil", t: "pan" }, { dif: "facil", t: "reloj" }, { dif: "facil", t: "guitarra" },
+    { dif: "facil", t: "barco" }, { dif: "facil", t: "avión" }, { dif: "facil", t: "helado" },
+    { dif: "facil", t: "anteojos" }, { dif: "facil", t: "tijera" },
+    { dif: "medio", t: "biblioteca" }, { dif: "medio", t: "supermercado" }, { dif: "medio", t: "telescopio" },
+    { dif: "medio", t: "cumpleaños" }, { dif: "medio", t: "estadio" }, { dif: "medio", t: "robot" },
+    { dif: "medio", t: "paraguas" }, { dif: "medio", t: "tobogán" }, { dif: "medio", t: "calabaza" },
+    { dif: "medio", t: "nadar" }, { dif: "medio", t: "cocinar" }, { dif: "medio", t: "estornudar" },
+    { dif: "medio", t: "bostezar" }, { dif: "medio", t: "abrazar" }, { dif: "medio", t: "saltar" },
+    { dif: "medio", t: "cinturón" }, { dif: "medio", t: "ascensor" }, { dif: "medio", t: "escalera" },
+    { dif: "medio", t: "barbacoa" }, { dif: "medio", t: "calculadora" }, { dif: "medio", t: "vacaciones" },
+    { dif: "medio", t: "chimenea" }, { dif: "medio", t: "submarino" }, { dif: "medio", t: "patineta" },
+    { dif: "dificil", t: "envidia" }, { dif: "dificil", t: "esperanza" }, { dif: "dificil", t: "libertad" },
+    { dif: "dificil", t: "paciencia" }, { dif: "dificil", t: "honestidad" }, { dif: "dificil", t: "globalización" },
+    { dif: "dificil", t: "democracia" }, { dif: "dificil", t: "infinito" }, { dif: "dificil", t: "gravedad" },
+    { dif: "dificil", t: "ironía" }, { dif: "dificil", t: "futuro" }, { dif: "dificil", t: "memoria" },
+    { dif: "dificil", t: "imaginación" }, { dif: "dificil", t: "dilema" }, { dif: "dificil", t: "secreto" },
+    { dif: "dificil", t: "tradición" }, { dif: "dificil", t: "fragilidad" }, { dif: "dificil", t: "destino" }
+  ];
+
+  const pill = document.getElementById('pw-cat-pill') as HTMLElement;
+  const text = document.getElementById('pw-text') as HTMLElement;
+  const dif = document.getElementById('pw-dif') as HTMLSelectElement;
+  const genBtn = document.getElementById('pw-gen') as HTMLButtonElement;
+  const hideBtn = document.getElementById('pw-hide') as HTMLButtonElement;
+  let last = '';
+
+  function pick<T>(a: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return a[i[0] % a.length]; }
+  function generate() {
+    const filter = dif.value;
+    const pool = filter === 'all' ? W : W.filter(x => x.dif === filter);
+    const item = pick(pool);
+    pill.textContent = item.dif;
+    text.textContent = item.t;
+    last = item.t;
+  }
+  hideBtn.addEventListener('click', () => {
+    if (text.textContent === '••••••') text.textContent = last;
+    else text.textContent = '••••••';
+  });
+  genBtn.addEventListener('click', generate);
+  generate();
+</script>
+</content>
+</invoke>

@@ -1,0 +1,139 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorShell from '../components/GeneratorShell.astro';
+
+const title = 'Generador de pitch de serie gratis | Genfy';
+const description = 'Generá pitches de una línea para tu próxima serie de TV o streaming. Combiná mundo, conflicto y motor de temporada para conseguir 10 ideas listas para presentar.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '¿En qué se diferencia un pitch de serie de uno de película?', acceptedAnswer: { '@type': 'Answer', text: 'El pitch de serie tiene que mostrar un motor que pueda durar varias temporadas, no solo un evento puntual. La pregunta clave es: ¿qué pasa cada semana?' } },
+    { '@type': 'Question', name: '¿Cuánto debe medir un pitch de serie?', acceptedAnswer: { '@type': 'Answer', text: 'Una a dos oraciones para el logline, más una "tagline" de cinco palabras. La descripción extendida (formato show bible) viene después.' } },
+    { '@type': 'Question', name: '¿Sirve para Netflix o Prime?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Las plataformas reciben miles de pitches por año. Una premisa clara con motor de temporadas es lo que pasa el primer filtro.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="es" tag="Entretenimiento" title="Generador de pitch de serie"
+    intro="Generá pitches de una línea para tu serie. Combiná mundo, conflicto y motor de temporada para conseguir 10 ideas listas para platforma o productora.">
+
+    <div slot="tool" class="bn">
+      <label for="bn-kw">Tema o ambiente</label>
+      <input id="bn-kw" type="text" placeholder="ciudad, frontera, oficina..." value="frontera" />
+
+      <label for="bn-style" style="margin-top:1rem">Tono</label>
+      <select id="bn-style">
+        <option value="prestige">Drama prestige</option>
+        <option value="crime">Crime / thriller</option>
+        <option value="comedy">Comedia</option>
+        <option value="scifi">Ciencia ficción</option>
+        <option value="anthology">Antología</option>
+      </select>
+
+      <button id="bn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generar 10 pitches</button>
+
+      <div id="bn-out" class="bn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Cómo escribir un pitch de serie que pase el primer filtro</h2>
+      <p>
+        El pitch de una serie tiene que responder dos preguntas a la vez: ¿qué pasa en el piloto?
+        y ¿qué pasa cada semana? La diferencia con una película es que la serie necesita un
+        motor sostenible. Si tu premisa se resuelve en el primer episodio, no es serie.
+      </p>
+      <ol>
+        <li><strong>Definí el mundo.</strong> Frontera, hospital, agencia, ciudad. Que el productor lo visualice.</li>
+        <li><strong>Sumá el evento que arranca.</strong> Una llegada, una muerte, un descubrimiento.</li>
+        <li><strong>Identificá el motor de temporada.</strong> ¿Por qué cada episodio aporta algo nuevo?</li>
+        <li><strong>Que tenga arco coral.</strong> Buenas series suelen mover varios personajes a la vez.</li>
+        <li><strong>Cerrá con un giro.</strong> Algo que diferencie tu pitch de los otros 100 que están leyendo.</li>
+      </ol>
+
+      <h2>Tipos de motor de serie</h2>
+      <ul>
+        <li><strong>Caso por episodio</strong>: cada semana resuelven uno (procedurales, comedias).</li>
+        <li><strong>Trama horizontal</strong>: una sola historia se desarrolla a lo largo de la temporada (prestige drama).</li>
+        <li><strong>Híbrido</strong>: caso semanal + arco horizontal (la mayoría de las series modernas).</li>
+        <li><strong>Antología</strong>: cada temporada con personajes y trama distintos.</li>
+      </ul>
+
+      <h2>Errores comunes</h2>
+      <p>
+        El más típico: pitches que parecen película de dos horas. Si tu premisa se resuelve en el
+        piloto, no hay serie. Otro error: demasiados personajes principales (más de cinco) que
+        diluyen el foco. Y un tercero: pitches sin "promesa de mundo". El espectador acepta una
+        serie cuando siente que ese mundo tiene mucho para dar más allá del evento inicial.
+      </p>
+
+      <h2>Después de generar</h2>
+      <ol>
+        <li>Verificá que el pitch responda "¿qué pasa cada semana?".</li>
+        <li>Definí los tres personajes principales en una frase cada uno.</li>
+        <li>Bocetá los arcos de la primera temporada en cinco líneas.</li>
+        <li>Listá tres giros para el final de temporada.</li>
+        <li>Probá el pitch en voz alta a alguien que mira mucha TV: ¿quiere ver el piloto?</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>¿En qué se diferencia de un pitch de película?</summary><p>Necesita motor sostenible para varias temporadas, no solo un evento.</p></details>
+      <details><summary>¿Cuánto debe medir?</summary><p>Una a dos oraciones de logline más tagline corta.</p></details>
+      <details><summary>¿Sirve para Netflix o Prime?</summary><p>Sí, una premisa con motor claro pasa el primer filtro.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bn-out { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+  .bn-item { padding: 1rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.1s; line-height: 1.55; }
+  .bn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const SETUP_P = ['En un pueblo costero en decadencia,', 'En una hacienda heredada por tres hermanas,', 'En un hotel termal cerrado fuera de temporada,', 'En un edificio de oficinas donde tres empresas comparten piso,'];
+  const SETUP_C = ['En una pequeña fiscalía rural,', 'En una agencia federal con tres inspectores nuevos,', 'En un destacamento al borde del país,'];
+  const SETUP_CO = ['En una redacción digital que recién arranca,', 'En un edificio de tres departamentos con vecinos imposibles,', 'En una panadería heredada por dos hermanos opuestos,'];
+  const SETUP_SF = ['En una colonia minera en Marte (renombrada como K-2),', 'En el último laboratorio de la superficie,', 'En una estación orbital donde la gravedad se está perdiendo,'];
+  const SETUP_AN = ['Cada temporada cuenta una nueva historia en el mismo barrio,', 'Cada temporada sigue a una familia distinta en el mismo edificio,'];
+  const ENGINE_P = ['un secreto familiar de cuarenta años empieza a salir, episodio a episodio.', 'cada semana, un personaje del pasado vuelve y reordena las relaciones.', 'la herencia trae una decisión nueva por capítulo.'];
+  const ENGINE_C = ['cada episodio resuelven un caso mientras avanzan en una conspiración mayor.', 'cada semana entra un nuevo expediente que conecta con un crimen del pasado.'];
+  const ENGINE_CO = ['cada episodio explora un conflicto entre los protagonistas mientras avanza una trama anual.', 'cada semana hay un nuevo enredo laboral con un giro que termina en risa.'];
+  const ENGINE_SF = ['cada episodio explora un problema técnico mientras se descubre que algo más grande pasa en la base.', 'cada semana, un sistema falla y revela parte del misterio central.'];
+  const ENGINE_AN = ['con un evento detonante y arco completo en ocho episodios.'];
+
+  const kw = document.getElementById('bn-kw') as HTMLInputElement;
+  const style = document.getElementById('bn-style') as HTMLSelectElement;
+  const gen = document.getElementById('bn-gen') as HTMLButtonElement;
+  const out = document.getElementById('bn-out')!;
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const s = style.value;
+    let SET: string[], ENG: string[];
+    if (s === 'crime') { SET = SETUP_C; ENG = ENGINE_C; }
+    else if (s === 'comedy') { SET = SETUP_CO; ENG = ENGINE_CO; }
+    else if (s === 'scifi') { SET = SETUP_SF; ENG = ENGINE_SF; }
+    else if (s === 'anthology') { SET = SETUP_AN; ENG = ENGINE_AN; }
+    else { SET = SETUP_P; ENG = ENGINE_P; }
+    out.innerHTML = '';
+    const seen = new Set<string>();
+    let attempts = 0;
+    while (seen.size < 10 && attempts < 60) {
+      attempts++;
+      const text = `${pick(SET)} ${pick(ENG)}`;
+      if (seen.has(text)) continue;
+      seen.add(text);
+      const el = document.createElement('div');
+      el.className = 'bn-item';
+      el.textContent = text;
+      el.title = 'Click para copiar';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(text); const orig = el.textContent; el.textContent = '✓ copiado'; setTimeout(() => el.textContent = orig, 800); });
+      out.appendChild(el);
+    }
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,278 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Database Table SQL Builder | Genfy';
+const description = 'Generate CREATE TABLE statements with types, keys, indexes and constraints. PostgreSQL, MySQL, SQLite or SQL Server.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Which PK type is best?', acceptedAnswer: { '@type': 'Answer', text: 'BIGSERIAL/IDENTITY for massive internal tables; UUID v7 when the ID travels to the frontend or between services.' } },
+    { '@type': 'Question', name: 'When to use a composite index?', acceptedAnswer: { '@type': 'Answer', text: 'When several columns are filtered together frequently. Order matters: the first column should be the most selective.' } },
+    { '@type': 'Question', name: 'VARCHAR or TEXT?', acceptedAnswer: { '@type': 'Answer', text: 'In Postgres there is no performance difference; use TEXT unless you need a hard cap. In MySQL, VARCHAR(N) when you know the max size.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Tech / Dev"
+    title="Database Table SQL Builder"
+    intro="Generate a CREATE TABLE with types, keys, indexes and constraints ready to drop into your migration."
+  >
+    <div slot="tool" class="db-tool">
+      <div class="db-grid">
+        <div>
+          <label for="db-dialect">Dialect</label>
+          <select id="db-dialect">
+            <option value="postgres">PostgreSQL</option>
+            <option value="mysql">MySQL</option>
+            <option value="sqlite">SQLite</option>
+            <option value="mssql">SQL Server</option>
+          </select>
+        </div>
+        <div>
+          <label for="db-template">Template</label>
+          <select id="db-template">
+            <option value="users">users</option>
+            <option value="posts">posts</option>
+            <option value="orders">orders</option>
+            <option value="audit">audit_log</option>
+          </select>
+        </div>
+      </div>
+      <div class="db-actions">
+        <button id="db-gen" class="btn btn-primary" type="button">Generate</button>
+        <button id="db-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+      </div>
+      <textarea id="db-out" class="mono" rows="14" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>Anatomy of a CREATE TABLE</h2>
+      <p>
+        A good CREATE TABLE defines columns with precise types, a clear primary key, foreign keys
+        with their cascade actions, indexes on filtered or sorted columns, and constraints that
+        protect integrity. What looks like overhead up front pays off in reliability later.
+      </p>
+
+      <h2>Primary key: BIGSERIAL vs UUID</h2>
+      <p>
+        For internal tables that grow fast, BIGSERIAL (Postgres) or BIGINT IDENTITY (SQL Server)
+        remain the most efficient: 8 bytes, sortable. For IDs visible to users or shared between
+        services, UUID (v7 if you want time ordering) avoids leaking cardinality and lets you
+        mint IDs without coordination.
+      </p>
+
+      <h2>Timestamp types</h2>
+      <p>
+        Use <code>TIMESTAMPTZ</code> in Postgres (timestamp with time zone): stored in UTC,
+        converted to the client TZ. Plain <code>TIMESTAMP</code> without TZ is a trap: it seems
+        to work until you cross time zones. In MySQL, use <code>DATETIME</code> with the rule
+        "store UTC in the app, format on the client".
+      </p>
+
+      <h2>NOT NULL and defaults</h2>
+      <p>
+        Every column allowed to be NULL should be a deliberate choice. If a field always has a
+        value, mark it NOT NULL from day one. <code>created_at TIMESTAMPTZ NOT NULL DEFAULT
+        NOW()</code> is the default config for any new table.
+      </p>
+
+      <h2>CHECK constraints</h2>
+      <p>
+        <code>CHECK (price &gt;= 0)</code>, <code>CHECK (status IN ('pending', 'paid'))</code>,
+        <code>CHECK (start_date &lt; end_date)</code>. What your app should validate, validate it
+        in the database too. It's the last line of defense against corrupt data.
+      </p>
+
+      <h2>Foreign keys: CASCADE, RESTRICT, SET NULL</h2>
+      <p>
+        <code>ON DELETE CASCADE</code> deletes children when the parent is deleted; useful for
+        composition (order &rarr; items). <code>RESTRICT</code> forbids deletion if children
+        exist; the most conservative. <code>SET NULL</code> orphans the child; useful for
+        authors and posts when you want to keep the post.
+      </p>
+
+      <h2>Indexes: when and which</h2>
+      <p>
+        Index columns used in WHERE, JOIN, ORDER BY. For equality and ranges, B-tree (default).
+        For full-text search, GIN in Postgres. For arrays and JSON, GIN as well. Too many indexes
+        slow INSERTs and take space: monitor with <code>pg_stat_user_indexes</code> which ones
+        aren't used and drop them.
+      </p>
+
+      <h2>Soft delete</h2>
+      <p>
+        If you'll "delete" records but want to keep them, add a nullable <code>deleted_at
+        TIMESTAMPTZ</code>. Reads filter <code>WHERE deleted_at IS NULL</code>. Trade-off: every
+        query needs that filter and unique indexes need partial conditions.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>BIGSERIAL or UUID?</summary><p>BIGSERIAL for internal tables; UUID when the ID is public or cross-service.</p></details>
+      <details><summary>Composite index?</summary><p>When several columns are filtered together. First column = most selective.</p></details>
+      <details><summary>VARCHAR or TEXT?</summary><p>Same in Postgres. In MySQL, VARCHAR(N) when you have a clear cap.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .db-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .db-grid { grid-template-columns: 1fr; } }
+  .db-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const dialect = document.getElementById('db-dialect') as HTMLSelectElement;
+  const tpl = document.getElementById('db-template') as HTMLSelectElement;
+  const out = document.getElementById('db-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('db-gen') as HTMLButtonElement;
+  const copy = document.getElementById('db-copy') as HTMLButtonElement;
+
+  function pgUsers() {
+    return `CREATE TABLE users (
+  id BIGSERIAL PRIMARY KEY,
+  uuid UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  name VARCHAR(120) NOT NULL,
+  role VARCHAR(20) NOT NULL DEFAULT 'user' CHECK (role IN ('admin','user','editor')),
+  active BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  deleted_at TIMESTAMPTZ
+);
+
+CREATE INDEX idx_users_email_lower ON users (LOWER(email));
+CREATE INDEX idx_users_active_created ON users (active, created_at DESC) WHERE deleted_at IS NULL;`;
+  }
+  function pgPosts() {
+    return `CREATE TABLE posts (
+  id BIGSERIAL PRIMARY KEY,
+  author_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  slug VARCHAR(200) NOT NULL UNIQUE,
+  title VARCHAR(200) NOT NULL,
+  content TEXT NOT NULL,
+  published BOOLEAN NOT NULL DEFAULT FALSE,
+  published_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  CHECK (NOT published OR published_at IS NOT NULL)
+);
+
+CREATE INDEX idx_posts_author ON posts (author_id);
+CREATE INDEX idx_posts_published ON posts (published_at DESC) WHERE published = TRUE;`;
+  }
+  function pgOrders() {
+    return `CREATE TABLE orders (
+  id BIGSERIAL PRIMARY KEY,
+  uuid UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE,
+  customer_id BIGINT NOT NULL REFERENCES customers(id) ON DELETE RESTRICT,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','paid','shipped','delivered','cancelled')),
+  total NUMERIC(12,2) NOT NULL CHECK (total >= 0),
+  currency CHAR(3) NOT NULL DEFAULT 'USD',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  paid_at TIMESTAMPTZ
+);
+
+CREATE INDEX idx_orders_customer ON orders (customer_id, created_at DESC);
+CREATE INDEX idx_orders_status ON orders (status) WHERE status IN ('pending','paid');`;
+  }
+  function pgAudit() {
+    return `CREATE TABLE audit_log (
+  id BIGSERIAL PRIMARY KEY,
+  actor_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
+  action VARCHAR(50) NOT NULL,
+  entity_type VARCHAR(50) NOT NULL,
+  entity_id VARCHAR(64) NOT NULL,
+  changes JSONB,
+  ip_address INET,
+  user_agent TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_audit_entity ON audit_log (entity_type, entity_id);
+CREATE INDEX idx_audit_actor ON audit_log (actor_id, created_at DESC);
+CREATE INDEX idx_audit_created ON audit_log (created_at DESC);`;
+  }
+  function mysqlUsers() {
+    return `CREATE TABLE users (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  uuid CHAR(36) NOT NULL UNIQUE,
+  email VARCHAR(255) NOT NULL,
+  name VARCHAR(120) NOT NULL,
+  role ENUM('admin','user','editor') NOT NULL DEFAULT 'user',
+  active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  deleted_at DATETIME NULL,
+  UNIQUE KEY uk_users_email (email),
+  KEY idx_users_active_created (active, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;`;
+  }
+  function sqliteUsers() {
+    return `CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  uuid TEXT NOT NULL UNIQUE,
+  email TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  role TEXT NOT NULL DEFAULT 'user' CHECK (role IN ('admin','user','editor')),
+  active INTEGER NOT NULL DEFAULT 1,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+  deleted_at TEXT
+);
+
+CREATE INDEX idx_users_email ON users (email);
+CREATE INDEX idx_users_active ON users (active, created_at) WHERE deleted_at IS NULL;`;
+  }
+  function mssqlUsers() {
+    return `CREATE TABLE users (
+  id BIGINT IDENTITY(1,1) PRIMARY KEY,
+  uuid UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID() UNIQUE,
+  email NVARCHAR(255) NOT NULL UNIQUE,
+  name NVARCHAR(120) NOT NULL,
+  role NVARCHAR(20) NOT NULL DEFAULT 'user' CHECK (role IN ('admin','user','editor')),
+  active BIT NOT NULL DEFAULT 1,
+  created_at DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME(),
+  updated_at DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME(),
+  deleted_at DATETIME2 NULL
+);
+
+CREATE INDEX idx_users_email ON users (email);
+CREATE INDEX idx_users_active_created ON users (active, created_at) WHERE deleted_at IS NULL;`;
+  }
+
+  function build() {
+    let r = '';
+    if (dialect.value === 'postgres') {
+      if (tpl.value === 'users') r = pgUsers();
+      else if (tpl.value === 'posts') r = pgPosts();
+      else if (tpl.value === 'orders') r = pgOrders();
+      else r = pgAudit();
+    } else if (dialect.value === 'mysql') {
+      r = mysqlUsers();
+    } else if (dialect.value === 'sqlite') {
+      r = sqliteUsers();
+    } else {
+      r = mssqlUsers();
+    }
+    out.value = r;
+  }
+  gen.addEventListener('click', build);
+  [dialect, tpl].forEach(el => el.addEventListener('change', build));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copied';
+    setTimeout(() => { icon.textContent = 'Copy'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

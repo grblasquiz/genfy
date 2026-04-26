@@ -1,0 +1,135 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Feature Name Generator | Genfy';
+const description = 'Generate names for new SaaS product features. Short, clear, ownable combinations in the spirit of Stripe, Linear or Notion. 20 ideas in one click.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What makes a good feature name?', acceptedAnswer: { '@type': 'Answer', text: 'Short (1-2 words), describes the outcome more than the mechanic, and reads naturally in conversation.' } },
+    { '@type': 'Question', name: 'Generic terms or proper names?', acceptedAnswer: { '@type': 'Answer', text: 'Generic for small obvious features (Filters, Search). Proper names for features you want users to remember and mention (Linear Roadmap, Notion AI).' } },
+    { '@type': 'Question', name: 'When NOT to brand a feature?', acceptedAnswer: { '@type': 'Answer', text: 'When it is small, unstable, or naming it adds more friction than value. Not everything deserves a name.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Feature Name Generator"
+    intro="Generate 20 names for your next feature: short, clear, ownable. Combinations in the style of Stripe, Linear or Notion for release notes, decks or pricing.">
+
+    <div slot="tool" class="fn">
+      <label>What the feature does in a few words</label>
+      <input id="fn-what" type="text" value="organize tasks with AI" />
+
+      <label style="margin-top:1rem">Style</label>
+      <select id="fn-style">
+        <option value="action">Action verb (Sort, Plan, Build)</option>
+        <option value="object">Concrete noun (Pulse, Forge, Beacon)</option>
+        <option value="combo">Prefix + suffix (Smart-X, Auto-X)</option>
+        <option value="proper">Proper name (Linear, Stripe-style)</option>
+      </select>
+
+      <button id="fn-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 20 names</button>
+
+      <div id="fn-out" class="fn-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>When a feature deserves a name and when not</h2>
+      <p>
+        Not everything you build needs a proper name. Simple rule: name it if you want customers
+        to remember it, ask for it, or mention it by name. "Filters" doesn't deserve a name.
+        "Roadmap timeline" doesn't either. But "Notion AI", "Stripe Sigma" or "Linear Cycles" do —
+        they stake out new territory in the product and give marketing something concrete.
+      </p>
+
+      <h2>What makes a good feature name</h2>
+      <ol>
+        <li><strong>Short:</strong> 1-2 words. 3 words loses in word-of-mouth.</li>
+        <li><strong>Concrete:</strong> hints at outcome, not mechanism. "Pulse" feels energetic; "Smart Prioritization Algorithm" doesn't.</li>
+        <li><strong>Speakable:</strong> sounds right in a call. If it sounds awkward, it won't spread.</li>
+        <li><strong>Not generic:</strong> avoid "Smart Sync" or "Auto Plus" — saturated.</li>
+        <li><strong>Unique in your space:</strong> Google + your name + competitor — if another company uses it, drop it.</li>
+      </ol>
+
+      <h2>4 styles that work</h2>
+      <ul>
+        <li><strong>Action verb:</strong> Sort, Plan, Build, Track. Great for productivity features. e.g. "Notion Build", "Linear Plan".</li>
+        <li><strong>Concrete noun:</strong> Pulse, Forge, Beacon, Pivot. Adds energy and feels ownable.</li>
+        <li><strong>Prefix / suffix:</strong> Smart-X, Auto-X, X-AI. Communicates fast but saturated — use with care.</li>
+        <li><strong>Invented proper name:</strong> Sigma, Atlas, Loom. Only for important features that deserve their own identity.</li>
+      </ul>
+
+      <h2>Common naming mistakes</h2>
+      <ol>
+        <li>Naming everything. When everything has a brand name, none stands out.</li>
+        <li>Using the internal project codename. "Project Falcon" rarely works externally.</li>
+        <li>Acronyms with no context: "MMR Engine", "AI-OPS Sync". Sounds like a bank.</li>
+        <li>Overly epic names for a small feature. "Quantum Engine" on a search filter is loud.</li>
+        <li>Skipping outside testing. Internal names usually sound great inside, weird outside.</li>
+      </ol>
+
+      <h2>How to test before launch</h2>
+      <ul>
+        <li>Tell 5 customers the name and ask, "what do you imagine it does?". Consistent answers means it works.</li>
+        <li>Google it. Same name + same category from another company? Drop.</li>
+        <li>Use it in a sentence: "I saw you're using [name]". If it sounds weird, change it.</li>
+        <li>Check subdomain or slug availability. /features/[name] should be free.</li>
+        <li>If the feature will be paid separately, run a USPTO trademark search.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What makes it good?</summary><p>Short, concrete, speakable, non-generic and unique in your space.</p></details>
+      <details><summary>Generic or proper?</summary><p>Generic for the obvious. Proper for what you want customers to mention.</p></details>
+      <details><summary>When NOT to name?</summary><p>If the feature is small, unstable or naming it adds friction.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .fn-out { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.5rem; margin-top: 1.25rem; }
+  .fn-item { padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: border-color 0.1s; text-align: center; }
+  .fn-item:hover { border-color: var(--primary); }
+</style>
+
+<script>
+  const what = document.getElementById('fn-what') as HTMLInputElement;
+  const style = document.getElementById('fn-style') as HTMLSelectElement;
+  const out = document.getElementById('fn-out')!;
+  const gen = document.getElementById('fn-gen') as HTMLButtonElement;
+
+  const VERBS = ['Sort', 'Plan', 'Build', 'Track', 'Sync', 'Boost', 'Match', 'Spot', 'Lift', 'Frame', 'Map', 'Steer', 'Render', 'Tune', 'Forge'];
+  const NOUNS = ['Pulse', 'Forge', 'Beacon', 'Pivot', 'Crest', 'Bloom', 'Spark', 'Atlas', 'Sigma', 'Compass', 'Anchor', 'Lens', 'Stream', 'Loop', 'Wave'];
+  const PREFIX = ['Smart', 'Auto', 'Quick', 'Live', 'Open', 'Deep'];
+  const SUFFIX = ['AI', 'Flow', 'Hub', 'Sync', 'Boost', 'Lab', 'Kit'];
+  const PROPER = ['Atlas', 'Sigma', 'Loom', 'Quill', 'Vector', 'Halo', 'Echo', 'Forge', 'Pulse', 'Compass', 'Lens', 'Beacon', 'Crest', 'Pivot', 'Span'];
+
+  function pick<T>(arr: T[]): T { const i = new Uint32Array(1); crypto.getRandomValues(i); return arr[i[0] % arr.length]; }
+
+  function generate() {
+    const set = new Set<string>();
+    let attempts = 0;
+    while (set.size < 20 && attempts < 200) {
+      attempts++;
+      let name = '';
+      if (style.value === 'action') name = pick(VERBS);
+      else if (style.value === 'object') name = pick(NOUNS);
+      else if (style.value === 'combo') name = pick(PREFIX) + pick(SUFFIX);
+      else name = pick(PROPER);
+      set.add(name);
+    }
+    out.innerHTML = '';
+    [...set].forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'fn-item';
+      el.textContent = n;
+      el.title = 'Click to copy';
+      el.addEventListener('click', () => { navigator.clipboard.writeText(n); el.textContent = '✓ ' + n; setTimeout(() => el.textContent = n, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

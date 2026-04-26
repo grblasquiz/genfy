@@ -1,0 +1,186 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Reddit Post Title Generator | Genfy';
+const description = 'Generate Reddit post titles that pass auto-mod and engage. Up to 300 characters with subreddit-specific tone, no obvious clickbait.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How many characters does a Reddit title allow?', acceptedAnswer: { '@type': 'Answer', text: 'Reddit allows up to 300 characters. Most top posts use 60 to 150: enough for context without looking like clickbait.' } },
+    { '@type': 'Question', name: 'Does Reddit penalize clickbait titles?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Auto-mods and the community downvote sensationalist titles. "You won\'t believe..." or "This one trick..." get downvoted instantly.' } },
+    { '@type': 'Question', name: 'What tone works on Reddit?', acceptedAnswer: { '@type': 'Answer', text: 'Casual, honest, context-first. Reddit values authenticity and distrusts obvious marketing. Better "I bought X and this happened" than "X changed my life".' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Marketing" title="Reddit Post Title Generator"
+    intro="Drop in subreddit, topic and tone. Genfy returns 4 titles that pass auto-mod and feel authentic to the community.">
+
+    <div slot="tool" class="rd">
+      <label for="rd-sub">Subreddit (without r/)</label>
+      <input id="rd-sub" type="text" placeholder="personalfinance..." value="personalfinance" />
+
+      <label for="rd-topic" style="margin-top:1rem">Topic or experience</label>
+      <input id="rd-topic" type="text" placeholder="Went from $0 to investing..." value="Went from saving nothing to investing 500 a month" />
+
+      <label for="rd-context" style="margin-top:1rem">Brief context</label>
+      <input id="rd-context" type="text" placeholder="28yo freelancer..." value="28yo freelancer, US-based" />
+
+      <label for="rd-tone" style="margin-top:1rem">Tone</label>
+      <select id="rd-tone">
+        <option value="story">Personal story</option>
+        <option value="question">Question to community</option>
+        <option value="advice">Advice or lessons</option>
+        <option value="discussion">Discussion</option>
+      </select>
+
+      <button id="rd-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate 4 titles</button>
+
+      <div id="rd-out" class="rd-out"></div>
+    </div>
+
+    <div slot="content">
+      <h2>Why Reddit is different from any other platform</h2>
+      <p>
+        Reddit isn't a feed: it's a set of self-governed communities where each subreddit has its own culture, rules, jargon and auto-mods. A title that performs in r/AskReddit dies in r/personalfinance. Before posting, lurking the sub for days and reading the sidebar rules isn't optional — it's the difference between growing and getting banned.
+      </p>
+      <p>
+        The other factor is Reddit users detect marketing from miles away. A title that sounds like an ad brief gets downvoted into oblivion. The way in is honesty, context and a genuine contribution to the community.
+      </p>
+
+      <h2>How Reddit's algorithm works</h2>
+      <p>
+        Reddit orders by net upvotes in the first window (a few hours depending on the sub). "Hot" weighs upvotes against time: a post with 100 upvotes in 30 minutes ranks better than one with 200 in 6 hours. The first 5-15 votes decide if the post scales or sinks. That's why the title has to hook in seconds.
+      </p>
+
+      <h2>The structure that performs on Reddit</h2>
+      <ol>
+        <li><strong>Context up front:</strong> "[F28, US]" or "[Update]" or "[OC]" — depends on the sub.</li>
+        <li><strong>Honest hook:</strong> "Went from saving nothing to investing $500/month" instead of "How I got rich".</li>
+        <li><strong>Specificity:</strong> concrete numbers, dates, context. People trust the specific.</li>
+        <li><strong>Question or promise:</strong> "How I did it and what I learned" sets clear expectation.</li>
+      </ol>
+
+      <h2>Auto-mods: the first barrier</h2>
+      <p>
+        Each subreddit has auto-moderators that filter posts before they appear. Common rules:
+      </p>
+      <ul>
+        <li><strong>Minimum karma:</strong> many subs require 50-500 karma before posting.</li>
+        <li><strong>Account age:</strong> minimum 7-30 days old.</li>
+        <li><strong>Required flair:</strong> in many subs a post without flair gets auto-deleted.</li>
+        <li><strong>Banned keywords:</strong> words like "make money", "discount", "promo" in the title trigger filters.</li>
+        <li><strong>Blocked links:</strong> specific domains get fully blocked.</li>
+      </ul>
+
+      <h2>The title formats each sub expects</h2>
+      <p>
+        Each community has recognizable patterns:
+      </p>
+      <ul>
+        <li><strong>r/AskReddit:</strong> "What's the most..." or "Reddit, what's your..."</li>
+        <li><strong>r/personalfinance:</strong> "[Country, age] Question about X" or "Update: my plan worked".</li>
+        <li><strong>r/explainlikeimfive:</strong> "ELI5: How does X work?"</li>
+        <li><strong>r/TIL:</strong> "TIL that [concrete fact] [source in parens]".</li>
+        <li><strong>r/changemyview:</strong> "CMV: [clear opinion]".</li>
+      </ul>
+      <p>Posting without following the sub's format is an immediate outsider signal and the community responds with downvotes.</p>
+
+      <h2>Why honest titles outperform</h2>
+      <p>
+        Reddit values authenticity over optimization. A title "I built a budget spreadsheet and it helped me save $200/month" performs better than "The trick that changed my finances". Redditors detect the second format as marketing and penalize it, even if the content is genuinely useful.
+      </p>
+
+      <h2>How to test if your title works</h2>
+      <ol>
+        <li>Post it and watch the first 15-30 minutes. If it hits +5 upvotes, you're good.</li>
+        <li>If it sits at -2 or 0 after 100+ views, the title isn't working.</li>
+        <li>You can't edit the title (Reddit only allows body edits). If you missed, wait 7+ days and repost with changes.</li>
+        <li>Watch comments: if people ask basic things already in your post, the title isn't communicating well.</li>
+      </ol>
+
+      <h2>Rules for promoting without getting banned</h2>
+      <p>
+        Reddit has a clear rule: 9 to 1. For every promotional post, you need 9 genuine contributions (comments, helpful posts, answers). If your account only posts your own content, you'll get banned from the sub or Reddit entirely.
+      </p>
+
+      <h2>Common mistakes that kill the post</h2>
+      <ul>
+        <li><strong>Obvious clickbait:</strong> "You won't believe..." gets instantly downvoted.</li>
+        <li><strong>Ignoring sub format:</strong> posting without tag, flair or expected structure.</li>
+        <li><strong>Linking your shop in the title:</strong> "My Etsy store" — automatic ban in most subs.</li>
+        <li><strong>Excessive caps:</strong> "BEST ADVICE EVER" reads as spam.</li>
+        <li><strong>No context:</strong> "What do I do?" without your situation gets ignored.</li>
+        <li><strong>Crossposting without permission:</strong> some subs ban crossposts and ban you.</li>
+      </ul>
+    </div>
+
+    <div slot="faq">
+      <details><summary>How many characters?</summary><p>Sweet spot: 60-150. Technical max: 300, but more is counterproductive.</p></details>
+      <details><summary>Can I edit the title?</summary><p>No. Reddit only allows body edits, not titles.</p></details>
+      <details><summary>What tone?</summary><p>Casual, honest, context-first. Marketing tone gets downvoted.</p></details>
+      <details><summary>Auto-mod filtered my post?</summary><p>Check karma, account age, flair and the sub's banned keywords.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .rd-out { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+  .rd-card { padding: 1rem 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.1s; line-height: 1.5; }
+  .rd-card:hover { border-color: var(--accent); }
+  .rd-meta { font-size: 0.75rem; color: var(--text-subtle); margin-top: 0.5rem; font-family: var(--font-mono); }
+  select { width: 100%; padding: 0.625rem 0.875rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-size: 0.9375rem; font-family: inherit; }
+</style>
+
+<script>
+  const sub = document.getElementById('rd-sub') as HTMLInputElement;
+  const topic = document.getElementById('rd-topic') as HTMLInputElement;
+  const context = document.getElementById('rd-context') as HTMLInputElement;
+  const tone = document.getElementById('rd-tone') as HTMLSelectElement;
+  const gen = document.getElementById('rd-gen') as HTMLButtonElement;
+  const out = document.getElementById('rd-out')!;
+
+  function generate() {
+    const T = topic.value.trim() || 'My experience';
+    const Ctx = context.value.trim();
+    const Tone = tone.value;
+
+    let v1, v2, v3, v4;
+    if (Tone === 'story') {
+      v1 = `${Ctx ? '[' + Ctx + '] ' : ''}${T}: what I learned`;
+      v2 = `Update: ${T}. Sharing in case it helps anyone`;
+      v3 = `${T}. What worked and what didn't.`;
+      v4 = `${Ctx ? '[' + Ctx + '] ' : ''}After months of testing: ${T}`;
+    } else if (Tone === 'question') {
+      v1 = `${Ctx ? '[' + Ctx + '] ' : ''}${T} - how would you handle this?`;
+      v2 = `Honest question: ${T.toLowerCase()}?`;
+      v3 = `${T}. What would you do in my place?`;
+      v4 = `Need perspective: ${T.toLowerCase()}`;
+    } else if (Tone === 'advice') {
+      v1 = `${T}: 5 things I wish I knew earlier`;
+      v2 = `What I learned about ${T.toLowerCase()}`;
+      v3 = `${T}. Real lessons, no marketing.`;
+      v4 = `If you're in my spot: ${T.toLowerCase()}`;
+    } else {
+      v1 = `Changed my mind about ${T.toLowerCase()}`;
+      v2 = `Why ${T.toLowerCase()} isn't what I thought`;
+      v3 = `${T}. Who's right?`;
+      v4 = `Discussion: ${T.toLowerCase()}`;
+    }
+
+    out.innerHTML = '';
+    [v1, v2, v3, v4].forEach((b, i) => {
+      const el = document.createElement('div');
+      el.className = 'rd-card';
+      el.title = 'Click to copy';
+      const len = b.length;
+      el.innerHTML = b + `<div class="rd-meta">v${i+1} · ${len}/300 characters · r/${sub.value || 'subreddit'}</div>`;
+      el.addEventListener('click', () => { navigator.clipboard.writeText(b); const orig = el.innerHTML; el.innerHTML = '✓ Copied'; setTimeout(() => el.innerHTML = orig, 800); });
+      out.appendChild(el);
+    });
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>

@@ -1,0 +1,190 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'YAML to JSON — Free Converter | Genfy';
+const description = 'Turn YAML into JSON instantly in the browser. Supports scalars, lists, nested maps and comments. 100% local.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Why convert YAML to JSON?', acceptedAnswer: { '@type': 'Answer', text: 'To process YAML configs in JavaScript code, send them to APIs that only accept JSON, or inspect them with tools that understand JSON but not YAML.' } },
+    { '@type': 'Question', name: 'What does this converter support?', acceptedAnswer: { '@type': 'Answer', text: 'The most common syntax: scalars (strings, numbers, booleans, null), hyphen-prefixed lists, nested maps, and # comments. It does not support anchors/aliases or custom tags.' } },
+    { '@type': 'Question', name: 'Why does YAML use indentation?', acceptedAnswer: { '@type': 'Answer', text: 'YAML was designed to be human-readable. Indentation replaces braces and brackets, reducing visual noise. But it also makes YAML sensitive to spacing errors — one stray space breaks everything.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Data" title="YAML to JSON"
+    intro="Paste YAML and get equivalent JSON. Handy for Kubernetes manifests, GitHub Actions, Docker Compose and any YAML you need to process as JSON.">
+
+    <div slot="tool">
+      <label for="yj-in">YAML</label>
+      <textarea id="yj-in" rows="10" style="font-family: var(--font-mono); font-size: 0.9rem;"># Sample config
+name: Genfy
+version: 1.0
+features:
+  - markdown
+  - json
+  - yaml
+database:
+  host: localhost
+  port: 5432
+  active: true</textarea>
+      <button id="yj-gen" class="btn btn-primary" type="button" style="margin-top:1rem;">Convert</button>
+      <button id="yj-copy" class="btn btn-ghost" type="button">Copy</button>
+      <div id="yj-status" class="yj-status"></div>
+      <label for="yj-out" style="margin-top:1rem;">JSON</label>
+      <textarea id="yj-out" rows="10" readonly style="font-family: var(--font-mono); font-size: 0.9rem;"></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>YAML: human-readable, parser-strict</h2>
+      <p>
+        YAML (recursive acronym for "YAML Ain't Markup Language") was born in 2001 as an XML alternative for configs. Big idea: use indentation instead of braces or brackets to denote hierarchy. The result reads like a bullet list rather than code. That's why Kubernetes, Docker Compose, GitHub Actions, GitLab CI, Ansible and most modern devops tools use it.
+      </p>
+
+      <h2>Why convert to JSON</h2>
+      <ul>
+        <li><strong>JavaScript processing.</strong> Browsers parse JSON natively; YAML needs an external library of several KB.</li>
+        <li><strong>APIs.</strong> Almost every REST API speaks JSON. If your config is YAML, you must convert.</li>
+        <li><strong>Validation with existing tools.</strong> JSON Schema is mature; YAML equivalents are less common.</li>
+        <li><strong>Version diffs.</strong> YAML diffs can be misleading because of indentation; minified JSON diffs are always clear.</li>
+      </ul>
+
+      <h2>Typical use cases</h2>
+      <ul>
+        <li><strong>Inspecting a Kubernetes manifest.</strong> Convert to JSON to view it in an API tool or run jq over it.</li>
+        <li><strong>Migrating config to a JSON-only system.</strong> Plenty of legacy still expects JSON.</li>
+        <li><strong>Test snapshots.</strong> Snapshotting structures as JSON is easier in testing.</li>
+        <li><strong>Posting to a REST endpoint.</strong> Some APIs accept YAML but most don't.</li>
+      </ul>
+
+      <h2>Limitations of this converter</h2>
+      <p>
+        It supports the most common syntax that covers 95% of cases: scalars (strings, numbers, booleans, null), hyphen-prefixed lists, nested maps with colons, and <code>#</code> comments. It does NOT support advanced YAML features like anchors (<code>&amp;</code>), aliases (<code>*</code>), custom tags (<code>!!str</code>), multi-document streams (<code>---</code>) or mixed flow style. For those cases, use a full library like js-yaml.
+      </p>
+
+      <h2>Common YAML traps</h2>
+      <ul>
+        <li><strong>Tab indentation.</strong> YAML allows only spaces. Mixing tabs and spaces breaks the parser.</li>
+        <li><strong>Accidental booleans.</strong> "yes", "no", "on", "off", "y", "n" are parsed as booleans. To keep the literal string, quote it.</li>
+        <li><strong>Numbers that look like strings.</strong> "012" is parsed as octal in YAML 1.1 — quote it.</li>
+        <li><strong>The "Norway problem."</strong> Norway's ISO code is "NO" and YAML turns it into false. Famous saga: <code>countries: [NO, NL]</code> ends up as <code>[false, "NL"]</code>.</li>
+      </ul>
+
+      <h2>YAML vs JSON: which to use</h2>
+      <p>
+        For config a human will hand-edit, YAML is more readable. For data flowing between machines, JSON is stricter and faster to parse. Good practice: write configs in YAML but compile to JSON at build time and serve JSON in production. Cuts surprises from ambiguous types and improves parser performance.
+      </p>
+
+      <h2>Security tips</h2>
+      <p>
+        YAML has a complicated security history: it can execute arbitrary code via tags if the parser supports it (CVEs in Ruby psych, Python pyyaml). When parsing untrusted YAML, use a "safe" loader that only allows basic types. This converter never executes code under any circumstances.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>Why convert YAML to JSON?</summary><p>For JavaScript processing without libraries, posting to JSON-only APIs, or validating with JSON Schema.</p></details>
+      <details><summary>What does this converter support?</summary><p>Scalars, lists, nested maps, comments. No anchors, aliases or custom tags.</p></details>
+      <details><summary>Why does YAML use indentation?</summary><p>To be more readable than JSON or XML. The trade-off is spacing-sensitivity.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .yj-status { font-family: var(--font-mono); font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.25rem; color: var(--text-soft); }
+</style>
+
+<script>
+  const inEl = document.getElementById('yj-in') as HTMLTextAreaElement;
+  const out = document.getElementById('yj-out') as HTMLTextAreaElement;
+  const status = document.getElementById('yj-status') as HTMLDivElement;
+  const genBtn = document.getElementById('yj-gen') as HTMLButtonElement;
+  const copyBtn = document.getElementById('yj-copy') as HTMLButtonElement;
+
+  function coerce(v: string): any {
+    v = v.trim();
+    if (v === '' || v === '~' || v.toLowerCase() === 'null') return null;
+    if (v === 'true' || v === 'True' || v === 'TRUE') return true;
+    if (v === 'false' || v === 'False' || v === 'FALSE') return false;
+    if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) return v.slice(1, -1);
+    if (/^-?\d+$/.test(v)) return parseInt(v, 10);
+    if (/^-?\d+\.\d+$/.test(v) || /^-?\d+(\.\d+)?[eE][+-]?\d+$/.test(v)) return parseFloat(v);
+    return v;
+  }
+
+  function parseYAML(text: string): any {
+    const lines = text.split('\n').map(l => l.replace(/\s*#.*$/, '')).filter(l => l.trim());
+    const stack: { indent: number; value: any; key?: string }[] = [{ indent: -1, value: {} }];
+
+    for (const raw of lines) {
+      const indent = raw.length - raw.trimStart().length;
+      const line = raw.trim();
+      while (stack.length > 1 && stack[stack.length - 1].indent >= indent) stack.pop();
+      const top = stack[stack.length - 1];
+
+      if (line.startsWith('- ')) {
+        const rest = line.slice(2).trim();
+        if (!Array.isArray(top.value)) {
+          if (top.key !== undefined && stack.length >= 2) {
+            const parent = stack[stack.length - 2].value;
+            parent[top.key] = [];
+            top.value = parent[top.key];
+          }
+        }
+        if (rest.includes(': ')) {
+          const m = rest.match(/^([^:]+):\s*(.*)$/);
+          if (m) {
+            const obj: any = {};
+            if (m[2]) obj[m[1]] = coerce(m[2]);
+            top.value.push(obj);
+            stack.push({ indent: indent + 2, value: obj });
+          }
+        } else {
+          top.value.push(coerce(rest));
+        }
+      } else {
+        const m = line.match(/^([^:]+):\s*(.*)$/);
+        if (!m) continue;
+        const key = m[1].trim(), val = m[2];
+        if (val === '') {
+          const obj: any = {};
+          top.value[key] = obj;
+          stack.push({ indent, value: obj, key });
+        } else if (val === '[]') {
+          top.value[key] = [];
+        } else if (val === '{}') {
+          top.value[key] = {};
+        } else if (val.startsWith('[') && val.endsWith(']')) {
+          top.value[key] = val.slice(1, -1).split(',').map(s => coerce(s.trim()));
+        } else {
+          top.value[key] = coerce(val);
+        }
+      }
+    }
+    return stack[0].value;
+  }
+
+  function run() {
+    const txt = inEl.value;
+    if (!txt.trim()) { out.value = ''; status.textContent = ''; return; }
+    try {
+      const data = parseYAML(txt);
+      out.value = JSON.stringify(data, null, 2);
+      status.textContent = '✓ YAML converted';
+    } catch (e: any) {
+      out.value = '';
+      status.textContent = 'Error: ' + (e.message || 'Invalid YAML');
+    }
+  }
+  inEl.addEventListener('input', run);
+  genBtn.addEventListener('click', run);
+  copyBtn.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const t = copyBtn.textContent; copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = t; }, 1200);
+  });
+  run();
+</script>

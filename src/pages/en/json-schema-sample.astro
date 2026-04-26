@@ -1,0 +1,217 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'JSON Schema Sample Generator | Genfy';
+const description = 'Generate a sample JSON Schema (draft 2020-12) to validate payloads. Types, required fields, formats and patterns ready to copy.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is JSON Schema?', acceptedAnswer: { '@type': 'Answer', text: 'A vocabulary for validating the structure of a JSON document: types, formats, required properties and patterns.' } },
+    { '@type': 'Question', name: 'Which draft should I use?', acceptedAnswer: { '@type': 'Answer', text: 'Draft 2020-12 is the latest. Draft 7 is still common in legacy tools like Ajv 6 or older validators.' } },
+    { '@type': 'Question', name: 'JSON Schema or TypeScript?', acceptedAnswer: { '@type': 'Answer', text: 'TS types your code but does not validate at runtime. JSON Schema validates payloads at runtime and can be converted to types via json-schema-to-typescript.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell
+    lang="en"
+    tag="Tech / Dev"
+    title="JSON Schema Sample"
+    intro="Generate a sample JSON Schema (draft 2020-12) to validate your payloads. Common models ready to copy."
+  >
+    <div slot="tool" class="js-tool">
+      <div class="js-grid">
+        <div>
+          <label for="js-template">Template</label>
+          <select id="js-template">
+            <option value="user">User</option>
+            <option value="product">Product</option>
+            <option value="order">Order</option>
+            <option value="article">Article</option>
+          </select>
+        </div>
+        <div>
+          <label for="js-strict">Strict mode</label>
+          <select id="js-strict">
+            <option value="true">additionalProperties: false</option>
+            <option value="false">Allow extras</option>
+          </select>
+        </div>
+      </div>
+      <div class="js-actions">
+        <button id="js-gen" class="btn btn-primary" type="button">Generate</button>
+        <button id="js-copy" class="btn btn-ghost" type="button"><span class="copy-icon">Copy</span></button>
+      </div>
+      <textarea id="js-out" class="mono" rows="14" readonly></textarea>
+    </div>
+
+    <div slot="content">
+      <h2>What is JSON Schema?</h2>
+      <p>
+        JSON Schema is a meta-language to describe what a JSON document should look like. You
+        define types (<code>string</code>, <code>integer</code>, <code>object</code>,
+        <code>array</code>), required properties, min and max values, formats (email, date-time,
+        uri) and regex patterns. Validators like Ajv check a payload against the schema and report
+        errors with exact paths.
+      </p>
+
+      <h2>Basic structure</h2>
+      <p>
+        A schema starts with <code>$schema</code> pointing to the draft, <code>$id</code> with a
+        unique URI, and <code>type</code> declaring the root type. For an object,
+        <code>properties</code> lists each field and <code>required</code> the mandatory ones.
+        <code>additionalProperties: false</code> rejects undeclared fields; useful for catching typos.
+      </p>
+
+      <h2>Common formats</h2>
+      <ul>
+        <li><strong>email</strong>: validates an RFC 5322 email.</li>
+        <li><strong>date-time</strong>: ISO 8601 (e.g. 2024-01-15T10:30:00Z).</li>
+        <li><strong>date</strong>: date only (2024-01-15).</li>
+        <li><strong>uuid</strong>: UUID v1-v8.</li>
+        <li><strong>uri</strong>: valid URL.</li>
+        <li><strong>ipv4</strong>, <strong>ipv6</strong>: IP addresses.</li>
+      </ul>
+
+      <h2>String validation</h2>
+      <p>
+        <code>minLength</code>, <code>maxLength</code> and <code>pattern</code> (regex) are your
+        friends. Phone example:
+        <code>"pattern": "^\\+?[0-9]&lcub;9,15&rcub;$"</code>. <code>enum</code> limits to a fixed
+        set: <code>"enum": ["pending", "paid", "shipped"]</code>.
+      </p>
+
+      <h2>Number validation</h2>
+      <p>
+        <code>minimum</code>, <code>maximum</code>, <code>exclusiveMinimum</code>,
+        <code>exclusiveMaximum</code> and <code>multipleOf</code>. For prices:
+        <code>"minimum": 0, "multipleOf": 0.01</code>. Use <code>integer</code> instead of
+        <code>number</code> to reject decimals.
+      </p>
+
+      <h2>Array validation</h2>
+      <p>
+        <code>items</code> describes the schema of each element. <code>minItems</code>,
+        <code>maxItems</code> and <code>uniqueItems</code> are useful for lists. For arrays with
+        positional types (tuples), use <code>prefixItems</code> in draft 2020-12.
+      </p>
+
+      <h2>Combinations: oneOf, anyOf, allOf</h2>
+      <p>
+        <code>oneOf</code> requires matching exactly one; useful for discriminated unions.
+        <code>anyOf</code> matches one or more. <code>allOf</code> requires all; used to extend
+        schemas. <code>not</code> negates a schema.
+      </p>
+
+      <h2>From schema to types</h2>
+      <p>
+        <code>json-schema-to-typescript</code> turns a schema into TS interfaces. You keep one
+        source of truth: the schema validates at runtime, types guard the code. The reverse,
+        generating schemas from TS, is available via <code>typescript-json-schema</code> or
+        <code>ts-json-schema-generator</code>.
+      </p>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is JSON Schema?</summary><p>A vocabulary to validate JSON structure: types, formats, required, patterns.</p></details>
+      <details><summary>Which draft?</summary><p>2020-12 is the latest. Draft 7 is still common in legacy tools.</p></details>
+      <details><summary>JSON Schema or TS?</summary><p>TS types code; JSON Schema validates at runtime. They complement each other.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .js-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .js-grid { grid-template-columns: 1fr; } }
+  .js-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  textarea { font-family: var(--font-mono); font-size: 0.8125rem; background: var(--bg-inset); resize: vertical; width: 100%; }
+</style>
+
+<script>
+  const tpl = document.getElementById('js-template') as HTMLSelectElement;
+  const strict = document.getElementById('js-strict') as HTMLSelectElement;
+  const out = document.getElementById('js-out') as HTMLTextAreaElement;
+  const gen = document.getElementById('js-gen') as HTMLButtonElement;
+  const copy = document.getElementById('js-copy') as HTMLButtonElement;
+
+  const templates: Record<string, any> = {
+    user: {
+      title: 'User',
+      properties: {
+        id: { type: 'integer', minimum: 1 },
+        uuid: { type: 'string', format: 'uuid' },
+        email: { type: 'string', format: 'email' },
+        name: { type: 'string', minLength: 2, maxLength: 100 },
+        role: { type: 'string', enum: ['admin', 'user', 'editor'] },
+        age: { type: 'integer', minimum: 0, maximum: 130 },
+        created_at: { type: 'string', format: 'date-time' },
+      },
+      required: ['id', 'email', 'name'],
+    },
+    product: {
+      title: 'Product',
+      properties: {
+        sku: { type: 'string', pattern: '^[A-Z0-9-]{4,20}$' },
+        name: { type: 'string', minLength: 1, maxLength: 200 },
+        price: { type: 'number', minimum: 0, multipleOf: 0.01 },
+        stock: { type: 'integer', minimum: 0 },
+        tags: { type: 'array', items: { type: 'string' }, uniqueItems: true },
+      },
+      required: ['sku', 'name', 'price'],
+    },
+    order: {
+      title: 'Order',
+      properties: {
+        id: { type: 'string', format: 'uuid' },
+        status: { type: 'string', enum: ['pending', 'paid', 'shipped', 'delivered', 'cancelled'] },
+        total: { type: 'number', minimum: 0 },
+        currency: { type: 'string', pattern: '^[A-Z]{3}$' },
+        items: { type: 'array', minItems: 1, items: { type: 'object', properties: { product_id: { type: 'integer' }, quantity: { type: 'integer', minimum: 1 } }, required: ['product_id', 'quantity'] } },
+        created_at: { type: 'string', format: 'date-time' },
+      },
+      required: ['id', 'status', 'total', 'currency', 'items'],
+    },
+    article: {
+      title: 'Article',
+      properties: {
+        id: { type: 'integer', minimum: 1 },
+        slug: { type: 'string', pattern: '^[a-z0-9-]+$' },
+        title: { type: 'string', minLength: 1, maxLength: 200 },
+        content: { type: 'string' },
+        published: { type: 'boolean' },
+        published_at: { type: 'string', format: 'date-time' },
+        tags: { type: 'array', items: { type: 'string' } },
+      },
+      required: ['id', 'slug', 'title'],
+    },
+  };
+
+  function build() {
+    const t = templates[tpl.value];
+    const schema: any = {
+      $schema: 'https://json-schema.org/draft/2020-12/schema',
+      $id: `https://example.com/schemas/${tpl.value}.json`,
+      title: t.title,
+      type: 'object',
+      properties: t.properties,
+      required: t.required,
+      additionalProperties: strict.value === 'true' ? false : true,
+    };
+    out.value = JSON.stringify(schema, null, 2);
+  }
+  gen.addEventListener('click', build);
+  [tpl, strict].forEach(el => el.addEventListener('change', build));
+  copy.addEventListener('click', async () => {
+    if (!out.value) return;
+    await navigator.clipboard.writeText(out.value);
+    const icon = copy.querySelector('.copy-icon') as HTMLElement;
+    icon.textContent = '✓ Copied';
+    setTimeout(() => { icon.textContent = 'Copy'; }, 1400);
+  });
+  build();
+</script>
+</content>
+</invoke>

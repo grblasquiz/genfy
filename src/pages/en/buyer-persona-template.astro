@@ -1,0 +1,151 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GeneratorShell from '../../components/GeneratorShell.astro';
+
+const title = 'Free Buyer Persona Template | Genfy';
+const description = 'Generate a complete buyer persona with demographics, jobs-to-be-done, pains, objections and channels. Ready to paste into your marketing plan.';
+
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'What is a buyer persona?', acceptedAnswer: { '@type': 'Answer', text: 'A semi-fictional portrait of your ideal customer based on real customer data and interviews. It aligns marketing, product and sales around a single person.' } },
+    { '@type': 'Question', name: 'How many personas do I need?', acceptedAnswer: { '@type': 'Answer', text: 'In most businesses, 1 to 3 personas is enough. More than 3 usually signals a focus problem rather than real complexity.' } },
+    { '@type': 'Question', name: 'Persona vs jobs-to-be-done?', acceptedAnswer: { '@type': 'Answer', text: 'Persona describes who buys, jobs-to-be-done describes what they hire it for. The strongest setup combines both.' } },
+  ],
+};
+---
+<Layout title={title} description={description} lang="en" schema={faqSchema} withSidebar={true}>
+  <GeneratorShell lang="en" tag="Business" title="Buyer Persona Template"
+    intro="Fill in the key fields and get a buyer persona sheet ready to paste into Notion, Figma or your deck. Combines demographics with the jobs-to-be-done framework.">
+
+    <div slot="tool" class="bp">
+      <div class="bp-grid">
+        <div><label>Fictional name</label><input id="bp-name" type="text" value="Sarah, SaaS founder" /></div>
+        <div><label>Role / title</label><input id="bp-role" type="text" value="CEO of B2B startup (5-20 employees)" /></div>
+        <div><label>Age</label><input id="bp-age" type="text" value="32-45" /></div>
+        <div><label>Industry</label><input id="bp-ind" type="text" value="SaaS / tech" /></div>
+      </div>
+
+      <label style="margin-top:1rem">Main job-to-be-done (what do they want to achieve?)</label>
+      <input id="bp-job" type="text" value="Ship a landing page that converts without waiting for the design team" />
+
+      <label style="margin-top:1rem">Strongest pain today</label>
+      <input id="bp-pain" type="text" value="Loses weeks on briefs and freelancer revisions" />
+
+      <label style="margin-top:1rem">Typical purchase objection</label>
+      <input id="bp-obj" type="text" value="How do I know quality will match my brand?" />
+
+      <button id="bp-gen" class="btn btn-primary" type="button" style="margin-top:1rem">Generate template</button>
+
+      <pre id="bp-out" class="bp-out"></pre>
+    </div>
+
+    <div slot="content">
+      <h2>What a buyer persona is actually for</h2>
+      <p>
+        A buyer persona aligns three teams that often live on different planets: marketing,
+        product and sales. Marketing writes for "someone", product builds for "all users", and
+        sales talks to anyone with a credit card. The persona forces a name, face, pain and
+        budget on the ideal customer — and filters out feedback noise from people who will never
+        buy.
+      </p>
+
+      <h2>How a real persona is built (no inventing)</h2>
+      <p>There's a myth that a buyer persona comes out of a marketing meeting with sticky notes.
+        That gets you a fictional persona, not a useful one. The good ones combine three sources:</p>
+      <ol>
+        <li><strong>5-8 interviews</strong>, 30 minutes each, with current customers from your best cohort (high retention, good LTV).</li>
+        <li><strong>Quantitative data</strong> from your CRM and product: role, company size, industry, usage frequency, churn.</li>
+        <li><strong>Sales conversations</strong>: which objections show up, which sentences repeat at close, the exact words customers use.</li>
+      </ol>
+
+      <h2>Recommended structure (one page)</h2>
+      <ul>
+        <li><strong>Identity:</strong> fictional name, role, age, industry, company size.</li>
+        <li><strong>Jobs-to-be-done:</strong> the main one plus 2 secondary. First-person sentences starting with "When... I want... so I can...".</li>
+        <li><strong>Pains:</strong> top 3, in their words. If you don't have direct quotes, you haven't interviewed enough.</li>
+        <li><strong>Expected gains:</strong> what outcome defines success for this person.</li>
+        <li><strong>Objections:</strong> top 3 reasons they wouldn't buy today.</li>
+        <li><strong>Channels:</strong> where they look for solutions (LinkedIn, Reddit, podcasts, communities).</li>
+        <li><strong>Buying triggers:</strong> the event that pushes them to look for your solution.</li>
+      </ul>
+
+      <h2>Example: "Sarah, SaaS founder"</h2>
+      <p>
+        Instead of "startup founders", build something concrete. Sarah is 38, founded a 12-person
+        B2B company, runs all marketing herself with two freelancers, and her trigger is always
+        the same: a new round or a competitor shipping a better page. With that level of detail,
+        landings, emails and sales talk tracks write themselves.
+      </p>
+
+      <h2>Common mistakes that kill a persona</h2>
+      <ol>
+        <li>Demographics with no job-to-be-done. Age alone predicts nothing.</li>
+        <li>Too many personas (more than 3). Usually a focus problem.</li>
+        <li>Inventing pains that sound good instead of extracting them from interviews.</li>
+        <li>Never updating the file. If your product changed, so did the persona.</li>
+        <li>Using real customer names — always fictional, so the team doesn't self-censor.</li>
+      </ol>
+    </div>
+
+    <div slot="faq">
+      <details><summary>What is a buyer persona?</summary><p>A semi-fictional portrait of your ideal customer, built from real data and interviews.</p></details>
+      <details><summary>How many do I need?</summary><p>Between 1 and 3. More usually means lack of focus.</p></details>
+      <details><summary>Persona or JTBD?</summary><p>Both. Persona = who buys. JTBD = what they hire it for.</p></details>
+    </div>
+  </GeneratorShell>
+</Layout>
+
+<style>
+  .bp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  @media (max-width: 600px) { .bp-grid { grid-template-columns: 1fr; } }
+  .bp-out { margin-top: 1.25rem; padding: 1.25rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.875rem; line-height: 1.55; }
+</style>
+
+<script>
+  const N = document.getElementById('bp-name') as HTMLInputElement;
+  const R = document.getElementById('bp-role') as HTMLInputElement;
+  const A = document.getElementById('bp-age') as HTMLInputElement;
+  const I = document.getElementById('bp-ind') as HTMLInputElement;
+  const J = document.getElementById('bp-job') as HTMLInputElement;
+  const P = document.getElementById('bp-pain') as HTMLInputElement;
+  const O = document.getElementById('bp-obj') as HTMLInputElement;
+  const out = document.getElementById('bp-out')!;
+  const gen = document.getElementById('bp-gen') as HTMLButtonElement;
+
+  function generate() {
+    const t = `BUYER PERSONA — ${N.value}
+
+IDENTITY
+- Role: ${R.value}
+- Age: ${A.value}
+- Industry: ${I.value}
+
+MAIN JOB-TO-BE-DONE
+"When ${J.value.toLowerCase()}, I want to do it fast and at quality — so the rest of my priorities don't stall."
+
+STRONGEST PAIN
+- ${P.value}
+- Visible symptom: tasks slipping for weeks, dependency on freelancers, rework.
+
+EXPECTED GAIN
+- Time recovered for product and sales.
+- A result the team and investors can see.
+
+MAIN OBJECTION
+"${O.value}"
+Suggested answer: show 2-3 references from the same segment + free revision guarantee.
+
+CHANNELS
+- LinkedIn (founder/operator posts)
+- Closed communities (industry Slack/Discord)
+- Specialized newsletters
+- Direct Google search ("template...", "generator...")
+
+BUYING TRIGGER
+- New round, competitor launch, stage change, board pressure for visible results.`;
+    out.textContent = t;
+  }
+  gen.addEventListener('click', generate);
+  generate();
+</script>
