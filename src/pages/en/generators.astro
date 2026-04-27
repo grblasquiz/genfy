@@ -36,28 +36,101 @@ const ORDER: GeneratorMeta['category'][] = [
       {GENERATORS.length} free tools, no signup, all run in your browser.
       Organized by category so you find what you need fast.
     </p>
+    <div class="search-wrap">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="search" id="gen-search" placeholder="Search 287 generators… (passwords, palettes, hashtags, slogans...)" autocomplete="off" spellcheck="false" aria-label="Search generators" />
+      <button class="search-clear" id="gen-search-clear" type="button" aria-label="Clear" hidden>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <kbd class="search-kbd">/</kbd>
+    </div>
+    <p class="search-status" id="search-status" hidden></p>
   </header>
 
-  {ORDER.filter(c => byCategory[c]?.length).map(cat => (
-    <section class="cat-section">
-      <h2>{CATEGORIES_EN[cat]} <span class="cat-count">({byCategory[cat].length})</span></h2>
-      <div class="grid-cards">
-        {byCategory[cat].map(g => (
-          <a class="gcard" href={urlFor(g, 'en')}>
-            <span class="gcard-emoji">{g.emoji}</span>
-            <span class="gcard-title">{g.title.en}</span>
-            <span class="gcard-desc">{g.description.en}</span>
-            <span class="gcard-arrow" aria-hidden="true">→</span>
-          </a>
-        ))}
-      </div>
-    </section>
-  ))}
+  <div id="cat-sections">
+    {ORDER.filter(c => byCategory[c]?.length).map(cat => (
+      <section class="cat-section" id={cat} data-cat={cat}>
+        <h2>{CATEGORIES_EN[cat]} <span class="cat-count">(<span class="cat-count-n">{byCategory[cat].length}</span>)</span></h2>
+        <div class="grid-cards">
+          {byCategory[cat].map(g => (
+            <a class="gcard" href={urlFor(g, 'en')} data-title={g.title.en.toLowerCase()} data-desc={g.description.en.toLowerCase()} data-cat={g.category}>
+              <span class="gcard-emoji">{g.emoji}</span>
+              <span class="gcard-title">{g.title.en}</span>
+              <span class="gcard-desc">{g.description.en}</span>
+              <span class="gcard-arrow" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <div id="search-empty" class="search-empty" hidden>
+    <p>No results for <strong id="search-q"></strong>.</p>
+    <p class="muted">Try another keyword or <a href="#" id="clear-search-link">clear the filter</a>.</p>
+  </div>
+
+  <script is:inline>
+    (function() {
+      const input = document.getElementById('gen-search');
+      const clearBtn = document.getElementById('gen-search-clear');
+      const status = document.getElementById('search-status');
+      const empty = document.getElementById('search-empty');
+      const sections = document.querySelectorAll('.cat-section');
+      function normalize(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+      function filter(q) {
+        const query = normalize(q.trim());
+        clearBtn.hidden = query.length === 0;
+        let total = 0;
+        sections.forEach(sec => {
+          const cards = sec.querySelectorAll('.gcard');
+          let visible = 0;
+          cards.forEach(c => {
+            const t = normalize(c.dataset.title || '');
+            const d = normalize(c.dataset.desc || '');
+            const cat = normalize(c.dataset.cat || '');
+            const match = !query || t.includes(query) || d.includes(query) || cat.includes(query);
+            c.hidden = !match;
+            if (match) visible++;
+          });
+          sec.hidden = visible === 0;
+          const n = sec.querySelector('.cat-count-n');
+          if (n) n.textContent = String(visible);
+          total += visible;
+        });
+        if (!query) { status.hidden = true; empty.hidden = true; }
+        else if (total === 0) { status.hidden = true; empty.hidden = false; document.getElementById('search-q').textContent = '"' + q + '"'; }
+        else { status.hidden = false; empty.hidden = true; status.textContent = total === 1 ? '1 result' : total + ' results'; }
+      }
+      input.addEventListener('input', e => filter(e.target.value));
+      clearBtn.addEventListener('click', () => { input.value = ''; filter(''); input.focus(); });
+      document.getElementById('clear-search-link').addEventListener('click', e => { e.preventDefault(); input.value = ''; filter(''); input.focus(); });
+      document.addEventListener('keydown', e => {
+        if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') { e.preventDefault(); input.focus(); }
+        if (e.key === 'Escape' && document.activeElement === input) { input.value = ''; filter(''); input.blur(); }
+      });
+    })();
+  </script>
 </Layout>
 
 <style>
   .hero { padding: 3rem 0 2rem; }
   .hero .lead { font-size: 1.0625rem; color: var(--text-soft); max-width: 60ch; margin-top: 1rem; }
+
+  .search-wrap { position: relative; max-width: 640px; margin-top: 1.75rem; display: flex; align-items: center; }
+  .search-wrap input { width: 100%; padding: 0.875rem 6.5rem 0.875rem 2.875rem; font-size: 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); color: var(--text); transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease); }
+  .search-wrap input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .search-icon { position: absolute; left: 1rem; color: var(--text-muted); pointer-events: none; }
+  .search-clear { position: absolute; right: 3rem; display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: var(--bg-inset); border: 0; border-radius: 50%; color: var(--text-soft); cursor: pointer; }
+  .search-clear:hover { background: var(--border); color: var(--text); }
+  .search-kbd { position: absolute; right: 0.875rem; padding: 0.125rem 0.4375rem; background: var(--bg-inset); border: 1px solid var(--border); border-radius: 4px; color: var(--text-subtle); font-family: var(--font-mono); font-size: 0.75rem; pointer-events: none; }
+  .search-status { margin-top: 0.75rem; color: var(--text-subtle); font-size: 0.875rem; font-feature-settings: "tnum"; }
+  .search-status[hidden] { display: none; }
+  .search-empty { margin-top: 3rem; padding: 2rem; text-align: center; background: var(--bg-soft); border: 1px dashed var(--border); border-radius: var(--radius-lg); }
+  .search-empty[hidden] { display: none; }
+  .gcard[hidden] { display: none; }
+  .cat-section[hidden] { display: none; }
+
   .cat-section { margin-top: 3rem; }
   .cat-section h2 { font-size: 1.375rem; font-weight: 600; margin: 0 0 1.25rem; border-bottom: 1px solid var(--border-soft); padding-bottom: 0.75rem; }
   .cat-count { color: var(--text-muted); font-weight: 400; font-size: 0.9rem; }
