@@ -2,16 +2,25 @@
 import Layout from '../../layouts/Layout.astro';
 import { GENERATORS, urlFor, CATEGORIES_EN, type GeneratorMeta } from '../../lib/generators';
 import { SITE_URL } from '../../lib/i18n';
+import { SYNONYMS_EN } from '../../lib/search-synonyms';
 
 const title = `All online generators (${GENERATORS.length}) | Genfy`;
 const description = `Full catalog of ${GENERATORS.length} free online generators: passwords, names, hashtags, QR codes, color palettes, test data and more. No signup.`;
+
+const searchIndex = GENERATORS.map(g => ({
+  slug: g.slug.en,
+  title: g.title.en,
+  desc: g.description.en,
+  cat: CATEGORIES_EN[g.category],
+  catId: g.category,
+}));
 
 const itemListSchema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'Online generators',
   numberOfItems: GENERATORS.length,
-  itemListElement: GENERATORS.slice(0, 50).map((g, i) => ({
+  itemListElement: GENERATORS.map((g, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     name: g.title.en,
@@ -30,6 +39,11 @@ const ORDER: GeneratorMeta['category'][] = [
 ];
 ---
 <Layout title={title} description={description} lang="en" schema={itemListSchema}>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/en">Home</a>
+    <svg class="crumb-sep" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+    <span class="crumb-current">Generators</span>
+  </nav>
   <header class="hero">
     <h1>All generators</h1>
     <p class="lead">
@@ -50,10 +64,13 @@ const ORDER: GeneratorMeta['category'][] = [
   <div id="cat-sections">
     {ORDER.filter(c => byCategory[c]?.length).map(cat => (
       <section class="cat-section" id={cat} data-cat={cat}>
-        <h2>{CATEGORIES_EN[cat]} <span class="cat-count">(<span class="cat-count-n">{byCategory[cat].length}</span>)</span></h2>
+        <h2>
+          <a href={`#${cat}`} class="cat-anchor" aria-label={`Link to ${CATEGORIES_EN[cat]}`}>{CATEGORIES_EN[cat]}</a>
+          <span class="cat-count">(<span class="cat-count-n">{byCategory[cat].length}</span>)</span>
+        </h2>
         <div class="grid-cards">
           {byCategory[cat].map(g => (
-            <a class="gcard" href={urlFor(g, 'en')} data-title={g.title.en.toLowerCase()} data-desc={g.description.en.toLowerCase()} data-cat={g.category}>
+            <a class="gcard" href={urlFor(g, 'en')} data-slug={g.slug.en} data-title={g.title.en.toLowerCase()} data-desc={g.description.en.toLowerCase()} data-cat={g.category}>
               <span class="gcard-emoji">{g.emoji}</span>
               <span class="gcard-title">{g.title.en}</span>
               <span class="gcard-desc">{g.description.en}</span>
@@ -70,50 +87,133 @@ const ORDER: GeneratorMeta['category'][] = [
     <p class="muted">Try another keyword or <a href="#" id="clear-search-link">clear the filter</a>.</p>
   </div>
 
-  <script is:inline>
-    (function() {
-      const input = document.getElementById('gen-search');
-      const clearBtn = document.getElementById('gen-search-clear');
-      const status = document.getElementById('search-status');
-      const empty = document.getElementById('search-empty');
-      const sections = document.querySelectorAll('.cat-section');
-      function normalize(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
-      function filter(q) {
-        const query = normalize(q.trim());
-        clearBtn.hidden = query.length === 0;
-        let total = 0;
-        sections.forEach(sec => {
-          const cards = sec.querySelectorAll('.gcard');
-          let visible = 0;
-          cards.forEach(c => {
-            const t = normalize(c.dataset.title || '');
-            const d = normalize(c.dataset.desc || '');
-            const cat = normalize(c.dataset.cat || '');
-            const match = !query || t.includes(query) || d.includes(query) || cat.includes(query);
-            c.hidden = !match;
-            if (match) visible++;
-          });
-          sec.hidden = visible === 0;
-          const n = sec.querySelector('.cat-count-n');
-          if (n) n.textContent = String(visible);
-          total += visible;
-        });
-        if (!query) { status.hidden = true; empty.hidden = true; }
-        else if (total === 0) { status.hidden = true; empty.hidden = false; document.getElementById('search-q').textContent = '"' + q + '"'; }
-        else { status.hidden = false; empty.hidden = true; status.textContent = total === 1 ? '1 result' : total + ' results'; }
+  <script type="application/json" id="gen-search-index" set:html={JSON.stringify(searchIndex)}></script>
+  <script type="application/json" id="gen-synonyms" set:html={JSON.stringify(SYNONYMS_EN)}></script>
+
+  <script>
+    import Fuse from 'fuse.js';
+
+    const input = document.getElementById('gen-search') as HTMLInputElement;
+    const clearBtn = document.getElementById('gen-search-clear') as HTMLButtonElement;
+    const status = document.getElementById('search-status') as HTMLElement;
+    const empty = document.getElementById('search-empty') as HTMLElement;
+    const sections = document.querySelectorAll('.cat-section');
+
+    const idxEl = document.getElementById('gen-search-index');
+    const synEl = document.getElementById('gen-synonyms');
+    type Item = { slug: string; title: string; desc: string; cat: string; catId: string };
+    const items: Item[] = JSON.parse(idxEl?.textContent || '[]');
+    const synonyms: Record<string, string[]> = JSON.parse(synEl?.textContent || '{}');
+
+    function normalize(s: string) {
+      return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    }
+
+    function expandQuery(q: string): string {
+      const n = normalize(q.trim());
+      if (!n) return '';
+      const expansions = [n];
+      for (const [key, vals] of Object.entries(synonyms)) {
+        if (n.includes(key)) expansions.push(...vals.map(normalize));
       }
-      input.addEventListener('input', e => filter(e.target.value));
-      clearBtn.addEventListener('click', () => { input.value = ''; filter(''); input.focus(); });
-      document.getElementById('clear-search-link').addEventListener('click', e => { e.preventDefault(); input.value = ''; filter(''); input.focus(); });
-      document.addEventListener('keydown', e => {
-        if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') { e.preventDefault(); input.focus(); }
-        if (e.key === 'Escape' && document.activeElement === input) { input.value = ''; filter(''); input.blur(); }
+      return [...new Set(expansions)].join(' ');
+    }
+
+    const normalized = items.map(it => ({
+      ...it,
+      _t: normalize(it.title),
+      _d: normalize(it.desc),
+      _c: normalize(it.cat),
+    }));
+
+    const fuse = new Fuse(normalized, {
+      keys: [
+        { name: '_t', weight: 0.6 },
+        { name: '_d', weight: 0.25 },
+        { name: '_c', weight: 0.15 },
+      ],
+      threshold: 0.38,
+      ignoreLocation: true,
+      includeScore: true,
+      minMatchCharLength: 2,
+    });
+
+    function filter(q: string) {
+      const expanded = expandQuery(q);
+      clearBtn.hidden = q.length === 0;
+
+      if (!expanded) {
+        sections.forEach(sec => {
+          (sec as HTMLElement).hidden = false;
+          sec.querySelectorAll('.gcard').forEach(c => ((c as HTMLElement).hidden = false));
+          const n = sec.querySelector('.cat-count-n');
+          if (n) {
+            const cards = sec.querySelectorAll('.gcard');
+            n.textContent = String(cards.length);
+          }
+        });
+        status.hidden = true;
+        empty.hidden = true;
+        return;
+      }
+
+      const matches = fuse.search(expanded);
+      const matchSlugs = new Set(matches.map(m => m.item.slug));
+
+      let total = 0;
+      sections.forEach(sec => {
+        const cards = sec.querySelectorAll('.gcard');
+        let visible = 0;
+        cards.forEach(c => {
+          const slug = (c as HTMLElement).dataset.slug || '';
+          const m = matchSlugs.has(slug);
+          (c as HTMLElement).hidden = !m;
+          if (m) visible++;
+        });
+        (sec as HTMLElement).hidden = visible === 0;
+        const n = sec.querySelector('.cat-count-n');
+        if (n) n.textContent = String(visible);
+        total += visible;
       });
-    })();
+
+      if (total === 0) {
+        status.hidden = true;
+        empty.hidden = false;
+        const sq = document.getElementById('search-q');
+        if (sq) sq.textContent = '"' + q + '"';
+      } else {
+        status.hidden = false;
+        empty.hidden = true;
+        status.textContent = total === 1 ? '1 result' : total + ' results';
+      }
+    }
+
+    input.addEventListener('input', e => filter((e.target as HTMLInputElement).value));
+    clearBtn.addEventListener('click', () => { input.value = ''; filter(''); input.focus(); });
+    document.getElementById('clear-search-link')?.addEventListener('click', e => { e.preventDefault(); input.value = ''; filter(''); input.focus(); });
+    document.addEventListener('keydown', e => {
+      const ae = document.activeElement;
+      if (e.key === '/' && ae?.tagName !== 'INPUT' && ae?.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        input.focus();
+      }
+      if (e.key === 'Escape' && ae === input) {
+        input.value = '';
+        filter('');
+        input.blur();
+      }
+    });
   </script>
 </Layout>
 
 <style>
+  .crumbs { display: flex; gap: 0.5rem; align-items: center; color: var(--text-muted); font-size: 0.8125rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .crumbs a { color: var(--text-subtle); text-decoration: none; transition: color 180ms var(--ease); }
+  .crumbs a:hover { color: var(--text); }
+  .crumb-sep { color: var(--text-muted); flex-shrink: 0; }
+  .crumb-current { color: var(--text); font-weight: 500; }
+  .cat-anchor { color: inherit; text-decoration: none; }
+  .cat-anchor:hover { color: var(--accent); text-decoration: none; }
   .hero { padding: 3rem 0 2rem; }
   .hero .lead { font-size: 1.0625rem; color: var(--text-soft); max-width: 60ch; margin-top: 1rem; }
 

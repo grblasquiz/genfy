@@ -12,6 +12,26 @@ const { lang, data } = Astro.props;
 const t = data[lang];
 const groupsJson = JSON.stringify(t.groups);
 const slugId = data.slug[lang].replace(/[^a-z0-9]/gi, '');
+
+const labels = lang === 'es' ? {
+  copyOne: 'Copiar',
+  copied: '¡Copiado!',
+  exportCsv: 'Exportar CSV',
+  exportJson: 'Exportar JSON',
+  copyAll: 'Copiar todo',
+  hideText: 'Ver como texto',
+  showText: 'Ocultar texto',
+  itemsLabel: 'Resultados',
+} : {
+  copyOne: 'Copy',
+  copied: 'Copied!',
+  exportCsv: 'Export CSV',
+  exportJson: 'Export JSON',
+  copyAll: 'Copy all',
+  hideText: 'View as text',
+  showText: 'Hide text',
+  itemsLabel: 'Results',
+};
 ---
 <GeneratorShell lang={lang} tag={t.tag} title={t.h1} intro={t.intro}>
   <div slot="tool" class={`gt gt-${slugId}`}>
@@ -42,9 +62,22 @@ const slugId = data.slug[lang].replace(/[^a-z0-9]/gi, '');
         </div>
       </div>
     )}
-    <button class={`btn btn-primary gt-gen`} type="button" data-target={slugId}>{t.generateLabel}</button>
-    <button class={`btn btn-ghost gt-copy`} type="button" data-target={slugId}>{t.copyLabel}</button>
-    <textarea class="gt-out" id={`gt-out-${slugId}`} rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+
+    <div class="gt-actions">
+      <button class="btn btn-primary gt-gen" type="button">{t.generateLabel}</button>
+      <button class="btn btn-ghost gt-copy" type="button">{labels.copyAll}</button>
+      <button class="btn btn-ghost gt-csv" type="button" title={labels.exportCsv}>CSV</button>
+      <button class="btn btn-ghost gt-json" type="button" title={labels.exportJson}>JSON</button>
+    </div>
+
+    <div class="gt-results-wrap" aria-live="polite">
+      <ul class="gt-list" id={`gt-list-${slugId}`}></ul>
+    </div>
+
+    <details class="gt-text-fallback">
+      <summary>{labels.hideText}</summary>
+      <textarea class="gt-out" id={`gt-out-${slugId}`} rows="8" readonly></textarea>
+    </details>
   </div>
 
   <div slot="content">
@@ -65,7 +98,7 @@ const slugId = data.slug[lang].replace(/[^a-z0-9]/gi, '');
 
 <script type="application/json" id={`gt-data-${slugId}`} set:html={groupsJson}></script>
 
-<script is:inline define:vars={{ slugId, mode: data.mode, separator: t.separator || ' ', copiedLabel: lang === 'es' ? '¡Copiado!' : 'Copied!', copyLabel: t.copyLabel }}>
+<script is:inline define:vars={{ slugId, mode: data.mode, separator: t.separator || ' ', labels, slugSafe: data.slug[lang] }}>
   (function() {
     const root = document.querySelector('.gt-' + slugId);
     if (!root) return;
@@ -74,9 +107,14 @@ const slugId = data.slug[lang].replace(/[^a-z0-9]/gi, '');
     try { groups = JSON.parse(dataEl.textContent || '[]'); } catch (e) {}
     const filterEl = root.querySelector('.gt-filter');
     const countEl = root.querySelector('.gt-count');
+    const list = root.querySelector('.gt-list');
     const out = root.querySelector('.gt-out');
     const gen = root.querySelector('.gt-gen');
-    const cp = root.querySelector('.gt-copy');
+    const cpAll = root.querySelector('.gt-copy');
+    const csvBtn = root.querySelector('.gt-csv');
+    const jsonBtn = root.querySelector('.gt-json');
+
+    let currentItems = [];
 
     function pick(arr) {
       const i = new Uint32Array(1);
@@ -84,7 +122,7 @@ const slugId = data.slug[lang].replace(/[^a-z0-9]/gi, '');
       return arr[i[0] % arr.length];
     }
 
-    function build() {
+    function generate() {
       const n = Math.max(1, Math.min(parseInt(countEl.value || '1', 10), 100));
       const lines = [];
       if (mode === 'combine') {
@@ -116,24 +154,117 @@ const slugId = data.slug[lang].replace(/[^a-z0-9]/gi, '');
         }
         for (let i = 0; i < n; i++) lines.push(pick(pool));
       }
-      out.value = lines.join('\n');
+      currentItems = lines;
+      render();
     }
 
-    gen.addEventListener('click', build);
-    cp.addEventListener('click', async () => {
-      if (!out.value) return;
+    function render() {
+      list.innerHTML = '';
+      currentItems.forEach((item, idx) => {
+        const li = document.createElement('li');
+        li.className = 'gt-item';
+        const txt = document.createElement('span');
+        txt.className = 'gt-item-text';
+        txt.textContent = item;
+        const btn = document.createElement('button');
+        btn.className = 'gt-item-copy';
+        btn.type = 'button';
+        btn.setAttribute('aria-label', labels.copyOne);
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+        btn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(item);
+            btn.classList.add('copied');
+            const orig = btn.innerHTML;
+            btn.innerHTML = '✓';
+            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 900);
+          } catch (e) {}
+        });
+        li.appendChild(txt);
+        li.appendChild(btn);
+        list.appendChild(li);
+      });
+      out.value = currentItems.join('\n');
+    }
+
+    function download(filename, content, mime) {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function toCsv(items) {
+      const escape = (s) => {
+        const str = String(s).replace(/"/g, '""');
+        return /[",\n]/.test(str) ? `"${str}"` : str;
+      };
+      return 'value\n' + items.map(escape).join('\n');
+    }
+
+    gen.addEventListener('click', generate);
+    cpAll.addEventListener('click', async () => {
+      if (!currentItems.length) return;
       try {
-        await navigator.clipboard.writeText(out.value);
-        const orig = cp.textContent;
-        cp.textContent = copiedLabel;
-        setTimeout(() => { cp.textContent = copyLabel; }, 1200);
+        await navigator.clipboard.writeText(currentItems.join('\n'));
+        const orig = cpAll.textContent;
+        cpAll.textContent = labels.copied;
+        setTimeout(() => { cpAll.textContent = labels.copyAll; }, 1200);
       } catch (e) {}
     });
-    build();
+    csvBtn.addEventListener('click', () => {
+      if (!currentItems.length) return;
+      download(`genfy-${slugSafe}.csv`, toCsv(currentItems), 'text/csv');
+    });
+    jsonBtn.addEventListener('click', () => {
+      if (!currentItems.length) return;
+      download(`genfy-${slugSafe}.json`, JSON.stringify(currentItems, null, 2), 'application/json');
+    });
+
+    generate();
   })();
 </script>
 
 <style>
   .gt-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
   @media (max-width: 600px) { .gt-row { grid-template-columns: 1fr; } }
+  .gt-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+  .gt-actions .btn { padding: 0.5rem 0.875rem; font-size: 0.875rem; }
+  .gt-results-wrap { margin-top: 1.25rem; }
+  .gt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.375rem; max-height: 480px; overflow-y: auto; }
+  .gt-item {
+    display: flex; align-items: center; gap: 0.625rem;
+    padding: 0.625rem 0.875rem;
+    background: var(--bg-inset);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    transition: border-color 180ms var(--ease), background 180ms var(--ease);
+  }
+  .gt-item:hover { border-color: var(--border); background: var(--bg-card); }
+  .gt-item-text {
+    flex: 1; min-width: 0;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text);
+    overflow-wrap: break-word;
+  }
+  .gt-item-copy {
+    flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px;
+    background: transparent; border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted); cursor: pointer;
+    transition: all 160ms var(--ease);
+  }
+  .gt-item:hover .gt-item-copy { color: var(--text-soft); border-color: var(--border); }
+  .gt-item-copy:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+  .gt-item-copy.copied { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+  .gt-text-fallback { margin-top: 1rem; }
+  .gt-text-fallback summary { cursor: pointer; font-size: 0.8125rem; color: var(--text-muted); padding: 0.25rem 0; }
+  .gt-text-fallback summary:hover { color: var(--text-soft); }
+  .gt-text-fallback textarea { margin-top: 0.5rem; width: 100%; font-family: var(--font-mono); font-size: 0.875rem; }
 </style>
