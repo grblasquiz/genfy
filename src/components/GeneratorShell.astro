@@ -1,6 +1,7 @@
 ---
 import AdSlot from './AdSlot.astro';
 import { t, type Lang } from '../lib/i18n';
+import { GENERATORS, urlFor, CATEGORIES_ES, CATEGORIES_EN, type GeneratorMeta } from '../lib/generators';
 
 export interface Props {
   lang?: Lang;
@@ -15,78 +16,282 @@ const homeHref = lang === 'es' ? '/' : '/en';
 const homeLabel = lang === 'es' ? 'Inicio' : 'Home';
 const allHref = lang === 'es' ? '/generadores' : '/en/generators';
 const allLabel = lang === 'es' ? 'Generadores' : 'Generators';
+
+// Detect current generator by URL
+const path = Astro.url.pathname.replace(/\/$/, '');
+const slugFromPath = path.split('/').pop() || '';
+const current = GENERATORS.find(g => g.slug.es === slugFromPath || g.slug.en === slugFromPath);
+
+const CAT_DOT_COLOR: Record<GeneratorMeta['category'], string> = {
+  security: '#dc2626', tech: '#2563eb', data: '#0891b2', business: '#7c3aed', marketing: '#ea580c',
+  design: '#db2777', random: '#ca8a04', pets: '#65a30d', people: '#0d9488', work: '#475569',
+  content: '#9333ea', inspiration: '#16a34a', fun: '#f59e0b', tools: '#525252',
+};
+
+const catColor = current ? CAT_DOT_COLOR[current.category] : '#525252';
+const CATS = lang === 'es' ? CATEGORIES_ES : CATEGORIES_EN;
+const catLabel = current ? CATS[current.category] : tag;
+
+// Related generators (same category, exclude current)
+const related = current
+  ? GENERATORS.filter(g => g.category === current.category && g.slug.es !== current.slug.es).slice(0, 4)
+  : GENERATORS.slice(0, 4).filter(g => g.slug.es !== slugFromPath);
+
+const relatedTitle = lang === 'es' ? 'Otros generadores que te van a gustar' : 'Other generators you might like';
+const trustItems = lang === 'es'
+  ? [{ icon: '⚡', text: 'Instantáneo' }, { icon: '🔒', text: 'En tu navegador' }, { icon: '✓', text: 'Sin registro' }]
+  : [{ icon: '⚡', text: 'Instant' }, { icon: '🔒', text: 'In your browser' }, { icon: '✓', text: 'No signup' }];
+
+const tocLabel = lang === 'es' ? 'En esta página' : 'On this page';
+const liveLabel = lang === 'es' ? 'En vivo' : 'Live';
+const shareLabel = lang === 'es' ? 'Compartir' : 'Share';
+const copyLinkLabel = lang === 'es' ? 'Copiar link' : 'Copy link';
+const copiedLabel = lang === 'es' ? 'Link copiado' : 'Link copied';
 ---
-<nav class="crumbs" aria-label="Breadcrumb">
-  <a href={homeHref}>{homeLabel}</a>
-  <svg class="crumb-sep" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-  <a href={allHref}>{allLabel}</a>
-</nav>
+<div class="gen-page">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href={homeHref}>{homeLabel}</a>
+    <svg class="crumb-sep" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+    <a href={allHref}>{allLabel}</a>
+    {current && (<>
+      <svg class="crumb-sep" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      <span class="crumb-current">{title}</span>
+    </>)}
+  </nav>
 
-<section class="gen-hero">
-  {tag && <span class="tag">{tag}</span>}
-  <h1>{title}</h1>
-  <p class="lead">{intro}</p>
-</section>
+  <section class="gen-hero" style={`--cat-dot: ${catColor}`}>
+    <div class="gen-hero-bg" aria-hidden="true"></div>
+    <div class="gen-hero-content">
+      {(tag || catLabel) && (
+        <span class="tag tag-cat">
+          <span class="tag-dot"></span>
+          {tag || catLabel}
+        </span>
+      )}
+      <h1>{title}</h1>
+      <p class="lead">{intro}</p>
+      <div class="trust-row">
+        {trustItems.map(t => (
+          <span class="trust-item"><span class="trust-icon">{t.icon}</span>{t.text}</span>
+        ))}
+        <button class="trust-share" id="copy-link-btn" type="button" aria-label={copyLinkLabel}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <span class="trust-share-label">{shareLabel}</span>
+        </button>
+      </div>
+    </div>
+  </section>
 
-<div class="gen-tool">
-  <slot name="tool" />
+  <div class="gen-tool-wrap">
+    <div class="gen-tool-header">
+      <span class="gen-tool-live"><span class="gen-tool-pulse"></span>{liveLabel}</span>
+    </div>
+    <div class="gen-tool">
+      <slot name="tool" />
+    </div>
+  </div>
+
+  <AdSlot variant="inline" slot="in-content-1" label={lang === 'en' ? 'Sponsored' : 'Publicidad'} />
+
+  <section class="gen-content drop-cap">
+    <slot name="content" />
+  </section>
+
+  <AdSlot variant="inline" slot="in-content-2" label={lang === 'en' ? 'Sponsored' : 'Publicidad'} />
+
+  <section class="gen-faq faq">
+    <h2>{tt.faqTitle}</h2>
+    <div class="faq-grid">
+      <slot name="faq" />
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="gen-related">
+      <h2>{relatedTitle}</h2>
+      <div class="related-grid">
+        {related.map(g => (
+          <a class="related-card" href={urlFor(g, lang)}>
+            <span class="related-emoji">{g.emoji}</span>
+            <span class="related-title">{g.title[lang]}</span>
+            <span class="related-desc">{g.description[lang]}</span>
+            <span class="related-arrow" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
 </div>
 
-<AdSlot variant="inline" slot="in-content-1" label={lang === 'en' ? 'Sponsored' : 'Publicidad'} />
-
-<section class="gen-content drop-cap">
-  <slot name="content" />
-</section>
-
-<AdSlot variant="inline" slot="in-content-2" label={lang === 'en' ? 'Sponsored' : 'Publicidad'} />
-
-<section class="gen-faq faq">
-  <h2>{tt.faqTitle}</h2>
-  <slot name="faq" />
-</section>
+<script is:inline define:vars={{ copiedLabel }}>
+  (function() {
+    const btn = document.getElementById('copy-link-btn');
+    if (!btn) return;
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        if (window.genfyToast) window.genfyToast(copiedLabel);
+        else {
+          const orig = btn.querySelector('.trust-share-label').textContent;
+          btn.querySelector('.trust-share-label').textContent = copiedLabel;
+          setTimeout(() => btn.querySelector('.trust-share-label').textContent = orig, 1400);
+        }
+      } catch (e) {}
+    });
+  })();
+</script>
 
 <style>
-  .crumbs {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    color: var(--text-muted);
-    font-size: 0.8125rem;
-    margin-bottom: 1.5rem;
-  }
-  .crumbs a {
-    color: var(--text-subtle);
-    text-decoration: none;
-    transition: color var(--t-base) var(--ease);
-  }
+  .gen-page { position: relative; }
+
+  /* Breadcrumbs */
+  .crumbs { display: flex; gap: 0.5rem; align-items: center; color: var(--text-muted); font-size: 0.8125rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .crumbs a { color: var(--text-subtle); text-decoration: none; transition: color 180ms var(--ease); }
   .crumbs a:hover { color: var(--text); }
   .crumb-sep { color: var(--text-muted); flex-shrink: 0; }
-  .gen-hero { margin-bottom: 2rem; }
-  .gen-hero .tag { margin-bottom: 1rem; }
-  .gen-hero h1 {
-    font-size: clamp(1.875rem, 4.5vw, 3rem);
-    max-width: 22ch;
+  .crumb-current { color: var(--text); font-weight: 500; }
+
+  /* Hero */
+  .gen-hero {
+    position: relative;
+    margin-bottom: 2rem;
+    padding: 0.5rem 0 0;
   }
-  .gen-hero .lead {
-    font-size: 1.0625rem;
+  .gen-hero-bg {
+    position: absolute;
+    inset: -2rem -2rem auto -2rem;
+    height: 280px;
+    background: radial-gradient(60% 80% at 0% 0%, color-mix(in oklab, var(--cat-dot) 8%, transparent) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .gen-hero-content { position: relative; z-index: 1; }
+  .gen-hero h1 { font-size: clamp(1.875rem, 4.5vw, 3rem); max-width: 22ch; }
+  .gen-hero .lead { font-size: 1.0625rem; color: var(--text-soft); max-width: 60ch; margin-top: 1rem; line-height: 1.6; }
+
+  .tag-cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4375rem;
+    padding: 0.25rem 0.75rem 0.25rem 0.5rem;
+    margin-bottom: 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 500;
     color: var(--text-soft);
-    max-width: 60ch;
-    margin-top: 1rem;
-    line-height: 1.6;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
+  .tag-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--cat-dot);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--cat-dot) 18%, transparent);
+  }
+
+  /* Trust row */
+  .trust-row {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 0.875rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px dashed var(--border);
+    color: var(--text-subtle);
+    font-size: 0.8125rem;
+  }
+  .trust-item { display: inline-flex; align-items: center; gap: 0.375rem; }
+  .trust-icon { font-size: 0.875rem; }
+  .trust-share {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-soft);
+    background: var(--bg);
+    font-size: 0.8125rem;
+    cursor: pointer;
+    transition: border-color 180ms var(--ease), color 180ms var(--ease);
+  }
+  .trust-share:hover { border-color: var(--text); color: var(--text); }
+
+  /* Tool wrap */
+  .gen-tool-wrap {
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .gen-tool-header {
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0 0.25rem;
+  }
+  .gen-tool-live {
+    display: inline-flex; align-items: center; gap: 0.4375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .gen-tool-pulse {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 var(--accent);
+    animation: live-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes live-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 60%, transparent); }
+    50% { box-shadow: 0 0 0 5px color-mix(in oklab, var(--accent) 0%, transparent); }
+  }
+
   .gen-tool {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
     padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: var(--shadow-xs);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .gen-tool::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--cat-dot, var(--accent)), transparent);
+    opacity: 0.5;
   }
   @media (max-width: 600px) {
     .gen-tool { padding: 1.5rem; border-radius: var(--radius-lg); }
   }
-  .gen-content :global(h2) { margin-top: 3rem; }
+
+  /* Content */
+  .gen-content :global(h2) {
+    margin-top: 3rem;
+    font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    position: relative;
+    padding-bottom: 0.625rem;
+    border-bottom: 1px solid var(--border-soft);
+  }
   .gen-content :global(h2:first-child) { margin-top: 1rem; }
+  .gen-content :global(h2)::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -1px;
+    width: 32px; height: 2px;
+    background: var(--cat-dot, var(--accent));
+    border-radius: 1px;
+  }
+  .gen-content :global(h3) {
+    margin-top: 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
   .gen-content :global(p) { max-width: 68ch; }
   .gen-content :global(ul),
   .gen-content :global(ol) {
@@ -95,5 +300,72 @@ const allLabel = lang === 'es' ? 'Generadores' : 'Generators';
     max-width: 66ch;
   }
   .gen-content :global(li) { margin-bottom: 0.5rem; line-height: 1.6; }
-  .gen-faq { margin-top: 3.5rem; }
+  .gen-content :global(li::marker) { color: var(--cat-dot, var(--accent)); }
+  .gen-content :global(strong) { color: var(--text); font-weight: 600; }
+
+  /* FAQ */
+  .gen-faq { margin-top: 4rem; }
+  .gen-faq h2 {
+    font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.5rem;
+    position: relative;
+    padding-bottom: 0.625rem;
+    border-bottom: 1px solid var(--border-soft);
+    display: inline-block;
+  }
+  .gen-faq h2::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -1px;
+    width: 32px; height: 2px;
+    background: var(--cat-dot, var(--accent));
+    border-radius: 1px;
+  }
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  @media (min-width: 768px) {
+    .faq-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  }
+
+  /* Related */
+  .gen-related { margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border-soft); }
+  .gen-related h2 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.5rem;
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  @media (min-width: 600px) { .related-grid { grid-template-columns: 1fr 1fr; } }
+  .related-card {
+    position: relative;
+    display: flex; flex-direction: column;
+    gap: 0.375rem;
+    padding: 1.125rem 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 220ms var(--ease), transform 220ms var(--ease);
+  }
+  .related-card:hover { border-color: var(--text); transform: translateY(-1px); text-decoration: none; }
+  .related-emoji { font-size: 1.25rem; line-height: 1; }
+  .related-title { font-weight: 600; font-size: 0.9375rem; letter-spacing: -0.01em; padding-right: 1.5rem; }
+  .related-desc { color: var(--text-soft); font-size: 0.8125rem; line-height: 1.5; }
+  .related-arrow {
+    position: absolute; top: 1.125rem; right: 1.125rem;
+    color: var(--text-muted); font-size: 0.875rem;
+    transition: transform 220ms var(--ease), color 220ms var(--ease);
+  }
+  .related-card:hover .related-arrow { color: var(--cat-dot, var(--accent)); transform: translateX(3px); }
 </style>
