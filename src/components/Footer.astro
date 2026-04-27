@@ -59,6 +59,18 @@ for (const cat of CAT_ORDER) {
       </div>
     </div>
 
+    <div class="footer-sister">
+      <span class="sister-label">{lang === 'es' ? 'También de los creadores de Genfy:' : 'Also from the makers of Genfy:'}</span>
+      <a href="https://hacecuentas.com" target="_blank" rel="noopener" class="sister-link">
+        <span class="sister-emoji" aria-hidden="true">🧮</span>
+        <span class="sister-text">
+          <strong>Hace Cuentas</strong>
+          <span class="sister-desc">{lang === 'es' ? 'Calculadoras online: hipoteca, BMI, edad, conversores' : 'Online calculators: mortgage, BMI, age, converters'}</span>
+        </span>
+        <span class="sister-arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+
     <div class="footer-bottom">
       <nav class="footer-nav" aria-label="Footer">
         {links.map(l => <a href={l.href}>{l.label}</a>)}
@@ -120,6 +132,34 @@ for (const cat of CAT_ORDER) {
     transition: color 180ms var(--ease);
   }
   .footer-col a:hover { color: var(--text); }
+
+  .footer-sister {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--border);
+  }
+  @media (min-width: 700px) {
+    .footer-sister { flex-direction: row; align-items: center; gap: 1rem; }
+  }
+  .sister-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 600; flex-shrink: 0; }
+  .sister-link {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    padding: 0.625rem 0.875rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none; color: var(--text);
+    transition: border-color 180ms var(--ease), transform 180ms var(--ease);
+  }
+  .sister-link:hover { border-color: var(--accent); transform: translateY(-1px); text-decoration: none; }
+  .sister-emoji { font-size: 1.25rem; line-height: 1; }
+  .sister-text { display: flex; flex-direction: column; gap: 0.0625rem; }
+  .sister-text strong { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.01em; }
+  .sister-desc { font-size: 0.75rem; color: var(--text-soft); line-height: 1.4; }
+  .sister-arrow { color: var(--text-muted); font-size: 0.875rem; margin-left: auto; }
+  .sister-link:hover .sister-arrow { color: var(--accent); }
 
   .footer-bottom {
     display: flex;
