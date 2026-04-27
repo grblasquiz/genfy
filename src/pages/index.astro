@@ -280,10 +280,17 @@ const useCases = [
   .usecase-link { margin-top: auto; color: var(--accent); font-size: 0.875rem; font-weight: 600; padding-top: 0.25rem; }
 
   /* Categories tiles with dot accent */
-  .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; }
-  .cat-tile {
-    display: flex; align-items: center;
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 0.75rem;
+  }
+  .cat-tile {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 0.75rem;
+    row-gap: 0.125rem;
+    align-items: center;
     padding: 1rem 1.125rem;
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -294,14 +301,26 @@ const useCases = [
   }
   .cat-tile:hover { border-color: var(--text); background: var(--bg-inset); text-decoration: none; }
   .cat-dot {
-    width: 8px; height: 8px; border-radius: 50%;
+    grid-row: 1 / span 2;
+    align-self: center;
+    width: 8px; height: 8px;
+    border-radius: 50%;
     background: var(--cat-dot, var(--accent));
-    flex-shrink: 0;
     box-shadow: 0 0 0 3px color-mix(in oklab, var(--cat-dot, var(--accent)) 18%, transparent);
   }
-  .cat-tile-text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
-  .cat-name { font-weight: 600; font-size: 0.9375rem; letter-spacing: -0.01em; flex: 1; }
-  .cat-count { color: var(--text-subtle); font-size: 0.8125rem; font-feature-settings: "tnum"; }
+  .cat-name {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    color: var(--text);
+  }
+  .cat-count {
+    color: var(--text-subtle);
+    font-size: 0.75rem;
+    font-feature-settings: "tnum";
+    line-height: 1.2;
+  }
 
   /* Why grid */
   .why h2 { max-width: 24ch; font-size: clamp(1.5rem, 3.5vw, 2.25rem); letter-spacing: -0.025em; }
