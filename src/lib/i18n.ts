@@ -1,7 +1,28 @@
+import { GENERATORS } from './generators';
+
 export type Lang = 'es' | 'en';
 
 export const SITE_URL = 'https://genfy.net';
 export const SITE_NAME = 'Genfy';
+
+const STATIC_PAGE_MAP: Record<string, string> = {
+  contacto: 'contact',
+  privacidad: 'privacy',
+  terminos: 'terms',
+  'sobre-genfy': 'about',
+  generadores: 'generators',
+};
+
+const ES_TO_EN_SLUG = new Map<string, string>();
+const EN_TO_ES_SLUG = new Map<string, string>();
+for (const g of GENERATORS) {
+  ES_TO_EN_SLUG.set(g.slug.es, g.slug.en);
+  EN_TO_ES_SLUG.set(g.slug.en, g.slug.es);
+}
+for (const [es, en] of Object.entries(STATIC_PAGE_MAP)) {
+  ES_TO_EN_SLUG.set(es, en);
+  EN_TO_ES_SLUG.set(en, es);
+}
 
 export const t = {
   es: {
@@ -51,6 +72,18 @@ export function getLangFromPath(pathname: string): Lang {
 }
 
 export function altPath(pathname: string, currentLang: Lang): string {
-  if (currentLang === 'es') return pathname === '/' ? '/en' : `/en${pathname}`;
-  return pathname === '/en' ? '/' : pathname.replace(/^\/en/, '') || '/';
+  const clean = pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+
+  if (currentLang === 'es') {
+    if (clean === '/') return '/en';
+    const slug = clean.replace(/^\//, '');
+    const enSlug = ES_TO_EN_SLUG.get(slug);
+    return enSlug ? `/en/${enSlug}` : `/en${clean}`;
+  }
+
+  if (clean === '/en') return '/';
+  const slug = clean.replace(/^\/en\//, '');
+  const esSlug = EN_TO_ES_SLUG.get(slug);
+  if (esSlug) return `/${esSlug}`;
+  return clean.replace(/^\/en/, '') || '/';
 }

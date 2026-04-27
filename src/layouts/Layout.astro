@@ -139,7 +139,7 @@ const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
   */}
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main">{lang === 'en' ? 'Skip to content' : 'Saltar al contenido'}</a>
   <ScrollProgress />
   <Header lang={lang} />
   <main id="main" class="container">

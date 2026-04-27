@@ -2,35 +2,148 @@
 import { type Lang } from '../lib/i18n';
 const { lang = 'es' } = Astro.props as { lang?: Lang };
 const t = lang === 'es' ? {
-  msg: 'Usamos cookies para analítica y publicidad. Al continuar aceptás su uso.',
-  accept: 'Aceptar',
+  msg: 'Usamos cookies propias y de terceros para analítica y publicidad. Podés aceptar todas, rechazar o configurar.',
+  accept: 'Aceptar todas',
+  reject: 'Rechazar',
+  configure: 'Configurar',
   privacy: 'Política',
   privacyHref: '/privacidad',
+  modalTitle: 'Preferencias de cookies',
+  necessary: 'Necesarias',
+  necessaryDesc: 'Imprescindibles para que el sitio funcione. No se pueden desactivar.',
+  analytics: 'Analítica',
+  analyticsDesc: 'Nos ayudan a entender cómo se usan los generadores (Google Analytics).',
+  ads: 'Publicidad',
+  adsDesc: 'Anuncios personalizados que financian el sitio (Google AdSense).',
+  save: 'Guardar preferencias',
+  close: 'Cerrar',
 } : {
-  msg: 'We use cookies for analytics and ads. By continuing you agree to their use.',
-  accept: 'Accept',
+  msg: 'We use first- and third-party cookies for analytics and ads. You can accept all, reject or configure.',
+  accept: 'Accept all',
+  reject: 'Reject',
+  configure: 'Configure',
   privacy: 'Privacy',
   privacyHref: '/en/privacy',
+  modalTitle: 'Cookie preferences',
+  necessary: 'Necessary',
+  necessaryDesc: 'Required for the site to work. They cannot be disabled.',
+  analytics: 'Analytics',
+  analyticsDesc: 'Help us understand how the generators are used (Google Analytics).',
+  ads: 'Advertising',
+  adsDesc: 'Personalized ads that fund the site (Google AdSense).',
+  save: 'Save preferences',
+  close: 'Close',
 };
 ---
 <div class="cookie-banner" id="cookie-banner" hidden>
   <p>{t.msg} <a href={t.privacyHref}>{t.privacy}</a></p>
-  <button class="btn btn-primary" id="cookie-accept" type="button">{t.accept}</button>
+  <div class="cookie-actions">
+    <button class="btn btn-ghost" id="cookie-reject" type="button">{t.reject}</button>
+    <button class="btn btn-ghost" id="cookie-configure" type="button">{t.configure}</button>
+    <button class="btn btn-primary" id="cookie-accept" type="button">{t.accept}</button>
+  </div>
+</div>
+
+<div class="cookie-modal" id="cookie-modal" hidden role="dialog" aria-modal="true" aria-labelledby="cookie-modal-title">
+  <div class="cookie-modal-card">
+    <h3 id="cookie-modal-title">{t.modalTitle}</h3>
+    <label class="cookie-row">
+      <input type="checkbox" checked disabled />
+      <div>
+        <strong>{t.necessary}</strong>
+        <p>{t.necessaryDesc}</p>
+      </div>
+    </label>
+    <label class="cookie-row">
+      <input type="checkbox" id="cookie-pref-analytics" />
+      <div>
+        <strong>{t.analytics}</strong>
+        <p>{t.analyticsDesc}</p>
+      </div>
+    </label>
+    <label class="cookie-row">
+      <input type="checkbox" id="cookie-pref-ads" />
+      <div>
+        <strong>{t.ads}</strong>
+        <p>{t.adsDesc}</p>
+      </div>
+    </label>
+    <div class="cookie-modal-actions">
+      <button class="btn btn-ghost" id="cookie-modal-close" type="button">{t.close}</button>
+      <button class="btn btn-primary" id="cookie-save" type="button">{t.save}</button>
+    </div>
+  </div>
 </div>
 
 <script is:inline>
   (function() {
-    const KEY = 'genfy:cookie-ack:v1';
+    const KEY = 'genfy:cookie-consent:v2';
     const banner = document.getElementById('cookie-banner');
-    const accept = document.getElementById('cookie-accept');
-    if (!banner || !accept) return;
-    try {
-      if (!localStorage.getItem(KEY)) banner.hidden = false;
-    } catch (e) {}
-    accept.addEventListener('click', () => {
-      try { localStorage.setItem(KEY, '1'); } catch (e) {}
-      banner.hidden = true;
+    const modal = document.getElementById('cookie-modal');
+    const acceptBtn = document.getElementById('cookie-accept');
+    const rejectBtn = document.getElementById('cookie-reject');
+    const configureBtn = document.getElementById('cookie-configure');
+    const saveBtn = document.getElementById('cookie-save');
+    const closeBtn = document.getElementById('cookie-modal-close');
+    const prefAnalytics = document.getElementById('cookie-pref-analytics');
+    const prefAds = document.getElementById('cookie-pref-ads');
+    if (!banner || !modal) return;
+
+    function readConsent() {
+      try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; }
+    }
+    function writeConsent(c) {
+      try { localStorage.setItem(KEY, JSON.stringify(c)); } catch (e) {}
+    }
+    function applyConsent(c) {
+      if (typeof window.gtag === 'function') {
+        window.gtag('consent', 'update', {
+          analytics_storage: c.analytics ? 'granted' : 'denied',
+          ad_storage: c.ads ? 'granted' : 'denied',
+          ad_user_data: c.ads ? 'granted' : 'denied',
+          ad_personalization: c.ads ? 'granted' : 'denied',
+        });
+      }
+    }
+    function close() { banner.hidden = true; modal.hidden = true; }
+
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'default', {
+        analytics_storage: 'denied', ad_storage: 'denied',
+        ad_user_data: 'denied', ad_personalization: 'denied',
+      });
+    }
+
+    const existing = readConsent();
+    if (existing) {
+      applyConsent(existing);
+    } else {
+      banner.hidden = false;
+    }
+
+    acceptBtn && acceptBtn.addEventListener('click', () => {
+      const c = { analytics: true, ads: true, ts: Date.now() };
+      writeConsent(c); applyConsent(c); close();
     });
+    rejectBtn && rejectBtn.addEventListener('click', () => {
+      const c = { analytics: false, ads: false, ts: Date.now() };
+      writeConsent(c); applyConsent(c); close();
+    });
+    configureBtn && configureBtn.addEventListener('click', () => {
+      const cur = readConsent() || { analytics: false, ads: false };
+      if (prefAnalytics) prefAnalytics.checked = !!cur.analytics;
+      if (prefAds) prefAds.checked = !!cur.ads;
+      modal.hidden = false;
+    });
+    saveBtn && saveBtn.addEventListener('click', () => {
+      const c = {
+        analytics: !!(prefAnalytics && prefAnalytics.checked),
+        ads: !!(prefAds && prefAds.checked),
+        ts: Date.now(),
+      };
+      writeConsent(c); applyConsent(c); close();
+    });
+    closeBtn && closeBtn.addEventListener('click', () => { modal.hidden = true; });
   })();
 </script>
 
@@ -41,7 +154,7 @@ const t = lang === 'es' ? {
     left: 1rem;
     right: 1rem;
     z-index: 60;
-    max-width: 520px;
+    max-width: 560px;
     margin: 0 auto;
     padding: 0.875rem 1.125rem;
     background: var(--bg-card);
@@ -50,12 +163,38 @@ const t = lang === 'es' ? {
     box-shadow: var(--shadow-lg);
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.875rem;
     flex-wrap: wrap;
     animation: slide-up 280ms var(--ease);
   }
   .cookie-banner p { margin: 0; flex: 1; min-width: 240px; font-size: 0.8125rem; color: var(--text-soft); line-height: 1.5; }
   .cookie-banner a { color: var(--text); text-decoration-color: var(--accent); }
-  .cookie-banner .btn { padding: 0.5rem 0.875rem; font-size: 0.8125rem; }
+  .cookie-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .cookie-banner .btn { padding: 0.5rem 0.75rem; font-size: 0.8125rem; }
   .cookie-banner[hidden] { display: none; }
+
+  .cookie-modal {
+    position: fixed; inset: 0; z-index: 70;
+    background: rgba(0,0,0,0.55);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  .cookie-modal[hidden] { display: none; }
+  .cookie-modal-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.25rem 1.5rem;
+    max-width: 480px; width: 100%; max-height: 86vh; overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+  }
+  .cookie-modal-card h3 { margin: 0 0 0.875rem; font-size: 1.0625rem; }
+  .cookie-row {
+    display: flex; gap: 0.75rem; align-items: flex-start;
+    padding: 0.625rem 0; border-top: 1px solid var(--border-soft);
+    cursor: pointer;
+  }
+  .cookie-row:first-of-type { border-top: 0; }
+  .cookie-row input { margin-top: 0.25rem; }
+  .cookie-row strong { display: block; font-size: 0.875rem; }
+  .cookie-row p { margin: 0.125rem 0 0; font-size: 0.8125rem; color: var(--text-soft); line-height: 1.45; }
+  .cookie-modal-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem; }
 </style>

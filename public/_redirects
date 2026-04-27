@@ -1,0 +1,4 @@
+https://www.genfy.net/*  https://genfy.net/:splat  301!
+http://www.genfy.net/*   https://genfy.net/:splat  301!
+http://genfy.net/*       https://genfy.net/:splat  301!
+/sitemap.xml             /sitemap-index.xml         301
