@@ -160,5 +160,13 @@ const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
   <CookieBanner lang={lang} />
   <ToastHost />
   <RevealOnScroll />
+
+  <script is:inline>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
 </body>
 </html>

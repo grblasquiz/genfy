@@ -1,7 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { GENERATORS, urlFor, CATEGORIES_EN, type GeneratorMeta } from '../../lib/generators';
+import { currentSeasonal } from '../../lib/seasonal';
 const lang = 'en' as const;
+const seasonal = currentSeasonal(lang);
 
 const title = 'Genfy — Free online generators | Passwords, names, QR and more';
 const description = 'Hundreds of free online generators: secure passwords, business names, QR codes, lorem ipsum, pet names. No signup, nothing to install.';
@@ -62,6 +64,28 @@ const useCases = [
   </section>
 
   <div class="dot-divider" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  {seasonal && (
+    <section class="seasonal reveal" aria-label={seasonal.tagline}>
+      <div class="seasonal-head">
+        <span class="seasonal-emoji" aria-hidden="true">{seasonal.emoji}</span>
+        <div>
+          <h2 class="seasonal-title">{seasonal.tagline}</h2>
+          <p class="seasonal-cta">{seasonal.cta}</p>
+        </div>
+      </div>
+      <div class="seasonal-grid">
+        {seasonal.generators.map(g => (
+          <a class="seasonal-card" href={urlFor(g, lang)}>
+            <span class="seasonal-card-emoji">{g.emoji}</span>
+            <span class="seasonal-card-title">{g.title.en}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {seasonal && <div class="dot-divider" aria-hidden="true"><span></span><span></span><span></span></div>}
 
   <section id="generators" class="generators reveal">
     <div class="section-head">
@@ -157,6 +181,33 @@ const useCases = [
 </Layout>
 
 <style>
+  .seasonal {
+    margin: 2rem 0;
+    padding: 1.5rem 1.75rem;
+    background: linear-gradient(135deg, color-mix(in oklab, var(--accent) 6%, var(--bg-card)) 0%, var(--bg-card) 80%);
+    border: 1px solid color-mix(in oklab, var(--accent) 30%, var(--border));
+    border-radius: var(--radius-xl);
+  }
+  .seasonal-head { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.25rem; }
+  .seasonal-emoji { font-size: 2rem; flex-shrink: 0; line-height: 1; }
+  .seasonal-title { margin: 0; font-size: 1.125rem; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
+  .seasonal-cta { margin: 0.25rem 0 0; font-size: 0.9375rem; color: var(--text-soft); line-height: 1.5; }
+  .seasonal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.625rem; }
+  .seasonal-card {
+    display: flex; align-items: center; gap: 0.625rem;
+    padding: 0.75rem 0.875rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none; color: var(--text);
+    font-size: 0.875rem;
+    transition: border-color 180ms var(--ease), transform 180ms var(--ease);
+  }
+  .seasonal-card:hover { border-color: var(--accent); transform: translateY(-1px); text-decoration: none; }
+  .seasonal-card-emoji { font-size: 1.125rem; }
+  .seasonal-card-title { font-weight: 500; }
+
+
   .hero { position: relative; padding: 4rem 0 3rem; overflow: hidden; }
   @media (min-width: 768px) { .hero { padding: 6rem 0 5rem; } }
   .hero-grid { display: grid; gap: 3rem; grid-template-columns: 1fr; position: relative; z-index: 1; }

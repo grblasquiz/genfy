@@ -1,0 +1,146 @@
+---
+import GeneratorShell from './GeneratorShell.astro';
+import type { Lang } from '../lib/i18n';
+import { GENERATORS, urlFor } from '../lib/generators';
+import type { ValidatorEntry } from '../lib/validators-data/types';
+
+export interface Props {
+  lang: Lang;
+  entry: ValidatorEntry;
+}
+
+const { lang, entry } = Astro.props;
+const t = entry[lang];
+const elId = entry.id.replace(/[^a-z0-9]/gi, '');
+---
+<GeneratorShell lang={lang} tag={t.tag} title={t.h1} intro={t.intro}>
+  <div slot="tool" class={`val val-${elId}`} data-validator-id={entry.id} data-i18n-id={`val-i18n-${elId}`}>
+    <label for={`val-input-${elId}`}>{t.inputLabel}</label>
+    <input id={`val-input-${elId}`} class="val-input" type="text" placeholder={t.placeholder} autocomplete="off" spellcheck="false" />
+
+    <div class="val-actions">
+      <button class="btn btn-primary val-validate" type="button">{t.validateLabel}</button>
+    </div>
+
+    {t.examples.length > 0 && (
+      <div class="val-examples">
+        <span class="val-examples-label">{lang === 'es' ? 'Probá con:' : 'Try with:'}</span>
+        {t.examples.map(ex => (
+          <button class="val-example" type="button" data-value={ex.value} title={ex.value}>{ex.label}</button>
+        ))}
+      </div>
+    )}
+
+    <div class="val-result" id={`val-result-${elId}`} hidden></div>
+  </div>
+
+  <div slot="content">
+    {t.body.map(s => (
+      <Fragment>
+        <h2>{s.h2}</h2>
+        <Fragment set:html={s.html} />
+      </Fragment>
+    ))}
+  </div>
+
+  <div slot="faq">
+    {t.faq.map(f => (
+      <details><summary>{f.q}</summary><p>{f.a}</p></details>
+    ))}
+  </div>
+</GeneratorShell>
+
+<script type="application/json" id={`val-i18n-${elId}`} set:html={JSON.stringify({ valid: t.validLabel, invalid: t.invalidLabel, reasons: t.reasons, detailsLabels: t.detailsLabels || {} })}></script>
+
+<script>
+  import { VALIDATORS } from '../lib/validators/algorithms';
+
+  document.querySelectorAll<HTMLElement>('.val').forEach(root => {
+    const id = root.dataset.validatorId as keyof typeof VALIDATORS | undefined;
+    const i18nElId = root.dataset.i18nId;
+    if (!id || !i18nElId) return;
+    const fn = VALIDATORS[id];
+    if (!fn) return;
+
+    const input = root.querySelector<HTMLInputElement>('.val-input');
+    const btn = root.querySelector<HTMLButtonElement>('.val-validate');
+    const result = root.querySelector<HTMLElement>('.val-result');
+    const i18nEl = document.getElementById(i18nElId);
+    if (!input || !btn || !result || !i18nEl) return;
+    const i18n = JSON.parse(i18nEl.textContent || '{}');
+
+    function render() {
+      const v = input!.value.trim();
+      if (!v) { result!.hidden = true; return; }
+      const r = fn(v);
+      result!.hidden = false;
+      result!.className = 'val-result ' + (r.valid ? 'val-result-ok' : 'val-result-fail');
+      let html = `<div class="val-status">${r.valid ? '✓ ' + i18n.valid : '✗ ' + i18n.invalid}</div>`;
+      if (!r.valid && r.reason) {
+        const reasonText = i18n.reasons?.[r.reason] || r.reason;
+        html += `<div class="val-reason">${reasonText}</div>`;
+      }
+      if (r.details && Object.keys(r.details).length) {
+        html += '<dl class="val-details">';
+        for (const [k, val] of Object.entries(r.details)) {
+          const label = i18n.detailsLabels?.[k] || k;
+          html += `<dt>${label}</dt><dd>${val}</dd>`;
+        }
+        html += '</dl>';
+      }
+      result!.innerHTML = html;
+    }
+
+    btn.addEventListener('click', render);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') render(); });
+    input.addEventListener('input', () => { if (result!.hidden === false) render(); });
+    root.querySelectorAll<HTMLButtonElement>('.val-example').forEach(b => {
+      b.addEventListener('click', () => { input!.value = b.dataset.value || ''; render(); input!.focus(); });
+    });
+  });
+</script>
+
+<style>
+  .val { display: flex; flex-direction: column; gap: 0.875rem; }
+  .val label { font-size: 0.875rem; font-weight: 500; color: var(--text); }
+  .val-input {
+    padding: 0.875rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+  }
+  .val-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .val-actions { display: flex; gap: 0.5rem; }
+  .val-examples { display: flex; flex-wrap: wrap; gap: 0.375rem; align-items: center; padding: 0.625rem 0.75rem; background: var(--bg-inset); border-radius: var(--radius-sm); }
+  .val-examples-label { font-size: 0.8125rem; color: var(--text-muted); margin-right: 0.25rem; }
+  .val-example {
+    padding: 0.25rem 0.625rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-soft);
+    cursor: pointer;
+    max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .val-example:hover { border-color: var(--accent); color: var(--text); }
+  .val-result {
+    padding: 1rem 1.125rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    margin-top: 0.5rem;
+  }
+  .val-result-ok { background: color-mix(in oklab, #16a34a 8%, var(--bg-card)); border-color: #16a34a; }
+  .val-result-fail { background: color-mix(in oklab, #dc2626 8%, var(--bg-card)); border-color: #dc2626; }
+  .val-status { font-weight: 700; font-size: 1rem; }
+  .val-result-ok .val-status { color: #16a34a; }
+  .val-result-fail .val-status { color: #dc2626; }
+  .val-reason { margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-soft); }
+  .val-details { display: grid; grid-template-columns: max-content 1fr; gap: 0.25rem 0.875rem; margin: 0.75rem 0 0; font-size: 0.875rem; }
+  .val-details dt { color: var(--text-muted); }
+  .val-details dd { margin: 0; color: var(--text); font-family: var(--font-mono); font-size: 0.8125rem; }
+</style>

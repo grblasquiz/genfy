@@ -1,0 +1,222 @@
+[
+  {
+    "id": "luhn",
+    "slugEs": "validador-tarjeta-credito",
+    "slugEn": "credit-card-validator",
+    "emoji": "💳",
+    "category": "data",
+    "termEs": "Validador de tarjeta de crédito (Luhn)",
+    "termEn": "Credit card validator (Luhn)",
+    "conceptEs": "Valida números de tarjeta usando el algoritmo de Luhn (mod 10). Detecta errores tipográficos pero no garantiza que la tarjeta exista.",
+    "conceptEn": "Validates card numbers using the Luhn algorithm (mod 10). Detects typos but does not guarantee the card actually exists.",
+    "examples": [
+      { "label": "Visa válida", "value": "4111 1111 1111 1111" },
+      { "label": "MasterCard válida", "value": "5500 0000 0000 0004" },
+      { "label": "AmEx válida", "value": "3400 000000 00009" },
+      { "label": "Inválida (typo)", "value": "4111 1111 1111 1112" }
+    ],
+    "reasonsEs": { "non-numeric": "Solo dígitos permitidos", "length-out-of-range": "Largo fuera de 8-19 dígitos", "luhn-checksum-fail": "El checksum Luhn no coincide" },
+    "reasonsEn": { "non-numeric": "Only digits allowed", "length-out-of-range": "Length out of 8-19 digits range", "luhn-checksum-fail": "Luhn checksum does not match" },
+    "detailsLabelsEs": { "brand": "Marca", "length": "Largo" },
+    "detailsLabelsEn": { "brand": "Brand", "length": "Length" },
+    "relatedEs": ["generador-de-tarjetas-de-test", "generador-de-numeros-aleatorios"],
+    "relatedEn": ["test-credit-card-generator", "random-number-generator"]
+  },
+  {
+    "id": "cuit",
+    "slugEs": "validador-cuit-cuil",
+    "slugEn": "cuit-cuil-validator",
+    "emoji": "🇦🇷",
+    "category": "data",
+    "termEs": "Validador de CUIT / CUIL (Argentina)",
+    "termEn": "CUIT / CUIL validator (Argentina)",
+    "conceptEs": "Valida CUIT (empresas) o CUIL (personas) argentinos usando el dígito verificador (mod 11) y el prefijo (20/23/24/27/30/33/34).",
+    "conceptEn": "Validates Argentine CUIT (companies) or CUIL (individuals) using the check digit (mod 11) and prefix (20/23/24/27/30/33/34).",
+    "examples": [
+      { "label": "CUIT empresa", "value": "30-71477168-3" },
+      { "label": "CUIL hombre", "value": "20-30000001-7" },
+      { "label": "CUIL mujer", "value": "27-25000005-7" },
+      { "label": "Inválido", "value": "20-12345678-1" }
+    ],
+    "reasonsEs": { "must-be-11-digits": "Debe tener exactamente 11 dígitos", "invalid-cuit-no-dv": "Cálculo dio dígito 10 (no válido)", "cuit-dv-mismatch": "El dígito verificador no coincide" },
+    "reasonsEn": { "must-be-11-digits": "Must have exactly 11 digits", "invalid-cuit-no-dv": "Calculation produced digit 10 (not valid)", "cuit-dv-mismatch": "Check digit does not match" },
+    "detailsLabelsEs": { "kind": "Tipo", "prefix": "Prefijo" },
+    "detailsLabelsEn": { "kind": "Type", "prefix": "Prefix" },
+    "relatedEs": ["generador-de-numeros-de-factura", "generador-de-direcciones-falsas"],
+    "relatedEn": ["invoice-number-generator", "fake-address-generator"]
+  },
+  {
+    "id": "rut-chile",
+    "slugEs": "validador-rut-chile",
+    "slugEn": "rut-chile-validator",
+    "emoji": "🇨🇱",
+    "category": "data",
+    "termEs": "Validador de RUT chileno",
+    "termEn": "Chilean RUT validator",
+    "conceptEs": "Valida el RUT (Rol Único Tributario) chileno usando el algoritmo módulo 11. El dígito verificador puede ser un número o la letra K.",
+    "conceptEn": "Validates the Chilean RUT (Unique Tax Roll) using the modulo 11 algorithm. The check digit can be a number or the letter K.",
+    "examples": [
+      { "label": "RUT válido", "value": "11.111.111-1" },
+      { "label": "RUT con K", "value": "1234567-K" },
+      { "label": "Sin formato", "value": "111111111" },
+      { "label": "Inválido", "value": "11.111.111-2" }
+    ],
+    "reasonsEs": { "invalid-format": "Formato no válido (ej: 12345678-K)", "dv-mismatch": "El dígito verificador no coincide" },
+    "reasonsEn": { "invalid-format": "Invalid format (e.g., 12345678-K)", "dv-mismatch": "Check digit does not match" },
+    "detailsLabelsEs": { "expected_dv": "Dígito esperado" },
+    "detailsLabelsEn": { "expected_dv": "Expected digit" },
+    "relatedEs": ["generador-de-numeros-aleatorios", "generador-de-direcciones-falsas"],
+    "relatedEn": ["random-number-generator", "fake-address-generator"]
+  },
+  {
+    "id": "isbn-10",
+    "slugEs": "validador-isbn-10",
+    "slugEn": "isbn-10-validator",
+    "emoji": "📕",
+    "category": "data",
+    "termEs": "Validador de ISBN-10",
+    "termEn": "ISBN-10 validator",
+    "conceptEs": "Valida ISBN de 10 dígitos (libros pre-2007). Algoritmo de checksum mod 11. El último dígito puede ser X (representa 10).",
+    "conceptEn": "Validates 10-digit ISBN (pre-2007 books). Mod 11 checksum algorithm. The last digit can be X (represents 10).",
+    "examples": [
+      { "label": "Clásico válido", "value": "0-306-40615-2" },
+      { "label": "Con X", "value": "0-19-852663-X" },
+      { "label": "Sin guiones", "value": "0306406152" },
+      { "label": "Inválido", "value": "0-306-40615-3" }
+    ],
+    "reasonsEs": { "must-be-10-chars": "Debe tener 10 caracteres (último puede ser X)", "checksum-fail": "El checksum mod 11 no coincide" },
+    "reasonsEn": { "must-be-10-chars": "Must be 10 characters (last can be X)", "checksum-fail": "Mod 11 checksum does not match" },
+    "relatedEs": ["generador-titulo-libro", "generador-de-numeros-aleatorios"],
+    "relatedEn": ["book-title-generator", "random-number-generator"]
+  },
+  {
+    "id": "isbn-13",
+    "slugEs": "validador-isbn-13",
+    "slugEn": "isbn-13-validator",
+    "emoji": "📘",
+    "category": "data",
+    "termEs": "Validador de ISBN-13",
+    "termEn": "ISBN-13 validator",
+    "conceptEs": "Valida ISBN de 13 dígitos (libros desde 2007). Compatible con códigos EAN-13. Checksum mod 10 con pesos alternados 1 y 3.",
+    "conceptEn": "Validates 13-digit ISBN (books since 2007). Compatible with EAN-13 codes. Mod 10 checksum with alternating weights 1 and 3.",
+    "examples": [
+      { "label": "ISBN-13 válido", "value": "978-3-16-148410-0" },
+      { "label": "Sin guiones", "value": "9783161484100" },
+      { "label": "Otro válido", "value": "978-0-306-40615-7" },
+      { "label": "Inválido", "value": "978-3-16-148410-1" }
+    ],
+    "reasonsEs": { "must-be-13-digits": "Debe tener 13 dígitos", "checksum-fail": "El checksum no coincide" },
+    "reasonsEn": { "must-be-13-digits": "Must be 13 digits", "checksum-fail": "Checksum does not match" },
+    "relatedEs": ["generador-titulo-libro", "generador-titulo-ebook"],
+    "relatedEn": ["book-title-generator", "ebook-title-generator"]
+  },
+  {
+    "id": "iban",
+    "slugEs": "validador-iban",
+    "slugEn": "iban-validator",
+    "emoji": "🏦",
+    "category": "data",
+    "termEs": "Validador de IBAN",
+    "termEn": "IBAN validator",
+    "conceptEs": "Valida números IBAN internacionales usando el checksum mod 97. Soporta todos los países que adhieren al estándar IBAN.",
+    "conceptEn": "Validates international IBAN numbers using the mod 97 checksum. Supports all countries adhering to the IBAN standard.",
+    "examples": [
+      { "label": "DE válido", "value": "DE89 3704 0044 0532 0130 00" },
+      { "label": "ES válido", "value": "ES91 2100 0418 4502 0005 1332" },
+      { "label": "FR válido", "value": "FR14 2004 1010 0505 0001 3M02 606" },
+      { "label": "Inválido", "value": "DE89 3704 0044 0532 0130 01" }
+    ],
+    "reasonsEs": { "invalid-format": "Formato IBAN inválido", "length-out-of-range": "Largo fuera de 15-34 caracteres", "checksum-fail": "El checksum mod 97 no coincide" },
+    "reasonsEn": { "invalid-format": "Invalid IBAN format", "length-out-of-range": "Length out of 15-34 characters", "checksum-fail": "Mod 97 checksum does not match" },
+    "detailsLabelsEs": { "country": "País", "length": "Largo" },
+    "detailsLabelsEn": { "country": "Country", "length": "Length" },
+    "relatedEs": ["generador-de-direcciones-falsas", "generador-de-numeros-aleatorios"],
+    "relatedEn": ["fake-address-generator", "random-number-generator"]
+  },
+  {
+    "id": "dni-es",
+    "slugEs": "validador-dni-espana",
+    "slugEn": "dni-spain-validator",
+    "emoji": "🇪🇸",
+    "category": "data",
+    "termEs": "Validador de DNI español",
+    "termEn": "Spanish DNI validator",
+    "conceptEs": "Valida el Documento Nacional de Identidad español (8 dígitos + letra). La letra se calcula a partir del módulo 23 de los dígitos.",
+    "conceptEn": "Validates the Spanish National ID (8 digits + letter). The letter is calculated from the digits modulo 23.",
+    "examples": [
+      { "label": "DNI válido", "value": "12345678Z" },
+      { "label": "Otro válido", "value": "00000000T" },
+      { "label": "Con guion", "value": "11111111-H" },
+      { "label": "Inválido", "value": "12345678A" }
+    ],
+    "reasonsEs": { "invalid-format": "Formato inválido (8 dígitos + letra)", "letter-mismatch": "La letra no coincide con los dígitos" },
+    "reasonsEn": { "invalid-format": "Invalid format (8 digits + letter)", "letter-mismatch": "Letter does not match digits" },
+    "detailsLabelsEs": { "expected_letter": "Letra esperada" },
+    "detailsLabelsEn": { "expected_letter": "Expected letter" },
+    "relatedEs": ["generador-de-direcciones-falsas", "generador-de-nombres-hispanos"],
+    "relatedEn": ["fake-address-generator", "hispanic-name-generator"]
+  },
+  {
+    "id": "cpf",
+    "slugEs": "validador-cpf-brasil",
+    "slugEn": "cpf-brazil-validator",
+    "emoji": "🇧🇷",
+    "category": "data",
+    "termEs": "Validador de CPF (Brasil)",
+    "termEn": "CPF validator (Brazil)",
+    "conceptEs": "Valida el Cadastro de Pessoas Físicas brasileño (11 dígitos con 2 dígitos verificadores). Rechaza secuencias triviales como 11111111111.",
+    "conceptEn": "Validates the Brazilian Cadastro de Pessoas Físicas (11 digits with 2 check digits). Rejects trivial sequences like 11111111111.",
+    "examples": [
+      { "label": "CPF válido", "value": "111.444.777-35" },
+      { "label": "Sin formato", "value": "11144477735" },
+      { "label": "Otro válido", "value": "529.982.247-25" },
+      { "label": "Inválido", "value": "111.444.777-99" }
+    ],
+    "reasonsEs": { "must-be-11-digits": "Debe tener 11 dígitos", "all-same-digits": "No puede ser todos dígitos iguales", "check-digits-mismatch": "Los dos dígitos verificadores no coinciden" },
+    "reasonsEn": { "must-be-11-digits": "Must be 11 digits", "all-same-digits": "Cannot be all same digits", "check-digits-mismatch": "The two check digits do not match" },
+    "relatedEs": ["generador-de-nombres-falsos", "generador-de-direcciones-falsas"],
+    "relatedEn": ["fake-name-generator", "fake-address-generator"]
+  },
+  {
+    "id": "cbu",
+    "slugEs": "validador-cbu",
+    "slugEn": "cbu-validator",
+    "emoji": "💰",
+    "category": "data",
+    "termEs": "Validador de CBU (Argentina)",
+    "termEn": "CBU validator (Argentina)",
+    "conceptEs": "Valida la Clave Bancaria Uniforme argentina (22 dígitos). Tiene dos checksums: uno para banco+sucursal+control y otro para cuenta+control.",
+    "conceptEn": "Validates the Argentine Banking Uniform Code (22 digits). Has two checksums: one for bank+branch+check, another for account+check.",
+    "examples": [
+      { "label": "CBU válido", "value": "0170099220000067797370" },
+      { "label": "Otro válido", "value": "2850590940090418135201" }
+    ],
+    "reasonsEs": { "must-be-22-digits": "Debe tener exactamente 22 dígitos", "block1-dv-mismatch": "El dígito verificador del primer bloque no coincide", "block2-dv-mismatch": "El dígito verificador del segundo bloque no coincide" },
+    "reasonsEn": { "must-be-22-digits": "Must be exactly 22 digits", "block1-dv-mismatch": "First block check digit does not match", "block2-dv-mismatch": "Second block check digit does not match" },
+    "relatedEs": ["generador-de-numeros-aleatorios", "generador-de-numeros-de-factura"],
+    "relatedEn": ["random-number-generator", "invoice-number-generator"]
+  },
+  {
+    "id": "bic",
+    "slugEs": "validador-bic-swift",
+    "slugEn": "bic-swift-validator",
+    "emoji": "🌍",
+    "category": "data",
+    "termEs": "Validador de BIC / SWIFT",
+    "termEn": "BIC / SWIFT validator",
+    "conceptEs": "Valida códigos BIC/SWIFT de bancos internacionales (8 u 11 caracteres). Estructura: 4 letras banco + 2 país + 2 ubicación + 3 sucursal opcional.",
+    "conceptEn": "Validates international BIC/SWIFT bank codes (8 or 11 chars). Structure: 4 bank letters + 2 country + 2 location + 3 optional branch.",
+    "examples": [
+      { "label": "Deutsche Bank", "value": "DEUTDEFF" },
+      { "label": "BBVA España", "value": "BBVAESMM" },
+      { "label": "Con sucursal", "value": "DEUTDEFF500" },
+      { "label": "Inválido", "value": "DEUT1EFF" }
+    ],
+    "reasonsEs": { "invalid-format": "Formato BIC inválido (AAAA BB CC [DDD])" },
+    "reasonsEn": { "invalid-format": "Invalid BIC format (AAAA BB CC [DDD])" },
+    "detailsLabelsEs": { "bank_code": "Banco", "country": "País", "location": "Ubicación", "branch": "Sucursal" },
+    "detailsLabelsEn": { "bank_code": "Bank", "country": "Country", "location": "Location", "branch": "Branch" },
+    "relatedEs": ["generador-de-direcciones-falsas", "generador-de-nombres-de-empresa"],
+    "relatedEn": ["fake-address-generator", "business-name-generator"]
+  }
+]

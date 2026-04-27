@@ -1,0 +1,13 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import GlossaryTemplate from '../../../components/GlossaryTemplate.astro';
+import { entry } from '../../../lib/glossary-data/wcag';
+const t = entry.en;
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: t.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout title={t.pageTitle} description={t.metaDesc} lang="en" schema={faqSchema}>
+  <GlossaryTemplate lang="en" entry={entry} />
+</Layout>

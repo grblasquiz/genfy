@@ -1,0 +1,152 @@
+---
+import { SITE_URL } from '../../lib/i18n';
+import type { GenData } from '../../lib/data/types';
+
+const dataModules = import.meta.glob<{ data: GenData }>('../../lib/data/*.ts', { eager: true });
+
+export async function getStaticPaths() {
+  const mods = import.meta.glob<{ data: GenData }>('../../lib/data/*.ts', { eager: true });
+  const paths: { params: { slug: string }; props: { data: GenData; lang: 'es' | 'en' } }[] = [];
+  for (const [filepath, mod] of Object.entries(mods)) {
+    if (!mod.data || filepath.includes('/types.ts')) continue;
+    paths.push({ params: { slug: mod.data.slug.es }, props: { data: mod.data, lang: 'es' } });
+  }
+  return paths;
+}
+
+const { data, lang } = Astro.props as { data: GenData; lang: 'es' | 'en' };
+const t = data[lang];
+const slugId = data.slug[lang].replace(/[^a-z0-9]/gi, '');
+const groupsJson = JSON.stringify(t.groups);
+const fullUrl = `${SITE_URL}/${data.slug[lang]}`;
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{t.h1} — Genfy embed</title>
+  <meta name="robots" content="noindex,follow" />
+  <link rel="canonical" href={fullUrl} />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, sans-serif; margin: 0; padding: 1rem; background: #ffffff; color: #18181b; line-height: 1.5; }
+    @media (prefers-color-scheme: dark) { body { background: #09090b; color: #e4e4e7; } }
+    h1 { font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem; }
+    p.intro { font-size: 0.875rem; color: #52525b; margin: 0 0 1rem; }
+    @media (prefers-color-scheme: dark) { p.intro { color: #a1a1aa; } }
+    label { display: block; font-size: 0.8125rem; font-weight: 500; margin-bottom: 0.25rem; }
+    select, input { width: 100%; padding: 0.5rem 0.625rem; font-size: 0.875rem; border: 1px solid #e4e4e7; border-radius: 6px; background: #fafafa; color: inherit; font-family: inherit; }
+    @media (prefers-color-scheme: dark) { select, input { background: #18181b; border-color: #27272a; } }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.625rem; margin-bottom: 0.75rem; }
+    @media (max-width: 480px) { .row { grid-template-columns: 1fr; } }
+    button { padding: 0.5rem 0.875rem; font-size: 0.875rem; font-weight: 500; border-radius: 6px; cursor: pointer; border: 1px solid transparent; }
+    .btn-primary { background: #18181b; color: #fafafa; }
+    @media (prefers-color-scheme: dark) { .btn-primary { background: #fafafa; color: #18181b; } }
+    .btn-ghost { background: transparent; border-color: #e4e4e7; color: inherit; }
+    @media (prefers-color-scheme: dark) { .btn-ghost { border-color: #27272a; } }
+    .actions { display: flex; gap: 0.375rem; margin-bottom: 0.875rem; flex-wrap: wrap; }
+    .out { display: flex; flex-direction: column; gap: 0.25rem; max-height: 240px; overflow-y: auto; }
+    .out-item { padding: 0.5rem 0.625rem; background: #f4f4f5; border-radius: 4px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.8125rem; word-break: break-word; cursor: pointer; }
+    @media (prefers-color-scheme: dark) { .out-item { background: #1a1a1c; } }
+    .out-item:hover { background: #e4e4e7; }
+    @media (prefers-color-scheme: dark) { .out-item:hover { background: #27272a; } }
+    .footer { margin-top: 0.875rem; padding-top: 0.625rem; border-top: 1px solid #e4e4e7; font-size: 0.6875rem; color: #71717a; text-align: center; }
+    @media (prefers-color-scheme: dark) { .footer { border-color: #27272a; color: #71717a; } }
+    .footer a { color: inherit; }
+  </style>
+</head>
+<body>
+  <h1>{data.emoji} {t.h1}</h1>
+  <p class="intro">{t.intro}</p>
+
+  <div class="emb" data-mode={data.mode} data-sep={t.separator || ' '}>
+    {t.groups.length > 1 && (
+      <div class="row">
+        <div>
+          <label for="emb-filter">{data.mode === 'combine' ? (lang === 'es' ? 'Estilo' : 'Style') : t.filterLabel}</label>
+          <select id="emb-filter">
+            {data.mode !== 'combine' && (<option value="all">{lang === 'es' ? 'Todos' : 'All'}</option>)}
+            {t.groups.map(g => (<option value={g.id}>{g.label}</option>))}
+          </select>
+        </div>
+        <div>
+          <label for="emb-count">{t.countLabel}</label>
+          <input id="emb-count" type="number" min="1" max={t.maxCount} value={t.defaultCount} />
+        </div>
+      </div>
+    )}
+    {t.groups.length <= 1 && (
+      <div class="row">
+        <div>
+          <label for="emb-count">{t.countLabel}</label>
+          <input id="emb-count" type="number" min="1" max={t.maxCount} value={t.defaultCount} />
+        </div>
+      </div>
+    )}
+    <div class="actions">
+      <button class="btn-primary" id="emb-gen">{t.generateLabel}</button>
+      <button class="btn-ghost" id="emb-copy">{t.copyLabel}</button>
+    </div>
+    <div class="out" id="emb-out"></div>
+  </div>
+
+  <div class="footer">
+    {lang === 'es' ? 'Generador embebido de' : 'Embedded generator from'} <a href={fullUrl} target="_blank" rel="noopener">Genfy</a>
+  </div>
+
+  <script type="application/json" id="emb-groups" set:html={groupsJson}></script>
+  <script is:inline>
+    (function() {
+      const groups = JSON.parse(document.getElementById('emb-groups').textContent);
+      const root = document.querySelector('.emb');
+      const mode = root.dataset.mode;
+      const sep = root.dataset.sep || ' ';
+      const filterEl = document.getElementById('emb-filter');
+      const countEl = document.getElementById('emb-count');
+      const out = document.getElementById('emb-out');
+      const gen = document.getElementById('emb-gen');
+      const cp = document.getElementById('emb-copy');
+      let items = [];
+
+      function pick(arr) {
+        const i = new Uint32Array(1);
+        crypto.getRandomValues(i);
+        return arr[i[0] % arr.length];
+      }
+      function generate() {
+        const n = Math.max(1, Math.min(parseInt(countEl.value || '1', 10), 100));
+        const lines = [];
+        if (mode === 'combine') {
+          const filter = filterEl ? filterEl.value : groups[0]?.id;
+          const styleGroup = filter && filter !== 'all' ? groups.find(g => g.id === filter) : null;
+          for (let i = 0; i < n; i++) {
+            if (styleGroup) {
+              const parts = styleGroup.items;
+              if (Array.isArray(parts[0])) lines.push(parts.map(s => pick(s)).join(sep));
+              else lines.push(pick(parts));
+            } else lines.push(groups.map(g => { const it = Array.isArray(g.items[0]) ? g.items[0] : g.items; return pick(it); }).join(sep));
+          }
+        } else {
+          const filter = filterEl ? filterEl.value : 'all';
+          let pool = filter === 'all' || !filter ? groups.flatMap(g => g.items) : (groups.find(g => g.id === filter)?.items || []);
+          for (let i = 0; i < n; i++) lines.push(pick(pool));
+        }
+        items = lines;
+        out.innerHTML = '';
+        for (const it of items) {
+          const div = document.createElement('div');
+          div.className = 'out-item';
+          div.textContent = it;
+          div.title = 'Click para copiar';
+          div.addEventListener('click', () => navigator.clipboard.writeText(it));
+          out.appendChild(div);
+        }
+      }
+      gen.addEventListener('click', generate);
+      cp.addEventListener('click', () => { if (items.length) navigator.clipboard.writeText(items.join('\n')); });
+      generate();
+    })();
+  </script>
+</body>
+</html>

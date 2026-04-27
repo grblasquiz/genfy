@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { GENERATORS, CATEGORIES_ES, type GeneratorMeta } from '../../lib/generators';
+
+const lang = 'es' as const;
+const cats: GeneratorMeta['category'][] = ['security','tech','data','business','marketing','design','random','pets','people','work','content','inspiration','fun','tools'];
+const byCat: Record<string, number> = {};
+GENERATORS.forEach(g => { byCat[g.category] = (byCat[g.category] || 0) + 1; });
+
+const title = 'Top 10 generadores por categoría | Genfy';
+const description = 'Listas curadas de los 10 mejores generadores por categoría: seguridad, tech, marketing, diseño, mascotas y más.';
+---
+<Layout title={title} description={description} lang={lang}>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Inicio</a>
+    <svg class="crumb-sep" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+    <span class="crumb-current">Top 10</span>
+  </nav>
+
+  <header class="hub-index-hero">
+    <h1>Top 10 por categoría</h1>
+    <p class="lead">Listas curadas de los mejores generadores en cada categoría. Pensadas para encontrar rápido lo que más se usa, sin perderte entre 491 opciones.</p>
+  </header>
+
+  <div class="hub-index-grid">
+    {cats.map(c => (
+      <a class="hub-index-card" href={`/top/${c}`}>
+        <span class="hub-index-name">{CATEGORIES_ES[c]}</span>
+        <span class="hub-index-count">{byCat[c] || 0} generadores</span>
+        <span class="hub-index-arrow" aria-hidden="true">→</span>
+      </a>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .crumbs { display: flex; gap: 0.5rem; align-items: center; color: var(--text-muted); font-size: 0.8125rem; margin: 1.5rem 0 0; flex-wrap: wrap; }
+  .crumbs a { color: var(--text-subtle); text-decoration: none; }
+  .crumbs a:hover { color: var(--text); }
+  .crumb-sep { color: var(--text-muted); flex-shrink: 0; }
+  .crumb-current { color: var(--text); font-weight: 500; }
+  .hub-index-hero { padding: 2rem 0 2rem; max-width: 680px; }
+  .hub-index-hero h1 { font-size: clamp(2rem, 4vw, 2.75rem); margin: 0 0 0.875rem; letter-spacing: -0.02em; }
+  .lead { font-size: 1.0625rem; color: var(--text-soft); margin: 0; line-height: 1.55; }
+  .hub-index-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.625rem; margin-bottom: 4rem; }
+  .hub-index-card { position: relative; display: flex; flex-direction: column; gap: 0.25rem; padding: 1rem 1.125rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; color: var(--text); transition: border-color 180ms var(--ease), transform 180ms var(--ease); }
+  .hub-index-card:hover { border-color: var(--accent); transform: translateY(-1px); text-decoration: none; }
+  .hub-index-name { font-weight: 600; font-size: 1rem; }
+  .hub-index-count { font-size: 0.8125rem; color: var(--text-muted); }
+  .hub-index-arrow { position: absolute; top: 1rem; right: 1.125rem; color: var(--text-muted); }
+  .hub-index-card:hover .hub-index-arrow { color: var(--accent); }
+</style>

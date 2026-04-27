@@ -3,10 +3,21 @@
   "short_name": "Genfy",
   "description": "Free online generators: passwords, names, QR codes, lorem ipsum and more.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#09090b",
+  "lang": "es",
+  "categories": ["productivity", "utilities", "developer"],
   "icons": [
-    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/apple-touch-icon.svg", "sizes": "180x180", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Generador de contraseñas", "short_name": "Contraseñas", "url": "/generador-de-contrasenas", "description": "Crea contraseñas fuertes" },
+    { "name": "Generador de QR", "short_name": "QR", "url": "/generador-de-codigos-qr" },
+    { "name": "UUID", "short_name": "UUID", "url": "/generador-de-uuid" },
+    { "name": "Todos los generadores", "short_name": "Todos", "url": "/generadores" }
   ]
 }
