@@ -1,0 +1,12 @@
+{
+  "name": "Genfy — Free online generators",
+  "short_name": "Genfy",
+  "description": "Free online generators: passwords, names, QR codes, lorem ipsum and more.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#09090b",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

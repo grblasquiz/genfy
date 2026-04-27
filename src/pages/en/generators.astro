@@ -1,9 +1,23 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { GENERATORS, urlFor, CATEGORIES_EN, type GeneratorMeta } from '../../lib/generators';
+import { SITE_URL } from '../../lib/i18n';
 
 const title = `All online generators (${GENERATORS.length}) | Genfy`;
 const description = `Full catalog of ${GENERATORS.length} free online generators: passwords, names, hashtags, QR codes, color palettes, test data and more. No signup.`;
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Online generators',
+  numberOfItems: GENERATORS.length,
+  itemListElement: GENERATORS.slice(0, 50).map((g, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: g.title.en,
+    url: `${SITE_URL}${urlFor(g, 'en')}`,
+  })),
+};
 
 const byCategory = GENERATORS.reduce((acc, g) => {
   (acc[g.category] = acc[g.category] || []).push(g);
@@ -15,7 +29,7 @@ const ORDER: GeneratorMeta['category'][] = [
   'design', 'random', 'pets', 'people', 'work', 'content', 'inspiration', 'fun', 'tools',
 ];
 ---
-<Layout title={title} description={description} lang="en">
+<Layout title={title} description={description} lang="en" schema={itemListSchema}>
   <header class="hero">
     <h1>All generators</h1>
     <p class="lead">

@@ -69,8 +69,23 @@ const breadcrumbSchema = {
     { '@type': 'ListItem', position: 3, name: title, item: `${SITE_URL}${path}` },
   ],
 };
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: title,
+  description: intro,
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Any (web)',
+  url: `${SITE_URL}${path}`,
+  inLanguage: lang === 'en' ? 'en-US' : 'es',
+  isAccessibleForFree: true,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  publisher: { '@type': 'Organization', name: 'Genfy', url: SITE_URL },
+};
 ---
 <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+<script type="application/ld+json" set:html={JSON.stringify(softwareSchema)}></script>
 
 <div class="gen-page" style={`--cat-dot: ${catColor}`}>
   <nav class="crumbs" aria-label="Breadcrumb">

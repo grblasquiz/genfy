@@ -1,0 +1,2 @@
+# Authorized digital sellers — replace placeholder with real AdSense pub-id when approved
+# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0

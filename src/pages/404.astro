@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { GENERATORS, urlFor } from '../lib/generators';
+
+const lang = Astro.url.pathname.startsWith('/en') ? 'en' : 'es';
+const title = lang === 'es' ? 'Página no encontrada — Genfy' : 'Page not found — Genfy';
+const description = lang === 'es' ? 'La página que buscás no existe. Volvé al inicio o explorá los generadores.' : 'The page you are looking for does not exist. Head back to the home or browse generators.';
+
+const t = lang === 'es' ? {
+  big: '404',
+  h: 'Esa página no existe',
+  p: 'O la borramos, o nunca existió, o hiciste un typo. Probá los generadores que sí están vivos:',
+  cta: 'Ver todos los generadores →',
+  ctaHref: '/generadores',
+  home: 'Volver al inicio',
+  homeHref: '/',
+} : {
+  big: '404',
+  h: 'This page does not exist',
+  p: 'We deleted it, never had it, or you mistyped. Try one of these tools that do exist:',
+  cta: 'Browse all generators →',
+  ctaHref: '/en/generators',
+  home: 'Back to home',
+  homeHref: '/en',
+};
+
+const sample = GENERATORS.slice(0, 6);
+---
+<Layout title={title} description={description} lang={lang as 'es' | 'en'} noindex={true}>
+  <section class="nf">
+    <span class="nf-big">{t.big}</span>
+    <h1>{t.h}</h1>
+    <p class="lead">{t.p}</p>
+    <div class="nf-actions">
+      <a href={t.ctaHref} class="btn btn-primary">{t.cta}</a>
+      <a href={t.homeHref} class="btn btn-ghost">{t.home}</a>
+    </div>
+    <div class="nf-grid">
+      {sample.map(g => (
+        <a class="nf-card" href={urlFor(g, lang as 'es' | 'en')}>
+          <span>{g.emoji}</span>
+          <span>{g.title[lang as 'es' | 'en']}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .nf { padding: 4rem 0 5rem; max-width: 60ch; }
+  .nf-big {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: clamp(4rem, 12vw, 8rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    line-height: 0.9;
+    margin-bottom: 1.5rem;
+  }
+  .nf h1 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); }
+  .nf .lead { color: var(--text-soft); font-size: 1.0625rem; margin: 1rem 0 1.75rem; }
+  .nf-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .nf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.5rem;
+  }
+  .nf-card {
+    display: flex; align-items: center; gap: 0.625rem;
+    padding: 0.625rem 0.875rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.875rem;
+    transition: border-color 180ms var(--ease);
+  }
+  .nf-card:hover { border-color: var(--text); text-decoration: none; }
+</style>

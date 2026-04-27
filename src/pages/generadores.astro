@@ -1,11 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { GENERATORS, urlFor, CATEGORIES_ES, type GeneratorMeta } from '../lib/generators';
+import { SITE_URL } from '../lib/i18n';
 
 const title = `Todos los generadores online (${GENERATORS.length}) | Genfy`;
 const description = `Catálogo completo de ${GENERATORS.length} generadores online gratis: contraseñas, nombres, hashtags, QR, paletas de colores, datos de testing y más. Sin registro.`;
 
-// Group generators by category
 const byCategory = GENERATORS.reduce((acc, g) => {
   (acc[g.category] = acc[g.category] || []).push(g);
   return acc;
@@ -15,8 +15,21 @@ const ORDER: GeneratorMeta['category'][] = [
   'security', 'tech', 'data', 'business', 'marketing',
   'design', 'random', 'pets', 'people', 'work', 'content', 'inspiration', 'fun', 'tools',
 ];
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Generadores online',
+  numberOfItems: GENERATORS.length,
+  itemListElement: GENERATORS.slice(0, 50).map((g, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: g.title.es,
+    url: `${SITE_URL}${urlFor(g, 'es')}`,
+  })),
+};
 ---
-<Layout title={title} description={description} lang="es">
+<Layout title={title} description={description} lang="es" schema={itemListSchema}>
   <header class="hero">
     <h1>Todos los generadores</h1>
     <p class="lead">

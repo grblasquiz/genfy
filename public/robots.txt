@@ -1,4 +1,20 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /api/
+
+# Be friendly to crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Block aggressive scrapers
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
 
 Sitemap: https://genfy.net/sitemap-index.xml
