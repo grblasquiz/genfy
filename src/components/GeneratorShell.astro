@@ -328,6 +328,26 @@ const breadcrumbSchema = {
 
     // 4. Sticky tool bar mobile (when tool is out of view, show floating bar)
     const tool = document.getElementById('gen-tool');
+
+    // GA4 event: generate_click — fires on any primary/Generar button click inside the tool.
+    if (tool) {
+      tool.addEventListener('click', (e) => {
+        const btn = e.target.closest('button, .btn');
+        if (!btn) return;
+        const txt = (btn.textContent || '').trim().toLowerCase();
+        const isPrimary = btn.classList.contains('btn-primary');
+        const isGenWord = /gener|regenerar|regenerate|crear|create|generate/i.test(txt);
+        if (!isPrimary && !isGenWord) return;
+        const slug = window.location.pathname.replace(/^\//, '').replace(/^en\//, '').replace(/\/$/, '');
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'generate_click', {
+            generator: slug || 'unknown',
+            language: lang,
+            value: 1,
+          });
+        }
+      });
+    }
     const bar = document.getElementById('sticky-tool-bar');
     if (tool && bar && window.matchMedia('(max-width: 767px)').matches) {
       const obs = new IntersectionObserver(([entry]) => {
