@@ -82,6 +82,24 @@ const useCases = [
 
   <div class="dot-divider" aria-hidden="true"><span></span><span></span><span></span></div>
 
+  <section class="categories reveal">
+    <div class="section-head">
+      <h2>Explorar por categoría</h2>
+      <a href="/generadores" class="section-link">Ver todas →</a>
+    </div>
+    <div class="cat-grid">
+      {CAT_ORDER.filter(c => byCategory[c]?.length).map(c => (
+        <a class="cat-tile" href={`/generadores#${c}`} style={`--cat-dot: ${CAT_DOT_COLOR[c]}`}>
+          <span class="cat-dot" aria-hidden="true"></span>
+          <span class="cat-name">{CATEGORIES_ES[c]}</span>
+          <span class="cat-count">{byCategory[c].length} herramientas</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <div class="dot-divider" aria-hidden="true"><span></span><span></span><span></span></div>
+
   <section class="usecases reveal">
     <div class="section-head">
       <h2>¿Para qué se usa Genfy?</h2>
@@ -96,24 +114,6 @@ const useCases = [
             {u.preview.map(p => <span class="usecase-chip mono">{p}</span>)}
           </div>
           <span class="usecase-link">Empezar acá →</span>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <div class="dot-divider" aria-hidden="true"><span></span><span></span><span></span></div>
-
-  <section class="categories reveal">
-    <div class="section-head">
-      <h2>Explorar por categoría</h2>
-      <a href="/generadores" class="section-link">Ver todas →</a>
-    </div>
-    <div class="cat-grid">
-      {CAT_ORDER.filter(c => byCategory[c]?.length).map(c => (
-        <a class="cat-tile" href={`/generadores#${c}`} style={`--cat-dot: ${CAT_DOT_COLOR[c]}`}>
-          <span class="cat-dot" aria-hidden="true"></span>
-          <span class="cat-name">{CATEGORIES_ES[c]}</span>
-          <span class="cat-count">{byCategory[c].length} herramientas</span>
         </a>
       ))}
     </div>
