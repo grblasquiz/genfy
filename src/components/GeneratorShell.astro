@@ -2,6 +2,7 @@
 import AdSlot from './AdSlot.astro';
 import { t, type Lang } from '../lib/i18n';
 import { GENERATORS, urlFor, CATEGORIES_ES, CATEGORIES_EN, type GeneratorMeta } from '../lib/generators';
+import { SITE_URL } from '../lib/i18n';
 
 export interface Props {
   lang?: Lang;
@@ -31,8 +32,10 @@ const CAT_DOT_COLOR: Record<GeneratorMeta['category'], string> = {
 const catColor = current ? CAT_DOT_COLOR[current.category] : '#525252';
 const CATS = lang === 'es' ? CATEGORIES_ES : CATEGORIES_EN;
 const catLabel = current ? CATS[current.category] : tag;
+const tagHref = current
+  ? (lang === 'es' ? `/generadores#${current.category}` : `/en/generators#${current.category}`)
+  : null;
 
-// Related generators (same category, exclude current)
 const related = current
   ? GENERATORS.filter(g => g.category === current.category && g.slug.es !== current.slug.es).slice(0, 4)
   : GENERATORS.slice(0, 4).filter(g => g.slug.es !== slugFromPath);
@@ -45,10 +48,31 @@ const trustItems = lang === 'es'
 const tocLabel = lang === 'es' ? 'En esta página' : 'On this page';
 const liveLabel = lang === 'es' ? 'En vivo' : 'Live';
 const shareLabel = lang === 'es' ? 'Compartir' : 'Share';
-const copyLinkLabel = lang === 'es' ? 'Copiar link' : 'Copy link';
 const copiedLabel = lang === 'es' ? 'Link copiado' : 'Link copied';
+const readMinLabel = lang === 'es' ? 'min de lectura' : 'min read';
+const feedbackQ = lang === 'es' ? '¿Te sirvió este generador?' : 'Was this generator useful?';
+const feedbackThanks = lang === 'es' ? '¡Gracias por tu feedback!' : 'Thanks for the feedback!';
+const feedbackYes = lang === 'es' ? 'Sí' : 'Yes';
+const feedbackNo = lang === 'es' ? 'No' : 'No';
+const feedbackPlaceholder = lang === 'es' ? '¿Qué podríamos mejorar? (opcional)' : 'What could we improve? (optional)';
+const feedbackSubmit = lang === 'es' ? 'Enviar' : 'Send';
+const stickyRegen = lang === 'es' ? 'Regenerar' : 'Regenerate';
+const stickyCopy = lang === 'es' ? 'Copiar' : 'Copy';
+
+// Schema BreadcrumbList
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: homeLabel, item: `${SITE_URL}${homeHref}` },
+    { '@type': 'ListItem', position: 2, name: allLabel, item: `${SITE_URL}${allHref}` },
+    { '@type': 'ListItem', position: 3, name: title, item: `${SITE_URL}${path}` },
+  ],
+};
 ---
-<div class="gen-page">
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+
+<div class="gen-page" style={`--cat-dot: ${catColor}`}>
   <nav class="crumbs" aria-label="Breadcrumb">
     <a href={homeHref}>{homeLabel}</a>
     <svg class="crumb-sep" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
@@ -59,14 +83,21 @@ const copiedLabel = lang === 'es' ? 'Link copiado' : 'Link copied';
     </>)}
   </nav>
 
-  <section class="gen-hero" style={`--cat-dot: ${catColor}`}>
+  <section class="gen-hero">
     <div class="gen-hero-bg" aria-hidden="true"></div>
     <div class="gen-hero-content">
       {(tag || catLabel) && (
-        <span class="tag tag-cat">
-          <span class="tag-dot"></span>
-          {tag || catLabel}
-        </span>
+        tagHref ? (
+          <a class="tag-cat tag-cat-link" href={tagHref}>
+            <span class="tag-dot"></span>
+            {tag || catLabel}
+          </a>
+        ) : (
+          <span class="tag-cat">
+            <span class="tag-dot"></span>
+            {tag || catLabel}
+          </span>
+        )
       )}
       <h1>{title}</h1>
       <p class="lead">{intro}</p>
@@ -74,7 +105,10 @@ const copiedLabel = lang === 'es' ? 'Link copiado' : 'Link copied';
         {trustItems.map(t => (
           <span class="trust-item"><span class="trust-icon">{t.icon}</span>{t.text}</span>
         ))}
-        <button class="trust-share" id="copy-link-btn" type="button" aria-label={copyLinkLabel}>
+        <span class="trust-item trust-time" id="reading-time" hidden>
+          <span class="trust-icon">📖</span><span class="trust-time-val">3</span>&nbsp;{readMinLabel}
+        </span>
+        <button class="trust-share" id="copy-link-btn" type="button">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           <span class="trust-share-label">{shareLabel}</span>
         </button>
@@ -82,20 +116,29 @@ const copiedLabel = lang === 'es' ? 'Link copiado' : 'Link copied';
     </div>
   </section>
 
-  <div class="gen-tool-wrap">
+  <div class="gen-tool-wrap" id="gen-tool-wrap">
     <div class="gen-tool-header">
       <span class="gen-tool-live"><span class="gen-tool-pulse"></span>{liveLabel}</span>
     </div>
-    <div class="gen-tool">
+    <div class="gen-tool" id="gen-tool">
       <slot name="tool" />
     </div>
   </div>
 
   <AdSlot variant="inline" slot="in-content-1" label={lang === 'en' ? 'Sponsored' : 'Publicidad'} />
 
-  <section class="gen-content drop-cap">
-    <slot name="content" />
-  </section>
+  <div class="gen-content-wrap">
+    <article class="gen-content drop-cap" id="gen-content">
+      <slot name="content" />
+    </article>
+
+    <aside class="gen-toc" aria-label={tocLabel}>
+      <div class="gen-toc-inner">
+        <span class="gen-toc-label">{tocLabel}</span>
+        <ul id="gen-toc-list"></ul>
+      </div>
+    </aside>
+  </div>
 
   <AdSlot variant="inline" slot="in-content-2" label={lang === 'en' ? 'Sponsored' : 'Publicidad'} />
 
@@ -106,15 +149,39 @@ const copiedLabel = lang === 'es' ? 'Link copiado' : 'Link copied';
     </div>
   </section>
 
+  <section class="gen-feedback" id="gen-feedback">
+    <div class="gen-feedback-inner">
+      <span class="gen-feedback-q">{feedbackQ}</span>
+      <div class="gen-feedback-actions">
+        <button class="gen-feedback-btn" data-fb="yes" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H7"/></svg>
+          {feedbackYes}
+        </button>
+        <button class="gen-feedback-btn" data-fb="no" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(180deg)"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H7"/></svg>
+          {feedbackNo}
+        </button>
+      </div>
+      <div class="gen-feedback-extra" id="gen-feedback-extra" hidden>
+        <textarea id="gen-feedback-text" rows="3" placeholder={feedbackPlaceholder}></textarea>
+        <button class="btn btn-primary" id="gen-feedback-submit" type="button">{feedbackSubmit}</button>
+      </div>
+      <div class="gen-feedback-thanks" id="gen-feedback-thanks" hidden>{feedbackThanks}</div>
+    </div>
+  </section>
+
   {related.length > 0 && (
     <section class="gen-related">
       <h2>{relatedTitle}</h2>
       <div class="related-grid">
         {related.map(g => (
-          <a class="related-card" href={urlFor(g, lang)}>
+          <a class="related-card" href={urlFor(g, lang)} style={`--cat-dot: ${CAT_DOT_COLOR[g.category]}`}>
             <span class="related-emoji">{g.emoji}</span>
             <span class="related-title">{g.title[lang]}</span>
             <span class="related-desc">{g.description[lang]}</span>
+            <span class="related-cat">
+              <span class="related-cat-dot"></span>{CATS[g.category]}
+            </span>
             <span class="related-arrow" aria-hidden="true">→</span>
           </a>
         ))}
@@ -123,21 +190,164 @@ const copiedLabel = lang === 'es' ? 'Link copiado' : 'Link copied';
   )}
 </div>
 
-<script is:inline define:vars={{ copiedLabel }}>
+<!-- Sticky mobile tool bar -->
+<div class="sticky-tool-bar" id="sticky-tool-bar" hidden>
+  <button class="sticky-btn sticky-btn-regen" type="button" id="sticky-regen">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
+    {stickyRegen}
+  </button>
+  <button class="sticky-btn sticky-btn-copy" type="button" id="sticky-copy">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    {stickyCopy}
+  </button>
+</div>
+
+<script is:inline define:vars={{ copiedLabel, readMinLabel, lang }}>
   (function() {
-    const btn = document.getElementById('copy-link-btn');
-    if (!btn) return;
-    btn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(window.location.href);
-        if (window.genfyToast) window.genfyToast(copiedLabel);
-        else {
-          const orig = btn.querySelector('.trust-share-label').textContent;
-          btn.querySelector('.trust-share-label').textContent = copiedLabel;
-          setTimeout(() => btn.querySelector('.trust-share-label').textContent = orig, 1400);
+    // 1. Copy link button
+    const copyBtn = document.getElementById('copy-link-btn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          if (window.genfyToast) window.genfyToast(copiedLabel);
+        } catch (e) {}
+      });
+    }
+
+    // 2. Reading time
+    const content = document.getElementById('gen-content');
+    if (content) {
+      const text = content.innerText || content.textContent || '';
+      const words = text.trim().split(/\s+/).length;
+      const mins = Math.max(1, Math.round(words / 220));
+      const rt = document.getElementById('reading-time');
+      if (rt) {
+        rt.querySelector('.trust-time-val').textContent = String(mins);
+        rt.hidden = false;
+      }
+    }
+
+    // 3. Build TOC + 4. Anchor links on h2
+    const tocList = document.getElementById('gen-toc-list');
+    if (content && tocList) {
+      const headings = content.querySelectorAll('h2, h3');
+      const items = [];
+      headings.forEach((h, i) => {
+        let id = h.id;
+        if (!id) {
+          id = (h.textContent || '').toLowerCase()
+            .normalize('NFD').replace(/[̀-ͯ]/g, '')
+            .replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-').slice(0, 60) || ('section-' + i);
+          h.id = id;
         }
-      } catch (e) {}
+        // Add anchor link button
+        const btn = document.createElement('button');
+        btn.className = 'h-anchor';
+        btn.type = 'button';
+        btn.title = 'Copiar link a esta sección';
+        btn.setAttribute('aria-label', 'Copy link');
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>';
+        btn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          const url = window.location.href.split('#')[0] + '#' + id;
+          history.replaceState(null, '', '#' + id);
+          try { await navigator.clipboard.writeText(url); if (window.genfyToast) window.genfyToast(copiedLabel); } catch (err) {}
+        });
+        h.appendChild(btn);
+
+        if (h.tagName === 'H2') {
+          const li = document.createElement('li');
+          li.className = 'toc-item';
+          const a = document.createElement('a');
+          a.href = '#' + id;
+          a.textContent = (h.textContent || '').trim().replace(/^[#]+\s*/, '').replace(/\s*🔗?\s*$/, '');
+          a.dataset.target = id;
+          li.appendChild(a);
+          tocList.appendChild(li);
+          items.push({ id, link: a });
+        }
+      });
+
+      // 1. TOC active link on scroll
+      if (items.length > 0 && 'IntersectionObserver' in window) {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const id = entry.target.id;
+              items.forEach(it => it.link.classList.toggle('active', it.id === id));
+            }
+          });
+        }, { rootMargin: '-30% 0px -60% 0px' });
+        items.forEach(it => {
+          const el = document.getElementById(it.id);
+          if (el) obs.observe(el);
+        });
+      }
+    }
+
+    // 7. Code highlight (keywords + strings + comments)
+    const codes = document.querySelectorAll('pre code');
+    const KEYWORDS = /\b(function|const|let|var|return|if|else|for|while|class|extends|new|this|import|export|from|async|await|true|false|null|undefined|typeof|instanceof|in|of|do|switch|case|break|continue|default|try|catch|throw|finally|delete|void|=>|console|log|warn|error)\b/g;
+    codes.forEach(code => {
+      let html = code.innerHTML;
+      // strings (single/double/template)
+      html = html.replace(/(['"`])((?:\\.|(?!\1).)*)\1/g, '<span class="hl-str">$&</span>');
+      // line comments
+      html = html.replace(/\/\/[^\n]*/g, '<span class="hl-com">$&</span>');
+      // numbers
+      html = html.replace(/\b\d+\b/g, '<span class="hl-num">$&</span>');
+      // keywords (avoid replacing inside spans)
+      html = html.replace(/(<span[^>]*>[^<]*<\/span>)|(\b(function|const|let|var|return|if|else|for|while|class|extends|new|this|import|export|from|async|await|true|false|null|undefined|typeof|instanceof|of|do|switch|case|break|continue|default|try|catch|throw|finally|delete|void)\b)/g, (m, p1, p2) => p1 || `<span class="hl-kw">${p2}</span>`);
+      code.innerHTML = html;
     });
+
+    // 8. Feedback widget
+    const fbBtns = document.querySelectorAll('.gen-feedback-btn');
+    const fbExtra = document.getElementById('gen-feedback-extra');
+    const fbThanks = document.getElementById('gen-feedback-thanks');
+    const fbSubmit = document.getElementById('gen-feedback-submit');
+    let fbAnswer = null;
+    fbBtns.forEach(b => {
+      b.addEventListener('click', () => {
+        fbBtns.forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        fbAnswer = b.dataset.fb;
+        if (fbExtra) fbExtra.hidden = false;
+        try { localStorage.setItem('genfy:fb:' + window.location.pathname, fbAnswer); } catch(e){}
+      });
+    });
+    if (fbSubmit) {
+      fbSubmit.addEventListener('click', () => {
+        const text = (document.getElementById('gen-feedback-text') || {}).value || '';
+        try { localStorage.setItem('genfy:fb-text:' + window.location.pathname, text); } catch(e){}
+        if (fbExtra) fbExtra.hidden = true;
+        if (fbThanks) fbThanks.hidden = false;
+      });
+    }
+
+    // 4. Sticky tool bar mobile (when tool is out of view, show floating bar)
+    const tool = document.getElementById('gen-tool');
+    const bar = document.getElementById('sticky-tool-bar');
+    if (tool && bar && window.matchMedia('(max-width: 767px)').matches) {
+      const obs = new IntersectionObserver(([entry]) => {
+        bar.hidden = entry.isIntersecting;
+      }, { threshold: 0.1 });
+      obs.observe(tool);
+
+      // Connect sticky buttons to first matching button inside the tool
+      const regenBtn = document.getElementById('sticky-regen');
+      const copyBtn2 = document.getElementById('sticky-copy');
+      regenBtn?.addEventListener('click', () => {
+        const candidate = tool.querySelector('.btn-primary');
+        if (candidate) candidate.click();
+        tool.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      copyBtn2?.addEventListener('click', () => {
+        const candidate = tool.querySelector('.btn-ghost, [data-copy], #pw-copy, .copy-btn');
+        if (candidate) candidate.click();
+      });
+    }
   })();
 </script>
 
@@ -152,123 +362,44 @@ const copiedLabel = lang === 'es' ? 'Link copiado' : 'Link copied';
   .crumb-current { color: var(--text); font-weight: 500; }
 
   /* Hero */
-  .gen-hero {
-    position: relative;
-    margin-bottom: 2rem;
-    padding: 0.5rem 0 0;
-  }
-  .gen-hero-bg {
-    position: absolute;
-    inset: -2rem -2rem auto -2rem;
-    height: 280px;
-    background: radial-gradient(60% 80% at 0% 0%, color-mix(in oklab, var(--cat-dot) 8%, transparent) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
+  .gen-hero { position: relative; margin-bottom: 2rem; padding: 0.5rem 0 0; }
+  .gen-hero-bg { position: absolute; inset: -2rem -2rem auto -2rem; height: 280px; background: radial-gradient(60% 80% at 0% 0%, color-mix(in oklab, var(--cat-dot) 8%, transparent) 0%, transparent 60%); pointer-events: none; z-index: 0; }
   .gen-hero-content { position: relative; z-index: 1; }
   .gen-hero h1 { font-size: clamp(1.875rem, 4.5vw, 3rem); max-width: 22ch; }
   .gen-hero .lead { font-size: 1.0625rem; color: var(--text-soft); max-width: 60ch; margin-top: 1rem; line-height: 1.6; }
 
-  .tag-cat {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4375rem;
-    padding: 0.25rem 0.75rem 0.25rem 0.5rem;
-    margin-bottom: 1rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--text-soft);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-  .tag-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--cat-dot);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--cat-dot) 18%, transparent);
-  }
+  .tag-cat { display: inline-flex; align-items: center; gap: 0.4375rem; padding: 0.25rem 0.75rem 0.25rem 0.5rem; margin-bottom: 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; font-size: 0.75rem; font-weight: 500; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.04em; }
+  .tag-cat-link { text-decoration: none; transition: border-color 180ms var(--ease), color 180ms var(--ease); }
+  .tag-cat-link:hover { border-color: var(--cat-dot); color: var(--text); text-decoration: none; }
+  .tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cat-dot); box-shadow: 0 0 0 3px color-mix(in oklab, var(--cat-dot) 18%, transparent); }
 
-  /* Trust row */
-  .trust-row {
-    display: flex; flex-wrap: wrap; align-items: center;
-    gap: 0.875rem;
-    margin-top: 1.5rem;
-    padding-top: 1.25rem;
-    border-top: 1px dashed var(--border);
-    color: var(--text-subtle);
-    font-size: 0.8125rem;
-  }
+  .trust-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.875rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px dashed var(--border); color: var(--text-subtle); font-size: 0.8125rem; }
   .trust-item { display: inline-flex; align-items: center; gap: 0.375rem; }
   .trust-icon { font-size: 0.875rem; }
-  .trust-share {
-    margin-left: auto;
-    display: inline-flex; align-items: center; gap: 0.375rem;
-    padding: 0.375rem 0.75rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--text-soft);
-    background: var(--bg);
-    font-size: 0.8125rem;
-    cursor: pointer;
-    transition: border-color 180ms var(--ease), color 180ms var(--ease);
-  }
+  .trust-time-val { font-feature-settings: "tnum"; font-weight: 600; color: var(--text-soft); }
+  .trust-share { margin-left: auto; display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.375rem 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-soft); background: var(--bg); font-size: 0.8125rem; cursor: pointer; transition: border-color 180ms var(--ease), color 180ms var(--ease); }
   .trust-share:hover { border-color: var(--text); color: var(--text); }
 
-  /* Tool wrap */
-  .gen-tool-wrap {
-    margin-bottom: 2.5rem;
-    position: relative;
-  }
-  .gen-tool-header {
-    display: flex; align-items: center; gap: 0.5rem;
-    margin-bottom: 0.5rem;
-    padding: 0 0.25rem;
-  }
-  .gen-tool-live {
-    display: inline-flex; align-items: center; gap: 0.4375rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--text-subtle);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .gen-tool-pulse {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 0 var(--accent);
-    animation: live-pulse 1.6s ease-in-out infinite;
-  }
-  @keyframes live-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 60%, transparent); }
-    50% { box-shadow: 0 0 0 5px color-mix(in oklab, var(--accent) 0%, transparent); }
-  }
+  /* Tool */
+  .gen-tool-wrap { margin-bottom: 2.5rem; position: relative; }
+  .gen-tool-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; padding: 0 0.25rem; }
+  .gen-tool-live { display: inline-flex; align-items: center; gap: 0.4375rem; font-size: 0.75rem; font-weight: 500; color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.06em; }
+  .gen-tool-pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: live-pulse 1.6s ease-in-out infinite; }
+  @keyframes live-pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 60%, transparent); } 50% { box-shadow: 0 0 0 5px color-mix(in oklab, var(--accent) 0%, transparent); } }
+  .gen-tool { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow-md); position: relative; overflow: hidden; }
+  .gen-tool::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--cat-dot, var(--accent)), transparent); opacity: 0.5; }
+  @media (max-width: 600px) { .gen-tool { padding: 1.5rem; border-radius: var(--radius-lg); } }
 
-  .gen-tool {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-xl);
-    padding: 2rem;
-    box-shadow: var(--shadow-md);
-    position: relative;
-    overflow: hidden;
+  /* Content + TOC layout */
+  .gen-content-wrap {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-top: 2.5rem;
   }
-  .gen-tool::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--cat-dot, var(--accent)), transparent);
-    opacity: 0.5;
+  @media (min-width: 1100px) {
+    .gen-content-wrap { grid-template-columns: 1fr 220px; gap: 4rem; }
   }
-  @media (max-width: 600px) {
-    .gen-tool { padding: 1.5rem; border-radius: var(--radius-lg); }
-  }
-
-  /* Content */
   .gen-content :global(h2) {
     margin-top: 3rem;
     font-size: clamp(1.25rem, 2.5vw, 1.625rem);
@@ -277,79 +408,151 @@ const copiedLabel = lang === 'es' ? 'Link copiado' : 'Link copied';
     position: relative;
     padding-bottom: 0.625rem;
     border-bottom: 1px solid var(--border-soft);
+    scroll-margin-top: 80px;
   }
-  .gen-content :global(h2:first-child) { margin-top: 1rem; }
-  .gen-content :global(h2)::after {
-    content: "";
-    position: absolute;
-    left: 0; bottom: -1px;
-    width: 32px; height: 2px;
-    background: var(--cat-dot, var(--accent));
-    border-radius: 1px;
-  }
-  .gen-content :global(h3) {
-    margin-top: 2rem;
-    font-size: 1.125rem;
-    font-weight: 600;
-  }
+  .gen-content :global(h2:first-child) { margin-top: 0; }
+  .gen-content :global(h2)::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 32px; height: 2px; background: var(--cat-dot, var(--accent)); border-radius: 1px; }
+  .gen-content :global(h3) { margin-top: 2rem; font-size: 1.125rem; font-weight: 600; scroll-margin-top: 80px; }
   .gen-content :global(p) { max-width: 68ch; }
   .gen-content :global(ul),
-  .gen-content :global(ol) {
-    color: var(--text-soft);
-    padding-left: 1.5rem;
-    max-width: 66ch;
-  }
+  .gen-content :global(ol) { color: var(--text-soft); padding-left: 1.5rem; max-width: 66ch; }
   .gen-content :global(li) { margin-bottom: 0.5rem; line-height: 1.6; }
   .gen-content :global(li::marker) { color: var(--cat-dot, var(--accent)); }
   .gen-content :global(strong) { color: var(--text); font-weight: 600; }
 
+  /* Anchor links on h2/h3 */
+  .gen-content :global(.h-anchor) {
+    margin-left: 0.5rem;
+    padding: 0.125rem 0.25rem;
+    color: var(--text-muted);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    opacity: 0;
+    vertical-align: middle;
+    transition: opacity 180ms var(--ease), color 180ms var(--ease);
+  }
+  .gen-content :global(h2:hover .h-anchor),
+  .gen-content :global(h3:hover .h-anchor) { opacity: 1; }
+  .gen-content :global(.h-anchor:hover) { color: var(--cat-dot, var(--accent)); }
+
+  /* Code highlight */
+  .gen-content :global(pre) {
+    background: var(--bg-inset);
+    padding: 1rem 1.125rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow-x: auto;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    margin: 1rem 0;
+  }
+  .gen-content :global(pre code) {
+    background: transparent;
+    padding: 0;
+    border: 0;
+    font-family: var(--font-mono);
+    color: var(--text);
+  }
+  .gen-content :global(.hl-kw) { color: #7c3aed; font-weight: 600; }
+  .gen-content :global(.hl-str) { color: #059669; }
+  .gen-content :global(.hl-com) { color: var(--text-muted); font-style: italic; }
+  .gen-content :global(.hl-num) { color: #ea580c; }
+  @media (prefers-color-scheme: dark) {
+    .gen-content :global(.hl-kw) { color: #c4b5fd; }
+    .gen-content :global(.hl-str) { color: #6ee7b7; }
+    .gen-content :global(.hl-num) { color: #fdba74; }
+  }
+
+  /* TOC */
+  .gen-toc { display: none; }
+  @media (min-width: 1100px) { .gen-toc { display: block; } }
+  .gen-toc-inner {
+    position: sticky;
+    top: 5rem;
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+    padding-left: 1.25rem;
+    border-left: 1px solid var(--border);
+  }
+  .gen-toc-label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.875rem;
+  }
+  .gen-toc ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .gen-toc a {
+    display: block;
+    color: var(--text-subtle);
+    font-size: 0.8125rem;
+    text-decoration: none;
+    line-height: 1.4;
+    padding-left: 0.625rem;
+    border-left: 2px solid transparent;
+    transition: color 180ms var(--ease), border-color 180ms var(--ease);
+  }
+  .gen-toc a:hover { color: var(--text); }
+  .gen-toc a.active { color: var(--text); border-left-color: var(--cat-dot, var(--accent)); font-weight: 500; }
+
   /* FAQ */
   .gen-faq { margin-top: 4rem; }
-  .gen-faq h2 {
-    font-size: clamp(1.25rem, 2.5vw, 1.625rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin: 0 0 1.5rem;
-    position: relative;
-    padding-bottom: 0.625rem;
-    border-bottom: 1px solid var(--border-soft);
-    display: inline-block;
+  .gen-faq h2 { font-size: clamp(1.25rem, 2.5vw, 1.625rem); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 1.5rem; position: relative; padding-bottom: 0.625rem; border-bottom: 1px solid var(--border-soft); display: inline-block; }
+  .gen-faq h2::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 32px; height: 2px; background: var(--cat-dot, var(--accent)); border-radius: 1px; }
+  .faq-grid { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+  @media (min-width: 768px) { .faq-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; } }
+
+  /* Feedback widget */
+  .gen-feedback { margin-top: 3rem; }
+  .gen-feedback-inner {
+    padding: 1.5rem;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
-  .gen-faq h2::after {
-    content: "";
-    position: absolute;
-    left: 0; bottom: -1px;
-    width: 32px; height: 2px;
-    background: var(--cat-dot, var(--accent));
-    border-radius: 1px;
+  .gen-feedback-q { font-weight: 600; font-size: 1rem; color: var(--text); }
+  .gen-feedback-actions { display: flex; gap: 0.5rem; }
+  .gen-feedback-btn {
+    display: inline-flex; align-items: center; gap: 0.375rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-soft);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: border-color 180ms var(--ease), color 180ms var(--ease), background 180ms var(--ease);
   }
-  .faq-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
+  .gen-feedback-btn:hover { border-color: var(--text); color: var(--text); }
+  .gen-feedback-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .gen-feedback-extra { display: flex; flex-direction: column; gap: 0.625rem; }
+  .gen-feedback-extra textarea { font-size: 0.875rem; }
+  .gen-feedback-thanks {
+    color: var(--accent);
+    font-weight: 500;
+    font-size: 0.875rem;
+    display: inline-flex; align-items: center; gap: 0.375rem;
   }
-  @media (min-width: 768px) {
-    .faq-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  }
+  .gen-feedback-thanks::before { content: "✓"; }
 
   /* Related */
   .gen-related { margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border-soft); }
-  .gen-related h2 {
-    font-size: 1.375rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin: 0 0 1.5rem;
-  }
-  .related-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
+  .gen-related h2 { font-size: 1.375rem; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 1.5rem; }
+  .related-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
   @media (min-width: 600px) { .related-grid { grid-template-columns: 1fr 1fr; } }
   .related-card {
     position: relative;
-    display: flex; flex-direction: column;
-    gap: 0.375rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto auto;
+    column-gap: 0.875rem;
+    row-gap: 0.25rem;
     padding: 1.125rem 1.25rem;
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -358,14 +561,61 @@ const copiedLabel = lang === 'es' ? 'Link copiado' : 'Link copied';
     color: var(--text);
     transition: border-color 220ms var(--ease), transform 220ms var(--ease);
   }
-  .related-card:hover { border-color: var(--text); transform: translateY(-1px); text-decoration: none; }
-  .related-emoji { font-size: 1.25rem; line-height: 1; }
+  .related-card:hover { border-color: var(--cat-dot); transform: translateY(-1px); text-decoration: none; }
+  .related-emoji {
+    grid-row: 1 / span 3;
+    display: flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px;
+    font-size: 1.375rem;
+    background: color-mix(in oklab, var(--cat-dot) 8%, transparent);
+    border-radius: var(--radius);
+    flex-shrink: 0;
+  }
   .related-title { font-weight: 600; font-size: 0.9375rem; letter-spacing: -0.01em; padding-right: 1.5rem; }
   .related-desc { color: var(--text-soft); font-size: 0.8125rem; line-height: 1.5; }
+  .related-cat {
+    display: inline-flex; align-items: center; gap: 0.3125rem;
+    font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--text-muted); margin-top: 0.25rem;
+  }
+  .related-cat-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--cat-dot);
+  }
   .related-arrow {
     position: absolute; top: 1.125rem; right: 1.125rem;
     color: var(--text-muted); font-size: 0.875rem;
     transition: transform 220ms var(--ease), color 220ms var(--ease);
   }
-  .related-card:hover .related-arrow { color: var(--cat-dot, var(--accent)); transform: translateX(3px); }
+  .related-card:hover .related-arrow { color: var(--cat-dot); transform: translateX(3px); }
+
+  /* Sticky tool bar (mobile) */
+  .sticky-tool-bar {
+    position: fixed;
+    bottom: 1rem; left: 1rem; right: 1rem;
+    z-index: 49;
+    display: flex; gap: 0.5rem;
+    padding: 0.625rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    animation: slide-up 280ms var(--ease);
+  }
+  @media (min-width: 768px) { .sticky-tool-bar { display: none !important; } }
+  .sticky-btn {
+    flex: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 0.375rem;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    background: var(--bg);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .sticky-btn-regen { background: var(--text); color: var(--bg); border-color: var(--text); }
 </style>
