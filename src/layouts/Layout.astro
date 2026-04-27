@@ -7,7 +7,7 @@ import Footer from '../components/Footer.astro';
 import AdSlot from '../components/AdSlot.astro';
 import ScrollProgress from '../components/ScrollProgress.astro';
 import ToastHost from '../components/ToastHost.astro';
-import CmdK from '../components/CmdK.astro';
+import RevealOnScroll from '../components/RevealOnScroll.astro';
 import { SITE_URL, SITE_NAME, type Lang, altPath } from '../lib/i18n';
 
 export interface Props {
@@ -128,5 +128,6 @@ const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
   <AdSlot variant="anchor" slot="anchor-1" label={lang === 'en' ? 'Sponsored' : 'Publicidad'} />
   <Footer lang={lang} />
   <ToastHost />
+  <RevealOnScroll />
 </body>
 </html>

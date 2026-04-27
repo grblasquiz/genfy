@@ -7,6 +7,7 @@ const title = 'Genfy — Generadores online gratis | Contraseñas, nombres, QR y
 const description = 'Cientos de generadores online gratis: contraseñas seguras, nombres de empresa, QR, lorem ipsum, nombres para mascotas. Sin registro y sin instalar nada.';
 
 const featured = GENERATORS.slice(0, 9);
+const heroPreview = GENERATORS.slice(0, 3);
 
 const byCategory = GENERATORS.reduce((acc, g) => {
   (acc[g.category] = acc[g.category] || []).push(g);
@@ -18,28 +19,51 @@ const CAT_ORDER: GeneratorMeta['category'][] = [
   'design', 'random', 'pets', 'people', 'work', 'content', 'inspiration', 'fun', 'tools',
 ];
 
+const CAT_DOT_COLOR: Record<GeneratorMeta['category'], string> = {
+  security: '#dc2626', tech: '#2563eb', data: '#0891b2', business: '#7c3aed', marketing: '#ea580c',
+  design: '#db2777', random: '#ca8a04', pets: '#65a30d', people: '#0d9488', work: '#475569',
+  content: '#9333ea', inspiration: '#16a34a', fun: '#f59e0b', tools: '#525252',
+};
+
 const useCases = [
-  { icon: '🚀', title: 'Lanzar una marca', text: 'Nombres, slogans, dominios y bios — todo lo que necesitás para arrancar una marca o un side project.', href: '/generador-de-nombres-de-empresa' },
-  { icon: '🔐', title: 'Proteger cuentas', text: 'Contraseñas fuertes, PINs, API keys y validadores. Pensado para que tu seguridad no dependa de la suerte.', href: '/generador-de-contrasenas' },
-  { icon: '🎨', title: 'Diseñar más rápido', text: 'Paletas, gradientes CSS, sombras, avatares y placeholders. Lo que tu mockup necesita, sin abrir Figma.', href: '/generador-de-paletas-de-colores' },
-  { icon: '✍️', title: 'Crear contenido', text: 'Captions, hashtags, headlines, bios y emails. Templates con criterio para no salir con texto genérico.', href: '/generador-de-bio-instagram' },
+  { icon: '🚀', title: 'Lanzar una marca', text: 'Nombres, slogans, dominios y bios — todo lo que necesitás para arrancar una marca o un side project.', href: '/generador-de-nombres-de-empresa', preview: ['Lumokit', 'Vita Pro', 'Aurum'] },
+  { icon: '🔐', title: 'Proteger cuentas', text: 'Contraseñas fuertes, PINs, API keys y validadores. Pensado para que tu seguridad no dependa de la suerte.', href: '/generador-de-contrasenas', preview: ['7$kQ9!mPv2X', 'PIN 8 dígitos', 'API key 64 bits'] },
+  { icon: '🎨', title: 'Diseñar más rápido', text: 'Paletas, gradientes CSS, sombras, avatares y placeholders. Lo que tu mockup necesita, sin abrir Figma.', href: '/generador-de-paletas-de-colores', preview: ['#059669', '#0891b2', '#7c3aed'] },
+  { icon: '✍️', title: 'Crear contenido', text: 'Captions, hashtags, headlines, bios y emails. Templates con criterio para no salir con texto genérico.', href: '/generador-de-bio-instagram', preview: ['#design', '#productivity', '#tools'] },
 ];
 ---
 <Layout title={title} description={description} lang={lang}>
   <section class="hero hero-bg">
-    <span class="eyebrow">Free online generators</span>
-    <h1>Herramientas pequeñas que <span class="accent-text">resuelven cosas grandes</span>.</h1>
-    <p class="lead">
-      Contraseñas, nombres de marca, QR, lorem ipsum, ideas para tu próxima mascota.
-      Todo en una sola interfaz limpia, gratis, sin registros y sin pop-ups.
-    </p>
-    <div class="cta-row">
-      <a href="#generadores" class="btn btn-primary">Ver generadores →</a>
-      <a href="/sobre-genfy" class="btn btn-ghost">Sobre Genfy</a>
+    <div class="dot-pattern" aria-hidden="true"></div>
+    <div class="hero-grid">
+      <div class="hero-text">
+        <span class="eyebrow">Free online generators</span>
+        <h1>Herramientas pequeñas que <span class="accent-text">resuelven cosas grandes</span>.</h1>
+        <p class="lead">
+          Contraseñas, nombres de marca, QR, lorem ipsum, ideas para tu próxima mascota.
+          Todo en una sola interfaz limpia, gratis, sin registros y sin pop-ups.
+        </p>
+        <div class="cta-row">
+          <a href="#generadores" class="btn btn-primary">Ver generadores →</a>
+          <a href="/sobre-genfy" class="btn btn-ghost">Sobre Genfy</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        {heroPreview.map((g, i) => (
+          <div class={`float-card float-card-${i}`}>
+            <div class="float-card-emoji">{g.emoji}</div>
+            <div class="float-card-title">{g.title.es}</div>
+            <div class="float-card-desc">{g.description.es.slice(0, 50)}…</div>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
-  <section id="generadores" class="generators">
+  <div class="dot-divider" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <section id="generadores" class="generators reveal">
     <div class="section-head">
       <h2>Generadores destacados</h2>
       <a href="/generadores" class="section-link">Ver todos →</a>
@@ -56,7 +80,9 @@ const useCases = [
     </div>
   </section>
 
-  <section class="usecases">
+  <div class="dot-divider" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <section class="usecases reveal">
     <div class="section-head">
       <h2>¿Para qué se usa Genfy?</h2>
     </div>
@@ -66,20 +92,26 @@ const useCases = [
           <span class="usecase-icon">{u.icon}</span>
           <h3>{u.title}</h3>
           <p>{u.text}</p>
+          <div class="usecase-preview" aria-hidden="true">
+            {u.preview.map(p => <span class="usecase-chip mono">{p}</span>)}
+          </div>
           <span class="usecase-link">Empezar acá →</span>
         </a>
       ))}
     </div>
   </section>
 
-  <section class="categories">
+  <div class="dot-divider" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <section class="categories reveal">
     <div class="section-head">
       <h2>Explorar por categoría</h2>
       <a href="/generadores" class="section-link">Ver todas →</a>
     </div>
     <div class="cat-grid">
       {CAT_ORDER.filter(c => byCategory[c]?.length).map(c => (
-        <a class="cat-tile" href={`/generadores#${c}`}>
+        <a class="cat-tile" href={`/generadores#${c}`} style={`--cat-dot: ${CAT_DOT_COLOR[c]}`}>
+          <span class="cat-dot" aria-hidden="true"></span>
           <span class="cat-name">{CATEGORIES_ES[c]}</span>
           <span class="cat-count">{byCategory[c].length} herramientas</span>
         </a>
@@ -87,33 +119,35 @@ const useCases = [
     </div>
   </section>
 
-  <section class="why">
+  <div class="dot-divider" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <section class="why reveal">
     <h2>Construido para usarse, no para perderte el tiempo.</h2>
     <div class="why-grid">
       <div class="why-item">
-        <span class="why-num">01</span>
+        <span class="why-num"><span data-counter="1">00</span></span>
         <h3>Gratis y sin registro</h3>
         <p>Ninguna herramienta pide email ni cuenta. Entrás, generás, te vas.</p>
       </div>
       <div class="why-item">
-        <span class="why-num">02</span>
+        <span class="why-num"><span data-counter="2">00</span></span>
         <h3>Privado por diseño</h3>
         <p>Todo se ejecuta en tu navegador. Tus datos nunca salen de tu dispositivo.</p>
       </div>
       <div class="why-item">
-        <span class="why-num">03</span>
+        <span class="why-num"><span data-counter="3">00</span></span>
         <h3>Pensado para velocidad</h3>
         <p>Páginas optimizadas, sin scripts pesados, sin pop-ups que se cuelan.</p>
       </div>
       <div class="why-item">
-        <span class="why-num">04</span>
+        <span class="why-num"><span data-counter="4">00</span></span>
         <h3>Bilingüe nativo</h3>
         <p>Versión completa en español e inglés. No traducciones automáticas.</p>
       </div>
     </div>
   </section>
 
-  <section class="cta-final">
+  <section class="cta-final reveal">
     <div class="cta-final-inner">
       <h2>Encontrá la herramienta que necesitás.</h2>
       <p>Cientos de generadores y herramientas online, todos gratis. Sin registro, sin pop-ups, sin instalar nada.</p>
@@ -123,21 +157,28 @@ const useCases = [
 </Layout>
 
 <style>
-  .hero {
-    padding: 4rem 0 3rem;
-    max-width: 32ch;
+  /* Hero */
+  .hero { position: relative; padding: 4rem 0 3rem; overflow: hidden; }
+  @media (min-width: 768px) { .hero { padding: 6rem 0 5rem; } }
+  .hero-grid {
+    display: grid; gap: 3rem;
+    grid-template-columns: 1fr;
+    position: relative;
+    z-index: 1;
   }
-  @media (min-width: 768px) { .hero { padding: 6rem 0 4rem; max-width: 22ch; } }
+  @media (min-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr 1fr; align-items: center; }
+  }
+  .hero-text { max-width: 32ch; }
+  @media (min-width: 768px) { .hero-text { max-width: 22ch; } }
   .eyebrow {
     display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 1.25rem;
   }
-  .hero h1 { max-width: 16ch; }
+  .hero-text h1 { max-width: 16ch; }
   .accent-text {
     background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%);
     padding: 0 0.125em;
@@ -145,7 +186,7 @@ const useCases = [
   @media (prefers-color-scheme: dark) {
     .accent-text { color: var(--accent); background: none; }
   }
-  .hero .lead {
+  .hero-text .lead {
     font-size: 1.125rem;
     color: var(--text-soft);
     max-width: 56ch;
@@ -154,11 +195,36 @@ const useCases = [
   }
   .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 
-  .generators, .usecases, .categories, .why, .cta-final { margin-top: 5rem; }
+  /* Hero visual: floating cards on the right */
+  .hero-visual {
+    display: none;
+    position: relative;
+    height: 360px;
+  }
+  @media (min-width: 1024px) { .hero-visual { display: block; } }
+  .float-card {
+    position: absolute;
+    width: 240px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.125rem;
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(10px);
+  }
+  .float-card-emoji { font-size: 1.5rem; margin-bottom: 0.5rem; line-height: 1; }
+  .float-card-title { font-weight: 600; font-size: 0.9375rem; letter-spacing: -0.01em; margin-bottom: 0.25rem; }
+  .float-card-desc { color: var(--text-subtle); font-size: 0.8125rem; line-height: 1.5; }
+  .float-card-0 { top: 0; left: 8%; transform: rotate(-3deg); animation: float-slow 6s ease-in-out infinite; }
+  .float-card-1 { top: 100px; right: 0; transform: rotate(2deg); animation: float-slow 7s ease-in-out infinite reverse; animation-delay: 0.5s; }
+  .float-card-2 { bottom: 30px; left: 15%; transform: rotate(-1deg); animation: float-slow 8s ease-in-out infinite; animation-delay: 1s; }
+
+  /* Sections */
+  .generators, .usecases, .categories, .why, .cta-final { margin-top: 2rem; }
 
   .section-head {
     display: flex; justify-content: space-between; align-items: baseline;
-    margin-bottom: 1.75rem;
+    margin-bottom: 2rem;
     border-bottom: 1px solid var(--border-soft);
     padding-bottom: 1rem;
   }
@@ -166,18 +232,8 @@ const useCases = [
   .section-link { color: var(--text-subtle); text-decoration: none; font-size: 0.875rem; font-weight: 500; }
   .section-link:hover { color: var(--accent); }
 
-  .gcard {
-    position: relative;
-    display: flex; flex-direction: column;
-    gap: 0.5rem;
-    padding: 1.5rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    text-decoration: none;
-    color: var(--text);
-    transition: border-color 280ms var(--ease), transform 280ms var(--ease), box-shadow 280ms var(--ease);
-  }
+  /* Featured generators */
+  .gcard { position: relative; display: flex; flex-direction: column; gap: 0.5rem; padding: 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); text-decoration: none; color: var(--text); transition: border-color 280ms var(--ease), transform 280ms var(--ease), box-shadow 280ms var(--ease); }
   .gcard:hover { border-color: var(--text); transform: translateY(-2px); box-shadow: var(--shadow-md); text-decoration: none; }
   .gcard-emoji { font-size: 1.5rem; line-height: 1; margin-bottom: 0.25rem; }
   .gcard-title { font-weight: 600; font-size: 1rem; letter-spacing: -0.015em; color: var(--text); }
@@ -186,16 +242,11 @@ const useCases = [
   .gcard:hover .gcard-arrow { color: var(--accent); transform: translateX(3px); }
 
   /* Use cases */
-  .usecase-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+  .usecase-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
   @media (min-width: 700px) { .usecase-grid { grid-template-columns: 1fr 1fr; } }
   .usecase {
-    position: relative;
-    display: flex; flex-direction: column;
-    gap: 0.625rem;
+    position: relative; display: flex; flex-direction: column;
+    gap: 0.75rem;
     padding: 1.75rem;
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -206,8 +257,7 @@ const useCases = [
     overflow: hidden;
   }
   .usecase::before {
-    content: "";
-    position: absolute; top: 0; right: 0; width: 50%; height: 100%;
+    content: ""; position: absolute; top: 0; right: 0; width: 50%; height: 100%;
     background: radial-gradient(circle at 100% 0%, color-mix(in oklab, var(--accent) 8%, transparent), transparent 60%);
     pointer-events: none;
   }
@@ -215,17 +265,25 @@ const useCases = [
   .usecase-icon { font-size: 1.875rem; line-height: 1; }
   .usecase h3 { margin: 0; font-size: 1.125rem; font-weight: 700; letter-spacing: -0.02em; }
   .usecase p { margin: 0; color: var(--text-soft); font-size: 0.9375rem; line-height: 1.55; }
-  .usecase-link { margin-top: auto; color: var(--accent); font-size: 0.875rem; font-weight: 600; padding-top: 0.5rem; }
-
-  /* Categories tiles */
-  .cat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 0.75rem;
+  .usecase-preview {
+    display: flex; flex-wrap: wrap; gap: 0.375rem;
+    margin-top: 0.25rem;
   }
+  .usecase-chip {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background: var(--bg-inset);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-soft);
+  }
+  .usecase-link { margin-top: auto; color: var(--accent); font-size: 0.875rem; font-weight: 600; padding-top: 0.25rem; }
+
+  /* Categories tiles with dot accent */
+  .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; }
   .cat-tile {
-    display: flex; flex-direction: column;
-    gap: 0.25rem;
+    display: flex; align-items: center;
+    gap: 0.75rem;
     padding: 1rem 1.125rem;
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -235,56 +293,60 @@ const useCases = [
     transition: border-color 220ms var(--ease), background 220ms var(--ease);
   }
   .cat-tile:hover { border-color: var(--text); background: var(--bg-inset); text-decoration: none; }
-  .cat-name { font-weight: 600; font-size: 0.9375rem; letter-spacing: -0.01em; }
+  .cat-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--cat-dot, var(--accent));
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--cat-dot, var(--accent)) 18%, transparent);
+  }
+  .cat-tile-text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .cat-name { font-weight: 600; font-size: 0.9375rem; letter-spacing: -0.01em; flex: 1; }
   .cat-count { color: var(--text-subtle); font-size: 0.8125rem; font-feature-settings: "tnum"; }
 
   /* Why grid */
   .why h2 { max-width: 24ch; font-size: clamp(1.5rem, 3.5vw, 2.25rem); letter-spacing: -0.025em; }
-  .why-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    margin-top: 2.5rem;
-  }
+  .why-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2.5rem; }
   @media (min-width: 768px) { .why-grid { grid-template-columns: 1fr 1fr; gap: 3rem 4rem; } }
   .why-item { position: relative; padding-left: 3rem; }
   .why-item .why-num {
     position: absolute; left: 0; top: 0;
     font-family: var(--font-mono);
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: var(--accent);
     padding-top: 0.25rem;
     letter-spacing: 0.04em;
+    font-feature-settings: "tnum";
   }
   .why-item h3 { margin: 0 0 0.5rem; font-size: 1.0625rem; font-weight: 600; color: var(--text); }
   .why-item p { margin: 0; color: var(--text-soft); }
 
-  /* Final CTA */
+  /* Final CTA with glow pulse */
   .cta-final-inner {
     background: var(--text);
     color: var(--bg);
-    padding: 3.5rem 2rem;
+    padding: 4rem 2rem;
     border-radius: var(--radius-xl);
     text-align: center;
     position: relative;
     overflow: hidden;
+    animation: glow-pulse 8s ease-in-out infinite;
   }
   .cta-final-inner::before {
     content: "";
     position: absolute; inset: 0;
-    background: radial-gradient(60% 80% at 50% 0%, color-mix(in oklab, var(--accent) 25%, transparent), transparent 70%);
+    background:
+      radial-gradient(60% 80% at 50% 0%, color-mix(in oklab, var(--accent) 30%, transparent), transparent 70%),
+      radial-gradient(30% 50% at 20% 100%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 70%);
     pointer-events: none;
   }
-  .cta-final-inner h2 { color: var(--bg); margin: 0 0 0.75rem; font-size: clamp(1.5rem, 3.5vw, 2.25rem); letter-spacing: -0.025em; }
-  .cta-final-inner p { color: rgba(255, 255, 255, 0.72); max-width: 50ch; margin: 0 auto 1.5rem; }
-  .cta-final-inner .btn-primary {
-    background: var(--bg);
-    color: var(--text);
-    border-color: var(--bg);
-  }
+  .cta-final-inner h2 { color: var(--bg); margin: 0 0 0.75rem; font-size: clamp(1.5rem, 3.5vw, 2.25rem); letter-spacing: -0.025em; position: relative; }
+  .cta-final-inner h2::after { background: var(--accent); }
+  .cta-final-inner p { color: rgba(255, 255, 255, 0.72); max-width: 50ch; margin: 0 auto 1.5rem; position: relative; }
+  .cta-final-inner .btn-primary { background: var(--bg); color: var(--text); border-color: var(--bg); position: relative; }
   .cta-final-inner .btn-primary:hover { background: var(--bg-soft); border-color: var(--bg-soft); color: var(--text); box-shadow: 0 8px 24px -8px rgba(0,0,0,0.5); }
-  @media (prefers-color-scheme: dark) {
-    .cta-final-inner { background: var(--bg-inset); border: 1px solid var(--border); }
-  }
+  @media (prefers-color-scheme: dark) { .cta-final-inner { background: var(--bg-inset); border: 1px solid var(--border); } }
+
+  /* In CTA final, hide the section-head underline accent */
+  .cta-final-inner h2::after { display: none; }
 </style>

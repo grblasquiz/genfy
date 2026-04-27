@@ -1,32 +1,70 @@
 ---
 import { t, type Lang } from '../lib/i18n';
+import { GENERATORS, urlFor, CATEGORIES_ES, CATEGORIES_EN, type GeneratorMeta } from '../lib/generators';
+
 const { lang = 'es' } = Astro.props as { lang?: Lang };
 const tt = t[lang];
 const year = new Date().getFullYear();
+
 const links = lang === 'es'
   ? [
       { href: '/sobre-genfy', label: tt.nav.about },
       { href: '/contacto', label: tt.nav.contact },
       { href: '/privacidad', label: tt.nav.privacy },
       { href: '/terminos', label: tt.nav.terms },
+      { href: '/generadores', label: lang === 'es' ? 'Todos los generadores' : 'All generators' },
     ]
   : [
       { href: '/en/about', label: tt.nav.about },
       { href: '/en/contact', label: tt.nav.contact },
       { href: '/en/privacy', label: tt.nav.privacy },
       { href: '/en/terms', label: tt.nav.terms },
+      { href: '/en/generators', label: 'All generators' },
     ];
+
+const CATS = lang === 'es' ? CATEGORIES_ES : CATEGORIES_EN;
+const CAT_ORDER: GeneratorMeta['category'][] = ['security', 'tech', 'business', 'marketing', 'design', 'pets', 'people', 'work'];
+
+// Get top 4 generators per category for the footer link cloud
+const featuredByCat: Record<string, GeneratorMeta[]> = {};
+for (const cat of CAT_ORDER) {
+  featuredByCat[cat] = GENERATORS.filter(g => g.category === cat).slice(0, 4);
+}
 ---
 <footer class="site-footer">
   <div class="container footer-inner">
-    <div class="footer-brand">
-      <span class="footer-brand-name">Genfy</span>
-      <span class="footer-brand-tag">{tt.footerTagline}</span>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href={lang === 'es' ? '/' : '/en'} class="brand-row">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="22" height="22" rx="6" fill="currentColor"/>
+            <path d="M16 9.5h-4.5a2.5 2.5 0 0 0 0 5H14V13h-2.5" stroke="var(--bg)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          <span class="brand-name">Genfy</span>
+        </a>
+        <p class="footer-tag">{tt.footerTagline}</p>
+      </div>
+
+      <div class="footer-grid">
+        {CAT_ORDER.filter(c => featuredByCat[c]?.length).slice(0, 4).map(c => (
+          <div class="footer-col">
+            <h4>{CATS[c]}</h4>
+            <ul>
+              {featuredByCat[c].map(g => (
+                <li><a href={urlFor(g, lang)}>{g.title[lang]}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
-    <nav class="footer-nav" aria-label="Footer">
-      {links.map(l => <a href={l.href}>{l.label}</a>)}
-    </nav>
-    <p class="copy">© {year} Genfy · {tt.footerRights}</p>
+
+    <div class="footer-bottom">
+      <nav class="footer-nav" aria-label="Footer">
+        {links.map(l => <a href={l.href}>{l.label}</a>)}
+      </nav>
+      <p class="copy">© {year} Genfy · {tt.footerRights}</p>
+    </div>
   </div>
 </footer>
 
@@ -34,46 +72,65 @@ const links = lang === 'es'
   .site-footer {
     margin-top: 6rem;
     border-top: 1px solid var(--border);
-    padding: 3rem 0 5rem;
-    background: var(--bg);
+    padding: 4rem 0 3rem;
+    background: var(--bg-soft);
   }
-  .footer-inner {
+  .footer-inner { display: flex; flex-direction: column; gap: 3rem; }
+  .footer-top {
     display: grid;
-    gap: 2rem;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
-  .footer-brand {
-    display: flex;
-    flex-direction: column;
-    gap: 0.375rem;
+  @media (min-width: 768px) {
+    .footer-top { grid-template-columns: 280px 1fr; gap: 4rem; }
   }
-  .footer-brand-name {
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: -0.02em;
-    color: var(--text);
+  .footer-brand { display: flex; flex-direction: column; gap: 0.875rem; }
+  .brand-row {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: var(--text); font-weight: 700; font-size: 1rem;
+    letter-spacing: -0.02em; text-decoration: none;
   }
-  .footer-brand-tag {
-    color: var(--text-subtle);
-    font-size: 0.875rem;
-    max-width: 32ch;
-  }
-  .footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-  }
-  .footer-nav a {
+  .footer-tag {
     color: var(--text-soft);
     font-size: 0.875rem;
-    text-decoration: none;
-    transition: color var(--t-base) var(--ease);
-  }
-  .footer-nav a:hover { color: var(--text); }
-  .copy {
-    color: var(--text-muted);
-    font-size: 0.8125rem;
     margin: 0;
-    border-top: 1px solid var(--border-soft);
-    padding-top: 1.5rem;
+    max-width: 30ch;
+    line-height: 1.55;
   }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem 1.25rem;
+  }
+  @media (min-width: 768px) { .footer-grid { grid-template-columns: repeat(4, 1fr); } }
+  .footer-col h4 {
+    margin: 0 0 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text);
+  }
+  .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4375rem; }
+  .footer-col a {
+    color: var(--text-subtle);
+    font-size: 0.8125rem;
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 180ms var(--ease);
+  }
+  .footer-col a:hover { color: var(--text); }
+
+  .footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  @media (min-width: 700px) { .footer-bottom { flex-direction: row; justify-content: space-between; align-items: center; } }
+  .footer-nav { display: flex; flex-wrap: wrap; gap: 1rem 1.25rem; }
+  .footer-nav a { color: var(--text-soft); font-size: 0.8125rem; text-decoration: none; }
+  .footer-nav a:hover { color: var(--text); }
+  .copy { color: var(--text-muted); font-size: 0.75rem; margin: 0; }
 </style>
