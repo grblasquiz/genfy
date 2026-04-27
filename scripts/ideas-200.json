@@ -1,0 +1,1802 @@
+[
+  {
+    "slugEs": "generador-de-nombres-para-dragones",
+    "slugEn": "dragon-name-generator",
+    "category": "fun",
+    "emoji": "🐉",
+    "mode": "pick",
+    "conceptEs": "Genera nombres épicos para dragones de fantasía, ideal para escritores, gamers y creadores de mundos RPG.",
+    "conceptEn": "Generates epic dragon names for fantasy worlds, perfect for writers, gamers and RPG world builders."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-videojuego",
+    "slugEn": "video-game-name-generator",
+    "category": "fun",
+    "emoji": "🎮",
+    "mode": "combine",
+    "conceptEs": "Crea títulos memorables para tus proyectos de videojuegos indie o AAA, con gancho comercial.",
+    "conceptEn": "Creates memorable titles for your indie or AAA game projects with commercial appeal."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-planeta",
+    "slugEn": "planet-name-generator",
+    "category": "fun",
+    "emoji": "🪐",
+    "mode": "pick",
+    "conceptEs": "Genera nombres únicos para planetas de ciencia ficción, perfecto para escritores y diseñadores de juegos espaciales.",
+    "conceptEn": "Generates unique planet names for sci-fi, perfect for writers and space game designers."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-criatura-fantastica",
+    "slugEn": "mythical-creature-name-generator",
+    "category": "fun",
+    "emoji": "🦄",
+    "mode": "pick",
+    "conceptEs": "Crea nombres para criaturas míticas y fantásticas, desde unicornios hasta quimeras para tus historias.",
+    "conceptEn": "Creates names for mythical and fantastic creatures, from unicorns to chimeras for your stories."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hechizo",
+    "slugEn": "spell-name-generator",
+    "category": "fun",
+    "emoji": "✨",
+    "mode": "combine",
+    "conceptEs": "Genera nombres místicos para hechizos y conjuros, ideal para juegos de rol y ficción de magia.",
+    "conceptEn": "Generates mystical spell and incantation names, ideal for RPGs and magical fiction."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-pocion",
+    "slugEn": "potion-name-generator",
+    "category": "fun",
+    "emoji": "🧪",
+    "mode": "combine",
+    "conceptEs": "Crea nombres creativos para pociones mágicas y brebajes, perfecto para juegos y narrativa fantástica.",
+    "conceptEn": "Creates creative names for magical potions and brews, perfect for games and fantasy storytelling."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-reino",
+    "slugEn": "kingdom-name-generator",
+    "category": "fun",
+    "emoji": "👑",
+    "mode": "pick",
+    "conceptEs": "Genera nombres majestuosos para reinos y territorios de fantasía, útil para worldbuilding épico.",
+    "conceptEn": "Generates majestic names for fantasy kingdoms and territories, useful for epic worldbuilding."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-taverna",
+    "slugEn": "tavern-name-generator",
+    "category": "fun",
+    "emoji": "🍺",
+    "mode": "combine",
+    "conceptEs": "Crea nombres pintorescos para tabernas y posadas medievales, ideal para ambientación RPG.",
+    "conceptEn": "Creates picturesque names for medieval taverns and inns, ideal for RPG settings."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-gremio",
+    "slugEn": "guild-name-generator",
+    "category": "fun",
+    "emoji": "⚔️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres épicos para gremios, clanes y hermandades en juegos online y RPG.",
+    "conceptEn": "Generates epic names for guilds, clans and brotherhoods in online games and RPGs."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-ciudad-fantastica",
+    "slugEn": "fantasy-city-name-generator",
+    "category": "fun",
+    "emoji": "🏰",
+    "mode": "pick",
+    "conceptEs": "Crea nombres evocadores para ciudades de fantasía, desde metrópolis élficas hasta fortalezas enanas.",
+    "conceptEn": "Creates evocative names for fantasy cities, from elven metropolises to dwarven fortresses."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-arma-legendaria",
+    "slugEn": "legendary-weapon-name-generator",
+    "category": "fun",
+    "emoji": "⚡",
+    "mode": "combine",
+    "conceptEs": "Genera nombres épicos para espadas, hachas y armas legendarias con historia propia.",
+    "conceptEn": "Generates epic names for swords, axes and legendary weapons with their own lore."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-clan-samurai",
+    "slugEn": "samurai-clan-name-generator",
+    "category": "fun",
+    "emoji": "🗾",
+    "mode": "pick",
+    "conceptEs": "Crea nombres tradicionales japoneses para clanes samurai, perfecto para juegos ambientados en Japón feudal.",
+    "conceptEn": "Creates traditional Japanese names for samurai clans, perfect for feudal Japan themed games."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-ninja",
+    "slugEn": "ninja-name-generator",
+    "category": "fun",
+    "emoji": "🥷",
+    "mode": "pick",
+    "conceptEs": "Genera nombres sigilosos para ninjas y asesinos, ideal para personajes de sigilo y sombra.",
+    "conceptEn": "Generates stealthy names for ninjas and assassins, ideal for stealth and shadow characters."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-mecha",
+    "slugEn": "mecha-name-generator",
+    "category": "tech",
+    "emoji": "🤖",
+    "mode": "combine",
+    "conceptEs": "Crea designaciones técnicas para robots gigantes y mechas, estilo anime japonés.",
+    "conceptEn": "Creates technical designations for giant robots and mechas, Japanese anime style."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-nave-espacial",
+    "slugEn": "spaceship-name-generator",
+    "category": "tech",
+    "emoji": "🚀",
+    "mode": "combine",
+    "conceptEs": "Genera nombres épicos para naves estelares y cruceros espaciales, perfecto para sci-fi.",
+    "conceptEn": "Generates epic names for starships and space cruisers, perfect for sci-fi settings."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-estacion-espacial",
+    "slugEn": "space-station-name-generator",
+    "category": "tech",
+    "emoji": "🛰️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres técnicos para estaciones orbitales y puestos avanzados espaciales.",
+    "conceptEn": "Creates technical names for orbital stations and space outposts."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-ia",
+    "slugEn": "ai-name-generator",
+    "category": "tech",
+    "emoji": "🧠",
+    "mode": "pick",
+    "conceptEs": "Genera nombres para inteligencias artificiales y asistentes virtuales con personalidad tech.",
+    "conceptEn": "Generates names for artificial intelligences and virtual assistants with tech personality."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-virus-informatico",
+    "slugEn": "computer-virus-name-generator",
+    "category": "tech",
+    "emoji": "🦠",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de código para malware y virus en contextos de ficción cyberpunk.",
+    "conceptEn": "Creates code names for malware and viruses in cyberpunk fiction contexts."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-operacion-militar",
+    "slugEn": "military-operation-name-generator",
+    "category": "work",
+    "emoji": "🎖️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres en clave para operaciones militares, estilo NATO, ideal para simulaciones.",
+    "conceptEn": "Generates code names for military operations, NATO style, ideal for simulations."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-proyecto-secreto",
+    "slugEn": "secret-project-codename-generator",
+    "category": "work",
+    "emoji": "🕵️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres en código corporativos para proyectos confidenciales, siguiendo estándares tech.",
+    "conceptEn": "Creates corporate code names for confidential projects, following tech standards."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-fragrancia",
+    "slugEn": "perfume-name-generator",
+    "category": "business",
+    "emoji": "🌸",
+    "mode": "combine",
+    "conceptEs": "Genera nombres elegantes y evocadores para perfumes y líneas de fragancias de lujo.",
+    "conceptEn": "Generates elegant and evocative names for perfumes and luxury fragrance lines."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-coleccion-moda",
+    "slugEn": "fashion-collection-name-generator",
+    "category": "design",
+    "emoji": "👗",
+    "mode": "combine",
+    "conceptEs": "Crea nombres sofisticados para colecciones de moda, temporadas y líneas de diseñador.",
+    "conceptEn": "Creates sophisticated names for fashion collections, seasons and designer lines."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-boutique",
+    "slugEn": "boutique-name-generator",
+    "category": "business",
+    "emoji": "👠",
+    "mode": "combine",
+    "conceptEs": "Genera nombres chic para boutiques de moda, accesorios y tiendas de ropa exclusiva.",
+    "conceptEn": "Generates chic names for fashion boutiques, accessories and exclusive clothing stores."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-joyeria",
+    "slugEn": "jewelry-store-name-generator",
+    "category": "business",
+    "emoji": "💎",
+    "mode": "combine",
+    "conceptEs": "Crea nombres elegantes para joyerías y marcas de accesorios de lujo.",
+    "conceptEn": "Creates elegant names for jewelry stores and luxury accessory brands."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-linea-de-maquillaje",
+    "slugEn": "makeup-line-name-generator",
+    "category": "business",
+    "emoji": "💄",
+    "mode": "combine",
+    "conceptEs": "Genera nombres atractivos para líneas de cosméticos y productos de belleza.",
+    "conceptEn": "Generates attractive names for cosmetic lines and beauty products."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-salon-de-unas",
+    "slugEn": "nail-salon-name-generator",
+    "category": "business",
+    "emoji": "💅",
+    "mode": "combine",
+    "conceptEs": "Crea nombres creativos para salones de manicura y estudios de nail art.",
+    "conceptEn": "Creates creative names for manicure salons and nail art studios."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-barberia",
+    "slugEn": "barber-shop-name-generator",
+    "category": "business",
+    "emoji": "💈",
+    "mode": "combine",
+    "conceptEs": "Genera nombres con estilo para barberías modernas y tradicionales.",
+    "conceptEn": "Generates stylish names for modern and traditional barber shops."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-estudio-tatuaje",
+    "slugEn": "tattoo-studio-name-generator",
+    "category": "business",
+    "emoji": "🖋️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres impactantes para estudios de tatuajes y body art.",
+    "conceptEn": "Creates impactful names for tattoo studios and body art parlors."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-heladeria",
+    "slugEn": "ice-cream-shop-name-generator",
+    "category": "business",
+    "emoji": "🍦",
+    "mode": "combine",
+    "conceptEs": "Genera nombres dulces y memorables para heladerías artesanales y gelaterías.",
+    "conceptEn": "Generates sweet and memorable names for artisan ice cream shops and gelaterias."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-pizzeria",
+    "slugEn": "pizzeria-name-generator",
+    "category": "business",
+    "emoji": "🍕",
+    "mode": "combine",
+    "conceptEs": "Crea nombres italianos auténticos para pizzerías y restaurantes de comida italiana.",
+    "conceptEn": "Creates authentic Italian names for pizzerias and Italian food restaurants."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-sushi-bar",
+    "slugEn": "sushi-bar-name-generator",
+    "category": "business",
+    "emoji": "🍣",
+    "mode": "combine",
+    "conceptEs": "Genera nombres japoneses elegantes para sushi bars y restaurantes de cocina nipona.",
+    "conceptEn": "Generates elegant Japanese names for sushi bars and Japanese cuisine restaurants."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-taqueria",
+    "slugEn": "taco-shop-name-generator",
+    "category": "business",
+    "emoji": "🌮",
+    "mode": "combine",
+    "conceptEs": "Crea nombres auténticos y divertidos para taquerías y restaurantes mexicanos.",
+    "conceptEn": "Creates authentic and fun names for taquerias and Mexican restaurants."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-cerveceria-artesanal",
+    "slugEn": "craft-brewery-name-generator",
+    "category": "business",
+    "emoji": "🍻",
+    "mode": "combine",
+    "conceptEs": "Genera nombres distintivos para cervecerías artesanales y brewpubs.",
+    "conceptEn": "Generates distinctive names for craft breweries and brewpubs."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-cerveza",
+    "slugEn": "beer-name-generator",
+    "category": "business",
+    "emoji": "🍺",
+    "mode": "combine",
+    "conceptEs": "Crea nombres creativos para cervezas artesanales, IPAs y variedades craft.",
+    "conceptEn": "Creates creative names for craft beers, IPAs and craft varieties."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-vino",
+    "slugEn": "wine-name-generator",
+    "category": "business",
+    "emoji": "🍷",
+    "mode": "combine",
+    "conceptEs": "Genera nombres sofisticados para vinos, bodegas y etiquetas premium.",
+    "conceptEn": "Generates sophisticated names for wines, wineries and premium labels."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-te",
+    "slugEn": "tea-blend-name-generator",
+    "category": "business",
+    "emoji": "🍵",
+    "mode": "combine",
+    "conceptEs": "Crea nombres relajantes para blends de té, infusiones y tisanas artesanales.",
+    "conceptEn": "Creates relaxing names for tea blends, infusions and artisan tisanes."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-postre",
+    "slugEn": "dessert-name-generator",
+    "category": "business",
+    "emoji": "🧁",
+    "mode": "combine",
+    "conceptEs": "Genera nombres tentadores para postres gourmet, pasteles y creaciones dulces.",
+    "conceptEn": "Generates tempting names for gourmet desserts, cakes and sweet creations."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-plato-especial",
+    "slugEn": "signature-dish-name-generator",
+    "category": "business",
+    "emoji": "🍽️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres atractivos para platos especiales y creaciones culinarias exclusivas.",
+    "conceptEn": "Creates attractive names for special dishes and exclusive culinary creations."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-food-blog",
+    "slugEn": "food-blog-name-generator",
+    "category": "content",
+    "emoji": "📝",
+    "mode": "combine",
+    "conceptEs": "Genera nombres memorables para blogs de cocina, recetas y gastronomía.",
+    "conceptEn": "Generates memorable names for cooking blogs, recipes and gastronomy."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-travel-blog",
+    "slugEn": "travel-blog-name-generator",
+    "category": "content",
+    "emoji": "✈️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres inspiradores para blogs de viajes, aventuras y nómadas digitales.",
+    "conceptEn": "Creates inspiring names for travel blogs, adventures and digital nomads."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-lifestyle-blog",
+    "slugEn": "lifestyle-blog-name-generator",
+    "category": "content",
+    "emoji": "🌟",
+    "mode": "combine",
+    "conceptEs": "Genera nombres aspiracionales para blogs de estilo de vida y desarrollo personal.",
+    "conceptEn": "Generates aspirational names for lifestyle and personal development blogs."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-fitness-blog",
+    "slugEn": "fitness-blog-name-generator",
+    "category": "content",
+    "emoji": "💪",
+    "mode": "combine",
+    "conceptEs": "Crea nombres motivadores para blogs de fitness, entrenamiento y vida saludable.",
+    "conceptEn": "Creates motivating names for fitness, training and healthy living blogs."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-tech-blog",
+    "slugEn": "tech-blog-name-generator",
+    "category": "tech",
+    "emoji": "💻",
+    "mode": "combine",
+    "conceptEs": "Genera nombres modernos para blogs de tecnología, programación y gadgets.",
+    "conceptEn": "Generates modern names for technology, programming and gadget blogs."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-parenting-blog",
+    "slugEn": "parenting-blog-name-generator",
+    "category": "content",
+    "emoji": "👶",
+    "mode": "combine",
+    "conceptEs": "Crea nombres cálidos para blogs de maternidad, paternidad y crianza.",
+    "conceptEn": "Creates warm names for maternity, paternity and parenting blogs."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-diy-blog",
+    "slugEn": "diy-blog-name-generator",
+    "category": "content",
+    "emoji": "🔨",
+    "mode": "combine",
+    "conceptEs": "Genera nombres creativos para blogs de manualidades, DIY y proyectos caseros.",
+    "conceptEn": "Generates creative names for crafts, DIY and home project blogs."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-gaming-channel",
+    "slugEn": "gaming-channel-name-generator",
+    "category": "content",
+    "emoji": "🎯",
+    "mode": "combine",
+    "conceptEs": "Crea nombres pegadizos para canales de gaming, streams y contenido de videojuegos.",
+    "conceptEn": "Creates catchy names for gaming channels, streams and video game content."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-canal-educativo",
+    "slugEn": "educational-channel-name-generator",
+    "category": "content",
+    "emoji": "🎓",
+    "mode": "combine",
+    "conceptEs": "Genera nombres profesionales para canales educativos y tutoriales online.",
+    "conceptEn": "Generates professional names for educational channels and online tutorials."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-vlog",
+    "slugEn": "vlog-name-generator",
+    "category": "content",
+    "emoji": "📹",
+    "mode": "combine",
+    "conceptEs": "Crea nombres personales y auténticos para vlogs y contenido de vida diaria.",
+    "conceptEn": "Creates personal and authentic names for vlogs and daily life content."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-canal-kids",
+    "slugEn": "kids-channel-name-generator",
+    "category": "content",
+    "emoji": "🧒",
+    "mode": "combine",
+    "conceptEs": "Genera nombres divertidos y seguros para canales infantiles y contenido familiar.",
+    "conceptEn": "Generates fun and safe names for children's channels and family content."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-curso-online",
+    "slugEn": "online-course-name-generator",
+    "category": "content",
+    "emoji": "📚",
+    "mode": "combine",
+    "conceptEs": "Crea títulos atractivos para cursos digitales, masterclasses y programas educativos.",
+    "conceptEn": "Creates attractive titles for digital courses, masterclasses and educational programs."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-ebook",
+    "slugEn": "ebook-title-generator",
+    "category": "content",
+    "emoji": "📖",
+    "mode": "combine",
+    "conceptEs": "Genera títulos vendedores para ebooks, guías descargables y lead magnets.",
+    "conceptEn": "Generates sales-driven titles for ebooks, downloadable guides and lead magnets."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-challenge",
+    "slugEn": "challenge-name-generator",
+    "category": "marketing",
+    "emoji": "🏆",
+    "mode": "combine",
+    "conceptEs": "Crea nombres virales para challenges de redes sociales, desafíos fitness y campañas participativas.",
+    "conceptEn": "Creates viral names for social media challenges, fitness challenges and participatory campaigns."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-evento-virtual",
+    "slugEn": "virtual-event-name-generator",
+    "category": "work",
+    "emoji": "🌐",
+    "mode": "combine",
+    "conceptEs": "Genera nombres memorables para eventos online, summits virtuales y conferencias digitales.",
+    "conceptEn": "Generates memorable names for online events, virtual summits and digital conferences."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hackathon",
+    "slugEn": "hackathon-name-generator",
+    "category": "tech",
+    "emoji": "⌨️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres técnicos y motivadores para hackathons, coding sprints y jams de programación.",
+    "conceptEn": "Creates technical and motivating names for hackathons, coding sprints and programming jams."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-bootcamp",
+    "slugEn": "bootcamp-name-generator",
+    "category": "content",
+    "emoji": "🚀",
+    "mode": "combine",
+    "conceptEs": "Genera nombres intensivos para bootcamps, programas acelerados y trainings inmersivos.",
+    "conceptEn": "Generates intensive names for bootcamps, accelerated programs and immersive trainings."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-comunidad-online",
+    "slugEn": "online-community-name-generator",
+    "category": "marketing",
+    "emoji": "👥",
+    "mode": "combine",
+    "conceptEs": "Crea nombres inclusivos para comunidades digitales, foros y grupos de membresía.",
+    "conceptEn": "Creates inclusive names for digital communities, forums and membership groups."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-mastermind",
+    "slugEn": "mastermind-group-name-generator",
+    "category": "business",
+    "emoji": "🧩",
+    "mode": "combine",
+    "conceptEs": "Genera nombres profesionales para grupos mastermind, círculos de CEOs y peer advisory groups.",
+    "conceptEn": "Generates professional names for mastermind groups, CEO circles and peer advisory groups."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-coworking",
+    "slugEn": "coworking-space-name-generator",
+    "category": "business",
+    "emoji": "🏢",
+    "mode": "combine",
+    "conceptEs": "Crea nombres modernos para espacios de coworking, hubs creativos y oficinas compartidas.",
+    "conceptEn": "Creates modern names for coworking spaces, creative hubs and shared offices."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-agencia-creativa",
+    "slugEn": "creative-agency-name-generator",
+    "category": "business",
+    "emoji": "🎨",
+    "mode": "combine",
+    "conceptEs": "Genera nombres disruptivos para agencias de publicidad, estudios creativos y consultoras de branding.",
+    "conceptEn": "Generates disruptive names for advertising agencies, creative studios and branding consultancies."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-agencia-digital",
+    "slugEn": "digital-agency-name-generator",
+    "category": "business",
+    "emoji": "📱",
+    "mode": "combine",
+    "conceptEs": "Crea nombres tech-forward para agencias digitales, growth hackers y consultoras de marketing online.",
+    "conceptEn": "Creates tech-forward names for digital agencies, growth hackers and online marketing consultancies."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-consultoria",
+    "slugEn": "consulting-firm-name-generator",
+    "category": "business",
+    "emoji": "💼",
+    "mode": "combine",
+    "conceptEs": "Genera nombres corporativos confiables para consultorías, advisory firms y servicios profesionales.",
+    "conceptEn": "Generates reliable corporate names for consultancies, advisory firms and professional services."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-estudio-arquitectura",
+    "slugEn": "architecture-firm-name-generator",
+    "category": "business",
+    "emoji": "🏛️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres elegantes para estudios de arquitectura, diseño de interiores y urbanismo.",
+    "conceptEn": "Creates elegant names for architecture firms, interior design and urbanism."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-estudio-diseno",
+    "slugEn": "design-studio-name-generator",
+    "category": "design",
+    "emoji": "✏️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres visuales para estudios de diseño gráfico, UX/UI y branding.",
+    "conceptEn": "Generates visual names for graphic design, UX/UI and branding studios."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-productora-audiovisual",
+    "slugEn": "production-company-name-generator",
+    "category": "business",
+    "emoji": "🎬",
+    "mode": "combine",
+    "conceptEs": "Crea nombres cinematográficos para productoras de video, cine y contenido audiovisual.",
+    "conceptEn": "Creates cinematic names for video, film and audiovisual content production companies."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-estudio-fotografia",
+    "slugEn": "photography-studio-name-generator",
+    "category": "business",
+    "emoji": "📷",
+    "mode": "combine",
+    "conceptEs": "Genera nombres artísticos para estudios fotográficos, fotógrafos freelance y servicios de foto.",
+    "conceptEn": "Generates artistic names for photography studios, freelance photographers and photo services."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-estudio-musica",
+    "slugEn": "music-studio-name-generator",
+    "category": "business",
+    "emoji": "🎵",
+    "mode": "combine",
+    "conceptEs": "Crea nombres sonoros para estudios de grabación, productoras musicales y salas de ensayo.",
+    "conceptEn": "Creates sonorous names for recording studios, music producers and rehearsal rooms."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-sello-discografico",
+    "slugEn": "record-label-name-generator",
+    "category": "business",
+    "emoji": "💿",
+    "mode": "combine",
+    "conceptEs": "Genera nombres underground para sellos discográficos, labels indie y distribuidoras musicales.",
+    "conceptEn": "Generates underground names for record labels, indie labels and music distributors."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-playlist",
+    "slugEn": "playlist-name-generator",
+    "category": "fun",
+    "emoji": "🎧",
+    "mode": "combine",
+    "conceptEs": "Crea nombres mood-based para playlists de Spotify, listas musicales y compilados temáticos.",
+    "conceptEn": "Creates mood-based names for Spotify playlists, music lists and thematic compilations."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-festival",
+    "slugEn": "festival-name-generator",
+    "category": "fun",
+    "emoji": "🎪",
+    "mode": "combine",
+    "conceptEs": "Genera nombres festivos para festivales de música, arte, gastronomía y cultura.",
+    "conceptEn": "Generates festive names for music, art, gastronomy and culture festivals."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-tour-musical",
+    "slugEn": "concert-tour-name-generator",
+    "category": "fun",
+    "emoji": "🎤",
+    "mode": "combine",
+    "conceptEs": "Crea nombres épicos para giras musicales, world tours y conciertos internacionales.",
+    "conceptEn": "Creates epic names for music tours, world tours and international concerts."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-movimiento-artistico",
+    "slugEn": "art-movement-name-generator",
+    "category": "design",
+    "emoji": "🖼️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres vanguardistas para movimientos artísticos, colectivos y manifiestos creativos.",
+    "conceptEn": "Generates avant-garde names for art movements, collectives and creative manifestos."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-galeria-arte",
+    "slugEn": "art-gallery-name-generator",
+    "category": "business",
+    "emoji": "🎨",
+    "mode": "combine",
+    "conceptEs": "Crea nombres sofisticados para galerías de arte, espacios culturales y showrooms artísticos.",
+    "conceptEn": "Creates sophisticated names for art galleries, cultural spaces and artistic showrooms."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-exposicion",
+    "slugEn": "exhibition-name-generator",
+    "category": "design",
+    "emoji": "🖌️",
+    "mode": "combine",
+    "conceptEs": "Genera títulos conceptuales para exposiciones de arte, muestras y bienales.",
+    "conceptEn": "Generates conceptual titles for art exhibitions, shows and biennales."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-obra-de-arte",
+    "slugEn": "artwork-title-generator",
+    "category": "design",
+    "emoji": "🌈",
+    "mode": "combine",
+    "conceptEs": "Crea títulos evocadores para obras de arte, pinturas, esculturas y piezas creativas.",
+    "conceptEn": "Creates evocative titles for artworks, paintings, sculptures and creative pieces."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-serie-fotografica",
+    "slugEn": "photo-series-name-generator",
+    "category": "design",
+    "emoji": "📸",
+    "mode": "combine",
+    "conceptEs": "Genera nombres poéticos para series fotográficas, proyectos visuales y ensayos de imagen.",
+    "conceptEn": "Generates poetic names for photo series, visual projects and image essays."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-personaje-animacion",
+    "slugEn": "animated-character-name-generator",
+    "category": "fun",
+    "emoji": "🎭",
+    "mode": "pick",
+    "conceptEs": "Crea nombres memorables para personajes de animación, cartoons y series infantiles.",
+    "conceptEn": "Creates memorable names for animation characters, cartoons and children's series."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-mascota-marca",
+    "slugEn": "brand-mascot-name-generator",
+    "category": "marketing",
+    "emoji": "🐻",
+    "mode": "pick",
+    "conceptEs": "Genera nombres carismáticos para mascotas corporativas, brand characters y embajadores de marca.",
+    "conceptEn": "Generates charismatic names for corporate mascots, brand characters and brand ambassadors."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-campana-publicitaria",
+    "slugEn": "ad-campaign-name-generator",
+    "category": "marketing",
+    "emoji": "📢",
+    "mode": "combine",
+    "conceptEs": "Crea nombres impactantes para campañas publicitarias, lanzamientos y activaciones de marca.",
+    "conceptEn": "Creates impactful names for advertising campaigns, launches and brand activations."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-linea-de-producto",
+    "slugEn": "product-line-name-generator",
+    "category": "business",
+    "emoji": "📦",
+    "mode": "combine",
+    "conceptEs": "Genera nombres coherentes para líneas de productos, familias SKU y categorías comerciales.",
+    "conceptEn": "Generates coherent names for product lines, SKU families and commercial categories."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-modelo-producto",
+    "slugEn": "product-model-name-generator",
+    "category": "business",
+    "emoji": "🏷️",
+    "mode": "combine",
+    "conceptEs": "Crea designaciones técnicas para modelos de producto, versiones y variantes comerciales.",
+    "conceptEn": "Creates technical designations for product models, versions and commercial variants."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-plan-de-precios",
+    "slugEn": "pricing-plan-name-generator",
+    "category": "business",
+    "emoji": "💳",
+    "mode": "combine",
+    "conceptEs": "Genera nombres aspiracionales para planes SaaS, tiers de suscripción y paquetes premium.",
+    "conceptEn": "Generates aspirational names for SaaS plans, subscription tiers and premium packages."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-funcion-premium",
+    "slugEn": "premium-feature-name-generator",
+    "category": "business",
+    "emoji": "⭐",
+    "mode": "combine",
+    "conceptEs": "Crea nombres exclusivos para features premium, add-ons y funcionalidades de pago.",
+    "conceptEn": "Creates exclusive names for premium features, add-ons and paid functionalities."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-programa-referidos",
+    "slugEn": "referral-program-name-generator",
+    "category": "marketing",
+    "emoji": "🤝",
+    "mode": "combine",
+    "conceptEs": "Genera nombres atractivos para programas de referidos, embajadores y marketing de afiliados.",
+    "conceptEn": "Generates attractive names for referral programs, ambassadors and affiliate marketing."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-programa-vip",
+    "slugEn": "vip-program-name-generator",
+    "category": "business",
+    "emoji": "💎",
+    "mode": "combine",
+    "conceptEs": "Crea nombres exclusivos para programas VIP, clubes de elite y membresías premium.",
+    "conceptEn": "Creates exclusive names for VIP programs, elite clubs and premium memberships."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-club-de-clientes",
+    "slugEn": "customer-club-name-generator",
+    "category": "business",
+    "emoji": "🎁",
+    "mode": "combine",
+    "conceptEs": "Genera nombres acogedores para clubes de clientes, customer loyalty programs y reward systems.",
+    "conceptEn": "Generates welcoming names for customer clubs, loyalty programs and reward systems."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-box-suscripcion",
+    "slugEn": "subscription-box-name-generator",
+    "category": "business",
+    "emoji": "📮",
+    "mode": "combine",
+    "conceptEs": "Crea nombres tentadores para cajas de suscripción, monthly boxes y servicios recurrentes.",
+    "conceptEn": "Creates tempting names for subscription boxes, monthly boxes and recurring services."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-marketplace",
+    "slugEn": "marketplace-name-generator",
+    "category": "business",
+    "emoji": "🛒",
+    "mode": "combine",
+    "conceptEs": "Genera nombres comerciales para marketplaces online, plataformas B2B y e-commerce multimarca.",
+    "conceptEn": "Generates commercial names for online marketplaces, B2B platforms and multi-brand e-commerce."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-tienda-online",
+    "slugEn": "online-store-name-generator",
+    "category": "business",
+    "emoji": "🏪",
+    "mode": "combine",
+    "conceptEs": "Crea nombres memorables para tiendas virtuales, e-shops y negocios de dropshipping.",
+    "conceptEn": "Creates memorable names for virtual stores, e-shops and dropshipping businesses."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-marca-de-ropa",
+    "slugEn": "clothing-brand-name-generator",
+    "category": "business",
+    "emoji": "👕",
+    "mode": "combine",
+    "conceptEs": "Genera nombres fashion para marcas de ropa, streetwear y líneas de indumentaria.",
+    "conceptEn": "Generates fashion names for clothing brands, streetwear and apparel lines."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-marca-deportiva",
+    "slugEn": "sportswear-brand-name-generator",
+    "category": "business",
+    "emoji": "⚽",
+    "mode": "combine",
+    "conceptEs": "Crea nombres dinámicos para marcas deportivas, activewear y equipamiento atlético.",
+    "conceptEn": "Creates dynamic names for sports brands, activewear and athletic equipment."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-marca-sustentable",
+    "slugEn": "sustainable-brand-name-generator",
+    "category": "business",
+    "emoji": "🌱",
+    "mode": "combine",
+    "conceptEs": "Genera nombres eco-conscious para marcas sustentables, productos verdes y negocios éticos.",
+    "conceptEn": "Generates eco-conscious names for sustainable brands, green products and ethical businesses."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-marca-vegana",
+    "slugEn": "vegan-brand-name-generator",
+    "category": "business",
+    "emoji": "🥗",
+    "mode": "combine",
+    "conceptEs": "Crea nombres plant-based para marcas veganas, productos cruelty-free y alimentación consciente.",
+    "conceptEn": "Creates plant-based names for vegan brands, cruelty-free products and conscious nutrition."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-suplemento",
+    "slugEn": "supplement-name-generator",
+    "category": "business",
+    "emoji": "💊",
+    "mode": "combine",
+    "conceptEs": "Genera nombres científicos para suplementos nutricionales, vitaminas y productos wellness.",
+    "conceptEn": "Generates scientific names for nutritional supplements, vitamins and wellness products."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-protein-shake",
+    "slugEn": "protein-shake-name-generator",
+    "category": "business",
+    "emoji": "🥤",
+    "mode": "combine",
+    "conceptEs": "Crea nombres fitness para batidos proteicos, smoothies nutritivos y bebidas deportivas.",
+    "conceptEn": "Creates fitness names for protein shakes, nutritious smoothies and sports drinks."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-programa-fitness",
+    "slugEn": "fitness-program-name-generator",
+    "category": "business",
+    "emoji": "🏋️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres motivadores para programas de entrenamiento, retos fitness y planes de ejercicio.",
+    "conceptEn": "Generates motivating names for training programs, fitness challenges and workout plans."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-clase-grupal",
+    "slugEn": "group-class-name-generator",
+    "category": "business",
+    "emoji": "🤸",
+    "mode": "combine",
+    "conceptEs": "Crea nombres energéticos para clases grupales, workouts colectivos y sesiones fitness.",
+    "conceptEn": "Creates energetic names for group classes, collective workouts and fitness sessions."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-retiro-wellness",
+    "slugEn": "wellness-retreat-name-generator",
+    "category": "business",
+    "emoji": "🧘",
+    "mode": "combine",
+    "conceptEs": "Genera nombres zen para retiros de bienestar, escapadas mindfulness y vacaciones de transformación.",
+    "conceptEn": "Generates zen names for wellness retreats, mindfulness getaways and transformation vacations."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-app-meditacion",
+    "slugEn": "meditation-app-name-generator",
+    "category": "business",
+    "emoji": "🕉️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres peaceful para apps de meditación, mindfulness y salud mental.",
+    "conceptEn": "Creates peaceful names for meditation apps, mindfulness and mental health."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-app-habitos",
+    "slugEn": "habit-tracker-app-name-generator",
+    "category": "business",
+    "emoji": "✅",
+    "mode": "combine",
+    "conceptEs": "Genera nombres productivos para apps de hábitos, trackers de rutinas y herramientas de mejora continua.",
+    "conceptEn": "Generates productive names for habit apps, routine trackers and continuous improvement tools."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-app-finanzas",
+    "slugEn": "finance-app-name-generator",
+    "category": "business",
+    "emoji": "💰",
+    "mode": "combine",
+    "conceptEs": "Crea nombres confiables para apps financieras, gestores de presupuesto y herramientas de ahorro.",
+    "conceptEn": "Creates reliable names for financial apps, budget managers and savings tools."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-app-citas",
+    "slugEn": "dating-app-name-generator",
+    "category": "business",
+    "emoji": "💕",
+    "mode": "combine",
+    "conceptEs": "Genera nombres románticos para apps de citas, plataformas de matchmaking y redes de encuentros.",
+    "conceptEn": "Generates romantic names for dating apps, matchmaking platforms and meeting networks."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-app-social",
+    "slugEn": "social-app-name-generator",
+    "category": "business",
+    "emoji": "📱",
+    "mode": "combine",
+    "conceptEs": "Crea nombres virales para redes sociales, plataformas de comunidad y apps de networking.",
+    "conceptEn": "Creates viral names for social networks, community platforms and networking apps."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-app-delivery",
+    "slugEn": "delivery-app-name-generator",
+    "category": "business",
+    "emoji": "🚗",
+    "mode": "combine",
+    "conceptEs": "Genera nombres rápidos para apps de delivery, servicios de mensajería y logística on-demand.",
+    "conceptEn": "Generates fast names for delivery apps, courier services and on-demand logistics."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-app-turismo",
+    "slugEn": "travel-app-name-generator",
+    "category": "business",
+    "emoji": "🗺️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres aventureros para apps de viaje, guías turísticas y planificadores de itinerarios.",
+    "conceptEn": "Creates adventurous names for travel apps, tourist guides and itinerary planners."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-app-idiomas",
+    "slugEn": "language-learning-app-name-generator",
+    "category": "business",
+    "emoji": "🌍",
+    "mode": "combine",
+    "conceptEs": "Genera nombres educativos para apps de idiomas, plataformas de aprendizaje y tutores virtuales.",
+    "conceptEn": "Generates educational names for language apps, learning platforms and virtual tutors."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-app-ninos",
+    "slugEn": "kids-app-name-generator",
+    "category": "business",
+    "emoji": "🎈",
+    "mode": "combine",
+    "conceptEs": "Crea nombres divertidos y seguros para apps infantiles, juegos educativos y contenido kids-friendly.",
+    "conceptEn": "Creates fun and safe names for kids apps, educational games and kids-friendly content."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-juego-movil",
+    "slugEn": "mobile-game-name-generator",
+    "category": "fun",
+    "emoji": "📲",
+    "mode": "combine",
+    "conceptEs": "Genera nombres adictivos para juegos móviles, casual games y títulos hypercasual.",
+    "conceptEn": "Generates addictive names for mobile games, casual games and hypercasual titles."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-juego-indie",
+    "slugEn": "indie-game-name-generator",
+    "category": "fun",
+    "emoji": "🎲",
+    "mode": "combine",
+    "conceptEs": "Crea nombres artísticos para juegos indie, proyectos experimentales y títulos narrativos.",
+    "conceptEn": "Creates artistic names for indie games, experimental projects and narrative titles."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-mod",
+    "slugEn": "game-mod-name-generator",
+    "category": "fun",
+    "emoji": "🔧",
+    "mode": "combine",
+    "conceptEs": "Genera nombres técnicos para mods de juegos, paquetes de texturas y expansiones comunitarias.",
+    "conceptEn": "Generates technical names for game mods, texture packs and community expansions."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-servidor-minecraft",
+    "slugEn": "minecraft-server-name-generator",
+    "category": "fun",
+    "emoji": "⛏️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres blocky para servidores de Minecraft, realms y mundos multijugador.",
+    "conceptEn": "Creates blocky names for Minecraft servers, realms and multiplayer worlds."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-build-minecraft",
+    "slugEn": "minecraft-build-name-generator",
+    "category": "fun",
+    "emoji": "🏗️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres creativos para construcciones de Minecraft, proyectos y creaciones arquitectónicas.",
+    "conceptEn": "Generates creative names for Minecraft builds, projects and architectural creations."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-clan-gaming",
+    "slugEn": "gaming-clan-name-generator",
+    "category": "fun",
+    "emoji": "🎮",
+    "mode": "combine",
+    "conceptEs": "Crea nombres competitivos para clanes gaming, equipos pro y organizaciones esports.",
+    "conceptEn": "Creates competitive names for gaming clans, pro teams and esports organizations."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-torneo-esports",
+    "slugEn": "esports-tournament-name-generator",
+    "category": "fun",
+    "emoji": "🏅",
+    "mode": "combine",
+    "conceptEs": "Genera nombres prestigiosos para torneos esports, ligas competitivas y championships.",
+    "conceptEn": "Generates prestigious names for esports tournaments, competitive leagues and championships."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-personaje-rpg",
+    "slugEn": "rpg-character-name-generator",
+    "category": "fun",
+    "emoji": "🎭",
+    "mode": "pick",
+    "conceptEs": "Crea nombres inmersivos para personajes de rol, aventureros y héroes de RPG de mesa.",
+    "conceptEn": "Creates immersive names for role-playing characters, adventurers and tabletop RPG heroes."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-elfo",
+    "slugEn": "elf-name-generator",
+    "category": "fun",
+    "emoji": "🧝",
+    "mode": "pick",
+    "conceptEs": "Genera nombres élficos elegantes con sonoridad tolkieniana para fantasía y RPG.",
+    "conceptEn": "Generates elegant elvish names with Tolkienian sound for fantasy and RPG."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-enano",
+    "slugEn": "dwarf-name-generator",
+    "category": "fun",
+    "emoji": "⚒️",
+    "mode": "pick",
+    "conceptEs": "Crea nombres robustos para enanos de montaña, herreros y guerreros de piedra.",
+    "conceptEn": "Creates robust names for mountain dwarves, blacksmiths and stone warriors."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-orco",
+    "slugEn": "orc-name-generator",
+    "category": "fun",
+    "emoji": "👹",
+    "mode": "pick",
+    "conceptEs": "Genera nombres brutales para orcos, guerreros tribales y bárbaros de fantasía.",
+    "conceptEn": "Generates brutal names for orcs, tribal warriors and fantasy barbarians."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-mago",
+    "slugEn": "wizard-name-generator",
+    "category": "fun",
+    "emoji": "🧙",
+    "mode": "pick",
+    "conceptEs": "Crea nombres místicos para magos, hechiceros y maestros de las artes arcanas.",
+    "conceptEn": "Creates mystical names for wizards, sorcerers and masters of arcane arts."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-guerrero",
+    "slugEn": "warrior-name-generator",
+    "category": "fun",
+    "emoji": "⚔️",
+    "mode": "pick",
+    "conceptEs": "Genera nombres heroicos para guerreros, paladines y campeones de batalla.",
+    "conceptEn": "Generates heroic names for warriors, paladins and battle champions."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-asesino",
+    "slugEn": "assassin-name-generator",
+    "category": "fun",
+    "emoji": "🗡️",
+    "mode": "pick",
+    "conceptEs": "Crea nombres sigilosos para asesinos, ladrones y agentes en las sombras.",
+    "conceptEn": "Creates stealthy names for assassins, thieves and agents in the shadows."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-pirata",
+    "slugEn": "pirate-name-generator",
+    "category": "fun",
+    "emoji": "🏴‍☠️",
+    "mode": "pick",
+    "conceptEs": "Genera nombres aventureros para piratas, corsarios y bucaneros de los siete mares.",
+    "conceptEn": "Generates adventurous names for pirates, corsairs and buccaneers of the seven seas."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-vikingo",
+    "slugEn": "viking-name-generator",
+    "category": "fun",
+    "emoji": "⚔️",
+    "mode": "pick",
+    "conceptEs": "Crea nombres nórdicos para vikingos, jarls y guerreros escandinavos.",
+    "conceptEn": "Creates Nordic names for vikings, jarls and Scandinavian warriors."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-samurai",
+    "slugEn": "samurai-name-generator",
+    "category": "fun",
+    "emoji": "🗡️",
+    "mode": "pick",
+    "conceptEs": "Genera nombres honorables para samuráis, ronin y guerreros del bushido.",
+    "conceptEn": "Generates honorable names for samurai, ronin and bushido warriors."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-caballero",
+    "slugEn": "knight-name-generator",
+    "category": "fun",
+    "emoji": "🛡️",
+    "mode": "pick",
+    "conceptEs": "Crea nombres nobles para caballeros medievales, templarios y defensores del reino.",
+    "conceptEn": "Creates noble names for medieval knights, templars and kingdom defenders."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-detective",
+    "slugEn": "detective-name-generator",
+    "category": "fun",
+    "emoji": "🔍",
+    "mode": "pick",
+    "conceptEs": "Genera nombres intrigantes para detectives, investigadores privados y sabuesos del misterio.",
+    "conceptEn": "Generates intriguing names for detectives, private investigators and mystery sleuths."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-espia",
+    "slugEn": "spy-name-generator",
+    "category": "fun",
+    "emoji": "🕴️",
+    "mode": "pick",
+    "conceptEs": "Crea nombres encubiertos para espías, agentes secretos y operativos de inteligencia.",
+    "conceptEn": "Creates undercover names for spies, secret agents and intelligence operatives."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-cowboy",
+    "slugEn": "cowboy-name-generator",
+    "category": "fun",
+    "emoji": "🤠",
+    "mode": "pick",
+    "conceptEs": "Genera nombres del viejo oeste para cowboys, forajidos y sheriffs fronterizos.",
+    "conceptEn": "Generates old west names for cowboys, outlaws and frontier sheriffs."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-astronauta",
+    "slugEn": "astronaut-name-generator",
+    "category": "fun",
+    "emoji": "👨‍🚀",
+    "mode": "pick",
+    "conceptEs": "Crea nombres espaciales para astronautas, exploradores cósmicos y pioneros interestelares.",
+    "conceptEn": "Creates space names for astronauts, cosmic explorers and interstellar pioneers."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-cientifico-loco",
+    "slugEn": "mad-scientist-name-generator",
+    "category": "fun",
+    "emoji": "🧪",
+    "mode": "pick",
+    "conceptEs": "Genera nombres excéntricos para científicos locos, inventores y genios desquiciados.",
+    "conceptEn": "Generates eccentric names for mad scientists, inventors and unhinged geniuses."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-alien",
+    "slugEn": "alien-species-name-generator",
+    "category": "fun",
+    "emoji": "👽",
+    "mode": "pick",
+    "conceptEs": "Crea nombres extraterrestres para especies alienígenas, razas cósmicas y civilizaciones exóticas.",
+    "conceptEn": "Creates extraterrestrial names for alien species, cosmic races and exotic civilizations."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-monstruo",
+    "slugEn": "monster-name-generator",
+    "category": "fun",
+    "emoji": "👾",
+    "mode": "pick",
+    "conceptEs": "Genera nombres terroríficos para monstruos, criaturas de pesadilla y bestias legendarias.",
+    "conceptEn": "Generates terrifying names for monsters, nightmare creatures and legendary beasts."
+  },
+  {
+    "slugEs": "generador-de-variables-sass",
+    "slugEn": "sass-variable-generator",
+    "category": "tools",
+    "emoji": "🎨",
+    "mode": "pick",
+    "conceptEs": "Genera nombres de variables SASS/SCSS organizados por sistema de diseño",
+    "conceptEn": "Generate organized SASS/SCSS variable names following design system patterns"
+  },
+  {
+    "slugEs": "generador-de-regex-sql-injection",
+    "slugEn": "sql-injection-pattern-generator",
+    "category": "security",
+    "emoji": "🛡️",
+    "mode": "pick",
+    "conceptEs": "Genera patrones regex para detectar intentos de SQL injection",
+    "conceptEn": "Generate regex patterns to detect SQL injection attempts"
+  },
+  {
+    "slugEs": "generador-de-datos-gdpr",
+    "slugEn": "gdpr-compliant-test-data",
+    "category": "data",
+    "emoji": "🔐",
+    "mode": "pick",
+    "conceptEs": "Crea datasets de prueba que cumplen con normativas GDPR",
+    "conceptEn": "Create GDPR-compliant test datasets for development"
+  },
+  {
+    "slugEs": "generador-de-preguntas-retrospectiva",
+    "slugEn": "retrospective-question-generator",
+    "category": "work",
+    "emoji": "🔄",
+    "mode": "pick",
+    "conceptEs": "Preguntas facilitadoras para retrospectivas ágiles y team reviews",
+    "conceptEn": "Facilitator questions for agile retrospectives and team reviews"
+  },
+  {
+    "slugEs": "generador-de-ejercicios-hiit",
+    "slugEn": "hiit-workout-generator",
+    "category": "inspiration",
+    "emoji": "💪",
+    "mode": "combine",
+    "conceptEs": "Arma circuitos HIIT personalizados con tiempo y ejercicios",
+    "conceptEn": "Build custom HIIT circuits with timing and exercises"
+  },
+  {
+    "slugEs": "generador-de-combinaciones-meal-prep",
+    "slugEn": "meal-prep-combo-generator",
+    "category": "random",
+    "emoji": "🍱",
+    "mode": "combine",
+    "conceptEs": "Combina proteína + carbohidrato + vegetal para meal prep semanal",
+    "conceptEn": "Combine protein + carb + veggie for weekly meal prep planning"
+  },
+  {
+    "slugEs": "generador-de-nombres-de-funcion-typescript",
+    "slugEn": "typescript-function-name-generator",
+    "category": "tools",
+    "emoji": "📘",
+    "mode": "pick",
+    "conceptEs": "Nombres de funciones TypeScript siguiendo convenciones clean code",
+    "conceptEn": "TypeScript function names following clean code conventions"
+  },
+  {
+    "slugEs": "generador-de-casos-edge-testing",
+    "slugEn": "edge-case-test-generator",
+    "category": "data",
+    "emoji": "🧪",
+    "mode": "pick",
+    "conceptEs": "Genera casos edge para testing: nulls, vacíos, límites, especiales",
+    "conceptEn": "Generate edge cases for testing: nulls, empty, boundaries, special chars"
+  },
+  {
+    "slugEs": "generador-de-politicas-cors",
+    "slugEn": "cors-policy-generator",
+    "category": "security",
+    "emoji": "🌐",
+    "mode": "pick",
+    "conceptEs": "Genera configuraciones CORS seguras para APIs",
+    "conceptEn": "Generate secure CORS policy configurations for APIs"
+  },
+  {
+    "slugEs": "generador-de-storytime-para-ninos",
+    "slugEn": "kids-storytime-prompt-generator",
+    "category": "inspiration",
+    "emoji": "📚",
+    "mode": "combine",
+    "conceptEs": "Combina personaje + lugar + problema para cuentos infantiles",
+    "conceptEn": "Combine character + place + problem for children's storytelling"
+  },
+  {
+    "slugEs": "generador-de-readme-badges",
+    "slugEn": "readme-badge-generator",
+    "category": "tools",
+    "emoji": "🏷️",
+    "mode": "pick",
+    "conceptEs": "Genera badges markdown para README con shields.io",
+    "conceptEn": "Generate markdown badges for README using shields.io"
+  },
+  {
+    "slugEs": "generador-de-objetivos-okr",
+    "slugEn": "okr-objective-generator",
+    "category": "work",
+    "emoji": "🎯",
+    "mode": "pick",
+    "conceptEs": "Genera objetivos OKR con estructura clara y medible",
+    "conceptEn": "Generate OKR objectives with clear measurable structure"
+  },
+  {
+    "slugEs": "generador-de-headers-http-seguridad",
+    "slugEn": "security-headers-generator",
+    "category": "security",
+    "emoji": "🔒",
+    "mode": "pick",
+    "conceptEs": "Genera headers HTTP de seguridad: CSP, HSTS, X-Frame-Options",
+    "conceptEn": "Generate security HTTP headers: CSP, HSTS, X-Frame-Options"
+  },
+  {
+    "slugEs": "generador-de-datos-stripe-test",
+    "slugEn": "stripe-test-data-generator",
+    "category": "data",
+    "emoji": "💳",
+    "mode": "pick",
+    "conceptEs": "Genera datos de prueba válidos para Stripe API",
+    "conceptEn": "Generate valid test data for Stripe API integration"
+  },
+  {
+    "slugEs": "generador-de-plan-de-comidas-semanal",
+    "slugEn": "weekly-meal-plan-generator",
+    "category": "random",
+    "emoji": "📅",
+    "mode": "combine",
+    "conceptEs": "Planificador semanal de comidas con variedad nutricional",
+    "conceptEn": "Weekly meal planner with nutritional variety"
+  },
+  {
+    "slugEs": "generador-de-nombre-de-hook-react",
+    "slugEn": "react-hook-name-generator",
+    "category": "tools",
+    "emoji": "⚛️",
+    "mode": "pick",
+    "conceptEs": "Nombres de custom hooks React siguiendo convención use",
+    "conceptEn": "React custom hook names following use convention"
+  },
+  {
+    "slugEs": "generador-de-preguntas-one-on-one",
+    "slugEn": "one-on-one-question-generator",
+    "category": "work",
+    "emoji": "👥",
+    "mode": "pick",
+    "conceptEs": "Preguntas para reuniones 1:1 entre manager y equipo",
+    "conceptEn": "Questions for manager-employee one-on-one meetings"
+  },
+  {
+    "slugEs": "generador-de-mantras-para-meditar",
+    "slugEn": "meditation-mantra-generator",
+    "category": "inspiration",
+    "emoji": "🧘",
+    "mode": "pick",
+    "conceptEs": "Mantras y frases para práctica de meditación mindfulness",
+    "conceptEn": "Mantras and phrases for mindfulness meditation practice"
+  },
+  {
+    "slugEs": "generador-de-schema-graphql",
+    "slugEn": "graphql-schema-generator",
+    "category": "tools",
+    "emoji": "📊",
+    "mode": "pick",
+    "conceptEs": "Genera schemas GraphQL con types, queries y mutations",
+    "conceptEn": "Generate GraphQL schemas with types, queries and mutations"
+  },
+  {
+    "slugEs": "generador-de-claves-api-oauth",
+    "slugEn": "oauth-credentials-generator",
+    "category": "security",
+    "emoji": "🔑",
+    "mode": "pick",
+    "conceptEs": "Genera client_id, client_secret y tokens OAuth válidos",
+    "conceptEn": "Generate client_id, client_secret and valid OAuth tokens"
+  },
+  {
+    "slugEs": "generador-de-datasets-ml",
+    "slugEn": "ml-dataset-generator",
+    "category": "data",
+    "emoji": "🤖",
+    "mode": "pick",
+    "conceptEs": "Crea datasets sintéticos para entrenar modelos ML",
+    "conceptEn": "Create synthetic datasets for ML model training"
+  },
+  {
+    "slugEs": "generador-de-retos-de-escritura",
+    "slugEn": "writing-challenge-generator",
+    "category": "inspiration",
+    "emoji": "✍️",
+    "mode": "combine",
+    "conceptEs": "Retos creativos de escritura: género + restricción + tema",
+    "conceptEn": "Creative writing challenges: genre + constraint + theme"
+  },
+  {
+    "slugEs": "generador-de-nombre-de-archivo-componente",
+    "slugEn": "component-filename-generator",
+    "category": "tools",
+    "emoji": "📁",
+    "mode": "pick",
+    "conceptEs": "Nombres de archivos para componentes siguiendo convenciones",
+    "conceptEn": "Component file names following framework conventions"
+  },
+  {
+    "slugEs": "generador-de-rutina-estiramiento",
+    "slugEn": "stretching-routine-generator",
+    "category": "random",
+    "emoji": "🤸",
+    "mode": "combine",
+    "conceptEs": "Rutinas de estiramiento por zona corporal y duración",
+    "conceptEn": "Stretching routines by body area and duration"
+  },
+  {
+    "slugEs": "generador-de-check-in-preguntas",
+    "slugEn": "daily-check-in-question-generator",
+    "category": "work",
+    "emoji": "☀️",
+    "mode": "pick",
+    "conceptEs": "Preguntas para check-ins diarios de equipo remoto",
+    "conceptEn": "Questions for remote team daily check-ins"
+  },
+  {
+    "slugEs": "generador-de-tokens-jwt-test",
+    "slugEn": "jwt-test-token-generator",
+    "category": "security",
+    "emoji": "🎫",
+    "mode": "pick",
+    "conceptEs": "Genera JWTs de prueba con claims personalizados",
+    "conceptEn": "Generate test JWTs with custom claims"
+  },
+  {
+    "slugEs": "generador-de-propiedades-css-custom",
+    "slugEn": "css-custom-property-generator",
+    "category": "tools",
+    "emoji": "🎨",
+    "mode": "pick",
+    "conceptEs": "Nombres de CSS custom properties (variables) organizadas",
+    "conceptEn": "Organized CSS custom property (variable) names"
+  },
+  {
+    "slugEs": "generador-de-mock-api-response",
+    "slugEn": "api-mock-response-generator",
+    "category": "data",
+    "emoji": "📡",
+    "mode": "pick",
+    "conceptEs": "Respuestas mock realistas para endpoints REST",
+    "conceptEn": "Realistic mock responses for REST endpoints"
+  },
+  {
+    "slugEs": "generador-de-ingredientes-nevera",
+    "slugEn": "fridge-ingredient-generator",
+    "category": "random",
+    "emoji": "🧊",
+    "mode": "pick",
+    "conceptEs": "Sugiere qué cocinar según ingredientes disponibles",
+    "conceptEn": "Suggest what to cook based on available ingredients"
+  },
+  {
+    "slugEs": "generador-de-intenciones-del-dia",
+    "slugEn": "daily-intention-generator",
+    "category": "inspiration",
+    "emoji": "🌅",
+    "mode": "pick",
+    "conceptEs": "Intenciones diarias para mindfulness y productividad",
+    "conceptEn": "Daily intentions for mindfulness and productivity"
+  },
+  {
+    "slugEs": "generador-de-props-react",
+    "slugEn": "react-props-generator",
+    "category": "tools",
+    "emoji": "🔧",
+    "mode": "pick",
+    "conceptEs": "Nombres y tipos de props para componentes React",
+    "conceptEn": "Prop names and types for React components"
+  },
+  {
+    "slugEs": "generador-de-politicas-rate-limit",
+    "slugEn": "rate-limit-policy-generator",
+    "category": "security",
+    "emoji": "⏱️",
+    "mode": "pick",
+    "conceptEs": "Configura políticas de rate limiting para APIs",
+    "conceptEn": "Configure rate limiting policies for APIs"
+  },
+  {
+    "slugEs": "generador-de-feedback-constructivo",
+    "slugEn": "constructive-feedback-generator",
+    "category": "work",
+    "emoji": "💬",
+    "mode": "pick",
+    "conceptEs": "Frameworks para dar feedback constructivo: SBI, COIN",
+    "conceptEn": "Frameworks for giving constructive feedback: SBI, COIN"
+  },
+  {
+    "slugEs": "generador-de-logs-aplicacion",
+    "slugEn": "application-log-generator",
+    "category": "data",
+    "emoji": "📋",
+    "mode": "pick",
+    "conceptEs": "Genera logs de aplicación realistas para testing",
+    "conceptEn": "Generate realistic application logs for testing"
+  },
+  {
+    "slugEs": "generador-de-snack-saludable",
+    "slugEn": "healthy-snack-generator",
+    "category": "random",
+    "emoji": "🥗",
+    "mode": "combine",
+    "conceptEs": "Combina snacks saludables por calorías y macros",
+    "conceptEn": "Combine healthy snacks by calories and macros"
+  },
+  {
+    "slugEs": "generador-de-nombre-de-clase-css",
+    "slugEn": "css-class-name-generator",
+    "category": "tools",
+    "emoji": "🏷️",
+    "mode": "pick",
+    "conceptEs": "Nombres de clases CSS siguiendo BEM o metodologías",
+    "conceptEn": "CSS class names following BEM or other methodologies"
+  },
+  {
+    "slugEs": "generador-de-prompts-journaling",
+    "slugEn": "journaling-prompt-generator",
+    "category": "inspiration",
+    "emoji": "📔",
+    "mode": "pick",
+    "conceptEs": "Prompts para journaling y reflexión personal",
+    "conceptEn": "Prompts for journaling and personal reflection"
+  },
+  {
+    "slugEs": "generador-de-certificados-ssl-test",
+    "slugEn": "ssl-test-certificate-generator",
+    "category": "security",
+    "emoji": "🔐",
+    "mode": "pick",
+    "conceptEs": "Genera certificados SSL para ambientes de desarrollo",
+    "conceptEn": "Generate SSL certificates for development environments"
+  },
+  {
+    "slugEs": "generador-de-user-stories",
+    "slugEn": "user-story-generator",
+    "category": "work",
+    "emoji": "📝",
+    "mode": "pick",
+    "conceptEs": "User stories formato: Como [rol] quiero [acción] para [beneficio]",
+    "conceptEn": "User stories format: As a [role] I want [action] so that [benefit]"
+  },
+  {
+    "slugEs": "generador-de-queries-mongodb",
+    "slugEn": "mongodb-query-generator",
+    "category": "data",
+    "emoji": "🍃",
+    "mode": "pick",
+    "conceptEs": "Genera queries MongoDB con agregaciones y filtros",
+    "conceptEn": "Generate MongoDB queries with aggregations and filters"
+  },
+  {
+    "slugEs": "generador-de-combinaciones-batido",
+    "slugEn": "smoothie-combo-generator",
+    "category": "random",
+    "emoji": "🥤",
+    "mode": "combine",
+    "conceptEs": "Combina frutas + líquido + extras para batidos nutritivos",
+    "conceptEn": "Combine fruits + liquid + extras for nutritious smoothies"
+  },
+  {
+    "slugEs": "generador-de-decoradores-typescript",
+    "slugEn": "typescript-decorator-generator",
+    "category": "tools",
+    "emoji": "✨",
+    "mode": "pick",
+    "conceptEs": "Nombres de decorators TypeScript para clases y métodos",
+    "conceptEn": "TypeScript decorator names for classes and methods"
+  },
+  {
+    "slugEs": "generador-de-practicas-respiracion",
+    "slugEn": "breathing-exercise-generator",
+    "category": "inspiration",
+    "emoji": "🌬️",
+    "mode": "pick",
+    "conceptEs": "Técnicas de respiración: box breathing, 4-7-8, Wim Hof",
+    "conceptEn": "Breathing techniques: box breathing, 4-7-8, Wim Hof"
+  },
+  {
+    "slugEs": "generador-de-headers-csp",
+    "slugEn": "csp-header-generator",
+    "category": "security",
+    "emoji": "🛡️",
+    "mode": "pick",
+    "conceptEs": "Genera Content Security Policy headers configurables",
+    "conceptEn": "Generate configurable Content Security Policy headers"
+  },
+  {
+    "slugEs": "generador-de-criterios-aceptacion",
+    "slugEn": "acceptance-criteria-generator",
+    "category": "work",
+    "emoji": "✅",
+    "mode": "pick",
+    "conceptEs": "Criterios de aceptación en formato Given-When-Then",
+    "conceptEn": "Acceptance criteria in Given-When-Then format"
+  },
+  {
+    "slugEs": "generador-de-tiempo-estimado-tarea",
+    "slugEn": "task-time-estimator",
+    "category": "work",
+    "emoji": "⏰",
+    "mode": "pick",
+    "conceptEs": "Estima duración de tareas con técnica planning poker",
+    "conceptEn": "Estimate task duration using planning poker technique"
+  },
+  {
+    "slugEs": "generador-de-eventos-analytics",
+    "slugEn": "analytics-event-generator",
+    "category": "data",
+    "emoji": "📈",
+    "mode": "pick",
+    "conceptEs": "Genera nombres de eventos para Google Analytics / Mixpanel",
+    "conceptEn": "Generate event names for Google Analytics / Mixpanel"
+  },
+  {
+    "slugEs": "generador-de-reto-fitness-semanal",
+    "slugEn": "weekly-fitness-challenge-generator",
+    "category": "random",
+    "emoji": "🏋️",
+    "mode": "pick",
+    "conceptEs": "Retos fitness semanales progresivos y variados",
+    "conceptEn": "Progressive and varied weekly fitness challenges"
+  },
+  {
+    "slugEs": "generador-de-interfaces-typescript",
+    "slugEn": "typescript-interface-generator",
+    "category": "tools",
+    "emoji": "📐",
+    "mode": "pick",
+    "conceptEs": "Genera interfaces TypeScript con propiedades tipadas",
+    "conceptEn": "Generate TypeScript interfaces with typed properties"
+  },
+  {
+    "slugEs": "generador-de-recordatorios-hidratacion",
+    "slugEn": "hydration-reminder-generator",
+    "category": "inspiration",
+    "emoji": "💧",
+    "mode": "pick",
+    "conceptEs": "Mensajes motivadores para beber agua regularmente",
+    "conceptEn": "Motivational messages to drink water regularly"
+  },
+  {
+    "slugEs": "generador-de-tokens-csrf",
+    "slugEn": "csrf-token-generator",
+    "category": "security",
+    "emoji": "🎭",
+    "mode": "pick",
+    "conceptEs": "Genera tokens CSRF seguros para formularios",
+    "conceptEn": "Generate secure CSRF tokens for forms"
+  },
+  {
+    "slugEs": "generador-de-plantillas-pr",
+    "slugEn": "pr-template-generator",
+    "category": "work",
+    "emoji": "🔀",
+    "mode": "pick",
+    "conceptEs": "Plantillas de pull request con checklist y secciones",
+    "conceptEn": "Pull request templates with checklist and sections"
+  },
+  {
+    "slugEs": "generador-de-factories-testing",
+    "slugEn": "test-factory-generator",
+    "category": "data",
+    "emoji": "🏭",
+    "mode": "pick",
+    "conceptEs": "Factories para crear objetos de test rápidamente",
+    "conceptEn": "Factories to create test objects quickly"
+  },
+  {
+    "slugEs": "generador-de-ensalada-personalizada",
+    "slugEn": "custom-salad-generator",
+    "category": "random",
+    "emoji": "🥙",
+    "mode": "combine",
+    "conceptEs": "Combina base + proteína + vegetales + dressing para ensaladas",
+    "conceptEn": "Combine base + protein + veggies + dressing for salads"
+  },
+  {
+    "slugEs": "generador-de-enums-typescript",
+    "slugEn": "typescript-enum-generator",
+    "category": "tools",
+    "emoji": "🔢",
+    "mode": "pick",
+    "conceptEs": "Nombres de enums TypeScript con valores descriptivos",
+    "conceptEn": "TypeScript enum names with descriptive values"
+  },
+  {
+    "slugEs": "generador-de-habitos-atomicos",
+    "slugEn": "atomic-habit-generator",
+    "category": "inspiration",
+    "emoji": "⚛️",
+    "mode": "pick",
+    "conceptEs": "Hábitos pequeños basados en Atomic Habits de James Clear",
+    "conceptEn": "Small habits based on Atomic Habits by James Clear"
+  },
+  {
+    "slugEs": "generador-de-salts-encriptacion",
+    "slugEn": "encryption-salt-generator",
+    "category": "security",
+    "emoji": "🧂",
+    "mode": "pick",
+    "conceptEs": "Genera salts criptográficos para hashing seguro",
+    "conceptEn": "Generate cryptographic salts for secure hashing"
+  },
+  {
+    "slugEs": "generador-de-definition-of-done",
+    "slugEn": "definition-of-done-generator",
+    "category": "work",
+    "emoji": "🏁",
+    "mode": "pick",
+    "conceptEs": "Checklist Definition of Done para sprints ágiles",
+    "conceptEn": "Definition of Done checklist for agile sprints"
+  },
+  {
+    "slugEs": "generador-de-fixtures-cypress",
+    "slugEn": "cypress-fixture-generator",
+    "category": "data",
+    "emoji": "🌲",
+    "mode": "pick",
+    "conceptEs": "Genera fixtures JSON para tests E2E con Cypress",
+    "conceptEn": "Generate JSON fixtures for E2E tests with Cypress"
+  },
+  {
+    "slugEs": "generador-de-tabla-nutricional",
+    "slugEn": "nutrition-facts-generator",
+    "category": "random",
+    "emoji": "📊",
+    "mode": "pick",
+    "conceptEs": "Calcula macros y calorías de comidas combinadas",
+    "conceptEn": "Calculate macros and calories of combined meals"
+  },
+  {
+    "slugEs": "generador-de-middleware-express",
+    "slugEn": "express-middleware-generator",
+    "category": "tools",
+    "emoji": "🚂",
+    "mode": "pick",
+    "conceptEs": "Nombres de middleware Express.js con funcionalidad clara",
+    "conceptEn": "Express.js middleware names with clear functionality"
+  },
+  {
+    "slugEs": "generador-de-mantras-productividad",
+    "slugEn": "productivity-mantra-generator",
+    "category": "inspiration",
+    "emoji": "⚡",
+    "mode": "pick",
+    "conceptEs": "Mantras para enfoque y productividad deep work",
+    "conceptEn": "Mantras for focus and deep work productivity"
+  },
+  {
+    "slugEs": "generador-de-nonce-seguridad",
+    "slugEn": "security-nonce-generator",
+    "category": "security",
+    "emoji": "🎲",
+    "mode": "pick",
+    "conceptEs": "Genera nonces únicos para prevenir replay attacks",
+    "conceptEn": "Generate unique nonces to prevent replay attacks"
+  },
+  {
+    "slugEs": "generador-de-sprint-goals",
+    "slugEn": "sprint-goal-generator",
+    "category": "work",
+    "emoji": "🎯",
+    "mode": "pick",
+    "conceptEs": "Objetivos SMART para sprints de desarrollo ágil",
+    "conceptEn": "SMART goals for agile development sprints"
+  },
+  {
+    "slugEs": "generador-de-payloads-webhook",
+    "slugEn": "webhook-payload-generator",
+    "category": "data",
+    "emoji": "🪝",
+    "mode": "pick",
+    "conceptEs": "Genera payloads de prueba para webhooks",
+    "conceptEn": "Generate test payloads for webhooks"
+  },
+  {
+    "slugEs": "generador-de-bowl-desayuno",
+    "slugEn": "breakfast-bowl-generator",
+    "category": "random",
+    "emoji": "🥣",
+    "mode": "combine",
+    "conceptEs": "Combina base + frutas + toppings para bowls nutritivos",
+    "conceptEn": "Combine base + fruits + toppings for nutritious bowls"
+  },
+  {
+    "slugEs": "generador-de-reducers-redux",
+    "slugEn": "redux-reducer-generator",
+    "category": "tools",
+    "emoji": "🔄",
+    "mode": "pick",
+    "conceptEs": "Nombres de reducers Redux con actions asociadas",
+    "conceptEn": "Redux reducer names with associated actions"
+  },
+  {
+    "slugEs": "generador-de-pausas-activas",
+    "slugEn": "active-break-generator",
+    "category": "inspiration",
+    "emoji": "🕐",
+    "mode": "pick",
+    "conceptEs": "Rutinas de pausas activas para trabajadores remotos",
+    "conceptEn": "Active break routines for remote workers"
+  },
+  {
+    "slugEs": "generador-de-secrets-kubernetes",
+    "slugEn": "kubernetes-secret-generator",
+    "category": "security",
+    "emoji": "☸️",
+    "mode": "pick",
+    "conceptEs": "Genera secrets seguros para Kubernetes manifests",
+    "conceptEn": "Generate secure secrets for Kubernetes manifests"
+  }
+]

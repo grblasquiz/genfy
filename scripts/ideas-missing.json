@@ -1,0 +1,155 @@
+[
+  {
+    "slugEs": "generador-de-nombres-de-asesino",
+    "slugEn": "assassin-name-generator",
+    "category": "fun",
+    "emoji": "🗡️",
+    "mode": "pick",
+    "conceptEs": "Crea nombres sigilosos para asesinos, ladrones y agentes en las sombras.",
+    "conceptEn": "Creates stealthy names for assassins, thieves and agents in the shadows."
+  },
+  {
+    "slugEs": "generador-de-preguntas-retrospectiva",
+    "slugEn": "retrospective-question-generator",
+    "category": "work",
+    "emoji": "🔄",
+    "mode": "pick",
+    "conceptEs": "Preguntas facilitadoras para retrospectivas ágiles y team reviews",
+    "conceptEn": "Facilitator questions for agile retrospectives and team reviews"
+  },
+  {
+    "slugEs": "generador-de-datos-stripe-test",
+    "slugEn": "stripe-test-data-generator",
+    "category": "data",
+    "emoji": "💳",
+    "mode": "pick",
+    "conceptEs": "Genera datos de prueba válidos para Stripe API",
+    "conceptEn": "Generate valid test data for Stripe API integration"
+  },
+  {
+    "slugEs": "generador-de-claves-api-oauth",
+    "slugEn": "oauth-credentials-generator",
+    "category": "security",
+    "emoji": "🔑",
+    "mode": "pick",
+    "conceptEs": "Genera client_id, client_secret y tokens OAuth válidos",
+    "conceptEn": "Generate client_id, client_secret and valid OAuth tokens"
+  },
+  {
+    "slugEs": "generador-de-datasets-ml",
+    "slugEn": "ml-dataset-generator",
+    "category": "data",
+    "emoji": "🤖",
+    "mode": "pick",
+    "conceptEs": "Crea datasets sintéticos para entrenar modelos ML",
+    "conceptEn": "Create synthetic datasets for ML model training"
+  },
+  {
+    "slugEs": "generador-de-retos-de-escritura",
+    "slugEn": "writing-challenge-generator",
+    "category": "inspiration",
+    "emoji": "✍️",
+    "mode": "combine",
+    "conceptEs": "Retos creativos de escritura: género + restricción + tema",
+    "conceptEn": "Creative writing challenges: genre + constraint + theme"
+  },
+  {
+    "slugEs": "generador-de-nombre-de-archivo-componente",
+    "slugEn": "component-filename-generator",
+    "category": "tools",
+    "emoji": "📁",
+    "mode": "pick",
+    "conceptEs": "Nombres de archivos para componentes siguiendo convenciones",
+    "conceptEn": "Component file names following framework conventions"
+  },
+  {
+    "slugEs": "generador-de-rutina-estiramiento",
+    "slugEn": "stretching-routine-generator",
+    "category": "random",
+    "emoji": "🤸",
+    "mode": "combine",
+    "conceptEs": "Rutinas de estiramiento por zona corporal y duración",
+    "conceptEn": "Stretching routines by body area and duration"
+  },
+  {
+    "slugEs": "generador-de-mock-api-response",
+    "slugEn": "api-mock-response-generator",
+    "category": "data",
+    "emoji": "📡",
+    "mode": "pick",
+    "conceptEs": "Respuestas mock realistas para endpoints REST",
+    "conceptEn": "Realistic mock responses for REST endpoints"
+  },
+  {
+    "slugEs": "generador-de-ingredientes-nevera",
+    "slugEn": "fridge-ingredient-generator",
+    "category": "random",
+    "emoji": "🧊",
+    "mode": "pick",
+    "conceptEs": "Sugiere qué cocinar según ingredientes disponibles",
+    "conceptEn": "Suggest what to cook based on available ingredients"
+  },
+  {
+    "slugEs": "generador-de-logs-aplicacion",
+    "slugEn": "application-log-generator",
+    "category": "data",
+    "emoji": "📋",
+    "mode": "pick",
+    "conceptEs": "Genera logs de aplicación realistas para testing",
+    "conceptEn": "Generate realistic application logs for testing"
+  },
+  {
+    "slugEs": "generador-de-user-stories",
+    "slugEn": "user-story-generator",
+    "category": "work",
+    "emoji": "📝",
+    "mode": "pick",
+    "conceptEs": "User stories formato: Como [rol] quiero [acción] para [beneficio]",
+    "conceptEn": "User stories format: As a [role] I want [action] so that [benefit]"
+  },
+  {
+    "slugEs": "generador-de-factories-testing",
+    "slugEn": "test-factory-generator",
+    "category": "data",
+    "emoji": "🏭",
+    "mode": "pick",
+    "conceptEs": "Factories para crear objetos de test rápidamente",
+    "conceptEn": "Factories to create test objects quickly"
+  },
+  {
+    "slugEs": "generador-de-ensalada-personalizada",
+    "slugEn": "custom-salad-generator",
+    "category": "random",
+    "emoji": "🥙",
+    "mode": "combine",
+    "conceptEs": "Combina base + proteína + vegetales + dressing para ensaladas",
+    "conceptEn": "Combine base + protein + veggies + dressing for salads"
+  },
+  {
+    "slugEs": "generador-de-definition-of-done",
+    "slugEn": "definition-of-done-generator",
+    "category": "work",
+    "emoji": "🏁",
+    "mode": "pick",
+    "conceptEs": "Checklist Definition of Done para sprints ágiles",
+    "conceptEn": "Definition of Done checklist for agile sprints"
+  },
+  {
+    "slugEs": "generador-de-fixtures-cypress",
+    "slugEn": "cypress-fixture-generator",
+    "category": "data",
+    "emoji": "🌲",
+    "mode": "pick",
+    "conceptEs": "Genera fixtures JSON para tests E2E con Cypress",
+    "conceptEn": "Generate JSON fixtures for E2E tests with Cypress"
+  },
+  {
+    "slugEs": "generador-de-secrets-kubernetes",
+    "slugEn": "kubernetes-secret-generator",
+    "category": "security",
+    "emoji": "☸️",
+    "mode": "pick",
+    "conceptEs": "Genera secrets seguros para Kubernetes manifests",
+    "conceptEn": "Generate secure secrets for Kubernetes manifests"
+  }
+]

@@ -1,0 +1,139 @@
+---
+import GeneratorShell from './GeneratorShell.astro';
+import type { Lang } from '../lib/i18n';
+import type { GenData } from '../lib/data/types';
+
+export interface Props {
+  lang: Lang;
+  data: GenData;
+}
+
+const { lang, data } = Astro.props;
+const t = data[lang];
+const groupsJson = JSON.stringify(t.groups);
+const slugId = data.slug[lang].replace(/[^a-z0-9]/gi, '');
+---
+<GeneratorShell lang={lang} tag={t.tag} title={t.h1} intro={t.intro}>
+  <div slot="tool" class={`gt gt-${slugId}`}>
+    {t.groups.length > 1 && (
+      <div class="gt-row">
+        <div>
+          <label for={`gt-filter-${slugId}`}>{data.mode === 'combine' ? (lang === 'es' ? 'Estilo' : 'Style') : t.filterLabel}</label>
+          <select id={`gt-filter-${slugId}`} class="gt-filter">
+            {data.mode !== 'combine' && (
+              <option value="all">{lang === 'es' ? 'Todos' : 'All'}</option>
+            )}
+            {t.groups.map(g => (
+              <option value={g.id}>{g.label}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label for={`gt-count-${slugId}`}>{t.countLabel}</label>
+          <input id={`gt-count-${slugId}`} class="gt-count" type="number" min="1" max={t.maxCount} value={t.defaultCount} />
+        </div>
+      </div>
+    )}
+    {t.groups.length <= 1 && (
+      <div class="gt-row">
+        <div>
+          <label for={`gt-count-${slugId}`}>{t.countLabel}</label>
+          <input id={`gt-count-${slugId}`} class="gt-count" type="number" min="1" max={t.maxCount} value={t.defaultCount} />
+        </div>
+      </div>
+    )}
+    <button class={`btn btn-primary gt-gen`} type="button" data-target={slugId}>{t.generateLabel}</button>
+    <button class={`btn btn-ghost gt-copy`} type="button" data-target={slugId}>{t.copyLabel}</button>
+    <textarea class="gt-out" id={`gt-out-${slugId}`} rows="10" readonly style="margin-top:1rem; font-family: var(--font-mono); font-size: 0.95rem;"></textarea>
+  </div>
+
+  <div slot="content">
+    {t.content.map(s => (
+      <Fragment>
+        <h2>{s.h2}</h2>
+        <Fragment set:html={s.body} />
+      </Fragment>
+    ))}
+  </div>
+
+  <div slot="faq">
+    {t.faq.map(f => (
+      <details><summary>{f.q}</summary><p>{f.a}</p></details>
+    ))}
+  </div>
+</GeneratorShell>
+
+<script type="application/json" id={`gt-data-${slugId}`} set:html={groupsJson}></script>
+
+<script is:inline define:vars={{ slugId, mode: data.mode, separator: t.separator || ' ', copiedLabel: lang === 'es' ? '¡Copiado!' : 'Copied!', copyLabel: t.copyLabel }}>
+  (function() {
+    const root = document.querySelector('.gt-' + slugId);
+    if (!root) return;
+    const dataEl = document.getElementById('gt-data-' + slugId);
+    let groups = [];
+    try { groups = JSON.parse(dataEl.textContent || '[]'); } catch (e) {}
+    const filterEl = root.querySelector('.gt-filter');
+    const countEl = root.querySelector('.gt-count');
+    const out = root.querySelector('.gt-out');
+    const gen = root.querySelector('.gt-gen');
+    const cp = root.querySelector('.gt-copy');
+
+    function pick(arr) {
+      const i = new Uint32Array(1);
+      crypto.getRandomValues(i);
+      return arr[i[0] % arr.length];
+    }
+
+    function build() {
+      const n = Math.max(1, Math.min(parseInt(countEl.value || '1', 10), 100));
+      const lines = [];
+      if (mode === 'combine') {
+        const filter = filterEl ? filterEl.value : groups[0]?.id;
+        const styleGroup = filter && filter !== 'all' ? groups.find(g => g.id === filter) : null;
+        for (let i = 0; i < n; i++) {
+          if (styleGroup) {
+            const parts = styleGroup.items;
+            if (Array.isArray(parts[0])) {
+              lines.push(parts.map(slot => pick(slot)).join(separator));
+            } else {
+              lines.push(pick(parts));
+            }
+          } else {
+            lines.push(groups.map(g => {
+              const items = Array.isArray(g.items[0]) ? g.items[0] : g.items;
+              return pick(items);
+            }).join(separator));
+          }
+        }
+      } else {
+        const filter = filterEl ? filterEl.value : 'all';
+        let pool = [];
+        if (filter === 'all' || !filter) {
+          pool = groups.flatMap(g => g.items);
+        } else {
+          const grp = groups.find(g => g.id === filter);
+          pool = grp ? grp.items : groups.flatMap(g => g.items);
+        }
+        for (let i = 0; i < n; i++) lines.push(pick(pool));
+      }
+      out.value = lines.join('\n');
+    }
+
+    gen.addEventListener('click', build);
+    cp.addEventListener('click', async () => {
+      if (!out.value) return;
+      try {
+        await navigator.clipboard.writeText(out.value);
+        const orig = cp.textContent;
+        cp.textContent = copiedLabel;
+        setTimeout(() => { cp.textContent = copyLabel; }, 1200);
+      } catch (e) {}
+    });
+    build();
+  })();
+</script>
+
+<style>
+  .gt-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+  @media (max-width: 600px) { .gt-row { grid-template-columns: 1fr; } }
+</style>

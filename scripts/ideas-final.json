@@ -1,0 +1,29 @@
+[
+  {
+    "slugEs": "generador-de-retos-de-escritura",
+    "slugEn": "writing-challenge-generator",
+    "category": "inspiration",
+    "emoji": "✍️",
+    "mode": "combine",
+    "conceptEs": "Retos creativos de escritura: género + restricción + tema",
+    "conceptEn": "Creative writing challenges: genre + constraint + theme"
+  },
+  {
+    "slugEs": "generador-de-fixtures-cypress",
+    "slugEn": "cypress-fixture-generator",
+    "category": "data",
+    "emoji": "🌲",
+    "mode": "pick",
+    "conceptEs": "Genera fixtures JSON para tests E2E con Cypress",
+    "conceptEn": "Generate JSON fixtures for E2E tests with Cypress"
+  },
+  {
+    "slugEs": "generador-de-secrets-kubernetes",
+    "slugEn": "kubernetes-secret-generator",
+    "category": "security",
+    "emoji": "☸️",
+    "mode": "pick",
+    "conceptEs": "Genera secrets seguros para Kubernetes manifests",
+    "conceptEn": "Generate secure secrets for Kubernetes manifests"
+  }
+]

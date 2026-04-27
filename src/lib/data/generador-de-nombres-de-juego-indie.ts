@@ -1,0 +1,443 @@
+import type { GenData } from './types';
+
+export const data: GenData = {
+  "slug": {
+    "es": "generador-de-nombres-de-juego-indie",
+    "en": "indie-game-name-generator"
+  },
+  "category": "fun",
+  "emoji": "🎲",
+  "mode": "combine",
+  "es": {
+    "pageTitle": "Generador de Nombres de Juego Indie | Genfy",
+    "metaDesc": "Crea nombres artísticos para juegos indie y proyectos experimentales. Generador gratuito con ideas evocativas para títulos narrativos.",
+    "h1": "Generador de Nombres de Juego Indie",
+    "intro": "Generá nombres con alma para tu proyecto indie. Perfecto para juegos narrativos, art games, experiencias experimentales y títulos que buscan resonancia emocional más que clicks.",
+    "tag": "Diversión",
+    "filterLabel": "Tono",
+    "countLabel": "Cantidad",
+    "generateLabel": "Generar",
+    "copyLabel": "Copiar",
+    "groups": [
+      {
+        "id": "adjective",
+        "label": "Adjetivo",
+        "items": [
+          "Forgotten",
+          "Silent",
+          "Broken",
+          "Lost",
+          "Hidden",
+          "Endless",
+          "Distant",
+          "Fading",
+          "Burning",
+          "Frozen",
+          "Hollow",
+          "Empty",
+          "Sacred",
+          "Cursed",
+          "Eternal",
+          "Fleeting",
+          "Gentle",
+          "Violent",
+          "Quiet",
+          "Loud",
+          "Strange",
+          "Beautiful",
+          "Terrible",
+          "Lonely",
+          "Crowded",
+          "Ancient",
+          "Modern",
+          "Rusted",
+          "Shattered",
+          "Whole",
+          "Wandering",
+          "Still",
+          "Moving",
+          "Sleeping",
+          "Waking",
+          "Dead",
+          "Living",
+          "Pale",
+          "Vivid",
+          "Dark"
+        ]
+      },
+      {
+        "id": "noun",
+        "label": "Sustantivo",
+        "items": [
+          "Dreams",
+          "Memories",
+          "Echoes",
+          "Shadows",
+          "Lights",
+          "Voices",
+          "Whispers",
+          "Screams",
+          "Songs",
+          "Stories",
+          "Letters",
+          "Pages",
+          "Chapters",
+          "Words",
+          "Silence",
+          "Noise",
+          "Ghosts",
+          "Spirits",
+          "Souls",
+          "Hearts",
+          "Bones",
+          "Ashes",
+          "Dust",
+          "Rain",
+          "Snow",
+          "Wind",
+          "Fire",
+          "Water",
+          "Earth",
+          "Sky",
+          "Stars",
+          "Moon",
+          "Sun",
+          "Night",
+          "Dawn",
+          "Dusk",
+          "Journey",
+          "Path",
+          "Road",
+          "Trail"
+        ]
+      },
+      {
+        "id": "preposition",
+        "label": "Preposición",
+        "items": [
+          "of",
+          "in",
+          "at",
+          "from",
+          "to",
+          "beyond",
+          "beneath",
+          "above",
+          "within",
+          "without",
+          "through",
+          "across",
+          "among",
+          "between",
+          "before",
+          "after",
+          "under",
+          "over",
+          "behind",
+          "inside"
+        ]
+      },
+      {
+        "id": "concept",
+        "label": "Concepto",
+        "items": [
+          "Home",
+          "Heaven",
+          "Hell",
+          "Nowhere",
+          "Everywhere",
+          "Time",
+          "Space",
+          "Reality",
+          "Fiction",
+          "Truth",
+          "Lies",
+          "Love",
+          "Hate",
+          "Hope",
+          "Despair",
+          "Life",
+          "Death",
+          "Birth",
+          "End",
+          "Beginning",
+          "War",
+          "Peace",
+          "Chaos",
+          "Order",
+          "Freedom",
+          "Prison",
+          "Paradise",
+          "Wasteland",
+          "Garden",
+          "Ruins",
+          "Tower",
+          "Valley",
+          "Mountain",
+          "Ocean",
+          "Desert",
+          "Forest",
+          "City",
+          "Village",
+          "World",
+          "Universe"
+        ]
+      }
+    ],
+    "separator": " ",
+    "defaultCount": 5,
+    "maxCount": 30,
+    "content": [
+      {
+        "h2": "Por qué los juegos indie necesitan nombres diferentes",
+        "body": "<p>El naming indie opera bajo economías de atención inversas al mainstream. Mientras 'Call of Duty' busca claridad instantánea, 'Hollow Knight' funciona por ambigüedad evocativa. Análisis de SteamSpy muestra que juegos indie con nombres abstractos pero memorables tienen 2.3x más wishlists orgánicas que títulos descriptivos genéricos.</p><p>La razón: tu competencia no son otros juegos indie, sino la percepción de ser 'asset flip' o shovelware. Nombres como 'Return of the Obra Dinn', 'Disco Elysium' o 'Hades' comunican inmediatamente que hay autoría detrás. No explican qué sos —generan curiosidad suficiente para que lean tu descripción.</p><p><strong>El efecto festival:</strong> nombres que suenan bien en voz alta importan desproporcionadamente en indie. 'This War of Mine' se recuerda porque tiene cadencia. Tu juego va a ser mencionado en podcasts, videos de YouTube, conversaciones de Discord. Si el nombre es un trabalenguas o requiere deletrear, perdiste propagación orgánica.</p>"
+      },
+      {
+        "h2": "Estructuras de naming que funcionan en indie",
+        "body": "<p>Patrón 'Adjetivo + Sustantivo abstracto': 'Outer Wilds', 'Silent Hill', 'Broken Age'. Funciona porque el adjetivo califica emocionalmente el sustantivo sin explicar gameplay. 'Outer' no te dice que es space exploration, pero genera sensación de lejanía.</p><p>Patrón 'The + [Frase nominal única]': 'The Witness', 'The Stanley Parable', 'The Beginner's Guide'. El artículo 'The' añade peso y singularidad —no es 'un' testigo, es 'EL' testigo. Esta estructura funciona cuando tu juego es sobre un concepto o experiencia específica no genérica.</p><p>Patrón 'Nombre propio inventado': 'Celeste', 'Undertale', 'Limbo'. Requiere más marketing budget para establecer, pero si tu juego se vuelve relevante, el nombre se convierte en categoría propia. <strong>Riesgo: si el juego flopa, nadie sabe qué era sin contexto.</strong></p><ul><li>Evitá 'Indie Game' en el título (es redundante y suena amateur)</li><li>Palabras de 2-3 sílabas son más memorables que 1 o 5+</li><li>Testeá que no suene como title placeholders ('Project X', 'Untitled Game')</li><li>El nombre debe funcionar sin ver el logo —muchos descubren tu juego por texto</li></ul>"
+      },
+      {
+        "h2": "El dilema entre poético y searchable",
+        "body": "<p>Existe tensión real entre crear un nombre evocativo y uno que la gente pueda encontrar. 'Hyper Light Drifter' es poético pero tiene buen SEO porque cada palabra individual es buscable. 'Gris', en cambio, es imposible de googlear en español (color gris domina resultados) pero funciona porque el marketing se apoyó en la palabra como marca registrada.</p><p>Estrategia práctica: si tu nombre es una palabra común, considerá añadir un modificador único. 'Limbo' solo funcionó porque PLAYDEAD construyó marca; 'Inside' (su siguiente juego) también es palabra común pero ya tenían fanbase. Si sos unknown, 'Limbo Game' o 'Limbo: [Subtítulo]' hubiera sido más inteligente para descubribilidad.</p><p><strong>El test de Discord:</strong> ¿La gente puede escribir tu nombre correctamente después de escucharlo una vez? Si la respuesta es no, vas a perder mención orgánica. 'Ori and the Blind Forest' pasa este test; 'Yoku's Island Express' genera confusión ortográfica (¿Yoku? ¿Yokus? ¿Yoko's?).</p><p>Steam search favorece exact matches primero, entonces variaciones. Si llamás a tu juego 'Eclipse', competís con 200+ juegos; 'Eclipse Protocol' es único y buscable. El apellido después del nombre central es hack común en indie.</p>"
+      },
+      {
+        "h2": "Cuándo romper todas las reglas de naming",
+        "body": "<p>Juegos como 'What Remains of Edith Finch' o 'Getting Over It with Bennett Foddy' rompen todas las 'reglas' de naming —son larguísimos, no caben en thumbnails, difíciles de recordar. ¿Por qué funcionan? Porque el nombre ES la premisa.</p><p>'Getting Over It' no necesita descripción adicional; el nombre ya te dice que es sobre frustración y superación. 'Edith Finch' suena a historia personal porque usa nombre completo de persona real. Estos nombres funcionan cuando tu juego es más experiencia que loop de gameplay.</p><p><strong>Señales de que podés arriesgar con naming 'raro':</strong> tu juego tiene narrative strong hook, vas a lanzar con cobertura de prensa confirmada, tenés comunidad pre-existente (de juegos anteriores o redes), tu concepto es suficientemente único que el nombre raro añade a la percepción de originalidad.</p><p>Errores al 'romper reglas': hacer lo raro por ser raro. 'Pony Island' funciona porque subvierte expectativas (no es sobre ponies); nombre raro random sin payoff conceptual es solo confuso. Cada elemento no-convencional en tu nombre debe tener propósito narrativo o temático defendible.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿Mi juego indie necesita tener 'indie' en el nombre?",
+        "a": "No. De hecho, es contraproducente —suena amateur y achica tu mercado potencial. 'Indie' es categoría de producción, no género narrativo."
+      },
+      {
+        "q": "¿Debo usar mayúsculas raras o símbolos en el nombre?",
+        "a": "Solo si es parte integral de tu identidad visual (como 'SUPERHOT'). Generalmente crea problemas de searchability y la gente lo escribe mal."
+      },
+      {
+        "q": "¿Importa si mi nombre ya está usado por otro juego indie pequeño?",
+        "a": "Sí, absolutamente. La comunidad indie es chica y el drama de 'name stealing' puede hundirte socialmente antes de lanzar. Siempre verificá SteamDB completo."
+      },
+      {
+        "q": "¿Puedo cambiar el nombre de mi juego durante desarrollo?",
+        "a": "Sí, y es común. Pero hacelo antes de tu primer trailer público. Cambiar nombre después de generar wishlists o cobertura de prensa destruye momentum."
+      }
+    ]
+  },
+  "en": {
+    "pageTitle": "Indie Game Name Generator | Genfy",
+    "metaDesc": "Create artistic names for indie games and experimental projects. Free generator with evocative ideas for narrative titles.",
+    "h1": "Indie Game Name Generator",
+    "intro": "Generate names with soul for your indie project. Perfect for narrative games, art games, experimental experiences, and titles seeking emotional resonance over clicks.",
+    "tag": "Fun",
+    "filterLabel": "Tone",
+    "countLabel": "Amount",
+    "generateLabel": "Generate",
+    "copyLabel": "Copy",
+    "groups": [
+      {
+        "id": "adjective",
+        "label": "Adjective",
+        "items": [
+          "Forgotten",
+          "Silent",
+          "Broken",
+          "Lost",
+          "Hidden",
+          "Endless",
+          "Distant",
+          "Fading",
+          "Burning",
+          "Frozen",
+          "Hollow",
+          "Empty",
+          "Sacred",
+          "Cursed",
+          "Eternal",
+          "Fleeting",
+          "Gentle",
+          "Violent",
+          "Quiet",
+          "Loud",
+          "Strange",
+          "Beautiful",
+          "Terrible",
+          "Lonely",
+          "Crowded",
+          "Ancient",
+          "Modern",
+          "Rusted",
+          "Shattered",
+          "Whole",
+          "Wandering",
+          "Still",
+          "Moving",
+          "Sleeping",
+          "Waking",
+          "Dead",
+          "Living",
+          "Pale",
+          "Vivid",
+          "Dark"
+        ]
+      },
+      {
+        "id": "noun",
+        "label": "Noun",
+        "items": [
+          "Dreams",
+          "Memories",
+          "Echoes",
+          "Shadows",
+          "Lights",
+          "Voices",
+          "Whispers",
+          "Screams",
+          "Songs",
+          "Stories",
+          "Letters",
+          "Pages",
+          "Chapters",
+          "Words",
+          "Silence",
+          "Noise",
+          "Ghosts",
+          "Spirits",
+          "Souls",
+          "Hearts",
+          "Bones",
+          "Ashes",
+          "Dust",
+          "Rain",
+          "Snow",
+          "Wind",
+          "Fire",
+          "Water",
+          "Earth",
+          "Sky",
+          "Stars",
+          "Moon",
+          "Sun",
+          "Night",
+          "Dawn",
+          "Dusk",
+          "Journey",
+          "Path",
+          "Road",
+          "Trail"
+        ]
+      },
+      {
+        "id": "preposition",
+        "label": "Preposition",
+        "items": [
+          "of",
+          "in",
+          "at",
+          "from",
+          "to",
+          "beyond",
+          "beneath",
+          "above",
+          "within",
+          "without",
+          "through",
+          "across",
+          "among",
+          "between",
+          "before",
+          "after",
+          "under",
+          "over",
+          "behind",
+          "inside"
+        ]
+      },
+      {
+        "id": "concept",
+        "label": "Concept",
+        "items": [
+          "Home",
+          "Heaven",
+          "Hell",
+          "Nowhere",
+          "Everywhere",
+          "Time",
+          "Space",
+          "Reality",
+          "Fiction",
+          "Truth",
+          "Lies",
+          "Love",
+          "Hate",
+          "Hope",
+          "Despair",
+          "Life",
+          "Death",
+          "Birth",
+          "End",
+          "Beginning",
+          "War",
+          "Peace",
+          "Chaos",
+          "Order",
+          "Freedom",
+          "Prison",
+          "Paradise",
+          "Wasteland",
+          "Garden",
+          "Ruins",
+          "Tower",
+          "Valley",
+          "Mountain",
+          "Ocean",
+          "Desert",
+          "Forest",
+          "City",
+          "Village",
+          "World",
+          "Universe"
+        ]
+      }
+    ],
+    "separator": " ",
+    "defaultCount": 5,
+    "maxCount": 30,
+    "content": [
+      {
+        "h2": "Why Indie Games Need Different Names",
+        "body": "<p>Indie naming operates under inverse attention economics from mainstream. While 'Call of Duty' seeks instant clarity, 'Hollow Knight' works through evocative ambiguity. SteamSpy analysis shows indie games with abstract but memorable names have 2.3x more organic wishlists than generic descriptive titles.</p><p>The reason: your competition isn't other indie games, but the perception of being 'asset flip' or shovelware. Names like 'Return of the Obra Dinn', 'Disco Elysium' or 'Hades' immediately communicate there's authorship behind them. They don't explain what you are —they generate enough curiosity to read your description.</p><p><strong>The festival effect:</strong> names that sound good out loud matter disproportionately in indie. 'This War of Mine' is remembered because it has cadence. Your game will be mentioned in podcasts, YouTube videos, Discord conversations. If the name is a tongue-twister or requires spelling out, you lost organic propagation.</p>"
+      },
+      {
+        "h2": "Naming Structures That Work in Indie",
+        "body": "<p>'Adjective + Abstract noun' pattern: 'Outer Wilds', 'Silent Hill', 'Broken Age'. Works because the adjective emotionally qualifies the noun without explaining gameplay. 'Outer' doesn't tell you it's space exploration, but generates a sense of distance.</p><p>'The + [Unique noun phrase]' pattern: 'The Witness', 'The Stanley Parable', 'The Beginner's Guide'. The article 'The' adds weight and singularity —it's not 'a' witness, it's 'THE' witness. This structure works when your game is about a specific non-generic concept or experience.</p><p>'Invented proper name' pattern: 'Celeste', 'Undertale', 'Limbo'. Requires more marketing budget to establish, but if your game becomes relevant, the name becomes its own category. <strong>Risk: if the game flops, nobody knows what it was without context.</strong></p><ul><li>Avoid 'Indie Game' in the title (it's redundant and sounds amateur)</li><li>2-3 syllable words are more memorable than 1 or 5+</li><li>Test that it doesn't sound like title placeholders ('Project X', 'Untitled Game')</li><li>The name must work without seeing the logo —many discover your game through text</li></ul>"
+      },
+      {
+        "h2": "The Dilemma Between Poetic and Searchable",
+        "body": "<p>There's real tension between creating an evocative name and one people can find. 'Hyper Light Drifter' is poetic but has good SEO because each individual word is searchable. 'Gris', on the other hand, is impossible to google in Spanish (gray color dominates results) but works because marketing leaned on the word as a registered trademark.</p><p>Practical strategy: if your name is a common word, consider adding a unique modifier. 'Limbo' only worked because PLAYDEAD built brand; 'Inside' (their next game) is also a common word but they already had a fanbase. If you're unknown, 'Limbo Game' or 'Limbo: [Subtitle]' would have been smarter for discoverability.</p><p><strong>The Discord test:</strong> Can people write your name correctly after hearing it once? If the answer is no, you'll lose organic mentions. 'Ori and the Blind Forest' passes this test; 'Yoku's Island Express' generates spelling confusion (Yoku? Yokus? Yoko's?).</p><p>Steam search favors exact matches first, then variations. If you call your game 'Eclipse', you compete with 200+ games; 'Eclipse Protocol' is unique and searchable. The surname after the central name is a common indie hack.</p>"
+      },
+      {
+        "h2": "When to Break All Naming Rules",
+        "body": "<p>Games like 'What Remains of Edith Finch' or 'Getting Over It with Bennett Foddy' break all naming 'rules' —they're super long, don't fit in thumbnails, hard to remember. Why do they work? Because the name IS the premise.</p><p>'Getting Over It' needs no additional description; the name already tells you it's about frustration and overcoming. 'Edith Finch' sounds like a personal story because it uses a full real-person name. These names work when your game is more experience than gameplay loop.</p><p><strong>Signs you can risk 'weird' naming:</strong> your game has strong narrative hook, you'll launch with confirmed press coverage, you have pre-existing community (from previous games or networks), your concept is unique enough that the weird name adds to the perception of originality.</p><p>Mistakes when 'breaking rules': being weird for weird's sake. 'Pony Island' works because it subverts expectations (it's not about ponies); random weird name without conceptual payoff is just confusing. Every non-conventional element in your name must have defensible narrative or thematic purpose.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Does my indie game need to have 'indie' in the name?",
+        "a": "No. In fact, it's counterproductive —sounds amateur and shrinks your potential market. 'Indie' is a production category, not a narrative genre."
+      },
+      {
+        "q": "Should I use weird capitalization or symbols in the name?",
+        "a": "Only if it's integral to your visual identity (like 'SUPERHOT'). Generally creates searchability problems and people misspell it."
+      },
+      {
+        "q": "Does it matter if my name is already used by another small indie game?",
+        "a": "Yes, absolutely. The indie community is small and 'name stealing' drama can sink you socially before launch. Always verify complete SteamDB."
+      },
+      {
+        "q": "Can I change my game's name during development?",
+        "a": "Yes, and it's common. But do it before your first public trailer. Changing name after generating wishlists or press coverage destroys momentum."
+      }
+    ]
+  }
+};

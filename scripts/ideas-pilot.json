@@ -1,0 +1,47 @@
+[
+  {
+    "slugEs": "generador-de-excusas",
+    "slugEn": "excuse-generator",
+    "category": "fun",
+    "emoji": "🙃",
+    "mode": "pick",
+    "conceptEs": "Excusas creíbles para llegar tarde, faltar al trabajo, cancelar planes, no ir a un evento. Categorías: laborales, sociales, creativas y absurdas (humor).",
+    "conceptEn": "Believable excuses for being late, missing work, cancelling plans, skipping events. Categories: work, social, creative and absurd (funny)."
+  },
+  {
+    "slugEs": "generador-nombre-constelacion",
+    "slugEn": "constellation-name-generator",
+    "category": "fun",
+    "emoji": "✨",
+    "mode": "combine",
+    "conceptEs": "Nombres de constelaciones inventadas para fantasía, worldbuilding y juegos de rol. Combina raíz poética + sustantivo celestial + terminación latinizante.",
+    "conceptEn": "Made-up constellation names for fantasy, worldbuilding and tabletop RPGs. Combines poetic root + celestial noun + latin-style ending."
+  },
+  {
+    "slugEs": "generador-nombre-pocion-fantasia",
+    "slugEn": "fantasy-potion-name-generator",
+    "category": "fun",
+    "emoji": "🧪",
+    "mode": "combine",
+    "conceptEs": "Nombres de pociones para D&D, escritura de fantasía y RPG. Estructura: cualidad + ingrediente raro + autor o lugar mítico.",
+    "conceptEn": "Potion names for D&D, fantasy writing and RPGs. Structure: quality + rare ingredient + mythic author or place."
+  },
+  {
+    "slugEs": "generador-de-giro-argumental",
+    "slugEn": "plot-twist-generator",
+    "category": "content",
+    "emoji": "🔄",
+    "mode": "pick",
+    "conceptEs": "Giros argumentales para historias, novelas, guiones y campañas de rol. Filtros: revelación de identidad, traición, salto temporal, doble agente, sobrenatural.",
+    "conceptEn": "Plot twists for stories, novels, scripts and roleplay campaigns. Filters: identity reveal, betrayal, time jump, double agent, supernatural."
+  },
+  {
+    "slugEs": "generador-prompts-chatgpt",
+    "slugEn": "chatgpt-prompt-generator",
+    "category": "work",
+    "emoji": "💬",
+    "mode": "combine",
+    "conceptEs": "Prompts efectivos para ChatGPT, Claude y otras IAs. Estructura: rol + tarea + restriccion + formato de salida. Filtros por uso (marketing, codigo, escritura, analisis).",
+    "conceptEn": "Effective prompts for ChatGPT, Claude and other LLMs. Structure: role + task + constraint + output format. Filters by use (marketing, code, writing, analysis)."
+  }
+]
