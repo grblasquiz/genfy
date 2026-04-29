@@ -1,0 +1,119 @@
+[
+  {
+    "slugEs": "generador-de-nombres-de-constelacion",
+    "slugEn": "constellation-name-generator",
+    "category": "fun",
+    "emoji": "⭐",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de constelaciones inventadas para universos sci-fi, astronomía ficticia y mapas estelares originales.",
+    "conceptEn": "Create invented constellation names for sci-fi universes, fictional astronomy and original star maps."
+  },
+  {
+    "slugEs": "generador-de-propuestas-de-valor",
+    "slugEn": "value-proposition-generator",
+    "category": "business",
+    "emoji": "💡",
+    "mode": "pick",
+    "conceptEs": "Genera propuestas de valor claras y convincentes para startups, productos y servicios que buscan diferenciarse.",
+    "conceptEn": "Generate clear and compelling value propositions for startups, products and services seeking differentiation."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-isla",
+    "slugEn": "island-name-generator",
+    "category": "fun",
+    "emoji": "🏝️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de islas tropicales, archipiélagos y atolones para juegos, novelas de aventura y mapas de fantasía.",
+    "conceptEn": "Generate tropical island, archipelago and atoll names for games, adventure novels and fantasy maps."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-alianza",
+    "slugEn": "alliance-name-generator",
+    "category": "fun",
+    "emoji": "🤝",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de alianzas, coaliciones y facciones para juegos de estrategia, guilds y organizaciones ficticias.",
+    "conceptEn": "Create alliance, coalition and faction names for strategy games, guilds and fictional organizations."
+  },
+  {
+    "slugEs": "generador-de-desafios-creativos",
+    "slugEn": "creative-challenge-generator",
+    "category": "inspiration",
+    "emoji": "🎨",
+    "mode": "pick",
+    "conceptEs": "Genera desafíos de creatividad diarios para artistas, diseñadores y escritores que buscan vencer el bloqueo creativo.",
+    "conceptEn": "Generate daily creativity challenges for artists, designers and writers seeking to overcome creative blocks."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-torneo",
+    "slugEn": "tournament-name-generator",
+    "category": "fun",
+    "emoji": "🏆",
+    "mode": "combine",
+    "conceptEs": "Genera nombres épicos de torneos deportivos, esports y competencias que suenen profesionales y memorables.",
+    "conceptEn": "Generate epic sports tournament, esports and competition names that sound professional and memorable."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-dios-inventado",
+    "slugEn": "fictional-deity-name-generator",
+    "category": "fun",
+    "emoji": "⚡",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de deidades ficticias para mitologías inventadas, worldbuilding religioso y sistemas de panteones originales.",
+    "conceptEn": "Create fictional deity names for invented mythologies, religious worldbuilding and original pantheon systems."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-montaña",
+    "slugEn": "mountain-name-generator",
+    "category": "fun",
+    "emoji": "⛰️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de montañas, picos y cordilleras para mapas de fantasía, worldbuilding geográfico y aventuras épicas.",
+    "conceptEn": "Generate mountain, peak and mountain range names for fantasy maps, geographic worldbuilding and epic adventures."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-estrella",
+    "slugEn": "star-name-generator",
+    "category": "fun",
+    "emoji": "✨",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de estrellas y sistemas solares para ciencia ficción espacial, astronomía ficticia y mapas galácticos.",
+    "conceptEn": "Create star and solar system names for space sci-fi, fictional astronomy and galactic maps."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-mazmorra",
+    "slugEn": "dungeon-name-generator",
+    "category": "fun",
+    "emoji": "🗝️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres oscuros de mazmorras, catacumbas y calabozos para juegos de rol, aventuras y dungeon crawlers.",
+    "conceptEn": "Create dark dungeon, catacomb and prison names for role-playing games, adventures and dungeon crawlers."
+  },
+  {
+    "slugEs": "generador-de-ruta-de-viaje",
+    "slugEn": "travel-itinerary-generator",
+    "category": "random",
+    "emoji": "🗺️",
+    "mode": "pick",
+    "conceptEs": "Genera ideas de rutas de viaje y destinos aleatorios para planificación de vacaciones y aventuras espontáneas.",
+    "conceptEn": "Generate travel route ideas and random destinations for vacation planning and spontaneous adventures."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-bosque",
+    "slugEn": "forest-name-generator",
+    "category": "fun",
+    "emoji": "🌲",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de bosques, selvas y arboledas para worldbuilding natural, cuentos de hadas y escenarios mágicos.",
+    "conceptEn": "Generate forest, jungle and grove names for natural worldbuilding, fairy tales and magical scenarios."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-idioma-inventado",
+    "slugEn": "constructed-language-name-generator",
+    "category": "fun",
+    "emoji": "🗣️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de idiomas ficticios y lenguas inventadas para worldbuilding lingüístico y culturas alienígenas.",
+    "conceptEn": "Create fictional language and invented tongue names for linguistic worldbuilding and alien cultures."
+  }
+]

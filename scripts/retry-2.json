@@ -1,0 +1,119 @@
+[
+  {
+    "slugEs": "generador-de-nombres-de-compañia-aeronautica",
+    "slugEn": "airline-name-generator",
+    "category": "business",
+    "emoji": "✈️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de aerolíneas ficticias, líneas aéreas y compañías de aviación para simulaciones y worldbuilding.",
+    "conceptEn": "Generate fictional airline, air carrier and aviation company names for simulations and worldbuilding."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-biblioteca",
+    "slugEn": "library-name-generator",
+    "category": "fun",
+    "emoji": "📚",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de bibliotecas antiguas, archivos mágicos y repositorios de conocimiento para ambientaciones eruditas.",
+    "conceptEn": "Create ancient library, magical archive and knowledge repository names for scholarly settings."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-cerveza-artesanal",
+    "slugEn": "craft-beer-name-generator",
+    "category": "fun",
+    "emoji": "🍺",
+    "mode": "combine",
+    "conceptEs": "Genera nombres creativos para cervezas artesanales, variedades IPA y brews que destaquen en el mercado.",
+    "conceptEn": "Generate creative craft beer, IPA variety and brew names that stand out in the market."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-montaña-rusa",
+    "slugEn": "roller-coaster-name-generator",
+    "category": "fun",
+    "emoji": "🎢",
+    "mode": "combine",
+    "conceptEs": "Crea nombres emocionantes de montañas rusas y atracciones de parques temáticos que prometan adrenalina.",
+    "conceptEn": "Create thrilling roller coaster and theme park attraction names that promise adrenaline."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-marca-moda",
+    "slugEn": "fashion-brand-name-generator",
+    "category": "business",
+    "emoji": "👗",
+    "mode": "combine",
+    "conceptEs": "Crea nombres chic de marcas de moda, líneas de ropa y diseñadores que suenen haute couture.",
+    "conceptEn": "Create chic fashion brand, clothing line and designer names that sound haute couture."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-editorial",
+    "slugEn": "publishing-house-name-generator",
+    "category": "business",
+    "emoji": "📖",
+    "mode": "combine",
+    "conceptEs": "Genera nombres distinguidos de editoriales, casas de publicación y sellos literarios con tradición intelectual.",
+    "conceptEn": "Generate distinguished publishing house, press and literary imprint names with intellectual tradition."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-consultora",
+    "slugEn": "consulting-firm-name-generator",
+    "category": "business",
+    "emoji": "💼",
+    "mode": "combine",
+    "conceptEs": "Crea nombres corporativos de consultoras, firmas de asesoría y empresas de estrategia con autoridad profesional.",
+    "conceptEn": "Create corporate consulting, advisory firm and strategy company names with professional authority."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-firma-legal",
+    "slugEn": "law-firm-name-generator",
+    "category": "business",
+    "emoji": "⚖️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de bufetes de abogados, firmas legales y estudios jurídicos que transmitan expertise y seriedad.",
+    "conceptEn": "Generate law office, legal firm and attorney practice names that convey expertise and seriousness."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hacker-etico",
+    "slugEn": "hacker-handle-generator",
+    "category": "tech",
+    "emoji": "💻",
+    "mode": "combine",
+    "conceptEs": "Crea handles y alias de hackers éticos para CTFs, competencias de seguridad y comunidades infosec.",
+    "conceptEn": "Create ethical hacker handles and aliases for CTFs, security competitions and infosec communities."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-carrera-universitaria",
+    "slugEn": "university-major-generator",
+    "category": "fun",
+    "emoji": "🎓",
+    "mode": "combine",
+    "conceptEs": "Genera nombres ficticios de carreras y programas universitarios para worldbuilding académico y parodias educativas.",
+    "conceptEn": "Generate fictional university major and program names for academic worldbuilding and educational parodies."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-enfermedad-ficticia",
+    "slugEn": "fictional-disease-name-generator",
+    "category": "fun",
+    "emoji": "🦠",
+    "mode": "combine",
+    "conceptEs": "Crea nombres médicos de enfermedades ficticias para ciencia ficción, thrillers médicos y narrativa pandémica.",
+    "conceptEn": "Create medical fictional disease names for science fiction, medical thrillers and pandemic narrative."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-campamento-verano",
+    "slugEn": "summer-camp-name-generator",
+    "category": "fun",
+    "emoji": "🏕️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres nostálgicos de campamentos de verano, camps juveniles y retiros outdoor con espíritu aventurero.",
+    "conceptEn": "Generate nostalgic summer camp, youth camp and outdoor retreat names with adventurous spirit."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-fraternidad",
+    "slugEn": "fraternity-name-generator",
+    "category": "fun",
+    "emoji": "🎓",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de fraternidades y sororidades universitarias con letras griegas y tradición académica.",
+    "conceptEn": "Create fraternity and sorority names with Greek letters and academic tradition."
+  }
+]

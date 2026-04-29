@@ -1,0 +1,110 @@
+[
+  {
+    "slugEs": "generador-de-nombres-de-licántropo",
+    "slugEn": "lycanthrope-name-generator",
+    "category": "fun",
+    "emoji": "🐺",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de licántropos, hombres lobo y criaturas con maldición de transformación lunar.",
+    "conceptEn": "Generate lycanthrope, werewolf and lunar transformation curse creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-vampiro",
+    "slugEn": "vampire-name-generator",
+    "category": "fun",
+    "emoji": "🧛",
+    "mode": "combine",
+    "conceptEs": "Crea nombres aristocráticos de vampiros, no-muertos elegantes y criaturas de la noche inmortales.",
+    "conceptEn": "Create aristocratic vampire, elegant undead and immortal creature of the night names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-goblin",
+    "slugEn": "goblin-name-generator",
+    "category": "fun",
+    "emoji": "👺",
+    "mode": "combine",
+    "conceptEs": "Crea nombres traviesos de goblins, criaturas pequeñas y seres de travesuras caóticas.",
+    "conceptEn": "Create mischievous goblin, small creature and chaotic mischief being names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-basilisco",
+    "slugEn": "basilisk-name-generator",
+    "category": "fun",
+    "emoji": "🐍",
+    "mode": "combine",
+    "conceptEs": "Crea nombres venenosos de basiliscos, serpientes legendarias y criaturas de mirada petrificante.",
+    "conceptEn": "Create venomous basilisk, legendary serpent and petrifying gaze creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-kraken",
+    "slugEn": "kraken-name-generator",
+    "category": "fun",
+    "emoji": "🦑",
+    "mode": "combine",
+    "conceptEs": "Genera nombres abisales de krakens, leviatanes marinos y monstruos de las profundidades oceánicas.",
+    "conceptEn": "Generate abyssal kraken, sea leviathan and oceanic depth monster names."
+  },
+  {
+    "slugEs": "generador-de-cron-humano",
+    "slugEn": "human-readable-cron-generator",
+    "category": "tools",
+    "emoji": "⏰",
+    "mode": "pick",
+    "conceptEs": "Convierte expresiones cron en lenguaje natural (ej: '0 9 * * 1-5' → 'Todos los días laborables a las 9 AM')",
+    "conceptEn": "Converts cron expressions to human-readable language (e.g., '0 9 * * 1-5' → 'Every weekday at 9 AM')"
+  },
+  {
+    "slugEs": "generador-de-changelog",
+    "slugEn": "changelog-generator",
+    "category": "work",
+    "emoji": "📋",
+    "mode": "pick",
+    "conceptEs": "Genera entradas estructuradas de changelog con categorías (Added, Fixed, Changed, Deprecated) para releases",
+    "conceptEn": "Generates structured changelog entries with categories (Added, Fixed, Changed, Deprecated) for releases"
+  },
+  {
+    "slugEs": "generador-de-http-headers",
+    "slugEn": "http-header-generator",
+    "category": "tech",
+    "emoji": "🔐",
+    "mode": "pick",
+    "conceptEs": "Genera headers HTTP de seguridad (CSP, HSTS, X-Frame-Options) con valores recomendados para proteger apps",
+    "conceptEn": "Generates security HTTP headers (CSP, HSTS, X-Frame-Options) with recommended values to protect apps"
+  },
+  {
+    "slugEs": "generador-de-schema-markup",
+    "slugEn": "schema-markup-generator",
+    "category": "marketing",
+    "emoji": "🏷️",
+    "mode": "pick",
+    "conceptEs": "Crea código JSON-LD de Schema.org para artículos, productos, eventos, FAQs y organizaciones (SEO)",
+    "conceptEn": "Creates Schema.org JSON-LD code for articles, products, events, FAQs, and organizations (SEO)"
+  },
+  {
+    "slugEs": "generador-de-casos-de-prueba",
+    "slugEn": "test-case-generator",
+    "category": "work",
+    "emoji": "✅",
+    "mode": "pick",
+    "conceptEs": "Genera casos de prueba QA con pasos, datos esperados y criterios de aceptación para features",
+    "conceptEn": "Generates QA test cases with steps, expected data, and acceptance criteria for features"
+  },
+  {
+    "slugEs": "generador-de-user-story",
+    "slugEn": "user-story-generator",
+    "category": "work",
+    "emoji": "👤",
+    "mode": "pick",
+    "conceptEs": "Crea user stories formato 'Como [rol] quiero [acción] para [beneficio]' con criterios de aceptación",
+    "conceptEn": "Creates user stories in format 'As a [role] I want [action] so that [benefit]' with acceptance criteria"
+  },
+  {
+    "slugEs": "generador-de-curl-a-codigo",
+    "slugEn": "curl-to-code-generator",
+    "category": "tech",
+    "emoji": "🔄",
+    "mode": "pick",
+    "conceptEs": "Convierte comandos cURL en código Python, JavaScript, PHP o Ruby para requests HTTP",
+    "conceptEn": "Converts cURL commands to Python, JavaScript, PHP, or Ruby code for HTTP requests"
+  }
+]
