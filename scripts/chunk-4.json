@@ -1,0 +1,164 @@
+[
+  {
+    "slugEs": "generador-de-nombres-de-teatro",
+    "slugEn": "theater-name-generator",
+    "category": "fun",
+    "emoji": "🎭",
+    "mode": "combine",
+    "conceptEs": "Genera nombres clásicos de teatros, auditorios y casas de ópera con elegancia y tradición cultural.",
+    "conceptEn": "Generate classic theater, auditorium and opera house names with elegance and cultural tradition."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-podcast-crimen",
+    "slugEn": "true-crime-podcast-name-generator",
+    "category": "content",
+    "emoji": "🔍",
+    "mode": "combine",
+    "conceptEs": "Crea nombres intrigantes para podcasts de crimen real, misterio y casos sin resolver que enganchen oyentes.",
+    "conceptEn": "Create intriguing true crime, mystery and cold case podcast names that hook listeners."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-perfume",
+    "slugEn": "perfume-name-generator",
+    "category": "business",
+    "emoji": "🌸",
+    "mode": "combine",
+    "conceptEs": "Genera nombres evocadores para perfumes, fragancias y líneas de cosméticos que transmitan sensorialidad.",
+    "conceptEn": "Generate evocative perfume, fragrance and cosmetics line names that convey sensoriality."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-joya",
+    "slugEn": "jewelry-piece-name-generator",
+    "category": "business",
+    "emoji": "💍",
+    "mode": "combine",
+    "conceptEs": "Crea nombres lujosos de joyas, colecciones de alta joyería y piezas exclusivas con elegancia.",
+    "conceptEn": "Create luxurious jewelry, fine jewelry collection and exclusive piece names with elegance."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-ritual",
+    "slugEn": "ritual-name-generator",
+    "category": "fun",
+    "emoji": "🕯️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres místicos de rituales, ceremonias ancestrales y prácticas mágicas para worldbuilding religioso.",
+    "conceptEn": "Generate mystical ritual, ancestral ceremony and magical practice names for religious worldbuilding."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-club-nocturno",
+    "slugEn": "nightclub-name-generator",
+    "category": "business",
+    "emoji": "🎉",
+    "mode": "combine",
+    "conceptEs": "Crea nombres vibrantes de clubs nocturnos, discotecas y venues de entretenimiento nocturno.",
+    "conceptEn": "Create vibrant nightclub, discotheque and nighttime entertainment venue names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-tienda-vintage",
+    "slugEn": "vintage-shop-name-generator",
+    "category": "business",
+    "emoji": "🕰️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres nostálgicos de tiendas vintage, anticuarios y boutiques de segunda mano con encanto retro.",
+    "conceptEn": "Create nostalgic vintage store, antique shop and thrift boutique names with retro charm."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-laboratorio",
+    "slugEn": "laboratory-name-generator",
+    "category": "business",
+    "emoji": "🔬",
+    "mode": "combine",
+    "conceptEs": "Genera nombres científicos de laboratorios, centros de investigación y facilities para empresas biotech y farmacéuticas.",
+    "conceptEn": "Generate scientific laboratory, research center and facility names for biotech and pharmaceutical companies."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-montaña-rusa",
+    "slugEn": "roller-coaster-name-generator",
+    "category": "fun",
+    "emoji": "🎢",
+    "mode": "combine",
+    "conceptEs": "Crea nombres emocionantes de montañas rusas y atracciones de parques temáticos que prometan adrenalina.",
+    "conceptEn": "Create thrilling roller coaster and theme park attraction names that promise adrenaline."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-expedicion",
+    "slugEn": "expedition-name-generator",
+    "category": "fun",
+    "emoji": "🧭",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de expediciones científicas, misiones de exploración y aventuras históricas para narrativa épica.",
+    "conceptEn": "Generate scientific expedition, exploration mission and historic adventure names for epic narrative."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-empresa-construccion",
+    "slugEn": "construction-company-name-generator",
+    "category": "business",
+    "emoji": "🏗️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres sólidos de empresas constructoras, contratistas y desarrolladores inmobiliarios que inspiren confianza.",
+    "conceptEn": "Create solid construction company, contractor and real estate developer names that inspire trust."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-orquesta",
+    "slugEn": "orchestra-name-generator",
+    "category": "fun",
+    "emoji": "🎻",
+    "mode": "combine",
+    "conceptEs": "Genera nombres elegantes de orquestas, ensambles musicales y agrupaciones sinfónicas con prestigio.",
+    "conceptEn": "Generate elegant orchestra, musical ensemble and symphonic group names with prestige."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-agencia-viajes",
+    "slugEn": "travel-agency-name-generator",
+    "category": "business",
+    "emoji": "🌍",
+    "mode": "combine",
+    "conceptEs": "Crea nombres atractivos para agencias de viaje, tour operators y servicios turísticos que inspiren wanderlust.",
+    "conceptEn": "Create attractive travel agency, tour operator and tourism service names that inspire wanderlust."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-empresa-seguridad",
+    "slugEn": "security-company-name-generator",
+    "category": "business",
+    "emoji": "🛡️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres profesionales de empresas de seguridad, guardias y servicios de protección que transmitan confiabilidad.",
+    "conceptEn": "Generate professional security company, guard and protection service names that convey reliability."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-marca-moda",
+    "slugEn": "fashion-brand-name-generator",
+    "category": "business",
+    "emoji": "👗",
+    "mode": "combine",
+    "conceptEs": "Crea nombres chic de marcas de moda, líneas de ropa y diseñadores que suenen haute couture.",
+    "conceptEn": "Create chic fashion brand, clothing line and designer names that sound haute couture."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-editorial",
+    "slugEn": "publishing-house-name-generator",
+    "category": "business",
+    "emoji": "📖",
+    "mode": "combine",
+    "conceptEs": "Genera nombres distinguidos de editoriales, casas de publicación y sellos literarios con tradición intelectual.",
+    "conceptEn": "Generate distinguished publishing house, press and literary imprint names with intellectual tradition."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-consultora",
+    "slugEn": "consulting-firm-name-generator",
+    "category": "business",
+    "emoji": "💼",
+    "mode": "combine",
+    "conceptEs": "Crea nombres corporativos de consultoras, firmas de asesoría y empresas de estrategia con autoridad profesional.",
+    "conceptEn": "Create corporate consulting, advisory firm and strategy company names with professional authority."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-firma-legal",
+    "slugEn": "law-firm-name-generator",
+    "category": "business",
+    "emoji": "⚖️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de bufetes de abogados, firmas legales y estudios jurídicos que transmitan expertise y seriedad.",
+    "conceptEn": "Generate law office, legal firm and attorney practice names that convey expertise and seriousness."
+  }
+]

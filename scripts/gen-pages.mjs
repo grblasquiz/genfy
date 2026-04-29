@@ -14,7 +14,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
 const MODEL = 'claude-sonnet-4-5-20250929';
-const BATCH_SIZE = 1;
+const BATCH_SIZE = 5;
 const MAX_TOKENS = 40000;
 const CONCURRENCY = 4;
 const DEBUG_DIR = path.resolve(__dirname, '../.gen-debug');

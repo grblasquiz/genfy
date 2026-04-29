@@ -1,0 +1,164 @@
+[
+  {
+    "slugEs": "generador-de-nombres-de-dragon",
+    "slugEn": "dragon-name-generator",
+    "category": "fun",
+    "emoji": "🐉",
+    "mode": "combine",
+    "conceptEs": "Genera nombres épicos de dragones para juegos de rol, fantasía y worldbuilding, combinando elementos mitológicos y sonidos dracónicos.",
+    "conceptEn": "Generate epic dragon names for RPGs, fantasy settings and worldbuilding, combining mythological elements and draconic sounds."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-platos",
+    "slugEn": "dish-name-generator",
+    "category": "fun",
+    "emoji": "🍽️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres creativos y apetitosos para platos de menú de restaurantes, food trucks y chefs que buscan destacar.",
+    "conceptEn": "Create creative and appetizing names for restaurant menu dishes, food trucks and chefs looking to stand out."
+  },
+  {
+    "slugEs": "generador-de-excusas-creativas",
+    "slugEn": "creative-excuse-generator",
+    "category": "fun",
+    "emoji": "🤷",
+    "mode": "pick",
+    "conceptEs": "Genera excusas humorísticas y creativas para situaciones cotidianas, con tono ligero y entretenido (sin uso serio).",
+    "conceptEn": "Generate humorous and creative excuses for everyday situations, with a light and entertaining tone (not for serious use)."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-agencia",
+    "slugEn": "agency-name-generator",
+    "category": "business",
+    "emoji": "💼",
+    "mode": "combine",
+    "conceptEs": "Crea nombres profesionales para agencias de marketing, diseño, publicidad y consultoría que transmitan expertise.",
+    "conceptEn": "Create professional names for marketing, design, advertising and consulting agencies that convey expertise."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-plantas",
+    "slugEn": "plant-name-generator",
+    "category": "fun",
+    "emoji": "🌱",
+    "mode": "combine",
+    "conceptEs": "Genera nombres ficticios de plantas para juegos, worldbuilding botánico y proyectos de ficción científica con flora inventada.",
+    "conceptEn": "Generate fictional plant names for games, botanical worldbuilding and sci-fi projects with invented flora."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hechizos",
+    "slugEn": "spell-name-generator",
+    "category": "fun",
+    "emoji": "✨",
+    "mode": "combine",
+    "conceptEs": "Crea nombres místicos de hechizos y encantamientos para juegos de rol, escritura fantástica y sistemas de magia personalizados.",
+    "conceptEn": "Create mystical spell and enchantment names for RPGs, fantasy writing and custom magic systems."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-planetas",
+    "slugEn": "planet-name-generator",
+    "category": "fun",
+    "emoji": "🪐",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de planetas alienígenas para ciencia ficción, juegos espaciales y universos sci-fi originales.",
+    "conceptEn": "Generate alien planet names for science fiction, space games and original sci-fi universes."
+  },
+  {
+    "slugEs": "generador-de-lema-personal",
+    "slugEn": "personal-motto-generator",
+    "category": "inspiration",
+    "emoji": "💪",
+    "mode": "pick",
+    "conceptEs": "Crea lemas y mantras personales inspiradores para motivación diaria, desarrollo personal y definición de valores de vida.",
+    "conceptEn": "Create inspiring personal mottos and mantras for daily motivation, personal development and defining life values."
+  },
+  {
+    "slugEs": "generador-de-retos-fitness",
+    "slugEn": "fitness-challenge-generator",
+    "category": "random",
+    "emoji": "🏋️",
+    "mode": "pick",
+    "conceptEs": "Genera desafíos y retos de ejercicio diarios para entrenamiento personal, motivación fitness y variedad en rutinas.",
+    "conceptEn": "Generate daily workout challenges for personal training, fitness motivation and routine variety."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-calle",
+    "slugEn": "street-name-generator",
+    "category": "fun",
+    "emoji": "🛣️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de calles y avenidas para worldbuilding urbano, desarrollo de juegos y mapas de ciudades ficticias.",
+    "conceptEn": "Create street and avenue names for urban worldbuilding, game development and fictional city maps."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-mision",
+    "slugEn": "mission-name-generator",
+    "category": "fun",
+    "emoji": "🎮",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de misiones y operaciones para juegos, campañas militares ficticias y aventuras de equipo.",
+    "conceptEn": "Generate mission and operation names for games, fictional military campaigns and team adventures."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-constelacion",
+    "slugEn": "constellation-name-generator",
+    "category": "fun",
+    "emoji": "⭐",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de constelaciones inventadas para universos sci-fi, astronomía ficticia y mapas estelares originales.",
+    "conceptEn": "Create invented constellation names for sci-fi universes, fictional astronomy and original star maps."
+  },
+  {
+    "slugEs": "generador-de-propuestas-de-valor",
+    "slugEn": "value-proposition-generator",
+    "category": "business",
+    "emoji": "💡",
+    "mode": "pick",
+    "conceptEs": "Genera propuestas de valor claras y convincentes para startups, productos y servicios que buscan diferenciarse.",
+    "conceptEn": "Generate clear and compelling value propositions for startups, products and services seeking differentiation."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-isla",
+    "slugEn": "island-name-generator",
+    "category": "fun",
+    "emoji": "🏝️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de islas tropicales, archipiélagos y atolones para juegos, novelas de aventura y mapas de fantasía.",
+    "conceptEn": "Generate tropical island, archipelago and atoll names for games, adventure novels and fantasy maps."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-alianza",
+    "slugEn": "alliance-name-generator",
+    "category": "fun",
+    "emoji": "🤝",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de alianzas, coaliciones y facciones para juegos de estrategia, guilds y organizaciones ficticias.",
+    "conceptEn": "Create alliance, coalition and faction names for strategy games, guilds and fictional organizations."
+  },
+  {
+    "slugEs": "generador-de-desafios-creativos",
+    "slugEn": "creative-challenge-generator",
+    "category": "inspiration",
+    "emoji": "🎨",
+    "mode": "pick",
+    "conceptEs": "Genera desafíos de creatividad diarios para artistas, diseñadores y escritores que buscan vencer el bloqueo creativo.",
+    "conceptEn": "Generate daily creativity challenges for artists, designers and writers seeking to overcome creative blocks."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-torneo",
+    "slugEn": "tournament-name-generator",
+    "category": "fun",
+    "emoji": "🏆",
+    "mode": "combine",
+    "conceptEs": "Genera nombres épicos de torneos deportivos, esports y competencias que suenen profesionales y memorables.",
+    "conceptEn": "Generate epic sports tournament, esports and competition names that sound professional and memorable."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-dios-inventado",
+    "slugEn": "fictional-deity-name-generator",
+    "category": "fun",
+    "emoji": "⚡",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de deidades ficticias para mitologías inventadas, worldbuilding religioso y sistemas de panteones originales.",
+    "conceptEn": "Create fictional deity names for invented mythologies, religious worldbuilding and original pantheon systems."
+  }
+]

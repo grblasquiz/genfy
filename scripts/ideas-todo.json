@@ -1,0 +1,1541 @@
+[
+  {
+    "slugEs": "generador-de-nombres-de-dragon",
+    "slugEn": "dragon-name-generator",
+    "category": "fun",
+    "emoji": "🐉",
+    "mode": "combine",
+    "conceptEs": "Genera nombres épicos de dragones para juegos de rol, fantasía y worldbuilding, combinando elementos mitológicos y sonidos dracónicos.",
+    "conceptEn": "Generate epic dragon names for RPGs, fantasy settings and worldbuilding, combining mythological elements and draconic sounds."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-platos",
+    "slugEn": "dish-name-generator",
+    "category": "fun",
+    "emoji": "🍽️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres creativos y apetitosos para platos de menú de restaurantes, food trucks y chefs que buscan destacar.",
+    "conceptEn": "Create creative and appetizing names for restaurant menu dishes, food trucks and chefs looking to stand out."
+  },
+  {
+    "slugEs": "generador-de-excusas-creativas",
+    "slugEn": "creative-excuse-generator",
+    "category": "fun",
+    "emoji": "🤷",
+    "mode": "pick",
+    "conceptEs": "Genera excusas humorísticas y creativas para situaciones cotidianas, con tono ligero y entretenido (sin uso serio).",
+    "conceptEn": "Generate humorous and creative excuses for everyday situations, with a light and entertaining tone (not for serious use)."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-agencia",
+    "slugEn": "agency-name-generator",
+    "category": "business",
+    "emoji": "💼",
+    "mode": "combine",
+    "conceptEs": "Crea nombres profesionales para agencias de marketing, diseño, publicidad y consultoría que transmitan expertise.",
+    "conceptEn": "Create professional names for marketing, design, advertising and consulting agencies that convey expertise."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-plantas",
+    "slugEn": "plant-name-generator",
+    "category": "fun",
+    "emoji": "🌱",
+    "mode": "combine",
+    "conceptEs": "Genera nombres ficticios de plantas para juegos, worldbuilding botánico y proyectos de ficción científica con flora inventada.",
+    "conceptEn": "Generate fictional plant names for games, botanical worldbuilding and sci-fi projects with invented flora."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hechizos",
+    "slugEn": "spell-name-generator",
+    "category": "fun",
+    "emoji": "✨",
+    "mode": "combine",
+    "conceptEs": "Crea nombres místicos de hechizos y encantamientos para juegos de rol, escritura fantástica y sistemas de magia personalizados.",
+    "conceptEn": "Create mystical spell and enchantment names for RPGs, fantasy writing and custom magic systems."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-planetas",
+    "slugEn": "planet-name-generator",
+    "category": "fun",
+    "emoji": "🪐",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de planetas alienígenas para ciencia ficción, juegos espaciales y universos sci-fi originales.",
+    "conceptEn": "Generate alien planet names for science fiction, space games and original sci-fi universes."
+  },
+  {
+    "slugEs": "generador-de-lema-personal",
+    "slugEn": "personal-motto-generator",
+    "category": "inspiration",
+    "emoji": "💪",
+    "mode": "pick",
+    "conceptEs": "Crea lemas y mantras personales inspiradores para motivación diaria, desarrollo personal y definición de valores de vida.",
+    "conceptEn": "Create inspiring personal mottos and mantras for daily motivation, personal development and defining life values."
+  },
+  {
+    "slugEs": "generador-de-retos-fitness",
+    "slugEn": "fitness-challenge-generator",
+    "category": "random",
+    "emoji": "🏋️",
+    "mode": "pick",
+    "conceptEs": "Genera desafíos y retos de ejercicio diarios para entrenamiento personal, motivación fitness y variedad en rutinas.",
+    "conceptEn": "Generate daily workout challenges for personal training, fitness motivation and routine variety."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-calle",
+    "slugEn": "street-name-generator",
+    "category": "fun",
+    "emoji": "🛣️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de calles y avenidas para worldbuilding urbano, desarrollo de juegos y mapas de ciudades ficticias.",
+    "conceptEn": "Create street and avenue names for urban worldbuilding, game development and fictional city maps."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-mision",
+    "slugEn": "mission-name-generator",
+    "category": "fun",
+    "emoji": "🎮",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de misiones y operaciones para juegos, campañas militares ficticias y aventuras de equipo.",
+    "conceptEn": "Generate mission and operation names for games, fictional military campaigns and team adventures."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-constelacion",
+    "slugEn": "constellation-name-generator",
+    "category": "fun",
+    "emoji": "⭐",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de constelaciones inventadas para universos sci-fi, astronomía ficticia y mapas estelares originales.",
+    "conceptEn": "Create invented constellation names for sci-fi universes, fictional astronomy and original star maps."
+  },
+  {
+    "slugEs": "generador-de-propuestas-de-valor",
+    "slugEn": "value-proposition-generator",
+    "category": "business",
+    "emoji": "💡",
+    "mode": "pick",
+    "conceptEs": "Genera propuestas de valor claras y convincentes para startups, productos y servicios que buscan diferenciarse.",
+    "conceptEn": "Generate clear and compelling value propositions for startups, products and services seeking differentiation."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-isla",
+    "slugEn": "island-name-generator",
+    "category": "fun",
+    "emoji": "🏝️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de islas tropicales, archipiélagos y atolones para juegos, novelas de aventura y mapas de fantasía.",
+    "conceptEn": "Generate tropical island, archipelago and atoll names for games, adventure novels and fantasy maps."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-alianza",
+    "slugEn": "alliance-name-generator",
+    "category": "fun",
+    "emoji": "🤝",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de alianzas, coaliciones y facciones para juegos de estrategia, guilds y organizaciones ficticias.",
+    "conceptEn": "Create alliance, coalition and faction names for strategy games, guilds and fictional organizations."
+  },
+  {
+    "slugEs": "generador-de-desafios-creativos",
+    "slugEn": "creative-challenge-generator",
+    "category": "inspiration",
+    "emoji": "🎨",
+    "mode": "pick",
+    "conceptEs": "Genera desafíos de creatividad diarios para artistas, diseñadores y escritores que buscan vencer el bloqueo creativo.",
+    "conceptEn": "Generate daily creativity challenges for artists, designers and writers seeking to overcome creative blocks."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-torneo",
+    "slugEn": "tournament-name-generator",
+    "category": "fun",
+    "emoji": "🏆",
+    "mode": "combine",
+    "conceptEs": "Genera nombres épicos de torneos deportivos, esports y competencias que suenen profesionales y memorables.",
+    "conceptEn": "Generate epic sports tournament, esports and competition names that sound professional and memorable."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-dios-inventado",
+    "slugEn": "fictional-deity-name-generator",
+    "category": "fun",
+    "emoji": "⚡",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de deidades ficticias para mitologías inventadas, worldbuilding religioso y sistemas de panteones originales.",
+    "conceptEn": "Create fictional deity names for invented mythologies, religious worldbuilding and original pantheon systems."
+  },
+  {
+    "slugEs": "generador-de-bio-twitter",
+    "slugEn": "twitter-bio-generator",
+    "category": "marketing",
+    "emoji": "🐦",
+    "mode": "pick",
+    "conceptEs": "Genera biografías creativas para perfiles de Twitter/X que capturen personalidad en 160 caracteres o menos.",
+    "conceptEn": "Generate creative Twitter/X profile bios that capture personality in 160 characters or less."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-movimiento-social",
+    "slugEn": "social-movement-name-generator",
+    "category": "content",
+    "emoji": "✊",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de movimientos sociales, campañas de activismo y causas comunitarias con impacto y claridad.",
+    "conceptEn": "Create social movement, activism campaign and community cause names with impact and clarity."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-blog",
+    "slugEn": "blog-name-generator",
+    "category": "content",
+    "emoji": "📝",
+    "mode": "combine",
+    "conceptEs": "Crea nombres únicos y SEO-friendly para blogs personales, nichos temáticos y proyectos de content marketing.",
+    "conceptEn": "Create unique and SEO-friendly names for personal blogs, niche topics and content marketing projects."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-criatura",
+    "slugEn": "creature-name-generator",
+    "category": "fun",
+    "emoji": "🦎",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de criaturas fantásticas y monstruos para bestiarios, juegos y universos de fantasía originales.",
+    "conceptEn": "Generate fantasy creature and monster names for bestiaries, games and original fantasy universes."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-evento",
+    "slugEn": "event-name-generator",
+    "category": "business",
+    "emoji": "🎉",
+    "mode": "combine",
+    "conceptEs": "Crea nombres memorables para eventos corporativos, festivales, conferencias y reuniones que destaquen en calendarios.",
+    "conceptEn": "Create memorable names for corporate events, festivals, conferences and gatherings that stand out on calendars."
+  },
+  {
+    "slugEs": "generador-de-prompt-dibujo",
+    "slugEn": "drawing-prompt-generator",
+    "category": "inspiration",
+    "emoji": "✏️",
+    "mode": "pick",
+    "conceptEs": "Genera prompts y consignas de dibujo para artistas visuales que buscan inspiración y práctica diaria creativa.",
+    "conceptEn": "Generate drawing prompts and assignments for visual artists seeking inspiration and daily creative practice."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-guerra",
+    "slugEn": "war-name-generator",
+    "category": "fun",
+    "emoji": "⚔️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres épicos de guerras y conflictos históricos ficticios para worldbuilding, novelas y juegos de estrategia.",
+    "conceptEn": "Create epic war and fictional historical conflict names for worldbuilding, novels and strategy games."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-proyecto",
+    "slugEn": "project-name-generator",
+    "category": "work",
+    "emoji": "📋",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de código y títulos internos para proyectos de desarrollo, iniciativas empresariales y sprints ágiles.",
+    "conceptEn": "Generate code names and internal titles for development projects, business initiatives and agile sprints."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-dimension",
+    "slugEn": "dimension-name-generator",
+    "category": "fun",
+    "emoji": "🌀",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de dimensiones alternas, planos de existencia y realidades paralelas para sci-fi y fantasía multiversal.",
+    "conceptEn": "Generate alternate dimension, plane of existence and parallel reality names for sci-fi and multiversal fantasy."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-maldicion",
+    "slugEn": "curse-name-generator",
+    "category": "fun",
+    "emoji": "🔮",
+    "mode": "combine",
+    "conceptEs": "Crea nombres siniestros de maldiciones, hexes y aflicciones mágicas para horror, dark fantasy y narrativa oscura.",
+    "conceptEn": "Create sinister curse, hex and magical affliction names for horror, dark fantasy and dark narrative."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-montaña",
+    "slugEn": "mountain-name-generator",
+    "category": "fun",
+    "emoji": "⛰️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de montañas, picos y cordilleras para mapas de fantasía, worldbuilding geográfico y aventuras épicas.",
+    "conceptEn": "Generate mountain, peak and mountain range names for fantasy maps, geographic worldbuilding and epic adventures."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-ciudad",
+    "slugEn": "city-name-generator",
+    "category": "fun",
+    "emoji": "🏙️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de ciudades y metrópolis para worldbuilding urbano, juegos de simulación y mapas de mundos inventados.",
+    "conceptEn": "Create city and metropolis names for urban worldbuilding, simulation games and invented world maps."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-rio",
+    "slugEn": "river-name-generator",
+    "category": "fun",
+    "emoji": "🌊",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de ríos, arroyos y afluentes para geografía ficticia, cartografía de fantasía y ambientación natural.",
+    "conceptEn": "Generate river, stream and tributary names for fictional geography, fantasy cartography and natural settings."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-estrella",
+    "slugEn": "star-name-generator",
+    "category": "fun",
+    "emoji": "✨",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de estrellas y sistemas solares para ciencia ficción espacial, astronomía ficticia y mapas galácticos.",
+    "conceptEn": "Create star and solar system names for space sci-fi, fictional astronomy and galactic maps."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-mazmorra",
+    "slugEn": "dungeon-name-generator",
+    "category": "fun",
+    "emoji": "🗝️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres oscuros de mazmorras, catacumbas y calabozos para juegos de rol, aventuras y dungeon crawlers.",
+    "conceptEn": "Create dark dungeon, catacomb and prison names for role-playing games, adventures and dungeon crawlers."
+  },
+  {
+    "slugEs": "generador-de-ruta-de-viaje",
+    "slugEn": "travel-itinerary-generator",
+    "category": "random",
+    "emoji": "🗺️",
+    "mode": "pick",
+    "conceptEs": "Genera ideas de rutas de viaje y destinos aleatorios para planificación de vacaciones y aventuras espontáneas.",
+    "conceptEn": "Generate travel route ideas and random destinations for vacation planning and spontaneous adventures."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-bosque",
+    "slugEn": "forest-name-generator",
+    "category": "fun",
+    "emoji": "🌲",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de bosques, selvas y arboledas para worldbuilding natural, cuentos de hadas y escenarios mágicos.",
+    "conceptEn": "Generate forest, jungle and grove names for natural worldbuilding, fairy tales and magical scenarios."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-idioma-inventado",
+    "slugEn": "constructed-language-name-generator",
+    "category": "fun",
+    "emoji": "🗣️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de idiomas ficticios y lenguas inventadas para worldbuilding lingüístico y culturas alienígenas.",
+    "conceptEn": "Create fictional language and invented tongue names for linguistic worldbuilding and alien cultures."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-tribu",
+    "slugEn": "tribe-name-generator",
+    "category": "fun",
+    "emoji": "🪶",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de tribus, clanes y pueblos ancestrales para worldbuilding cultural y ambientaciones tribales.",
+    "conceptEn": "Generate tribe, clan and ancestral people names for cultural worldbuilding and tribal settings."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-desierto",
+    "slugEn": "desert-name-generator",
+    "category": "fun",
+    "emoji": "🏜️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de desiertos, dunas y páramos áridos para geografía de fantasía y ambientaciones desoladas.",
+    "conceptEn": "Generate desert, dune and arid wasteland names for fantasy geography and desolate settings."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-campana-marketing",
+    "slugEn": "marketing-campaign-name-generator",
+    "category": "marketing",
+    "emoji": "📢",
+    "mode": "combine",
+    "conceptEs": "Genera nombres creativos de campañas de marketing y publicidad que sean memorables y alineados con la marca.",
+    "conceptEn": "Generate creative marketing and advertising campaign names that are memorable and brand-aligned."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-continente",
+    "slugEn": "continent-name-generator",
+    "category": "fun",
+    "emoji": "🗾",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de continentes y masas terrestres para mapas mundiales de fantasía y worldbuilding a gran escala.",
+    "conceptEn": "Generate continent and landmass names for fantasy world maps and large-scale worldbuilding."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-artefacto",
+    "slugEn": "artifact-name-generator",
+    "category": "fun",
+    "emoji": "💎",
+    "mode": "combine",
+    "conceptEs": "Crea nombres místicos de artefactos antiguos, reliquias y objetos mágicos con historia y poder legendario.",
+    "conceptEn": "Create mystical ancient artifact, relic and magical object names with legendary history and power."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-colonia-espacial",
+    "slugEn": "space-colony-name-generator",
+    "category": "fun",
+    "emoji": "🌌",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de colonias espaciales, estaciones orbitales y asentamientos extraplanetarios para narrativa sci-fi.",
+    "conceptEn": "Generate space colony, orbital station and extraplanetary settlement names for sci-fi narrative."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-orden-caballeria",
+    "slugEn": "knightly-order-name-generator",
+    "category": "fun",
+    "emoji": "🛡️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de órdenes de caballería, hermandades nobles y organizaciones de paladines para fantasía medieval.",
+    "conceptEn": "Create knightly order, noble brotherhood and paladin organization names for medieval fantasy."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-empresa-tech",
+    "slugEn": "tech-company-name-generator",
+    "category": "business",
+    "emoji": "💻",
+    "mode": "combine",
+    "conceptEs": "Genera nombres modernos para startups tecnológicas, empresas SaaS y proyectos de innovación digital.",
+    "conceptEn": "Generate modern names for tech startups, SaaS companies and digital innovation projects."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-portal-magico",
+    "slugEn": "magic-portal-name-generator",
+    "category": "fun",
+    "emoji": "🌀",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de portales mágicos, pasajes dimensionales y puertas místicas para fantasía y viajes interdimensionales.",
+    "conceptEn": "Generate magic portal, dimensional passage and mystical gateway names for fantasy and interdimensional travel."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-escuela-magia",
+    "slugEn": "magic-school-name-generator",
+    "category": "fun",
+    "emoji": "🎓",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de academias de magia, escuelas de hechicería y universidades arcanas para worldbuilding educativo.",
+    "conceptEn": "Create magic academy, wizarding school and arcane university names for educational worldbuilding."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-secta",
+    "slugEn": "cult-name-generator",
+    "category": "fun",
+    "emoji": "👁️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres siniestros de sectas, cultos oscuros y sociedades secretas para horror, misterio y thriller.",
+    "conceptEn": "Generate sinister cult, dark society and secret organization names for horror, mystery and thriller."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-ocupacion-fantasia",
+    "slugEn": "fantasy-occupation-name-generator",
+    "category": "fun",
+    "emoji": "⚒️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de oficios y profesiones fantásticas para worldbuilding económico y desarrollo de personajes únicos.",
+    "conceptEn": "Generate fantasy craft and occupation names for economic worldbuilding and unique character development."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-banda-sonora",
+    "slugEn": "soundtrack-title-generator",
+    "category": "content",
+    "emoji": "🎵",
+    "mode": "combine",
+    "conceptEs": "Crea títulos evocadores de bandas sonoras, OSTs y pistas musicales para videojuegos, películas y proyectos audio.",
+    "conceptEn": "Create evocative soundtrack, OST and music track titles for video games, films and audio projects."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-compañia-aeronautica",
+    "slugEn": "airline-name-generator",
+    "category": "business",
+    "emoji": "✈️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de aerolíneas ficticias, líneas aéreas y compañías de aviación para simulaciones y worldbuilding.",
+    "conceptEn": "Generate fictional airline, air carrier and aviation company names for simulations and worldbuilding."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hotel",
+    "slugEn": "hotel-name-generator",
+    "category": "business",
+    "emoji": "🏨",
+    "mode": "combine",
+    "conceptEs": "Crea nombres elegantes de hoteles, resorts y hospedajes que transmitan lujo, confort y destino deseado.",
+    "conceptEn": "Create elegant hotel, resort and lodging names that convey luxury, comfort and desirable destination."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-moneda",
+    "slugEn": "currency-name-generator",
+    "category": "fun",
+    "emoji": "💰",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de monedas ficticias y sistemas monetarios para worldbuilding económico y juegos de comercio.",
+    "conceptEn": "Generate fictional currency and monetary system names for economic worldbuilding and trading games."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-biblioteca",
+    "slugEn": "library-name-generator",
+    "category": "fun",
+    "emoji": "📚",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de bibliotecas antiguas, archivos mágicos y repositorios de conocimiento para ambientaciones eruditas.",
+    "conceptEn": "Create ancient library, magical archive and knowledge repository names for scholarly settings."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-cerveza-artesanal",
+    "slugEn": "craft-beer-name-generator",
+    "category": "fun",
+    "emoji": "🍺",
+    "mode": "combine",
+    "conceptEs": "Genera nombres creativos para cervezas artesanales, variedades IPA y brews que destaquen en el mercado.",
+    "conceptEn": "Generate creative craft beer, IPA variety and brew names that stand out in the market."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-teatro",
+    "slugEn": "theater-name-generator",
+    "category": "fun",
+    "emoji": "🎭",
+    "mode": "combine",
+    "conceptEs": "Genera nombres clásicos de teatros, auditorios y casas de ópera con elegancia y tradición cultural.",
+    "conceptEn": "Generate classic theater, auditorium and opera house names with elegance and cultural tradition."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-podcast-crimen",
+    "slugEn": "true-crime-podcast-name-generator",
+    "category": "content",
+    "emoji": "🔍",
+    "mode": "combine",
+    "conceptEs": "Crea nombres intrigantes para podcasts de crimen real, misterio y casos sin resolver que enganchen oyentes.",
+    "conceptEn": "Create intriguing true crime, mystery and cold case podcast names that hook listeners."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-perfume",
+    "slugEn": "perfume-name-generator",
+    "category": "business",
+    "emoji": "🌸",
+    "mode": "combine",
+    "conceptEs": "Genera nombres evocadores para perfumes, fragancias y líneas de cosméticos que transmitan sensorialidad.",
+    "conceptEn": "Generate evocative perfume, fragrance and cosmetics line names that convey sensoriality."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-joya",
+    "slugEn": "jewelry-piece-name-generator",
+    "category": "business",
+    "emoji": "💍",
+    "mode": "combine",
+    "conceptEs": "Crea nombres lujosos de joyas, colecciones de alta joyería y piezas exclusivas con elegancia.",
+    "conceptEn": "Create luxurious jewelry, fine jewelry collection and exclusive piece names with elegance."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-ritual",
+    "slugEn": "ritual-name-generator",
+    "category": "fun",
+    "emoji": "🕯️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres místicos de rituales, ceremonias ancestrales y prácticas mágicas para worldbuilding religioso.",
+    "conceptEn": "Generate mystical ritual, ancestral ceremony and magical practice names for religious worldbuilding."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-club-nocturno",
+    "slugEn": "nightclub-name-generator",
+    "category": "business",
+    "emoji": "🎉",
+    "mode": "combine",
+    "conceptEs": "Crea nombres vibrantes de clubs nocturnos, discotecas y venues de entretenimiento nocturno.",
+    "conceptEn": "Create vibrant nightclub, discotheque and nighttime entertainment venue names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-tienda-vintage",
+    "slugEn": "vintage-shop-name-generator",
+    "category": "business",
+    "emoji": "🕰️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres nostálgicos de tiendas vintage, anticuarios y boutiques de segunda mano con encanto retro.",
+    "conceptEn": "Create nostalgic vintage store, antique shop and thrift boutique names with retro charm."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-laboratorio",
+    "slugEn": "laboratory-name-generator",
+    "category": "business",
+    "emoji": "🔬",
+    "mode": "combine",
+    "conceptEs": "Genera nombres científicos de laboratorios, centros de investigación y facilities para empresas biotech y farmacéuticas.",
+    "conceptEn": "Generate scientific laboratory, research center and facility names for biotech and pharmaceutical companies."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-montaña-rusa",
+    "slugEn": "roller-coaster-name-generator",
+    "category": "fun",
+    "emoji": "🎢",
+    "mode": "combine",
+    "conceptEs": "Crea nombres emocionantes de montañas rusas y atracciones de parques temáticos que prometan adrenalina.",
+    "conceptEn": "Create thrilling roller coaster and theme park attraction names that promise adrenaline."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-expedicion",
+    "slugEn": "expedition-name-generator",
+    "category": "fun",
+    "emoji": "🧭",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de expediciones científicas, misiones de exploración y aventuras históricas para narrativa épica.",
+    "conceptEn": "Generate scientific expedition, exploration mission and historic adventure names for epic narrative."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-empresa-construccion",
+    "slugEn": "construction-company-name-generator",
+    "category": "business",
+    "emoji": "🏗️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres sólidos de empresas constructoras, contratistas y desarrolladores inmobiliarios que inspiren confianza.",
+    "conceptEn": "Create solid construction company, contractor and real estate developer names that inspire trust."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-orquesta",
+    "slugEn": "orchestra-name-generator",
+    "category": "fun",
+    "emoji": "🎻",
+    "mode": "combine",
+    "conceptEs": "Genera nombres elegantes de orquestas, ensambles musicales y agrupaciones sinfónicas con prestigio.",
+    "conceptEn": "Generate elegant orchestra, musical ensemble and symphonic group names with prestige."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-agencia-viajes",
+    "slugEn": "travel-agency-name-generator",
+    "category": "business",
+    "emoji": "🌍",
+    "mode": "combine",
+    "conceptEs": "Crea nombres atractivos para agencias de viaje, tour operators y servicios turísticos que inspiren wanderlust.",
+    "conceptEn": "Create attractive travel agency, tour operator and tourism service names that inspire wanderlust."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-empresa-seguridad",
+    "slugEn": "security-company-name-generator",
+    "category": "business",
+    "emoji": "🛡️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres profesionales de empresas de seguridad, guardias y servicios de protección que transmitan confiabilidad.",
+    "conceptEn": "Generate professional security company, guard and protection service names that convey reliability."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-marca-moda",
+    "slugEn": "fashion-brand-name-generator",
+    "category": "business",
+    "emoji": "👗",
+    "mode": "combine",
+    "conceptEs": "Crea nombres chic de marcas de moda, líneas de ropa y diseñadores que suenen haute couture.",
+    "conceptEn": "Create chic fashion brand, clothing line and designer names that sound haute couture."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-editorial",
+    "slugEn": "publishing-house-name-generator",
+    "category": "business",
+    "emoji": "📖",
+    "mode": "combine",
+    "conceptEs": "Genera nombres distinguidos de editoriales, casas de publicación y sellos literarios con tradición intelectual.",
+    "conceptEn": "Generate distinguished publishing house, press and literary imprint names with intellectual tradition."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-consultora",
+    "slugEn": "consulting-firm-name-generator",
+    "category": "business",
+    "emoji": "💼",
+    "mode": "combine",
+    "conceptEs": "Crea nombres corporativos de consultoras, firmas de asesoría y empresas de estrategia con autoridad profesional.",
+    "conceptEn": "Create corporate consulting, advisory firm and strategy company names with professional authority."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-firma-legal",
+    "slugEn": "law-firm-name-generator",
+    "category": "business",
+    "emoji": "⚖️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de bufetes de abogados, firmas legales y estudios jurídicos que transmitan expertise y seriedad.",
+    "conceptEn": "Generate law office, legal firm and attorney practice names that convey expertise and seriousness."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-clinica",
+    "slugEn": "clinic-name-generator",
+    "category": "business",
+    "emoji": "🏥",
+    "mode": "combine",
+    "conceptEs": "Crea nombres acogedores de clínicas médicas, centros de salud y consultorios que inspiren bienestar.",
+    "conceptEn": "Create welcoming medical clinic, health center and practice names that inspire wellness."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-fundacion",
+    "slugEn": "foundation-name-generator",
+    "category": "business",
+    "emoji": "🤲",
+    "mode": "combine",
+    "conceptEs": "Crea nombres nobles de fundaciones, ONGs y organizaciones sin fines de lucro con propósito social claro.",
+    "conceptEn": "Create noble foundation, NGO and nonprofit organization names with clear social purpose."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-catering",
+    "slugEn": "catering-company-name-generator",
+    "category": "business",
+    "emoji": "🍽️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres apetitosos de empresas de catering y servicios de banquetes que prometan experiencia culinaria.",
+    "conceptEn": "Create appetizing catering company and banquet service names that promise culinary experience."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-estudio-danza",
+    "slugEn": "dance-studio-name-generator",
+    "category": "business",
+    "emoji": "💃",
+    "mode": "combine",
+    "conceptEs": "Genera nombres dinámicos de academias de danza, escuelas de baile y estudios coreográficos con ritmo.",
+    "conceptEn": "Generate dynamic dance academy, dance school and choreography studio names with rhythm."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-granja",
+    "slugEn": "farm-name-generator",
+    "category": "business",
+    "emoji": "🌾",
+    "mode": "combine",
+    "conceptEs": "Crea nombres bucólicos de granjas, ranchos y fincas agrícolas que evoquen vida rural y tradición.",
+    "conceptEn": "Create bucolic farm, ranch and agricultural estate names that evoke rural life and tradition."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-bodega",
+    "slugEn": "winery-name-generator",
+    "category": "business",
+    "emoji": "🍇",
+    "mode": "combine",
+    "conceptEs": "Genera nombres elegantes de bodegas vitivinícolas y viñedos que transmitan pasión por el vino artesanal.",
+    "conceptEn": "Generate elegant winery and vineyard names that convey passion for artisanal wine."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-floristeria",
+    "slugEn": "flower-shop-name-generator",
+    "category": "business",
+    "emoji": "💐",
+    "mode": "combine",
+    "conceptEs": "Crea nombres florales de floristerías y boutiques de flores que evoquen belleza natural y frescura.",
+    "conceptEn": "Create floral flower shop and flower boutique names that evoke natural beauty and freshness."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-libreria",
+    "slugEn": "bookstore-name-generator",
+    "category": "business",
+    "emoji": "📚",
+    "mode": "combine",
+    "conceptEs": "Crea nombres acogedores de librerías independientes y tiendas de libros que inviten a explorar.",
+    "conceptEn": "Create cozy independent bookstore and book shop names that invite exploration."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-museo",
+    "slugEn": "museum-name-generator",
+    "category": "business",
+    "emoji": "🏛️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres culturales de museos, galerías y centros de patrimonio con gravitas institucional.",
+    "conceptEn": "Generate cultural museum, gallery and heritage center names with institutional gravitas."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-galeria-gaming",
+    "slugEn": "gaming-lounge-name-generator",
+    "category": "business",
+    "emoji": "🎮",
+    "mode": "combine",
+    "conceptEs": "Crea nombres épicos de gaming lounges, cibercafés y espacios de esports para comunidad gamer.",
+    "conceptEn": "Create epic gaming lounge, cyber cafe and esports venue names for gaming community."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-refugio-animales",
+    "slugEn": "animal-shelter-name-generator",
+    "category": "business",
+    "emoji": "🐾",
+    "mode": "combine",
+    "conceptEs": "Genera nombres compasivos de refugios de animales y organizaciones de rescate que inspiren adopción.",
+    "conceptEn": "Generate compassionate animal shelter and rescue organization names that inspire adoption."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-lavanderia",
+    "slugEn": "laundromat-name-generator",
+    "category": "business",
+    "emoji": "🧺",
+    "mode": "combine",
+    "conceptEs": "Crea nombres frescos de lavanderías y servicios de lavandería que transmitan limpieza y eficiencia.",
+    "conceptEn": "Create fresh laundromat and laundry service names that convey cleanliness and efficiency."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-guarderia",
+    "slugEn": "daycare-name-generator",
+    "category": "business",
+    "emoji": "👶",
+    "mode": "combine",
+    "conceptEs": "Genera nombres tiernos de guarderías infantiles y centros de cuidado que inspiren confianza parental.",
+    "conceptEn": "Generate tender daycare and childcare center names that inspire parental trust."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-taller-mecanico",
+    "slugEn": "auto-shop-name-generator",
+    "category": "business",
+    "emoji": "🔧",
+    "mode": "combine",
+    "conceptEs": "Crea nombres confiables de talleres mecánicos y servicios automotrices que prometan expertise técnico.",
+    "conceptEn": "Create reliable auto shop and automotive service names that promise technical expertise."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-biohackers",
+    "slugEn": "biohacker-alias-generator",
+    "category": "tech",
+    "emoji": "🧬",
+    "mode": "combine",
+    "conceptEs": "Genera alias futuristas para biohackers, transhumanistas y entusiastas de mejora humana con edge tecnológico.",
+    "conceptEn": "Generate futuristic aliases for biohackers, transhumanists and human enhancement enthusiasts with tech edge."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hacker-etico",
+    "slugEn": "hacker-handle-generator",
+    "category": "tech",
+    "emoji": "💻",
+    "mode": "combine",
+    "conceptEs": "Crea handles y alias de hackers éticos para CTFs, competencias de seguridad y comunidades infosec.",
+    "conceptEn": "Create ethical hacker handles and aliases for CTFs, security competitions and infosec communities."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-carrera-universitaria",
+    "slugEn": "university-major-generator",
+    "category": "fun",
+    "emoji": "🎓",
+    "mode": "combine",
+    "conceptEs": "Genera nombres ficticios de carreras y programas universitarios para worldbuilding académico y parodias educativas.",
+    "conceptEn": "Generate fictional university major and program names for academic worldbuilding and educational parodies."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-enfermedad-ficticia",
+    "slugEn": "fictional-disease-name-generator",
+    "category": "fun",
+    "emoji": "🦠",
+    "mode": "combine",
+    "conceptEs": "Crea nombres médicos de enfermedades ficticias para ciencia ficción, thrillers médicos y narrativa pandémica.",
+    "conceptEn": "Create medical fictional disease names for science fiction, medical thrillers and pandemic narrative."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-droga-ficticia",
+    "slugEn": "fictional-drug-name-generator",
+    "category": "fun",
+    "emoji": "💊",
+    "mode": "combine",
+    "conceptEs": "Genera nombres farmacéuticos de medicamentos ficticios para narrativa médica, sci-fi y sátira corporativa.",
+    "conceptEn": "Generate pharmaceutical fictional medication names for medical narrative, sci-fi and corporate satire."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-sindicato",
+    "slugEn": "syndicate-name-generator",
+    "category": "fun",
+    "emoji": "🕴️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres siniestros de sindicatos criminales, organizaciones clandestinas y carteles para noir y thriller.",
+    "conceptEn": "Create sinister criminal syndicate, underground organization and cartel names for noir and thriller."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-corporacion-malvada",
+    "slugEn": "evil-corporation-name-generator",
+    "category": "fun",
+    "emoji": "🏢",
+    "mode": "combine",
+    "conceptEs": "Genera nombres corporativos con aura siniestra para megacorporaciones distópicas y villanos empresariales.",
+    "conceptEn": "Generate corporate names with sinister aura for dystopian megacorps and business villains."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-equipo-policiaco",
+    "slugEn": "police-unit-name-generator",
+    "category": "fun",
+    "emoji": "👮",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de unidades policiales especiales, task forces y divisiones para procedurales y thrillers policiales.",
+    "conceptEn": "Create special police unit, task force and division names for procedurals and police thrillers."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-equipo-militar",
+    "slugEn": "military-unit-name-generator",
+    "category": "fun",
+    "emoji": "🪖",
+    "mode": "combine",
+    "conceptEs": "Genera nombres tácticos de unidades militares, escuadrones y divisiones de élite con autoridad castrense.",
+    "conceptEn": "Generate tactical military unit, squadron and elite division names with martial authority."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-agencia-espionaje",
+    "slugEn": "spy-agency-name-generator",
+    "category": "fun",
+    "emoji": "🕵️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres encubiertos de agencias de espionaje, servicios de inteligencia y organizaciones clandestinas.",
+    "conceptEn": "Create covert spy agency, intelligence service and clandestine organization names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-laboratorio-secreto",
+    "slugEn": "secret-lab-name-generator",
+    "category": "fun",
+    "emoji": "🧪",
+    "mode": "combine",
+    "conceptEs": "Genera nombres misteriosos de laboratorios secretos, facilities clasificados y centros de investigación ocultos.",
+    "conceptEn": "Generate mysterious secret laboratory, classified facility and hidden research center names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-experimento",
+    "slugEn": "experiment-codename-generator",
+    "category": "fun",
+    "emoji": "🔬",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de código para experimentos científicos clasificados y proyectos de investigación secretos.",
+    "conceptEn": "Create codenames for classified scientific experiments and secret research projects."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-protocolo-secreto",
+    "slugEn": "classified-protocol-name-generator",
+    "category": "fun",
+    "emoji": "📋",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de protocolos clasificados, procedimientos secretos y directivas gubernamentales encubiertas.",
+    "conceptEn": "Create classified protocol, secret procedure and covert government directive names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-satelite",
+    "slugEn": "satellite-name-generator",
+    "category": "fun",
+    "emoji": "🛰️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres técnicos de satélites, sondas espaciales y tecnología orbital para narrativa aeroespacial.",
+    "conceptEn": "Generate technical satellite, space probe and orbital technology names for aerospace narrative."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-algoritmo",
+    "slugEn": "algorithm-name-generator",
+    "category": "tech",
+    "emoji": "📊",
+    "mode": "combine",
+    "conceptEs": "Genera nombres técnicos de algoritmos, modelos ML y sistemas de predicción con resonancia científica.",
+    "conceptEn": "Generate technical algorithm, ML model and prediction system names with scientific resonance."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-base-militar",
+    "slugEn": "military-base-name-generator",
+    "category": "fun",
+    "emoji": "🏰",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de bases militares, instalaciones de defensa y fortalezas estratégicas con autoridad geopolítica.",
+    "conceptEn": "Create military base, defense installation and strategic fortress names with geopolitical authority."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-bunker",
+    "slugEn": "bunker-name-generator",
+    "category": "fun",
+    "emoji": "🏚️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de búnkers subterráneos, refugios apocalípticos y shelters para escenarios post-apocalípticos.",
+    "conceptEn": "Generate underground bunker, apocalyptic shelter and survival vault names for post-apocalyptic scenarios."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-operacion-encubierta",
+    "slugEn": "covert-operation-name-generator",
+    "category": "fun",
+    "emoji": "🎯",
+    "mode": "combine",
+    "conceptEs": "Crea nombres clasificados de operaciones encubiertas, misiones black-ops y acciones clandestinas.",
+    "conceptEn": "Create classified covert operation, black-ops mission and clandestine action names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-campamento-verano",
+    "slugEn": "summer-camp-name-generator",
+    "category": "fun",
+    "emoji": "🏕️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres nostálgicos de campamentos de verano, camps juveniles y retiros outdoor con espíritu aventurero.",
+    "conceptEn": "Generate nostalgic summer camp, youth camp and outdoor retreat names with adventurous spirit."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-fraternidad",
+    "slugEn": "fraternity-name-generator",
+    "category": "fun",
+    "emoji": "🎓",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de fraternidades y sororidades universitarias con letras griegas y tradición académica.",
+    "conceptEn": "Create fraternity and sorority names with Greek letters and academic tradition."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-club-secreto",
+    "slugEn": "secret-society-name-generator",
+    "category": "fun",
+    "emoji": "🔐",
+    "mode": "combine",
+    "conceptEs": "Genera nombres misteriosos de sociedades secretas, clubes exclusivos y hermandades ocultas con aura enigmática.",
+    "conceptEn": "Generate mysterious secret society, exclusive club and hidden brotherhood names with enigmatic aura."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-banda-punk",
+    "slugEn": "punk-band-name-generator",
+    "category": "fun",
+    "emoji": "🎸",
+    "mode": "combine",
+    "conceptEs": "Crea nombres rebeldes de bandas punk, grupos hardcore y proyectos de música alternativa con actitud.",
+    "conceptEn": "Create rebellious punk band, hardcore group and alternative music project names with attitude."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-banda-metal",
+    "slugEn": "metal-band-name-generator",
+    "category": "fun",
+    "emoji": "🤘",
+    "mode": "combine",
+    "conceptEs": "Genera nombres épicos de bandas de metal, death metal y heavy metal con oscuridad y poder.",
+    "conceptEn": "Generate epic metal, death metal and heavy metal band names with darkness and power."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-zine",
+    "slugEn": "zine-name-generator",
+    "category": "content",
+    "emoji": "📰",
+    "mode": "combine",
+    "conceptEs": "Crea nombres underground de fanzines, publicaciones indie y revistas alternativas con espíritu DIY.",
+    "conceptEn": "Create underground fanzine, indie publication and alternative magazine names with DIY spirit."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-subcultura",
+    "slugEn": "subculture-name-generator",
+    "category": "fun",
+    "emoji": "🎭",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de subculturas inventadas, movimientos contraculturales y tribus urbanas para worldbuilding social.",
+    "conceptEn": "Generate invented subculture, countercultural movement and urban tribe names for social worldbuilding."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-teoria-conspiracion",
+    "slugEn": "conspiracy-theory-name-generator",
+    "category": "fun",
+    "emoji": "👁️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de teorías conspirativas ficticias y explicaciones alternativas para sátira y ficción especulativa.",
+    "conceptEn": "Create fictional conspiracy theory and alternative explanation names for satire and speculative fiction."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-dimension-bolsillo",
+    "slugEn": "pocket-dimension-name-generator",
+    "category": "fun",
+    "emoji": "🌌",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de dimensiones de bolsillo, espacios extradimensionales y realidades miniatura para fantasía.",
+    "conceptEn": "Generate pocket dimension, extradimensional space and miniature reality names for fantasy."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-refugio-zombie",
+    "slugEn": "zombie-shelter-name-generator",
+    "category": "fun",
+    "emoji": "🧟",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de refugios anti-zombies, safe zones y bastiones supervivenciales para apocalipsis zombi.",
+    "conceptEn": "Create zombie shelter, safe zone and survival stronghold names for zombie apocalypse."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-faccion-apocaliptica",
+    "slugEn": "post-apocalyptic-faction-name-generator",
+    "category": "fun",
+    "emoji": "☢️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de facciones post-apocalípticas, clanes wasteland y grupos supervivientes en mundos caídos.",
+    "conceptEn": "Generate post-apocalyptic faction, wasteland clan and survivor group names in fallen worlds."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-mutante",
+    "slugEn": "mutant-name-generator",
+    "category": "fun",
+    "emoji": "☢️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de mutantes, seres irradiados y criaturas post-nucleares para escenarios apocalípticos.",
+    "conceptEn": "Create mutant, irradiated being and post-nuclear creature names for apocalyptic scenarios."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-cyborg",
+    "slugEn": "cyborg-name-generator",
+    "category": "fun",
+    "emoji": "🦾",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de cyborgs, seres biotech y humanos aumentados para cyberpunk y ciencia ficción transhumanista.",
+    "conceptEn": "Generate cyborg, biotech being and augmented human names for cyberpunk and transhumanist sci-fi."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-androide",
+    "slugEn": "android-name-generator",
+    "category": "fun",
+    "emoji": "🤖",
+    "mode": "combine",
+    "conceptEs": "Crea designaciones de androides, unidades sintéticas y robots humanoides con nomenclatura técnica.",
+    "conceptEn": "Create android designation, synthetic unit and humanoid robot names with technical nomenclature."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-bar-espacial",
+    "slugEn": "space-bar-name-generator",
+    "category": "fun",
+    "emoji": "🍸",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de bares espaciales, cantinas intergalácticas y watering holes cósmicos estilo Star Wars.",
+    "conceptEn": "Generate space bar, intergalactic cantina and cosmic watering hole names Star Wars style."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-mercado-negro",
+    "slugEn": "black-market-name-generator",
+    "category": "fun",
+    "emoji": "🏴",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de mercados negros, bazares clandestinos y hubs de contrabando para noir y cyberpunk.",
+    "conceptEn": "Create black market, clandestine bazaar and smuggling hub names for noir and cyberpunk."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-pirata-espacial",
+    "slugEn": "space-pirate-name-generator",
+    "category": "fun",
+    "emoji": "🏴‍☠️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de piratas espaciales, corsarios cósmicos y saqueadores interestelares con espíritu rebelde.",
+    "conceptEn": "Generate space pirate, cosmic corsair and interstellar raider names with rebel spirit."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-cazarrecompensas",
+    "slugEn": "bounty-hunter-name-generator",
+    "category": "fun",
+    "emoji": "🎯",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de cazarrecompensas, mercenarios y hunters profesionales para westerns espaciales y cyberpunk.",
+    "conceptEn": "Create bounty hunter, mercenary and professional hunter names for space westerns and cyberpunk."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-contrabandista",
+    "slugEn": "smuggler-name-generator",
+    "category": "fun",
+    "emoji": "📦",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de contrabandistas, traficantes y runners del underworld con aire de peligro calculado.",
+    "conceptEn": "Generate smuggler, trafficker and underworld runner names with calculated danger air."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-piloto",
+    "slugEn": "pilot-callsign-generator",
+    "category": "fun",
+    "emoji": "✈️",
+    "mode": "combine",
+    "conceptEs": "Crea callsigns y aliases de pilotos militares, aviadores y aces del aire con tradición aeronáutica.",
+    "conceptEn": "Create pilot callsign and military aviator aliases with aeronautical tradition."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-comandante",
+    "slugEn": "commander-name-generator",
+    "category": "fun",
+    "emoji": "⭐",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de comandantes militares, generales y líderes tácticos con autoridad estratégica.",
+    "conceptEn": "Generate military commander, general and tactical leader names with strategic authority."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-diplomático",
+    "slugEn": "diplomat-name-generator",
+    "category": "fun",
+    "emoji": "🤝",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de diplomáticos, embajadores y negociadores intergalácticos con gravitas política.",
+    "conceptEn": "Create diplomat, ambassador and intergalactic negotiator names with political gravitas."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-alquimista",
+    "slugEn": "alchemist-name-generator",
+    "category": "fun",
+    "emoji": "⚗️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de alquimistas místicos, transmutadores y maestros de las artes herméticas.",
+    "conceptEn": "Create mystical alchemist, transmuter and hermetic arts master names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-nigromante",
+    "slugEn": "necromancer-name-generator",
+    "category": "fun",
+    "emoji": "💀",
+    "mode": "combine",
+    "conceptEs": "Genera nombres oscuros de nigromantes, invocadores de muertos y maestros de magia prohibida.",
+    "conceptEn": "Generate dark necromancer, death summoner and forbidden magic master names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-druida",
+    "slugEn": "druid-name-generator",
+    "category": "fun",
+    "emoji": "🌿",
+    "mode": "combine",
+    "conceptEs": "Crea nombres naturales de druidas, guardianes del bosque y chamanes conectados con la tierra.",
+    "conceptEn": "Create natural druid, forest guardian and earth-connected shaman names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-monje",
+    "slugEn": "monk-name-generator",
+    "category": "fun",
+    "emoji": "🙏",
+    "mode": "combine",
+    "conceptEs": "Genera nombres serenos de monjes, maestros marciales y ascetas en búsqueda de iluminación.",
+    "conceptEn": "Generate serene monk, martial master and enlightenment-seeking ascetic names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-bardo",
+    "slugEn": "bard-name-generator",
+    "category": "fun",
+    "emoji": "🎻",
+    "mode": "combine",
+    "conceptEs": "Crea nombres melodiosos de bardos, trovadores y músicos itinerantes con carisma narrativo.",
+    "conceptEn": "Create melodious bard, troubadour and traveling musician names with narrative charisma."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-ladron",
+    "slugEn": "rogue-name-generator",
+    "category": "fun",
+    "emoji": "🗡️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres furtivos de ladrones, pícaros y maestros del sigilo con astucia criminal.",
+    "conceptEn": "Generate stealthy thief, rogue and stealth master names with criminal cunning."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-ranger",
+    "slugEn": "ranger-name-generator",
+    "category": "fun",
+    "emoji": "🏹",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de rangers solitarios, exploradores wilderness y protectores de las fronteras salvajes.",
+    "conceptEn": "Create lone ranger, wilderness explorer and wild frontier protector names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-clerigo",
+    "slugEn": "cleric-name-generator",
+    "category": "fun",
+    "emoji": "⛪",
+    "mode": "combine",
+    "conceptEs": "Genera nombres sagrados de clérigos, sanadores divinos y sirvientes de poderes superiores.",
+    "conceptEn": "Generate sacred cleric, divine healer and higher power servant names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hechicero",
+    "slugEn": "sorcerer-name-generator",
+    "category": "fun",
+    "emoji": "🔮",
+    "mode": "combine",
+    "conceptEs": "Crea nombres místicos de hechiceros, magos innatos y canalizadores de poder arcano natural.",
+    "conceptEn": "Create mystical sorcerer, innate mage and natural arcane power channeler names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-brujo-warlock",
+    "slugEn": "warlock-name-generator",
+    "category": "fun",
+    "emoji": "😈",
+    "mode": "combine",
+    "conceptEs": "Genera nombres oscuros de warlocks con pactos, sirvientes de entidades y usuarios de magia pactada.",
+    "conceptEn": "Generate dark warlock with pact, entity servant and pact magic user names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-paladin",
+    "slugEn": "paladin-name-generator",
+    "category": "fun",
+    "emoji": "⚔️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres nobles de paladines, caballeros sagrados y guerreros del bien con honor inquebrantable.",
+    "conceptEn": "Create noble paladin, holy knight and good warrior names with unwavering honor."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-barbaro",
+    "slugEn": "barbarian-name-generator",
+    "category": "fun",
+    "emoji": "🪓",
+    "mode": "combine",
+    "conceptEs": "Genera nombres salvajes de bárbaros, guerreros tribales y berserkers con furia primordial.",
+    "conceptEn": "Generate savage barbarian, tribal warrior and berserker names with primal fury."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-artifice",
+    "slugEn": "artificer-name-generator",
+    "category": "fun",
+    "emoji": "⚙️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres técnicos de artífices, ingenieros mágicos y constructores de maravillas arcano-tecnológicas.",
+    "conceptEn": "Create technical artificer, magical engineer and arcano-technological marvel builder names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-invocador",
+    "slugEn": "summoner-name-generator",
+    "category": "fun",
+    "emoji": "✨",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de invocadores, conjuradores de entidades y maestros del llamado planar.",
+    "conceptEn": "Generate summoner, entity conjurer and planar calling master names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-cambiaformas",
+    "slugEn": "shapeshifter-name-generator",
+    "category": "fun",
+    "emoji": "🦊",
+    "mode": "combine",
+    "conceptEs": "Crea nombres fluidos de cambiaformas, metamorfos y criaturas de identidad mutable.",
+    "conceptEn": "Create fluid shapeshifter, metamorph and mutable identity creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-licántropo",
+    "slugEn": "lycanthrope-name-generator",
+    "category": "fun",
+    "emoji": "🐺",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de licántropos, hombres lobo y criaturas con maldición de transformación lunar.",
+    "conceptEn": "Generate lycanthrope, werewolf and lunar transformation curse creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-vampiro",
+    "slugEn": "vampire-name-generator",
+    "category": "fun",
+    "emoji": "🧛",
+    "mode": "combine",
+    "conceptEs": "Crea nombres aristocráticos de vampiros, no-muertos elegantes y criaturas de la noche inmortales.",
+    "conceptEn": "Create aristocratic vampire, elegant undead and immortal creature of the night names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-goblin",
+    "slugEn": "goblin-name-generator",
+    "category": "fun",
+    "emoji": "👺",
+    "mode": "combine",
+    "conceptEs": "Crea nombres traviesos de goblins, criaturas pequeñas y seres de travesuras caóticas.",
+    "conceptEn": "Create mischievous goblin, small creature and chaotic mischief being names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-troll",
+    "slugEn": "troll-name-generator",
+    "category": "fun",
+    "emoji": "🧌",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de trolls, gigantes brutales y criaturas de puentes y montañas.",
+    "conceptEn": "Generate troll, brutal giant and bridge and mountain creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hada",
+    "slugEn": "fairy-name-generator",
+    "category": "fun",
+    "emoji": "🧚",
+    "mode": "combine",
+    "conceptEs": "Crea nombres delicados de hadas, espíritus del bosque y criaturas mágicas diminutas.",
+    "conceptEn": "Create delicate fairy, forest spirit and tiny magical creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-demonio",
+    "slugEn": "demon-name-generator",
+    "category": "fun",
+    "emoji": "😈",
+    "mode": "combine",
+    "conceptEs": "Genera nombres infernales de demonios, criaturas del abismo y entidades malignas planares.",
+    "conceptEn": "Generate infernal demon, abyss creature and planar malevolent entity names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-angel",
+    "slugEn": "angel-name-generator",
+    "category": "fun",
+    "emoji": "👼",
+    "mode": "combine",
+    "conceptEs": "Crea nombres celestiales de ángeles, mensajeros divinos y seres de luz y virtud.",
+    "conceptEn": "Create celestial angel, divine messenger and light and virtue being names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-centauro",
+    "slugEn": "centaur-name-generator",
+    "category": "fun",
+    "emoji": "🏹",
+    "mode": "combine",
+    "conceptEs": "Genera nombres nobles de centauros, híbridos humano-caballo y criaturas de praderas místicas.",
+    "conceptEn": "Generate noble centaur, human-horse hybrid and mystical prairie creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-minotauro",
+    "slugEn": "minotaur-name-generator",
+    "category": "fun",
+    "emoji": "🐂",
+    "mode": "combine",
+    "conceptEs": "Crea nombres poderosos de minotauros, híbridos toro-humano y guardianes de laberintos.",
+    "conceptEn": "Create powerful minotaur, bull-human hybrid and labyrinth guardian names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-sirena",
+    "slugEn": "mermaid-name-generator",
+    "category": "fun",
+    "emoji": "🧜",
+    "mode": "combine",
+    "conceptEs": "Genera nombres acuáticos de sirenas, criaturas marinas y habitantes del océano profundo.",
+    "conceptEn": "Generate aquatic mermaid, sea creature and deep ocean dweller names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-fenix",
+    "slugEn": "phoenix-name-generator",
+    "category": "fun",
+    "emoji": "🔥",
+    "mode": "combine",
+    "conceptEs": "Crea nombres ardientes de fénix, aves de fuego y criaturas de renacimiento inmortal.",
+    "conceptEn": "Create blazing phoenix, fire bird and immortal rebirth creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-grifo",
+    "slugEn": "griffin-name-generator",
+    "category": "fun",
+    "emoji": "🦅",
+    "mode": "combine",
+    "conceptEs": "Genera nombres majestuosos de grifos, híbridos águila-león y guardianes aéreos nobles.",
+    "conceptEn": "Generate majestic griffin, eagle-lion hybrid and noble aerial guardian names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hidra",
+    "slugEn": "hydra-name-generator",
+    "category": "fun",
+    "emoji": "🐉",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de hidras multi-cabeza, serpientes regenerativas y monstruos acuáticos legendarios.",
+    "conceptEn": "Create multi-headed hydra, regenerative serpent and legendary aquatic monster names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-quimera",
+    "slugEn": "chimera-name-generator",
+    "category": "fun",
+    "emoji": "🦁",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de quimeras, híbridos multi-animales y aberraciones de fusión biológica.",
+    "conceptEn": "Generate chimera, multi-animal hybrid and biological fusion aberration names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-basilisco",
+    "slugEn": "basilisk-name-generator",
+    "category": "fun",
+    "emoji": "🐍",
+    "mode": "combine",
+    "conceptEs": "Crea nombres venenosos de basiliscos, serpientes legendarias y criaturas de mirada petrificante.",
+    "conceptEn": "Create venomous basilisk, legendary serpent and petrifying gaze creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-kraken",
+    "slugEn": "kraken-name-generator",
+    "category": "fun",
+    "emoji": "🦑",
+    "mode": "combine",
+    "conceptEs": "Genera nombres abisales de krakens, leviatanes marinos y monstruos de las profundidades oceánicas.",
+    "conceptEn": "Generate abyssal kraken, sea leviathan and oceanic depth monster names."
+  },
+  {
+    "slugEs": "generador-de-cron-humano",
+    "slugEn": "human-readable-cron-generator",
+    "category": "tools",
+    "emoji": "⏰",
+    "mode": "pick",
+    "conceptEs": "Convierte expresiones cron en lenguaje natural (ej: '0 9 * * 1-5' → 'Todos los días laborables a las 9 AM')",
+    "conceptEn": "Converts cron expressions to human-readable language (e.g., '0 9 * * 1-5' → 'Every weekday at 9 AM')"
+  },
+  {
+    "slugEs": "generador-de-changelog",
+    "slugEn": "changelog-generator",
+    "category": "work",
+    "emoji": "📋",
+    "mode": "pick",
+    "conceptEs": "Genera entradas estructuradas de changelog con categorías (Added, Fixed, Changed, Deprecated) para releases",
+    "conceptEn": "Generates structured changelog entries with categories (Added, Fixed, Changed, Deprecated) for releases"
+  },
+  {
+    "slugEs": "generador-de-http-headers",
+    "slugEn": "http-header-generator",
+    "category": "tech",
+    "emoji": "🔐",
+    "mode": "pick",
+    "conceptEs": "Genera headers HTTP de seguridad (CSP, HSTS, X-Frame-Options) con valores recomendados para proteger apps",
+    "conceptEn": "Generates security HTTP headers (CSP, HSTS, X-Frame-Options) with recommended values to protect apps"
+  },
+  {
+    "slugEs": "generador-de-schema-markup",
+    "slugEn": "schema-markup-generator",
+    "category": "marketing",
+    "emoji": "🏷️",
+    "mode": "pick",
+    "conceptEs": "Crea código JSON-LD de Schema.org para artículos, productos, eventos, FAQs y organizaciones (SEO)",
+    "conceptEn": "Creates Schema.org JSON-LD code for articles, products, events, FAQs, and organizations (SEO)"
+  },
+  {
+    "slugEs": "generador-de-casos-de-prueba",
+    "slugEn": "test-case-generator",
+    "category": "work",
+    "emoji": "✅",
+    "mode": "pick",
+    "conceptEs": "Genera casos de prueba QA con pasos, datos esperados y criterios de aceptación para features",
+    "conceptEn": "Generates QA test cases with steps, expected data, and acceptance criteria for features"
+  },
+  {
+    "slugEs": "generador-de-politica-de-privacidad",
+    "slugEn": "privacy-policy-generator",
+    "category": "work",
+    "emoji": "🔒",
+    "mode": "pick",
+    "conceptEs": "Genera plantilla básica de política de privacidad con secciones GDPR, cookies y derechos del usuario",
+    "conceptEn": "Generates basic privacy policy template with GDPR sections, cookies, and user rights"
+  },
+  {
+    "slugEs": "generador-de-terminos-y-condiciones",
+    "slugEn": "terms-and-conditions-generator",
+    "category": "work",
+    "emoji": "📄",
+    "mode": "pick",
+    "conceptEs": "Crea plantilla de términos y condiciones con cláusulas de uso, limitaciones y responsabilidad",
+    "conceptEn": "Creates terms and conditions template with usage clauses, limitations, and liability"
+  },
+  {
+    "slugEs": "generador-de-roadmap-producto",
+    "slugEn": "product-roadmap-generator",
+    "category": "work",
+    "emoji": "🗺️",
+    "mode": "pick",
+    "conceptEs": "Genera estructura de roadmap trimestral con milestones, features y dependencias para productos",
+    "conceptEn": "Generates quarterly roadmap structure with milestones, features, and dependencies for products"
+  },
+  {
+    "slugEs": "generador-de-user-story",
+    "slugEn": "user-story-generator",
+    "category": "work",
+    "emoji": "👤",
+    "mode": "pick",
+    "conceptEs": "Crea user stories formato 'Como [rol] quiero [acción] para [beneficio]' con criterios de aceptación",
+    "conceptEn": "Creates user stories in format 'As a [role] I want [action] so that [benefit]' with acceptance criteria"
+  },
+  {
+    "slugEs": "generador-de-wireframe-texto",
+    "slugEn": "text-wireframe-generator",
+    "category": "design",
+    "emoji": "📐",
+    "mode": "pick",
+    "conceptEs": "Genera wireframes ASCII art de layouts web (header, sidebar, content, footer) para mockups rápidos",
+    "conceptEn": "Generates ASCII art wireframes of web layouts (header, sidebar, content, footer) for quick mockups"
+  },
+  {
+    "slugEs": "generador-de-componentes-atomic",
+    "slugEn": "atomic-component-name-generator",
+    "category": "tech",
+    "emoji": "⚛️",
+    "mode": "pick",
+    "conceptEs": "Genera nombres de componentes React/Vue siguiendo Atomic Design (atoms, molecules, organisms)",
+    "conceptEn": "Generates React/Vue component names following Atomic Design (atoms, molecules, organisms)"
+  },
+  {
+    "slugEs": "generador-de-json-web-token",
+    "slugEn": "jwt-generator",
+    "category": "security",
+    "emoji": "🎫",
+    "mode": "combine",
+    "conceptEs": "Crea JWT de prueba con payload personalizable y firma HS256 para testing de APIs",
+    "conceptEn": "Creates test JWTs with customizable payload and HS256 signature for API testing"
+  },
+  {
+    "slugEs": "generador-de-datos-de-tarjeta-luhn",
+    "slugEn": "luhn-valid-card-generator",
+    "category": "data",
+    "emoji": "💳",
+    "mode": "pick",
+    "conceptEs": "Genera números de tarjeta que pasan validación Luhn (sin valor real) para tests de checkout",
+    "conceptEn": "Generates card numbers that pass Luhn validation (no real value) for checkout tests"
+  },
+  {
+    "slugEs": "generador-de-curl-a-codigo",
+    "slugEn": "curl-to-code-generator",
+    "category": "tech",
+    "emoji": "🔄",
+    "mode": "pick",
+    "conceptEs": "Convierte comandos cURL en código Python, JavaScript, PHP o Ruby para requests HTTP",
+    "conceptEn": "Converts cURL commands to Python, JavaScript, PHP, or Ruby code for HTTP requests"
+  }
+]

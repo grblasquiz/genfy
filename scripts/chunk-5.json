@@ -1,0 +1,164 @@
+[
+  {
+    "slugEs": "generador-de-nombres-de-clinica",
+    "slugEn": "clinic-name-generator",
+    "category": "business",
+    "emoji": "🏥",
+    "mode": "combine",
+    "conceptEs": "Crea nombres acogedores de clínicas médicas, centros de salud y consultorios que inspiren bienestar.",
+    "conceptEn": "Create welcoming medical clinic, health center and practice names that inspire wellness."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-fundacion",
+    "slugEn": "foundation-name-generator",
+    "category": "business",
+    "emoji": "🤲",
+    "mode": "combine",
+    "conceptEs": "Crea nombres nobles de fundaciones, ONGs y organizaciones sin fines de lucro con propósito social claro.",
+    "conceptEn": "Create noble foundation, NGO and nonprofit organization names with clear social purpose."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-catering",
+    "slugEn": "catering-company-name-generator",
+    "category": "business",
+    "emoji": "🍽️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres apetitosos de empresas de catering y servicios de banquetes que prometan experiencia culinaria.",
+    "conceptEn": "Create appetizing catering company and banquet service names that promise culinary experience."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-estudio-danza",
+    "slugEn": "dance-studio-name-generator",
+    "category": "business",
+    "emoji": "💃",
+    "mode": "combine",
+    "conceptEs": "Genera nombres dinámicos de academias de danza, escuelas de baile y estudios coreográficos con ritmo.",
+    "conceptEn": "Generate dynamic dance academy, dance school and choreography studio names with rhythm."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-granja",
+    "slugEn": "farm-name-generator",
+    "category": "business",
+    "emoji": "🌾",
+    "mode": "combine",
+    "conceptEs": "Crea nombres bucólicos de granjas, ranchos y fincas agrícolas que evoquen vida rural y tradición.",
+    "conceptEn": "Create bucolic farm, ranch and agricultural estate names that evoke rural life and tradition."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-bodega",
+    "slugEn": "winery-name-generator",
+    "category": "business",
+    "emoji": "🍇",
+    "mode": "combine",
+    "conceptEs": "Genera nombres elegantes de bodegas vitivinícolas y viñedos que transmitan pasión por el vino artesanal.",
+    "conceptEn": "Generate elegant winery and vineyard names that convey passion for artisanal wine."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-floristeria",
+    "slugEn": "flower-shop-name-generator",
+    "category": "business",
+    "emoji": "💐",
+    "mode": "combine",
+    "conceptEs": "Crea nombres florales de floristerías y boutiques de flores que evoquen belleza natural y frescura.",
+    "conceptEn": "Create floral flower shop and flower boutique names that evoke natural beauty and freshness."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-libreria",
+    "slugEn": "bookstore-name-generator",
+    "category": "business",
+    "emoji": "📚",
+    "mode": "combine",
+    "conceptEs": "Crea nombres acogedores de librerías independientes y tiendas de libros que inviten a explorar.",
+    "conceptEn": "Create cozy independent bookstore and book shop names that invite exploration."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-museo",
+    "slugEn": "museum-name-generator",
+    "category": "business",
+    "emoji": "🏛️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres culturales de museos, galerías y centros de patrimonio con gravitas institucional.",
+    "conceptEn": "Generate cultural museum, gallery and heritage center names with institutional gravitas."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-galeria-gaming",
+    "slugEn": "gaming-lounge-name-generator",
+    "category": "business",
+    "emoji": "🎮",
+    "mode": "combine",
+    "conceptEs": "Crea nombres épicos de gaming lounges, cibercafés y espacios de esports para comunidad gamer.",
+    "conceptEn": "Create epic gaming lounge, cyber cafe and esports venue names for gaming community."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-refugio-animales",
+    "slugEn": "animal-shelter-name-generator",
+    "category": "business",
+    "emoji": "🐾",
+    "mode": "combine",
+    "conceptEs": "Genera nombres compasivos de refugios de animales y organizaciones de rescate que inspiren adopción.",
+    "conceptEn": "Generate compassionate animal shelter and rescue organization names that inspire adoption."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-lavanderia",
+    "slugEn": "laundromat-name-generator",
+    "category": "business",
+    "emoji": "🧺",
+    "mode": "combine",
+    "conceptEs": "Crea nombres frescos de lavanderías y servicios de lavandería que transmitan limpieza y eficiencia.",
+    "conceptEn": "Create fresh laundromat and laundry service names that convey cleanliness and efficiency."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-guarderia",
+    "slugEn": "daycare-name-generator",
+    "category": "business",
+    "emoji": "👶",
+    "mode": "combine",
+    "conceptEs": "Genera nombres tiernos de guarderías infantiles y centros de cuidado que inspiren confianza parental.",
+    "conceptEn": "Generate tender daycare and childcare center names that inspire parental trust."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-taller-mecanico",
+    "slugEn": "auto-shop-name-generator",
+    "category": "business",
+    "emoji": "🔧",
+    "mode": "combine",
+    "conceptEs": "Crea nombres confiables de talleres mecánicos y servicios automotrices que prometan expertise técnico.",
+    "conceptEn": "Create reliable auto shop and automotive service names that promise technical expertise."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-biohackers",
+    "slugEn": "biohacker-alias-generator",
+    "category": "tech",
+    "emoji": "🧬",
+    "mode": "combine",
+    "conceptEs": "Genera alias futuristas para biohackers, transhumanistas y entusiastas de mejora humana con edge tecnológico.",
+    "conceptEn": "Generate futuristic aliases for biohackers, transhumanists and human enhancement enthusiasts with tech edge."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hacker-etico",
+    "slugEn": "hacker-handle-generator",
+    "category": "tech",
+    "emoji": "💻",
+    "mode": "combine",
+    "conceptEs": "Crea handles y alias de hackers éticos para CTFs, competencias de seguridad y comunidades infosec.",
+    "conceptEn": "Create ethical hacker handles and aliases for CTFs, security competitions and infosec communities."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-carrera-universitaria",
+    "slugEn": "university-major-generator",
+    "category": "fun",
+    "emoji": "🎓",
+    "mode": "combine",
+    "conceptEs": "Genera nombres ficticios de carreras y programas universitarios para worldbuilding académico y parodias educativas.",
+    "conceptEn": "Generate fictional university major and program names for academic worldbuilding and educational parodies."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-enfermedad-ficticia",
+    "slugEn": "fictional-disease-name-generator",
+    "category": "fun",
+    "emoji": "🦠",
+    "mode": "combine",
+    "conceptEs": "Crea nombres médicos de enfermedades ficticias para ciencia ficción, thrillers médicos y narrativa pandémica.",
+    "conceptEn": "Create medical fictional disease names for science fiction, medical thrillers and pandemic narrative."
+  }
+]

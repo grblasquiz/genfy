@@ -1,0 +1,164 @@
+[
+  {
+    "slugEs": "generador-de-nombres-de-banda-metal",
+    "slugEn": "metal-band-name-generator",
+    "category": "fun",
+    "emoji": "🤘",
+    "mode": "combine",
+    "conceptEs": "Genera nombres épicos de bandas de metal, death metal y heavy metal con oscuridad y poder.",
+    "conceptEn": "Generate epic metal, death metal and heavy metal band names with darkness and power."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-zine",
+    "slugEn": "zine-name-generator",
+    "category": "content",
+    "emoji": "📰",
+    "mode": "combine",
+    "conceptEs": "Crea nombres underground de fanzines, publicaciones indie y revistas alternativas con espíritu DIY.",
+    "conceptEn": "Create underground fanzine, indie publication and alternative magazine names with DIY spirit."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-subcultura",
+    "slugEn": "subculture-name-generator",
+    "category": "fun",
+    "emoji": "🎭",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de subculturas inventadas, movimientos contraculturales y tribus urbanas para worldbuilding social.",
+    "conceptEn": "Generate invented subculture, countercultural movement and urban tribe names for social worldbuilding."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-teoria-conspiracion",
+    "slugEn": "conspiracy-theory-name-generator",
+    "category": "fun",
+    "emoji": "👁️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de teorías conspirativas ficticias y explicaciones alternativas para sátira y ficción especulativa.",
+    "conceptEn": "Create fictional conspiracy theory and alternative explanation names for satire and speculative fiction."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-dimension-bolsillo",
+    "slugEn": "pocket-dimension-name-generator",
+    "category": "fun",
+    "emoji": "🌌",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de dimensiones de bolsillo, espacios extradimensionales y realidades miniatura para fantasía.",
+    "conceptEn": "Generate pocket dimension, extradimensional space and miniature reality names for fantasy."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-refugio-zombie",
+    "slugEn": "zombie-shelter-name-generator",
+    "category": "fun",
+    "emoji": "🧟",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de refugios anti-zombies, safe zones y bastiones supervivenciales para apocalipsis zombi.",
+    "conceptEn": "Create zombie shelter, safe zone and survival stronghold names for zombie apocalypse."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-faccion-apocaliptica",
+    "slugEn": "post-apocalyptic-faction-name-generator",
+    "category": "fun",
+    "emoji": "☢️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de facciones post-apocalípticas, clanes wasteland y grupos supervivientes en mundos caídos.",
+    "conceptEn": "Generate post-apocalyptic faction, wasteland clan and survivor group names in fallen worlds."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-mutante",
+    "slugEn": "mutant-name-generator",
+    "category": "fun",
+    "emoji": "☢️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de mutantes, seres irradiados y criaturas post-nucleares para escenarios apocalípticos.",
+    "conceptEn": "Create mutant, irradiated being and post-nuclear creature names for apocalyptic scenarios."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-cyborg",
+    "slugEn": "cyborg-name-generator",
+    "category": "fun",
+    "emoji": "🦾",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de cyborgs, seres biotech y humanos aumentados para cyberpunk y ciencia ficción transhumanista.",
+    "conceptEn": "Generate cyborg, biotech being and augmented human names for cyberpunk and transhumanist sci-fi."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-androide",
+    "slugEn": "android-name-generator",
+    "category": "fun",
+    "emoji": "🤖",
+    "mode": "combine",
+    "conceptEs": "Crea designaciones de androides, unidades sintéticas y robots humanoides con nomenclatura técnica.",
+    "conceptEn": "Create android designation, synthetic unit and humanoid robot names with technical nomenclature."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-bar-espacial",
+    "slugEn": "space-bar-name-generator",
+    "category": "fun",
+    "emoji": "🍸",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de bares espaciales, cantinas intergalácticas y watering holes cósmicos estilo Star Wars.",
+    "conceptEn": "Generate space bar, intergalactic cantina and cosmic watering hole names Star Wars style."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-mercado-negro",
+    "slugEn": "black-market-name-generator",
+    "category": "fun",
+    "emoji": "🏴",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de mercados negros, bazares clandestinos y hubs de contrabando para noir y cyberpunk.",
+    "conceptEn": "Create black market, clandestine bazaar and smuggling hub names for noir and cyberpunk."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-pirata-espacial",
+    "slugEn": "space-pirate-name-generator",
+    "category": "fun",
+    "emoji": "🏴‍☠️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de piratas espaciales, corsarios cósmicos y saqueadores interestelares con espíritu rebelde.",
+    "conceptEn": "Generate space pirate, cosmic corsair and interstellar raider names with rebel spirit."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-cazarrecompensas",
+    "slugEn": "bounty-hunter-name-generator",
+    "category": "fun",
+    "emoji": "🎯",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de cazarrecompensas, mercenarios y hunters profesionales para westerns espaciales y cyberpunk.",
+    "conceptEn": "Create bounty hunter, mercenary and professional hunter names for space westerns and cyberpunk."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-contrabandista",
+    "slugEn": "smuggler-name-generator",
+    "category": "fun",
+    "emoji": "📦",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de contrabandistas, traficantes y runners del underworld con aire de peligro calculado.",
+    "conceptEn": "Generate smuggler, trafficker and underworld runner names with calculated danger air."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-piloto",
+    "slugEn": "pilot-callsign-generator",
+    "category": "fun",
+    "emoji": "✈️",
+    "mode": "combine",
+    "conceptEs": "Crea callsigns y aliases de pilotos militares, aviadores y aces del aire con tradición aeronáutica.",
+    "conceptEn": "Create pilot callsign and military aviator aliases with aeronautical tradition."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-comandante",
+    "slugEn": "commander-name-generator",
+    "category": "fun",
+    "emoji": "⭐",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de comandantes militares, generales y líderes tácticos con autoridad estratégica.",
+    "conceptEn": "Generate military commander, general and tactical leader names with strategic authority."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-diplomático",
+    "slugEn": "diplomat-name-generator",
+    "category": "fun",
+    "emoji": "🤝",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de diplomáticos, embajadores y negociadores intergalácticos con gravitas política.",
+    "conceptEn": "Create diplomat, ambassador and intergalactic negotiator names with political gravitas."
+  }
+]

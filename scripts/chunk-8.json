@@ -1,0 +1,164 @@
+[
+  {
+    "slugEs": "generador-de-nombres-de-alquimista",
+    "slugEn": "alchemist-name-generator",
+    "category": "fun",
+    "emoji": "⚗️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de alquimistas místicos, transmutadores y maestros de las artes herméticas.",
+    "conceptEn": "Create mystical alchemist, transmuter and hermetic arts master names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-nigromante",
+    "slugEn": "necromancer-name-generator",
+    "category": "fun",
+    "emoji": "💀",
+    "mode": "combine",
+    "conceptEs": "Genera nombres oscuros de nigromantes, invocadores de muertos y maestros de magia prohibida.",
+    "conceptEn": "Generate dark necromancer, death summoner and forbidden magic master names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-druida",
+    "slugEn": "druid-name-generator",
+    "category": "fun",
+    "emoji": "🌿",
+    "mode": "combine",
+    "conceptEs": "Crea nombres naturales de druidas, guardianes del bosque y chamanes conectados con la tierra.",
+    "conceptEn": "Create natural druid, forest guardian and earth-connected shaman names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-monje",
+    "slugEn": "monk-name-generator",
+    "category": "fun",
+    "emoji": "🙏",
+    "mode": "combine",
+    "conceptEs": "Genera nombres serenos de monjes, maestros marciales y ascetas en búsqueda de iluminación.",
+    "conceptEn": "Generate serene monk, martial master and enlightenment-seeking ascetic names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-bardo",
+    "slugEn": "bard-name-generator",
+    "category": "fun",
+    "emoji": "🎻",
+    "mode": "combine",
+    "conceptEs": "Crea nombres melodiosos de bardos, trovadores y músicos itinerantes con carisma narrativo.",
+    "conceptEn": "Create melodious bard, troubadour and traveling musician names with narrative charisma."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-ladron",
+    "slugEn": "rogue-name-generator",
+    "category": "fun",
+    "emoji": "🗡️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres furtivos de ladrones, pícaros y maestros del sigilo con astucia criminal.",
+    "conceptEn": "Generate stealthy thief, rogue and stealth master names with criminal cunning."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-ranger",
+    "slugEn": "ranger-name-generator",
+    "category": "fun",
+    "emoji": "🏹",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de rangers solitarios, exploradores wilderness y protectores de las fronteras salvajes.",
+    "conceptEn": "Create lone ranger, wilderness explorer and wild frontier protector names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-clerigo",
+    "slugEn": "cleric-name-generator",
+    "category": "fun",
+    "emoji": "⛪",
+    "mode": "combine",
+    "conceptEs": "Genera nombres sagrados de clérigos, sanadores divinos y sirvientes de poderes superiores.",
+    "conceptEn": "Generate sacred cleric, divine healer and higher power servant names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hechicero",
+    "slugEn": "sorcerer-name-generator",
+    "category": "fun",
+    "emoji": "🔮",
+    "mode": "combine",
+    "conceptEs": "Crea nombres místicos de hechiceros, magos innatos y canalizadores de poder arcano natural.",
+    "conceptEn": "Create mystical sorcerer, innate mage and natural arcane power channeler names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-brujo-warlock",
+    "slugEn": "warlock-name-generator",
+    "category": "fun",
+    "emoji": "😈",
+    "mode": "combine",
+    "conceptEs": "Genera nombres oscuros de warlocks con pactos, sirvientes de entidades y usuarios de magia pactada.",
+    "conceptEn": "Generate dark warlock with pact, entity servant and pact magic user names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-paladin",
+    "slugEn": "paladin-name-generator",
+    "category": "fun",
+    "emoji": "⚔️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres nobles de paladines, caballeros sagrados y guerreros del bien con honor inquebrantable.",
+    "conceptEn": "Create noble paladin, holy knight and good warrior names with unwavering honor."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-barbaro",
+    "slugEn": "barbarian-name-generator",
+    "category": "fun",
+    "emoji": "🪓",
+    "mode": "combine",
+    "conceptEs": "Genera nombres salvajes de bárbaros, guerreros tribales y berserkers con furia primordial.",
+    "conceptEn": "Generate savage barbarian, tribal warrior and berserker names with primal fury."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-artifice",
+    "slugEn": "artificer-name-generator",
+    "category": "fun",
+    "emoji": "⚙️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres técnicos de artífices, ingenieros mágicos y constructores de maravillas arcano-tecnológicas.",
+    "conceptEn": "Create technical artificer, magical engineer and arcano-technological marvel builder names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-invocador",
+    "slugEn": "summoner-name-generator",
+    "category": "fun",
+    "emoji": "✨",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de invocadores, conjuradores de entidades y maestros del llamado planar.",
+    "conceptEn": "Generate summoner, entity conjurer and planar calling master names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-cambiaformas",
+    "slugEn": "shapeshifter-name-generator",
+    "category": "fun",
+    "emoji": "🦊",
+    "mode": "combine",
+    "conceptEs": "Crea nombres fluidos de cambiaformas, metamorfos y criaturas de identidad mutable.",
+    "conceptEn": "Create fluid shapeshifter, metamorph and mutable identity creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-licántropo",
+    "slugEn": "lycanthrope-name-generator",
+    "category": "fun",
+    "emoji": "🐺",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de licántropos, hombres lobo y criaturas con maldición de transformación lunar.",
+    "conceptEn": "Generate lycanthrope, werewolf and lunar transformation curse creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-vampiro",
+    "slugEn": "vampire-name-generator",
+    "category": "fun",
+    "emoji": "🧛",
+    "mode": "combine",
+    "conceptEs": "Crea nombres aristocráticos de vampiros, no-muertos elegantes y criaturas de la noche inmortales.",
+    "conceptEn": "Create aristocratic vampire, elegant undead and immortal creature of the night names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-goblin",
+    "slugEn": "goblin-name-generator",
+    "category": "fun",
+    "emoji": "👺",
+    "mode": "combine",
+    "conceptEs": "Crea nombres traviesos de goblins, criaturas pequeñas y seres de travesuras caóticas.",
+    "conceptEn": "Create mischievous goblin, small creature and chaotic mischief being names."
+  }
+]

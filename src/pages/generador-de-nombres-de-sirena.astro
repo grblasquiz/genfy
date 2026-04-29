@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GeneratorTemplate from '../components/GeneratorTemplate.astro';
+import { data } from '../lib/data/generador-de-nombres-de-sirena';
+
+const t = data.es;
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: t.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout title={t.pageTitle} description={t.metaDesc} lang="es" schema={faqSchema} withSidebar={true}>
+  <GeneratorTemplate lang="es" data={data} />
+</Layout>

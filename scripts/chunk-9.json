@@ -1,0 +1,164 @@
+[
+  {
+    "slugEs": "generador-de-nombres-de-troll",
+    "slugEn": "troll-name-generator",
+    "category": "fun",
+    "emoji": "🧌",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de trolls, gigantes brutales y criaturas de puentes y montañas.",
+    "conceptEn": "Generate troll, brutal giant and bridge and mountain creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hada",
+    "slugEn": "fairy-name-generator",
+    "category": "fun",
+    "emoji": "🧚",
+    "mode": "combine",
+    "conceptEs": "Crea nombres delicados de hadas, espíritus del bosque y criaturas mágicas diminutas.",
+    "conceptEn": "Create delicate fairy, forest spirit and tiny magical creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-demonio",
+    "slugEn": "demon-name-generator",
+    "category": "fun",
+    "emoji": "😈",
+    "mode": "combine",
+    "conceptEs": "Genera nombres infernales de demonios, criaturas del abismo y entidades malignas planares.",
+    "conceptEn": "Generate infernal demon, abyss creature and planar malevolent entity names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-angel",
+    "slugEn": "angel-name-generator",
+    "category": "fun",
+    "emoji": "👼",
+    "mode": "combine",
+    "conceptEs": "Crea nombres celestiales de ángeles, mensajeros divinos y seres de luz y virtud.",
+    "conceptEn": "Create celestial angel, divine messenger and light and virtue being names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-centauro",
+    "slugEn": "centaur-name-generator",
+    "category": "fun",
+    "emoji": "🏹",
+    "mode": "combine",
+    "conceptEs": "Genera nombres nobles de centauros, híbridos humano-caballo y criaturas de praderas místicas.",
+    "conceptEn": "Generate noble centaur, human-horse hybrid and mystical prairie creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-minotauro",
+    "slugEn": "minotaur-name-generator",
+    "category": "fun",
+    "emoji": "🐂",
+    "mode": "combine",
+    "conceptEs": "Crea nombres poderosos de minotauros, híbridos toro-humano y guardianes de laberintos.",
+    "conceptEn": "Create powerful minotaur, bull-human hybrid and labyrinth guardian names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-sirena",
+    "slugEn": "mermaid-name-generator",
+    "category": "fun",
+    "emoji": "🧜",
+    "mode": "combine",
+    "conceptEs": "Genera nombres acuáticos de sirenas, criaturas marinas y habitantes del océano profundo.",
+    "conceptEn": "Generate aquatic mermaid, sea creature and deep ocean dweller names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-fenix",
+    "slugEn": "phoenix-name-generator",
+    "category": "fun",
+    "emoji": "🔥",
+    "mode": "combine",
+    "conceptEs": "Crea nombres ardientes de fénix, aves de fuego y criaturas de renacimiento inmortal.",
+    "conceptEn": "Create blazing phoenix, fire bird and immortal rebirth creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-grifo",
+    "slugEn": "griffin-name-generator",
+    "category": "fun",
+    "emoji": "🦅",
+    "mode": "combine",
+    "conceptEs": "Genera nombres majestuosos de grifos, híbridos águila-león y guardianes aéreos nobles.",
+    "conceptEn": "Generate majestic griffin, eagle-lion hybrid and noble aerial guardian names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hidra",
+    "slugEn": "hydra-name-generator",
+    "category": "fun",
+    "emoji": "🐉",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de hidras multi-cabeza, serpientes regenerativas y monstruos acuáticos legendarios.",
+    "conceptEn": "Create multi-headed hydra, regenerative serpent and legendary aquatic monster names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-quimera",
+    "slugEn": "chimera-name-generator",
+    "category": "fun",
+    "emoji": "🦁",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de quimeras, híbridos multi-animales y aberraciones de fusión biológica.",
+    "conceptEn": "Generate chimera, multi-animal hybrid and biological fusion aberration names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-basilisco",
+    "slugEn": "basilisk-name-generator",
+    "category": "fun",
+    "emoji": "🐍",
+    "mode": "combine",
+    "conceptEs": "Crea nombres venenosos de basiliscos, serpientes legendarias y criaturas de mirada petrificante.",
+    "conceptEn": "Create venomous basilisk, legendary serpent and petrifying gaze creature names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-kraken",
+    "slugEn": "kraken-name-generator",
+    "category": "fun",
+    "emoji": "🦑",
+    "mode": "combine",
+    "conceptEs": "Genera nombres abisales de krakens, leviatanes marinos y monstruos de las profundidades oceánicas.",
+    "conceptEn": "Generate abyssal kraken, sea leviathan and oceanic depth monster names."
+  },
+  {
+    "slugEs": "generador-de-cron-humano",
+    "slugEn": "human-readable-cron-generator",
+    "category": "tools",
+    "emoji": "⏰",
+    "mode": "pick",
+    "conceptEs": "Convierte expresiones cron en lenguaje natural (ej: '0 9 * * 1-5' → 'Todos los días laborables a las 9 AM')",
+    "conceptEn": "Converts cron expressions to human-readable language (e.g., '0 9 * * 1-5' → 'Every weekday at 9 AM')"
+  },
+  {
+    "slugEs": "generador-de-changelog",
+    "slugEn": "changelog-generator",
+    "category": "work",
+    "emoji": "📋",
+    "mode": "pick",
+    "conceptEs": "Genera entradas estructuradas de changelog con categorías (Added, Fixed, Changed, Deprecated) para releases",
+    "conceptEn": "Generates structured changelog entries with categories (Added, Fixed, Changed, Deprecated) for releases"
+  },
+  {
+    "slugEs": "generador-de-http-headers",
+    "slugEn": "http-header-generator",
+    "category": "tech",
+    "emoji": "🔐",
+    "mode": "pick",
+    "conceptEs": "Genera headers HTTP de seguridad (CSP, HSTS, X-Frame-Options) con valores recomendados para proteger apps",
+    "conceptEn": "Generates security HTTP headers (CSP, HSTS, X-Frame-Options) with recommended values to protect apps"
+  },
+  {
+    "slugEs": "generador-de-schema-markup",
+    "slugEn": "schema-markup-generator",
+    "category": "marketing",
+    "emoji": "🏷️",
+    "mode": "pick",
+    "conceptEs": "Crea código JSON-LD de Schema.org para artículos, productos, eventos, FAQs y organizaciones (SEO)",
+    "conceptEn": "Creates Schema.org JSON-LD code for articles, products, events, FAQs, and organizations (SEO)"
+  },
+  {
+    "slugEs": "generador-de-casos-de-prueba",
+    "slugEn": "test-case-generator",
+    "category": "work",
+    "emoji": "✅",
+    "mode": "pick",
+    "conceptEs": "Genera casos de prueba QA con pasos, datos esperados y criterios de aceptación para features",
+    "conceptEn": "Generates QA test cases with steps, expected data, and acceptance criteria for features"
+  }
+]

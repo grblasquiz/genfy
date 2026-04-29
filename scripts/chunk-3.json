@@ -1,0 +1,164 @@
+[
+  {
+    "slugEs": "generador-de-nombres-de-tribu",
+    "slugEn": "tribe-name-generator",
+    "category": "fun",
+    "emoji": "🪶",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de tribus, clanes y pueblos ancestrales para worldbuilding cultural y ambientaciones tribales.",
+    "conceptEn": "Generate tribe, clan and ancestral people names for cultural worldbuilding and tribal settings."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-desierto",
+    "slugEn": "desert-name-generator",
+    "category": "fun",
+    "emoji": "🏜️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de desiertos, dunas y páramos áridos para geografía de fantasía y ambientaciones desoladas.",
+    "conceptEn": "Generate desert, dune and arid wasteland names for fantasy geography and desolate settings."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-campana-marketing",
+    "slugEn": "marketing-campaign-name-generator",
+    "category": "marketing",
+    "emoji": "📢",
+    "mode": "combine",
+    "conceptEs": "Genera nombres creativos de campañas de marketing y publicidad que sean memorables y alineados con la marca.",
+    "conceptEn": "Generate creative marketing and advertising campaign names that are memorable and brand-aligned."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-continente",
+    "slugEn": "continent-name-generator",
+    "category": "fun",
+    "emoji": "🗾",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de continentes y masas terrestres para mapas mundiales de fantasía y worldbuilding a gran escala.",
+    "conceptEn": "Generate continent and landmass names for fantasy world maps and large-scale worldbuilding."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-artefacto",
+    "slugEn": "artifact-name-generator",
+    "category": "fun",
+    "emoji": "💎",
+    "mode": "combine",
+    "conceptEs": "Crea nombres místicos de artefactos antiguos, reliquias y objetos mágicos con historia y poder legendario.",
+    "conceptEn": "Create mystical ancient artifact, relic and magical object names with legendary history and power."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-colonia-espacial",
+    "slugEn": "space-colony-name-generator",
+    "category": "fun",
+    "emoji": "🌌",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de colonias espaciales, estaciones orbitales y asentamientos extraplanetarios para narrativa sci-fi.",
+    "conceptEn": "Generate space colony, orbital station and extraplanetary settlement names for sci-fi narrative."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-orden-caballeria",
+    "slugEn": "knightly-order-name-generator",
+    "category": "fun",
+    "emoji": "🛡️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de órdenes de caballería, hermandades nobles y organizaciones de paladines para fantasía medieval.",
+    "conceptEn": "Create knightly order, noble brotherhood and paladin organization names for medieval fantasy."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-empresa-tech",
+    "slugEn": "tech-company-name-generator",
+    "category": "business",
+    "emoji": "💻",
+    "mode": "combine",
+    "conceptEs": "Genera nombres modernos para startups tecnológicas, empresas SaaS y proyectos de innovación digital.",
+    "conceptEn": "Generate modern names for tech startups, SaaS companies and digital innovation projects."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-portal-magico",
+    "slugEn": "magic-portal-name-generator",
+    "category": "fun",
+    "emoji": "🌀",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de portales mágicos, pasajes dimensionales y puertas místicas para fantasía y viajes interdimensionales.",
+    "conceptEn": "Generate magic portal, dimensional passage and mystical gateway names for fantasy and interdimensional travel."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-escuela-magia",
+    "slugEn": "magic-school-name-generator",
+    "category": "fun",
+    "emoji": "🎓",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de academias de magia, escuelas de hechicería y universidades arcanas para worldbuilding educativo.",
+    "conceptEn": "Create magic academy, wizarding school and arcane university names for educational worldbuilding."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-secta",
+    "slugEn": "cult-name-generator",
+    "category": "fun",
+    "emoji": "👁️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres siniestros de sectas, cultos oscuros y sociedades secretas para horror, misterio y thriller.",
+    "conceptEn": "Generate sinister cult, dark society and secret organization names for horror, mystery and thriller."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-ocupacion-fantasia",
+    "slugEn": "fantasy-occupation-name-generator",
+    "category": "fun",
+    "emoji": "⚒️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de oficios y profesiones fantásticas para worldbuilding económico y desarrollo de personajes únicos.",
+    "conceptEn": "Generate fantasy craft and occupation names for economic worldbuilding and unique character development."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-banda-sonora",
+    "slugEn": "soundtrack-title-generator",
+    "category": "content",
+    "emoji": "🎵",
+    "mode": "combine",
+    "conceptEs": "Crea títulos evocadores de bandas sonoras, OSTs y pistas musicales para videojuegos, películas y proyectos audio.",
+    "conceptEn": "Create evocative soundtrack, OST and music track titles for video games, films and audio projects."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-compañia-aeronautica",
+    "slugEn": "airline-name-generator",
+    "category": "business",
+    "emoji": "✈️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de aerolíneas ficticias, líneas aéreas y compañías de aviación para simulaciones y worldbuilding.",
+    "conceptEn": "Generate fictional airline, air carrier and aviation company names for simulations and worldbuilding."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-hotel",
+    "slugEn": "hotel-name-generator",
+    "category": "business",
+    "emoji": "🏨",
+    "mode": "combine",
+    "conceptEs": "Crea nombres elegantes de hoteles, resorts y hospedajes que transmitan lujo, confort y destino deseado.",
+    "conceptEn": "Create elegant hotel, resort and lodging names that convey luxury, comfort and desirable destination."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-moneda",
+    "slugEn": "currency-name-generator",
+    "category": "fun",
+    "emoji": "💰",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de monedas ficticias y sistemas monetarios para worldbuilding económico y juegos de comercio.",
+    "conceptEn": "Generate fictional currency and monetary system names for economic worldbuilding and trading games."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-biblioteca",
+    "slugEn": "library-name-generator",
+    "category": "fun",
+    "emoji": "📚",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de bibliotecas antiguas, archivos mágicos y repositorios de conocimiento para ambientaciones eruditas.",
+    "conceptEn": "Create ancient library, magical archive and knowledge repository names for scholarly settings."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-cerveza-artesanal",
+    "slugEn": "craft-beer-name-generator",
+    "category": "fun",
+    "emoji": "🍺",
+    "mode": "combine",
+    "conceptEs": "Genera nombres creativos para cervezas artesanales, variedades IPA y brews que destaquen en el mercado.",
+    "conceptEn": "Generate creative craft beer, IPA variety and brew names that stand out in the market."
+  }
+]

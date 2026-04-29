@@ -1,0 +1,83 @@
+[
+  {
+    "slugEs": "generador-de-politica-de-privacidad",
+    "slugEn": "privacy-policy-generator",
+    "category": "work",
+    "emoji": "🔒",
+    "mode": "pick",
+    "conceptEs": "Genera plantilla básica de política de privacidad con secciones GDPR, cookies y derechos del usuario",
+    "conceptEn": "Generates basic privacy policy template with GDPR sections, cookies, and user rights"
+  },
+  {
+    "slugEs": "generador-de-terminos-y-condiciones",
+    "slugEn": "terms-and-conditions-generator",
+    "category": "work",
+    "emoji": "📄",
+    "mode": "pick",
+    "conceptEs": "Crea plantilla de términos y condiciones con cláusulas de uso, limitaciones y responsabilidad",
+    "conceptEn": "Creates terms and conditions template with usage clauses, limitations, and liability"
+  },
+  {
+    "slugEs": "generador-de-roadmap-producto",
+    "slugEn": "product-roadmap-generator",
+    "category": "work",
+    "emoji": "🗺️",
+    "mode": "pick",
+    "conceptEs": "Genera estructura de roadmap trimestral con milestones, features y dependencias para productos",
+    "conceptEn": "Generates quarterly roadmap structure with milestones, features, and dependencies for products"
+  },
+  {
+    "slugEs": "generador-de-user-story",
+    "slugEn": "user-story-generator",
+    "category": "work",
+    "emoji": "👤",
+    "mode": "pick",
+    "conceptEs": "Crea user stories formato 'Como [rol] quiero [acción] para [beneficio]' con criterios de aceptación",
+    "conceptEn": "Creates user stories in format 'As a [role] I want [action] so that [benefit]' with acceptance criteria"
+  },
+  {
+    "slugEs": "generador-de-wireframe-texto",
+    "slugEn": "text-wireframe-generator",
+    "category": "design",
+    "emoji": "📐",
+    "mode": "pick",
+    "conceptEs": "Genera wireframes ASCII art de layouts web (header, sidebar, content, footer) para mockups rápidos",
+    "conceptEn": "Generates ASCII art wireframes of web layouts (header, sidebar, content, footer) for quick mockups"
+  },
+  {
+    "slugEs": "generador-de-componentes-atomic",
+    "slugEn": "atomic-component-name-generator",
+    "category": "tech",
+    "emoji": "⚛️",
+    "mode": "pick",
+    "conceptEs": "Genera nombres de componentes React/Vue siguiendo Atomic Design (atoms, molecules, organisms)",
+    "conceptEn": "Generates React/Vue component names following Atomic Design (atoms, molecules, organisms)"
+  },
+  {
+    "slugEs": "generador-de-json-web-token",
+    "slugEn": "jwt-generator",
+    "category": "security",
+    "emoji": "🎫",
+    "mode": "combine",
+    "conceptEs": "Crea JWT de prueba con payload personalizable y firma HS256 para testing de APIs",
+    "conceptEn": "Creates test JWTs with customizable payload and HS256 signature for API testing"
+  },
+  {
+    "slugEs": "generador-de-datos-de-tarjeta-luhn",
+    "slugEn": "luhn-valid-card-generator",
+    "category": "data",
+    "emoji": "💳",
+    "mode": "pick",
+    "conceptEs": "Genera números de tarjeta que pasan validación Luhn (sin valor real) para tests de checkout",
+    "conceptEn": "Generates card numbers that pass Luhn validation (no real value) for checkout tests"
+  },
+  {
+    "slugEs": "generador-de-curl-a-codigo",
+    "slugEn": "curl-to-code-generator",
+    "category": "tech",
+    "emoji": "🔄",
+    "mode": "pick",
+    "conceptEs": "Convierte comandos cURL en código Python, JavaScript, PHP o Ruby para requests HTTP",
+    "conceptEn": "Converts cURL commands to Python, JavaScript, PHP, or Ruby code for HTTP requests"
+  }
+]

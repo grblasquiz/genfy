@@ -1,0 +1,164 @@
+[
+  {
+    "slugEs": "generador-de-nombres-de-droga-ficticia",
+    "slugEn": "fictional-drug-name-generator",
+    "category": "fun",
+    "emoji": "💊",
+    "mode": "combine",
+    "conceptEs": "Genera nombres farmacéuticos de medicamentos ficticios para narrativa médica, sci-fi y sátira corporativa.",
+    "conceptEn": "Generate pharmaceutical fictional medication names for medical narrative, sci-fi and corporate satire."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-sindicato",
+    "slugEn": "syndicate-name-generator",
+    "category": "fun",
+    "emoji": "🕴️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres siniestros de sindicatos criminales, organizaciones clandestinas y carteles para noir y thriller.",
+    "conceptEn": "Create sinister criminal syndicate, underground organization and cartel names for noir and thriller."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-corporacion-malvada",
+    "slugEn": "evil-corporation-name-generator",
+    "category": "fun",
+    "emoji": "🏢",
+    "mode": "combine",
+    "conceptEs": "Genera nombres corporativos con aura siniestra para megacorporaciones distópicas y villanos empresariales.",
+    "conceptEn": "Generate corporate names with sinister aura for dystopian megacorps and business villains."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-equipo-policiaco",
+    "slugEn": "police-unit-name-generator",
+    "category": "fun",
+    "emoji": "👮",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de unidades policiales especiales, task forces y divisiones para procedurales y thrillers policiales.",
+    "conceptEn": "Create special police unit, task force and division names for procedurals and police thrillers."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-equipo-militar",
+    "slugEn": "military-unit-name-generator",
+    "category": "fun",
+    "emoji": "🪖",
+    "mode": "combine",
+    "conceptEs": "Genera nombres tácticos de unidades militares, escuadrones y divisiones de élite con autoridad castrense.",
+    "conceptEn": "Generate tactical military unit, squadron and elite division names with martial authority."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-agencia-espionaje",
+    "slugEn": "spy-agency-name-generator",
+    "category": "fun",
+    "emoji": "🕵️",
+    "mode": "combine",
+    "conceptEs": "Crea nombres encubiertos de agencias de espionaje, servicios de inteligencia y organizaciones clandestinas.",
+    "conceptEn": "Create covert spy agency, intelligence service and clandestine organization names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-laboratorio-secreto",
+    "slugEn": "secret-lab-name-generator",
+    "category": "fun",
+    "emoji": "🧪",
+    "mode": "combine",
+    "conceptEs": "Genera nombres misteriosos de laboratorios secretos, facilities clasificados y centros de investigación ocultos.",
+    "conceptEn": "Generate mysterious secret laboratory, classified facility and hidden research center names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-experimento",
+    "slugEn": "experiment-codename-generator",
+    "category": "fun",
+    "emoji": "🔬",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de código para experimentos científicos clasificados y proyectos de investigación secretos.",
+    "conceptEn": "Create codenames for classified scientific experiments and secret research projects."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-protocolo-secreto",
+    "slugEn": "classified-protocol-name-generator",
+    "category": "fun",
+    "emoji": "📋",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de protocolos clasificados, procedimientos secretos y directivas gubernamentales encubiertas.",
+    "conceptEn": "Create classified protocol, secret procedure and covert government directive names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-satelite",
+    "slugEn": "satellite-name-generator",
+    "category": "fun",
+    "emoji": "🛰️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres técnicos de satélites, sondas espaciales y tecnología orbital para narrativa aeroespacial.",
+    "conceptEn": "Generate technical satellite, space probe and orbital technology names for aerospace narrative."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-algoritmo",
+    "slugEn": "algorithm-name-generator",
+    "category": "tech",
+    "emoji": "📊",
+    "mode": "combine",
+    "conceptEs": "Genera nombres técnicos de algoritmos, modelos ML y sistemas de predicción con resonancia científica.",
+    "conceptEn": "Generate technical algorithm, ML model and prediction system names with scientific resonance."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-base-militar",
+    "slugEn": "military-base-name-generator",
+    "category": "fun",
+    "emoji": "🏰",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de bases militares, instalaciones de defensa y fortalezas estratégicas con autoridad geopolítica.",
+    "conceptEn": "Create military base, defense installation and strategic fortress names with geopolitical authority."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-bunker",
+    "slugEn": "bunker-name-generator",
+    "category": "fun",
+    "emoji": "🏚️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres de búnkers subterráneos, refugios apocalípticos y shelters para escenarios post-apocalípticos.",
+    "conceptEn": "Generate underground bunker, apocalyptic shelter and survival vault names for post-apocalyptic scenarios."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-operacion-encubierta",
+    "slugEn": "covert-operation-name-generator",
+    "category": "fun",
+    "emoji": "🎯",
+    "mode": "combine",
+    "conceptEs": "Crea nombres clasificados de operaciones encubiertas, misiones black-ops y acciones clandestinas.",
+    "conceptEn": "Create classified covert operation, black-ops mission and clandestine action names."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-campamento-verano",
+    "slugEn": "summer-camp-name-generator",
+    "category": "fun",
+    "emoji": "🏕️",
+    "mode": "combine",
+    "conceptEs": "Genera nombres nostálgicos de campamentos de verano, camps juveniles y retiros outdoor con espíritu aventurero.",
+    "conceptEn": "Generate nostalgic summer camp, youth camp and outdoor retreat names with adventurous spirit."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-fraternidad",
+    "slugEn": "fraternity-name-generator",
+    "category": "fun",
+    "emoji": "🎓",
+    "mode": "combine",
+    "conceptEs": "Crea nombres de fraternidades y sororidades universitarias con letras griegas y tradición académica.",
+    "conceptEn": "Create fraternity and sorority names with Greek letters and academic tradition."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-club-secreto",
+    "slugEn": "secret-society-name-generator",
+    "category": "fun",
+    "emoji": "🔐",
+    "mode": "combine",
+    "conceptEs": "Genera nombres misteriosos de sociedades secretas, clubes exclusivos y hermandades ocultas con aura enigmática.",
+    "conceptEn": "Generate mysterious secret society, exclusive club and hidden brotherhood names with enigmatic aura."
+  },
+  {
+    "slugEs": "generador-de-nombres-de-banda-punk",
+    "slugEn": "punk-band-name-generator",
+    "category": "fun",
+    "emoji": "🎸",
+    "mode": "combine",
+    "conceptEs": "Crea nombres rebeldes de bandas punk, grupos hardcore y proyectos de música alternativa con actitud.",
+    "conceptEn": "Create rebellious punk band, hardcore group and alternative music project names with attitude."
+  }
+]
