@@ -80,6 +80,13 @@ const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+    gtag('consent', 'default', {
+      analytics_storage: 'granted',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      wait_for_update: 500,
+    });
     gtag('config', 'G-2VFNFYMHMR');
   </script>
 

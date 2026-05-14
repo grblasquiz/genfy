@@ -107,13 +107,6 @@ const t = lang === 'es' ? {
     }
     function close() { banner.hidden = true; modal.hidden = true; }
 
-    if (typeof window.gtag === 'function') {
-      window.gtag('consent', 'default', {
-        analytics_storage: 'denied', ad_storage: 'denied',
-        ad_user_data: 'denied', ad_personalization: 'denied',
-      });
-    }
-
     const existing = readConsent();
     if (existing) {
       applyConsent(existing);
