@@ -20,6 +20,7 @@ export default defineConfig({
       },
       changefreq: 'weekly',
       priority: 0.7,
+      filter: (page) => !/\/embed\/[^/]+\/?$/.test(page),
     }),
   ],
   prefetch: {

@@ -18,7 +18,7 @@ const copy = HUB_COPY[cat]?.es;
 const title = `Top 10 generadores de ${catName.toLowerCase()} | Genfy`;
 const description = `Los 10 mejores generadores de ${catName.toLowerCase()} en Genfy: gratis, sin registro, todos en el navegador. Curados por uso real.`;
 
-const path = Astro.url.pathname.replace(/\/$/, '');
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '');
 const itemListSchema = {
   '@context': 'https://schema.org', '@type': 'ItemList',
   name: `Top 10 generadores de ${catName}`,

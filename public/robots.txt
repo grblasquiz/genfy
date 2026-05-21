@@ -2,6 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /api/
+Disallow: /search
+Disallow: /embed/SLUG
 
 # Be friendly to crawlers
 User-agent: Googlebot

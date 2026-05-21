@@ -19,7 +19,7 @@ const allHref = lang === 'es' ? '/generadores' : '/en/generators';
 const allLabel = lang === 'es' ? 'Generadores' : 'Generators';
 
 // Detect current generator by URL
-const path = Astro.url.pathname.replace(/\/$/, '');
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '');
 const slugFromPath = path.split('/').pop() || '';
 const current = GENERATORS.find(g => g.slug.es === slugFromPath || g.slug.en === slugFromPath);
 

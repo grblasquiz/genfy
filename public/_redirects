@@ -1,1 +1,44 @@
 /sitemap.xml  /sitemap-index.xml  301
+
+# Glosario/glossary cross-language (paths que existen pero idioma cruzado)
+/en/glosario/*  /en/glossary/:splat  301
+/glossary/*  /glosario/:splat  301
+
+# .html residuales (bug viejo, ya fixeado en código)
+/*.html  /:splat  301
+
+# Diacritic — slug ES eliminado de generators.ts
+/generador-de-nombres-de-diplom%C3%A1tico  /generador-de-nombres-de-diplomatico  301
+
+# /en/embed → /embed (no hay versión EN del embed hub)
+/en/embed  /embed  301
+/en/embed/*  /embed/:splat  301
+
+# Slugs ES que aparecían bajo /en/ (bug histórico altPath fallback)
+/en/generador-de-contrasenas  /en/password-generator  301
+/en/generador-de-codigos-qr  /en/qr-code-generator  301
+/en/generador-de-direcciones-ip  /en/random-ip-generator  301
+/en/generador-de-emoji-aleatorio  /en/random-emoji-generator  301
+/en/generador-de-nombres-de-bebe-varon  /en/baby-boy-name-generator  301
+/en/generador-de-nombres-de-startup  /en/startup-name-generator  301
+/en/generador-de-strings-aleatorios  /en/random-string-generator  301
+/en/generador-titulo-case-study  /en/case-study-title  301
+/en/generador-sql-select  /en/random-sql-select-query  301
+/en/generador-codigo-descuento  /en/discount-code-generator  301
+/en/decisor-si-o-no  /en/yes-no-decider  301
+/en/pig-latin  /en/pig-latin-translator  301
+/en/invertir-texto  /en/text-reverser  301
+
+# Slugs EN que aparecían en raíz ES (bug histórico)
+/random-mac-generator  /generador-de-direcciones-mac  301
+/reading-group-name-generator  /generador-nombre-club-lectura  301
+/linkedin-headline-generator  /generador-de-headline-linkedin  301
+/random-date-generator  /generador-de-fechas-aleatorias  301
+/random-winner-picker  /sortear-ganador  301
+
+# Generadores eliminados
+/en/legendary-weapon-name-generator  /en/generators  301
+
+# Placeholders crawl noise
+/search  /  301
+/embed/SLUG  /embed  301

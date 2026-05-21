@@ -35,3 +35,12 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy
+
+      - name: Setup Python (for IndexNow push)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Push URLs to IndexNow (Bing + Yandex + Seznam + Naver)
+        run: python3 scripts/indexnow-push.py
+        continue-on-error: true

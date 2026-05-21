@@ -24,6 +24,15 @@ for (const [es, en] of Object.entries(STATIC_PAGE_MAP)) {
   EN_TO_ES_SLUG.set(en, es);
 }
 
+const SEGMENT_MAP_ES_EN: Record<string, string> = {
+  glosario: 'glossary',
+  top: 'top',
+};
+const SEGMENT_MAP_EN_ES: Record<string, string> = {
+  glossary: 'glosario',
+  top: 'top',
+};
+
 export const t = {
   es: {
     siteTagline: 'Generadores online gratis',
@@ -71,19 +80,38 @@ export function getLangFromPath(pathname: string): Lang {
   return pathname.startsWith('/en') ? 'en' : 'es';
 }
 
-export function altPath(pathname: string, currentLang: Lang): string {
+export function altPath(pathname: string, currentLang: Lang): string | null {
   const clean = pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
 
   if (currentLang === 'es') {
     if (clean === '/') return '/en';
     const slug = clean.replace(/^\//, '');
+
     const enSlug = ES_TO_EN_SLUG.get(slug);
-    return enSlug ? `/en/${enSlug}` : `/en${clean}`;
+    if (enSlug) return `/en/${enSlug}`;
+
+    const idx = slug.indexOf('/');
+    if (idx > 0) {
+      const head = slug.slice(0, idx);
+      const tail = slug.slice(idx + 1);
+      const enHead = SEGMENT_MAP_ES_EN[head];
+      if (enHead) return `/en/${enHead}/${tail}`;
+    }
+    return null;
   }
 
   if (clean === '/en') return '/';
   const slug = clean.replace(/^\/en\//, '');
+
   const esSlug = EN_TO_ES_SLUG.get(slug);
   if (esSlug) return `/${esSlug}`;
-  return clean.replace(/^\/en/, '') || '/';
+
+  const idx = slug.indexOf('/');
+  if (idx > 0) {
+    const head = slug.slice(0, idx);
+    const tail = slug.slice(idx + 1);
+    const esHead = SEGMENT_MAP_EN_ES[head];
+    if (esHead) return `/${esHead}/${tail}`;
+  }
+  return null;
 }

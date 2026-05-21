@@ -1,0 +1,89 @@
+name: IndexNow daily push (Bing + Yandex)
+
+# Cron diario que pushea TODAS las URLs del sitemap al IndexNow API
+# (Bing, Yandex, Seznam, Naver). Complementa el push post-deploy de deploy.yml
+# para mantener a Bing/Yandex/Seznam/Naver alineados aunque no haya cambios.
+#
+# IndexNow no requiere credenciales (solo la key file servida desde
+# /67fce4162c27d89c860f19a1f4483888.txt) — no hay secrets que configurar.
+# El script ya batchea de a 10.000 URLs (límite IndexNow).
+
+on:
+  schedule:
+    # 09:45 UTC (06:45 AR) — offset 15 min de hacecuentas/indexnow-daily.yml
+    # para no colisionar en el runner queue de la cuenta.
+    - cron: '45 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  indexnow-daily:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (genera dist/client/sitemap-*.xml)
+        run: npm run build
+
+      - name: Push URLs to IndexNow (Bing + Yandex + Seznam + Naver)
+        id: push
+        run: |
+          set -o pipefail
+          python3 scripts/indexnow-push.py 2>&1 | tee /tmp/indexnow.log
+          # Validar status 200 o 202
+          if grep -qE 'status=4[0-9]{2}|status=5[0-9]{2}|\[WARN\]|Error:' /tmp/indexnow.log; then
+            echo "::error::IndexNow push tuvo errores"
+            exit 1
+          fi
+
+      - name: Open GitHub issue if push failed
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITLE="🚨 IndexNow daily push falló ($(date -u +'%Y-%m-%d'))"
+          BODY=$(cat <<EOF
+          El cron diario de IndexNow para genfy.net falló.
+
+          **Workflow:** [\`${{ github.workflow }}\` run #${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          **Trigger:** ${{ github.event_name }}
+          **Fecha:** $(date -u +'%Y-%m-%d %H:%M UTC')
+
+          ## Log
+          \`\`\`
+          $(cat /tmp/indexnow.log 2>/dev/null | tail -30 || echo 'sin log')
+          \`\`\`
+
+          ## Diagnóstico rápido
+          1. Si es **403** → verificar que https://genfy.net/67fce4162c27d89c860f19a1f4483888.txt sigue sirviendo la key
+          2. Si es **422** → URLs malformadas en el sitemap (revisar build)
+          3. Si es **429** → rate limit; bajar frecuencia
+          4. Si es **5xx** → transitorio del proveedor; re-correr con \`workflow_dispatch\`
+          EOF
+          )
+          EXISTING=$(gh issue list --label indexnow-failure --state open --json number --jq '.[0].number' || echo '')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY" --label indexnow-failure || \
+              gh issue create --title "$TITLE" --body "$BODY"
+          fi

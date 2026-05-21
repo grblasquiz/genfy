@@ -43,7 +43,7 @@ const ogLocale = lang === 'en' ? 'en_US' : 'es_419';
 
 const altHref = altPath(cleanPath, lang);
 const altLang = lang === 'es' ? 'en' : 'es';
-const altUrl = `${SITE_URL}${altHref}`;
+const altUrl = altHref ? `${SITE_URL}${altHref}` : null;
 
 const globalSchema = {
   '@context': 'https://schema.org',
@@ -114,8 +114,8 @@ const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
   {noindex && <meta name="robots" content="noindex, nofollow" />}
 
   <link rel="alternate" hreflang={htmlLang} href={fullCanonical} />
-  <link rel="alternate" hreflang={altLang} href={altUrl} />
-  <link rel="alternate" hreflang="x-default" href={lang === 'es' ? fullCanonical : altUrl} />
+  {altUrl && <link rel="alternate" hreflang={altLang} href={altUrl} />}
+  <link rel="alternate" hreflang="x-default" href={lang === 'es' ? fullCanonical : (altUrl ?? fullCanonical)} />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content={title} />

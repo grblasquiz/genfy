@@ -5,7 +5,7 @@ const { lang = 'es' } = Astro.props as { lang?: Lang };
 const tt = t[lang];
 const homeHref = lang === 'es' ? '/' : '/en';
 const allHref = lang === 'es' ? '/generadores' : '/en/generators';
-const altHref = altPath(Astro.url.pathname, lang);
+const altHref = altPath(Astro.url.pathname, lang) ?? (lang === 'es' ? '/en' : '/');
 ---
 <header class="site-header">
   <div class="container header-inner">
