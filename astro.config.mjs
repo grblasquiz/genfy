@@ -1,11 +1,28 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 
 const SITE = 'https://genfy.net';
 const DIST = './dist/client';
+const STYLESHEET = '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>';
+
+function injectStylesheet() {
+  return {
+    name: 'inject-sitemap-stylesheet',
+    hooks: {
+      'astro:build:done': () => {
+        for (const f of [`${DIST}/sitemap-index.xml`, `${DIST}/sitemap-0.xml`]) {
+          if (!existsSync(f)) continue;
+          const xml = readFileSync(f, 'utf-8');
+          if (xml.includes('xml-stylesheet')) continue;
+          writeFileSync(f, xml.replace(/^(<\?xml[^?]+\?>)/, `$1\n${STYLESHEET}`));
+        }
+      },
+    },
+  };
+}
 
 function readHreflang(pathname) {
   const file = pathname === '/' ? `${DIST}/index.html` : `${DIST}${pathname}.html`;
@@ -47,6 +64,7 @@ export default defineConfig({
         return item;
       },
     }),
+    injectStylesheet(),
   ],
   prefetch: {
     prefetchAll: false,
