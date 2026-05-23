@@ -13,6 +13,14 @@
 /generador-de-nombres-de-monta%C3%B1a-rusa  /generador-de-nombres-de-montana-rusa  301
 /generador-de-nombres-de-compa%C3%B1ia-aeronautica  /generador-de-nombres-de-compania-aeronautica  301
 
+# Singular/plural & naming variants — consolidar a un canónico por par EN
+/generador-de-nombres-de-consultoria  /generador-de-nombres-de-consultora  301
+/generador-de-nombres-de-hechizo  /generador-de-nombres-de-hechizos  301
+/generador-de-nombres-de-planeta  /generador-de-nombres-de-planetas  301
+/generador-de-nombres-para-dragones  /generador-de-nombres-de-dragon  301
+/generador-de-user-stories  /generador-de-user-story  301
+/generador-nombre-constelacion  /generador-de-nombres-de-constelacion  301
+
 # /en/embed → /embed (no hay versión EN del embed hub)
 /en/embed  /embed  301
 /en/embed/*  /embed/:splat  301
