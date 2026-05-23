@@ -36,9 +36,21 @@ const tagHref = current
   ? (lang === 'es' ? `/generadores#${current.category}` : `/en/generators#${current.category}`)
   : null;
 
+function pickRelated(seed: string, pool: GeneratorMeta[], n: number): GeneratorMeta[] {
+  if (pool.length === 0) return [];
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = ((h << 5) - h + seed.charCodeAt(i)) | 0;
+  const offset = Math.abs(h) % pool.length;
+  const result: GeneratorMeta[] = [];
+  for (let i = 0; i < n && i < pool.length; i++) {
+    result.push(pool[(offset + i) % pool.length]);
+  }
+  return result;
+}
+
 const related = current
-  ? GENERATORS.filter(g => g.category === current.category && g.slug.es !== current.slug.es).slice(0, 4)
-  : GENERATORS.slice(0, 4).filter(g => g.slug.es !== slugFromPath);
+  ? pickRelated(current.slug.es, GENERATORS.filter(g => g.category === current.category && g.slug.es !== current.slug.es), 4)
+  : pickRelated(slugFromPath, GENERATORS.filter(g => g.slug.es !== slugFromPath && g.slug.en !== slugFromPath), 4);
 
 const relatedTitle = lang === 'es' ? 'Otros generadores que te van a gustar' : 'Other generators you might like';
 const trustItems = lang === 'es'
