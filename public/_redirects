@@ -9,6 +9,9 @@
 
 # Diacritic — slug ES eliminado de generators.ts
 /generador-de-nombres-de-diplom%C3%A1tico  /generador-de-nombres-de-diplomatico  301
+/generador-de-nombres-de-monta%C3%B1a  /generador-de-nombres-de-montana  301
+/generador-de-nombres-de-monta%C3%B1a-rusa  /generador-de-nombres-de-montana-rusa  301
+/generador-de-nombres-de-compa%C3%B1ia-aeronautica  /generador-de-nombres-de-compania-aeronautica  301
 
 # /en/embed → /embed (no hay versión EN del embed hub)
 /en/embed  /embed  301
