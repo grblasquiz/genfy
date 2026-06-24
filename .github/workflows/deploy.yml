@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # historial completo: el push streaming a IndexNow hace git diff before..after
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -41,6 +43,14 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Push URLs to IndexNow (Bing + Yandex + Seznam + Naver)
-        run: python3 scripts/indexnow-push.py
+      # Streaming (no batch): pushea SOLO las URLs cambiadas en este deploy.
+      # Bing desaconseja re-enviar el sitio entero; ante cambio estructural el
+      # script hace full push solo. En dispatch manual (sin before) -> full.
+      - name: Push changed URLs to IndexNow (streaming)
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            python3 scripts/indexnow-push.py --git-changed "${{ github.event.before }}" "${{ github.sha }}"
+          else
+            python3 scripts/indexnow-push.py --all
+          fi
         continue-on-error: true

@@ -15,17 +15,26 @@ Google no soporta IndexNow oficialmente, pero Bing sí. Bing reindexa en horas y
 Google levanta señales indirectas al recrawlear.
 
 Uso:
-  python3 scripts/indexnow-push.py                 # streaming: solo lo cambiado desde el ultimo push
-  python3 scripts/indexnow-push.py --all           # full re-submit (SOLO para fixes sitewide)
+  python3 scripts/indexnow-push.py                      # streaming local: solo lo cambiado desde el ultimo push
+  python3 scripts/indexnow-push.py --git-changed A B    # streaming CI: URLs cambiadas entre commits A..B
+  python3 scripts/indexnow-push.py --all                # full re-submit (SOLO para fixes sitewide)
   python3 scripts/indexnow-push.py --coverage X.xlsx
-  python3 scripts/indexnow-push.py /url1 /url2      # URLs puntuales (siempre se envian)
-  python3 scripts/indexnow-push.py --dry-run       # muestra que enviaria, sin enviar ni tocar el baseline
-  python3 scripts/indexnow-push.py --reset         # reescribe el baseline al estado actual, sin enviar nada
+  python3 scripts/indexnow-push.py /url1 /url2          # URLs puntuales (siempre se envian)
+  python3 scripts/indexnow-push.py --dry-run            # muestra que enviaria, sin enviar ni tocar el baseline
+  python3 scripts/indexnow-push.py --reset             # reescribe el baseline al estado actual, sin enviar nada
+
+Modos de cambio:
+- Local (default): diff por hash del HTML construido vs scripts/.indexnow-state.json (persiste local).
+- CI (--git-changed): diff por `git diff` entre commits, mapeando archivos -> URLs. No usa state
+  (el checkout de CI es efimero). Ante cualquier duda (ruta dinamica, archivo estructural, diff
+  no confiable) hace full push: nunca sub-pushea.
 """
 import hashlib
 import json
 import os
+import re
 import ssl
+import subprocess
 import sys
 import time
 import urllib.error
@@ -206,6 +215,77 @@ def submit(urls: list, dry_run: bool = False) -> set:
     return sent
 
 
+def es_en_slug_map() -> dict:
+    """Lee src/lib/generators.ts y devuelve {slug_es: slug_en} para mapear data files -> URL EN."""
+    f = ROOT / 'src' / 'lib' / 'generators.ts'
+    if not f.exists():
+        return {}
+    txt = f.read_text(encoding='utf-8')
+    return {m.group(1): m.group(2)
+            for m in re.finditer(r"slug:\s*\{\s*es:\s*'([^']+)'\s*,\s*en:\s*'([^']+)'", txt)}
+
+
+def _urls_for_changed_file(fp: str, smap: dict):
+    """Mapea un archivo cambiado -> (urls, structural, ignore).
+    structural=True fuerza full push; ignore=True lo descarta (no afecta el sitio publicado)."""
+    low = fp.lower()
+    # 1) archivos que NO afectan el HTML publicado (tooling, CI, docs, lockfiles)
+    if (low.endswith('.md')
+            or fp.startswith(('scripts/', '.github/', '.vscode/', '.idea/', '.gen-debug/'))
+            or low in {'.gitignore', 'license', 'package-lock.json', 'wrangler.toml', 'wrangler.jsonc'}):
+        return [], False, True
+    # 2) páginas .astro -> ruta directa (build.format='file')
+    if fp.startswith('src/pages/') and fp.endswith('.astro'):
+        rel = fp[len('src/pages/'):-len('.astro')]
+        if '[' in rel:                       # ruta dinámica -> no mapeable
+            return [], True, False
+        if rel == '404':
+            return [], False, True
+        if rel.startswith('en/'):
+            sub = rel[len('en/'):]
+            url = '/en' if sub == 'index' else f'/en/{sub}'
+        else:
+            url = '/' if rel == 'index' else f'/{rel}'
+        return [canonicalize(url)], False, False
+    # 3) data de un generador -> ES + EN
+    if fp.startswith('src/lib/data/') and fp.endswith('.ts'):
+        slug = fp[len('src/lib/data/'):-len('.ts')]
+        urls = [canonicalize(f'/{slug}')]
+        en = smap.get(slug)
+        if en:
+            urls.append(canonicalize(f'/en/{en}'))
+        return urls, False, False
+    # 4) cualquier otro archivo del sitio (componentes, layouts, lib, estilos, config) -> afecta todo
+    return [], True, False
+
+
+def urls_from_git(before: str, after: str):
+    """Devuelve (urls, full). full=True => pushear el sitemap entero (cambio estructural o diff dudoso)."""
+    if not before or set(before.strip()) <= {'0'}:
+        return [], True                      # primer push / sin base -> full
+    try:
+        out = subprocess.run(['git', 'diff', '--name-only', before, after],
+                             cwd=str(ROOT), capture_output=True, text=True, timeout=30)
+    except Exception as e:
+        print(f'  git diff error: {e} -> full push')
+        return [], True
+    if out.returncode != 0:
+        print(f'  git diff rc={out.returncode}: {out.stderr.strip()[:200]} -> full push')
+        return [], True
+    files = [l.strip() for l in out.stdout.splitlines() if l.strip()]
+    smap = es_en_slug_map()
+    urls = []
+    for fp in files:
+        u, structural, ignore = _urls_for_changed_file(fp, smap)
+        if structural:
+            print(f'  cambio estructural ({fp}) -> full push')
+            return [], True
+        if ignore:
+            continue
+        urls.extend(u)
+    return list(dict.fromkeys(urls)), False
+
+
 def _augment_state(sent: set) -> None:
     """Para modos puntuales (coverage / URLs sueltas): solo actualiza un baseline YA existente.
     Nunca siembra un baseline parcial (eso convertiria el proximo streaming en un batch)."""
@@ -243,6 +323,29 @@ def main():
         if not dry_run:
             _augment_state(sent)
         return 0
+
+    if args and args[0] == '--git-changed':
+        before = args[1] if len(args) > 1 else ''
+        after = args[2] if len(args) > 2 else 'HEAD'
+        changed, full = urls_from_git(before, after)
+        sitemap = list(dict.fromkeys(urls_from_sitemap()))
+        if full:
+            to_push = sitemap
+            print(f'Full push: {len(to_push)} URLs (cambio estructural / diff no confiable).')
+        else:
+            sset = set(sitemap)
+            to_push = [u for u in changed if u in sset]   # solo URLs reales e indexables
+            skipped = len(changed) - len(to_push)
+            extra = f' ({skipped} fuera del sitemap, omitidas)' if skipped else ''
+            print(f'Streaming (git diff): {len(to_push)} URLs cambiadas{extra}.')
+            if to_push:
+                print(f'Sample: {to_push[:5]}')
+        if not to_push:
+            print('Nada para enviar.')
+            return 0
+        sent = submit(to_push, dry_run)
+        failed = len(to_push) - len(sent)
+        return 0 if (dry_run or failed == 0) else 1
 
     if args and (args[0].startswith('/') or args[0].startswith('http')):
         urls = list(dict.fromkeys(canonicalize(u) for u in args))

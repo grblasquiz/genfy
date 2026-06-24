@@ -1,18 +1,16 @@
-name: IndexNow daily push (Bing + Yandex)
+name: IndexNow full re-submit (manual)
 
-# Cron diario que pushea TODAS las URLs del sitemap al IndexNow API
-# (Bing, Yandex, Seznam, Naver). Complementa el push post-deploy de deploy.yml
-# para mantener a Bing/Yandex/Seznam/Naver alineados aunque no haya cambios.
+# Full re-submit MANUAL de todas las URLs del sitemap a IndexNow (Bing, Yandex,
+# Seznam, Naver). Antes esto corría a diario, pero Bing desaconseja el "batch
+# mode" (re-enviar el sitio entero, aún sin cambios): satura y demora la
+# indexación. El streaming real ya lo hace deploy.yml (--git-changed: solo las
+# URLs que cambian en cada deploy). Este workflow queda como botón puntual para
+# casos sitewide (ej. migración masiva de slugs), NO en cron.
 #
 # IndexNow no requiere credenciales (solo la key file servida desde
 # /67fce4162c27d89c860f19a1f4483888.txt) — no hay secrets que configurar.
-# El script ya batchea de a 10.000 URLs (límite IndexNow).
 
 on:
-  schedule:
-    # 09:45 UTC (06:45 AR) — offset 15 min de hacecuentas/indexnow-daily.yml
-    # para no colisionar en el runner queue de la cuenta.
-    - cron: '45 9 * * *'
   workflow_dispatch:
 
 permissions:
@@ -44,11 +42,11 @@ jobs:
       - name: Build (genera dist/client/sitemap-*.xml)
         run: npm run build
 
-      - name: Push URLs to IndexNow (Bing + Yandex + Seznam + Naver)
+      - name: Push ALL URLs to IndexNow (full re-submit)
         id: push
         run: |
           set -o pipefail
-          python3 scripts/indexnow-push.py 2>&1 | tee /tmp/indexnow.log
+          python3 scripts/indexnow-push.py --all 2>&1 | tee /tmp/indexnow.log
           # Validar status 200 o 202
           if grep -qE 'status=4[0-9]{2}|status=5[0-9]{2}|\[WARN\]|Error:' /tmp/indexnow.log; then
             echo "::error::IndexNow push tuvo errores"
@@ -60,9 +58,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TITLE="🚨 IndexNow daily push falló ($(date -u +'%Y-%m-%d'))"
+          TITLE="🚨 IndexNow full re-submit falló ($(date -u +'%Y-%m-%d'))"
           BODY=$(cat <<EOF
-          El cron diario de IndexNow para genfy.net falló.
+          El re-submit manual de IndexNow para genfy.net falló.
 
           **Workflow:** [\`${{ github.workflow }}\` run #${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
           **Trigger:** ${{ github.event_name }}
