@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "npm run build && wrangler dev",
     "astro": "astro",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler deploy && (python3 scripts/indexnow-push.py || true)",
+    "indexnow": "python3 scripts/indexnow-push.py"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.1.10",
